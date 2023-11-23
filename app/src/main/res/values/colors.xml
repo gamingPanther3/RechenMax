@@ -1,0 +1,13 @@
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#000000</color>
+
+    <color name="colorLightBackground">#FFFFFF</color>
+    <color name="colorDarkBackground">#000000</color>
+    <color name="colorBTNBackgroundAccent">#FFFFFF</color>
+    <color name="colorBTNForegroundAccent">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#151515</color>
+    <color name="darkmode_white">#d5d5d5</color>
+    <color name="darkmode_black">#000000</color>
+</resources>

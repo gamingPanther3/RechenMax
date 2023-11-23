@@ -1,0 +1,318 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/patchnotesUI"
+    android:background="@color/colorBTNBackgroundAccent"
+    tools:context="com.mlprograms.rechenmax.MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/releaseNotesTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="RechenMax 1.4.60 Release-Notes"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/releaseNotesReleaseDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Veröffentlichungsdatum: 23.11.2023 14:18 Uhr"
+                android:gravity="center_horizontal"
+                android:textSize="15sp"
+                android:textColor="#000000"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/releaseNotesOverviewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Übersicht"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\nIn dieser Aktualisierung wurden zahlreiche Verbesserungen und neue Funktionen eingeführt. Die App passt sich nun automatisch an die Display-Einstellungen des Telefons für den Dunkel- und Tageslichtmodus an. Zudem besteht die Möglichkeit, den Anzeigemodus des Taschenrechners individuell einzustellen. Ein neu implementiertes Einstellungsmenü ermöglicht die Anpassung verschiedener Optionen. Dazu gehört ein 'Echter Dunkelmodus', der ein intensiveres Schwarz und ein abgeschwächtes Weiß bietet, um eine angenehmere Nutzungserfahrung zu ermöglichen. Darüber hinaus kann nun bei jedem Start des Taschenrechners die Anzeige von Release-Notes aktiviert werden. Dies ist eine nützliche Funktion, um stets auf dem neuesten Stand der Funktionen und Verbesserungen zu bleiben. Des Weiteren wurden eine Reihe von Fehlern behoben, darunter Probleme beim Wechsel zwischen den Modi, die Darstellung des Dunkelmodus in den Release-Notes und ein Berechnungsfehler. Zukünftige Updates werden weitere Anpassungsmöglichkeiten und neue Funktionen bereitstellen.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesFeaturesTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Neue Funktionen"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+
+        <TextView
+            android:id="@+id/releaseNotesFeaturesSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\nDunkel und Tageslichtmodus"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFeatures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:text="Die App passt sich jetzt automatisch den Display-Einstellungen Ihres Telefons an. Wenn Sie den Dunkelmodus auf Ihrem Telefon aktivieren, wechselt die App ebenfalls in den Dunkelmodus und umgekehrt."/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\nEinstellungsmenü"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Ein Einstellungsfenster ist nun verfügbar, in dem Sie verschiedene Optionen anpassen können. Weitere Einstellungsmöglichkeiten werden in zukünftigen Updates hinzugefügt.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Einstellung: Anzeigemodus"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Es ist jetzt möglich, den Anzeigemodus des Taschenrechners individuell einzustellen.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Einstellung: Echter Dunkelmodus"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Wenn diese Einstellung zusammen mit dem Dunkelmodus aktiviert ist, wird das Schwarz intensiver und das Weiß leicht abgeschwächt dargestellt.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Einstellung: Release-Notes"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Wenn diese Option aktiviert ist, erscheinen die Release-Notes jedes Mal beim Start des Taschenrechners.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesBugsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Behobene Fehler"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesBugsSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\nFehler beim Wechsel zwischen den Modi:"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/releaseNotesBugs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Es konnte vorkommen, dass die App beim Wechsel zwischen dem Tageslicht- und dem Dunkelmodus abstürzte."
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesBugsSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="\nAnzeigen des Dunkelmodus in den Release-Notes"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesBugs2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Es kam vor, dass die App beim Wechsel in den Dunkelmodus in den Release-Notes diesen falsch angezeigt hat.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesBugsSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:text="Behebung von Berechnungsfehlern"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesBugs3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Es wurden einige Berechnungsfehler behoben, die zuvor dazu führten, dass die App abstürzte.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kommende Funktionen"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\nVerschiedene Schreibmodi"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Es soll möglich sein einzustellen, ob man im Berechnungsbereich oder im Ergebnisbereich seine Mathematische Aufgabe eingibt. Zusätzlich sollte die Option vorhanden sein, das Zwischenergebnis anzeigen zu lassen."
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\nWissenschaflicher Taschenrechner"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Es wird eine zusätzliche Einstellung bereitgestellt, mit der man auswählen kann, ob man den wissenschaftlichen Taschenrechner, der über mehr Funktionen als der Standard-Taschenrechner verfügt, verwenden möchte oder nicht."
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\nVerschiede Ausrichtungsmodis"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Es soll die Option vorhanden sein, mit der ausgewählt werden kann, ob der Taschenrechner im Hoch- oder Querformat dargestellt wird.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesAPIVersionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:text="API-Version"/>
+
+        <TextView
+            android:id="@+id/releaseNotesAPIVersion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:text="\nMinimale API-Version: 29\nMaximale API-Version: 34\n"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom|end"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#000000"
+                android:checked="false"
+                android:text="Diesen Text nicht mehr anzeigen"/>
+
+            <Button
+                android:id="@+id/okay_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorDarkBackground"
+                android:text="Verstanden"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

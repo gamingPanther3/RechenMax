@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">RechenMax</string>
+    <string name="calculate_label"></string>
+    <string name="result_label">0</string>
+    <string name="EmptyClipboardButton">MC</string>
+    <string name="PasteFromClipboardButton">MR</string>
+    <string name="CopyToClipBoardButton">MS</string>
+    <string name="DivideButton">÷</string>
+    <string name="MultiplyButton">×</string>
+    <string name="SubtractButton">-</string>
+    <string name="AddButton">+</string>
+    <string name="NegativButton">±</string>
+    <string name="CommaButton">,</string>
+    <string name="CalculateButton">=</string>
+    <string name="BackspaceButton">⌫</string>
+    <string name="ClearAllButton">C</string>
+    <string name="ClearResultLabel">CE</string>
+    <string name="OneButton">1</string>
+    <string name="TwoButton">2</string>
+    <string name="ThreeButton">3</string>
+    <string name="FourButton">4</string>
+    <string name="FiveButton">5</string>
+    <string name="SixButton">6</string>
+    <string name="SevenButton">7</string>
+    <string name="EightButton">8</string>
+    <string name="NineButton">9</string>
+    <string name="ZeroButton">0</string>
+    <string name="history_text"></string>
+
+    <string-array name="mode_array">
+        <item>Systemstandard</item>
+        <item>Tageslichtmodus</item>
+        <item>Dunkelmodus</item>
+    </string-array>
+
+    <string name="mode_prompt">Wählen einen Modus aus</string>
+
+</resources>

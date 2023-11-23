@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/settingsUI"
+    tools:context="com.mlprograms.rechenmax.MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/settings_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/settings_return_button"
+            android:tag="return"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left"
+            android:backgroundTint="#FFFFFF"
+            android:drawableStart="@drawable/baseline_arrow_back_24"
+            android:foreground="@drawable/baseline_arrow_back_24"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="@dimen/calcButtonTextSize"
+            android:tooltipText="Zurück" />
+
+        <TextView
+            android:id="@+id/settings_title"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:gravity="center_vertical"
+            android:text="Einstellungen"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:textSize="@dimen/calcButtonTextSize" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/settings_sroll_textview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+            <Switch
+                android:id="@+id/settings_release_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Release-Notes"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/settings_release_notes_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="14.4dp"
+                android:text="Wenn diese Option aktiviert ist, erscheinen die Release-Notes jedes Mal beim Start des Taschenrechners." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+            <TextView
+                android:id="@+id/settings_display_mode_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Anzeigemodus"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/settings_display_mode_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="14.4dp"
+                android:text="Mit dieser Option lässt sich der Anzeigemodus des Taschenrechners auswählen." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+            <Spinner
+                android:id="@+id/settings_display_mode_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/mode_array"
+                android:prompt="@string/mode_prompt"
+                android:gravity="center_horizontal"
+                android:spinnerMode="dialog" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+            <Switch
+                android:id="@+id/settings_true_darkmode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Echter Dunkelmodus"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/settings_true_darkmode_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="14.4dp"
+                android:text="Diese Einstellung bewirkt, dass das Schwarz intensiver und das Weiß leicht gedimmt wird, wenn sie aktiviert ist. Bitte beachten Sie, dass diese Einstellung nur wirksam wird, wenn der Dunkelmodus aktiviert ist." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
