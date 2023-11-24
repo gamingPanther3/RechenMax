@@ -1,4 +1,4 @@
-<ScrollView
+<!--<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -315,8 +315,8 @@
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
-<!-- <ScrollView
+</ScrollView> -->
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -431,6 +431,23 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/releaseNotesBugsSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\nProblem beim Rechnen mit Notationen"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/releaseNotesBugs2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ein Fehler, der die falsche Umwandlung von Zahlen in wissenschaftlicher Notation in Dezimalzahlen verursachte, wurde behoben.\"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/releaseNotesFutureFeaturesTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -531,4 +548,4 @@
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView> -->
+</ScrollView>
