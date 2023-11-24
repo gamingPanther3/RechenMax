@@ -5,6 +5,7 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +35,7 @@ public class CalculatorActivity {
             final List<String> tokens = tokenize(expression);
             final BigDecimal result = evaluate(tokens);
             if (result.toString().replace(".", "").replace(",", "").length() >= 12) {
-                return String.format("%.6e", result);
+                return String.format(Locale.GERMANY ,"%.6e", result);
             } else {
                 return result.toPlainString().replace('.', ',');
             }
@@ -64,11 +65,17 @@ public class CalculatorActivity {
             if (isNumber(token)) {
                 stack.add(new BigDecimal(token));
             } else if (isOperator(token)) {
+                if (stack.size() < 2) {
+                    throw new IllegalArgumentException("Nicht genügend Operanden für den Operator: " + token);
+                }
                 final BigDecimal operand2 = stack.remove(stack.size() - 1);
                 final BigDecimal operand1 = stack.remove(stack.size() - 1);
                 final BigDecimal result = applyOperator(operand1, operand2, token, mc);
                 stack.add(result);
             }
+        }
+        if (stack.size() != 1) {
+            throw new IllegalArgumentException("Ungültiger Ausdruck");
         }
         return stack.get(0);
     }
@@ -120,21 +127,16 @@ public class CalculatorActivity {
             final char c = expression.charAt(i);
             if (Character.isDigit(c) || c == '.') {
                 currentToken.append(c);
-            } else if (c == '+' || c == '*' || c == '/') {
+            } else if (c == '+' || c == '*' || c == '/' || c == '-') {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);
                 }
                 tokens.add(Character.toString(c));
-            } else if (c == '-') {
+            } else if (c == ' ') {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);
-                }
-                if (i + 1 < expression.length() && Character.isDigit(expression.charAt(i + 1))) {
-                    currentToken.append(c);
-                } else {
-                    tokens.add(Character.toString(c));
                 }
             }
         }
