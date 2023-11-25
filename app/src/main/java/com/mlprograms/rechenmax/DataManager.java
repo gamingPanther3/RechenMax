@@ -103,14 +103,17 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
     // names                            | values                | context
-    // settingReleaseNotesSwitch        | true / false          | SettingsAcitiy
-    // settingsTrueDarkMode             | true / false          | MainActivtiy -> SettingsAcitiy
-    // showPatchNotes                   | true / false          | MainActivtiy -> SettingsAcitiy
-    // disablePatchNotesTemporary       | true / false          | MainActivtiy -> SettingsAcitiy
-    // showReleaseNotesOnVeryFirstStart | true / false          | MainActivtiy
-    // selectedSpinnerSetting           | System / Dark / Light | MainActivtiy
+    // settingReleaseNotesSwitch        | true / false          | SettingsActivity
+    // settingsTrueDarkMode             | true / false          | MainActivity -> SettingsActivity
+    // showPatchNotes                   | true / false          | MainActivity -> SettingsActivity
+    // disablePatchNotesTemporary       | true / false          | MainActivity -> SettingsActivity
+    // showReleaseNotesOnVeryFirstStart | true / false          | MainActivity
+    // selectedSpinnerSetting           | System / Dark / Light | MainActivity
+    // showScienceRow                   | true / false          | MainActivity
     // -> = ... wird übergeben zu ...
+
     public String readFromJSON(final String name, Context applicationContext) {
         String setting = null;
         try {
@@ -148,6 +151,7 @@ public class DataManager {
         saveToJSON("disablePatchNotesTemporary", "false", applicationContext);
         saveToJSON("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
         saveToJSON("selectedSpinnerSetting", "System", applicationContext);
+        saveToJSON("showScienceRow", false, applicationContext);
     }
     private static final String FILE_NAME1 = "history.txt";
     public void addtoHistory(String data, Context context) {

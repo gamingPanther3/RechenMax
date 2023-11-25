@@ -26,6 +26,10 @@
     <string name="NineButton">9</string>
     <string name="ZeroButton">0</string>
     <string name="history_text"></string>
+    <string name="clipOn">(</string>
+    <string name="clipOff">)</string>
+    <string name="power">x^</string>
+    <string name="root">√x</string>
 
     <string-array name="mode_array">
         <item>Systemstandard</item>

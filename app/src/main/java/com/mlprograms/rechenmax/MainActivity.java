@@ -73,29 +73,24 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         setUpListeners();
+        checkScienceButtonState();
         checkDarkmodeSetting();
     }
     public void setUpListeners() {
-        // Andere Knöpfe
         setButtonListener(R.id.history_button, this::switchToHistoryAction);
         setButtonListener(R.id.settings_button, this::switchToSettingsAction);
         setButtonListener(R.id.okay_button, this::patchNotesOkayButtonAction);
-        // Zwischenablage
         setClipboardButtonListener(R.id.emptyclipboard, "MC");
         setClipboardButtonListener(R.id.pastefromclipboard, "MR");
         setClipboardButtonListener(R.id.copytoclipboard, "MS");
-        // Löschen
         setEmptyButtonListener(R.id.clearresult, "CE");
         setEmptyButtonListener(R.id.clearall, "C");
         setEmptyButtonListener(R.id.backspace, "⌫");
-        // Rechenoperationen
         setOperationButtonListener(R.id.divide, "/");
         setOperationButtonListener(R.id.multiply, "*");
         setOperationButtonListener(R.id.subtract, "-");
         setOperationButtonListener(R.id.add, "+");
-        // Negieren
         setNegateButtonListener(R.id.negative);
-        // Zahlen
         setNumberButtonListener(R.id.zero);
         setNumberButtonListener(R.id.one);
         setNumberButtonListener(R.id.two);
@@ -106,12 +101,45 @@ public class MainActivity extends AppCompatActivity {
         setNumberButtonListener(R.id.seven);
         setNumberButtonListener(R.id.eight);
         setNumberButtonListener(R.id.nine);
-        // Berechnen
         setCalculateButtonListener(R.id.calculate);
-        // Komma
         setCommaButtonListener(R.id.comma);
+        setButtonListener(R.id.clipOn, this::clipOnAction);
+        setButtonListener(R.id.clipOff, this::clipOffAction);
+        setButtonListener(R.id.power, this::powerAction);
+        setButtonListener(R.id.root, this::rootAction);
+        setScienceButtonListener();
     }
+    private void setScienceButtonListener() {
+        Button toggleButton = (Button) findViewById(R.id.scientificButton);
+        if(toggleButton != null) {
+            toggleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LinearLayout buttonRow = findViewById(R.id.scientificRow);
+                    final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
 
+                    if(buttonRow != null && data != null) {
+                        if (data.equals("true")) {
+                            buttonRow.setVisibility(View.GONE);
+                            dataManager.saveToJSON("showScienceRow", false, getApplicationContext());
+                        } else if (data.equals("false")) {
+                            buttonRow.setVisibility(View.VISIBLE);
+                            dataManager.saveToJSON("showScienceRow", true, getApplicationContext());
+                        }
+                    }
+                }
+            });
+        }
+    }
+    public void checkScienceButtonState() {
+        LinearLayout buttonRow = findViewById(R.id.scientificRow);
+        final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
+        if(data.equals("true")) {
+            buttonRow.setVisibility(View.VISIBLE);
+        } else {
+            buttonRow.setVisibility(View.GONE);
+        }
+    }
     private void setCommaButtonListener(int buttonId) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -213,7 +241,21 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-    public void patchNotesOkayButtonAction() {
+
+    private void clipOnAction() {
+    }
+
+    private void clipOffAction() {
+    }
+
+    private void powerAction() {
+        addCalculateText(getResultText() + " ^");
+        setRemoveValue(true);
+    }
+
+    private void rootAction() {
+    }
+     public void patchNotesOkayButtonAction() {
         CheckBox checkBox = findViewById(R.id.checkBox);
         if (checkBox.isChecked()) {
             dataManager.saveToJSON("showPatchNotes", false, getApplicationContext());
@@ -261,6 +303,7 @@ public class MainActivity extends AppCompatActivity {
         // Globale Variablen
         TextView historyButton = (TextView) findViewById(R.id.history_button);
         TextView settingsButton = (TextView) findViewById(R.id.settings_button);
+        TextView scienceButton = (TextView) findViewById(R.id.scientificButton);
         currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         int newColorBTNBackgroundAccent = 0;
         int newColorBTNForegroundAccent = 0;
@@ -286,6 +329,9 @@ public class MainActivity extends AppCompatActivity {
                         if(settingsButton != null) {
                             settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
                         }
+                        if(scienceButton != null) {
+                            scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
+                        }
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.white);
@@ -295,6 +341,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                         if(settingsButton != null) {
                             settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24));
+                        }
+                        if(scienceButton != null) {
+                            scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
                         }
                         break;
                 }
@@ -306,6 +355,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(settingsButton != null) {
                     settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24));
+                }
+                if(scienceButton != null) {
+                    scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
                 }
             } else if (selectedSetting.equals("Dunkelmodus")) {
                 dataManager = new DataManager(this);
@@ -327,6 +379,9 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(settingsButton != null) {
                     settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
+                }
+                if(scienceButton != null) {
+                    scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
                 }
             }
 
@@ -547,6 +602,7 @@ public class MainActivity extends AppCompatActivity {
         }
         setRemoveValue(true);
         formatResultTextAfterType();
+        formatResultTextAfterCalculate(getResultText());
 
         setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
         dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
@@ -560,7 +616,7 @@ public class MainActivity extends AppCompatActivity {
         if (text.length() >= 14) {
             double number = Double.parseDouble(text.replace(".", "").replace(",", "."));
             int exponent = (int) Math.floor(Math.log10(number));
-            formattedNumber = String.format("%.1fE%+d", number / Math.pow(10, exponent), exponent);
+            formattedNumber = String.format("%.6fE%+d", number / Math.pow(10, exponent), exponent);
         } else {
             if (text.matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)$")) {
                 formattedNumber = text;

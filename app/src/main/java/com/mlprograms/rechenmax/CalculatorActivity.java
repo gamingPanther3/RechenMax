@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class CalculatorActivity {
     private static final MathContext MC = new MathContext(6, RoundingMode.HALF_UP);
+
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
         switch (operator) {
             case "+":
@@ -21,14 +22,12 @@ public class CalculatorActivity {
                 return operand1.multiply(operand2);
             case "/":
                 if (operand2.compareTo(BigDecimal.ZERO) == 0) {
-                    throw new IllegalArgumentException("Division by zero");
+                    throw new IllegalArgumentException("Division durch Null");
                 } else {
                     return operand1.divide(operand2, MC);
                 }
-            case "^":
-                return operand1.pow(operand2.intValue(), MC);
             default:
-                throw new IllegalArgumentException("Unknown operator: " + operator);
+                throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
     }
 
@@ -44,7 +43,7 @@ public class CalculatorActivity {
             final List<String> tokens = tokenize(expression);
             final BigDecimal result = evaluate(tokens);
 
-            // Check if the result needs to be converted to scientific notation
+            // Überprüfen, ob das Ergebnis in wissenschaftlicher Notation umgewandelt werden muss
             if (result.toString().length() > 12) {
                 return String.format(Locale.GERMANY, "%.6e", result);
             } else {
@@ -56,7 +55,7 @@ public class CalculatorActivity {
     }
 
     public static String convertScientificToDecimal(final String str) {
-        final String formattedInput = str.replace(",", "."); // Replace commas with decimal points
+        final String formattedInput = str.replace(",", "."); // Ersetzen Sie Kommas durch Dezimalpunkte
         final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)(e[+-]\\d+)");
         final Matcher matcher = pattern.matcher(formattedInput);
         final StringBuffer sb = new StringBuffer();
@@ -65,7 +64,7 @@ public class CalculatorActivity {
             final String numberPart = matcher.group(1);
             String exponentPart = matcher.group(3);
 
-            // Check if exponentPart is null before accessing its substring
+            // Überprüfen Sie, ob exponentPart null ist, bevor Sie auf dessen Teilzeichenkette zugreifen
             if (exponentPart != null) {
                 exponentPart = exponentPart.substring(1);
             }
@@ -73,34 +72,42 @@ public class CalculatorActivity {
             final int exponent = Integer.parseInt(exponentPart);
             final BigDecimal number = new BigDecimal(numberPart).stripTrailingZeros();
 
-            // Scale the number by the exponent
+            // Skalieren Sie die Zahl um den Exponenten
             final BigDecimal scaledNumber = number.scaleByPowerOfTen(exponent);
 
-            // Replace the matched portion with the scaled number
+            // Ersetzen Sie den abgeglichenen Teil durch die skalierte Zahl
             matcher.appendReplacement(sb, scaledNumber.toPlainString());
         }
 
         matcher.appendTail(sb);
         return sb.toString();
     }
-    
+
     public static BigDecimal evaluate(final List<String> tokens) {
         final List<String> postfixTokens = infixToPostfix(tokens);
         return evaluatePostfix(postfixTokens);
     }
+
     public static BigDecimal evaluatePostfix(final List<String> postfixTokens) {
         final List<BigDecimal> stack = new ArrayList<>();
         for (final String token : postfixTokens) {
             if (isNumber(token)) {
                 stack.add(new BigDecimal(token));
-            } else if (isOperator(token)) {
+            } else if (isOperator(token) || token.equals("^")) {
                 if (stack.size() < 2) {
                     throw new IllegalArgumentException("Nicht genügend Operanden für den Operator: " + token);
                 }
                 final BigDecimal operand2 = stack.remove(stack.size() - 1);
                 final BigDecimal operand1 = stack.remove(stack.size() - 1);
-                final BigDecimal result = applyOperator(operand1, operand2, token);
+                final BigDecimal result;
+                if (token.equals("^")) {
+                    result = operand1.pow(operand2.intValue(), MC);
+                } else {
+                    result = applyOperator(operand1, operand2, token);
+                }
                 stack.add(result);
+            } else {
+                throw new IllegalArgumentException("Ungültiges Token: " + token);
             }
         }
         if (stack.size() != 1) {
@@ -108,6 +115,7 @@ public class CalculatorActivity {
         }
         return stack.get(0);
     }
+
     public static List<String> infixToPostfix(final List<String> infixTokens) {
         final List<String> postfixTokens = new ArrayList<>();
         final List<String> operatorStack = new ArrayList<>();
@@ -142,9 +150,11 @@ public class CalculatorActivity {
             return false;
         }
     }
+
     public static boolean isOperator(final String token) {
-        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("^");
     }
+
     public static int precedence(final String operator) {
         switch (operator) {
             case "+":
@@ -153,10 +163,13 @@ public class CalculatorActivity {
             case "*":
             case "/":
                 return 2;
+            case "^":
+                return 3;
             default:
                 throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
     }
+
     public static List<String> tokenize(final String expression) {
         final List<String> tokens = new ArrayList<>();
         final StringBuilder currentToken = new StringBuilder();
@@ -164,7 +177,7 @@ public class CalculatorActivity {
             final char c = expression.charAt(i);
             if (Character.isDigit(c) || c == '.') {
                 currentToken.append(c);
-            } else if (c == '+' || c == '*' || c == '/' || c == '-') {
+            } else if (c == '+' || c == '*' || c == '/' || c == '-' || c == '^') {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);

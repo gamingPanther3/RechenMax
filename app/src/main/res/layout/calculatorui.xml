@@ -18,10 +18,23 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/actionBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorLightBackground"
             android:layout_gravity="right">
+
+            <Button
+                android:id="@+id/scientificButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginTop="2.5dp"
+                android:backgroundTint="@color/white"
+                android:foreground="@drawable/baseline_science_24"
+                android:tag="history"
+                android:tooltipText="Verlauf"
+                android:translationX="5dp" />
 
             <Button
                 android:id="@+id/history_button"
@@ -33,13 +46,13 @@
                 android:foreground="@drawable/baseline_history_24"
                 android:tag="history"
                 android:tooltipText="Verlauf"
-                android:translationX="315dp" />
+                android:translationX="275dp" />
 
             <Button
                 android:id="@+id/settings_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:translationX="323dp"
+                android:translationX="280dp"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginTop="2.5dp"
                 android:backgroundTint="@color/white"
@@ -119,6 +132,63 @@
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize"
                 android:tooltipText="Wert kopieren"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scientificRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightBackground"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/clipOn"
+                android:tag="("
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/clipOn"
+                android:textSize="@dimen/calcButtonTextSize"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/clipOff"
+                android:tag=")"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/clipOff"
+                android:textSize="@dimen/calcButtonTextSize"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/power"
+                android:tag="^"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/power"
+                android:textSize="@dimen/calcButtonTextSize"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/root"
+                android:tag="^"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/root"
+                android:textSize="@dimen/calcButtonTextSize"
                 style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
 
