@@ -1,7 +1,5 @@
 # RechenMax (Calculator)
 
-## English
-
 Welcome to the documentation for the Calculator App. This app provides a simple and intuitive interface for performing mathematical calculations.
 
 ### Features
