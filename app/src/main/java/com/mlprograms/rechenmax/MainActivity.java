@@ -134,10 +134,12 @@ public class MainActivity extends AppCompatActivity {
     public void checkScienceButtonState() {
         LinearLayout buttonRow = findViewById(R.id.scientificRow);
         final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-        if(data.equals("true")) {
-            buttonRow.setVisibility(View.VISIBLE);
-        } else {
-            buttonRow.setVisibility(View.GONE);
+        if(buttonRow != null && data != null) {
+            if(data.equals("true")) {
+                buttonRow.setVisibility(View.VISIBLE);
+            } else {
+                buttonRow.setVisibility(View.GONE);
+            }
         }
     }
     private void setCommaButtonListener(int buttonId) {
@@ -273,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.calculatorui);
         dataManager.loadNumbers();
         checkDarkmodeSetting();
+        checkScienceButtonState();
         setUpListeners();
     }
     public void switchToSettingsAction() {
