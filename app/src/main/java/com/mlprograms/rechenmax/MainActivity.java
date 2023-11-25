@@ -243,18 +243,14 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-
     private void clipOnAction() {
     }
-
     private void clipOffAction() {
     }
-
     private void powerAction() {
         addCalculateText(getResultText() + " ^");
         setRemoveValue(true);
     }
-
     private void rootAction() {
     }
      public void patchNotesOkayButtonAction() {
@@ -290,18 +286,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
-
     public void checkDarkmodeSetting() {
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
-
     private void switchDisplayMode(int currentNightMode) {
         // Globale Variablen
         TextView historyButton = (TextView) findViewById(R.id.history_button);
@@ -463,12 +456,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
     public void resetReleaseNoteConfig(Context applicationContext) {
         dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
         dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
     }
-
     protected void onDestroy() {
         super.onDestroy();
         if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
@@ -476,7 +467,6 @@ public class MainActivity extends AppCompatActivity {
         }
         finish();
     }
-
     public void NumberAction(String num) {
         String resultText = getResultText();
         String calculateText = getCalculateText().toString();
@@ -514,7 +504,6 @@ public class MainActivity extends AppCompatActivity {
         }
         adjustTextSize();
     }
-
     private void handleMRAction(ClipboardManager clipboardManager) {
         ClipData clipData = clipboardManager.getPrimaryClip();
         ClipData.Item item = clipData.getItemAt(0);
@@ -528,7 +517,6 @@ public class MainActivity extends AppCompatActivity {
             setRemoveValue(true);
         }
     }
-
     public void OperationAction(final String op) {
         setLastOp(op);
         setLastNumber(getResultText());
@@ -540,7 +528,6 @@ public class MainActivity extends AppCompatActivity {
         }
         setRemoveValue(true);
     }
-
     public void EmptyAction(final String e) {
         if (e.equals("⌫")) {
             handleBackspaceAction();
