@@ -14,8 +14,6 @@ Download the calculator, open the app and enter your calculation. The results wi
 
 - - -
 
-# RechenMax (Taschenrechner)
-
 ## Deutsch
 
 Willkommen zur Dokumentation der Taschenrechner App. Diese App bietet eine einfache und intuitive Benutzeroberfläche, um mathematische Berechnungen durchzuführen. Bitte beachten Sie, dass die App derzeit nur auf Deutsch verfügbar ist.
