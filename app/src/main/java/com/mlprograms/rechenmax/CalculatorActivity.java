@@ -40,6 +40,7 @@ public class CalculatorActivity {
                     .replace(".", "")
                     .replace(",", ".")
                     .trim());
+            // hello
             final List<String> tokens = tokenize(expression);
             final BigDecimal result = evaluate(tokens);
 
