@@ -345,7 +345,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:text="RechenMax 1.4.61 Release-Notes"
+                android:text="RechenMax 1.4.68 Snapshot"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -388,13 +388,21 @@
 
 
         <TextView
-            android:id="@+id/releaseNotesFeaturesSubtitle"
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\n"
+            android:text="\nWissenschaftlicher Taschenrechner"
             android:textColor="#000000"
             android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Der Taschenrechners bietet nun Unterstützung für Klammern, Potenzen und Wurzeln, um eine präzise Steuerung der Reihenfolge der Operationen und die Berechnung komplexer mathematischer Ausdrücke zu ermöglichen."
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/releaseNotesFeatures"
@@ -471,23 +479,6 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="Es soll möglich sein einzustellen, ob man im Berechnungsbereich oder im Ergebnisbereich seine Mathematische Aufgabe eingibt. Zusätzlich sollte die Option vorhanden sein, das Zwischenergebnis anzeigen zu lassen."
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\nWissenschaflicher Taschenrechner"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Es wird eine zusätzliche Einstellung bereitgestellt, mit der man auswählen kann, ob man den wissenschaftlichen Taschenrechner, der über mehr Funktionen als der Standard-Taschenrechner verfügt, verwenden möchte oder nicht."
             android:textColor="#000000" />
 
         <TextView

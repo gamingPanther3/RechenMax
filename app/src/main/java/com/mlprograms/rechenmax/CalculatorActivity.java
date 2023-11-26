@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class CalculatorActivity {
     private static final MathContext MC = new MathContext(6, RoundingMode.HALF_UP);
-
+    public static final String ROOT = "√";
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
         switch (operator) {
             case "+":
@@ -26,11 +26,18 @@ public class CalculatorActivity {
                 } else {
                     return operand1.divide(operand2, MC);
                 }
+            case ROOT:
+                if (operand2.compareTo(BigDecimal.ZERO) < 0) {
+                    throw new IllegalArgumentException("Negativer Wert unter der Wurzel");
+                } else {
+                    return new BigDecimal(Math.sqrt(operand2.doubleValue()));
+                }
+            case "^":
+                return operand1.pow(operand2.intValue(), MC);
             default:
                 throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
     }
-
     public static String calculate(final String calc) {
         try {
             final String expression = convertScientificToDecimal(calc
@@ -43,19 +50,17 @@ public class CalculatorActivity {
             final List<String> tokens = tokenize(expression);
             final BigDecimal result = evaluate(tokens);
 
-            // Überprüfen, ob das Ergebnis in wissenschaftlicher Notation umgewandelt werden muss
-            if (result.toString().length() > 12) {
+            if (result.compareTo(new BigDecimal("1000000000000")) >= 0) {
                 return String.format(Locale.GERMANY, "%.6e", result);
             } else {
-                return result.toPlainString().replace('.', ',');
+                return result.stripTrailingZeros().toPlainString().replace('.', ',');
             }
         } catch (ArithmeticException e) {
             return e.getMessage();
         }
     }
-
     public static String convertScientificToDecimal(final String str) {
-        final String formattedInput = str.replace(",", "."); // Ersetzen Sie Kommas durch Dezimalpunkte
+        final String formattedInput = str.replace(",", ".");
         final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)(e[+-]\\d+)");
         final Matcher matcher = pattern.matcher(formattedInput);
         final StringBuffer sb = new StringBuffer();
@@ -63,49 +68,41 @@ public class CalculatorActivity {
         while (matcher.find()) {
             final String numberPart = matcher.group(1);
             String exponentPart = matcher.group(3);
-
-            // Überprüfen Sie, ob exponentPart null ist, bevor Sie auf dessen Teilzeichenkette zugreifen
             if (exponentPart != null) {
                 exponentPart = exponentPart.substring(1);
             }
-
             final int exponent = Integer.parseInt(exponentPart);
             final BigDecimal number = new BigDecimal(numberPart).stripTrailingZeros();
-
-            // Skalieren Sie die Zahl um den Exponenten
             final BigDecimal scaledNumber = number.scaleByPowerOfTen(exponent);
-
-            // Ersetzen Sie den abgeglichenen Teil durch die skalierte Zahl
             matcher.appendReplacement(sb, scaledNumber.toPlainString());
         }
-
         matcher.appendTail(sb);
         return sb.toString();
     }
-
     public static BigDecimal evaluate(final List<String> tokens) {
         final List<String> postfixTokens = infixToPostfix(tokens);
         return evaluatePostfix(postfixTokens);
     }
-
     public static BigDecimal evaluatePostfix(final List<String> postfixTokens) {
         final List<BigDecimal> stack = new ArrayList<>();
         for (final String token : postfixTokens) {
             if (isNumber(token)) {
                 stack.add(new BigDecimal(token));
-            } else if (isOperator(token) || token.equals("^")) {
-                if (stack.size() < 2) {
-                    throw new IllegalArgumentException("Nicht genügend Operanden für den Operator: " + token);
-                }
+            } else if (isOperator(token)) {
                 final BigDecimal operand2 = stack.remove(stack.size() - 1);
-                final BigDecimal operand1 = stack.remove(stack.size() - 1);
-                final BigDecimal result;
-                if (token.equals("^")) {
-                    result = operand1.pow(operand2.intValue(), MC);
+                BigDecimal operand1;
+                if (!token.equals(ROOT)) {
+                    operand1 = stack.remove(stack.size() - 1);
+                    final BigDecimal result = applyOperator(operand1, operand2, token);
+                    stack.add(result);
                 } else {
-                    result = applyOperator(operand1, operand2, token);
+                    final BigDecimal operand2SquareRoot = new BigDecimal(Math.sqrt(operand2.doubleValue()));
+                    if (operand2SquareRoot.compareTo(BigDecimal.ZERO) == 0) {
+                        stack.add(BigDecimal.ZERO);
+                    } else {
+                        stack.add(operand2SquareRoot);
+                    }
                 }
-                stack.add(result);
             } else {
                 throw new IllegalArgumentException("Ungültiges Token: " + token);
             }
@@ -113,9 +110,9 @@ public class CalculatorActivity {
         if (stack.size() != 1) {
             throw new IllegalArgumentException("Ungültiger Ausdruck");
         }
+
         return stack.get(0);
     }
-
     public static List<String> infixToPostfix(final List<String> infixTokens) {
         final List<String> postfixTokens = new ArrayList<>();
         final List<String> operatorStack = new ArrayList<>();
@@ -134,6 +131,11 @@ public class CalculatorActivity {
                     postfixTokens.add(operatorStack.remove(operatorStack.size() - 1));
                 }
                 operatorStack.remove(operatorStack.size() - 1);
+            } else if (token.equals("√")) {
+                while (!operatorStack.isEmpty() && (precedence(operatorStack.get(operatorStack.size() - 1)) > precedence(token) || operatorStack.get(operatorStack.size() - 1).equals("^"))) {
+                    postfixTokens.add(operatorStack.remove(operatorStack.size() - 1));
+                }
+                operatorStack.add(token);
             }
         }
         while (!operatorStack.isEmpty()) {
@@ -141,7 +143,6 @@ public class CalculatorActivity {
         }
         return postfixTokens;
     }
-
     public static boolean isNumber(final String token) {
         try {
             new BigDecimal(token);
@@ -150,26 +151,24 @@ public class CalculatorActivity {
             return false;
         }
     }
-
     public static boolean isOperator(final String token) {
-        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("^");
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("^") || token.equals("√");
     }
-
     public static int precedence(final String operator) {
-        switch (operator) {
-            case "+":
-            case "-":
-                return 1;
-            case "*":
-            case "/":
-                return 2;
-            case "^":
-                return 3;
-            default:
-                throw new IllegalArgumentException("Unbekannter Operator: " + operator);
+        if (operator.equals("(")) {
+            return 0;
+        } else if (operator.equals("+") || operator.equals("-")) {
+            return 1;
+        } else if (operator.equals("*") || operator.equals("/")) {
+            return 2;
+        } else if (operator.equals("^")) {
+            return 3;
+        } else if (operator.equals("√")) {
+            return 4;
+        } else {
+            throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
     }
-
     public static List<String> tokenize(final String expression) {
         final List<String> tokens = new ArrayList<>();
         final StringBuilder currentToken = new StringBuilder();
@@ -177,7 +176,7 @@ public class CalculatorActivity {
             final char c = expression.charAt(i);
             if (Character.isDigit(c) || c == '.') {
                 currentToken.append(c);
-            } else if (c == '+' || c == '*' || c == '/' || c == '-' || c == '^') {
+            } else if (c == '+' || c == '*' || c == '/' || c == '-' || c == '^' || c == '√' || c == '(' || c == ')') {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);

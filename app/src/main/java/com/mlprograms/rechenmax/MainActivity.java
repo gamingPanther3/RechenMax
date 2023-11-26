@@ -29,7 +29,11 @@ import com.google.android.material.textview.MaterialTextView;
 import org.apache.tools.ant.taskdefs.MacroDef;
 import org.w3c.dom.Text;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class MainActivity extends AppCompatActivity {
+    private boolean rotateOperatorAfterRoot = false;
     private Context context = this;
     private boolean removevalue = false;
     private String last_number = "0";
@@ -244,14 +248,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void clipOnAction() {
+        addCalculateText("(");
     }
     private void clipOffAction() {
+        addCalculateText(getResultText() + " )");
+        setRotateOperator(true);
     }
     private void powerAction() {
-        addCalculateText(getResultText() + " ^");
-        setRemoveValue(true);
+        if(!getRotateOperatorAfterRoot()) {
+            addCalculateText(getResultText() + " ^");
+            setRemoveValue(true);
+        } else {
+            addCalculateText(" ^");
+            setRemoveValue(true);
+            setRotateOperator(false);
+        }
     }
     private void rootAction() {
+        if(!getRotateOperatorAfterRoot()) {
+            addCalculateText("√(" + getResultText() + ")");
+        } else {
+            addCalculateText(getLastOp() + " √(" + getResultText() + ")");
+        }
+        setRemoveValue(true);
+        setRotateOperator(true);
     }
      public void patchNotesOkayButtonAction() {
         CheckBox checkBox = findViewById(R.id.checkBox);
@@ -519,14 +539,20 @@ public class MainActivity extends AppCompatActivity {
     }
     public void OperationAction(final String op) {
         setLastOp(op);
-        setLastNumber(getResultText());
         final String new_op = op.replace("*", "×").replace("/", "÷");
-        if (getCalculateText().contains("=")) {
-            setCalculateText(getResultText() + " " + new_op);
+        if(!getRotateOperatorAfterRoot()) {
+            setLastNumber(getResultText());
+            if (getCalculateText().contains("=")) {
+                setCalculateText(getResultText() + " " + new_op);
+            } else {
+                addCalculateText(getResultText() + " " + new_op);
+            }
+            setRemoveValue(true);
         } else {
-            addCalculateText(getResultText() + " " + new_op);
+            addCalculateText(new_op);
+            setRemoveValue(true);
         }
-        setRemoveValue(true);
+        setRotateOperator(false);
     }
     public void EmptyAction(final String e) {
         if (e.equals("⌫")) {
@@ -534,6 +560,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (e.equals("C")) {
             setResultText("0");
             setCalculateText("");
+            setRotateOperator(false);
         } else if (e.equals("CE")) {
             setResultText("0");
         }
@@ -578,32 +605,62 @@ public class MainActivity extends AppCompatActivity {
         TextView calclab = (TextView) findViewById(R.id.calculate_label);
         TextView reslab = (TextView) findViewById(R.id.result_label);
 
-        if (!calcText.contains("=")) {
-            setLastNumber(getResultText());
-            calclab.setText(calcText + " " + getResultText() + " =");
-            reslab.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
-        } else {
-            if (!getLastOp().isEmpty()) {
-                calclab.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+        if(getRotateOperatorAfterRoot()) {
+            if (!calcText.contains("=")) {
+                setLastNumber(getResultText());
+                setCalculateText(calcText + " =");
+                setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
             } else {
-                calclab.setText(getResultText() + " =");
+                if (!getLastOp().isEmpty() && !getLastOp().equals("√")) {
+                    setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+                } else {
+                    setCalculateText(getResultText() + " =");
+                }
+                setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
             }
-            reslab.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
-        }
-        setRemoveValue(true);
-        formatResultTextAfterType();
-        formatResultTextAfterCalculate(getResultText());
+            setRemoveValue(true);
+            //formatResultTextAfterType();F
+            //formatResultTextAfterCalculate(getResultText());
+            adjustTextSize();
 
-        setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
-        dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
-        dataManager.saveNumbers(getApplicationContext());
+            setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
+            dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
+            dataManager.saveNumbers(getApplicationContext());
+        } else {
+            if (!calcText.contains("=")) {
+                setLastNumber(getResultText());
+                calclab.setText(calcText + " " + getResultText() + " =");
+                reslab.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
+            } else {
+                if (!getLastOp().isEmpty()) {
+                    calclab.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+                } else {
+                    calclab.setText(getResultText() + " =");
+                }
+                reslab.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
+            }
+            setRemoveValue(true);
+            //formatResultTextAfterType();
+            //formatResultTextAfterCalculate(getResultText());
+            adjustTextSize();
+
+            setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
+            dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
+            dataManager.saveNumbers(getApplicationContext());
+        }
+        setRotateOperator(false);
     }
     private boolean isInvalidInput(String text) {
         return text.contains("Ungültige Eingabe") || text.contains("Unendlich");
     }
-    private void formatResultTextAfterCalculate(String text) {
+    public static BigDecimal round(String value) {
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(6, RoundingMode.HALF_UP);
+        return bd;
+    }
+    public void formatResultTextAfterCalculate(String text) {
         String formattedNumber;
-        if (text.length() >= 14) {
+        if (text.length() >= 24) {
             double number = Double.parseDouble(text.replace(".", "").replace(",", "."));
             int exponent = (int) Math.floor(Math.log10(number));
             formattedNumber = String.format("%.6fE%+d", number / Math.pow(10, exponent), exponent);
@@ -617,7 +674,7 @@ public class MainActivity extends AppCompatActivity {
         }
         setResultText(formattedNumber);
     }
-    private void formatResultTextAfterType() {
+    public void formatResultTextAfterType() {
         String originalText = getResultText();
         int index = originalText.indexOf(',');
         String result;
@@ -633,7 +690,7 @@ public class MainActivity extends AppCompatActivity {
         String formattedNumber = decimalFormat.format(Long.parseLong(result));
         setResultText(formattedNumber + result2);
     }
-    private void adjustTextSize() {
+    public void adjustTextSize() {
         int len = getResultText().replace(",", "").replace(".", "").replace("-", "").length();
         TextView label = findViewById(R.id.result_label);
         if (!getResultText().equals("Ungültige Eingabe")) {
@@ -654,6 +711,8 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+    public void setRotateOperator(final boolean rotate) { rotateOperatorAfterRoot = rotate; }
+    public boolean getRotateOperatorAfterRoot() { return rotateOperatorAfterRoot; }
     public String getLastOp() {
         return last_op;
     }
