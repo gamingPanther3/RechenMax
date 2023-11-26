@@ -49,6 +49,7 @@ public class DataManager {
         File file = new File(applicationContext.getFilesDir(), JSON_FILE);
         file.delete();
     }
+    
     // names                            | values                | context
     // settingReleaseNotesSwitch        | true / false          | SettingsAcitiy
     // settingsTrueDarkMode             | true / false          | MainActivtiy -> SettingsAcitiy
@@ -57,6 +58,7 @@ public class DataManager {
     // showReleaseNotesOnVeryFirstStart | true / false          | MainActivtiy
     // selectedSpinnerSetting           | System / Dark / Light | MainActivtiy
     // -> = ... wird übergeben zu ...
+
     public void saveToJSON(String name, boolean value, Context applicationContext) {
         JSONObject jsonObj = new JSONObject();
         try {
