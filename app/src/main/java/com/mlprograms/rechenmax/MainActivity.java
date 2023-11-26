@@ -261,7 +261,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             addCalculateText(getResultText() + " )");
         }
-
         setRotateOperator(true);
     }
     private void powerAction() {
