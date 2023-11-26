@@ -31,6 +31,8 @@ import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     private boolean rotateOperatorAfterRoot = false;
@@ -251,7 +253,15 @@ public class MainActivity extends AppCompatActivity {
         addCalculateText("(");
     }
     private void clipOffAction() {
-        addCalculateText(getResultText() + " )");
+        Pattern pattern = Pattern.compile("√\\(\\d+\\)$");
+        Matcher matcher = pattern.matcher(getCalculateText());
+
+        if (matcher.find()) {
+            addCalculateText(" )");
+        } else {
+            addCalculateText(getResultText() + " )");
+        }
+
         setRotateOperator(true);
     }
     private void powerAction() {
