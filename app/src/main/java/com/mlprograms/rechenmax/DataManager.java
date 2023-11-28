@@ -106,14 +106,15 @@ public class DataManager {
         }
     }
 
-    // names                            | values                | context
-    // settingReleaseNotesSwitch        | true / false          | SettingsActivity
-    // settingsTrueDarkMode             | true / false          | MainActivity -> SettingsActivity
-    // showPatchNotes                   | true / false          | MainActivity -> SettingsActivity
-    // disablePatchNotesTemporary       | true / false          | MainActivity -> SettingsActivity
-    // showReleaseNotesOnVeryFirstStart | true / false          | MainActivity
-    // selectedSpinnerSetting           | System / Dark / Light | MainActivity
-    // showScienceRow                   | true / false          | MainActivity
+    // names                            | values                   | context
+    // settingReleaseNotesSwitch        | true / false             | SettingsActivity
+    // settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity
+    // showPatchNotes                   | true / false             | MainActivity -> SettingsActivity
+    // disablePatchNotesTemporary       | true / false             | MainActivity -> SettingsActivity
+    // showReleaseNotesOnVeryFirstStart | true / false             | MainActivity
+    // selectedSpinnerSetting           | System / Dark / Light    | MainActivity
+    // showScienceRow                   | true / false             | MainActivity
+    // calculatingMode                  | easy / normal            | MainActivity
     // -> = ... wird übergeben zu ...
 
     public String readFromJSON(final String name, Context applicationContext) {
@@ -154,6 +155,7 @@ public class DataManager {
         saveToJSON("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
         saveToJSON("selectedSpinnerSetting", "System", applicationContext);
         saveToJSON("showScienceRow", false, applicationContext);
+        saveToJSON("calculatingMode", "easy", applicationContext);
     }
     private static final String FILE_NAME1 = "history.txt";
     public void addtoHistory(String data, Context context) {

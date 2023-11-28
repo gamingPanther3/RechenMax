@@ -110,11 +110,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
         spinner = findViewById(R.id.settings_display_mode_spinner);
 
-        final Integer num = getSelectetSettingPosition();
+        Integer num = getSelectetSettingPosition();
         if(num != null) {
             spinner.setSelection(num);
         }
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -125,7 +124,6 @@ public class SettingsActivity extends AppCompatActivity {
                 // do nothing
             }
         });
-
     }
     public void updateSpinner(AdapterView<?> parent) {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -190,7 +188,19 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+    public Integer getSelectetCalculatingModePosition() {
+        Integer num = null;
+        final String readselectedSetting = dataManager.readFromJSON("calculatingMode", getMainActivityContext());
 
+        if(readselectedSetting != null) {
+            if(readselectedSetting.equals("normal")) {
+                num = 0;
+            } else if (readselectedSetting.equals("easy")) {
+                num = 1;
+            }
+        }
+        return num;
+    }
     public Integer getSelectetSettingPosition() {
         Integer num = null;
         final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
@@ -293,7 +303,6 @@ public class SettingsActivity extends AppCompatActivity {
                         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
@@ -309,6 +318,7 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
+
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager(this);
                 String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());

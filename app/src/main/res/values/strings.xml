@@ -31,10 +31,15 @@
     <string name="power">x^</string>
     <string name="root">√x</string>
 
-    <string-array name="mode_array">
+    <string-array name="setting_display_mode_options">
         <item>Systemstandard</item>
         <item>Tageslichtmodus</item>
         <item>Dunkelmodus</item>
+    </string-array>
+
+    <string-array name="setting_calculating_mode_options">
+        <item>Standard</item>
+        <item>Vereinfacht</item>
     </string-array>
 
     <string name="mode_prompt">Wählen einen Modus aus</string>

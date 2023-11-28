@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private String last_number = "0";
     private String last_op = "+";
     private DataManager dataManager;
+    private String calculatingMode;
     SharedPreferences prefs = null;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
         dataManager.loadNumbers();
         dataManager.checkAndCreateFile();
+
+        calculatingMode = dataManager.readFromJSON("calculatingMode", context);
 
         prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
         if (prefs.getBoolean("firstrun", true)) {
@@ -437,7 +440,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public String getSelectedSetting() {
         final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext());
-
         if(setting != null) {
             if(setting.equals("System")) {
                 return "Systemstandard";
@@ -649,7 +651,7 @@ public class MainActivity extends AppCompatActivity {
                 reslab.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
             }
             setRemoveValue(true);
-            //formatResultTextAfterType();
+            formatResultTextAfterType();
             //formatResultTextAfterCalculate(getResultText());
             adjustTextSize();
 
@@ -695,9 +697,11 @@ public class MainActivity extends AppCompatActivity {
             result = originalText.replace(".", "");
             result2 = "";
         }
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String formattedNumber = decimalFormat.format(Long.parseLong(result));
-        setResultText(formattedNumber + result2);
+        if(!getResultText().equals("Unendlich")) {
+            DecimalFormat decimalFormat = new DecimalFormat("#,###");
+            String formattedNumber = decimalFormat.format(Long.parseLong(result));
+            setResultText(formattedNumber + result2);
+        }
     }
     public void adjustTextSize() {
         int len = getResultText().replace(",", "").replace(".", "").replace("-", "").length();
