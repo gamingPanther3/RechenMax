@@ -4,13 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
+import android.text.Html;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.text.method.LinkMovementMethod;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -22,14 +22,11 @@ import androidx.core.content.ContextCompat;
 
 import org.w3c.dom.Text;
 
-
 public class SettingsActivity extends AppCompatActivity {
     private String space = "                                                      ";
     DataManager dataManager;
-    private Context context;
     private static MainActivity mainActivity;
     private Spinner spinner;
-    private String selectedSetting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
                 TextView settingsReleaseNotes = (TextView) findViewById(R.id.settings_release_notes);
                 TextView settingsReleaseNotesText = (TextView) findViewById(R.id.settings_release_notes_text);
                 TextView settingsTrueDarkModeText = (TextView) findViewById(R.id.settings_true_darkmode_text);
+                TextView settingsCredits = (TextView) findViewById(R.id.credits_view);
 
                 settingsLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
                 settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
@@ -105,6 +103,9 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsReleaseNotesText.setTextColor(ContextCompat.getColor(this, R.color.white));
                 settingsTrueDarkMode.setTextColor(ContextCompat.getColor(this, R.color.white));
                 settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.white));
+                settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.white));
+                settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
+
                 switchDisplayMode(Configuration.UI_MODE_NIGHT_NO);
             }
         });
@@ -265,6 +266,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsTrueDarkModeText = (TextView) findViewById(R.id.settings_true_darkmode_text);
         TextView settingsDisplayModeText = (TextView) findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = (TextView) findViewById(R.id.settings_display_mode_title);
+        TextView settingsCredits = (TextView) findViewById(R.id.credits_view);
 
         Spinner spinner = (Spinner) findViewById(R.id.settings_display_mode_spinner);
         updateSpinner2(spinner);
@@ -303,6 +305,8 @@ public class SettingsActivity extends AppCompatActivity {
                         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
+                        settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
+                        settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
@@ -318,6 +322,8 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
+                settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
+                settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
 
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager(this);
@@ -346,6 +352,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsTrueDarkModeText = (TextView) findViewById(R.id.settings_true_darkmode_text);
         TextView settingsDisplayModeText = (TextView) findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = (TextView) findViewById(R.id.settings_display_mode_title);
+        TextView settingsCredits = (TextView) findViewById(R.id.credits_view);
 
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
@@ -359,6 +366,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
     }
     @Override
     public void onBackPressed() {

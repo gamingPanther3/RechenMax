@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/settingsUI"
     tools:context="com.mlprograms.rechenmax.MainActivity" >
@@ -43,43 +43,43 @@
     <ScrollView
         android:id="@+id/settings_sroll_textview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="841dp"
         android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:orientation="vertical">
+            android:paddingRight="20dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""/>
+                android:text="" />
 
             <Switch
                 android:id="@+id/settings_release_notes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Release-Notes"
-                android:thumb="@drawable/settings_switch_thumb"
-                android:track="@drawable/settings_switch_track"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track" />
 
             <TextView
                 android:id="@+id/settings_release_notes_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Wenn diese Option aktiviert ist, erscheinen die Release-Notes jedes Mal beim Start des Taschenrechners."
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="14.4dp"
-                android:text="Wenn diese Option aktiviert ist, erscheinen die Release-Notes jedes Mal beim Start des Taschenrechners." />
+                android:textSize="14.4dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""/>
+                android:text="" />
 
             <TextView
                 android:id="@+id/settings_display_mode_title"
@@ -93,52 +93,70 @@
                 android:id="@+id/settings_display_mode_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Mit dieser Option lässt sich der Anzeigemodus des Taschenrechners auswählen."
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="14.4dp"
-                android:text="Mit dieser Option lässt sich der Anzeigemodus des Taschenrechners auswählen." />
+                android:textSize="14.4dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""/>
+                android:text="" />
 
             <Spinner
                 android:id="@+id/settings_display_mode_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:entries="@array/setting_display_mode_options"
-                android:prompt="@string/mode_prompt"
                 android:gravity="center_horizontal"
+                android:prompt="@string/mode_prompt"
                 android:spinnerMode="dialog" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""/>
+                android:text="" />
 
             <Switch
                 android:id="@+id/settings_true_darkmode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Echter Dunkelmodus"
-                android:thumb="@drawable/settings_switch_thumb"
-                android:track="@drawable/settings_switch_track"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track" />
 
             <TextView
                 android:id="@+id/settings_true_darkmode_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Diese Einstellung bewirkt, dass das Schwarz intensiver und das Weiß leicht gedimmt wird, wenn sie aktiviert ist. Bitte beachten Sie, dass diese Einstellung nur wirksam wird, wenn der Dunkelmodus aktiviert ist."
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="14.4dp"
-                android:text="Diese Einstellung bewirkt, dass das Schwarz intensiver und das Weiß leicht gedimmt wird, wenn sie aktiviert ist. Bitte beachten Sie, dass diese Einstellung nur wirksam wird, wenn der Dunkelmodus aktiviert ist." />
+                android:textSize="14.4dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""/>
-
+                android:text="" />
         </LinearLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/credits_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:background="@color/colorBTNBackgroundAccent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:linksClickable="true"
+            android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der MIT-Lizenz.\nVersion: 1.4.86"
+            android:textColor="@color/colorBTNForegroundAccent" />
+    </FrameLayout>
 </LinearLayout>

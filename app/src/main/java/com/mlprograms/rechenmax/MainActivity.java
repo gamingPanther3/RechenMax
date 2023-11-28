@@ -267,7 +267,13 @@ public class MainActivity extends AppCompatActivity {
     }
     private void powerAction() {
         if(!getRotateOperatorAfterRoot()) {
-            addCalculateText(getResultText() + " ^");
+            setRemoveValue(true);
+            setLastNumber(getResultText());
+            if (getCalculateText().contains("=")) {
+                setCalculateText(getResultText() + " ^");
+            } else {
+                addCalculateText(getResultText() + " ^");
+            }
             setRemoveValue(true);
         } else {
             if (getCalculateText().replace(" ", "").charAt(getCalculateText().replace(" ", "").length() - 1) == ')') {
