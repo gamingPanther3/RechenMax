@@ -11,6 +11,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CalculatorActivity {
+    private static MainActivity mainActivity;
+    public static void setMainActivity(MainActivity activity) {
+        mainActivity = activity;
+    }
     private static final MathContext MC = new MathContext(6, RoundingMode.HALF_UP);
     public static final String ROOT = "√";
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
@@ -39,35 +43,47 @@ public class CalculatorActivity {
                 throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
     }
-
     public static String calculate(final String calc) {
         try {
-            final String expression = convertScientificToDecimal(calc
-                    .replace('×', '*')
+            String trim = calc.replace('×', '*')
                     .replace('÷', '/')
                     .replace("=", "")
                     .replace(".", "")
                     .replace(",", ".")
-                    .trim());
-            final List<String> tokens = tokenize(expression);
+                    .replace("E", "e")
+                    .trim();
 
+            if (isScientificNotation(trim)) {
+                mainActivity.setIsNotation(true);
+                String result = convertScientificToDecimal(trim);
+                return removeNonNumeric(result);
+            }
+
+            final String expression = convertScientificToDecimal(trim);
+            final List<String> tokens = tokenize(expression);
             for (int i = 0; i < tokens.size() - 1; i++) {
                 if (tokens.get(i).equals("/") && Double.parseDouble(tokens.get(i + 1)) <= 0) {
                     return "Unendlich";
                 }
             }
             final BigDecimal result = evaluate(tokens);
-
-            if (result.compareTo(new BigDecimal("1000000000000")) >= 0) {
-                return String.format(Locale.GERMANY, "%.6e", result);
+            if (result.compareTo(new BigDecimal("1000000000000000000")) >= 0) {
+                return String.format(Locale.GERMANY, "%.8e", result);
             } else {
                 return result.stripTrailingZeros().toPlainString().replace('.', ',');
             }
         } catch (ArithmeticException e) {
             return e.getMessage();
+        } catch (Exception e) {
+            return "Syntax Fehler";
         }
     }
-
+    public static boolean isScientificNotation(final String str) {
+        final String formattedInput = str.replace(",", ".");
+        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)(e[+-]\\d+)$");
+        final Matcher matcher = pattern.matcher(formattedInput);
+        return matcher.matches();
+    }
     public static String convertScientificToDecimal(final String str) {
         final String formattedInput = str.replace(",", ".");
         final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)(e[+-]\\d+)");
@@ -87,6 +103,9 @@ public class CalculatorActivity {
         }
         matcher.appendTail(sb);
         return sb.toString();
+    }
+    public static String removeNonNumeric(final String str) {
+        return str.replaceAll("[^0-9.,]", "");
     }
     public static BigDecimal pow(BigDecimal base, BigDecimal exponent) {
         final int signOf2 = exponent.signum();

@@ -1,19 +1,18 @@
 package com.mlprograms.rechenmax;
 
+import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
+
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -25,9 +24,6 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textview.MaterialTextView;
-
-import org.apache.tools.ant.taskdefs.MacroDef;
-import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -43,10 +39,13 @@ public class MainActivity extends AppCompatActivity {
     private DataManager dataManager;
     private String calculatingMode;
     SharedPreferences prefs = null;
+    private boolean isnotation = false;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calculatorui);
         context = this;
+        setMainActivity(this);
 
         dataManager = new DataManager(this);
         //dataManager.deleteJSON(getApplicationContext());
@@ -271,7 +270,11 @@ public class MainActivity extends AppCompatActivity {
             addCalculateText(getResultText() + " ^");
             setRemoveValue(true);
         } else {
-            addCalculateText(" ^");
+            if (getCalculateText().replace(" ", "").charAt(getCalculateText().replace(" ", "").length() - 1) == ')') {
+                addCalculateText("^");
+            } else {
+                addCalculateText(" ^");
+            }
             setRemoveValue(true);
             setRotateOperator(false);
         }
@@ -512,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
             setResultText("0");
             setRemoveValue(false);
         }
-        if (resultText.replace(".", "").replace(",", "").replace("-", "").length() < 13) {
+        if (resultText.replace(".", "").replace(",", "").replace("-", "").length() < 18) {
             if (resultText.equals("0") || resultText.equals("-0")) {
                 setResultText(resultText.replace("0", num));
             } else {
@@ -540,14 +543,17 @@ public class MainActivity extends AppCompatActivity {
         ClipData.Item item = clipData.getItemAt(0);
         String text = (String) item.getText();
         if (text.replace(".", "").matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)?$")) {
-            formatResultTextAfterCalculate(text);
+            setRemoveValue(false);
+            String result = formatResultTextAfterCalculate(text);
+            setResultText(result.toLowerCase());
         } else {
             TextView label = findViewById(R.id.result_label);
-            label.setTextSize(50f);
             setResultText("Ungültige Eingabe");
             setRemoveValue(true);
         }
+        adjustTextSize();
     }
+
     public void OperationAction(final String op) {
         setLastOp(op);
         final String new_op = op.replace("*", "×").replace("/", "÷");
@@ -629,10 +635,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
             }
-            setRemoveValue(true);
-            //formatResultTextAfterType();F
             //formatResultTextAfterCalculate(getResultText());
-            adjustTextSize();
 
             setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
             dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
@@ -650,31 +653,31 @@ public class MainActivity extends AppCompatActivity {
                 }
                 reslab.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
             }
-            setRemoveValue(true);
-            formatResultTextAfterType();
             //formatResultTextAfterCalculate(getResultText());
-            adjustTextSize();
 
             setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
             dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
             dataManager.saveNumbers(getApplicationContext());
         }
         setRotateOperator(false);
+        formatResultTextAfterType();
+        setRemoveValue(true);
+        adjustTextSize();
     }
     private boolean isInvalidInput(String text) {
-        return text.contains("Ungültige Eingabe") || text.contains("Unendlich");
+        return text.contains("Ungültige Eingabe") || text.contains("Unendlich") || text.contains("Syntax Fehler");
     }
     public static BigDecimal round(String value) {
         BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(6, RoundingMode.HALF_UP);
+        bd = bd.setScale(8, RoundingMode.HALF_UP);
         return bd;
     }
-    public void formatResultTextAfterCalculate(String text) {
+    public String formatResultTextAfterCalculate(String text) {
         String formattedNumber;
-        if (text.length() >= 24) {
+        if (text.length() >= 18) {
             double number = Double.parseDouble(text.replace(".", "").replace(",", "."));
             int exponent = (int) Math.floor(Math.log10(number));
-            formattedNumber = String.format("%.6fE%+d", number / Math.pow(10, exponent), exponent);
+            formattedNumber = String.format("%.8fE%+d", number / Math.pow(10, exponent), exponent);
         } else {
             if (text.matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)$")) {
                 formattedNumber = text;
@@ -684,6 +687,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         setResultText(formattedNumber);
+        return formattedNumber;
     }
     public void formatResultTextAfterType() {
         String originalText = getResultText();
@@ -697,10 +701,12 @@ public class MainActivity extends AppCompatActivity {
             result = originalText.replace(".", "");
             result2 = "";
         }
-        if(!getResultText().equals("Unendlich")) {
+        if(!getResultText().equals("Unendlich") && !getResultText().equals("Syntax Fehler") && !getIsNotation()) {
             DecimalFormat decimalFormat = new DecimalFormat("#,###");
             String formattedNumber = decimalFormat.format(Long.parseLong(result));
             setResultText(formattedNumber + result2);
+        } else if (getIsNotation()) {
+            setIsNotation(false);
         }
     }
     public void adjustTextSize() {
@@ -709,7 +715,7 @@ public class MainActivity extends AppCompatActivity {
         if (!getResultText().equals("Ungültige Eingabe")) {
             if (len >= 12) {
                 label.setTextSize(45f);
-                if (len >= 14) {
+                if (len >= 15) {
                     label.setTextSize(35f);
                 }
             } else {
@@ -724,6 +730,8 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }
+    public void setIsNotation(final boolean val) { isnotation = val; }
+    public boolean getIsNotation() { return isnotation; }
     public void setRotateOperator(final boolean rotate) { rotateOperatorAfterRoot = rotate; }
     public boolean getRotateOperatorAfterRoot() { return rotateOperatorAfterRoot; }
     public String getLastOp() {

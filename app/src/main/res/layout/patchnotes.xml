@@ -401,7 +401,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Der Taschenrechners bietet nun Unterstützung für Klammern, Potenzen und Wurzeln, um eine präzise Steuerung der Reihenfolge der Operationen und die Berechnung komplexer mathematischer Ausdrücke zu ermöglichen."
+            android:text="Der Taschenrechners bietet nun Unterstützung für Klammern, Potenzen und Wurzeln, um eine präzise Steuerung der Reihenfolge der Operationen und die Berechnung komplexer mathematischer Ausdrücke zu ermöglichen.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\Erweiterung des Eingabebereichs"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Der Eingabebereich wurde für eine verbesserte Benutzererfahrung von 14 auf bis zu 18 Zeichen erweitert.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\Umrechnung von Notation zu Dezimalzahlen"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Es gibt eine neue Funktion, die es ermöglicht, wissenschaftliche Notationen in Dezimalzahlen umzuwandeln. Um diese Funktion zu nutzen, geben Sie nur die Notation in den Taschenrechner ein.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\Erhöhung der Genauigkeit der Notation"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Es wurde die Genauigkeit der Umrechnungsfunktion für wissenschaftliche Notationen verbessert. Jetzt werden acht Nachkommastellen anstelle der bisherigen sechs berücksichtigt, um eine noch präzisere Darstellung zu ermöglichen."
             android:textColor="#000000" />
 
         <TextView
