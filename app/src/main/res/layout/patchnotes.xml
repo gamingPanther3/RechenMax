@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:text="RechenMax 1.4.86 Snapshot"
+                android:text="RechenMax 1.4.86"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
