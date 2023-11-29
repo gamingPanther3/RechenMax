@@ -27,18 +27,10 @@ public class CalculatorActivity {
                 return operand1.multiply(operand2);
             case "/":
                 if (operand2.compareTo(BigDecimal.ZERO) == 0) {
-                    return new BigDecimal("Unendlich");
+                    throw new IllegalArgumentException("Division durch Null");
                 } else {
                     return operand1.divide(operand2, MC);
                 }
-            case ROOT:
-                if (operand2.compareTo(BigDecimal.ZERO) < 0) {
-                    throw new IllegalArgumentException("Negativer Wert unter der Wurzel");
-                } else {
-                    return new BigDecimal(Math.sqrt(operand2.doubleValue()));
-                }
-            case "^":
-                return pow(operand1, operand2);
             default:
                 throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
@@ -131,16 +123,19 @@ public class CalculatorActivity {
         for (final String token : postfixTokens) {
             if (isNumber(token)) {
                 stack.add(new BigDecimal(token));
-            } else if (isOperator(token)) {
-                final BigDecimal operand2 = stack.remove(stack.size() - 1);
-                if (!token.equals(ROOT)) {
-                    final BigDecimal operand1 = stack.remove(stack.size() - 1);
-                    final BigDecimal result = applyOperator(operand1, operand2, token);
-                    stack.add(result);
-                } else {
-                    final BigDecimal operand2SquareRoot = applyOperator(BigDecimal.ZERO, operand2, ROOT);
-                    stack.add(operand2SquareRoot);
+            } else if (isOperator(token) || token.equals("^")) {
+                if (stack.size() < 2) {
+                    throw new IllegalArgumentException("Nicht genügend Operanden für den Operator: " + token);
                 }
+                final BigDecimal operand2 = stack.remove(stack.size() - 1);
+                final BigDecimal operand1 = stack.remove(stack.size() - 1);
+                final BigDecimal result;
+                if (token.equals("^")) {
+                    result = operand1.pow(operand2.intValue(), MC);
+                } else {
+                    result = applyOperator(operand1, operand2, token);
+                }
+                stack.add(result);
             } else {
                 throw new IllegalArgumentException("Ungültiges Token: " + token);
             }
@@ -148,7 +143,6 @@ public class CalculatorActivity {
         if (stack.size() != 1) {
             throw new IllegalArgumentException("Ungültiger Ausdruck");
         }
-
         return stack.get(0);
     }
     public static List<String> infixToPostfix(final List<String> infixTokens) {
@@ -207,16 +201,21 @@ public class CalculatorActivity {
     public static List<String> tokenize(final String expression) {
         final List<String> tokens = new ArrayList<>();
         final StringBuilder currentToken = new StringBuilder();
+        boolean isNegativeExponent = false;
         for (int i = 0; i < expression.length(); i++) {
             final char c = expression.charAt(i);
-            if (Character.isDigit(c) || c == '.') {
+            if (Character.isDigit(c) || c == '.' || (c == '-' && isNegativeExponent)) {
                 currentToken.append(c);
-            } else if (c == '+' || c == '*' || c == '/' || c == '-' || c == '^' || c == '√' || c == '(' || c == ')') {
+                isNegativeExponent = false;
+            } else if (c == '+' || c == '*' || c == '/' || c == '-' || c == '^') {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);
                 }
                 tokens.add(Character.toString(c));
+                if (c == '^') {
+                    isNegativeExponent = true;
+                }
             } else if (c == ' ') {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
