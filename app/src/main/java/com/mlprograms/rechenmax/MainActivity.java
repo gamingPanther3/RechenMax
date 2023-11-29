@@ -707,7 +707,7 @@ public class MainActivity extends AppCompatActivity {
             result = originalText.replace(".", "");
             result2 = "";
         }
-        if(!getResultText().equals("Unendlich") && !getResultText().equals("Syntax Fehler") && !getIsNotation()) {
+        if(!getResultText().equals("Unendlich") && !getResultText().equals("Syntax Fehler") && !getIsNotation() && !getResultText().equals("Wert zu groß")) {
             DecimalFormat decimalFormat = new DecimalFormat("#,###");
             String formattedNumber = decimalFormat.format(Long.parseLong(result));
             setResultText(formattedNumber + result2);

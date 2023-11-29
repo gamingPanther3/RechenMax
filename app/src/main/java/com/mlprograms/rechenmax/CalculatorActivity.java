@@ -45,6 +45,11 @@ public class CalculatorActivity {
                 throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
     }
+    public static void checkRange(BigDecimal number) {
+        if (number.compareTo(new BigDecimal(Double.MAX_VALUE)) > 0) {
+            throw new ArithmeticException("Wert zu groß");
+        }
+    }
     public static String calculate(final String calc) {
         try {
             String trim = calc.replace('×', '*')
@@ -69,13 +74,21 @@ public class CalculatorActivity {
                 }
             }
             final BigDecimal result = evaluate(tokens);
+            double resultDouble = result.doubleValue();
+            if (Double.isInfinite(resultDouble)) {
+                return "Wert zu groß";
+            }
             if (result.compareTo(new BigDecimal("1000000000000000000")) >= 0) {
                 return String.format(Locale.GERMANY, "%.8e", result);
             } else {
                 return result.stripTrailingZeros().toPlainString().replace('.', ',');
             }
         } catch (ArithmeticException e) {
-            return e.getMessage();
+            if (e.getMessage().equals("Wert zu groß")) {
+                return "Wert zu groß";
+            } else {
+                return e.getMessage();
+            }
         } catch (Exception e) {
             return "Syntax Fehler";
         }
@@ -112,10 +125,12 @@ public class CalculatorActivity {
     public static BigDecimal pow(BigDecimal base, BigDecimal exponent) {
         double baseDouble = base.doubleValue();
         double exponentDouble = exponent.doubleValue();
-        double resultDouble = FastMath.pow(baseDouble, exponentDouble);
+        double resultDouble = Math.pow(baseDouble, exponentDouble);
+        if (Double.isInfinite(resultDouble)) {
+            throw new ArithmeticException("Wert zu groß");
+        }
         return new BigDecimal(resultDouble, MC);
     }
-
     public static BigDecimal evaluate(final List<String> tokens) {
         final List<String> postfixTokens = infixToPostfix(tokens);
         return evaluatePostfix(postfixTokens);
