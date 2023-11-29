@@ -13,7 +13,7 @@
       "attributes": [],
       "versionCode": 1486,
       "versionName": "1.4.86",
-      "outputFile": "RechenMax.apk"
+      "outputFile": "app-release.apk"
     }
   ],
   "elementType": "File"
