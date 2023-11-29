@@ -1,6 +1,8 @@
 package com.mlprograms.rechenmax;
 
+import org.apache.commons.math3.util.FastMath;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -27,10 +29,18 @@ public class CalculatorActivity {
                 return operand1.multiply(operand2);
             case "/":
                 if (operand2.compareTo(BigDecimal.ZERO) == 0) {
-                    throw new IllegalArgumentException("Division durch Null");
+                    return new BigDecimal("Unendlich");
                 } else {
                     return operand1.divide(operand2, MC);
                 }
+            case ROOT:
+                if (operand2.compareTo(BigDecimal.ZERO) < 0) {
+                    throw new IllegalArgumentException("Negativer Wert unter der Wurzel");
+                } else {
+                    return new BigDecimal(Math.sqrt(operand2.doubleValue()));
+                }
+            case "^":
+                return pow(operand1, operand2);
             default:
                 throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
@@ -100,18 +110,10 @@ public class CalculatorActivity {
         return str.replaceAll("[^0-9.,]", "");
     }
     public static BigDecimal pow(BigDecimal base, BigDecimal exponent) {
-        final int signOf2 = exponent.signum();
-        final double dn1 = base.doubleValue();
-        BigDecimal remainderOf2 = exponent.remainder(BigDecimal.ONE);
-        final BigDecimal n2IntPart = exponent.subtract(remainderOf2);
-        final BigDecimal intPow = base.pow(n2IntPart.intValueExact(), MC);
-        final BigDecimal doublePow = new BigDecimal(Math.pow(dn1, remainderOf2.doubleValue()));
-
-        BigDecimal result = intPow.multiply(doublePow, MC);
-        if (signOf2 == -1) {
-            result = BigDecimal.ONE.divide(result, MC.getPrecision(), RoundingMode.HALF_UP);
-        }
-        return result;
+        double baseDouble = base.doubleValue();
+        double exponentDouble = exponent.doubleValue();
+        double resultDouble = FastMath.pow(baseDouble, exponentDouble);
+        return new BigDecimal(resultDouble, MC);
     }
 
     public static BigDecimal evaluate(final List<String> tokens) {
@@ -123,19 +125,16 @@ public class CalculatorActivity {
         for (final String token : postfixTokens) {
             if (isNumber(token)) {
                 stack.add(new BigDecimal(token));
-            } else if (isOperator(token) || token.equals("^")) {
-                if (stack.size() < 2) {
-                    throw new IllegalArgumentException("Nicht genügend Operanden für den Operator: " + token);
-                }
+            } else if (isOperator(token)) {
                 final BigDecimal operand2 = stack.remove(stack.size() - 1);
-                final BigDecimal operand1 = stack.remove(stack.size() - 1);
-                final BigDecimal result;
-                if (token.equals("^")) {
-                    result = operand1.pow(operand2.intValue(), MC);
+                if (!token.equals(ROOT)) {
+                    final BigDecimal operand1 = stack.remove(stack.size() - 1);
+                    final BigDecimal result = applyOperator(operand1, operand2, token);
+                    stack.add(result);
                 } else {
-                    result = applyOperator(operand1, operand2, token);
+                    final BigDecimal operand2SquareRoot = applyOperator(BigDecimal.ZERO, operand2, ROOT);
+                    stack.add(operand2SquareRoot);
                 }
-                stack.add(result);
             } else {
                 throw new IllegalArgumentException("Ungültiges Token: " + token);
             }
@@ -143,6 +142,7 @@ public class CalculatorActivity {
         if (stack.size() != 1) {
             throw new IllegalArgumentException("Ungültiger Ausdruck");
         }
+
         return stack.get(0);
     }
     public static List<String> infixToPostfix(final List<String> infixTokens) {
@@ -201,21 +201,16 @@ public class CalculatorActivity {
     public static List<String> tokenize(final String expression) {
         final List<String> tokens = new ArrayList<>();
         final StringBuilder currentToken = new StringBuilder();
-        boolean isNegativeExponent = false;
         for (int i = 0; i < expression.length(); i++) {
             final char c = expression.charAt(i);
-            if (Character.isDigit(c) || c == '.' || (c == '-' && isNegativeExponent)) {
+            if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || !Character.isDigit(expression.charAt(i - 1))))) {
                 currentToken.append(c);
-                isNegativeExponent = false;
-            } else if (c == '+' || c == '*' || c == '/' || c == '-' || c == '^') {
+            } else if (c == '+' || c == '*' || c == '/' || c == '-' || c == '^' || c == '√' || c == '(' || c == ')') {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);
                 }
                 tokens.add(Character.toString(c));
-                if (c == '^') {
-                    isNegativeExponent = true;
-                }
             } else if (c == ' ') {
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
