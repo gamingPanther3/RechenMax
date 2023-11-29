@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1460,
-      "versionName": "1.4.60",
-      "outputFile": "app-release.apk"
+      "versionCode": 1486,
+      "versionName": "1.4.86",
+      "outputFile": "RechenMax.apk"
     }
   ],
   "elementType": "File"
