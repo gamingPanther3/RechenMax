@@ -17,7 +17,7 @@ public class CalculatorActivity {
     public static void setMainActivity(MainActivity activity) {
         mainActivity = activity;
     }
-    private static final MathContext MC = new MathContext(6, RoundingMode.HALF_UP);
+    private static final MathContext MC = new MathContext(Integer.MAX_VALUE);
     public static final String ROOT = "√";
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
         switch (operator) {

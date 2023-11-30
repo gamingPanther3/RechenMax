@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:text="RechenMax 1.4.88"
+                android:text="RechenMax 1.4.89"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -135,6 +135,23 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="Es wurde die Genauigkeit der Umrechnungsfunktion für wissenschaftliche Notationen verbessert. Jetzt werden acht Nachkommastellen anstelle der bisherigen sechs berücksichtigt, um eine noch präzisere Darstellung zu ermöglichen."
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\nErhöhung der Genauigkeit beim Rechnen"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Es wurde die Genauigkeit von den Berechnungen verbessert, um extrem präzise Ergebnisse zu liefern. Dies ermöglicht eine genauere Datenverarbeitung und verbessert die Gesamtleistung des Taschenrechners."
             android:textColor="#000000" />
 
         <TextView
