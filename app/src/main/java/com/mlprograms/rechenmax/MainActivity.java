@@ -266,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
         setRotateOperator(true);
     }
     private void powerAction() {
+        setLastOp("^");
         if(!getRotateOperatorAfterRoot()) {
             setRemoveValue(true);
             setLastNumber(getResultText());
@@ -707,7 +708,7 @@ public class MainActivity extends AppCompatActivity {
             result = originalText.replace(".", "");
             result2 = "";
         }
-        if(!getResultText().equals("Unendlich") && !getResultText().equals("Syntax Fehler") && !getIsNotation() && !getResultText().equals("Wert zu groß") && !getResultText().equals("Nur reelle Zahlen")) {
+        if(!getResultText().equals("Unendlich") && !getResultText().equals("Syntax Fehler") && !getIsNotation() && !getResultText().equals("Wert zu groß") && !getResultText().equals("Nur reelle Zahlen") ) {
             DecimalFormat decimalFormat = new DecimalFormat("#,###");
             String formattedNumber = decimalFormat.format(Long.parseLong(result));
             setResultText(formattedNumber + result2);
