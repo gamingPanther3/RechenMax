@@ -35,7 +35,7 @@
                 android:id="@+id/releaseNotesReleaseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Veröffentlichungsdatum: N/A (work in progress)"
+                android:text="Veröffentlichungsdatum: 30.11.2023 - 21:30 Uhr"
                 android:gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textColor="#000000"
