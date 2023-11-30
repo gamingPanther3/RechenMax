@@ -35,7 +35,7 @@ public class CalculatorActivity {
                 }
             case ROOT:
                 if (operand2.compareTo(BigDecimal.ZERO) < 0) {
-                    throw new IllegalArgumentException("Negativer Wert unter der Wurzel");
+                    throw new IllegalArgumentException("Nur reelle Zahlen");
                 } else {
                     return new BigDecimal(Math.sqrt(operand2.doubleValue()));
                 }
@@ -43,11 +43,6 @@ public class CalculatorActivity {
                 return pow(operand1, operand2);
             default:
                 throw new IllegalArgumentException("Unbekannter Operator: " + operator);
-        }
-    }
-    public static void checkRange(BigDecimal number) {
-        if (number.compareTo(new BigDecimal(Double.MAX_VALUE)) > 0) {
-            throw new ArithmeticException("Wert zu groß");
         }
     }
     public static String calculate(final String calc) {
@@ -89,6 +84,8 @@ public class CalculatorActivity {
             } else {
                 return e.getMessage();
             }
+        } catch (IllegalArgumentException e) {
+            return e.getMessage();
         } catch (Exception e) {
             return "Syntax Fehler";
         }

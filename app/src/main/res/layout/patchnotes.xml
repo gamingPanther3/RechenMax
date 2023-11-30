@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:text="RechenMax 1.4.87"
+                android:text="RechenMax 1.4.88"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
                 android:id="@+id/releaseNotesReleaseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Veröffentlichungsdatum: 29.11.2023 - 21:26 Uhr"
+                android:text="Veröffentlichungsdatum: N/A (work in progress)"
                 android:gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textColor="#000000"

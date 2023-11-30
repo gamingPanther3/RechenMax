@@ -707,7 +707,7 @@ public class MainActivity extends AppCompatActivity {
             result = originalText.replace(".", "");
             result2 = "";
         }
-        if(!getResultText().equals("Unendlich") && !getResultText().equals("Syntax Fehler") && !getIsNotation() && !getResultText().equals("Wert zu groß")) {
+        if(!getResultText().equals("Unendlich") && !getResultText().equals("Syntax Fehler") && !getIsNotation() && !getResultText().equals("Wert zu groß") && !getResultText().equals("Nur reelle Zahlen")) {
             DecimalFormat decimalFormat = new DecimalFormat("#,###");
             String formattedNumber = decimalFormat.format(Long.parseLong(result));
             setResultText(formattedNumber + result2);
@@ -718,14 +718,18 @@ public class MainActivity extends AppCompatActivity {
     public void adjustTextSize() {
         int len = getResultText().replace(",", "").replace(".", "").replace("-", "").length();
         TextView label = findViewById(R.id.result_label);
-        if (!getResultText().equals("Ungültige Eingabe")) {
-            if (len >= 12) {
-                label.setTextSize(45f);
-                if (len >= 15) {
-                    label.setTextSize(35f);
+        if(!getResultText().equals("Nur reelle Zahlen")) {
+            if (!getResultText().equals("Ungültige Eingabe")) {
+                if (len >= 12) {
+                    label.setTextSize(45f);
+                    if (len >= 15) {
+                        label.setTextSize(35f);
+                    }
+                } else {
+                    label.setTextSize(55f);
                 }
             } else {
-                label.setTextSize(55f);
+                label.setTextSize(50f);
             }
         } else {
             label.setTextSize(50f);
