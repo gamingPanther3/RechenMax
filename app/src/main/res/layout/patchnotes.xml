@@ -262,7 +262,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Es soll die Funktion “Aufgaben aus dem Verlauf aufrufen” das Aufrufen und Übernehmen von vorherigen Aufgaben in den Taschenrechner durch einfaches Klicken auf die Aufgabe im VerlaufIn der neuesten Version ermöglicht die Funktion “Aufgaben aus dem Verlauf aufrufen” das Aufrufen und Übernehmen von vorherigen Aufgaben in den Taschenrechner durch einfaches Klicken auf die Aufgabe im Verlauf.\n"
+            android:text="Die Funktion 'Aufgaben aus dem Verlauf aufrufen' ermöglicht es, vorherige Aufgaben im Taschenrechner durch einfaches Klicken auf die Aufgabe im Verlauf aufzurufen und zu übernehmen.\n"
             android:textColor="#000000" />
 
         <TextView
