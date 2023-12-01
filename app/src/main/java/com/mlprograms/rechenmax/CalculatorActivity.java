@@ -148,11 +148,11 @@ public class CalculatorActivity {
                     stack.add(operand2SquareRoot);
                 }
             } else {
-                throw new IllegalArgumentException("Ungültiges Token: " + token);
+                throw new IllegalArgumentException("Syntax Fehler");
             }
         }
         if (stack.size() != 1) {
-            throw new IllegalArgumentException("Ungültiger Ausdruck");
+            throw new IllegalArgumentException("Syntax Fehler");
         }
 
         return stack.get(0);
