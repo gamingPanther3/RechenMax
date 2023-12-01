@@ -253,7 +253,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\Aufgaben aus dem Verlauf aufrufen"
+            android:text="Aufgaben aus dem Verlauf aufrufen"
             android:textColor="#000000"
             android:textSize="15sp"/>
 
@@ -263,6 +263,23 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="Die Funktion 'Aufgaben aus dem Verlauf aufrufen' ermöglicht es, vorherige Aufgaben im Taschenrechner durch einfaches Klicken auf die Aufgabe im Verlauf aufzurufen und zu übernehmen.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Rechnen mit Fakultäten"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Die kommende Funktion “Rechnen mit Fakultäten” soll es ermöglichen, mit Fakultäten in Berechnungen einzubeziehen. Dies erweitert die mathematischen Möglichkeiten und erleichtert komplexe Berechnungen.\n"
             android:textColor="#000000" />
 
         <TextView
