@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
         if (prefs.getBoolean("firstrun", true)) {
+            dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
             setContentView(R.layout.patchnotes);
             checkDarkmodeSetting();
 
