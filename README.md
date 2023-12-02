@@ -1,18 +1,4 @@
-# RechenMax (Calculator)
-
-## English
-
-Welcome to the documentation for the Calculator App. This app provides a simple and intuitive interface for performing mathematical calculations. Please note that the app is currently only available in German.
-
-### Features
-The calculator offers basic mathematical operations such as addition, subtraction, multiplication, and division. In addition, it supports advanced operations like powers and roots. There is also a scientific mode that provides additional functions. A clean and user-friendly design ensures an optimal user experience.
-
-In addition, there is a settings menu where various settings can be made, such as: displaying the latest release notes, setting the display mode (dark mode, light mode or system setting). The "True Dark Mode" is also provided, which intensifies the black and slightly dims the white.
-
-### Usage
-Download the calculator, open the app and enter your calculation. The results will be displayed instantly.
-
-- - -
+# RechenMax (Taschenrechner)
 
 ## Deutsch
 
