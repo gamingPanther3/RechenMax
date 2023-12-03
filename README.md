@@ -1,5 +1,7 @@
 <div align="center">
-  # RechenMax
+  <div align="center">
+    # RechenMax
+  </div>
   <img src="RM-LM-C.png" alt="RechenMax Logo" width="400"/> <img src="RM-DM-C.png" alt="RechenMax Logo" width="400"/>
 </div>  
 
