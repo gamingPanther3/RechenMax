@@ -1,36 +1,30 @@
-
-
 <div align="center">
-  <img src="RM-LM-C.png" alt="RechenMaxBild1" width="400"/> <img src="RM-DM-C.png" alt="RechenMaxBild2" width="400"/>
-</div>  
 
-## Willkommen zur Dokumentation der Taschenrechner App
+# Dokumentation - RechenMax (Taschenrechner)
+</div>
 
-Diese App bietet eine einfache und intuitive Benutzeroberfläche, um mathematische Berechnungen durchzuführen. Bitte beachten Sie, dass die App derzeit nur auf Deutsch verfügbar ist.
+## Übersicht
+
+RechenMax ist eine leistungsstarke und benutzerfreundliche Taschenrechner-App, die eine Vielzahl von mathematischen Operationen unterstützt. Von grundlegenden Rechenoperationen bis hin zu komplexen wissenschaftlichen Berechnungen. RechenMax ist für diese Anwendung perfekt ausgelegt.
 
 ### Funktionen
 
-Der Taschenrechner bietet grundlegende mathematische Operationen wie Addition, Subtraktion, Multiplikation und Division. Darüber hinaus unterstützt er fortgeschrittene Operationen wie Potenzen und Wurzeln. Es gibt auch einen wissenschaftlichen Modus, der zusätzliche Funktionen bietet. Ein sauberes und benutzerfreundliches Design sorgt für eine optimale Benutzererfahrung.
+Der Taschenrechner bietet eine Vielzahl von Funktionen:
 
-Zusätzlich gibt es ein Einstellungsmenü, in dem verschiedene Einstellungen vorgenommen werden können, wie zum Beispiel: das Anzeigen der neuesten Release-Notes, das Einstellen des Anzeigemodus (Darkmode, Lightmode oder Systemeinstellung). Es wird auch der "Echter Dunkelmodus" bereitgestellt, der das Schwarz intensiver und das Weiß leicht dimmt.
+- **Grundlegende mathematische Operationen**: Führen Sie grundlegende Rechenoperationen wie Addition (+), Subtraktion (-), Multiplikation (×) und Division (÷) durch.
 
-### Verwendung
+- **Erweiterte mathematische Operationen**: Nutzen Sie erweiterte mathematische Funktionen wie Potenzierung (^), Quadratwurzel (√) und Fakultät (!).
 
-Laden Sie den Taschenrechner herunter, öffnen Sie die App und geben Sie Ihre Berechnung ein. Die Ergebnisse werden sofort angezeigt.
+- **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen und wissenschaftliche Notationen zu nutzen.
 
-### Taschenrechner
+- **Benutzerfreundliches Design**: Mit seinem sauberen und intuitiven Design ist RechenMax einfach zu bedienen und bietet eine optimale Benutzererfahrung.
 
-Dieser Taschenrechner kann die folgenden Operationen durchführen:
+<div align="center">
+  <img src="RM-LM-C.png" alt="RechenMaxBild1" width="250"/>
+  <img src="RM-DM-C.png" alt="RechenMaxBild2" width="250"/>
+</div>  
 
-- Addition (+)
-- Subtraktion (-)
-- Multiplikation (*)
-- Division (/)
-- Potenzierung (^)
-- Quadratwurzel (√)
-- Fakultät (!)
-
-Der Taschenrechner kann auch wissenschaftliche Notationen verarbeiten.
+- **Wissenschaftliche Notationen**: RechenMax kann auch wissenschaftliche Notationen verarbeiten und automatisch in Dezimalnotationen umwandeln.
 
 #### Beispiele für die Verwendung des Taschenrechners:
 
@@ -42,7 +36,10 @@ Der Taschenrechner kann auch wissenschaftliche Notationen verarbeiten.
 - Um die Quadratwurzel von 16 zu finden, geben Sie √(16) ein.
 - Um die Fakultät von 5 zu berechnen, geben Sie 5! ein.
 
-Der Taschenrechner konvertiert automatisch wissenschaftliche Notationen in Dezimalnotationen bei der Berechnung von Ergebnissen.
+<div align="center">
+  <img src="RM-LM-S.png" alt="RechenMaxBild3" width="250"/>
+  <img src="RM-DM-S.png" alt="RechenMaxBild4" width="250"/>
+</div>  
 
 #### Beispiele für die Verwendung von wissenschaftlichen Notationen mit dem Taschenrechner:
 
@@ -50,3 +47,16 @@ Der Taschenrechner konvertiert automatisch wissenschaftliche Notationen in Dezim
 - Um 2.718 x 10^-5 einzugeben, geben Sie 2.718e-5 ein.
 
 Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
+
+<div align="center"
+  <img src="RM-LM-H.png" alt="RechenMaxBild5" width="250"/>
+  <img src="RM-DM-H.png" alt="RechenMaxBild6" width="250"/>
+</div>  
+
+### Verwendung
+
+Laden Sie den Taschenrechner herunter, öffnen Sie die App und geben Sie Ihre Berechnung ein. Die Ergebnisse werden sofort angezeigt. Egal ob Sie schnelle Alltagsberechnungen durchführen oder komplexe wissenschaftliche Gleichungen lösen müssen, RechenMax ist für Sie da.
+
+### Fazit
+
+RechenMax ist mehr als nur ein Taschenrechner. Es ist ein leistungsstarkes Werkzeug, das Ihnen hilft, Probleme zu lösen, Entscheidungen zu treffen und die Welt um Sie herum zu verstehen. Probieren Sie RechenMax noch heute aus und erleben Sie den Unterschied!
