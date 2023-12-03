@@ -1,6 +1,6 @@
 # RechenMax
 
-![RechenMax Logo](RechenMaxIcon.png)
+![RechenMax Logo](RechenMaxIcon.jpeg)
 
 ## Willkommen zur Dokumentation der Taschenrechner App
 
