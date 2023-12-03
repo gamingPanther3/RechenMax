@@ -1,8 +1,8 @@
 <div align="center" width="200px" height="200px">
 
-# RechenMax (Taschenrechner)
+# ![Logo RechenMax](RechenMaxIcon.jpg) RechenMax (Taschenrechner)
 
-![Logo RechenMax](RechenMaxIcon.jpg)
+
 
 ---
 
