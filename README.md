@@ -54,4 +54,4 @@ Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn
 
 ### Verwendung
 
-Laden Sie den Taschenrechner herunter, öffnen Sie die App und geben Sie Ihre Berechnung ein. Die Ergebnisse werden sofort angezeigt. Egal ob Sie schnelle Alltagsberechnungen durchführen oder komplexe wissenschaftliche Gleichungen lösen müssen, RechenMax ist für Sie da.
+Laden Sie die RechenMax-App herunter und starten Sie sie, um Ihre mathematischen Berechnungen durchzuführen. Die Ergebnisse werden in Echtzeit angezeigt. Ob Sie einfache Alltagsrechnungen schnell erledigen oder komplexe wissenschaftliche Gleichungen lösen müssen, RechenMax ist hervorragend darauf ausgelegt, Ihre Anforderungen zu erfüllen
