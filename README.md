@@ -1,6 +1,6 @@
 <div align="center">
 
-# Simple Java Calculator
+# RechenMax (Taschenrechner)
 
 ![Logo RechenMax](RechenMaxIcon.jpg)
 
@@ -11,8 +11,6 @@ This calculator is **simple** with an **easy to use code** to help novices **lea
 ---
 
 </div>
-
-# RechenMax (Taschenrechner)
 
 ## Deutsch
 
