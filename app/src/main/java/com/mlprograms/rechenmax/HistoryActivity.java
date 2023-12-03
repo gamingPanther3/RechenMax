@@ -21,13 +21,33 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+/**
+ * HistoryActivity
+ * @author Max Lemberg
+ * @version 1.0.0
+ * @date 03.12.2023
+ */
 public class HistoryActivity extends AppCompatActivity {
 
+    // Declare a Context object and initialize it to this instance
     private Context context = this;
+    // Declare a LinearLayout object
     private LinearLayout linearLayout;
+    // Declare a DataManager object
     DataManager dataManager;
+    // Declare a static MainActivity object
     private static MainActivity mainActivity;
 
+    // Define the name of the File
+    private static final String FILE_NAME = "history.txt";
+
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
@@ -44,6 +64,10 @@ public class HistoryActivity extends AppCompatActivity {
         switchDisplayMode(currentNightMode);
     }
 
+    /**
+     * This method is called when the configuration of the device changes.
+     * @param newConfig The new device configuration.
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -52,12 +76,19 @@ public class HistoryActivity extends AppCompatActivity {
         switchDisplayMode(currentNightMode);
     }
 
+    /**
+     * This method is called when the back button is pressed.
+     * It overrides the default behavior and returns to the calculator.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         returnToCalculator();
     }
 
+    /**
+     * Perform any final cleanup before an activity is destroyed.
+     */
     protected void onDestroy() {
         super.onDestroy();
         if (dataManager != null && dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
@@ -66,6 +97,10 @@ public class HistoryActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * This method switches the display mode based on the current night mode.
+     * @param currentNightMode The current night mode.
+     */
     private void switchDisplayMode(int currentNightMode) {
         Button deleteButton = findViewById(R.id.history_delete_button);
         Button returnButton = findViewById(R.id.history_return_button);
@@ -132,6 +167,16 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method updates the UI elements according to the night mode.
+     * @param deleteButton The delete button.
+     * @param returnButton The return button.
+     * @param historyScrollView The history scroll view.
+     * @param historyTextView The history text view.
+     * @param historyTitle The history title.
+     * @param newColorBTNForegroundAccent The new color for the button foreground accent.
+     * @param newColorBTNBackgroundAccent The new color for the button background accent.
+     */
     private void updateUIAccordingToNightMode(Button deleteButton, Button returnButton, ScrollView historyScrollView, TextView historyTextView, TextView historyTitle, int newColorBTNForegroundAccent, int newColorBTNBackgroundAccent) {
         if (deleteButton != null) {
             deleteButton.setTextColor(newColorBTNForegroundAccent);
@@ -162,6 +207,13 @@ public class HistoryActivity extends AppCompatActivity {
         returnButton.setBackgroundColor(newColorBTNBackgroundAccent);
         returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
     }
+
+    /**
+     * This method changes the colors of all buttons in a layout.
+     * @param layout The layout containing the buttons.
+     * @param foregroundColor The color to be used for the foreground.
+     * @param backgroundColor The color to be used for the background.
+     */
     private void changeButtonColors(ViewGroup layout, int foregroundColor, int backgroundColor) {
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
@@ -180,7 +232,11 @@ public class HistoryActivity extends AppCompatActivity {
             }
         }
     }
-    private static final String FILE_NAME = "history.txt";
+
+    /**
+     * This method deletes the history.
+     * @param context The application context.
+     */
     public void deleteHistory(Context context) {
         try {
             FileOutputStream fileOut = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
@@ -193,6 +249,12 @@ public class HistoryActivity extends AppCompatActivity {
         TextView history_text_view = (TextView) findViewById(R.id.history_textview);
         history_text_view.setText(loadHistory(getApplicationContext()));
     }
+
+    /**
+     * This method loads the history from a file.
+     * @param context The application context.
+     * @return The history as a string.
+     */
     public String loadHistory(Context context) {
         StringBuilder result = new StringBuilder();
         try {
@@ -220,6 +282,11 @@ public class HistoryActivity extends AppCompatActivity {
             return result.toString();
         }
     }
+
+    /**
+     * This method gets the position of the selected setting.
+     * @return The position of the selected setting.
+     */
     public Integer getSelectetSettingPosition() {
         Integer num = null;
         final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
@@ -235,12 +302,27 @@ public class HistoryActivity extends AppCompatActivity {
         }
         return num;
     }
+
+    /**
+     * This static method sets the context of the MainActivity.
+     * @param activity The MainActivity whose context is to be set.
+     */
     public static void setMainActivityContext(MainActivity activity) {
         mainActivity = activity;
     }
+
+    /**
+     * This method gets the context of the MainActivity.
+     * @return The context of the MainActivity.
+     */
     public Context getMainActivityContext() {
         return mainActivity;
     }
+
+    /**
+     * This method gets the selected setting.
+     * @return The selected setting.
+     */
     public String getSelectedSetting() {
         if(dataManager != null) {
             final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
@@ -257,6 +339,10 @@ public class HistoryActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * This method handles button clicks.
+     * @param view The view that was clicked.
+     */
     public void ButtonListener2(View view) {
         if (view.getTag().equals("return")) {
             returnToCalculator();
@@ -265,6 +351,10 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method returns to the calculator by starting the MainActivity.
+     * It also switches the display mode based on the current night mode.
+     */
     public void returnToCalculator() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

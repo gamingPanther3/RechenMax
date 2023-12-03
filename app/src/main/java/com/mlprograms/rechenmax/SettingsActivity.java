@@ -22,11 +22,32 @@ import androidx.core.content.ContextCompat;
 
 import org.w3c.dom.Text;
 
+/**
+ * SettingsActivity
+ * @author Max Lemberg
+ * @version 1.0.0
+ * @date 03.12.2023
+ */
 public class SettingsActivity extends AppCompatActivity {
+
+    // Define a string of spaces
     private String space = "                                                      ";
+    // Declare a DataManager object
     DataManager dataManager;
+    // Declare a static MainActivity object
     private static MainActivity mainActivity;
+    // Declare a Spinner object
     private Spinner spinner;
+
+    /**
+     * The `savedInstanceState` Bundle contains data that was saved in {@link #onSaveInstanceState}
+     * when the activity was previously destroyed. This data can be used to restore the activity's
+     * state when it is re-initialized. If the activity is being created for the first time,
+     * this Bundle is null.
+     *
+     * @param savedInstanceState The Bundle containing the saved state, or null if the activity is
+     *                         being created for the first time.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +147,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * This method updates the spinner based on the selected setting.
+     * @param parent The AdapterView where the selection happened.
+     */
     public void updateSpinner(AdapterView<?> parent) {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         final String readselectedSetting = parent.getSelectedItem().toString();
@@ -159,6 +185,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * This method updates the second spinner based on the selected setting.
+     * @param parent The AdapterView where the selection happened.
+     */
     public void updateSpinner2(AdapterView<?> parent) {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         final String readselectedSetting = parent.getSelectedItem().toString();
@@ -189,6 +220,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * This method gets the position of the selected calculating mode.
+     * @return The position of the selected calculating mode.
+     */
     public Integer getSelectetCalculatingModePosition() {
         Integer num = null;
         final String readselectedSetting = dataManager.readFromJSON("calculatingMode", getMainActivityContext());
@@ -202,6 +238,11 @@ public class SettingsActivity extends AppCompatActivity {
         }
         return num;
     }
+
+    /**
+     * This method gets the position of the selected setting.
+     * @return The position of the selected setting.
+     */
     public Integer getSelectetSettingPosition() {
         Integer num = null;
         final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
@@ -217,6 +258,11 @@ public class SettingsActivity extends AppCompatActivity {
         }
         return num;
     }
+
+    /**
+     * This method gets the selected setting.
+     * @return The selected setting.
+     */
     public String getSelectedSetting() {
         final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
 
@@ -231,6 +277,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
         return null;
     }
+
+    /**
+     * This method updates the state of a switch view based on a key.
+     * @param switchView The switch view to update.
+     * @param key The key to use to get the value.
+     */
     private void updateSwitchState(Switch switchView, String key) {
         String value = dataManager.readFromJSON(key, this);
         if (value != null) {
@@ -240,12 +292,26 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This static method sets the context of the MainActivity.
+     * @param activity The MainActivity whose context is to be set.
+     */
     public static void setMainActivityContext(MainActivity activity) {
         mainActivity = activity;
     }
+
+    /**
+     * This method gets the context of the MainActivity.
+     * @return The context of the MainActivity.
+     */
     public Context getMainActivityContext() {
         return mainActivity;
     }
+
+    /**
+     * This method is called when the configuration of the device changes.
+     * @param newConfig The new device configuration.
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -253,6 +319,11 @@ public class SettingsActivity extends AppCompatActivity {
         int currentNightMode = newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switchDisplayMode(currentNightMode);
     }
+
+    /**
+     * This method switches the display mode based on the current night mode.
+     * @param currentNightMode The current night mode.
+     */
     @SuppressLint("ResourceType")
     private void switchDisplayMode(int currentNightMode) {
         ScrollView settingsScrollView = (ScrollView) findViewById(R.id.settings_sroll_textview);
@@ -341,6 +412,12 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * This method updates the UI elements with the given background color and text color.
+     * @param backgroundColor The color to be used for the background.
+     * @param textColor The color to be used for the text.
+     */
     private void updateUI(int backgroundColor, int textColor) {
         ScrollView settingsScrollView = (ScrollView) findViewById(R.id.settings_sroll_textview);
         LinearLayout settingsLayout = (LinearLayout) findViewById(R.id.settings_layout);
@@ -369,11 +446,21 @@ public class SettingsActivity extends AppCompatActivity {
         settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
     }
+
+    /**
+     * This method is called when the back button is pressed.
+     * It overrides the default behavior and returns to the calculator.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         returnToCalculator();
     }
+
+    /**
+     * This method appends spaces to the text of all Switch views in a layout.
+     * @param layout The layout containing the Switch views.
+     */
     private void appendSpaceToSwitches(ViewGroup layout) {
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
@@ -389,6 +476,13 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * This method changes the text and background colors of all TextViews in a layout.
+     * @param layout The layout containing the TextViews.
+     * @param foregroundColor The color to be used for the text.
+     * @param backgroundColor The color to be used for the background.
+     */
     private void changeTextViewColors(ViewGroup layout, int foregroundColor, int backgroundColor) {
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
@@ -407,6 +501,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * This method returns to the calculator by starting the MainActivity.
+     */
     public void returnToCalculator() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

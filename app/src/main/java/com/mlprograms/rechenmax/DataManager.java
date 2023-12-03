@@ -20,23 +20,73 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 
+/**
+ * DataManager
+ * @author Max Lemberg
+ * @version 1.0.0
+ * @date 03.12.2023
+ */
+
+/**
+ *  | Names                            | Values                   | Context                              |
+ *  |----------------------------------|--------------------------|--------------------------------------|
+ *  | settingReleaseNotesSwitch        | true / false             | SettingsActivity                     |
+ *  | settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity     |
+ *  | showPatchNotes                   | true / false             | MainActivity -> SettingsActivity     |
+ *  | disablePatchNotesTemporary       | true / false             | MainActivity -> SettingsActivity     |
+ *  | showReleaseNotesOnVeryFirstStart | true / false             | MainActivity                         |
+ *  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
+ *  | showScienceRow                   | true / false             | MainActivity                         |
+ *  | calculatingMode                  | easy / normal            | MainActivity                         |
+ */
 public class DataManager {
+
+    // Define the name of the JSON file
     private static final String JSON_FILE = "settings.json";
+    // Declare a HistoryActivity object
     private HistoryActivity historyActivity;
+    // Declare a SettingsActivity object
+    private SettingsActivity settingsActivity;
+    // Declare a MainActivity object
     private MainActivity mainActivity;
+
+    // Define the names of the files
+    private static final String FILE_NAME1 = "history.txt";
+    private static final String FILE_NAME2 = "calculate.txt";
+    private static final String FILE_NAME3 = "result.txt";
+
+    /**
+     * This constructor is used to create a DataManager object for the MainActivity.
+     *
+     * @param mainActivity The MainActivity instance that this DataManager will be associated with.
+     */
     public DataManager(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
-    private SettingsActivity settingsActivity;
 
+    /**
+     * This constructor is used to create a DataManager object for the SettingsActivity.
+     *
+     * @param settingsActivity The SettingsActivity instance that this DataManager will be associated with.
+     */
     public DataManager(SettingsActivity settingsActivity) {
         this.settingsActivity = settingsActivity;
     }
 
+    /**
+     * This constructor is used to create a DataManager object for the HistoryActivity.
+     *
+     * @param historyActivity The HistoryActivity instance that this DataManager will be associated with.
+     */
     public DataManager(HistoryActivity historyActivity) {
         this.historyActivity = historyActivity;
     }
 
+    /**
+     * This method is used to create a new JSON file in the application's file directory.
+     *
+     * @param applicationContext The application context, which is used to get the application's file directory.
+     */
     public void createJSON(Context applicationContext) {
         File file = new File(applicationContext.getFilesDir(), JSON_FILE);
         try {
@@ -45,20 +95,27 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This method is used to delete the JSON file from the application's file directory.
+     *
+     * @param applicationContext The application context, which is used to get the application's file directory.
+     */
     public void deleteJSON(Context applicationContext) {
         File file = new File(applicationContext.getFilesDir(), JSON_FILE);
         file.delete();
     }
-    
-    // names                            | values                | context
-    // settingReleaseNotesSwitch        | true / false          | SettingsAcitiy
-    // settingsTrueDarkMode             | true / false          | MainActivtiy -> SettingsAcitiy
-    // showPatchNotes                   | true / false          | MainActivtiy -> SettingsAcitiy
-    // disablePatchNotesTemporary       | true / false          | MainActivtiy -> SettingsAcitiy
-    // showReleaseNotesOnVeryFirstStart | true / false          | MainActivtiy
-    // selectedSpinnerSetting           | System / Dark / Light | MainActivtiy
-    // -> = ... wird übergeben zu ...
 
+    /**
+     * This method is used to save a boolean value to a JSON file.
+     * It first checks if the file exists, and if not, it creates a new file.
+     * It then reads the content of the file and converts it to a JSONObject.
+     * It puts the given name and value into the JSONObject and writes it back to the file.
+     *
+     * @param name The name to be saved in the JSON file. This should be a string.
+     * @param value The boolean value to be saved in the JSON file.
+     * @param applicationContext The application context, which is used to get the application's file directory.
+     */
     public void saveToJSON(String name, boolean value, Context applicationContext) {
         JSONObject jsonObj = new JSONObject();
         try {
@@ -82,6 +139,17 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This method is used to save a string value to a JSON file.
+     * It first checks if the file exists, and if not, it creates a new file.
+     * It then reads the content of the file and converts it to a JSONObject.
+     * It puts the given name and value into the JSONObject and writes it back to the file.
+     *
+     * @param name The name to be saved in the JSON file. This should be a string.
+     * @param value The string value to be saved in the JSON file.
+     * @param applicationContext The application context, which is used to get the application's file directory.
+     */
     public void saveToJSON(String name, String value, Context applicationContext) {
         JSONObject jsonObj = new JSONObject();
         try {
@@ -106,17 +174,15 @@ public class DataManager {
         }
     }
 
-    // names                            | values                   | context
-    // settingReleaseNotesSwitch        | true / false             | SettingsActivity
-    // settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity
-    // showPatchNotes                   | true / false             | MainActivity -> SettingsActivity
-    // disablePatchNotesTemporary       | true / false             | MainActivity -> SettingsActivity
-    // showReleaseNotesOnVeryFirstStart | true / false             | MainActivity
-    // selectedSpinnerSetting           | System / Dark / Light    | MainActivity
-    // showScienceRow                   | true / false             | MainActivity
-    // calculatingMode                  | easy / normal            | MainActivity
-    // -> = ... wird übergeben zu ...
-
+    /**
+     * This method reads a value from a JSON file.
+     * If the file does not exist or is empty, it initializes the settings and creates a new file.
+     * If the requested name does not exist in the JSON file, it initializes the settings.
+     *
+     * @param name The name of the value to be read from the JSON file.
+     * @param applicationContext The application context, which is used to get the application's file directory.
+     * @return Returns the value associated with the given name in the JSON file, or null if the file does not exist, is empty, or does not contain the name.
+     */
     public String readFromJSON(final String name, Context applicationContext) {
         String setting = null;
         try {
@@ -147,6 +213,12 @@ public class DataManager {
         }
         return setting;
     }
+
+    /**
+     * This method initializes the settings by saving default values to the JSON file.
+     *
+     * @param applicationContext The application context, which is used to get the application's file directory.
+     */
     private void initializeSettings(Context applicationContext) {
         saveToJSON("settingReleaseNotesSwitch", "true", applicationContext);
         saveToJSON("settingsTrueDarkMode", "false", applicationContext);
@@ -157,7 +229,14 @@ public class DataManager {
         saveToJSON("showScienceRow", false, applicationContext);
         saveToJSON("calculatingMode", "easy", applicationContext);
     }
-    private static final String FILE_NAME1 = "history.txt";
+
+    /**
+     * This method adds a string of data to the history file.
+     * It reads the old data from the file, prepends the new data, and writes it back to the file.
+     *
+     * @param data The data to be added to the history file.
+     * @param context The context, which is used to open the file input and output streams.
+     */
     public void addtoHistory(String data, Context context) {
         try {
             FileInputStream fileIn = context.openFileInput(FILE_NAME1);
@@ -179,6 +258,10 @@ public class DataManager {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This method checks if a file exists and creates it if it doesn't.
+     */
     public void checkAndCreateFile() {
         File file = new File(mainActivity.getFilesDir(), FILE_NAME1);
         if (!file.exists()) {
@@ -201,8 +284,11 @@ public class DataManager {
             e.printStackTrace();
         }
     }
-    private static final String FILE_NAME2 = "calculate.txt";
-    private static final String FILE_NAME3 = "result.txt";
+
+    /**
+     * This method saves numbers to two files.
+     * @param applicationContext The application context.
+     */
     public void saveNumbers(Context applicationContext) {
         if (mainActivity != null) {
             try {
@@ -220,6 +306,10 @@ public class DataManager {
             }
         }
     }
+
+    /**
+     * This method loads numbers from two files and sets the text of two TextViews.
+     */
     public void loadNumbers() {
         String result1 = "";
         try {

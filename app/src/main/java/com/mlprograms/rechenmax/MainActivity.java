@@ -30,17 +30,66 @@ import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * MainActivity
+ * @author Max Lemberg
+ * @version 1.0.0
+ * @date 03.12.2023
+ */
+
 public class MainActivity extends AppCompatActivity {
+    /**
+     * Flag to control the rotation of operators after a root operation. If true, operator will swap with the number.
+     */
     private boolean rotateOperatorAfterRoot = false;
+
+    /**
+     * The context of the current object. Useful for accessing resources, launching new activities, etc.
+     */
     private Context context = this;
+
+    /**
+     * Flag to control the removal of a value. If true, the value will be removed.
+     */
     private boolean removevalue = false;
+
+    /**
+     * Stores the last number entered or calculated. Initialized to "0" to handle the case where no number has been entered yet.
+     */
     private String last_number = "0";
+
+    /**
+     * Stores the last operator used. Initialized to "+" as it is the default operator.
+     */
     private String last_op = "+";
+
+    /**
+     * Instance of DataManager to handle data-related tasks such as saving and retrieving data.
+     */
     private DataManager dataManager;
+
+    /**
+     * Stores the current mode of calculation (e.g., standard, scientific, programmer).
+     */
     private String calculatingMode;
+
+    /**
+     * Instance of SharedPreferences for storing and retrieving small amounts of primitive data as key-value pairs.
+     */
     SharedPreferences prefs = null;
+
+    /**
+     * Flag to control the notation. If true, a certain notation (e.g., scientific notation) will be used.
+     */
     private boolean isnotation = false;
 
+    /**
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calculatorui);
@@ -48,27 +97,23 @@ public class MainActivity extends AppCompatActivity {
         setMainActivity(this);
 
         dataManager = new DataManager(this);
-        //dataManager.deleteJSON(getApplicationContext());
         dataManager.createJSON(getApplicationContext());
-        //resetReleaseNoteConfig(getApplicationContext());
-
         dataManager.loadNumbers();
         dataManager.checkAndCreateFile();
-
         calculatingMode = dataManager.readFromJSON("calculatingMode", context);
 
+        // If it's the first run of the application
         prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
         if (prefs.getBoolean("firstrun", true)) {
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
             setContentView(R.layout.patchnotes);
             checkDarkmodeSetting();
-
-            // 'firstrun' auf false setzen, nachdem der Code ausgeführt wurde
             prefs.edit().putBoolean("firstrun", false).commit();
         }
 
         MaterialTextView mEditText1 = (MaterialTextView) findViewById(R.id.calculate_label);
         MaterialTextView mEditText2 = (MaterialTextView) findViewById(R.id.result_label);
+
         Log.e("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
         Log.e("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
 
@@ -85,21 +130,30 @@ public class MainActivity extends AppCompatActivity {
         checkScienceButtonState();
         checkDarkmodeSetting();
     }
-    public void setUpListeners() {
+
+    /**
+     * Sets up the listeners for each button in the application
+     */
+    private void setUpListeners() {
         setButtonListener(R.id.history_button, this::switchToHistoryAction);
         setButtonListener(R.id.settings_button, this::switchToSettingsAction);
+
         setButtonListener(R.id.okay_button, this::patchNotesOkayButtonAction);
+
         setClipboardButtonListener(R.id.emptyclipboard, "MC");
         setClipboardButtonListener(R.id.pastefromclipboard, "MR");
         setClipboardButtonListener(R.id.copytoclipboard, "MS");
+
         setEmptyButtonListener(R.id.clearresult, "CE");
         setEmptyButtonListener(R.id.clearall, "C");
         setEmptyButtonListener(R.id.backspace, "⌫");
+
         setOperationButtonListener(R.id.divide, "/");
         setOperationButtonListener(R.id.multiply, "*");
         setOperationButtonListener(R.id.subtract, "-");
         setOperationButtonListener(R.id.add, "+");
         setNegateButtonListener(R.id.negative);
+
         setNumberButtonListener(R.id.zero);
         setNumberButtonListener(R.id.one);
         setNumberButtonListener(R.id.two);
@@ -110,14 +164,22 @@ public class MainActivity extends AppCompatActivity {
         setNumberButtonListener(R.id.seven);
         setNumberButtonListener(R.id.eight);
         setNumberButtonListener(R.id.nine);
+
         setCalculateButtonListener(R.id.calculate);
         setCommaButtonListener(R.id.comma);
-        setButtonListener(R.id.clipOn, this::clipOnAction);
-        setButtonListener(R.id.clipOff, this::clipOffAction);
+
+        setButtonListener(R.id.clipOn, this::parenthesisOnAction);
+        setButtonListener(R.id.clipOff, this::parenthesisOffAction);
+
         setButtonListener(R.id.power, this::powerAction);
         setButtonListener(R.id.root, this::rootAction);
+        setButtonListener(R.id.faculty, this::factorial);
         setScienceButtonListener();
     }
+
+    /**
+     * Sets up the listener for the scientific buttons
+     */
     private void setScienceButtonListener() {
         Button toggleButton = (Button) findViewById(R.id.scientificButton);
         if(toggleButton != null) {
@@ -126,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     LinearLayout buttonRow = findViewById(R.id.scientificRow);
                     final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-
                     if(buttonRow != null && data != null) {
                         if (data.equals("true")) {
                             buttonRow.setVisibility(View.GONE);
@@ -140,6 +201,10 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    /**
+     * Checks the state of the science button
+     */
     public void checkScienceButtonState() {
         LinearLayout buttonRow = findViewById(R.id.scientificRow);
         final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
@@ -151,6 +216,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Sets up the listener for the comma button.
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     */
     private void setCommaButtonListener(int buttonId) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -163,6 +234,13 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+
+    /**
+     * Sets up the listener for the calculate button.
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     */
     private void setCalculateButtonListener(int buttonId) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -179,6 +257,12 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    /**
+     * Sets up the listener for all number buttons
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     */
     private void setNumberButtonListener(int buttonId) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -192,6 +276,13 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    /**
+     * Sets up the listener for all operation buttons
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     * @param operation The action which belongs to the button.
+     */
     private void setOperationButtonListener(int buttonId, String operation) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -204,6 +295,13 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    /**
+     * Sets up the listener for all number buttons
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     * @param action The action which belongs to the button.
+     */
     private void setEmptyButtonListener(int buttonId, String action) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -216,6 +314,13 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    /**
+     * Sets up the listener for all number buttons
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     * @param action The action which belongs to the button.
+     */
     private void setButtonListener(int buttonId, Runnable action) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -228,6 +333,12 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    /**
+     * Sets up the listener for all number buttons
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     */
     private void setNegateButtonListener(int buttonId) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -240,6 +351,13 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    /**
+     * Sets up the listener for all number buttons
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     * @param action The action which belongs to the button.
+     */
     private void setClipboardButtonListener(int buttonId, String action) {
         Button btn = (Button) findViewById(buttonId);
         if(btn != null) {
@@ -252,23 +370,50 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-    private void clipOnAction() {
+
+    /**
+     * This method adds an opening parenthesis to the calculation text.
+     */
+    private void parenthesisOnAction() {
         addCalculateText("(");
     }
-    private void clipOffAction() {
+
+    /**
+     * This method adds a closing parenthesis to the calculation text.
+     * If the last operation was a square root, it adds a closing parenthesis.
+     * Otherwise, it adds the result text and a closing parenthesis.
+     */
+    private void parenthesisOffAction() {
         Pattern pattern = Pattern.compile("√\\(\\d+\\)$");
         Matcher matcher = pattern.matcher(getCalculateText());
-
         if (matcher.find()) {
-            addCalculateText(" )");
+            addCalculateText(")");
         } else {
-            addCalculateText(getResultText() + " )");
+            if(!getRotateOperator()) {
+                addCalculateText(getResultText() + ")");
+            } else {
+                addCalculateText(")");
+            }
         }
         setRotateOperator(true);
     }
+
+    /**
+     * This method adds a factorial to the calculation text.
+     * It appends a "!" to the result text and sets the rotate operator flag to true.
+     */
+    private void factorial() {
+        addCalculateText(getResultText() + "!");
+        setRotateOperator(true);
+    }
+
+    /**
+     * This method adds a power operation to the calculation text.
+     * Depending on the state of the rotate operator flag, it handles the power operation differently.
+     */
     private void powerAction() {
         setLastOp("^");
-        if(!getRotateOperatorAfterRoot()) {
+        if(!getRotateOperator()) {
             setRemoveValue(true);
             setLastNumber(getResultText());
             if (getCalculateText().contains("=")) {
@@ -287,8 +432,13 @@ public class MainActivity extends AppCompatActivity {
             setRotateOperator(false);
         }
     }
+
+    /**
+     * This method adds a root operation to the calculation text.
+     * Depending on the state of the rotate operator flag, it handles the root operation differently.
+     */
     private void rootAction() {
-        if(!getRotateOperatorAfterRoot()) {
+        if(!getRotateOperator()) {
             addCalculateText("√(" + getResultText() + ")");
         } else {
             addCalculateText(getLastOp() + " √(" + getResultText() + ")");
@@ -296,20 +446,22 @@ public class MainActivity extends AppCompatActivity {
         setRemoveValue(true);
         setRotateOperator(true);
     }
-     public void patchNotesOkayButtonAction() {
+
+    /**
+     * Handles the action when the okay button in the patch notes is clicked.
+     * Depending on whether the checkbox is checked or not, it saves different values to JSON.
+     * Then it sets the content view, loads numbers, checks dark mode setting, checks science button state, and sets up listeners.
+     */
+    public void patchNotesOkayButtonAction() {
         CheckBox checkBox = findViewById(R.id.checkBox);
         if (checkBox.isChecked()) {
             dataManager.saveToJSON("showPatchNotes", false, getApplicationContext());
             dataManager.saveToJSON("disablePatchNotesTemporary", true, getApplicationContext());
             dataManager.saveToJSON("settingReleaseNotesSwitch", false, getApplicationContext());
-            Log.e("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
-            Log.e("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
         } else {
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
             dataManager.saveToJSON("disablePatchNotesTemporary", true, getApplicationContext());
             dataManager.saveToJSON("settingReleaseNotesSwitch", true, getApplicationContext());
-            Log.e("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
-            Log.e("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
         }
         setContentView(R.layout.calculatorui);
         dataManager.loadNumbers();
@@ -317,27 +469,53 @@ public class MainActivity extends AppCompatActivity {
         checkScienceButtonState();
         setUpListeners();
     }
+
+    /**
+     * Switches to the settings activity.
+     * It creates a new SettingsActivity, sets the main activity context, and starts the activity.
+     */
     public void switchToSettingsAction() {
         SettingsActivity settingsActivity = new SettingsActivity();
         settingsActivity.setMainActivityContext(this);
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Switches to the history activity.
+     * It creates a new HistoryActivity, sets the main activity context, and starts the activity.
+     */
     private void switchToHistoryAction() {
         HistoryActivity historyActivity = new HistoryActivity();
         historyActivity.setMainActivityContext(this);
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Handles configuration changes.
+     * It calls the superclass method and switches the display mode based on the current night mode.
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
+
+    /**
+     * Checks the dark mode setting.
+     * It switches the display mode based on the current night mode.
+     */
     public void checkDarkmodeSetting() {
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
+
+    /**
+     * This method is used to switch the display mode of the application based on the user's selected setting.
+     * It first initializes the UI elements and gets the current night mode status and the user's selected setting.
+     * If a setting is selected, it switches the display mode based on the selected setting.
+     * If no setting is selected, it saves "System" as the selected setting and calls itself again.
+     */
     private void switchDisplayMode(int currentNightMode) {
         // Globale Variablen
         TextView historyButton = (TextView) findViewById(R.id.history_button);
@@ -434,6 +612,15 @@ public class MainActivity extends AppCompatActivity {
             switchDisplayMode(currentNightMode);
         }
     }
+
+    /**
+     * This method is used to get the position of the selected setting.
+     * It reads the selected setting from the JSON file and returns the corresponding position.
+     * @return If the selected setting is "System", it returns 0.
+     * @return If the selected setting is "Light", it returns 1.
+     * @return If the selected setting is "Dark", it returns 2.
+     * @return If no setting is selected, it returns null.
+     */
     public Integer getSelectetSettingPosition() {
         Integer num = null;
         final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext());
@@ -449,6 +636,15 @@ public class MainActivity extends AppCompatActivity {
         }
         return num;
     }
+
+    /**
+     * This method is used to get the selected setting.
+     * It reads the selected setting from the JSON file and returns the corresponding setting.
+     * @return If the selected setting is "System", it returns "Systemstandard".
+     * @return If the selected setting is "Dark", it returns "Dunkelmodus".
+     * @return If the selected setting is "Light", it returns "Tageslichtmodus".
+     * @return If no setting is selected, it returns null.
+     */
     public String getSelectedSetting() {
         final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext());
         if(setting != null) {
@@ -462,6 +658,14 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
+
+    /**
+     * This method is used to change the colors of the buttons in a given layout.
+     *
+     * @param layout The ViewGroup whose Button children should have their colors changed. This can be any layout containing Buttons.
+     * @param foregroundColor The color to be set as the text color of the Buttons. This should be a resolved color, not a resource id.
+     * @param backgroundColor The color to be set as the background color of the Buttons and the layout. This should be a resolved color, not a resource id.
+     */
     private void changeButtonColors(ViewGroup layout, int foregroundColor, int backgroundColor) {
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
@@ -480,6 +684,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * This method is used to change the colors of the TextViews in a given layout.
+     *
+     * @param layout The ViewGroup whose TextView children should have their colors changed. This can be any layout containing TextViews.
+     * @param foregroundColor The color to be set as the text color of the TextViews. This should be a resolved color, not a resource id.
+     * @param backgroundColor The color to be set as the background color of the TextViews and the layout. This should be a resolved color, not a resource id.
+     */
     private void changeTextViewColors(ViewGroup layout, int foregroundColor, int backgroundColor) {
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
@@ -498,10 +710,21 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    public void resetReleaseNoteConfig(Context applicationContext) {
+
+    /**
+     * This method is used to reset the release note configuration.
+     * It saves "showPatchNotes" as true and "disablePatchNotesTemporary" as false in the JSON file.
+     */
+    public void resetReleaseNoteConfig() {
         dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
         dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
     }
+
+    /**
+     * This method is called when the activity is destroyed.
+     * It checks if "disablePatchNotesTemporary" is true in the JSON file, and if so, it saves "disablePatchNotesTemporary" as false in the JSON file.
+     * It then calls the finish() method to close the activity.
+     */
     protected void onDestroy() {
         super.onDestroy();
         if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
@@ -509,6 +732,17 @@ public class MainActivity extends AppCompatActivity {
         }
         finish();
     }
+
+    /**
+     * This method is called when a number button is clicked.
+     * It gets the text of the result and calculate TextViews and checks if they contain invalid input.
+     * If they do, it resets the calculate text and sets removeValue to true.
+     * If removeValue is true, it resets the calculate text if it contains invalid input or an equals sign, and sets the result text to "0".
+     * It then checks if the length of the result text is less than 18, and if so, it adds the clicked number to the result text.
+     * Finally, it formats the result text and adjusts its size.
+     *
+     * @param num The number corresponding to the clicked button. This number will be added to the result text.
+     */
     public void NumberAction(String num) {
         String resultText = getResultText();
         String calculateText = getCalculateText().toString();
@@ -533,6 +767,13 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
         adjustTextSize();
     }
+
+    /**
+     * This method is called when a clipboard button is clicked.
+     * It interacts with the system clipboard service to perform various clipboard operations.
+     *
+     * @param c The operation to be performed. This can be "MC" to clear the clipboard, "MR" to retrieve data from the clipboard, or "MS" to save data to the clipboard.
+     */
     public void ClipboardAction(final String c) {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         if (c.equals("MC")) {
@@ -546,6 +787,13 @@ public class MainActivity extends AppCompatActivity {
         }
         adjustTextSize();
     }
+
+    /**
+     * This method is called when the MR (Memory Recall) button is clicked.
+     * It retrieves data from the clipboard and sets it as the result text if it's a valid number.
+     *
+     * @param clipboardManager The ClipboardManager instance used to interact with the system clipboard.
+     */
     private void handleMRAction(ClipboardManager clipboardManager) {
         ClipData clipData = clipboardManager.getPrimaryClip();
         ClipData.Item item = clipData.getItemAt(0);
@@ -562,10 +810,16 @@ public class MainActivity extends AppCompatActivity {
         adjustTextSize();
     }
 
+    /**
+     * This method is called when an operation button is clicked.
+     * It performs various actions based on the operation and updates the calculate text and result text accordingly.
+     *
+     * @param op The operation to be performed. This can be any mathematical operation like addition (+), subtraction (-), multiplication (*), or division (/).
+     */
     public void OperationAction(final String op) {
         setLastOp(op);
         final String new_op = op.replace("*", "×").replace("/", "÷");
-        if(!getRotateOperatorAfterRoot()) {
+        if(!getRotateOperator()) {
             setLastNumber(getResultText());
             if (getCalculateText().contains("=")) {
                 setCalculateText(getResultText() + " " + new_op);
@@ -579,6 +833,13 @@ public class MainActivity extends AppCompatActivity {
         }
         setRotateOperator(false);
     }
+
+    /**
+     * This method is called when the C, CE, or backspace button is clicked.
+     * It performs different actions based on the button that was clicked.
+     *
+     * @param e The action to be performed. This can be "⌫" for the backspace button, "C" for the C button, or "CE" for the CE button.
+     */
     public void EmptyAction(final String e) {
         if (e.equals("⌫")) {
             handleBackspaceAction();
@@ -591,6 +852,15 @@ public class MainActivity extends AppCompatActivity {
         }
         adjustTextSize();
     }
+
+
+    /**
+     * This method is called when the backspace button is clicked.
+     * It removes the last character from the result text.
+     * If the result text is "Ungültige Eingabe", it resets the calculate text and result text.
+     * If the result text is empty after removing the last character, it sets the result text to "0".
+     * It then formats the result text and saves the numbers to the application context.
+     */
     private void handleBackspaceAction() {
         String resultText = getResultText();
         if (!resultText.equals("Ungültige Eingabe")) {
@@ -612,6 +882,13 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
         dataManager.saveNumbers(getApplicationContext());
     }
+
+    /**
+     * This method is called when the negate button is clicked.
+     * It toggles the sign of the result text.
+     * If the first character of the result text is "-", it removes the "-" from the result text.
+     * If the first character of the result text is not "-", it adds "-" to the beginning of the result text.
+     */
     public void NegativAction() {
         final char firstchar = getResultText().charAt(0);
         if (String.valueOf(firstchar).equals("-")) {
@@ -620,17 +897,35 @@ public class MainActivity extends AppCompatActivity {
             setResultText("-" + getResultText());
         }
     }
+
+    /**
+     * This method is called when the comma button is clicked.
+     * It adds a comma to the result text if it does not already contain a comma.
+     */
     public void CommaAction() {
         if (!getResultText().contains(",")) {
             addResultText(",");
         }
     }
+
+    /**
+     * This method is called when the calculate button is clicked.
+     * It performs the calculation based on the current calculate text and updates the result text with the result of the calculation.
+     * If the rotate operator is true, it handles the calculation in a specific way.
+     * If the calculate text does not contain an equals sign, it sets the last number to the current result text, adds an equals sign to the calculate text, and sets the result text to the result of the calculation.
+     * If the calculate text does contain an equals sign, it checks if the last operator is not empty and not a square root. If so, it sets the calculate text to the current result text followed by the last operator and the last number, and an equals sign. Otherwise, it sets the calculate text to the current result text followed by an equals sign. It then sets the result text to the result of the calculation.
+     * If the rotate operator is false, it checks if the calculate text does not contain an equals sign. If so, it sets the last number to the current result text, sets the calculate label text to the current calculate text followed by the current result text and an equals sign, and sets the result label text to the result of the calculation.
+     * If the calculate text does contain an equals sign, it checks if the last operator is not empty. If so, it sets the calculate label text to the current result text followed by the last operator and the last number, and an equals sign. Otherwise, it sets the calculate label text to the current result text followed by an equals sign. It then sets the result label text to the result of the calculation.
+     * After performing the calculation, it formats the result text, sets removeValue to true, and adjusts the text size.
+     *
+     * @throws Exception If an error occurs during the calculation.
+     */
     public void Calculate() throws Exception {
         String calcText = getCalculateText().replace("*", "×").replace("/", "÷");
         TextView calclab = (TextView) findViewById(R.id.calculate_label);
         TextView reslab = (TextView) findViewById(R.id.result_label);
 
-        if(getRotateOperatorAfterRoot()) {
+        if(getRotateOperator()) {
             if (!calcText.contains("=")) {
                 setLastNumber(getResultText());
                 setCalculateText(calcText + " =");
@@ -643,7 +938,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
             }
-            //formatResultTextAfterCalculate(getResultText());
 
             setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
             dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
@@ -661,7 +955,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 reslab.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
             }
-            //formatResultTextAfterCalculate(getResultText());
 
             setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
             dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
@@ -672,14 +965,34 @@ public class MainActivity extends AppCompatActivity {
         setRemoveValue(true);
         adjustTextSize();
     }
+
+    /**
+     * This method checks if the input text is invalid.
+     *
+     * @param text The text to be checked. This should be a string containing the text input from the user or the result of a calculation.
+     * @return Returns true if the text is invalid (contains "Ungültige Eingabe", "Unendlich", "Syntax Fehler", or "Domainfehler"), and false otherwise.
+     */
     private boolean isInvalidInput(String text) {
-        return text.contains("Ungültige Eingabe") || text.contains("Unendlich") || text.contains("Syntax Fehler");
+        return text.contains("Ungültige Eingabe") || text.contains("Unendlich") || text.contains("Syntax Fehler") || text.contains("Domainfehler");
     }
+
+    /**
+     * This method rounds a given value to 8 decimal places using half-up rounding mode.
+     *
+     * @param value The value to be rounded. This should be a string representation of a decimal number.
+     * @return Returns a BigDecimal representation of the rounded value.
+     */
     public static BigDecimal round(String value) {
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(8, RoundingMode.HALF_UP);
         return bd;
     }
+    /**
+     * This method formats the result text after a calculation.
+     *
+     * @param text The text to be formatted. This should be a string representation of the result of a calculation.
+     * @return Returns a string representation of the formatted number.
+     */
     public String formatResultTextAfterCalculate(String text) {
         String formattedNumber;
         if (text.length() >= 18) {
@@ -697,6 +1010,12 @@ public class MainActivity extends AppCompatActivity {
         setResultText(formattedNumber);
         return formattedNumber;
     }
+
+    /**
+     * This method formats the result text after a type operation.
+     * It separates the integer and fractional parts of the result text, formats them separately, and then combines them.
+     * If the result text is an error message or the notation flag is set, it does not format the result text.
+     */
     public void formatResultTextAfterType() {
         String originalText = getResultText();
         int index = originalText.indexOf(',');
@@ -709,7 +1028,13 @@ public class MainActivity extends AppCompatActivity {
             result = originalText.replace(".", "");
             result2 = "";
         }
-        if(!getResultText().equals("Unendlich") && !getResultText().equals("Syntax Fehler") && !getIsNotation() && !getResultText().equals("Wert zu groß") && !getResultText().equals("Nur reelle Zahlen") ) {
+        if(!getResultText().equals("Unendlich")
+                && !getResultText().equals("Syntax Fehler")
+                && !getIsNotation()
+                && !getResultText().equals("Wert zu groß")
+                && !getResultText().equals("Nur reelle Zahlen")
+                && !getResultText().equals("Domainfehler")
+                && !getResultText().equals("Overflow")) {
             DecimalFormat decimalFormat = new DecimalFormat("#,###");
             String formattedNumber = decimalFormat.format(Long.parseLong(result));
             setResultText(formattedNumber + result2);
@@ -717,6 +1042,12 @@ public class MainActivity extends AppCompatActivity {
             setIsNotation(false);
         }
     }
+
+    /**
+     * This method adjusts the text size of the result label based on its length.
+     * If the result text is not "Nur reelle Zahlen" and its length is 12 or more, the text size is reduced to fit the label.
+     * If the result text is "Ungültige Eingabe" or "Nur reelle Zahlen", the text size is set to a specific value.
+     */
     public void adjustTextSize() {
         int len = getResultText().replace(",", "").replace(".", "").replace("-", "").length();
         TextView label = findViewById(R.id.result_label);
@@ -737,15 +1068,24 @@ public class MainActivity extends AppCompatActivity {
             label.setTextSize(50f);
         }
     }
+
+    /**
+     * This method is called when the back button is pressed.
+     * It calls the superclass's onBackPressed method and then finishes the activity.
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
     }
+
+    /**
+     * The following methods are simple getter and setter methods for various properties.
+     */
     public void setIsNotation(final boolean val) { isnotation = val; }
     public boolean getIsNotation() { return isnotation; }
     public void setRotateOperator(final boolean rotate) { rotateOperatorAfterRoot = rotate; }
-    public boolean getRotateOperatorAfterRoot() { return rotateOperatorAfterRoot; }
+    public boolean getRotateOperator() { return rotateOperatorAfterRoot; }
     public String getLastOp() {
         return last_op;
     }

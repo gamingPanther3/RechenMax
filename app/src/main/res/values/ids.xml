@@ -2,4 +2,9 @@
 <resources>
     <item name="colorBTNBackgroundAccent" type="id" format="color" />
     <item name="colorBTNForegroundAccent" type="id" format="color" />
+    <item name="releaseNotesOverviewTitle" type="id" />
+    <item name="releaseNotesOverview" type="id" />
+    <item name="releaseNotesReleaseDate" type="id" />
+    <item name="releaseNotesTitle" type="id" />
+    <item name="releaseNotesFeaturesTitle" type="id" />
 </resources>
