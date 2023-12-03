@@ -20,8 +20,8 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 - **Benutzerfreundliches Design**: Mit seinem sauberen und intuitiven Design ist RechenMax einfach zu bedienen und bietet eine optimale Benutzererfahrung.
 
 <div align="center">
-  <img src="RM-LM-C.png" alt="RechenMaxBild1" width="250"/>
-  <img src="RM-DM-C.png" alt="RechenMaxBild2" width="250"/>
+  <img src="pictures/RM-LM-C.png" alt="RechenMaxBild1" width="250"/>
+  <img src="pictures/RM-DM-C.png" alt="RechenMaxBild2" width="250"/>
 </div>  
 
 - **Wissenschaftliche Notationen**: RechenMax kann auch wissenschaftliche Notationen verarbeiten und automatisch in Dezimalnotationen umwandeln.
@@ -37,8 +37,8 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 - Um die Fakultät von 5 zu berechnen, geben Sie 5! ein.
 
 <div align="center">
-  <img src="RM-LM-S.png" alt="RechenMaxBild3" width="250"/>
-  <img src="RM-DM-S.png" alt="RechenMaxBild4" width="250"/>
+  <img src="pictures/RM-LM-S.png" alt="RechenMaxBild3" width="250"/>
+  <img src="pictures/RM-DM-S.png" alt="RechenMaxBild4" width="250"/>
 </div>  
 
 #### Beispiele für die Verwendung von wissenschaftlichen Notationen mit dem Taschenrechner:
@@ -49,8 +49,8 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
 
 <div align="center"
-  <img src="RM-LM-H.png" alt="RechenMaxBild5" width="250"/>
-  <img src="RM-DM-H.png" alt="RechenMaxBild6" width="250"/>
+  <img src="pictures/RM-LM-H.png" alt="RechenMaxBild5" width="250"/>
+  <img src="pictures/RM-DM-H.png" alt="RechenMaxBild6" width="250"/>
 </div>  
 
 ### Verwendung
