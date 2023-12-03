@@ -1,5 +1,6 @@
 <div align="center">
-# RechenMax
+# Simple Java Calculator
+
 </div>
 
 <div align="center">
