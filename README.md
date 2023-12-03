@@ -1,4 +1,6 @@
-<img src="RechenMaxIcon.jpg" alt="RechenMax Logo" width="200"/> # RechenMax
+<div align="center">
+  <img src="RechenMaxIcon.jpg" alt="RechenMax Logo" width="200"/>
+</div>  
 
 ## Willkommen zur Dokumentation der Taschenrechner App
 
