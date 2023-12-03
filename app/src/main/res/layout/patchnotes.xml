@@ -370,8 +370,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:text="RechenMax 1.5.0"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:text="RechenMax 1.4.9"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -379,7 +379,7 @@
                 android:id="@+id/releaseNotesReleaseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Veröffentlichungsdatum: 2.12.2023 - 12:15 Uhr"
+                android:text="Veröffentlichungsdatum: N/A (work in progress)"
                 android:gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textColor="#000000"
@@ -429,6 +429,22 @@
             android:text="Die neue Funktion ermöglichen es, Fakultäten in Berechnungen einzubeziehen. Dies erweitert die mathematischen Möglichkeiten und erleichtert komplexe Berechnungen.\n"
             android:textColor="#000000" />
 
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Erweiterte Wurzelberechnungsfunktionen"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Mit der neuesten Version können Berechnungen innerhalb einer Wurzel durchgeführt werden. Diese Verbesserung bietet erweiterte Funktionalität und verbessert die Benutzererfahrung bei der Durchführung komplexer mathematischer Operationen.\n"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/releaseNotesBugsTitle"

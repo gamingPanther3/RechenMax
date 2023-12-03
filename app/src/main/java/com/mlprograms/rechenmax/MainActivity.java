@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
         setUpListeners();
         checkScienceButtonState();
         checkDarkmodeSetting();
+        formatResultTextAfterType();
+        adjustTextSize();
     }
 
     /**
@@ -390,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
             addCalculateText(")");
         } else {
             if(!getRotateOperator()) {
-                addCalculateText(getResultText() + ")");
+                addCalculateText(getResultText() + " )");
             } else {
                 addCalculateText(")");
             }
@@ -439,9 +441,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void rootAction() {
         if(!getRotateOperator()) {
-            addCalculateText("√(" + getResultText() + ")");
+            addCalculateText("√(");
         } else {
-            addCalculateText(getLastOp() + " √(" + getResultText() + ")");
+            addCalculateText(getLastOp() + " √(");
         }
         setRemoveValue(true);
         setRotateOperator(true);
@@ -853,7 +855,6 @@ public class MainActivity extends AppCompatActivity {
         adjustTextSize();
     }
 
-
     /**
      * This method is called when the backspace button is clicked.
      * It removes the last character from the result text.
@@ -962,8 +963,9 @@ public class MainActivity extends AppCompatActivity {
         }
         setRotateOperator(false);
         formatResultTextAfterType();
-        setRemoveValue(true);
         adjustTextSize();
+        setRemoveValue(true);
+        formatResultTextAfterType();
     }
 
     /**
