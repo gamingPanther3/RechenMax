@@ -1,9 +1,8 @@
 <div align="center">
-  <div align="center">
----
-# RechenMax
----
-  </div>
+
+# Simple Java Calculator
+</div>
+<div align="center">
   <img src="RM-LM-C.png" alt="RechenMax Logo" width="400"/> <img src="RM-DM-C.png" alt="RechenMax Logo" width="400"/>
 </div>  
 
