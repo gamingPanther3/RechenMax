@@ -20,8 +20,10 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 - **Benutzerfreundliches Design**: Mit seinem sauberen und intuitiven Design ist RechenMax einfach zu bedienen und bietet eine optimale Benutzererfahrung.
 
 <div align="center">
-  <img src="pictures/RM-LM-C.png" alt="RechenMaxBild1" width="250"/>
-  <img src="pictures/RM-DM-C.png" alt="RechenMaxBild2" width="250"/>
+  <img src="pictures/RM-LM-C.png" alt="RechenMaxBild1" width="200"/>
+  <img src="pictures/RM-DM-C.png" alt="RechenMaxBild2" width="200"/>
+  <img src="pictures/RM-LM-C-S.png" alt="RechenMaxBild3" width="200"/>
+  <img src="pictures/RM-DM-C-S.png" alt="RechenMaxBild4" width="200"/>
 </div>  
 
 - **Wissenschaftliche Notationen**: RechenMax kann auch wissenschaftliche Notationen verarbeiten und automatisch in Dezimalnotationen umwandeln.
