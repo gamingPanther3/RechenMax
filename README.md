@@ -1,4 +1,4 @@
-<div align="center", width="200px", height="200px">
+<div align="center" width="200px" height="200px">
 
 # RechenMax (Taschenrechner)
 
