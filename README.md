@@ -2,7 +2,7 @@
 
 # Simple Java Calculator
 
-![Logo Simple Java Calculator](RechenMaxicon.jpg)
+![Logo RechenMax](RechenMaxIcon.jpg)
 
 ---
 
