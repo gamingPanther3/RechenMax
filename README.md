@@ -1,7 +1,7 @@
 
 
 <div align="center">
-  <img src="RM-LM-C.png" alt="RechenMax Logo" width="400"/> <img src="RM-DM-C.png" alt="RechenMax Logo" width="400"/>
+  <img src="RM-LM-C.png" alt="RechenMax Logo" width="400"/>       <img src="RM-DM-C.png" alt="RechenMax Logo" width="400"/>
 </div>  
 
 ## Willkommen zur Dokumentation der Taschenrechner App
