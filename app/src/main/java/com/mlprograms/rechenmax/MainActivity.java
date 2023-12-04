@@ -446,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
             addCalculateText(getLastOp() + " √(");
         }
         setRemoveValue(true);
-        setRotateOperator(true);
+        //setRotateOperator(true);
     }
 
     /**
