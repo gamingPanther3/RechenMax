@@ -284,7 +284,7 @@ public class CalculatorActivity {
         if (Double.isInfinite(resultDouble)) {
             throw new ArithmeticException("Wert zu groß");
         }
-        return new BigDecimal(resultDouble, MC);
+        return new BigDecimal(resultDouble, DIVIDEMC).stripTrailingZeros();
     }
 
     /**

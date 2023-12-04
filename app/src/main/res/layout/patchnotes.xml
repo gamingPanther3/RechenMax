@@ -460,9 +460,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text=""
+            android:text="Negative Exponenten:"
             android:textColor="#000000"
             android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Der Fehler, der bei der Berechnung mit negativen Exponenten auftrat (übermäßige Anzahl an Nachkommastellen), wurde behoben.\n"
+            android:textColor="#000000"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/releaseNotesFutureFeaturesTitle"
