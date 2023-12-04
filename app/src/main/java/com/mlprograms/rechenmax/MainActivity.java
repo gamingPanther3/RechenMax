@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
         dataManager = new DataManager(this);
         dataManager.createJSON(getApplicationContext());
-        dataManager.loadNumbers();
         dataManager.checkAndCreateFile();
         calculatingMode = dataManager.readFromJSON("calculatingMode", context);
 
@@ -126,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 checkDarkmodeSetting();
             }
         }
+        //dataManager.loadNumbers();
+        dataManager.saveNumbers(getApplicationContext());
         setUpListeners();
         checkScienceButtonState();
         checkDarkmodeSetting();
