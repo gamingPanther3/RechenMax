@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
         if (prefs.getBoolean("firstrun", true)) {
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
-            setContentView(R.layout.patchnotes);
+            //setContentView(R.layout.patchnotes);
             checkDarkmodeSetting();
             prefs.edit().putBoolean("firstrun", false).commit();
         }
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (showPatNot != null && disablePatNotTemp != null) {
             if (showPatNot.equals("true") && disablePatNotTemp.equals("false")) {
-                setContentView(R.layout.patchnotes);
+                //setContentView(R.layout.patchnotes);
                 checkDarkmodeSetting();
             }
         }

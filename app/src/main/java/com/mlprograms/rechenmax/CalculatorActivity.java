@@ -219,7 +219,7 @@ public class CalculatorActivity {
         final String formattedInput = str.replace(",", ".");
 
         // A regular expression pattern is defined to match the scientific notation. The pattern is the same as in the isScientificNotation method.
-        final Pattern pattern = Pattern.compile("([-+]?\\\\d+(\\\\.\\\\d+)?)(e[-+]?\\\\d+)");
+        final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)(e[-+]?\\d+)");
 
         // The pattern is used to create a matcher for the formatted input string
         final Matcher matcher = pattern.matcher(formattedInput);
@@ -244,6 +244,11 @@ public class CalculatorActivity {
 
             // The number is scaled by the power of ten of the exponent
             final BigDecimal scaledNumber = number.scaleByPowerOfTen(exponent);
+
+            // Check if the value is too large for a Long
+            if (scaledNumber.compareTo(BigDecimal.valueOf(Long.MAX_VALUE)) > 0) {
+                throw new NumberFormatException("Wert zu groß");
+            }
 
             // The match in the input string is replaced with the scaled number
             matcher.appendReplacement(sb, scaledNumber.toPlainString());
