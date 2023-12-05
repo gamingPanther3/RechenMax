@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
         if (prefs.getBoolean("firstrun", true)) {
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
-            //setContentView(R.layout.patchnotes);
+            setContentView(R.layout.patchnotes);
             checkDarkmodeSetting();
             prefs.edit().putBoolean("firstrun", false).commit();
         }
@@ -121,12 +121,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (showPatNot != null && disablePatNotTemp != null) {
             if (showPatNot.equals("true") && disablePatNotTemp.equals("false")) {
-                //setContentView(R.layout.patchnotes);
+                setContentView(R.layout.patchnotes);
                 checkDarkmodeSetting();
             }
         }
-        //dataManager.loadNumbers();
-        dataManager.saveNumbers(getApplicationContext());
+        dataManager.loadNumbers();
+        //dataManager.saveNumbers(getApplicationContext());
         setUpListeners();
         checkScienceButtonState();
         checkDarkmodeSetting();
@@ -1021,28 +1021,36 @@ public class MainActivity extends AppCompatActivity {
      */
     public void formatResultTextAfterType() {
         String originalText = getResultText();
-        int index = originalText.indexOf(',');
-        String result;
-        String result2;
-        if (index != -1) {
-            result = originalText.substring(0, index).replace(".", "");
-            result2 = originalText.substring(index);
-        } else {
-            result = originalText.replace(".", "");
-            result2 = "";
-        }
-        if(!getResultText().equals("Unendlich")
-                && !getResultText().equals("Syntax Fehler")
-                && !getIsNotation()
-                && !getResultText().equals("Wert zu groß")
-                && !getResultText().equals("Nur reelle Zahlen")
-                && !getResultText().equals("Domainfehler")
-                && !getResultText().equals("Overflow")) {
-            DecimalFormat decimalFormat = new DecimalFormat("#,###");
-            String formattedNumber = decimalFormat.format(Long.parseLong(result));
-            setResultText(formattedNumber + result2);
-        } else if (getIsNotation()) {
-            setIsNotation(false);
+        if(originalText != null) {
+            int index = originalText.indexOf(',');
+            String result;
+            String result2;
+            if (index != -1) {
+                result = originalText.substring(0, index).replace(".", "");
+                result2 = originalText.substring(index);
+            } else {
+                result = originalText.replace(".", "");
+                result2 = "";
+            }
+            if(!getResultText().equals("Unendlich")
+                    && !getResultText().equals("Syntax Fehler")
+                    && !getIsNotation()
+                    && !getResultText().equals("Wert zu groß")
+                    && !getResultText().equals("Nur reelle Zahlen")
+                    && !getResultText().equals("Domainfehler")
+                    && !getResultText().equals("Overflow")
+                    && !getResultText().equals("Ungültiges Zahlenformat")){
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                try {
+                    BigDecimal bigDecimalResult = new BigDecimal(result);
+                    String formattedNumber = decimalFormat.format(bigDecimalResult);
+                    setResultText(formattedNumber + result2);
+                } catch (NumberFormatException e) {
+                    System.out.println("Ungültiges Zahlenformat: " + result);
+                }
+            } else if (getIsNotation()) {
+                setIsNotation(false);
+            }
         }
     }
 
@@ -1052,23 +1060,25 @@ public class MainActivity extends AppCompatActivity {
      * If the result text is "Ungültige Eingabe" or "Nur reelle Zahlen", the text size is set to a specific value.
      */
     public void adjustTextSize() {
-        int len = getResultText().replace(",", "").replace(".", "").replace("-", "").length();
-        TextView label = findViewById(R.id.result_label);
-        if(!getResultText().equals("Nur reelle Zahlen")) {
-            if (!getResultText().equals("Ungültige Eingabe")) {
-                if (len >= 12) {
-                    label.setTextSize(45f);
-                    if (len >= 15) {
-                        label.setTextSize(35f);
+        if(getResultText() != null) {
+            int len = getResultText().replace(",", "").replace(".", "").replace("-", "").length();
+            TextView label = findViewById(R.id.result_label);
+            if(!getResultText().equals("Nur reelle Zahlen")) {
+                if (!getResultText().equals("Ungültige Eingabe")) {
+                    if (len >= 12) {
+                        label.setTextSize(45f);
+                        if (len >= 15) {
+                            label.setTextSize(35f);
+                        }
+                    } else {
+                        label.setTextSize(55f);
                     }
                 } else {
-                    label.setTextSize(55f);
+                    label.setTextSize(50f);
                 }
             } else {
                 label.setTextSize(50f);
             }
-        } else {
-            label.setTextSize(50f);
         }
     }
 
@@ -1112,7 +1122,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public String getResultText() {
         TextView resulttext = (TextView) findViewById(R.id.result_label);
-        return resulttext.getText().toString();
+        if(resulttext != null) {
+            return resulttext.getText().toString();
+        }
+        return null;
     }
     public void addResultText(final char c) {
         TextView resulttext = (TextView) findViewById(R.id.result_label);
