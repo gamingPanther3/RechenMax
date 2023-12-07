@@ -4,23 +4,21 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.text.Html;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.text.method.LinkMovementMethod;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import org.w3c.dom.Text;
 
 /**
  * SettingsActivity
@@ -30,14 +28,11 @@ import org.w3c.dom.Text;
  */
 public class SettingsActivity extends AppCompatActivity {
 
-    // Define a string of spaces
-    private String space = "                                                      ";
     // Declare a DataManager object
     DataManager dataManager;
     // Declare a static MainActivity object
+    @SuppressLint("StaticFieldLeak")
     private static MainActivity mainActivity;
-    // Declare a Spinner object
-    private Spinner spinner;
 
     /**
      * The `savedInstanceState` Bundle contains data that was saved in {@link #onSaveInstanceState}
@@ -48,12 +43,13 @@ public class SettingsActivity extends AppCompatActivity {
      * @param savedInstanceState The Bundle containing the saved state, or null if the activity is
      *                         being created for the first time.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
-        dataManager = new DataManager(this);
+        dataManager = new DataManager();
         //dataManager.deleteJSON(getApplicationContext());
         dataManager.createJSON(getApplicationContext());
         //resetReleaseNoteConfig(getApplicationContext());
@@ -61,13 +57,13 @@ public class SettingsActivity extends AppCompatActivity {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switchDisplayMode(currentNightMode);
 
-        Button button = findViewById(R.id.settings_return_button);
+        @SuppressLint("CutPasteId") Button button = findViewById(R.id.settings_return_button);
         button.setOnClickListener(v -> returnToCalculator());
 
         findViewById(R.id.settingsUI);
 
-        Switch settingsReleaseNotesSwitch = findViewById(R.id.settings_release_notes);
-        Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
+        @SuppressLint({"CutPasteId", "UseSwitchCompatOrMaterialCode"}) Switch settingsReleaseNotesSwitch = findViewById(R.id.settings_release_notes);
+        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
 
         updateSwitchState(settingsReleaseNotesSwitch, "settingReleaseNotesSwitch");
         updateSwitchState(settingsTrueDarkMode, "settingsTrueDarkMode");
@@ -76,11 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         final String setRelNotSwitch= dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext());
 
         if (setRelNotSwitch != null) {
-            if(setRelNotSwitch.equals("true")) {
-                settingsReleaseNotesSwitch.setChecked(true);
-            } else {
-                settingsReleaseNotesSwitch.setChecked(false);
-            }
+            settingsReleaseNotesSwitch.setChecked(setRelNotSwitch.equals("true"));
         }
 
         settingsReleaseNotesSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -93,7 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
             dataManager.saveToJSON("settingsTrueDarkMode", isChecked, getMainActivityContext());
             Log.d("Settings", "settingsTrueDarkMode=" + dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext()));
 
-            dataManager = new DataManager(this);
+            dataManager = new DataManager();
             int currentNightMode1 = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
             String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
@@ -104,15 +96,15 @@ public class SettingsActivity extends AppCompatActivity {
                     updateUI(R.color.black, R.color.white);
                 }
             } else if(currentNightMode1 == Configuration.UI_MODE_NIGHT_NO) {
-                ScrollView settingsScrollView = (ScrollView) findViewById(R.id.settings_sroll_textview);
-                LinearLayout settingsLayout = (LinearLayout) findViewById(R.id.settings_layout);
-                Button settingsReturnButton = (Button) findViewById(R.id.settings_return_button);
+                ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
+                LinearLayout settingsLayout = findViewById(R.id.settings_layout);
+                @SuppressLint("CutPasteId") Button settingsReturnButton = findViewById(R.id.settings_return_button);
 
-                TextView settingsTitle = (TextView) findViewById(R.id.settings_title);
-                TextView settingsReleaseNotes = (TextView) findViewById(R.id.settings_release_notes);
-                TextView settingsReleaseNotesText = (TextView) findViewById(R.id.settings_release_notes_text);
-                TextView settingsTrueDarkModeText = (TextView) findViewById(R.id.settings_true_darkmode_text);
-                TextView settingsCredits = (TextView) findViewById(R.id.credits_view);
+                TextView settingsTitle = findViewById(R.id.settings_title);
+                @SuppressLint("CutPasteId") TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
+                TextView settingsReleaseNotesText = findViewById(R.id.settings_release_notes_text);
+                TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
+                TextView settingsCredits = findViewById(R.id.credits_view);
 
                 settingsLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
                 settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
@@ -130,9 +122,10 @@ public class SettingsActivity extends AppCompatActivity {
                 switchDisplayMode(Configuration.UI_MODE_NIGHT_NO);
             }
         });
-        spinner = findViewById(R.id.settings_display_mode_spinner);
+        // Declare a Spinner object
+        Spinner spinner = findViewById(R.id.settings_display_mode_spinner);
 
-        Integer num = getSelectetSettingPosition();
+        Integer num = getSelectedSettingPosition();
         if(num != null) {
             spinner.setSelection(num);
         }
@@ -156,7 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         final String readselectedSetting = parent.getSelectedItem().toString();
 
-        // Überprüfen Sie, ob das TextView-Objekt null ist, bevor Sie Methoden darauf aufrufen
+        // Check if the TextView object is null before calling methods on it
         TextView textView = null;
         if(parent.getChildAt(0) instanceof TextView) {
             textView = (TextView) parent.getChildAt(0);
@@ -164,24 +157,26 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(textView != null) {
             textView.setTextSize(20);
-            if(readselectedSetting != null) {
-                if(readselectedSetting.equals("Dunkelmodus")) {
+            switch (readselectedSetting) {
+                case "Dunkelmodus":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     switchDisplayMode(currentNightMode);
                     textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-                } else if (readselectedSetting.equals("Tageslichtmodus")) {
+                    break;
+                case "Tageslichtmodus":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
                     textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     switchDisplayMode(currentNightMode);
-                } else if (readselectedSetting.equals("Systemstandard")) {
+                    break;
+                case "Systemstandard":
                     dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
-                    if(currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                    if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.white));
                     } else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     }
                     switchDisplayMode(currentNightMode);
-                }
+                    break;
             }
         }
     }
@@ -194,7 +189,7 @@ public class SettingsActivity extends AppCompatActivity {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         final String readselectedSetting = parent.getSelectedItem().toString();
 
-        // Überprüfen Sie, ob das TextView-Objekt null ist, bevor Sie Methoden darauf aufrufen
+        // Check if the TextView object is null before calling methods on it
         TextView textView = null;
         if(parent.getChildAt(0) instanceof TextView) {
             textView = (TextView) parent.getChildAt(0);
@@ -202,58 +197,46 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(textView != null) {
             textView.setTextSize(20);
-            if(readselectedSetting != null) {
-                if(readselectedSetting.equals("Dunkelmodus")) {
+            switch (readselectedSetting) {
+                case "Dunkelmodus":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-                } else if (readselectedSetting.equals("Tageslichtmodus")) {
+                    break;
+                case "Tageslichtmodus":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
                     textView.setTextColor(ContextCompat.getColor(this, R.color.black));
-                } else if (readselectedSetting.equals("Systemstandard")) {
+                    break;
+                case "Systemstandard":
                     dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
-                    if(currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                    if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.white));
                     } else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     }
-                }
+                    break;
             }
         }
-    }
-
-    /**
-     * This method gets the position of the selected calculating mode.
-     * @return The position of the selected calculating mode.
-     */
-    public Integer getSelectetCalculatingModePosition() {
-        Integer num = null;
-        final String readselectedSetting = dataManager.readFromJSON("calculatingMode", getMainActivityContext());
-
-        if(readselectedSetting != null) {
-            if(readselectedSetting.equals("normal")) {
-                num = 0;
-            } else if (readselectedSetting.equals("easy")) {
-                num = 1;
-            }
-        }
-        return num;
     }
 
     /**
      * This method gets the position of the selected setting.
      * @return The position of the selected setting.
      */
-    public Integer getSelectetSettingPosition() {
+    public Integer getSelectedSettingPosition() {
         Integer num = null;
         final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
 
         if(readselectedSetting != null) {
-            if(readselectedSetting.equals("System")) {
-                num = 0;
-            } else if (readselectedSetting.equals("Light")) {
-                num = 1;
-            } else if (readselectedSetting.equals("Dark")) {
-                num = 2;
+            switch (readselectedSetting) {
+                case "System":
+                    num = 0;
+                    break;
+                case "Light":
+                    num = 1;
+                    break;
+                case "Dark":
+                    num = 2;
+                    break;
             }
         }
         return num;
@@ -267,12 +250,13 @@ public class SettingsActivity extends AppCompatActivity {
         final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
 
         if(setting != null) {
-            if(setting.equals("System")) {
-                return "Systemstandard";
-            } else if (setting.equals("Dark")) {
-                return "Dunkelmodus";
-            } else if (setting.equals("Light")) {
-                return "Tageslichtmodus";
+            switch (setting) {
+                case "System":
+                    return "Systemstandard";
+                case "Dark":
+                    return "Dunkelmodus";
+                case "Light":
+                    return "Tageslichtmodus";
             }
         }
         return null;
@@ -283,7 +267,7 @@ public class SettingsActivity extends AppCompatActivity {
      * @param switchView The switch view to update.
      * @param key The key to use to get the value.
      */
-    private void updateSwitchState(Switch switchView, String key) {
+    private void updateSwitchState(@SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchView, String key) {
         String value = dataManager.readFromJSON(key, this);
         if (value != null) {
             switchView.setChecked(Boolean.parseBoolean(value));
@@ -313,7 +297,7 @@ public class SettingsActivity extends AppCompatActivity {
      * @param newConfig The new device configuration.
      */
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         int currentNightMode = newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -324,30 +308,30 @@ public class SettingsActivity extends AppCompatActivity {
      * This method switches the display mode based on the current night mode.
      * @param currentNightMode The current night mode.
      */
-    @SuppressLint("ResourceType")
+    @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables"})
     private void switchDisplayMode(int currentNightMode) {
-        ScrollView settingsScrollView = (ScrollView) findViewById(R.id.settings_sroll_textview);
-        LinearLayout settingsLayout = (LinearLayout) findViewById(R.id.settings_layout);
-        Button settingsReturnButton = (Button) findViewById(R.id.settings_return_button);
+        ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
+        LinearLayout settingsLayout = findViewById(R.id.settings_layout);
+        Button settingsReturnButton = findViewById(R.id.settings_return_button);
 
-        TextView settingsTitle = (TextView) findViewById(R.id.settings_title);
-        TextView settingsReleaseNotes = (TextView) findViewById(R.id.settings_release_notes);
-        TextView settingsReleaseNotesText = (TextView) findViewById(R.id.settings_release_notes_text);
-        Switch settingsTrueDarkMode = (android.widget.Switch) findViewById(R.id.settings_true_darkmode);
-        TextView settingsTrueDarkModeText = (TextView) findViewById(R.id.settings_true_darkmode_text);
-        TextView settingsDisplayModeText = (TextView) findViewById(R.id.settings_display_mode_text);
-        TextView settingsDisplayModeTitle = (TextView) findViewById(R.id.settings_display_mode_title);
-        TextView settingsCredits = (TextView) findViewById(R.id.credits_view);
+        TextView settingsTitle = findViewById(R.id.settings_title);
+        TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
+        TextView settingsReleaseNotesText = findViewById(R.id.settings_release_notes_text);
+        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
+        TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
+        TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
+        TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
+        TextView settingsCredits = findViewById(R.id.credits_view);
 
-        Spinner spinner = (Spinner) findViewById(R.id.settings_display_mode_spinner);
+        Spinner spinner = findViewById(R.id.settings_display_mode_spinner);
         updateSpinner2(spinner);
 
         if(getSelectedSetting() != null) {
             if(getSelectedSetting().equals("Systemstandard")) {
                 switch (currentNightMode) {
                     case Configuration.UI_MODE_NIGHT_YES:
-                        // Nachtmodus ist aktiviert
-                        dataManager = new DataManager(this);
+                        // Nightmode is activated
+                        dataManager = new DataManager();
                         String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
 
                         if (trueDarkMode != null) {
@@ -361,9 +345,9 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
-                        // Nachtmodus ist nicht aktiviert
+                        // Nightmode is not activated
 
-                        // Setzen Sie die Farben für den Button und den TextView
+                        // Set the colors for the Button and the TextView
                         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
                         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
@@ -397,7 +381,7 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
 
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
-                dataManager = new DataManager(this);
+                dataManager = new DataManager();
                 String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
 
                 if (trueDarkMode != null) {
@@ -418,18 +402,19 @@ public class SettingsActivity extends AppCompatActivity {
      * @param backgroundColor The color to be used for the background.
      * @param textColor The color to be used for the text.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void updateUI(int backgroundColor, int textColor) {
-        ScrollView settingsScrollView = (ScrollView) findViewById(R.id.settings_sroll_textview);
-        LinearLayout settingsLayout = (LinearLayout) findViewById(R.id.settings_layout);
-        Button settingsReturnButton = (Button) findViewById(R.id.settings_return_button);
-        TextView settingsTitle = (TextView) findViewById(R.id.settings_title);
-        TextView settingsReleaseNotes = (TextView) findViewById(R.id.settings_release_notes);
-        TextView settingsReleaseNotesText = (TextView) findViewById(R.id.settings_release_notes_text);
-        Switch settingsTrueDarkMode = (android.widget.Switch) findViewById(R.id.settings_true_darkmode);
-        TextView settingsTrueDarkModeText = (TextView) findViewById(R.id.settings_true_darkmode_text);
-        TextView settingsDisplayModeText = (TextView) findViewById(R.id.settings_display_mode_text);
-        TextView settingsDisplayModeTitle = (TextView) findViewById(R.id.settings_display_mode_title);
-        TextView settingsCredits = (TextView) findViewById(R.id.credits_view);
+        ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
+        LinearLayout settingsLayout = findViewById(R.id.settings_layout);
+        Button settingsReturnButton = findViewById(R.id.settings_return_button);
+        TextView settingsTitle = findViewById(R.id.settings_title);
+        TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
+        TextView settingsReleaseNotesText = findViewById(R.id.settings_release_notes_text);
+        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
+        TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
+        TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
+        TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
+        TextView settingsCredits = findViewById(R.id.credits_view);
 
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
@@ -467,36 +452,13 @@ public class SettingsActivity extends AppCompatActivity {
                 View v = layout.getChildAt(i);
                 if (v instanceof Switch) {
                     String switchText = ((Switch) v).getText().toString();
-                    switchText = switchText + this.space;
+                    // Define a string of spaces
+                    String space = "                                                      ";
+                    switchText = switchText + space;
                     ((Switch) v).setText(switchText);
                 }
                 else if (v instanceof ViewGroup) {
                     appendSpaceToSwitches((ViewGroup) v);
-                }
-            }
-        }
-    }
-
-    /**
-     * This method changes the text and background colors of all TextViews in a layout.
-     * @param layout The layout containing the TextViews.
-     * @param foregroundColor The color to be used for the text.
-     * @param backgroundColor The color to be used for the background.
-     */
-    private void changeTextViewColors(ViewGroup layout, int foregroundColor, int backgroundColor) {
-        if (layout != null) {
-            for (int i = 0; i < layout.getChildCount(); i++) {
-                View v = layout.getChildAt(i);
-                v.setBackgroundColor(backgroundColor);
-
-                // Wenn das child ein TextView ist, ändere die Vordergrund- und Hintergrundfarben
-                if (v instanceof TextView) {
-                    ((TextView) v).setTextColor(foregroundColor);
-                    ((TextView) v).setBackgroundColor(backgroundColor);
-                }
-                // Wenn das child selbst ein ViewGroup (z.B. ein Layout) ist, rufe Funktion rekursiv auf
-                else if (v instanceof ViewGroup) {
-                    changeTextViewColors((ViewGroup) v, foregroundColor, backgroundColor);
                 }
             }
         }

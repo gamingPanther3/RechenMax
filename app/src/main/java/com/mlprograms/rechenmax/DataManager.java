@@ -1,9 +1,7 @@
 package com.mlprograms.rechenmax;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -25,9 +23,7 @@ import java.nio.file.Files;
  * @author Max Lemberg
  * @version 1.0.0
  * @date 03.12.2023
- */
-
-/**
+ *
  *  | Names                            | Values                   | Context                              |
  *  |----------------------------------|--------------------------|--------------------------------------|
  *  | settingReleaseNotesSwitch        | true / false             | SettingsActivity                     |
@@ -43,10 +39,6 @@ public class DataManager {
 
     // Define the name of the JSON file
     private static final String JSON_FILE = "settings.json";
-    // Declare a HistoryActivity object
-    private HistoryActivity historyActivity;
-    // Declare a SettingsActivity object
-    private SettingsActivity settingsActivity;
     // Declare a MainActivity object
     private MainActivity mainActivity;
 
@@ -65,22 +57,13 @@ public class DataManager {
     }
 
     /**
-     * This constructor is used to create a DataManager object for the SettingsActivity.
+     * This constructor is used to create a DataManager object.
      *
-     * @param settingsActivity The SettingsActivity instance that this DataManager will be associated with.
      */
-    public DataManager(SettingsActivity settingsActivity) {
-        this.settingsActivity = settingsActivity;
+    public DataManager() {
+        // Declare a SettingsActivity object
     }
 
-    /**
-     * This constructor is used to create a DataManager object for the HistoryActivity.
-     *
-     * @param historyActivity The HistoryActivity instance that this DataManager will be associated with.
-     */
-    public DataManager(HistoryActivity historyActivity) {
-        this.historyActivity = historyActivity;
-    }
 
     /**
      * This method is used to create a new JSON file in the application's file directory.
@@ -252,7 +235,7 @@ public class DataManager {
 
             FileOutputStream fileOut = context.openFileOutput(FILE_NAME1, Context.MODE_PRIVATE);
             OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
-            outputWriter.write(data + "\n" + oldData.toString());
+            outputWriter.write(data + "\n" + oldData);
             outputWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -294,12 +277,12 @@ public class DataManager {
             try {
                 FileOutputStream fileOut1 = applicationContext.openFileOutput(FILE_NAME2, Context.MODE_PRIVATE);
                 OutputStreamWriter outputWriter1 = new OutputStreamWriter(fileOut1);
-                outputWriter1.write(mainActivity.getCalculateText().toString());
+                outputWriter1.write(mainActivity.getCalculateText());
                 outputWriter1.close();
 
                 FileOutputStream fileOut2 = applicationContext.openFileOutput(FILE_NAME3, Context.MODE_PRIVATE);
                 OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileOut2);
-                outputWriter2.write(mainActivity.getResultText().toString());
+                outputWriter2.write(mainActivity.getResultText());
                 outputWriter2.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -311,7 +294,7 @@ public class DataManager {
      * This method loads numbers from two files and sets the text of two TextViews.
      */
     public void loadNumbers() {
-        String result1 = "";
+        StringBuilder result1 = new StringBuilder();
         try {
             FileInputStream fileIn = mainActivity.openFileInput(FILE_NAME2);
             InputStreamReader inputReader = new InputStreamReader(fileIn);
@@ -319,14 +302,14 @@ public class DataManager {
             int charRead;
             while ((charRead = inputReader.read(inputBuffer)) > 0) {
                 String readString = String.copyValueOf(inputBuffer, 0, charRead);
-                result1 += readString;
+                result1.append(readString);
             }
             inputReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        String result2 = "";
+        StringBuilder result2 = new StringBuilder();
         try {
             FileInputStream fileIn = mainActivity.openFileInput(FILE_NAME3);
             InputStreamReader inputReader = new InputStreamReader(fileIn);
@@ -334,22 +317,22 @@ public class DataManager {
             int charRead;
             while ((charRead = inputReader.read(inputBuffer)) > 0) {
                 String readString = String.copyValueOf(inputBuffer, 0, charRead);
-                result2 += readString;
+                result2.append(readString);
             }
             inputReader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        TextView calclab = (TextView) mainActivity.findViewById(R.id.calculate_label);
-        TextView reslab = (TextView) mainActivity.findViewById(R.id.result_label);
+        TextView calculatelabel = mainActivity.findViewById(R.id.calculate_label);
+        TextView resultlabel = mainActivity.findViewById(R.id.result_label);
 
-        if (mainActivity != null && calclab != null && reslab != null) {
-            calclab.setText(result1);
-            if (!result2.equals("")) {
-                reslab.setText(result2);
+        if (mainActivity != null && calculatelabel != null && resultlabel != null) {
+            calculatelabel.setText(result1.toString());
+            if (!result2.toString().equals("")) {
+                resultlabel.setText(result2.toString());
             } else {
-                reslab.setText("0");
+                resultlabel.setText("0");
             }
         }
     }

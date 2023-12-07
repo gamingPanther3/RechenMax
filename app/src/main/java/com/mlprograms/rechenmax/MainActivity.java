@@ -2,10 +2,12 @@ package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
@@ -23,10 +25,7 @@ import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
-import com.google.android.material.textview.MaterialTextView;
-
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,11 +68,6 @@ public class MainActivity extends AppCompatActivity {
     private DataManager dataManager;
 
     /**
-     * Stores the current mode of calculation (e.g., standard, scientific, programmer).
-     */
-    private String calculatingMode;
-
-    /**
      * Instance of SharedPreferences for storing and retrieving small amounts of primitive data as key-value pairs.
      */
     SharedPreferences prefs = null;
@@ -99,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DataManager(this);
         dataManager.createJSON(getApplicationContext());
         dataManager.checkAndCreateFile();
-        calculatingMode = dataManager.readFromJSON("calculatingMode", context);
 
         // If it's the first run of the application
         prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
@@ -107,11 +100,8 @@ public class MainActivity extends AppCompatActivity {
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
             setContentView(R.layout.patchnotes);
             checkDarkmodeSetting();
-            prefs.edit().putBoolean("firstrun", false).commit();
+            prefs.edit().putBoolean("firstrun", false).apply();
         }
-
-        MaterialTextView mEditText1 = (MaterialTextView) findViewById(R.id.calculate_label);
-        MaterialTextView mEditText2 = (MaterialTextView) findViewById(R.id.result_label);
 
         Log.e("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
         Log.e("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
@@ -184,21 +174,18 @@ public class MainActivity extends AppCompatActivity {
      * Sets up the listener for the scientific buttons
      */
     private void setScienceButtonListener() {
-        Button toggleButton = (Button) findViewById(R.id.scientificButton);
+        Button toggleButton = findViewById(R.id.scientificButton);
         if(toggleButton != null) {
-            toggleButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LinearLayout buttonRow = findViewById(R.id.scientificRow);
-                    final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-                    if(buttonRow != null && data != null) {
-                        if (data.equals("true")) {
-                            buttonRow.setVisibility(View.GONE);
-                            dataManager.saveToJSON("showScienceRow", false, getApplicationContext());
-                        } else if (data.equals("false")) {
-                            buttonRow.setVisibility(View.VISIBLE);
-                            dataManager.saveToJSON("showScienceRow", true, getApplicationContext());
-                        }
+            toggleButton.setOnClickListener(v -> {
+                LinearLayout buttonRow = findViewById(R.id.scientificRow);
+                final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
+                if(buttonRow != null && data != null) {
+                    if (data.equals("true")) {
+                        buttonRow.setVisibility(View.GONE);
+                        dataManager.saveToJSON("showScienceRow", false, getApplicationContext());
+                    } else if (data.equals("false")) {
+                        buttonRow.setVisibility(View.VISIBLE);
+                        dataManager.saveToJSON("showScienceRow", true, getApplicationContext());
                     }
                 }
             });
@@ -226,14 +213,11 @@ public class MainActivity extends AppCompatActivity {
      * @param buttonId The ID of the button to which the listener is to be set.
      */
     private void setCommaButtonListener(int buttonId) {
-        Button btn = (Button) findViewById(buttonId);
+        Button btn = findViewById(buttonId);
         if(btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CommaAction();
-                    dataManager.saveNumbers(getApplicationContext());
-                }
+            btn.setOnClickListener(v -> {
+                CommaAction();
+                dataManager.saveNumbers(getApplicationContext());
             });
         }
     }
@@ -245,17 +229,14 @@ public class MainActivity extends AppCompatActivity {
      * @param buttonId The ID of the button to which the listener is to be set.
      */
     private void setCalculateButtonListener(int buttonId) {
-        Button btn = (Button) findViewById(buttonId);
+        Button btn = findViewById(buttonId);
         if(btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Calculate();
-                        dataManager.saveNumbers(getApplicationContext());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
+            btn.setOnClickListener(v -> {
+                try {
+                    Calculate();
+                    dataManager.saveNumbers(getApplicationContext());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             });
         }
@@ -267,15 +248,12 @@ public class MainActivity extends AppCompatActivity {
      * @param buttonId The ID of the button to which the listener is to be set.
      */
     private void setNumberButtonListener(int buttonId) {
-        Button btn = (Button) findViewById(buttonId);
+        Button btn = findViewById(buttonId);
         if(btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final String num = v.getTag().toString();
-                    NumberAction(num);
-                    dataManager.saveNumbers(getApplicationContext());
-                }
+            btn.setOnClickListener(v -> {
+                final String num = v.getTag().toString();
+                NumberAction(num);
+                dataManager.saveNumbers(getApplicationContext());
             });
         }
     }
@@ -287,14 +265,11 @@ public class MainActivity extends AppCompatActivity {
      * @param operation The action which belongs to the button.
      */
     private void setOperationButtonListener(int buttonId, String operation) {
-        Button btn = (Button) findViewById(buttonId);
+        Button btn = findViewById(buttonId);
         if(btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    OperationAction(operation);
-                    dataManager.saveNumbers(getApplicationContext());
-                }
+            btn.setOnClickListener(v -> {
+                OperationAction(operation);
+                dataManager.saveNumbers(getApplicationContext());
             });
         }
     }
@@ -306,14 +281,11 @@ public class MainActivity extends AppCompatActivity {
      * @param action The action which belongs to the button.
      */
     private void setEmptyButtonListener(int buttonId, String action) {
-        Button btn = (Button) findViewById(buttonId);
+        Button btn = findViewById(buttonId);
         if(btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    EmptyAction(action);
-                    dataManager.saveNumbers(getApplicationContext());
-                }
+            btn.setOnClickListener(v -> {
+                EmptyAction(action);
+                dataManager.saveNumbers(getApplicationContext());
             });
         }
     }
@@ -325,14 +297,11 @@ public class MainActivity extends AppCompatActivity {
      * @param action The action which belongs to the button.
      */
     private void setButtonListener(int buttonId, Runnable action) {
-        Button btn = (Button) findViewById(buttonId);
+        Button btn = findViewById(buttonId);
         if(btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    action.run();
-                    dataManager.saveNumbers(getApplicationContext());
-                }
+            btn.setOnClickListener(v -> {
+                action.run();
+                dataManager.saveNumbers(getApplicationContext());
             });
         }
     }
@@ -343,14 +312,11 @@ public class MainActivity extends AppCompatActivity {
      * @param buttonId The ID of the button to which the listener is to be set.
      */
     private void setNegateButtonListener(int buttonId) {
-        Button btn = (Button) findViewById(buttonId);
+        Button btn = findViewById(buttonId);
         if(btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NegativAction();
-                    dataManager.saveNumbers(getApplicationContext());
-                }
+            btn.setOnClickListener(v -> {
+                NegativAction();
+                dataManager.saveNumbers(getApplicationContext());
             });
         }
     }
@@ -362,14 +328,11 @@ public class MainActivity extends AppCompatActivity {
      * @param action The action which belongs to the button.
      */
     private void setClipboardButtonListener(int buttonId, String action) {
-        Button btn = (Button) findViewById(buttonId);
+        Button btn = findViewById(buttonId);
         if(btn != null) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ClipboardAction(action);
-                    dataManager.saveNumbers(getApplicationContext());
-                }
+            btn.setOnClickListener(v -> {
+                ClipboardAction(action);
+                dataManager.saveNumbers(getApplicationContext());
             });
         }
     }
@@ -456,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
      * Then it sets the content view, loads numbers, checks dark mode setting, checks science button state, and sets up listeners.
      */
     public void patchNotesOkayButtonAction() {
-        CheckBox checkBox = findViewById(R.id.checkBox);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) CheckBox checkBox = findViewById(R.id.checkBox);
         if (checkBox.isChecked()) {
             dataManager.saveToJSON("showPatchNotes", false, getApplicationContext());
             dataManager.saveToJSON("disablePatchNotesTemporary", true, getApplicationContext());
@@ -478,8 +441,7 @@ public class MainActivity extends AppCompatActivity {
      * It creates a new SettingsActivity, sets the main activity context, and starts the activity.
      */
     public void switchToSettingsAction() {
-        SettingsActivity settingsActivity = new SettingsActivity();
-        settingsActivity.setMainActivityContext(this);
+        SettingsActivity.setMainActivityContext(this);
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
@@ -489,8 +451,7 @@ public class MainActivity extends AppCompatActivity {
      * It creates a new HistoryActivity, sets the main activity context, and starts the activity.
      */
     private void switchToHistoryAction() {
-        HistoryActivity historyActivity = new HistoryActivity();
-        historyActivity.setMainActivityContext(this);
+        HistoryActivity.setMainActivityContext(this);
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
@@ -500,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
      * It calls the superclass method and switches the display mode based on the current night mode.
      */
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
@@ -519,97 +480,101 @@ public class MainActivity extends AppCompatActivity {
      * If a setting is selected, it switches the display mode based on the selected setting.
      * If no setting is selected, it saves "System" as the selected setting and calls itself again.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void switchDisplayMode(int currentNightMode) {
-        // Globale Variablen
-        TextView historyButton = (TextView) findViewById(R.id.history_button);
-        TextView settingsButton = (TextView) findViewById(R.id.settings_button);
-        TextView scienceButton = (TextView) findViewById(R.id.scientificButton);
-        currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        // Global variables
+        TextView historyButton = findViewById(R.id.history_button);
+        TextView settingsButton = findViewById(R.id.settings_button);
+        TextView scienceButton = findViewById(R.id.scientificButton);
         int newColorBTNBackgroundAccent = 0;
         int newColorBTNForegroundAccent = 0;
 
-        // Theme-Einstellung abrufen
+        // Retrieving theme setting
         String selectedSetting = getSelectedSetting();
-        // UI-Elemente aktualisieren
+        // Updating UI elements
         final String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext());
         if (selectedSetting != null) {
-            if (selectedSetting.equals("Systemstandard")) {
-                switch (currentNightMode) {
-                    case Configuration.UI_MODE_NIGHT_YES:
-                        if(trueDarkMode != null && trueDarkMode.equals("true")) {
-                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
-                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
-                        } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
-                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
-                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
-                        }
-                        if (historyButton != null) {
-                            historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
-                        }
-                        if(settingsButton != null) {
-                            settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
-                        }
-                        if(scienceButton != null) {
-                            scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
-                        }
-                        break;
-                    case Configuration.UI_MODE_NIGHT_NO:
-                        newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.white);
-                        newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.black);
-                        if (historyButton != null) {
-                            historyButton.setForeground(getDrawable(R.drawable.baseline_history_24));
-                        }
-                        if(settingsButton != null) {
-                            settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24));
-                        }
-                        if(scienceButton != null) {
-                            scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
-                        }
-                        break;
-                }
-            } else if (selectedSetting.equals("Tageslichtmodus")) {
-                newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.white);
-                newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.black);
-                if (historyButton != null) {
-                    historyButton.setForeground(getDrawable(R.drawable.baseline_history_24));
-                }
-                if(settingsButton != null) {
-                    settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24));
-                }
-                if(scienceButton != null) {
-                    scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
-                }
-            } else if (selectedSetting.equals("Dunkelmodus")) {
-                dataManager = new DataManager(this);
+            switch (selectedSetting) {
+                case "Systemstandard":
+                    switch (currentNightMode) {
+                        case Configuration.UI_MODE_NIGHT_YES:
+                            if (trueDarkMode != null && trueDarkMode.equals("true")) {
+                                newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
+                                newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
+                            } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
+                                newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
+                                newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
+                            }
+                            if (historyButton != null) {
+                                historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
+                            }
+                            if (settingsButton != null) {
+                                settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
+                            }
+                            if (scienceButton != null) {
+                                scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
+                            }
+                            break;
+                        case Configuration.UI_MODE_NIGHT_NO:
+                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.white);
+                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.black);
+                            if (historyButton != null) {
+                                historyButton.setForeground(getDrawable(R.drawable.baseline_history_24));
+                            }
+                            if (settingsButton != null) {
+                                settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24));
+                            }
+                            if (scienceButton != null) {
+                                scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
+                            }
+                            break;
+                    }
+                    break;
+                case "Tageslichtmodus":
+                    newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.white);
+                    newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.black);
+                    if (historyButton != null) {
+                        historyButton.setForeground(getDrawable(R.drawable.baseline_history_24));
+                    }
+                    if (settingsButton != null) {
+                        settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24));
+                    }
+                    if (scienceButton != null) {
+                        scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
+                    }
+                    break;
+                case "Dunkelmodus":
+                    dataManager = new DataManager(this);
 
-                if (trueDarkMode != null) {
-                    if (trueDarkMode.equals("false")) {
-                        newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
-                        newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
+                    if (trueDarkMode != null) {
+                        if (trueDarkMode.equals("false")) {
+                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
+                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
+                        } else {
+                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
+                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
+                        }
                     } else {
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
                         newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
                     }
-                } else {
-                    newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
-                    newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
-                }
-                if (historyButton != null) {
-                    historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
-                }
-                if(settingsButton != null) {
-                    settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
-                }
-                if(scienceButton != null) {
-                    scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
-                }
+                    if (historyButton != null) {
+                        historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
+                    }
+                    if (settingsButton != null) {
+                        settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
+                    }
+                    if (scienceButton != null) {
+                        scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
+                    }
+                    break;
             }
 
-            // UI-Elemente aktualisieren
-            changeTextViewColors((ViewGroup) findViewById(R.id.patchnotesUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
-            changeButtonColors((ViewGroup) findViewById(R.id.patchnotesUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
-            changeTextViewColors((ViewGroup) findViewById(R.id.calculatorUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
-            changeButtonColors((ViewGroup) findViewById(R.id.calculatorUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            // Updating UI elements
+            changeTextViewColors(findViewById(R.id.patchnotesUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            changeButtonColors(findViewById(R.id.patchnotesUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            changeTextViewColors(findViewById(R.id.calculatorUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            changeButtonColors(findViewById(R.id.calculatorUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
         } else {
             dataManager.saveToJSON("selectedSpinnerSetting", "System", getApplicationContext());
             switchDisplayMode(currentNightMode);
@@ -617,46 +582,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is used to get the position of the selected setting.
-     * It reads the selected setting from the JSON file and returns the corresponding position.
-     * @return If the selected setting is "System", it returns 0.
-     * @return If the selected setting is "Light", it returns 1.
-     * @return If the selected setting is "Dark", it returns 2.
-     * @return If no setting is selected, it returns null.
-     */
-    public Integer getSelectetSettingPosition() {
-        Integer num = null;
-        final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext());
-
-        if(readselectedSetting != null) {
-            if(readselectedSetting.equals("System")) {
-                num = 0;
-            } else if (readselectedSetting.equals("Light")) {
-                num = 1;
-            } else if (readselectedSetting.equals("Dark")) {
-                num = 2;
-            }
-        }
-        return num;
-    }
-
-    /**
      * This method is used to get the selected setting.
      * It reads the selected setting from the JSON file and returns the corresponding setting.
      * @return If the selected setting is "System", it returns "Systemstandard".
-     * @return If the selected setting is "Dark", it returns "Dunkelmodus".
-     * @return If the selected setting is "Light", it returns "Tageslichtmodus".
-     * @return If no setting is selected, it returns null.
+     *         If the selected setting is "Dark", it returns "Dunkelmodus".
+     *         If the selected setting is "Light", it returns "Tageslichtmodus".
+     *         If no setting is selected, it returns null.
      */
     public String getSelectedSetting() {
         final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext());
         if(setting != null) {
-            if(setting.equals("System")) {
-                return "Systemstandard";
-            } else if (setting.equals("Dark")) {
-                return "Dunkelmodus";
-            } else if (setting.equals("Light")) {
-                return "Tageslichtmodus";
+            switch (setting) {
+                case "System":
+                    return "Systemstandard";
+                case "Dark":
+                    return "Dunkelmodus";
+                case "Light":
+                    return "Tageslichtmodus";
             }
         }
         return null;
@@ -675,12 +617,12 @@ public class MainActivity extends AppCompatActivity {
                 View v = layout.getChildAt(i);
                 v.setBackgroundColor(backgroundColor);
 
-                // Wenn das child ein Button ist, ändere die Vordergrund- und Hintergrundfarben
+                // If the child is a Button, change the foreground and background colors
                 if (v instanceof Button) {
                     ((Button) v).setTextColor(foregroundColor);
-                    ((Button) v).setBackgroundColor(backgroundColor);
+                    v.setBackgroundColor(backgroundColor);
                 }
-                // Wenn das child selbst ein ViewGroup (z.B. ein Layout) ist, rufe Funktion rekursiv auf
+                // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
                 else if (v instanceof ViewGroup) {
                     changeButtonColors((ViewGroup) v, foregroundColor, backgroundColor);
                 }
@@ -701,26 +643,17 @@ public class MainActivity extends AppCompatActivity {
                 View v = layout.getChildAt(i);
                 v.setBackgroundColor(backgroundColor);
 
-                // Wenn das child ein TextView ist, ändere die Vordergrund- und Hintergrundfarben
+                // If the child is a TextView, change the foreground and background colors
                 if (v instanceof TextView) {
                     ((TextView) v).setTextColor(foregroundColor);
-                    ((TextView) v).setBackgroundColor(backgroundColor);
+                    v.setBackgroundColor(backgroundColor);
                 }
-                // Wenn das child selbst ein ViewGroup (z.B. ein Layout) ist, rufe Funktion rekursiv auf
+                // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
                 else if (v instanceof ViewGroup) {
                     changeTextViewColors((ViewGroup) v, foregroundColor, backgroundColor);
                 }
             }
         }
-    }
-
-    /**
-     * This method is used to reset the release note configuration.
-     * It saves "showPatchNotes" as true and "disablePatchNotesTemporary" as false in the JSON file.
-     */
-    public void resetReleaseNoteConfig() {
-        dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
-        dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
     }
 
     /**
@@ -748,7 +681,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void NumberAction(String num) {
         String resultText = getResultText();
-        String calculateText = getCalculateText().toString();
+        String calculateText = getCalculateText();
         if (isInvalidInput(resultText) || isInvalidInput(calculateText)) {
             setCalculateText("");
             setRemoveValue(true);
@@ -779,14 +712,20 @@ public class MainActivity extends AppCompatActivity {
      */
     public void ClipboardAction(final String c) {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        if (c.equals("MC")) {
-            ClipData clipData = ClipData.newPlainText("", "");
-            clipboardManager.setPrimaryClip(clipData);
-        } else if (c.equals("MR")) {
-            handleMRAction(clipboardManager);
-        } else if (c.equals("MS")) {
-            ClipData clipData = ClipData.newPlainText("", getResultText().toString());
-            clipboardManager.setPrimaryClip(clipData);
+        switch (c) {
+            case "MC": {
+                ClipData clipData = ClipData.newPlainText("", "");
+                clipboardManager.setPrimaryClip(clipData);
+                break;
+            }
+            case "MR":
+                handleMRAction(clipboardManager);
+                break;
+            case "MS": {
+                ClipData clipData = ClipData.newPlainText("", getResultText());
+                clipboardManager.setPrimaryClip(clipData);
+                break;
+            }
         }
         adjustTextSize();
     }
@@ -799,14 +738,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleMRAction(ClipboardManager clipboardManager) {
         ClipData clipData = clipboardManager.getPrimaryClip();
+        assert clipData != null;
         ClipData.Item item = clipData.getItemAt(0);
         String text = (String) item.getText();
-        if (text.replace(".", "").matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)?$")) {
+        if (text != null && text.replace(".", "").matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)?$")) {
             setRemoveValue(false);
             String result = formatResultTextAfterCalculate(text);
             setResultText(result.toLowerCase());
         } else {
-            TextView label = findViewById(R.id.result_label);
             setResultText("Ungültige Eingabe");
             setRemoveValue(true);
         }
@@ -844,14 +783,18 @@ public class MainActivity extends AppCompatActivity {
      * @param e The action to be performed. This can be "⌫" for the backspace button, "C" for the C button, or "CE" for the CE button.
      */
     public void EmptyAction(final String e) {
-        if (e.equals("⌫")) {
-            handleBackspaceAction();
-        } else if (e.equals("C")) {
-            setResultText("0");
-            setCalculateText("");
-            setRotateOperator(false);
-        } else if (e.equals("CE")) {
-            setResultText("0");
+        switch (e) {
+            case "⌫":
+                handleBackspaceAction();
+                break;
+            case "C":
+                setResultText("0");
+                setCalculateText("");
+                setRotateOperator(false);
+                break;
+            case "CE":
+                setResultText("0");
+                break;
         }
         adjustTextSize();
     }
@@ -920,12 +863,12 @@ public class MainActivity extends AppCompatActivity {
      * If the calculate text does contain an equals sign, it checks if the last operator is not empty. If so, it sets the calculate label text to the current result text followed by the last operator and the last number, and an equals sign. Otherwise, it sets the calculate label text to the current result text followed by an equals sign. It then sets the result label text to the result of the calculation.
      * After performing the calculation, it formats the result text, sets removeValue to true, and adjusts the text size.
      *
-     * @throws Exception If an error occurs during the calculation.
      */
-    public void Calculate() throws Exception {
+    @SuppressLint("SetTextI18n")
+    public void Calculate() {
         String calcText = getCalculateText().replace("*", "×").replace("/", "÷");
-        TextView calclab = (TextView) findViewById(R.id.calculate_label);
-        TextView reslab = (TextView) findViewById(R.id.result_label);
+        TextView calculatelabel = findViewById(R.id.calculate_label);
+        TextView resultlabel = findViewById(R.id.result_label);
 
         if(getRotateOperator()) {
             if (!calcText.contains("=")) {
@@ -941,27 +884,25 @@ public class MainActivity extends AppCompatActivity {
                 setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
             }
 
-            setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
-            dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
-            dataManager.saveNumbers(getApplicationContext());
         } else {
             if (!calcText.contains("=")) {
                 setLastNumber(getResultText());
-                calclab.setText(calcText + " " + getResultText() + " =");
-                reslab.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
+                calculatelabel.setText(calcText + " " + getResultText() + " =");
+                resultlabel.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
             } else {
                 if (!getLastOp().isEmpty()) {
-                    calclab.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+                    calculatelabel.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
                 } else {
-                    calclab.setText(getResultText() + " =");
+                    calculatelabel.setText(getResultText() + " =");
                 }
-                reslab.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
+                resultlabel.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
             }
 
-            setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
-            dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
-            dataManager.saveNumbers(getApplicationContext());
         }
+        setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
+        dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
+        dataManager.saveNumbers(getApplicationContext());
+
         setRotateOperator(false);
         formatResultTextAfterType();
         adjustTextSize();
@@ -980,34 +921,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This method rounds a given value to 8 decimal places using half-up rounding mode.
-     *
-     * @param value The value to be rounded. This should be a string representation of a decimal number.
-     * @return Returns a BigDecimal representation of the rounded value.
-     */
-    public static BigDecimal round(String value) {
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(8, RoundingMode.HALF_UP);
-        return bd;
-    }
-    /**
      * This method formats the result text after a calculation.
      *
      * @param text The text to be formatted. This should be a string representation of the result of a calculation.
      * @return Returns a string representation of the formatted number.
      */
+    @SuppressLint("DefaultLocale")
     public String formatResultTextAfterCalculate(String text) {
         String formattedNumber;
+        double v = Double.parseDouble(text.replace(".", "").replace(",", "."));
         if (text.length() >= 18) {
-            double number = Double.parseDouble(text.replace(".", "").replace(",", "."));
-            int exponent = (int) Math.floor(Math.log10(number));
-            formattedNumber = String.format("%.8fE%+d", number / Math.pow(10, exponent), exponent);
+            int exponent = (int) Math.floor(Math.log10(v));
+            formattedNumber = String.format("%.8fE%+d", v / Math.pow(10, exponent), exponent);
         } else {
             if (text.matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)$")) {
                 formattedNumber = text;
             } else {
                 final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#,###.####");
-                formattedNumber = decimalFormat.format(Double.parseDouble(text.replace(".", "").replace(",", ".")));
+                formattedNumber = decimalFormat.format(v);
             }
         }
         setResultText(formattedNumber);
@@ -1117,50 +1048,36 @@ public class MainActivity extends AppCompatActivity {
     public String getLastNumber() {
         final String num = last_number.replace(".", "").replace(",", ".");
         final DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
-        final String formattedNumber = decimalFormat.format(Double.parseDouble(num));
-        return formattedNumber;
+        return decimalFormat.format(Double.parseDouble(num));
     }
     public String getResultText() {
-        TextView resulttext = (TextView) findViewById(R.id.result_label);
+        TextView resulttext = findViewById(R.id.result_label);
         if(resulttext != null) {
             return resulttext.getText().toString();
         }
         return null;
     }
-    public void addResultText(final char c) {
-        TextView resulttext = (TextView) findViewById(R.id.result_label);
-        resulttext.setText(getResultText() + c);
-    }
+
+    @SuppressLint("SetTextI18n")
     public void addResultText(final String s) {
-        TextView resulttext = (TextView) findViewById(R.id.result_label);
+        TextView resulttext = findViewById(R.id.result_label);
         resulttext.setText(getResultText() + s);
     }
-    public void setResultText(final char c) {
-        TextView resulttext = (TextView) findViewById(R.id.result_label);
-        if(resulttext != null) { resulttext.setText(c); }
-    }
     public void setResultText(final String s) {
-        TextView resulttext = (TextView) findViewById(R.id.result_label);
+        TextView resulttext = findViewById(R.id.result_label);
         if(resulttext != null) { resulttext.setText(s); }
     }
     public String getCalculateText() {
-        TextView calculatetext = (TextView) findViewById(R.id.calculate_label);
+        TextView calculatetext = findViewById(R.id.calculate_label);
         return calculatetext.getText().toString();
     }
-    public void addCalculateText(final char c) {
-        TextView calculatetext = (TextView) findViewById(R.id.calculate_label);
-        calculatetext.setText(getCalculateText() + " " + c);
-    }
+    @SuppressLint("SetTextI18n")
     public void addCalculateText(final String s) {
-        TextView calculatetext = (TextView) findViewById(R.id.calculate_label);
+        TextView calculatetext = findViewById(R.id.calculate_label);
         calculatetext.setText(getCalculateText() + " " + s);
     }
-    public void setCalculateText(final char c) {
-        TextView calculatetext = (TextView) findViewById(R.id.calculate_label);
-        calculatetext.setText(c);
-    }
     public void setCalculateText(final String s) {
-        TextView calculatetext = (TextView) findViewById(R.id.calculate_label);
+        TextView calculatetext = findViewById(R.id.calculate_label);
         calculatetext.setText(s);
     }
 }

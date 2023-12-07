@@ -1,18 +1,18 @@
 package com.mlprograms.rechenmax;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -30,12 +30,11 @@ import java.io.OutputStreamWriter;
 public class HistoryActivity extends AppCompatActivity {
 
     // Declare a Context object and initialize it to this instance
-    private Context context = this;
-    // Declare a LinearLayout object
-    private LinearLayout linearLayout;
+    private final Context context = this;
     // Declare a DataManager object
     DataManager dataManager;
     // Declare a static MainActivity object
+    @SuppressLint("StaticFieldLeak")
     private static MainActivity mainActivity;
 
     // Define the name of the File
@@ -52,13 +51,8 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
 
-        TextView history_text_view = (TextView) findViewById(R.id.history_textview);
+        TextView history_text_view = findViewById(R.id.history_textview);
         history_text_view.setText(loadHistory(getApplicationContext()));
-
-        // DialogHelper dialogHelper = new DialogHelper(this);
-        // dialogHelper.showPatchNotesDialog();
-
-        linearLayout = findViewById(R.id.historyUI);
 
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switchDisplayMode(currentNightMode);
@@ -69,7 +63,7 @@ public class HistoryActivity extends AppCompatActivity {
      * @param newConfig The new device configuration.
      */
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         int currentNightMode = newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -101,19 +95,20 @@ public class HistoryActivity extends AppCompatActivity {
      * This method switches the display mode based on the current night mode.
      * @param currentNightMode The current night mode.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void switchDisplayMode(int currentNightMode) {
-        Button deleteButton = findViewById(R.id.history_delete_button);
-        Button returnButton = findViewById(R.id.history_return_button);
+        @SuppressLint("CutPasteId") Button deleteButton = findViewById(R.id.history_delete_button);
+        @SuppressLint("CutPasteId") Button returnButton = findViewById(R.id.history_return_button);
         ScrollView historyScrollView = findViewById(R.id.history_scroll_textview);
         TextView historyTextView = findViewById(R.id.history_textview);
         TextView historyTitle = findViewById(R.id.history_title);
-        TextView historyReturnButton = (TextView) findViewById(R.id.history_return_button);
-        TextView historyDeleteButton = (TextView) findViewById(R.id.history_delete_button);
+        @SuppressLint("CutPasteId") TextView historyReturnButton = findViewById(R.id.history_return_button);
+        @SuppressLint("CutPasteId") TextView historyDeleteButton = findViewById(R.id.history_delete_button);
 
         int newColorBTNForegroundAccent;
         int newColorBTNBackgroundAccent;
 
-        dataManager = new DataManager(this);
+        dataManager = new DataManager();
         final String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
         if (getSelectedSetting() != null && getSelectedSetting().equals("Systemstandard")) {
             switch (currentNightMode) {
@@ -177,6 +172,7 @@ public class HistoryActivity extends AppCompatActivity {
      * @param newColorBTNForegroundAccent The new color for the button foreground accent.
      * @param newColorBTNBackgroundAccent The new color for the button background accent.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void updateUIAccordingToNightMode(Button deleteButton, Button returnButton, ScrollView historyScrollView, TextView historyTextView, TextView historyTitle, int newColorBTNForegroundAccent, int newColorBTNBackgroundAccent) {
         if (deleteButton != null) {
             deleteButton.setTextColor(newColorBTNForegroundAccent);
@@ -197,12 +193,14 @@ public class HistoryActivity extends AppCompatActivity {
         }
         // Change the foreground and background colors of all buttons in your layout
         if (newColorBTNForegroundAccent != 0 && newColorBTNBackgroundAccent != 0) {
-            changeButtonColors((ViewGroup) findViewById(R.id.historyUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            changeButtonColors(findViewById(R.id.historyUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
         }
 
+        assert deleteButton != null;
         deleteButton.setTextColor(newColorBTNForegroundAccent);
         deleteButton.setBackgroundColor(newColorBTNBackgroundAccent);
         deleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24_light));
+        assert returnButton != null;
         returnButton.setTextColor(newColorBTNForegroundAccent);
         returnButton.setBackgroundColor(newColorBTNBackgroundAccent);
         returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
@@ -220,12 +218,12 @@ public class HistoryActivity extends AppCompatActivity {
                 View v = layout.getChildAt(i);
                 v.setBackgroundColor(backgroundColor);
 
-                // Wenn das child ein Button ist, ändere die Vordergrund- und Hintergrundfarben
+                // If the child is a Button, change the foreground and background colors
                 if (v instanceof Button) {
                     ((Button) v).setTextColor(foregroundColor);
-                    ((Button) v).setBackgroundColor(backgroundColor);
+                    v.setBackgroundColor(backgroundColor);
                 }
-                // Wenn das child selbst ein ViewGroup (z.B. ein Layout) ist, rufe Funktion rekursiv auf
+                // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
                 else if (v instanceof ViewGroup) {
                     changeButtonColors((ViewGroup) v, foregroundColor, backgroundColor);
                 }
@@ -246,7 +244,7 @@ public class HistoryActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        TextView history_text_view = (TextView) findViewById(R.id.history_textview);
+        TextView history_text_view = findViewById(R.id.history_textview);
         history_text_view.setText(loadHistory(getApplicationContext()));
     }
 
@@ -271,7 +269,7 @@ public class HistoryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        TextView history_text_view = (TextView) findViewById(R.id.history_textview);
+        TextView history_text_view = findViewById(R.id.history_textview);
         if (result.toString().equals("")) {
             history_text_view.setTextSize(40);
             history_text_view.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -281,26 +279,6 @@ public class HistoryActivity extends AppCompatActivity {
             history_text_view.setGravity(Gravity.END);
             return result.toString();
         }
-    }
-
-    /**
-     * This method gets the position of the selected setting.
-     * @return The position of the selected setting.
-     */
-    public Integer getSelectetSettingPosition() {
-        Integer num = null;
-        final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
-
-        if(readselectedSetting != null) {
-            if(readselectedSetting.equals("System")) {
-                num = 0;
-            } else if (readselectedSetting.equals("Light")) {
-                num = 1;
-            } else if (readselectedSetting.equals("Dark")) {
-                num = 2;
-            }
-        }
-        return num;
     }
 
     /**
@@ -327,12 +305,13 @@ public class HistoryActivity extends AppCompatActivity {
         if(dataManager != null) {
             final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
             if(setting != null) {
-                if(setting.equals("System")) {
-                    return "Systemstandard";
-                } else if (setting.equals("Dark")) {
-                    return "Dunkelmodus";
-                } else if (setting.equals("Light")) {
-                    return "Tageslichtmodus";
+                switch (setting) {
+                    case "System":
+                        return "Systemstandard";
+                    case "Dark":
+                        return "Dunkelmodus";
+                    case "Light":
+                        return "Tageslichtmodus";
                 }
             }
         }
