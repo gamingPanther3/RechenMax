@@ -75,10 +75,10 @@
                     android:id="@+id/calculate_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
                     android:gravity="end|center_vertical"
-                    android:textColor="@color/black"
+                    android:paddingTop="15dp"
                     android:text="@string/calculate_label"
+                    android:textColor="@color/black"
                     android:textSize="35sp" />
 
             </LinearLayout>
