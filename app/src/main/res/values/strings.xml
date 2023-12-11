@@ -37,10 +37,5 @@
         <item>Dunkelmodus</item>
     </string-array>
 
-    <string-array name="setting_calculating_mode_options">
-        <item>Standard</item>
-        <item>Vereinfacht</item>
-    </string-array>
-
     <string name="mode_prompt">Wähle einen Modus aus</string>
 </resources>
