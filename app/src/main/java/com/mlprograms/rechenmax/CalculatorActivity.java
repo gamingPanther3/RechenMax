@@ -78,7 +78,7 @@ public class CalculatorActivity {
             for (int i = 0; i < tokens.size() - 1; i++) {
                 // If the expression contains division by zero, return "Infinity"
                 if (tokens.get(i).equals("/") && Double.parseDouble(tokens.get(i + 1)) <= 0) {
-                    return "Infinity";
+                    return "Unendlich";
                 }
             }
             final BigDecimal result = evaluate(tokens);
