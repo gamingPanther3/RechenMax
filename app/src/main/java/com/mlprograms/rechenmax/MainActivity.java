@@ -900,7 +900,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
-        dataManager.addtoHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
+        dataManager.addToHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
         dataManager.saveNumbers(getApplicationContext());
 
         setRotateOperator(false);
@@ -917,7 +917,7 @@ public class MainActivity extends AppCompatActivity {
      * @return Returns true if the text is invalid (contains "Ungültige Eingabe", "Unendlich", "Syntax Fehler", or "Domainfehler"), and false otherwise.
      */
     private boolean isInvalidInput(String text) {
-        return text.contains("Ungültige Eingabe") || text.contains("Unendlich") || text.contains("Syntax Fehler") || text.contains("Domainfehler");
+        return text.contains("Ungültige Eingabe") || text.contains("Unendlich") || text.contains("Syntax Fehler") || text.contains("Domainfehler") || text.contains("For input string");
     }
 
     /**
@@ -963,14 +963,7 @@ public class MainActivity extends AppCompatActivity {
                 result = originalText.replace(".", "");
                 result2 = "";
             }
-            if(!getResultText().equals("Unendlich")
-                    && !getResultText().equals("Syntax Fehler")
-                    && !getIsNotation()
-                    && !getResultText().equals("Wert zu groß")
-                    && !getResultText().equals("Nur reelle Zahlen")
-                    && !getResultText().equals("Domainfehler")
-                    && !getResultText().equals("Overflow")
-                    && !getResultText().equals("Ungültiges Zahlenformat")){
+            if(!isInvalidInput(getResultText())){
                 DecimalFormat decimalFormat = new DecimalFormat("#,###");
                 try {
                     BigDecimal bigDecimalResult = new BigDecimal(result);

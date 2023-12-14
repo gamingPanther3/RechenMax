@@ -220,7 +220,7 @@ public class DataManager {
      * @param data The data to be added to the history file.
      * @param context The context, which is used to open the file input and output streams.
      */
-    public void addtoHistory(String data, Context context) {
+    public void addToHistory(String data, Context context) {
         try {
             FileInputStream fileIn = context.openFileInput(FILE_NAME1);
             InputStreamReader inputReader = new InputStreamReader(fileIn);

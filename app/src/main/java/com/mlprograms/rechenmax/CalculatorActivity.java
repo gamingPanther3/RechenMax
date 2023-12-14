@@ -562,7 +562,7 @@ public class CalculatorActivity {
 
             // If the operator is not recognized, throw an exception
             default:
-                throw new IllegalArgumentException("Unknown operator: " + operator);
+                throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
     }
 }
