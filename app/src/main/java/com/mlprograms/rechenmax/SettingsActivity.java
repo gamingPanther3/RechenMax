@@ -88,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
             dataManager = new DataManager();
             int currentNightMode1 = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             updateSpinner(findViewById(R.id.settings_display_mode_spinner));
-            Button backbutton = findViewById(R.id.settings_return_button);
+            @SuppressLint("CutPasteId") Button backbutton = findViewById(R.id.settings_return_button);
 
             String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
             if(currentNightMode1 == Configuration.UI_MODE_NIGHT_YES) {
@@ -151,7 +151,16 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * This method updates the display mode and text color of a spinner based on the selected setting.
+     * It first checks the current night mode of the device.
+     * Then it reads the selected setting from the spinner.
+     * If the selected setting is "Dunkelmodus", it saves "Dark" to the JSON file, switches the display mode, and sets the text color to white or darkmode_white based on the "settingsTrueDarkMode" value in the JSON file.
+     * If the selected setting is "Tageslichtmodus", it saves "Light" to the JSON file, switches the display mode, and sets the text color to black.
+     * If the selected setting is "Systemstandard", it saves "System" to the JSON file, switches the display mode, and sets the text color to white, darkmode_white, or black based on the current night mode and the "settingsTrueDarkMode" value in the JSON file.
+     *
+     * @param parent The AdapterView where the selection happened. This is used to get the selected setting and the TextView object.
+     */
     public void updateSpinner(AdapterView<?> parent) {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         final String readselectedSetting = parent.getSelectedItem().toString();
@@ -348,7 +357,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         Spinner spinner = findViewById(R.id.settings_display_mode_spinner);
         updateSpinner2(spinner);
-        Button backbutton = findViewById(R.id.settings_return_button);
+        @SuppressLint("CutPasteId") Button backbutton = findViewById(R.id.settings_return_button);
 
         if(getSelectedSetting() != null) {
             if(getSelectedSetting().equals("Systemstandard")) {
