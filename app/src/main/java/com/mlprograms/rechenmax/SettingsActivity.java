@@ -88,15 +88,25 @@ public class SettingsActivity extends AppCompatActivity {
             dataManager = new DataManager();
             int currentNightMode1 = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             updateSpinner(findViewById(R.id.settings_display_mode_spinner));
+            Button backbutton = findViewById(R.id.settings_return_button);
 
             String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
             if(currentNightMode1 == Configuration.UI_MODE_NIGHT_YES) {
                 if (trueDarkMode != null && trueDarkMode.equals("true") && (getSelectedSetting().equals("Dunkelmodus") || getSelectedSetting().equals("Systemstandard"))) {
                     updateUI(R.color.darkmode_black, R.color.darkmode_white);
+                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
                 } else if (trueDarkMode != null && trueDarkMode.equals("false") && (getSelectedSetting().equals("Dunkelmodus") || getSelectedSetting().equals("Systemstandard"))) {
                     updateUI(R.color.black, R.color.white);
+                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
                 }
             } else if(currentNightMode1 == Configuration.UI_MODE_NIGHT_NO) {
+                if (trueDarkMode != null && trueDarkMode.equals("true") && (getSelectedSetting().equals("Dunkelmodus") || getSelectedSetting().equals("Systemstandard"))) {
+                    updateUI(R.color.darkmode_black, R.color.darkmode_white);
+                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                } else if (trueDarkMode != null && trueDarkMode.equals("false") && (getSelectedSetting().equals("Dunkelmodus") || getSelectedSetting().equals("Systemstandard"))) {
+                    updateUI(R.color.black, R.color.white);
+                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                }
                 ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
                 LinearLayout settingsLayout = findViewById(R.id.settings_layout);
                 @SuppressLint("CutPasteId") Button settingsReturnButton = findViewById(R.id.settings_return_button);

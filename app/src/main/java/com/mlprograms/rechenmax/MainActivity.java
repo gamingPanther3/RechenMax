@@ -661,6 +661,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < layout.getChildCount(); i++) {
                 View v = layout.getChildAt(i);
                 v.setBackgroundColor(backgroundColor);
+                System.out.println(v);
 
                 // If the child is a TextView, change the foreground and background colors
                 if (v instanceof TextView) {
