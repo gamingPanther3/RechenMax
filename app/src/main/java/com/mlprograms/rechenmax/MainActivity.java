@@ -498,13 +498,6 @@ public class MainActivity extends AppCompatActivity {
                 case "Systemstandard":
                     switch (currentNightMode) {
                         case Configuration.UI_MODE_NIGHT_YES:
-                            if (trueDarkMode != null && trueDarkMode.equals("true")) {
-                                newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
-                                newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
-                            } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
-                                newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
-                                newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
-                            }
                             if (historyButton != null) {
                                 historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
                             }
@@ -513,6 +506,23 @@ public class MainActivity extends AppCompatActivity {
                             }
                             if (scienceButton != null) {
                                 scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
+                            }
+
+                            if (trueDarkMode != null && trueDarkMode.equals("true")) {
+                                newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
+                                newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
+                                if (scienceButton != null) {
+                                    scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_true_darkmode));
+                                }
+                                if (historyButton != null) {
+                                    historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_true_darkmode));
+                                }
+                                if (settingsButton != null) {
+                                    settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_true_darkmode));
+                                }
+                            } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
+                                newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
+                                newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
                             }
                             break;
                         case Configuration.UI_MODE_NIGHT_NO:
@@ -545,19 +555,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "Dunkelmodus":
                     dataManager = new DataManager(this);
-
-                    if (trueDarkMode != null) {
-                        if (trueDarkMode.equals("false")) {
-                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
-                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
-                        } else {
-                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
-                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
-                        }
-                    } else {
-                        newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
-                        newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
-                    }
                     if (historyButton != null) {
                         historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
                     }
@@ -566,6 +563,28 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (scienceButton != null) {
                         scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
+                    }
+                    if (trueDarkMode != null) {
+                        if (trueDarkMode.equals("false")) {
+                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
+                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
+                        } else {
+                            newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
+                            newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
+
+                            if (scienceButton != null) {
+                                scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_true_darkmode));
+                            }
+                            if (historyButton != null) {
+                                historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_true_darkmode));
+                            }
+                            if (settingsButton != null) {
+                                settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_true_darkmode));
+                            }
+                        }
+                    } else {
+                        newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
+                        newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
                     }
                     break;
             }

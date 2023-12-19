@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.5.0
- * @date 03.12.2023
+ * @version 1.6.1
+ * @date 16.12.2023
  */
 
 public class CalculatorActivity {
@@ -77,8 +77,12 @@ public class CalculatorActivity {
             final List<String> tokens = tokenize(expression);
             for (int i = 0; i < tokens.size() - 1; i++) {
                 // If the expression contains division by zero, return "Infinity"
-                if (tokens.get(i).equals("/") && Double.parseDouble(tokens.get(i + 1)) <= 0) {
-                    return "Unendlich";
+                try {
+                    if (tokens.get(i).equals("/") && Double.parseDouble(tokens.get(i + 1)) <= 0) {
+                        return "Unendlich";
+                    }
+                } catch (Exception e) {
+                    // do nothing
                 }
             }
             final BigDecimal result = evaluate(tokens);
@@ -106,6 +110,7 @@ public class CalculatorActivity {
             return e.getMessage();
         } catch (Exception e) {
             // Handle all other exceptions
+            System.out.println("1!" + e);
             return "Syntax Fehler";
         }
     }
@@ -232,13 +237,6 @@ public class CalculatorActivity {
                     currentToken.setLength(0);
                 }
                 tokens.add(Character.toString(c));
-            }
-            // If the character is a space, add the current token to the list (if it's not empty) and clear the current token
-            else if (c == ' ') {
-                if (currentToken.length() > 0) {
-                    tokens.add(currentToken.toString());
-                    currentToken.setLength(0);
-                }
             }
         }
         // If there's a current token left at the end, add it to the list
@@ -429,11 +427,13 @@ public class CalculatorActivity {
             }
             // If the token is neither a number nor an operator, throw an exception
             else {
+                System.out.println("token is neither a number nor an operator");
                 throw new IllegalArgumentException("Syntax Fehler");
             }
         }
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
+            System.out.println("Stacksize != 1");
             throw new IllegalArgumentException("Syntax Fehler");
         }
 

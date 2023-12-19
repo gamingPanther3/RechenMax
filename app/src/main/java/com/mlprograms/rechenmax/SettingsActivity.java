@@ -87,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             dataManager = new DataManager();
             int currentNightMode1 = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            updateSpinner(findViewById(R.id.settings_display_mode_spinner));
 
             String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
             if(currentNightMode1 == Configuration.UI_MODE_NIGHT_YES) {
@@ -124,7 +125,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
         // Declare a Spinner object
         Spinner spinner = findViewById(R.id.settings_display_mode_spinner);
-
         Integer num = getSelectedSettingPosition();
         if(num != null) {
             spinner.setSelection(num);
@@ -141,10 +141,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * This method updates the spinner based on the selected setting.
-     * @param parent The AdapterView where the selection happened.
-     */
+
     public void updateSpinner(AdapterView<?> parent) {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         final String readselectedSetting = parent.getSelectedItem().toString();
@@ -161,7 +158,11 @@ public class SettingsActivity extends AppCompatActivity {
                 case "Dunkelmodus":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     switchDisplayMode(currentNightMode);
-                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                    if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
+                        textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
+                    } else {
+                        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                    }
                     break;
                 case "Tageslichtmodus":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
@@ -171,7 +172,11 @@ public class SettingsActivity extends AppCompatActivity {
                 case "Systemstandard":
                     dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
                     if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                        if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
+                            textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
+                        } else {
+                            textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                        }
                     } else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     }
@@ -200,7 +205,11 @@ public class SettingsActivity extends AppCompatActivity {
             switch (readselectedSetting) {
                 case "Dunkelmodus":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
-                    textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                    if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
+                        textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
+                    } else {
+                        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                    }
                     break;
                 case "Tageslichtmodus":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
@@ -209,7 +218,11 @@ public class SettingsActivity extends AppCompatActivity {
                 case "Systemstandard":
                     dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
                     if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                        if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
+                            textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
+                        } else {
+                            textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                        }
                     } else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     }
@@ -325,6 +338,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         Spinner spinner = findViewById(R.id.settings_display_mode_spinner);
         updateSpinner2(spinner);
+        Button backbutton = findViewById(R.id.settings_return_button);
 
         if(getSelectedSetting() != null) {
             if(getSelectedSetting().equals("Systemstandard")) {
@@ -337,8 +351,16 @@ public class SettingsActivity extends AppCompatActivity {
                         if (trueDarkMode != null) {
                             if (trueDarkMode.equals("false")) {
                                 updateUI(R.color.black, R.color.white);
+
+                                if(backbutton != null) {
+                                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                                }
                             } else {
                                 updateUI(R.color.darkmode_black, R.color.darkmode_white);
+
+                                if(backbutton != null) {
+                                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                                }
                             }
                         } else {
                             updateUI(R.color.black, R.color.white);
@@ -387,11 +409,22 @@ public class SettingsActivity extends AppCompatActivity {
                 if (trueDarkMode != null) {
                     if (trueDarkMode.equals("false")) {
                         updateUI(R.color.black, R.color.white);
+                        updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
+
+                        if(backbutton != null) {
+                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                        }
                     } else {
                         updateUI(R.color.darkmode_black, R.color.darkmode_white);
+                        updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
+
+                        if(backbutton != null) {
+                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                        }
                     }
                 } else {
                     updateUI(R.color.black, R.color.white);
+                    updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
                 }
             }
         }
