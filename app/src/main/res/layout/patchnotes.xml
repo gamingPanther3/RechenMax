@@ -1,347 +1,3 @@
-<!-- <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/patchnotesUI"
-    android:background="@color/colorBTNBackgroundAccent"
-    tools:context="com.mlprograms.rechenmax.MainActivity" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/releaseNotesTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="RechenMax 1.4.9"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/releaseNotesReleaseDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Veröffentlichungsdatum: 2.12.2023 - 12:15 Uhr"
-                android:gravity="center_horizontal"
-                android:textSize="15sp"
-                android:textColor="#000000"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/releaseNotesOverviewTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Übersicht"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesOverview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="\nDer Taschenrechner hat neue Funktionen, die ihn leistungsfähiger und benutzerfreundlicher machen. Er unterstützt jetzt Klammern, Potenzen und Wurzeln, was eine präzisere Steuerung der Reihenfolge der Operationen und die Berechnung komplexer mathematischer Ausdrücke ermöglicht. Der Eingabebereich wurde von 14 auf 18 Zeichen erweitert, was die Eingabe von größeren Zahlen und Formeln erleichtert. Eine neue Funktion ermöglicht die Umrechnung von wissenschaftlichen Notationen in Dezimalzahlen, und die Genauigkeit dieser Umrechnung wurde erhöht.\n"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFeaturesTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Neue Funktionen"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\nWissenschaftlicher Taschenrechner"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Der Taschenrechners bietet nun Unterstützung für Klammern, Potenzen und Wurzeln, um eine präzise Steuerung der Reihenfolge der Operationen und die Berechnung komplexer mathematischer Ausdrücke zu ermöglichen.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\Erweiterung des Eingabebereichs"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Der Eingabebereich wurde für eine verbesserte Benutzererfahrung von 14 auf bis zu 18 Zeichen erweitert.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\Umrechnung von Notation zu Dezimalzahlen"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Es gibt eine neue Funktion, die es ermöglicht, wissenschaftliche Notationen in Dezimalzahlen umzuwandeln. Um diese Funktion zu nutzen, geben Sie nur die Notation in den Taschenrechner ein.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\Erhöhung der Genauigkeit der Notation"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Es wurde die Genauigkeit der Umrechnungsfunktion für wissenschaftliche Notationen verbessert. Jetzt werden acht Nachkommastellen anstelle der bisherigen sechs berücksichtigt, um eine noch präzisere Darstellung zu ermöglichen."
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\nErhöhung der Genauigkeit beim Rechnen"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Es wurde die Genauigkeit von den Berechnungen verbessert, um extrem präzise Ergebnisse zu liefern. Dies ermöglicht eine genauere Datenverarbeitung und verbessert die Gesamtleistung des Taschenrechners."
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFeatures"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:text=""/>
-
-        <TextView
-            android:id="@+id/releaseNotesBugsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Behobene Fehler"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesBugsSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="\nProblem beim Start des Taschenrechners"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/releaseNotesBugs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Unter bestimmten Bedingungen konnte es vorkommen, dass der Taschenrechner nach dem Start nicht korrekt angezeigt wurde. Dieses Problem wurde nun behoben."
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesBugsSubtitle2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="\nProblem beim Rechnen mit Notationen"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/releaseNotesBugs2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ein Fehler, der die falsche Umwandlung von Zahlen in wissenschaftlicher Notation in Dezimalzahlen verursachte, wurde behoben.\n"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kommende Funktionen"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\nVerschiedene Schreibmodi"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Es soll möglich sein einzustellen, ob man im Berechnungsbereich oder im Ergebnisbereich seine Mathematische Aufgabe eingibt. Zusätzlich sollte die Option vorhanden sein, das Zwischenergebnis anzeigen zu lassen."
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\nVerschiede Ausrichtungsmodis"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Es soll die Option vorhanden sein, mit der ausgewählt werden kann, ob der Taschenrechner im Hoch- oder Querformat dargestellt wird.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Aufgaben aus dem Verlauf aufrufen"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Diese Funktion ermöglicht es, vorherige Aufgaben im Taschenrechner durch einfaches Klicken auf die Aufgabe im Verlauf aufzurufen und zu übernehmen.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Rechnen mit Fakultäten"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Die kommende Funktion ermöglichen es, mit Fakultäten in Berechnungen einzubeziehen. Dies erweitert die mathematischen Möglichkeiten und erleichtert komplexe Berechnungen.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Verbessertes Klammersystem"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Die kommende Funktion ermöglicht das Setzen von Klammern durch einen speziellen Klammer-Knopf.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesAPIVersionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:text="Android-Version"/>
-
-        <TextView
-            android:id="@+id/releaseNotesAPIVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:text="\nMinimale Android-Version: 10\nMaximale Android-Version: 14\n"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom|end"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#000000"
-                android:checked="false"
-                android:text="Diesen Text nicht mehr anzeigen"/>
-
-            <Button
-                android:id="@+id/okay_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorDarkBackground"
-                android:text="Verstanden"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView> -->
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -370,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="RechenMax 1.5.0"
+                android:text="RechenMax 1.5.1"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -430,6 +86,23 @@
             android:textColor="#000000" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Intensivierter 'Echter Dunkelmodus'"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Der ‘Echter Dunkelmodus’ erreicht jetzt eine neue Stufe der Dunkelheit. Die Knöpfe werden nun auch zusätzlich abgedunkelt, wenn dieser Modus aktiviert ist.\n"
+            android:textColor="#000000" />
+
+        <TextView
             android:id="@+id/releaseNotesFutureFeaturesSubtitle6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -472,6 +145,7 @@
             android:textColor="#000000"
             android:textSize="12sp" />
 
+        <!--
         <TextView
             android:id="@+id/releaseNotesFutureFeaturesTitle"
             android:layout_width="match_parent"
@@ -548,6 +222,7 @@
             android:textSize="15sp"
             android:text="Die kommende Funktion ermöglicht das Setzen von Klammern durch einen speziellen Klammer-Knopf.\n"
             android:textColor="#000000" />
+        -->
 
         <TextView
             android:id="@+id/releaseNotesAPIVersionTitle"
