@@ -37,12 +37,11 @@ import java.nio.file.Files;
  */
 public class DataManager {
 
-    // Define the name of the JSON file
-    private static final String JSON_FILE = "settings.json";
     // Declare a MainActivity object
     private MainActivity mainActivity;
 
     // Define the names of the files
+    private static final String JSON_FILE = "settings.json";
     private static final String FILE_NAME1 = "history.txt";
     private static final String FILE_NAME2 = "calculate.txt";
     private static final String FILE_NAME3 = "result.txt";
