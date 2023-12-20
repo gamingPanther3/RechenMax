@@ -22,10 +22,10 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 - **Wissenschaftliche Notationen**: RechenMax kann auch wissenschaftliche Notationen verarbeiten und automatisch in Dezimalnotationen umwandeln.
   
 <div align="center">
-  <img src="pictures/RM-LM-C.png" alt="RechenMaxBild1" width="240"/>
-  <img src="pictures/RM-DM-C.png" alt="RechenMaxBild2" width="240"/>
-  <img src="pictures/RM-LM-C-S.png" alt="RechenMaxBild3" width="240"/>
-  <img src="pictures/RM-DM-C-S.png" alt="RechenMaxBild4" width="240"/>
+  <img src="pictures/RM-LM-C.png" alt="RechenMaxBild1" width="200"/>
+  <img src="pictures/RM-DM-C.png" alt="RechenMaxBild2" width="200"/>
+  <img src="pictures/RM-LM-C-S.png" alt="RechenMaxBild3" width="200"/>
+  <img src="pictures/RM-DM-C-S.png" alt="RechenMaxBild4" width="200"/>
 </div>  
 
 #### Beispiele für die Verwendung des Taschenrechners:
@@ -46,10 +46,10 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
 
 <div align="center">
-  <img src="pictures/RM-LM-H.png" alt="RechenMaxBild5" width="240"/>
-  <img src="pictures/RM-DM-H.png" alt="RechenMaxBild6" width="240"/>
-  <img src="pictures/RM-LM-S.png" alt="RechenMaxBild7" width="240"/>
-  <img src="pictures/RM-DM-S.png" alt="RechenMaxBild8" width="240"/>
+  <img src="pictures/RM-LM-H.png" alt="RechenMaxBild5" width="200"/>
+  <img src="pictures/RM-DM-H.png" alt="RechenMaxBild6" width="200"/>
+  <img src="pictures/RM-LM-S.png" alt="RechenMaxBild7" width="200"/>
+  <img src="pictures/RM-DM-S.png" alt="RechenMaxBild8" width="200"/>
 </div>
 
 ### Verwendung
