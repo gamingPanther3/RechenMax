@@ -32,8 +32,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.0.0
- * @date 03.12.2023
+ * @version 1.2.2
+ * @date 20.12.2023
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -46,11 +46,6 @@ public class MainActivity extends AppCompatActivity {
      * The context of the current object. Useful for accessing resources, launching new activities, etc.
      */
     private Context context = this;
-
-    /**
-     * Flag to control the removal of a value. If true, the value will be removed.
-     */
-    private boolean removevalue = false;
 
     /**
      * Stores the last number entered or calculated. Initialized to "0" to handle the case where no number has been entered yet.
@@ -1050,10 +1045,19 @@ public class MainActivity extends AppCompatActivity {
         last_op = s;
     }
     public boolean getRemoveValue() {
-        return removevalue;
+        final String value = dataManager.readFromJSON("removeValue", getApplicationContext());
+        if(value == null) {
+            dataManager.saveToJSON("removeValue", false,getApplicationContext());
+        }
+        assert value != null;
+        if (value.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
     }
     public void setRemoveValue(final boolean b) {
-        removevalue = b;
+        dataManager.saveToJSON("removeValue", b, getApplicationContext());
     }
     public void setLastNumber(final String s) {
         last_number = s.replace(".", "");

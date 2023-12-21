@@ -27,6 +27,7 @@ import java.nio.file.Files;
  *  | Names                            | Values                   | Context                              |
  *  |----------------------------------|--------------------------|--------------------------------------|
  *  | settingReleaseNotesSwitch        | true / false             | SettingsActivity                     |
+ *  | removeValue                      | true / false             | MainActivity                         |
  *  | settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity     |
  *  | showPatchNotes                   | true / false             | MainActivity -> SettingsActivity     |
  *  | disablePatchNotesTemporary       | true / false             | MainActivity -> SettingsActivity     |
@@ -210,6 +211,7 @@ public class DataManager {
         saveToJSON("selectedSpinnerSetting", "System", applicationContext);
         saveToJSON("showScienceRow", false, applicationContext);
         saveToJSON("calculatingMode", "easy", applicationContext);
+        saveToJSON("removeValue", "false", applicationContext);
     }
 
     /**
