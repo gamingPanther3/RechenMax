@@ -364,8 +364,13 @@ public class MainActivity extends AppCompatActivity {
      * It appends a "!" to the result text and sets the rotate operator flag to true.
      */
     private void factorial() {
-        addCalculateText(getResultText() + "!");
-        setRotateOperator(true);
+        if(getCalculateText().equals("") || getCalculateText().isEmpty()) {
+            addCalculateText(getResultText() + "!");
+            setRotateOperator(true);
+        } else {
+            addCalculateText(getLastOp() + " " + getResultText() + "!");
+            setRotateOperator(true);
+        }
     }
 
     /**
@@ -387,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
             if (getCalculateText().replace(" ", "").charAt(getCalculateText().replace(" ", "").length() - 1) == ')') {
                 addCalculateText("^");
             } else {
-                addCalculateText(" ^");
+                addCalculateText("^");
             }
             setRemoveValue(true);
             setRotateOperator(false);
@@ -823,7 +828,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleBackspaceAction() {
         String resultText = getResultText();
-        if (!resultText.equals("Ungültige Eingabe")) {
+        if (!isInvalidInput(getResultText())) {
             if (!resultText.equals("0") && !resultText.isEmpty()) {
                 setResultText(resultText.substring(0, resultText.length() - 1));
                 if (resultText.equals("-")) {
@@ -885,43 +890,48 @@ public class MainActivity extends AppCompatActivity {
         TextView calculatelabel = findViewById(R.id.calculate_label);
         TextView resultlabel = findViewById(R.id.result_label);
 
-        if(getRotateOperator()) {
-            if (!calcText.contains("=")) {
-                setLastNumber(getResultText());
-                setCalculateText(calcText + " =");
-                setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
-            } else {
-                if (!getLastOp().isEmpty() && !getLastOp().equals("√")) {
-                    setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+        if(!isInvalidInput(getResultText()) && !isInvalidInput(getCalculateText())) {
+            if(getRotateOperator()) {
+                if (!calcText.contains("=")) {
+                    setLastNumber(getResultText());
+                    setCalculateText(calcText + " =");
+                    setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
                 } else {
-                    setCalculateText(getResultText() + " =");
+                    if (!getLastOp().isEmpty() && !getLastOp().equals("√")) {
+                        setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+                    } else {
+                        setCalculateText(getResultText() + " =");
+                    }
+                    setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
                 }
-                setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
-            }
 
+            } else {
+                if (!calcText.contains("=")) {
+                    setLastNumber(getResultText());
+                    calculatelabel.setText(calcText + " " + getResultText() + " =");
+                    resultlabel.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
+                } else {
+                    if (!getLastOp().isEmpty()) {
+                        calculatelabel.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+                    } else {
+                        calculatelabel.setText(getResultText() + " =");
+                    }
+                    resultlabel.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
+                }
+
+            }
+            setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
+            dataManager.addToHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
+            dataManager.saveNumbers(getApplicationContext());
         } else {
-            if (!calcText.contains("=")) {
-                setLastNumber(getResultText());
-                calculatelabel.setText(calcText + " " + getResultText() + " =");
-                resultlabel.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
-            } else {
-                if (!getLastOp().isEmpty()) {
-                    calculatelabel.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
-                } else {
-                    calculatelabel.setText(getResultText() + " =");
-                }
-                resultlabel.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
-            }
-
+            setResultText("0");
+            setCalculateText("");
         }
-        setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
-        dataManager.addToHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
-        dataManager.saveNumbers(getApplicationContext());
 
         setRotateOperator(false);
         formatResultTextAfterType();
-        adjustTextSize();
         setRemoveValue(true);
+        adjustTextSize();
         formatResultTextAfterType();
     }
 
@@ -932,7 +942,12 @@ public class MainActivity extends AppCompatActivity {
      * @return Returns true if the text is invalid (contains "Ungültige Eingabe", "Unendlich", "Syntax Fehler", or "Domainfehler"), and false otherwise.
      */
     private boolean isInvalidInput(String text) {
-        return text.contains("Ungültige Eingabe") || text.contains("Unendlich") || text.contains("Syntax Fehler") || text.contains("Domainfehler") || text.contains("For input string");
+        return  text.contains("Ungültige Eingabe") ||
+                text.contains("Unendlich") ||
+                text.contains("Syntax Fehler") ||
+                text.contains("Domainfehler") ||
+                text.contains("For input string") ||
+                text.contains("Wert zu groß");
     }
 
     /**
