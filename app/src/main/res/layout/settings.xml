@@ -157,7 +157,7 @@
             android:layout_gravity="bottom"
             android:gravity="center"
             android:linksClickable="true"
-            android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz.\nVersion: 1.4.9"
+            android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz.\nVersion: 1.5.4"
             android:textColor="@color/colorBTNForegroundAccent" />
     </FrameLayout>
 </LinearLayout>
