@@ -197,6 +197,23 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Knöpfe wurden nicht ganz angezeigt"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesText5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unter bestimmten Umständen könnte es vorkommen, dass einige Knöpfe nicht korrekt angezeigt werden.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/releaseNotesAPIVersionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
