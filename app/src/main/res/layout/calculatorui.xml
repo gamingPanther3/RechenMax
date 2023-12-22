@@ -20,42 +20,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorLightBackground"
-            android:layout_gravity="right">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/scientificButton"
                 android:layout_width="40dp"
                 android:layout_height="44dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginTop="2.5dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
                 android:foreground="@drawable/baseline_science_24"
                 android:tag="history"
-                android:tooltipText="Verlauf"
-                android:translationX="5dp" />
+                android:tooltipText="Verlauf" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/history_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right|center_vertical"
-                android:layout_marginTop="2.5dp"
+                android:layout_marginEnd="10dp"
                 android:foreground="@drawable/baseline_history_24"
                 android:tag="history"
-                android:tooltipText="Verlauf"
-                android:translationX="275dp" />
+                android:tooltipText="Verlauf" />
 
             <Button
                 android:id="@+id/settings_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:translationX="280dp"
                 android:layout_gravity="right|center_vertical"
-                android:layout_marginTop="2.5dp"
+                android:layout_marginRight="10dp"
                 android:foreground="@drawable/baseline_settings_24"
                 android:tag="new_button"
                 android:tooltipText="Einstellungen" />
 
         </LinearLayout>
+
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -459,16 +463,16 @@
 
             <Button
                 android:id="@+id/negative"
-                android:tag="+-"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorBTNBackgroundAccent"
+                android:tag="+-"
+                android:text="@string/NegativButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:text="@string/NegativButton"
-                android:tooltipText="Negieren"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:tooltipText="Negieren" />
 
             <Button
                 android:id="@+id/zero"
