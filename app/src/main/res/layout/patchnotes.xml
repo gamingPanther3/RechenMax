@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="RechenMax 1.5.2"
+                android:text="RechenMax 1.5.3"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -35,7 +35,7 @@
                 android:id="@+id/releaseNotesReleaseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Veröffentlichungsdatum: 20.12.2023 - 16:36 Uhr"
+                android:text="Veröffentlichungsdatum: 22.12.2023 - 18:16 Uhr"
                 android:gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textColor="#000000"
@@ -179,84 +179,22 @@
             android:textColor="#000000"
             android:textSize="15sp" />
 
-        <!--
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kommende Funktionen"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\nVerschiedene Schreibmodi"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Es soll möglich sein einzustellen, ob man im Berechnungsbereich oder im Ergebnisbereich seine Mathematische Aufgabe eingibt. Zusätzlich sollte die Option vorhanden sein, das Zwischenergebnis anzeigen zu lassen."
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="\nVerschiede Ausrichtungsmodis"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Es soll die Option vorhanden sein, mit der ausgewählt werden kann, ob der Taschenrechner im Hoch- oder Querformat dargestellt wird.\n"
-            android:textColor="#000000" />
-
         <TextView
             android:id="@+id/releaseNotesFutureFeaturesSubtitle4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Aufgaben aus dem Verlauf aufrufen"
+            android:text="Rand von den Knöpfen"
             android:textColor="#000000"
             android:textSize="15sp"/>
 
         <TextView
-            android:id="@+id/releaseNotesFutureFeatures4"
+            android:id="@+id/releaseNotesFutureFeaturesText4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Diese Funktion ermöglicht es, vorherige Aufgaben im Taschenrechner durch einfaches Klicken auf die Aufgabe im Verlauf aufzurufen und zu übernehmen.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Verbessertes Klammersystem"
+            android:text="Der kleine weiße Rand von den Knöpfen wurde jetzt behoben.\n"
             android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Die kommende Funktion ermöglicht das Setzen von Klammern durch einen speziellen Klammer-Knopf.\n"
-            android:textColor="#000000" />
-        -->
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/releaseNotesAPIVersionTitle"
