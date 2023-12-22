@@ -20,10 +20,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="left"
-            android:backgroundTint="#FFFFFF"
-            android:drawableStart="@drawable/baseline_arrow_back_24"
             android:foreground="@drawable/baseline_arrow_back_24"
-            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="@dimen/calcButtonTextSize"
             android:tooltipText="Zurück" />
 

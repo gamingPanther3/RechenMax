@@ -158,10 +158,23 @@ public class HistoryActivity extends AppCompatActivity {
 
                 updateUIAccordingToNightMode(historyScrollView, historyTextView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
             } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
-                newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
-                newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
+                if(trueDarkMode != null && trueDarkMode.equals("true")) {
+                    newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
+                    newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
 
-                updateUIAccordingToNightMode(historyScrollView, historyTextView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+                    deleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24_true_darkmode));
+                    returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+
+                    updateUIAccordingToNightMode(historyScrollView, historyTextView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+                } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
+                    newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
+                    newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
+
+                    deleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24_light));
+                    returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+
+                    updateUIAccordingToNightMode(historyScrollView, historyTextView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+                }
             } else {
                 historyReturnButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
                 historyDeleteButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));

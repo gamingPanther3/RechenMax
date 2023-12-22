@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/historyUI"
-    android:backgroundTint="@color/colorBTNBackgroundAccent"
     tools:context="com.mlprograms.rechenmax.MainActivity" >
 
     <LinearLayout
@@ -20,7 +19,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="left"
-            android:backgroundTint="#FFFFFF"
             android:drawableStart="@drawable/baseline_arrow_back_24"
             android:foreground="@drawable/baseline_arrow_back_24"
             android:onClick="ButtonListener2"
@@ -46,11 +44,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
-            android:backgroundTint="#FFFFFF"
             android:onClick="ButtonListener2"
-            android:drawableStart="@drawable/baseline_delete_24"
             android:foreground="@drawable/baseline_delete_24"
-            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="@dimen/calcButtonTextSize"
             android:tooltipText="Löschen"
             tools:ignore="OnClick" />
