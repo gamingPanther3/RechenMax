@@ -10,16 +10,19 @@
     tools:context="com.mlprograms.rechenmax.MainActivity" >
 
     <LinearLayout
+        android:id="@+id/actionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBackground"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/history_return_button"
             android:tag="return"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="left"
-            android:drawableStart="@drawable/baseline_arrow_back_24"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
             android:foreground="@drawable/baseline_arrow_back_24"
             android:onClick="ButtonListener2"
             android:textSize="@dimen/calcButtonTextSize"
@@ -31,19 +34,25 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:gravity="center_vertical"
             android:text="Verlauf"
             android:textColor="@color/black"
             android:textSize="@dimen/calcButtonTextSize"
             android:tooltipText="Zwischenablage einfügen" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
         <Button
             android:id="@+id/history_delete_button"
             android:tag="delete"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="right"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginRight="10dp"
             android:onClick="ButtonListener2"
             android:foreground="@drawable/baseline_delete_24"
             android:textSize="@dimen/calcButtonTextSize"

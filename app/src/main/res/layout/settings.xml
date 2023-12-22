@@ -12,14 +12,17 @@
     <LinearLayout
         android:id="@+id/settings_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBackground"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/settings_return_button"
             android:tag="return"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="left"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
             android:foreground="@drawable/baseline_arrow_back_24"
             android:textSize="@dimen/calcButtonTextSize"
             android:tooltipText="Zurück" />
