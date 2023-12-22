@@ -1065,11 +1065,7 @@ public class MainActivity extends AppCompatActivity {
             dataManager.saveToJSON("removeValue", false,getApplicationContext());
         }
         assert value != null;
-        if (value.equals("true")) {
-            return true;
-        } else {
-            return false;
-        }
+        return value.equals("true");
     }
     public void setRemoveValue(final boolean b) {
         dataManager.saveToJSON("removeValue", b, getApplicationContext());
