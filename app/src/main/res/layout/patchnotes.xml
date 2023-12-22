@@ -133,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\nNegative Exponenten:"
+            android:text="\nNegative Exponenten"
             android:textColor="#000000"
             android:textSize="15sp"/>
 
@@ -142,6 +142,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Der Fehler, der bei der Berechnung mit negativen Exponenten auftrat (übermäßige Anzahl an Nachkommastellen), wurde behoben.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Rechnen mit Fakultäten"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Der Fehler, der den Operator setzt, wenn man die Fakultät-Taste drückt, wurde behoben.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Leeren der Rechenbereiche"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Der Fehler, der die Rechenbereiche nicht leert, wenn eine Fehlermeldung angezeigt wird, wurde behoben.\n"
             android:textColor="#000000"
             android:textSize="15sp" />
 
