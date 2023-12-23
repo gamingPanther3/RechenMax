@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.6.9
+ * @version 1.7.1
  * @date 23.12.2023
  */
 
