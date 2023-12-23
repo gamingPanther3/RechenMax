@@ -32,8 +32,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.2.2
- * @date 20.12.2023
+ * @version 1.2.8
+ * @date 22.12.2023
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -661,7 +661,6 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < layout.getChildCount(); i++) {
                 View v = layout.getChildAt(i);
                 v.setBackgroundColor(backgroundColor);
-                System.out.println(v);
 
                 // If the child is a TextView, change the foreground and background colors
                 if (v instanceof TextView) {
