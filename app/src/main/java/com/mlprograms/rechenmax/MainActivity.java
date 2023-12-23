@@ -974,7 +974,8 @@ public class MainActivity extends AppCompatActivity {
                 text.contains("Syntax Fehler") ||
                 text.contains("Domainfehler") ||
                 text.contains("For input string") ||
-                text.contains("Wert zu groß");
+                text.contains("Wert zu groß") ||
+                text.contains("Ungültiges Zahlenformat");
     }
 
     /**
