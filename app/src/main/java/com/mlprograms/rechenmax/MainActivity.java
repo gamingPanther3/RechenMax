@@ -360,17 +360,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This method adds a factorial to the calculation text.
+     * The 'factorial' method adds a factorial operator to the calculation.
      * It appends a "!" to the result text and sets the rotate operator flag to true.
+     * There are two conditions:
+     * 1. If the calculation text is empty, it appends the result with "!" to the calculation text.
+     * 2. Otherwise, it determines the last character in the calculation text. If the last character is a valid operator or an opening parenthesis, it appends the result with "!" to the calculation text.
+     * 3. If the last character is neither a valid operator nor an opening parenthesis, it appends the last operator and the result with "!" to the calculation text.
      */
     private void factorial() {
-        if(getCalculateText().equals("") || getCalculateText().isEmpty()) {
+        final String calc_text = getCalculateText().replace(" ", "");
+
+        if (calc_text.isEmpty()) {
             addCalculateText(getResultText() + "!");
             setRotateOperator(true);
         } else {
-            addCalculateText(getLastOp() + " " + getResultText() + "!");
-            setRotateOperator(true);
+            String lastchar = String.valueOf(calc_text.charAt(calc_text.length() - 1));
+            if (isValidOperator(lastchar.replace("!", "")) || lastchar.equals("(")) {
+                addCalculateText(getResultText() + "!");
+                setRotateOperator(true);
+            } else {
+                addCalculateText(getLastOp() + " " + getResultText() + "!");
+                setRotateOperator(true);
+            }
         }
+    }
+
+    /**
+     * The 'isValidOperator' method evaluates whether the input string is a recognized operator.
+     *
+     * @param op The string that is to be evaluated as an operator.
+     * @return boolean This returns 'true' if the input string matches one of the following operators: "+", "-", "×", "÷", "^", "!".
+     *                 It returns 'false' if the input string does not match any of the recognized operators.
+     */
+    private boolean isValidOperator(final String op) {
+        return  String.valueOf(op).equals("+") ||
+                String.valueOf(op).equals("-") ||
+                String.valueOf(op).equals("×") ||
+                String.valueOf(op).equals("÷") ||
+                String.valueOf(op).equals("^") ||
+                String.valueOf(op).equals("!");
     }
 
     /**
