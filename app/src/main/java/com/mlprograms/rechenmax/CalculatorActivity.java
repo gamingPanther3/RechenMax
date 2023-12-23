@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.6.4
- * @date 19.12.2023
+ * @version 1.6.9
+ * @date 23.12.2023
  */
 
 public class CalculatorActivity {
@@ -215,13 +215,13 @@ public class CalculatorActivity {
      * The output is a list of tokens in the order they appear in the expression.
      *
      * @param expression The mathematical expression to be tokenized.
-     * @return The list of tokens.
+     * @return A list of tokens representing the components of the mathematical expression.
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
         System.out.println("Input Expression: " + expression);
 
-        // Ersetze alle Leerzeichen im Ausdruck
+        // Replace all spaces in the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
 
         List<String> tokens = new ArrayList<>();
@@ -230,12 +230,12 @@ public class CalculatorActivity {
         for (int i = 0; i < expressionWithoutSpaces.length(); i++) {
             char c = expressionWithoutSpaces.charAt(i);
 
-            // Wenn das Zeichen eine Ziffer, ein Punkt oder ein Minuszeichen ist (wenn es am Anfang oder nach einer Öffnungsklammer steht),
-            // füge es zum aktuellen Token hinzu
+            // If the character is a digit, period, or minus sign (if it's at the beginning or after an opening parenthesis),
+            // add it to the current token
             if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || expressionWithoutSpaces.charAt(i - 1) == '('))) {
                 currentToken.append(c);
             } else {
-                // Wenn das Zeichen ein Operator ist, füge das aktuelle Token zur Liste hinzu und setze das aktuelle Token zurück
+                // If the character is an operator, add the current token to the list and reset the current token
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);
@@ -244,7 +244,7 @@ public class CalculatorActivity {
             }
         }
 
-        // Füge das letzte Token hinzu, wenn es vorhanden ist
+        // Add the last token if it exists
         if (currentToken.length() > 0) {
             tokens.add(currentToken.toString());
         }
