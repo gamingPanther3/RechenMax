@@ -214,6 +214,23 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Behobener Fehler bei der Subtraktion"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesText8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vorher wurde gelegentlich ein 'Syntaxfehler' als Ergebnis angezeigt, wenn eine Subtraktion durchgeführt wurde. Dieses Problem wurde erfolgreich behoben, und die Subtraktionsfunktion funktioniert jetzt reibungslos ohne unerwartete Fehlermeldungen.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/releaseNotesAPIVersionTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
