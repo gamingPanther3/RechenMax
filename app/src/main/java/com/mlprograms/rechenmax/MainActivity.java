@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
             prefs.edit().putBoolean("firstrun", false).apply();
         }
 
-        Log.e("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
-        Log.e("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
+        Log.i("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
+        Log.i("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
 
         final String showPatNot = dataManager.readFromJSON("showPatchNotes", getApplicationContext());
         final String disablePatNotTemp = dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext());
