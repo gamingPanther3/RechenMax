@@ -1,6 +1,7 @@
 package com.mlprograms.rechenmax;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -219,7 +220,7 @@ public class CalculatorActivity {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        System.out.println("Input Expression: " + expression);
+        Log.i("tokenize","Input Expression: " + expression);
 
         // Replace all spaces in the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -250,7 +251,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print tokens
-        System.out.println("Tokens: " + tokens);
+        Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -403,7 +404,7 @@ public class CalculatorActivity {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            System.out.println("Token: " + token);
+            Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -435,17 +436,17 @@ public class CalculatorActivity {
             }
             // If the token is neither a number nor an operator, throw an exception
             else {
-                System.out.println("Token is neither a number nor an operator");
+                Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException("Syntax Fehler");
             }
 
             // Debugging: Print current stack
-            System.out.println("Stack: " + stack);
+            Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            System.out.println("Stacksize != 1");
+            Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException("Syntax Fehler");
         }
 
@@ -469,6 +470,10 @@ public class CalculatorActivity {
 
         // Iterate through each token in the infix list
         for (final String token : infixTokens) {
+            // Debugging: Print current token and stack
+            Log.i("infixToPostfix","Current Token: " + token);
+            Log.i("infixToPostfix","Stack: " + stack);
+
             // If the token is a number, add it to the postfix list
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -494,11 +499,19 @@ public class CalculatorActivity {
                 // Remove the opening parenthesis from the stack
                 stack.pop();
             }
+
+            // Debugging: Print postfixTokens and stack after processing current token
+            Log.i("infixToPostfix","Postfix Tokens: " + postfixTokens);
+            Log.i("infixToPostfix","Stack after Token Processing: " + stack);
         }
+
         // Add all remaining operators on the stack to the postfix list
         while (!stack.isEmpty()) {
             postfixTokens.add(stack.pop());
         }
+
+        // Debugging: Print final postfixTokens
+        Log.i("infixToPostfix","Final Postfix Tokens: " + postfixTokens);
 
         // Return the postfix list
         return postfixTokens;
