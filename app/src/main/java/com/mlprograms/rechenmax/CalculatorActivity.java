@@ -68,26 +68,31 @@ public class CalculatorActivity {
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
+                // (Assuming these methods are defined elsewhere in your code)
                 mainActivity.setIsNotation(true);
                 String result = convertScientificToDecimal(trim);
                 return removeNonNumeric(result);
             }
 
-            // Tokenize the expression and evaluate it
+            // Tokenize the expression and handle negative exponent in division
             final String expression = convertScientificToDecimal(trim);
             final List<String> tokens = tokenize(expression);
 
             for (int i = 0; i < tokens.size() - 1; i++) {
-                // If the expression contains division by zero, return "Infinity"
                 try {
-                    if (tokens.get(i).equals("/") && Double.parseDouble(tokens.get(i + 1)) <= 0) {
-                        return "Unendlich";
+                    if (tokens.get(i).equals("/") && tokens.get(i + 1).equals("-")) {
+                        // Handle negative exponent in division
+                        tokens.remove(i + 1);
+                        tokens.add(i + 1, "NEG_EXPONENT");
                     }
                 } catch (Exception e) {
                     // do nothing
                 }
             }
+
+            // Evaluate the expression and handle exceptions
             final BigDecimal result = evaluate(tokens);
+
             double resultDouble = result.doubleValue();
             // If the result is too large, return "Wert zu groß"
             if (Double.isInfinite(resultDouble)) {
@@ -399,7 +404,6 @@ public class CalculatorActivity {
             throw new NumberFormatException("Ungültiges Zahlenformat");
         }
     }
-
 
     /**
      * This method evaluates a postfix expression.
