@@ -975,6 +975,7 @@ public class MainActivity extends AppCompatActivity {
                 text.contains("Domainfehler") ||
                 text.contains("For input string") ||
                 text.contains("Wert zu groß") ||
+                text.contains("Kein Teilen") ||
                 text.contains("Ungültiges Zahlenformat");
     }
 
