@@ -231,9 +231,9 @@ public class CalculatorActivity {
         for (int i = 0; i < expressionWithoutSpaces.length(); i++) {
             char c = expressionWithoutSpaces.charAt(i);
 
-            // If the character is a digit, period, or minus sign (if it's at the beginning or after an opening parenthesis),
+            // If the character is a digit, period, or minus sign (if it's at the beginning, after an opening parenthesis, or after an operator),
             // add it to the current token
-            if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || expressionWithoutSpaces.charAt(i - 1) == '('))) {
+            if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || expressionWithoutSpaces.charAt(i - 1) == '(' || isOperator(String.valueOf(expressionWithoutSpaces.charAt(i - 1)))))) {
                 currentToken.append(c);
             } else {
                 // If the character is an operator, add the current token to the list and reset the current token
