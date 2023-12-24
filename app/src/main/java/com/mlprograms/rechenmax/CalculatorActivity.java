@@ -373,8 +373,19 @@ public class CalculatorActivity {
         double baseDouble = base.doubleValue();
         double exponentDouble = exponent.doubleValue();
 
-        // Calculate the power of the base to the exponent
-        double resultDouble = Math.pow(baseDouble, exponentDouble);
+        // Check if the base is zero and the exponent is negative
+        if (baseDouble == 0 && exponentDouble < 0) {
+            throw new ArithmeticException("Kein Teilen durch 0");
+        }
+
+        // Check if the base is negative and the exponent is an integer
+        double resultDouble;
+        if (baseDouble < 0 && exponentDouble == (int) exponentDouble) {
+            baseDouble = -baseDouble;
+            resultDouble = -Math.pow(baseDouble, exponentDouble);
+        } else {
+            resultDouble = Math.pow(baseDouble, exponentDouble);
+        }
 
         // If the result is too large to be represented as a double, throw an exception
         if (Double.isInfinite(resultDouble)) {
@@ -388,6 +399,7 @@ public class CalculatorActivity {
             throw new NumberFormatException("Ungültiges Zahlenformat");
         }
     }
+
 
     /**
      * This method evaluates a postfix expression.
