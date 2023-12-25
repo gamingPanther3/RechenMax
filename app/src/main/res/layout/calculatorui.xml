@@ -59,12 +59,12 @@
 
         </LinearLayout>
 
-
-
         <ScrollView
-            android:layout_width="match_parent"
+            android:id="@+id/calculate_scrollview"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_gravity="right|bottom">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,6 +76,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="end|center_vertical"
                     android:paddingTop="15dp"
+                    android:paddingStart="10sp"
+                    android:paddingEnd="10sp"
                     android:text="@string/calculate_label"
                     android:textColor="@color/black"
                     android:textSize="35sp" />
@@ -84,22 +86,24 @@
         </ScrollView>
 
         <ScrollView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_gravity="right|bottom">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/result_label"
-                    android:layout_width="match_parent"
-                    android:paddingTop="45dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:gravity="end|center_vertical"
+                    android:paddingTop="40dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:text="@string/result_label"
+                    android:textColor="@color/black"
                     android:textSize="60sp" />
 
             </LinearLayout>

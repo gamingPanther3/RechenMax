@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -111,12 +112,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         dataManager.loadNumbers();
-        //dataManager.saveNumbers(getApplicationContext());
+        // dataManager.saveNumbers(getApplicationContext());
         setUpListeners();
         checkScienceButtonState();
         checkDarkmodeSetting();
         formatResultTextAfterType();
         adjustTextSize();
+
+        // scroll down in calculate_label
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
+    }
+
+    /**
+     * Scrolls a ScrollView to the bottom of its content.
+     * <p>
+     * This method posts a Runnable to the ScrollView's message queue, which
+     * ensures that the scrolling operation is executed after the view is
+     * created and laid out. It uses the fullScroll method with FOCUS_DOWN
+     * parameter to scroll the ScrollView to the bottom.
+     *
+     * @param scrollView The ScrollView to be scrolled to the bottom.
+     */
+    private void scrollToBottom(final ScrollView scrollView) {
+        // Executes the scrolling to the bottom of the ScrollView in a Runnable.
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
     }
 
     /**
@@ -337,6 +361,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void parenthesisOnAction() {
         addCalculateText("(");
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
     }
 
     /**
@@ -357,6 +382,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         setRotateOperator(true);
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
     }
 
     /**
@@ -383,6 +409,7 @@ public class MainActivity extends AppCompatActivity {
                 setRotateOperator(true);
             }
         }
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
     }
 
     /**
@@ -425,6 +452,7 @@ public class MainActivity extends AppCompatActivity {
             setRemoveValue(true);
             setRotateOperator(false);
         }
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
     }
 
     /**
@@ -439,6 +467,7 @@ public class MainActivity extends AppCompatActivity {
         }
         setRemoveValue(true);
         //setRotateOperator(true);
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
     }
 
     /**
@@ -821,6 +850,7 @@ public class MainActivity extends AppCompatActivity {
             setRemoveValue(true);
         }
         setRotateOperator(false);
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
     }
 
     /**
@@ -960,6 +990,7 @@ public class MainActivity extends AppCompatActivity {
         setRemoveValue(true);
         adjustTextSize();
         formatResultTextAfterType();
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
     }
 
     /**
