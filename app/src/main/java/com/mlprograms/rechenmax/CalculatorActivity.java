@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.7.1
- * @date 23.12.2023
+ * @version 1.7.3
+ * @date 25.12.2023
  */
 
 public class CalculatorActivity {
@@ -138,7 +138,7 @@ public class CalculatorActivity {
         // "([-+]?\\d+(\\.\\d+)?)" - matches a number which may be negative or positive, and may have a decimal part
         // "(e[+-]\\d+)" - matches 'e' followed by an optional '+' or '-' sign, followed by one or more digits
         // "$" - end of the line
-        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)(e[+-]\\d+)$");
+        final Pattern pattern = Pattern.compile("^([-+]?\\\\d+(\\\\.\\\\d+)?)(e[-+]?\\\\d+)$");
 
         // The pattern is used to create a matcher for the formatted input string
         final Matcher matcher = pattern.matcher(formattedInput);
@@ -225,7 +225,7 @@ public class CalculatorActivity {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        Log.i("tokenize","Input Expression: " + expression);
+        //Log.i("tokenize","Input Expression: " + expression);
 
         // Replace all spaces in the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -256,7 +256,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print tokens
-        Log.i("tokenize","Tokens: " + tokens);
+        //Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -296,30 +296,30 @@ public class CalculatorActivity {
      */
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
         switch (operator) {
-            case "+": // Case for addition
+            case "+":
                 return operand1.add(operand2);
-            case "-": // Case for subtraction
+            case "-":
                 return operand1.subtract(operand2);
-            case "*": // Case for multiplication
+            case "*":
                 return operand1.multiply(operand2);
-            case "/": // Case for division
-                if (operand2.compareTo(BigDecimal.ZERO) == 0) { // Check if the second operand is zero to avoid division by zero
-                    return new BigDecimal("Unendlich"); // Return "Infinity" if the second operand is zero
+            case "/":
+                if (operand2.compareTo(BigDecimal.ZERO) == 0) {
+                    throw new ArithmeticException("Kein Teilen durch 0");
                 } else {
-                    return operand1.divide(operand2, MC); // Perform the division if the second operand is not zero
+                    return operand1.divide(operand2, MC);
                 }
-            case ROOT: // Case for the root operation
-                if (operand2.compareTo(BigDecimal.ZERO) < 0) { // Check if the second operand is negative as the root of a negative number is not defined
-                    throw new IllegalArgumentException("Nur reelle Zahlen"); // Throw exception if the second operand is negative
+            case ROOT:
+                if (operand2.compareTo(BigDecimal.ZERO) < 0) {
+                    throw new IllegalArgumentException("Nur reelle Zahlen");
                 } else {
-                    return BigDecimal.valueOf(Math.sqrt(operand2.doubleValue())); // Calculate the square root if the second operand is not negative
+                    return BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
                 }
-            case "!": // Case for factorial
+            case "!":
                 return factorial(operand1);
-            case "^": // Case for power
+            case "^":
                 return pow(operand1, operand2);
-            default: // Default case when the operator is not recognized
-                throw new IllegalArgumentException("Unbekannter Operator: " + operator); // Throw exception when the operator is not recognized
+            default:
+                throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
     }
 
@@ -420,7 +420,7 @@ public class CalculatorActivity {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            Log.i("evaluatePostfix","Token: " + token);
+            //Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -452,17 +452,17 @@ public class CalculatorActivity {
             }
             // If the token is neither a number nor an operator, throw an exception
             else {
-                Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException("Syntax Fehler");
             }
 
             // Debugging: Print current stack
-            Log.i("evaluatePostfix","Stack: " + stack);
+            //Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            Log.i("evaluatePostfix","Stacksize != 1");
+            //Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException("Syntax Fehler");
         }
 
@@ -487,8 +487,8 @@ public class CalculatorActivity {
         // Iterate through each token in the infix list
         for (final String token : infixTokens) {
             // Debugging: Print current token and stack
-            Log.i("infixToPostfix","Current Token: " + token);
-            Log.i("infixToPostfix","Stack: " + stack);
+            //Log.i("infixToPostfix","Current Token: " + token);
+            //Log.i("infixToPostfix","Stack: " + stack);
 
             // If the token is a number, add it to the postfix list
             if (isNumber(token)) {
@@ -517,8 +517,8 @@ public class CalculatorActivity {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            Log.i("infixToPostfix","Postfix Tokens: " + postfixTokens);
-            Log.i("infixToPostfix","Stack after Token Processing: " + stack);
+            //Log.i("infixToPostfix","Postfix Tokens: " + postfixTokens);
+            //Log.i("infixToPostfix","Stack after Token Processing: " + stack);
         }
 
         // Add all remaining operators on the stack to the postfix list
@@ -527,7 +527,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print final postfixTokens
-        Log.i("infixToPostfix","Final Postfix Tokens: " + postfixTokens);
+        //Log.i("infixToPostfix","Final Postfix Tokens: " + postfixTokens);
 
         // Return the postfix list
         return postfixTokens;
