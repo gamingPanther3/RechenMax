@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="RechenMax 1.5.4"
+                android:text="RechenMax 1.5.5"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -35,7 +35,7 @@
                 android:id="@+id/releaseNotesReleaseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Veröffentlichungsdatum: 24.12.2023 - 10:00 Uhr"
+                android:text="Veröffentlichungsdatum: N/A (work in progress)"
                 android:gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textColor="#000000"
@@ -55,7 +55,7 @@
             android:id="@+id/releaseNotesOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="\nDas mit einer der letzten Updates meiner App hat eine Vielzahl von neuen Funktionen und Verbesserungen eingeführt, die die Benutzererfahrung erheblich verbessern. Eine der bemerkenswertesten Neuerungen ist die Möglichkeit, Fakultäten in Berechnungen einzubeziehen. Diese Funktion erweitert die mathematischen Möglichkeiten der App und erleichtert den Benutzern das Durchführen komplexer Berechnungen. Zusätzlich wurde der ‘Echte Dunkelmodus’ intensiviert und erreicht nun eine neue Stufe der Dunkelheit. Wenn dieser Modus aktiviert ist, werden die Knöpfe zusätzlich abgedunkelt, was zu einem angenehmeren visuellen Erlebnis führt. Ein weiteres wichtiges Update betrifft die Wurzelberechnungsfunktionen. Mit der neuesten Version der App können Benutzer nun Berechnungen innerhalb einer Wurzel durchführen. Diese Verbesserung bietet erweiterte Funktionalität und verbessert die Benutzererfahrung bei der Durchführung komplexer mathematischer Operationen. Neben diesen neuen Funktionen wurden auch einige Fehler behoben. Insbesondere wurde ein Fehler, der bei der Berechnung mit negativen Exponenten auftrat und zu einer übermäßigen Anzahl an Nachkommastellen führte, behoben. Es ist wichtig zu beachten, dass dieses Update das letzte seiner Art für die App ist. In Zukunft werden nur noch Fehler behoben. Zusammenfassend lässt sich sagen, dass das letzte Update der App eine Reihe wichtiger Verbesserungen und neuer Funktionen bietet, die die Leistungsfähigkeit und Benutzerfreundlichkeit der App erheblich steigern.\n"
+            android:text="\n\n"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\nRechnen mit Fakultäten"
+            android:text="\nAutomatisches Scrollen"
             android:textColor="#000000"
             android:textSize="15sp"/>
 
@@ -82,41 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Die neue Funktion ermöglichen es, Fakultäten in Berechnungen einzubeziehen. Dies erweitert die mathematischen Möglichkeiten und erleichtert komplexe Berechnungen.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Intensivierter 'Echter Dunkelmodus'"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Der ‘Echter Dunkelmodus’ erreicht jetzt eine neue Stufe der Dunkelheit. Die Knöpfe werden nun auch zusätzlich abgedunkelt, wenn dieser Modus aktiviert ist.\n"
-            android:textColor="#000000" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Erweiterte Wurzelberechnungsfunktionen"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="Mit der neuesten Version können Berechnungen innerhalb einer Wurzel durchgeführt werden. Diese Verbesserung bietet erweiterte Funktionalität und verbessert die Benutzererfahrung bei der Durchführung komplexer mathematischer Operationen.\n"
+            android:text="Falls erforderlich, erfolgt im oberen Berechnungsbereich eine automatische Bildlaufbewegung nach unten.\n"
             android:textColor="#000000" />
 
         <TextView
@@ -133,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\nNegative Exponenten"
+            android:text="\nAnzeigen der Berechnungsbereiche"
             android:textColor="#000000"
             android:textSize="15sp"/>
 
@@ -141,92 +107,7 @@
             android:id="@+id/releaseNotesFutureFeaturesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Der Fehler, der bei der Berechnung mit negativen Exponenten auftrat (übermäßige Anzahl an Nachkommastellen), wurde behoben.\n"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Rechnen mit Fakultäten"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Der Fehler, der den Operator setzt, wenn man die Fakultät-Taste drückt, wurde behoben.\n"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Leeren der Rechenbereiche"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Der Fehler, der die Rechenbereiche nicht leert, wenn eine Fehlermeldung angezeigt wird, wurde behoben.\n"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Rand von den Knöpfen"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesText4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Der kleine weiße Rand von den Knöpfen wurde jetzt behoben.\n"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Knöpfe wurden nicht ganz angezeigt"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesText5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Unter bestimmten Umständen könnte es vorkommen, dass einige Knöpfe nicht korrekt angezeigt werden.\n"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Behobener Fehler bei der Subtraktion"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesText8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Vorher wurde gelegentlich ein 'Syntaxfehler' als Ergebnis angezeigt, wenn eine Subtraktion durchgeführt wurde. Dieses Problem wurde erfolgreich behoben, und die Subtraktionsfunktion funktioniert jetzt reibungslos ohne unerwartete Fehlermeldungen.\n"
+            android:text="Es konnte vorkommen, dass die Berechnungsbereiche unter bestimmten Umständen nicht oder nur teilweise angezeigt wurden.\n"
             android:textColor="#000000"
             android:textSize="15sp" />
 
