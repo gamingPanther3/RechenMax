@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -30,7 +31,7 @@ public class CalculatorActivity {
     }
 
     // Declaration of a constant of type MathContext with a precision of 10. This is used for division to ensure a precision of 10 decimal places.
-    private static final MathContext MC = new MathContext(10);
+    private static final MathContext MC = new MathContext(11, RoundingMode.HALF_UP);
 
     // Declaration of a constant for the root operation.
     public static final String ROOT = "√";
@@ -137,7 +138,7 @@ public class CalculatorActivity {
         // "([-+]?\\d+(\\.\\d+)?)" - matches a number which may be negative or positive, and may have a decimal part
         // "(e[+-]\\d+)" - matches 'e' followed by an optional '+' or '-' sign, followed by one or more digits
         // "$" - end of the line
-        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)(e[-+]?\\d+)$");
+        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\\\.\\\\d+)?)(e[-+]?\\\\d+)$");
 
         // The pattern is used to create a matcher for the formatted input string
         final Matcher matcher = pattern.matcher(formattedInput);
