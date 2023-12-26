@@ -530,8 +530,8 @@ public class CalculatorActivity {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            //Log.i("infixToPostfix","Postfix Tokens: " + postfixTokens);
-            //Log.i("infixToPostfix","Stack after Token Processing: " + stack);
+            // Log.i("infixToPostfix","Postfix Tokens: " + postfixTokens);
+            // Log.i("infixToPostfix","Stack after Token Processing: " + stack);
         }
 
         // Add all remaining operators on the stack to the postfix list
