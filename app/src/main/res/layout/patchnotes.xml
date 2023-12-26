@@ -43,6 +43,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/releaseNotesOverviewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Übersicht"
@@ -51,6 +52,7 @@
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/releaseNotesOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="\n\n"
@@ -58,6 +60,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/releaseNotesFeaturesTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Neue Funktionen"
@@ -66,6 +69,7 @@
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -74,6 +78,7 @@
             android:textSize="15sp"/>
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeatures1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -81,6 +86,7 @@
             android:textColor="#000000" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -89,6 +95,7 @@
             android:textSize="15sp"/>
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeatures2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -96,6 +103,7 @@
             android:textColor="#000000" />
 
         <TextView
+            android:id="@+id/releaseNotesBugsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Behobene Fehler"
@@ -104,6 +112,7 @@
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -112,6 +121,7 @@
             android:textSize="15sp"/>
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Es konnte vorkommen, dass die Berechnungsbereiche unter bestimmten Umständen nicht oder nur teilweise angezeigt wurden.\n"
