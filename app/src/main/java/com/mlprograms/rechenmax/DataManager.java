@@ -34,7 +34,8 @@ import java.nio.file.Files;
  *  | showReleaseNotesOnVeryFirstStart | true / false             | MainActivity                         |
  *  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
  *  | showScienceRow                   | true / false             | MainActivity                         |
- *  | calculatingMode                  | easy / normal            | MainActivity                         |
+ *  | lastop                           | String                   | MainActivity                         |
+ *  | lastnumber                       | Integer                  | MainActivity                         |
  *  | historyTextViewNumber            | Integer                  | MainActivity                         |
  */
 public class DataManager {
