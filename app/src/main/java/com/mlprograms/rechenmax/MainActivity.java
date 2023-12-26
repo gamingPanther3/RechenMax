@@ -49,16 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private Context context = this;
 
     /**
-     * Stores the last number entered or calculated. Initialized to "0" to handle the case where no number has been entered yet.
-     */
-    private String last_number = "0";
-
-    /**
-     * Stores the last operator used. Initialized to "+" as it is the default operator.
-     */
-    private String last_op = "+";
-
-    /**
      * Instance of DataManager to handle data-related tasks such as saving and retrieving data.
      */
     private DataManager dataManager;
@@ -1157,10 +1147,16 @@ public class MainActivity extends AppCompatActivity {
     public void setRotateOperator(final boolean rotate) { rotateOperatorAfterRoot = rotate; }
     public boolean getRotateOperator() { return rotateOperatorAfterRoot; }
     public String getLastOp() {
-        return last_op;
+        final String last_op = dataManager.readFromJSON("lastop", getApplicationContext());
+        if(last_op != null) {
+            return last_op;
+        } else {
+            dataManager.saveToJSON("lastop", "+", getApplicationContext());
+        }
+        return getLastOp();
     }
     public void setLastOp(final String s) {
-        last_op = s;
+        dataManager.saveToJSON("lastop", s, getApplicationContext());
     }
     public boolean getRemoveValue() {
         final String value = dataManager.readFromJSON("removeValue", getApplicationContext());
@@ -1174,12 +1170,19 @@ public class MainActivity extends AppCompatActivity {
         dataManager.saveToJSON("removeValue", b, getApplicationContext());
     }
     public void setLastNumber(final String s) {
-        last_number = s.replace(".", "");
+        final String last_number = s.replace(".", "");
+        dataManager.saveToJSON("lastnumber", last_number, getApplicationContext());
     }
     public String getLastNumber() {
-        final String num = last_number.replace(".", "").replace(",", ".");
-        final DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
-        return decimalFormat.format(Double.parseDouble(num));
+        final String last_number = dataManager.readFromJSON("lastnumber", getApplicationContext());
+        if(last_number != null) {
+            final String num = last_number.replace(".", "").replace(",", ".");
+            final DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+            return decimalFormat.format(Double.parseDouble(num));
+        } else {
+            dataManager.saveToJSON("lastnumber", "0", getApplicationContext());
+        }
+        return getLastNumber();
     }
     public String getResultText() {
         TextView resulttext = findViewById(R.id.result_label);
