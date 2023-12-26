@@ -51,11 +51,23 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
 
+        System.out.println("opened HistoryActivity.java with history.xml");
+
         TextView history_text_view = findViewById(R.id.history_textview);
         history_text_view.setText(loadHistory(getApplicationContext()));
 
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switchDisplayMode(currentNightMode);
+
+        // code snippet to call all saved historyTextViewNumber values
+        final String value = dataManager.readFromJSON("historyTextViewNumber", getApplicationContext());
+        if(value == null) {
+            dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
+        } else {
+            for(int i = 1; i <= Integer.parseInt(value); i++) {
+                System.out.println(i + ": " + dataManager.readFromJSON(String.valueOf(i), getApplicationContext()));
+            }
+        }
     }
 
     /**
