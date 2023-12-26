@@ -24,8 +24,8 @@ import java.io.OutputStreamWriter;
 /**
  * HistoryActivity
  * @author Max Lemberg
- * @version 1.0.0
- * @date 03.12.2023
+ * @version 1.0.9
+ * @date 27.12.2023
  */
 public class HistoryActivity extends AppCompatActivity {
 

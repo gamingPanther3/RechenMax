@@ -5,6 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * CalculatorActivity
+ * @author Max Lemberg
+ * @version 1.0.2
+ * @date 27.12.2023
+ *
  * Example local unit test, which will execute on the development machine (host),
  *
  * @see <a href="http://d,android,com/tools/testing">Testing documentation</a>

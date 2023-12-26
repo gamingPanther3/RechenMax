@@ -33,8 +33,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.2.8
- * @date 22.12.2023
+ * @version 1.3.0
+ * @date 26.12.2023
  */
 
 public class MainActivity extends AppCompatActivity {
