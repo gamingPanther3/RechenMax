@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                         dataManager.saveToJSON("showScienceRow", true, getApplicationContext());
                     }
                 }
+                Log.i("setScienceButtonListener", "showScienceRow: " + dataManager.readFromJSON("showScienceRow", getApplicationContext()));
             });
         }
     }
@@ -1018,7 +1019,7 @@ public class MainActivity extends AppCompatActivity {
             dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
         } else {
             for(int i = 1; i <= Integer.parseInt(value); i++) {
-                System.out.println(i + ": " + dataManager.readFromJSON(String.valueOf(i), getApplicationContext()));
+                //System.out.println(i + ": " + dataManager.readFromJSON(String.valueOf(i), getApplicationContext()));
             }
         }
     }
@@ -1157,6 +1158,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setLastOp(final String s) {
         dataManager.saveToJSON("lastop", s, getApplicationContext());
+        Log.i("setLastOp", "lastOp: " + dataManager.readFromJSON("lastop", getApplicationContext()));
     }
     public boolean getRemoveValue() {
         final String value = dataManager.readFromJSON("removeValue", getApplicationContext());
@@ -1168,10 +1170,12 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setRemoveValue(final boolean b) {
         dataManager.saveToJSON("removeValue", b, getApplicationContext());
+        Log.i("setRemoveValue", "removeValue: " + dataManager.readFromJSON("removeValue", getApplicationContext()));
     }
     public void setLastNumber(final String s) {
         final String last_number = s.replace(".", "");
         dataManager.saveToJSON("lastnumber", last_number, getApplicationContext());
+        Log.i("setLastNumber", "lastNumber: " + dataManager.readFromJSON("lastnumber", getApplicationContext()));
     }
     public String getLastNumber() {
         final String last_number = dataManager.readFromJSON("lastnumber", getApplicationContext());
