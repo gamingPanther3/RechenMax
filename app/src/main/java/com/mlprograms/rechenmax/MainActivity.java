@@ -1021,6 +1021,8 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
 
+
+        // code snippet to call all saved historyTextViewNumber values
         final String value = dataManager.readFromJSON("historyTextViewNumber", getApplicationContext());
         if(value == null) {
             dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
