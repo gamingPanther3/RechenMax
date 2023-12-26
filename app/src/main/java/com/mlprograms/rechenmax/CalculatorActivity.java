@@ -324,39 +324,52 @@ public class CalculatorActivity {
     }
 
     /**
-     * This method calculates the factorial of a number. The factorial of a number is the product of all positive integers less than or equal to the number.
+     * Calculates the factorial of a number.
+     * <p>
+     * The factorial of a number is the product of all positive integers less than or equal to the number.
      * For example, the factorial of 5 (denoted as 5!) is 1*2*3*4*5 = 120.
      * <p>
-     * The method takes a BigDecimal number as input. It first checks if the number is negative. If it is, the number is made positive for the calculation.
-     * Then it checks if the number is a whole number because factorial is only defined for whole numbers.
+     * The method takes a BigDecimal number as input. It first checks if the number is negative. If it is,
+     * the number is made positive for the calculation. Then it checks if the number is a whole number because
+     * factorial is only defined for whole numbers.
      * <p>
      * It initializes the result to 1. This will hold the calculated factorial.
-     * It calculates the factorial by multiplying the number with the result and then decrementing the number, until the number is greater than 1.
+     * It calculates the factorial by multiplying the number with the result and then decrementing the number,
+     * until the number is greater than 1.
      * <p>
      * If the original number was negative, the result is negated. Otherwise, the result is returned as is.
      *
      * @param number The number for which the factorial is to be calculated.
      * @return The factorial of the number.
-     * @throws IllegalArgumentException If the number is not a whole number.
+     * @throws IllegalArgumentException If the number is not a whole number or if it's greater than 170.
      */
     public static BigDecimal factorial(BigDecimal number) {
+        // Check if the number is greater than 170
+        if (number.compareTo(new BigDecimal("170")) > 0) {
+            throw new IllegalArgumentException("Wert zu groß");
+        }
+
         // Check if the number is negative
         boolean isNegative = number.compareTo(BigDecimal.ZERO) < 0;
         // If the number is negative, convert it to positive
         if (isNegative) {
             number = number.negate();
         }
+
         // Check if the number is an integer. If not, throw an exception
         if (number.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) != 0) {
             throw new IllegalArgumentException("Domainfehler");
         }
+
         // Initialize the result as 1
         BigDecimal result = BigDecimal.ONE;
+
         // Calculate the factorial of the number
         while (number.compareTo(BigDecimal.ONE) > 0) {
             result = result.multiply(number);
             number = number.subtract(BigDecimal.ONE);
         }
+
         // If the original number was negative, return the negative of the result. Otherwise, return the result.
         return isNegative ? result.negate() : result;
     }
