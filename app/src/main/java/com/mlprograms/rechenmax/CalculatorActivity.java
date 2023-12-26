@@ -138,7 +138,7 @@ public class CalculatorActivity {
         // "([-+]?\\d+(\\.\\d+)?)" - matches a number which may be negative or positive, and may have a decimal part
         // "(e[+-]\\d+)" - matches 'e' followed by an optional '+' or '-' sign, followed by one or more digits
         // "$" - end of the line
-        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\\\.\\\\d+)?)(e[-+]?\\\\d+)$");
+        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)(e[+-]?\\d+)$");
 
         // The pattern is used to create a matcher for the formatted input string
         final Matcher matcher = pattern.matcher(formattedInput);
