@@ -120,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
         adjustTextSize();
 
         // scroll down in calculate_label
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
+
     }
 
     /**
@@ -361,7 +364,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void parenthesisOnAction() {
         addCalculateText("(");
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
     }
 
     /**
@@ -382,7 +387,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         setRotateOperator(true);
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
     }
 
     /**
@@ -409,7 +416,9 @@ public class MainActivity extends AppCompatActivity {
                 setRotateOperator(true);
             }
         }
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
     }
 
     /**
@@ -452,7 +461,9 @@ public class MainActivity extends AppCompatActivity {
             setRemoveValue(true);
             setRotateOperator(false);
         }
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
     }
 
     /**
@@ -467,7 +478,9 @@ public class MainActivity extends AppCompatActivity {
         }
         setRemoveValue(true);
         //setRotateOperator(true);
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
     }
 
     /**
@@ -850,7 +863,9 @@ public class MainActivity extends AppCompatActivity {
             setRemoveValue(true);
         }
         setRotateOperator(false);
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
     }
 
     /**
@@ -990,7 +1005,9 @@ public class MainActivity extends AppCompatActivity {
         setRemoveValue(true);
         adjustTextSize();
         formatResultTextAfterType();
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
     }
 
     /**
