@@ -1083,6 +1083,9 @@ public class MainActivity extends AppCompatActivity {
                         label.setTextSize(45f);
                         if (len >= 15) {
                             label.setTextSize(35f);
+                            if(len >= 17) {
+                                label.setTextSize(33f);
+                            }
                         }
                     } else {
                         label.setTextSize(55f);
