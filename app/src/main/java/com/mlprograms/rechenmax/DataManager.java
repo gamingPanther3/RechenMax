@@ -35,6 +35,7 @@ import java.nio.file.Files;
  *  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
  *  | showScienceRow                   | true / false             | MainActivity                         |
  *  | calculatingMode                  | easy / normal            | MainActivity                         |
+ *  | historyTextViewNumber            | Integer                  | MainActivity                         |
  */
 public class DataManager {
 
@@ -43,7 +44,7 @@ public class DataManager {
 
     // Define the names of the files
     private static final String JSON_FILE = "settings.json";
-    private static final String FILE_NAME1 = "history.txt";
+    private static final String HISTORY_FILE = "history.json";
     private static final String FILE_NAME2 = "calculate.txt";
     private static final String FILE_NAME3 = "result.txt";
 
@@ -214,16 +215,10 @@ public class DataManager {
         saveToJSON("removeValue", "false", applicationContext);
     }
 
-    /**
-     * This method adds a string of data to the history file.
-     * It reads the old data from the file, prepends the new data, and writes it back to the file.
-     *
-     * @param data The data to be added to the history file.
-     * @param context The context, which is used to open the file input and output streams.
-     */
+
     public void addToHistory(String data, Context context) {
         try {
-            FileInputStream fileIn = context.openFileInput(FILE_NAME1);
+            FileInputStream fileIn = context.openFileInput(HISTORY_FILE);
             InputStreamReader inputReader = new InputStreamReader(fileIn);
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line;
@@ -234,7 +229,7 @@ public class DataManager {
             }
             bufReader.close();
 
-            FileOutputStream fileOut = context.openFileOutput(FILE_NAME1, Context.MODE_PRIVATE);
+            FileOutputStream fileOut = context.openFileOutput(HISTORY_FILE, Context.MODE_PRIVATE);
             OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
             outputWriter.write(data + "\n" + oldData);
             outputWriter.close();
@@ -247,7 +242,7 @@ public class DataManager {
      * This method checks if a file exists and creates it if it doesn't.
      */
     public void checkAndCreateFile() {
-        File file = new File(mainActivity.getFilesDir(), FILE_NAME1);
+        File file = new File(mainActivity.getFilesDir(), HISTORY_FILE);
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -256,7 +251,7 @@ public class DataManager {
             }
         }
         try {
-            FileInputStream fileIn = mainActivity.openFileInput(FILE_NAME1);
+            FileInputStream fileIn = mainActivity.openFileInput(HISTORY_FILE);
             InputStreamReader inputReader = new InputStreamReader(fileIn);
             char[] inputBuffer = new char[100];
             int charRead;

@@ -1008,6 +1008,27 @@ public class MainActivity extends AppCompatActivity {
         if(findViewById(R.id.calculate_scrollview) != null) {
             scrollToBottom(findViewById(R.id.calculate_scrollview));
         }
+
+        dataManager.saveToJSON("historyTextViewNumber", "5", getApplicationContext());
+
+        /*
+         *   dataManager.saveToJSON("1", "1 + 2 = 3", getApplicationContext());
+         *   dataManager.saveToJSON("2", "2 + 2 = 4", getApplicationContext());
+         *   dataManager.saveToJSON("3", "3 + 2 = 5", getApplicationContext());
+         *   dataManager.saveToJSON("4", "4 + 2 = 6", getApplicationContext());
+         *   dataManager.saveToJSON("5", "5 + 2 = 7", getApplicationContext());
+         */
+
+        System.out.println("historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
+
+        final String value = dataManager.readFromJSON("historyTextViewNumber", getApplicationContext());
+        if(value == null) {
+            dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
+        } else {
+            for(int i = 1; i <= Integer.parseInt(value); i++) {
+                System.out.println(i + ": " + dataManager.readFromJSON(String.valueOf(i), getApplicationContext()));
+            }
+        }
     }
 
     /**
