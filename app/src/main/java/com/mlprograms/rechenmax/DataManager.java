@@ -21,8 +21,8 @@ import java.nio.file.Files;
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.0.1
- * @date 18.12.2023
+ * @version 1.2.0
+ * @date 26.12.2023
  *
  *  | Names                            | Values                   | Context                              |
  *  |----------------------------------|--------------------------|--------------------------------------|
