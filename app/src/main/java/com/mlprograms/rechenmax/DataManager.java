@@ -21,7 +21,7 @@ import java.nio.file.Files;
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.2.0
+ * @version 1.2.1
  * @date 27.12.2023
  *
  *  | Names                            | Values                   | Context                              |
@@ -37,6 +37,9 @@ import java.nio.file.Files;
  *  | lastop                           | String                   | MainActivity                         |
  *  | lastnumber                       | Integer                  | MainActivity                         |
  *  | historyTextViewNumber            | Integer                  | MainActivity                         |
+ *  | result_text                      | String                   | MainActivity                         |
+ *  | calculate_text                   | String                   | MainActivity                         |
+ *  | rotate_op                        | true / false             | MainActivity                         |
  */
 public class DataManager {
 
@@ -46,8 +49,6 @@ public class DataManager {
     // Define the names of the files
     private static final String JSON_FILE = "settings.json";
     private static final String HISTORY_FILE = "history.json";
-    private static final String FILE_NAME2 = "calculate.txt";
-    private static final String FILE_NAME3 = "result.txt";
 
     /**
      * This constructor is used to create a DataManager object for the MainActivity.
@@ -177,21 +178,23 @@ public class DataManager {
                 initializeSettings(applicationContext);
                 if (!file.createNewFile()) {
                     Log.e("saveToJSON", "Failed to create new file");
+                    initializeSettings(applicationContext);
                     return null;
                 }
-            }
-            String content = new String(Files.readAllBytes(file.toPath()));
-            if (content.isEmpty()) {
-                Log.e("readFromJSON", "File is empty");
-                initializeSettings(applicationContext);
-                return readFromJSON(name, applicationContext);
-            }
-            JSONObject jsonRead = new JSONObject(new JSONTokener(content));
-            if (jsonRead.has(name)) {
-                setting = jsonRead.getString(name);
             } else {
-                Log.e("readFromJSON", "Key: " + name + " does not exist in JSON");
-                initializeSettings(applicationContext);
+                String content = new String(Files.readAllBytes(file.toPath()));
+                if (content.isEmpty()) {
+                    Log.e("readFromJSON", "File is empty (" + name + ")");
+                    initializeSettings(applicationContext);
+                    return readFromJSON(name, applicationContext);
+                }
+                JSONObject jsonRead = new JSONObject(new JSONTokener(content));
+                if (jsonRead.has(name)) {
+                    setting = jsonRead.getString(name);
+                } else {
+                    Log.e("readFromJSON", "Key: " + name + " does not exist in JSON");
+                    initializeSettings(applicationContext);
+                }
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -204,38 +207,42 @@ public class DataManager {
      *
      * @param applicationContext The application context, which is used to get the application's file directory.
      */
-    private void initializeSettings(Context applicationContext) {
-        saveToJSON("settingReleaseNotesSwitch", "true", applicationContext);
-        saveToJSON("settingsTrueDarkMode", "false", applicationContext);
-        saveToJSON("showPatchNotes", "true", applicationContext);
-        saveToJSON("disablePatchNotesTemporary", "false", applicationContext);
-        saveToJSON("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
-        saveToJSON("selectedSpinnerSetting", "System", applicationContext);
-        saveToJSON("showScienceRow", false, applicationContext);
-        saveToJSON("calculatingMode", "easy", applicationContext);
-        saveToJSON("removeValue", "false", applicationContext);
-    }
-
-
-    public void addToHistory(String data, Context context) {
-        try {
-            FileInputStream fileIn = context.openFileInput(HISTORY_FILE);
-            InputStreamReader inputReader = new InputStreamReader(fileIn);
-            BufferedReader bufReader = new BufferedReader(inputReader);
-            String line;
-            StringBuilder oldData = new StringBuilder();
-
-            while ((line = bufReader.readLine()) != null) {
-                oldData.append(line).append("\n");
-            }
-            bufReader.close();
-
-            FileOutputStream fileOut = context.openFileOutput(HISTORY_FILE, Context.MODE_PRIVATE);
-            OutputStreamWriter outputWriter = new OutputStreamWriter(fileOut);
-            outputWriter.write(data + "\n" + oldData);
-            outputWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void initializeSettings(Context applicationContext) {
+        if(readFromJSON("settingReleaseNotesSwitch", applicationContext) == null) {
+            saveToJSON("settingReleaseNotesSwitch", "true", applicationContext);
+        }
+        if(readFromJSON("settingsTrueDarkMode", applicationContext) == null) {
+            saveToJSON("settingsTrueDarkMode", "false", applicationContext);
+        }
+        if(readFromJSON("showPatchNotes", applicationContext) == null) {
+            saveToJSON("showPatchNotes", "true", applicationContext);
+        }
+        if(readFromJSON("disablePatchNotesTemporary", applicationContext) == null) {
+            saveToJSON("disablePatchNotesTemporary", "false", applicationContext);
+        }
+        if(readFromJSON("showReleaseNotesOnVeryFirstStart", applicationContext) == null) {
+            saveToJSON("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
+        }
+        if(readFromJSON("selectedSpinnerSetting", applicationContext) == null) {
+            saveToJSON("selectedSpinnerSetting", "System", applicationContext);
+        }
+        if(readFromJSON("showScienceRow", applicationContext) == null) {
+            saveToJSON("showScienceRow", false, applicationContext);
+        }
+        if(readFromJSON("calculatingMode", applicationContext) == null) {
+            saveToJSON("calculatingMode", "easy", applicationContext);
+        }
+        if(readFromJSON("removeValue", applicationContext) == null) {
+            saveToJSON("removeValue", "false", applicationContext);
+        }
+        if(readFromJSON("result_text", applicationContext) == null) {
+            saveToJSON("result_text", "0", applicationContext);
+        }
+        if(readFromJSON("calculate_text", applicationContext) == null) {
+            saveToJSON("calculate_text", "", applicationContext);
+        }
+        if(readFromJSON("historyTextViewNumber", applicationContext) == null) {
+            saveToJSON("historyTextViewNumber", "0", applicationContext);
         }
     }
 
@@ -247,6 +254,7 @@ public class DataManager {
         if (!file.exists()) {
             try {
                 file.createNewFile();
+                initializeSettings(mainActivity.getApplicationContext());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -267,20 +275,20 @@ public class DataManager {
 
     /**
      * This method saves numbers to two files.
+     *
      * @param applicationContext The application context.
      */
     public void saveNumbers(Context applicationContext) {
         if (mainActivity != null) {
             try {
-                FileOutputStream fileOut1 = applicationContext.openFileOutput(FILE_NAME2, Context.MODE_PRIVATE);
-                OutputStreamWriter outputWriter1 = new OutputStreamWriter(fileOut1);
-                outputWriter1.write(mainActivity.getCalculateText());
-                outputWriter1.close();
+                String calculateText = mainActivity.getCalculateText();
+                String resultText = mainActivity.getResultText();
 
-                FileOutputStream fileOut2 = applicationContext.openFileOutput(FILE_NAME3, Context.MODE_PRIVATE);
-                OutputStreamWriter outputWriter2 = new OutputStreamWriter(fileOut2);
-                outputWriter2.write(mainActivity.getResultText());
-                outputWriter2.close();
+                // Save calculate_text using dataManager
+                saveToJSON("calculate_text", calculateText, applicationContext);
+
+                // Save result_text using dataManager
+                saveToJSON("result_text", resultText, applicationContext);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -291,45 +299,23 @@ public class DataManager {
      * This method loads numbers from two files and sets the text of two TextViews.
      */
     public void loadNumbers() {
-        StringBuilder result1 = new StringBuilder();
-        try {
-            FileInputStream fileIn = mainActivity.openFileInput(FILE_NAME2);
-            InputStreamReader inputReader = new InputStreamReader(fileIn);
-            char[] inputBuffer = new char[100];
-            int charRead;
-            while ((charRead = inputReader.read(inputBuffer)) > 0) {
-                String readString = String.copyValueOf(inputBuffer, 0, charRead);
-                result1.append(readString);
-            }
-            inputReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (mainActivity != null) {
+            // Load calculate_text using dataManager
+            String calculateText = readFromJSON("calculate_text", mainActivity.getApplicationContext());
 
-        StringBuilder result2 = new StringBuilder();
-        try {
-            FileInputStream fileIn = mainActivity.openFileInput(FILE_NAME3);
-            InputStreamReader inputReader = new InputStreamReader(fileIn);
-            char[] inputBuffer = new char[100];
-            int charRead;
-            while ((charRead = inputReader.read(inputBuffer)) > 0) {
-                String readString = String.copyValueOf(inputBuffer, 0, charRead);
-                result2.append(readString);
-            }
-            inputReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            // Load result_text using dataManager
+            String resultText = readFromJSON("result_text", mainActivity.getApplicationContext());
 
-        TextView calculatelabel = mainActivity.findViewById(R.id.calculate_label);
-        TextView resultlabel = mainActivity.findViewById(R.id.result_label);
+            TextView calculatelabel = mainActivity.findViewById(R.id.calculate_label);
+            TextView resultlabel = mainActivity.findViewById(R.id.result_label);
 
-        if (mainActivity != null && calculatelabel != null && resultlabel != null) {
-            calculatelabel.setText(result1.toString());
-            if (!result2.toString().equals("")) {
-                resultlabel.setText(result2.toString());
-            } else {
-                resultlabel.setText("0");
+            if (calculatelabel != null && resultlabel != null) {
+                calculatelabel.setText(calculateText);
+                if (resultText != null && !resultText.equals("")) {
+                    resultlabel.setText(resultText);
+                } else {
+                    resultlabel.setText("0");
+                }
             }
         }
     }

@@ -33,8 +33,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.3.0
- * @date 26.12.2023
+ * @version 1.4.6
+ * @date 27.12.2023
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -64,56 +64,99 @@ public class MainActivity extends AppCompatActivity {
     private boolean isnotation = false;
 
     /**
+     * Called when the activity is starting.
      *
      * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
-     *
+     *        previously being shut down, then this Bundle contains the data it most
+     *        recently supplied in {@link #onSaveInstanceState}.
+     *        <b><i>Note: Otherwise, it is null.</i></b>
      */
     protected void onCreate(Bundle savedInstanceState) {
+        // Call the superclass onCreate method
         super.onCreate(savedInstanceState);
+
+        // Set the content view to the calculator UI layout
         setContentView(R.layout.calculatorui);
+
+        // Set the context to this instance
         context = this;
+
+        // Set the main activity to this instance
         setMainActivity(this);
 
+        // Initialize DataManager with the current context
         dataManager = new DataManager(this);
+
+        // Create JSON file and check for its existence
         dataManager.createJSON(getApplicationContext());
         dataManager.checkAndCreateFile();
 
-        // If it's the first run of the application
+        // Get SharedPreferences for first run check
         prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
+
+        // If it's the first run of the application
         if (prefs.getBoolean("firstrun", true)) {
+            // Set the flag to show patch notes and switch to the patch notes layout
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
             setContentView(R.layout.patchnotes);
             checkDarkmodeSetting();
             prefs.edit().putBoolean("firstrun", false).apply();
         }
 
+        // Log information about patch notes settings
         Log.i("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
         Log.i("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
 
+        // Read values from DataManager
         final String showPatNot = dataManager.readFromJSON("showPatchNotes", getApplicationContext());
         final String disablePatNotTemp = dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext());
 
+        // If patch notes are set to be shown and not temporarily disabled, switch to patch notes layout
         if (showPatNot != null && disablePatNotTemp != null) {
             if (showPatNot.equals("true") && disablePatNotTemp.equals("false")) {
                 setContentView(R.layout.patchnotes);
                 checkDarkmodeSetting();
             }
         }
+
+        // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
         dataManager.loadNumbers();
-        // dataManager.saveNumbers(getApplicationContext());
         setUpListeners();
         checkScienceButtonState();
         checkDarkmodeSetting();
         formatResultTextAfterType();
         adjustTextSize();
 
-        // scroll down in calculate_label
-        if(findViewById(R.id.calculate_scrollview) != null) {
+        // Scroll down in the calculate label
+        if (findViewById(R.id.calculate_scrollview) != null) {
             scrollToBottom(findViewById(R.id.calculate_scrollview));
         }
 
+        // Show all settings
+        showAllSettings();
+    }
+
+    /**
+     * Prints and logs various application settings for debugging purposes.
+     */
+    public void showAllSettings() {
+        // Print and log each application setting
+        System.out.println("\n");
+        Log.i("showAllSettings", "settingReleaseNotesSwitch:       :'" + dataManager.readFromJSON("settingReleaseNotesSwitch", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "removeValue                      :'" + dataManager.readFromJSON("removeValue", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "settingsTrueDarkMode:            :'" + dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "showPatchNotes                   :'" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "disablePatchNotesTemporary       :'" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "showReleaseNotesOnVeryFirstStart :'" + dataManager.readFromJSON("showReleaseNotesOnVeryFirstStart", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "selectedSpinnerSetting           :'" + dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "showScienceRow                   :'" + dataManager.readFromJSON("showScienceRow", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "lastop                           :'" + dataManager.readFromJSON("lastop", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "lastnumber                       :'" + dataManager.readFromJSON("lastnumber", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "historyTextViewNumber            :'" + dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "result_text                      :'" + dataManager.readFromJSON("result_text", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "calculate_text                   :'" + dataManager.readFromJSON("calculate_text", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "rotate_op                        :'" + dataManager.readFromJSON("rotate_op", getApplicationContext()) + "'");
+        System.out.println("\n");
     }
 
     /**
@@ -354,11 +397,19 @@ public class MainActivity extends AppCompatActivity {
      * This method adds an opening parenthesis to the calculation text.
      */
     private void parenthesisOnAction() {
-        addCalculateText("(");
-        if(findViewById(R.id.calculate_scrollview) != null) {
+        // Check if calculate text is empty and set or add opening parenthesis accordingly
+        if (getCalculateText().isEmpty()) {
+            setCalculateText("(");
+        } else {
+            addCalculateText("(");
+        }
+
+        // Scroll to the bottom of the scroll view if it exists
+        if (findViewById(R.id.calculate_scrollview) != null) {
             scrollToBottom(findViewById(R.id.calculate_scrollview));
         }
     }
+
 
     /**
      * This method adds a closing parenthesis to the calculation text.
@@ -945,21 +996,25 @@ public class MainActivity extends AppCompatActivity {
      * If the rotate operator is false, it checks if the calculate text does not contain an equals sign. If so, it sets the last number to the current result text, sets the calculate label text to the current calculate text followed by the current result text and an equals sign, and sets the result label text to the result of the calculation.
      * If the calculate text does contain an equals sign, it checks if the last operator is not empty. If so, it sets the calculate label text to the current result text followed by the last operator and the last number, and an equals sign. Otherwise, it sets the calculate label text to the current result text followed by an equals sign. It then sets the result label text to the result of the calculation.
      * After performing the calculation, it formats the result text, sets removeValue to true, and adjusts the text size.
-     *
      */
     @SuppressLint("SetTextI18n")
     public void Calculate() {
+        // Replace special characters for proper calculation
         String calcText = getCalculateText().replace("*", "×").replace("/", "÷");
         TextView calculatelabel = findViewById(R.id.calculate_label);
         TextView resultlabel = findViewById(R.id.result_label);
 
-        if(!isInvalidInput(getResultText()) && !isInvalidInput(getCalculateText())) {
-            if(getRotateOperator()) {
+        // Check for valid input before performing calculations
+        if (!isInvalidInput(getResultText()) && !isInvalidInput(getCalculateText())) {
+            // Handle calculation based on the rotate operator flag
+            if (getRotateOperator()) {
                 if (!calcText.contains("=")) {
+                    // Handle calculation when equals sign is not present
                     setLastNumber(getResultText());
                     setCalculateText(calcText + " =");
                     setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
                 } else {
+                    // Handle calculation when equals sign is present
                     if (!getLastOp().isEmpty() && !getLastOp().equals("√")) {
                         setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
                     } else {
@@ -967,13 +1022,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
                 }
-
             } else {
                 if (!calcText.contains("=")) {
+                    // Handle calculation when equals sign is not present
                     setLastNumber(getResultText());
                     calculatelabel.setText(calcText + " " + getResultText() + " =");
                     resultlabel.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
                 } else {
+                    // Handle calculation when equals sign is present
                     if (!getLastOp().isEmpty()) {
                         calculatelabel.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
                     } else {
@@ -981,48 +1037,45 @@ public class MainActivity extends AppCompatActivity {
                     }
                     resultlabel.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
                 }
-
             }
+
+            // Replace special characters back for displaying
             setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
-            dataManager.addToHistory(getCalculateText() + "\n" + getResultText(), getApplicationContext());
+
+            // Save history, update UI, and set removeValue flag
             dataManager.saveNumbers(getApplicationContext());
         } else {
+            // Handle invalid input by resetting result text and calculate text
             setResultText("0");
             setCalculateText("");
         }
 
+        // Reset rotate operator flag, format result text, adjust text size, and scroll to bottom if necessary
         setRotateOperator(false);
         formatResultTextAfterType();
         setRemoveValue(true);
         adjustTextSize();
         formatResultTextAfterType();
-        if(findViewById(R.id.calculate_scrollview) != null) {
+        if (findViewById(R.id.calculate_scrollview) != null) {
             scrollToBottom(findViewById(R.id.calculate_scrollview));
         }
 
-        dataManager.saveToJSON("historyTextViewNumber", "5", getApplicationContext());
-
-        /*
-         *   dataManager.saveToJSON("1", "1 + 2 = 3", getApplicationContext());
-         *   dataManager.saveToJSON("2", "2 + 2 = 4", getApplicationContext());
-         *   dataManager.saveToJSON("3", "3 + 2 = 5", getApplicationContext());
-         *   dataManager.saveToJSON("4", "4 + 2 = 6", getApplicationContext());
-         *   dataManager.saveToJSON("5", "5 + 2 = 7", getApplicationContext());
-         */
-
-        System.out.println("historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
-
-
-        // code snippet to call all saved historyTextViewNumber values
+        // Code snippet to save calculation to history
         final String value = dataManager.readFromJSON("historyTextViewNumber", getApplicationContext());
-        if(value == null) {
+        if (value == null) {
             dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
         } else {
-            for(int i = 1; i <= Integer.parseInt(value); i++) {
-                //System.out.println(i + ": " + dataManager.readFromJSON(String.valueOf(i), getApplicationContext()));
-            }
+            final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
+            final int new_value = old_value + 1;
+
+            dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), getApplicationContext());
+            dataManager.saveToJSON(String.valueOf(old_value + 1), getCalculateText() + " " + getResultText(), getApplicationContext());
         }
+
+        // Log historyTextViewNumber value for debugging
+        Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
     }
+
 
     /**
      * This method checks if the input text is invalid.
@@ -1145,8 +1198,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void setIsNotation(final boolean val) { isnotation = val; }
     public boolean getIsNotation() { return isnotation; }
-    public void setRotateOperator(final boolean rotate) { rotateOperatorAfterRoot = rotate; }
-    public boolean getRotateOperator() { return rotateOperatorAfterRoot; }
+    public void setRotateOperator(final boolean rotate) {
+        dataManager.saveToJSON("rotate_op", rotate, getApplicationContext());
+        Log.i("setRotateOperator", "rotate_op: '" + dataManager.readFromJSON("rotate_op", getApplicationContext()) + "'");
+    }
+    public boolean getRotateOperator() {
+        Log.i("setRotateOperator", "rotate_op: '" + dataManager.readFromJSON("rotate_op", getApplicationContext()) + "'");
+        final boolean rotate = Boolean.parseBoolean(dataManager.readFromJSON("rotate_op", getApplicationContext()));
+        return rotate;
+    }
     public String getLastOp() {
         final String last_op = dataManager.readFromJSON("lastop", getApplicationContext());
         if(last_op != null) {

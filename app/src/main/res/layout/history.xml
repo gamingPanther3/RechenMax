@@ -18,13 +18,13 @@
 
         <Button
             android:id="@+id/history_return_button"
-            android:tag="return"
             android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_height="43dp"
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="10dp"
             android:foreground="@drawable/baseline_arrow_back_24"
             android:onClick="ButtonListener2"
+            android:tag="return"
             android:textSize="@dimen/calcButtonTextSize"
             android:tooltipText="Zurück"
             tools:ignore="OnClick" />
@@ -66,16 +66,12 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/history_textview"
+        <LinearLayout
+            android:id="@+id/history_scroll_linearlayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:gravity="end"
-            android:text="@string/history_text"
-            android:textSize="@dimen/historyresultsize" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="end">
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

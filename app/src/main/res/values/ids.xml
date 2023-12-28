@@ -7,4 +7,5 @@
     <item name="releaseNotesReleaseDate" type="id" />
     <item name="releaseNotesTitle" type="id" />
     <item name="releaseNotesFeaturesTitle" type="id" />
+    <item name="history_empty_textview" type="id" />
 </resources>
