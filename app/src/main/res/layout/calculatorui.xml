@@ -164,7 +164,64 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/scientificRow"
+            android:id="@+id/scientificRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightBackground"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sinus"
+                android:tag="sin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/sin"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/cosinus"
+                android:tag="cos"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/cos"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/tangens"
+                android:tag="tan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/tan"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/e"
+                android:tag="e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/e"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scientificRow2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorLightBackground"

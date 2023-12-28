@@ -222,14 +222,17 @@ public class MainActivity extends AppCompatActivity {
         Button toggleButton = findViewById(R.id.scientificButton);
         if(toggleButton != null) {
             toggleButton.setOnClickListener(v -> {
-                LinearLayout buttonRow = findViewById(R.id.scientificRow);
+                LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
+                LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
                 final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-                if(buttonRow != null && data != null) {
+                if(buttonRow1 != null && buttonRow2 != null && data != null) {
                     if (data.equals("true")) {
-                        buttonRow.setVisibility(View.GONE);
+                        buttonRow1.setVisibility(View.GONE);
+                        buttonRow2.setVisibility(View.GONE);
                         dataManager.saveToJSON("showScienceRow", false, getApplicationContext());
                     } else if (data.equals("false")) {
-                        buttonRow.setVisibility(View.VISIBLE);
+                        buttonRow1.setVisibility(View.VISIBLE);
+                        buttonRow2.setVisibility(View.VISIBLE);
                         dataManager.saveToJSON("showScienceRow", true, getApplicationContext());
                     }
                 }
@@ -242,13 +245,16 @@ public class MainActivity extends AppCompatActivity {
      * Checks the state of the science button
      */
     public void checkScienceButtonState() {
-        LinearLayout buttonRow = findViewById(R.id.scientificRow);
+        LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
+        LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
         final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-        if(buttonRow != null && data != null) {
+        if(buttonRow1 != null && buttonRow1 != null && data != null) {
             if(data.equals("true")) {
-                buttonRow.setVisibility(View.VISIBLE);
+                buttonRow2.setVisibility(View.VISIBLE);
+                buttonRow2.setVisibility(View.VISIBLE);
             } else {
-                buttonRow.setVisibility(View.GONE);
+                buttonRow1.setVisibility(View.GONE);
+                buttonRow2.setVisibility(View.GONE);
             }
         }
     }
