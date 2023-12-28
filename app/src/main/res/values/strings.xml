@@ -30,6 +30,10 @@
     <string name="clipOff">)</string>
     <string name="power">x^</string>
     <string name="root">√x</string>
+    <string name="sin">sin(x)</string>
+    <string name="cos">cos(x)</string>
+    <string name="tan">tan(x)</string>
+    <string name="e">e +/-</string>
 
     <string-array name="setting_display_mode_options">
         <item>Systemstandard</item>
