@@ -39,11 +39,6 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     /**
-     * Flag to control the rotation of operators after a root operation. If true, operator will swap with the number.
-     */
-    private boolean rotateOperatorAfterRoot = false;
-
-    /**
      * The context of the current object. Useful for accessing resources, launching new activities, etc.
      */
     private Context context = this;
@@ -89,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create JSON file and check for its existence
         dataManager.createJSON(getApplicationContext());
-        dataManager.checkAndCreateFile();
+        dataManager.initializeSettings(getApplicationContext());
 
         // Get SharedPreferences for first run check
         prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
@@ -142,20 +137,20 @@ public class MainActivity extends AppCompatActivity {
     public void showAllSettings() {
         // Print and log each application setting
         System.out.println("\n");
-        Log.i("showAllSettings", "settingReleaseNotesSwitch:       :'" + dataManager.readFromJSON("settingReleaseNotesSwitch", getApplicationContext()) + "'");
-        Log.i("showAllSettings", "removeValue                      :'" + dataManager.readFromJSON("removeValue", getApplicationContext()) + "'");
-        Log.i("showAllSettings", "settingsTrueDarkMode:            :'" + dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "selectedSpinnerSetting:          :'" + dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "settingReleaseNotesSwitch        :'" + dataManager.readFromJSON("settingReleaseNotesSwitch", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "removeValue:                     :'" + dataManager.readFromJSON("removeValue", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "settingsTrueDarkMode             :'" + dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()) + "'");
         Log.i("showAllSettings", "showPatchNotes                   :'" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()) + "'");
         Log.i("showAllSettings", "disablePatchNotesTemporary       :'" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()) + "'");
         Log.i("showAllSettings", "showReleaseNotesOnVeryFirstStart :'" + dataManager.readFromJSON("showReleaseNotesOnVeryFirstStart", getApplicationContext()) + "'");
-        Log.i("showAllSettings", "selectedSpinnerSetting           :'" + dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext()) + "'");
         Log.i("showAllSettings", "showScienceRow                   :'" + dataManager.readFromJSON("showScienceRow", getApplicationContext()) + "'");
-        Log.i("showAllSettings", "lastop                           :'" + dataManager.readFromJSON("lastop", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "rotate_op                        :'" + dataManager.readFromJSON("rotate_op", getApplicationContext()) + "'");
         Log.i("showAllSettings", "lastnumber                       :'" + dataManager.readFromJSON("lastnumber", getApplicationContext()) + "'");
         Log.i("showAllSettings", "historyTextViewNumber            :'" + dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()) + "'");
         Log.i("showAllSettings", "result_text                      :'" + dataManager.readFromJSON("result_text", getApplicationContext()) + "'");
         Log.i("showAllSettings", "calculate_text                   :'" + dataManager.readFromJSON("calculate_text", getApplicationContext()) + "'");
-        Log.i("showAllSettings", "rotate_op                        :'" + dataManager.readFromJSON("rotate_op", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "lastop                           :'" + dataManager.readFromJSON("lastop", getApplicationContext()) + "'");
         System.out.println("\n");
     }
 

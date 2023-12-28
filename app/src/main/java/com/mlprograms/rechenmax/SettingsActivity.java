@@ -79,11 +79,11 @@ public class SettingsActivity extends AppCompatActivity {
             dataManager.saveToJSON("settingReleaseNotesSwitch", isChecked, getMainActivityContext());
             dataManager.saveToJSON("showPatchNotes", isChecked, getMainActivityContext());
             dataManager.saveToJSON("disablePatchNotesTemporary", isChecked, getMainActivityContext());
-            Log.d("Settings", "settingReleaseNotesSwitch=" + dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext()));
+            Log.i("Settings", "settingReleaseNotesSwitch=" + dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext()));
         });
         settingsTrueDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
             dataManager.saveToJSON("settingsTrueDarkMode", isChecked, getMainActivityContext());
-            Log.d("Settings", "settingsTrueDarkMode=" + dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext()));
+            Log.i("Settings", "settingsTrueDarkMode=" + dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext()));
 
             dataManager = new DataManager();
             int currentNightMode1 = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -283,15 +283,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(setting != null) {
             switch (setting) {
-                case "System":
-                    return "Systemstandard";
                 case "Dark":
                     return "Dunkelmodus";
                 case "Light":
                     return "Tageslichtmodus";
+                default:
+                    return "Systemstandard";
             }
         }
-        return null;
+        return "Systemstandard";
     }
 
     /**

@@ -26,20 +26,20 @@ import java.nio.file.Files;
  *
  *  | Names                            | Values                   | Context                              |
  *  |----------------------------------|--------------------------|--------------------------------------|
+ *  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
  *  | settingReleaseNotesSwitch        | true / false             | SettingsActivity                     |
  *  | removeValue                      | true / false             | MainActivity                         |
  *  | settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity     |
  *  | showPatchNotes                   | true / false             | MainActivity -> SettingsActivity     |
  *  | disablePatchNotesTemporary       | true / false             | MainActivity -> SettingsActivity     |
  *  | showReleaseNotesOnVeryFirstStart | true / false             | MainActivity                         |
- *  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
  *  | showScienceRow                   | true / false             | MainActivity                         |
- *  | lastop                           | String                   | MainActivity                         |
+ *  | rotate_op                        | true / false             | MainActivity                         |
  *  | lastnumber                       | Integer                  | MainActivity                         |
  *  | historyTextViewNumber            | Integer                  | MainActivity                         |
  *  | result_text                      | String                   | MainActivity                         |
  *  | calculate_text                   | String                   | MainActivity                         |
- *  | rotate_op                        | true / false             | MainActivity                         |
+ *  | lastop                           | String                   | MainActivity                         |
  */
 public class DataManager {
 
@@ -75,6 +75,13 @@ public class DataManager {
      */
     public void createJSON(Context applicationContext) {
         File file = new File(applicationContext.getFilesDir(), JSON_FILE);
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
         try {
             file.createNewFile();
         } catch (IOException e) {
@@ -175,25 +182,22 @@ public class DataManager {
             File file = new File(applicationContext.getFilesDir(), JSON_FILE);
             if (!file.exists()) {
                 Log.e("readFromJSON", "File does not exist");
-                initializeSettings(applicationContext);
+                createJSON(mainActivity.getApplicationContext());
                 if (!file.createNewFile()) {
                     Log.e("saveToJSON", "Failed to create new file");
-                    initializeSettings(applicationContext);
+                    createJSON(mainActivity.getApplicationContext());
                     return null;
                 }
             } else {
                 String content = new String(Files.readAllBytes(file.toPath()));
                 if (content.isEmpty()) {
                     Log.e("readFromJSON", "File is empty (" + name + ")");
-                    initializeSettings(applicationContext);
-                    return readFromJSON(name, applicationContext);
                 }
                 JSONObject jsonRead = new JSONObject(new JSONTokener(content));
                 if (jsonRead.has(name)) {
                     setting = jsonRead.getString(name);
                 } else {
                     Log.e("readFromJSON", "Key: " + name + " does not exist in JSON");
-                    initializeSettings(applicationContext);
                 }
             }
         } catch (IOException | JSONException e) {
@@ -208,8 +212,14 @@ public class DataManager {
      * @param applicationContext The application context, which is used to get the application's file directory.
      */
     public void initializeSettings(Context applicationContext) {
+        if(readFromJSON("selectedSpinnerSetting", applicationContext) == null) {
+            saveToJSON("selectedSpinnerSetting", "System", applicationContext);
+        }
         if(readFromJSON("settingReleaseNotesSwitch", applicationContext) == null) {
             saveToJSON("settingReleaseNotesSwitch", "true", applicationContext);
+        }
+        if(readFromJSON("removeValue", applicationContext) == null) {
+            saveToJSON("removeValue", "false", applicationContext);
         }
         if(readFromJSON("settingsTrueDarkMode", applicationContext) == null) {
             saveToJSON("settingsTrueDarkMode", "false", applicationContext);
@@ -223,17 +233,17 @@ public class DataManager {
         if(readFromJSON("showReleaseNotesOnVeryFirstStart", applicationContext) == null) {
             saveToJSON("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
         }
-        if(readFromJSON("selectedSpinnerSetting", applicationContext) == null) {
-            saveToJSON("selectedSpinnerSetting", "System", applicationContext);
-        }
         if(readFromJSON("showScienceRow", applicationContext) == null) {
             saveToJSON("showScienceRow", false, applicationContext);
         }
-        if(readFromJSON("calculatingMode", applicationContext) == null) {
-            saveToJSON("calculatingMode", "easy", applicationContext);
+        if(readFromJSON("rotate_op", applicationContext) == null) {
+            saveToJSON("rotate_op", false, applicationContext);
         }
-        if(readFromJSON("removeValue", applicationContext) == null) {
-            saveToJSON("removeValue", "false", applicationContext);
+        if(readFromJSON("lastnumber", applicationContext) == null) {
+            saveToJSON("lastnumber", "0", applicationContext);
+        }
+        if(readFromJSON("historyTextViewNumber", applicationContext) == null) {
+            saveToJSON("historyTextViewNumber", "0", applicationContext);
         }
         if(readFromJSON("result_text", applicationContext) == null) {
             saveToJSON("result_text", "0", applicationContext);
@@ -241,36 +251,10 @@ public class DataManager {
         if(readFromJSON("calculate_text", applicationContext) == null) {
             saveToJSON("calculate_text", "", applicationContext);
         }
-        if(readFromJSON("historyTextViewNumber", applicationContext) == null) {
-            saveToJSON("historyTextViewNumber", "0", applicationContext);
+        if(readFromJSON("lastop", applicationContext) == null) {
+            saveToJSON("lastop", "+", applicationContext);
         }
-    }
-
-    /**
-     * This method checks if a file exists and creates it if it doesn't.
-     */
-    public void checkAndCreateFile() {
-        File file = new File(mainActivity.getFilesDir(), HISTORY_FILE);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                initializeSettings(mainActivity.getApplicationContext());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            FileInputStream fileIn = mainActivity.openFileInput(HISTORY_FILE);
-            InputStreamReader inputReader = new InputStreamReader(fileIn);
-            char[] inputBuffer = new char[100];
-            int charRead;
-            while ((charRead = inputReader.read(inputBuffer)) > 0) {
-                String.copyValueOf(inputBuffer, 0, charRead);
-            }
-            inputReader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mainActivity.showAllSettings();
     }
 
     /**
