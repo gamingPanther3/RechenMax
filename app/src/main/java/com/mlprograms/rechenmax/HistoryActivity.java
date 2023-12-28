@@ -4,6 +4,8 @@ import android.util.Log;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -55,6 +57,12 @@ public class HistoryActivity extends AppCompatActivity {
         System.out.println("Opened HistoryActivity.java with history.xml");
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
 
+        Button historyReturnButton = findViewById(R.id.history_return_button);
+        Button historyDeleteButton = findViewById(R.id.history_delete_button);
+
+        historyReturnButton.setOnClickListener(v -> returnToCalculator());
+        historyDeleteButton.setOnClickListener(v -> resetNamesAndValues());
+
         // Create an instance of the outer LinearLayout
         LinearLayout outerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
 
@@ -78,7 +86,7 @@ public class HistoryActivity extends AppCompatActivity {
                     switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
                 } else {
                     deleteEmptyHistoryTextView();
-                    for (int i = 1; i < Integer.parseInt(value) + 1; i++) {
+                    for (int i = 1; i < Integer.parseInt(Objects.requireNonNull(value)) + 1; i++) {
                         // Create a new TextView
                         TextView textView = createHistoryTextView(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
 
@@ -195,7 +203,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         // Add an OnConfigurationChangedListener to update line color on configuration changes
         line.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             updateLineColor(line);
         });
 
@@ -639,19 +646,6 @@ public class HistoryActivity extends AppCompatActivity {
         }
         // Handle the case when the setting is not found in the JSON file
         return "Systemstandard";
-    }
-
-
-    /**
-     * This method handles button clicks.
-     * @param view The view that was clicked.
-     */
-    public void ButtonListener2(View view) {
-        if (view.getTag().equals("return")) {
-            returnToCalculator();
-        } else if (view.getTag().equals("delete")) {
-            resetNamesAndValues();
-        }
     }
 
     /**
