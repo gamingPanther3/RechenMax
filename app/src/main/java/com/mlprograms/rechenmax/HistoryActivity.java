@@ -154,6 +154,11 @@ public class HistoryActivity extends AppCompatActivity {
         return textView;
     }
 
+    /**
+     * This method displays a toast on the screen.
+     * It retrieves the context of the current application and sets the duration of the toast to short.
+     * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
+     */
     private void showToast() {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
