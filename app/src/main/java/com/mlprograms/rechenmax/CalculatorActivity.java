@@ -16,8 +16,8 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.7.8
- * @date 27.12.2023
+ * @version 1.7.9
+ * @date 28.12.2023
  */
 
 public class CalculatorActivity {
@@ -458,7 +458,7 @@ public class CalculatorActivity {
                     }
                     // If the operator is ROOT, apply the operator to only one number
                     else {
-                        final BigDecimal operand2SquareRoot = applyOperator(BigDecimal.ZERO, operand2, ROOT);
+                        final BigDecimal operand2SquareRoot = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
                         stack.add(operand2SquareRoot);
                     }
                 }
