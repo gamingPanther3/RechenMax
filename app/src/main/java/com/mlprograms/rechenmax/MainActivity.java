@@ -54,11 +54,6 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs = null;
 
     /**
-     * Flag to control the notation. If true, a certain notation (e.g., scientific notation) will be used.
-     */
-    private boolean isnotation = false;
-
-    /**
      * Called when the activity is starting.
      *
      * @param savedInstanceState If the activity is being re-initialized after
@@ -1160,10 +1155,13 @@ public class MainActivity extends AppCompatActivity {
                 if (!getResultText().equals("Ungültige Eingabe")) {
                     if (len >= 12) {
                         label.setTextSize(45f);
-                        if (len >= 15) {
-                            label.setTextSize(35f);
-                            if(len >= 17) {
-                                label.setTextSize(33f);
+                        if (len >= 14) {
+                            label.setTextSize(40f);
+                            if (len >= 15) {
+                                label.setTextSize(35f);
+                                if(len >= 17) {
+                                    label.setTextSize(31f);
+                                }
                             }
                         }
                     } else {
@@ -1191,8 +1189,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The following methods are simple getter and setter methods for various properties.
      */
-    public void setIsNotation(final boolean val) { isnotation = val; }
-    public boolean getIsNotation() { return isnotation; }
+    public void setIsNotation(final boolean val) {
+        dataManager.saveToJSON("isNotation", val, getApplicationContext());
+        Log.i("setIsNotation", "isNotation: '" + val + "'");
+    }
+    public boolean getIsNotation() {
+        final boolean val = Boolean.parseBoolean(dataManager.readFromJSON("isNotation", getApplicationContext()));
+        return val;
+    }
     public void setRotateOperator(final boolean rotate) {
         dataManager.saveToJSON("rotate_op", rotate, getApplicationContext());
         Log.i("setRotateOperator", "rotate_op: '" + dataManager.readFromJSON("rotate_op", getApplicationContext()) + "'");
