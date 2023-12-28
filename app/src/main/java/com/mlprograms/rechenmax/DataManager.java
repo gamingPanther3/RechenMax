@@ -40,6 +40,7 @@ import java.nio.file.Files;
  *  | result_text                      | String                   | MainActivity                         |
  *  | calculate_text                   | String                   | MainActivity                         |
  *  | lastop                           | String                   | MainActivity                         |
+ *  | isNotation                       | Boolean                  | MainActivity                         |
  */
 public class DataManager {
 
@@ -253,6 +254,9 @@ public class DataManager {
         }
         if(readFromJSON("lastop", applicationContext) == null) {
             saveToJSON("lastop", "+", applicationContext);
+        }
+        if(readFromJSON("isNotation", applicationContext) == null) {
+            saveToJSON("isNotation", "false", applicationContext);
         }
         mainActivity.showAllSettings();
     }
