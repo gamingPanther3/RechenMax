@@ -149,15 +149,15 @@
             android:id="@+id/credits_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:background="@color/colorBTNBackgroundAccent"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textSize="12dp"
             android:layout_gravity="bottom"
+            android:background="@color/colorBTNBackgroundAccent"
             android:gravity="center"
             android:linksClickable="true"
-            android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz.\nVersion: 1.5.4"
-            android:textColor="@color/colorBTNForegroundAccent" />
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
+            android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz.\nVersion: 1.5.5"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:textSize="12dp" />
     </FrameLayout>
 </LinearLayout>
