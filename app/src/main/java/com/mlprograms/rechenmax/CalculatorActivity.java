@@ -21,6 +21,11 @@ import java.util.regex.Pattern;
  */
 
 public class CalculatorActivity {
+    /**
+     * Instance of DataManager to handle data-related tasks such as saving and retrieving data.
+     */
+    private static DataManager dataManager;
+
     // Declaration of a static variable of type MainActivity. This variable is used to access the methods and variables of the MainActivity class.
     @SuppressLint("StaticFieldLeak")
     private static MainActivity mainActivity;
@@ -69,7 +74,11 @@ public class CalculatorActivity {
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
                 // (Assuming these methods are defined elsewhere in your code)
-                mainActivity.setIsNotation(true);
+                try {
+                    dataManager.saveToJSON("isNotation", true, mainActivity.getApplicationContext());
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
                 String result = convertScientificToDecimal(trim);
                 return removeNonNumeric(result);
             }
@@ -148,58 +157,74 @@ public class CalculatorActivity {
     }
 
     /**
-     * This method converts a string in scientific notation to decimal notation.
+     * Converts a string in scientific notation to decimal notation.
      *
      * @param str The string in scientific notation to be converted.
-     * @return The string in decimal notation. If the exponent part of the scientific notation is greater than 1000, an IllegalArgumentException is thrown with the message "Wert zu groß".
+     * @return The string in decimal notation.
      * @throws IllegalArgumentException if the exponent part of the scientific notation is greater than 1000.
      */
     public static String convertScientificToDecimal(final String str) {
-        // The input string is formatted by replacing all commas with dots. This is because in some locales, a comma is used as the decimal separator.
+        // Replace commas with dots to handle different locales using commas as decimal separators
         final String formattedInput = str.replace(",", ".");
 
-        // A regular expression pattern is defined to match the scientific notation. The pattern is the same as in the isScientificNotation method.
-        final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)(e[-+]?\\d+)");
+        // Define a regular expression pattern to match scientific notation
+        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$");
 
-        // The pattern is used to create a matcher for the formatted input string
+        // Create a matcher for the formatted input string based on the pattern
         final Matcher matcher = pattern.matcher(formattedInput);
 
-        // A StringBuffer is created to hold the result of the conversion
+        // Create a StringBuffer to hold the result of the conversion
         final StringBuffer sb = new StringBuffer();
 
-        // The matcher is used to find each match in the input string
+        // Iterate through each match in the input string
         while (matcher.find()) {
-            // The number part and the exponent part of the match are separated
+            // Extract the number part and the exponent part of the match
             final String numberPart = matcher.group(1);
             String exponentPart = matcher.group(3);
 
-            // The 'e' in the exponent part is removed
+            // Remove the 'e' or 'E' from the exponent part
             if (exponentPart != null) {
                 exponentPart = exponentPart.substring(1);
             }
 
-            // The number part and the exponent part are converted to BigDecimal and integer respectively
-            assert exponentPart != null;
-            final int exponent = Integer.parseInt(exponentPart);
+            // Check if there is an exponent part
+            if (exponentPart != null) {
+                // Parse the exponent as an integer
+                final int exponent = Integer.parseInt(exponentPart);
 
-            // Check if exponent is greater than 1000 then return "Wert zu groß"
-            if (exponent > 1000) {
-                throw new IllegalArgumentException("Wert zu groß");
+                // Check if the exponent is greater than 1000, throw an exception if true
+                if (exponent > 1000) {
+                    throw new IllegalArgumentException("Value too large");
+                }
+
+                // Determine the sign based on the original input
+                final String sign = formattedInput.startsWith("-") ? "-" : "";
+
+                // Create a BigDecimal from the number part
+                final BigDecimal number = new BigDecimal(numberPart);
+
+                // Negate the number if the original input starts with a minus sign
+                if (formattedInput.startsWith("-")) {
+                    number.negate();
+                }
+
+                // Scale the number by the power of ten of the exponent
+                final BigDecimal scaledNumber = number.scaleByPowerOfTen(exponent);
+
+                // Append the result to the StringBuffer
+                matcher.appendReplacement(sb, sign + scaledNumber.stripTrailingZeros().toPlainString());
             }
-
-            final BigDecimal number = new BigDecimal(numberPart);
-
-            // The number is scaled by the power of ten of the exponent
-            final BigDecimal scaledNumber = number.scaleByPowerOfTen(exponent);
-
-            // The match in the input string is replaced with the scaled number
-            matcher.appendReplacement(sb, scaledNumber.toPlainString());
         }
 
-        // The remaining input string after the last match is appended to the result
+        // Append the remaining input string after the last match to the result
         matcher.appendTail(sb);
 
-        // The method returns the result of the conversion
+        // Check if the StringBuffer contains two consecutive minus signs and remove one if found
+        if (sb.indexOf("--") != -1) {
+            sb.replace(sb.indexOf("--"), sb.indexOf("--") + 2, "-");
+        }
+
+        // Return the final result of the conversion
         return sb.toString();
     }
 
@@ -212,7 +237,7 @@ public class CalculatorActivity {
      */
     public static String removeNonNumeric(final String str) {
         // Replace all non-numeric and non-decimal point characters in the string with an empty string
-        return str.replaceAll("[^0-9.,]", "");
+        return str.replaceAll("[^0-9.,\\-]", "");
     }
 
     /**
@@ -246,7 +271,14 @@ public class CalculatorActivity {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);
                 }
-                tokens.add(Character.toString(c));
+                // Check if the character is a minus sign and is followed by an opening parenthesis
+                if (c == '-' && i < expressionWithoutSpaces.length() - 1 && expressionWithoutSpaces.charAt(i + 1) == '(') {
+                    // If so, add a "NEGATIVE" token to represent the negative sign before the opening parenthesis
+                    tokens.add("NEGATIVE");
+                } else {
+                    // Otherwise, add the character as an operator
+                    tokens.add(Character.toString(c));
+                }
             }
         }
 
@@ -438,9 +470,7 @@ public class CalculatorActivity {
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
                 stack.add(new BigDecimal(token));
-            }
-            // If the token is an operator, apply the operator to the numbers in the stack
-            else if (isOperator(token)) {
+            } else if (isOperator(token)) { // If the token is an operator, apply the operator to the numbers in the stack
                 // If the operator is "!", apply the operator to only one number
                 if (token.equals("!")) {
                     final BigDecimal operand1 = stack.remove(stack.size() - 1);
@@ -458,7 +488,13 @@ public class CalculatorActivity {
                     }
                     // If the operator is ROOT, apply the operator to only one number
                     else {
-                        final BigDecimal operand2SquareRoot = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
+                        final BigDecimal operand2SquareRoot;
+                        if (operand2.compareTo(BigDecimal.ZERO) < 0) {
+                            // If the operand is negative, throw an exception or handle it as needed
+                            throw new IllegalArgumentException("Nur reelle Zahlen");
+                        } else {
+                            operand2SquareRoot = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
+                        }
                         stack.add(operand2SquareRoot);
                     }
                 }
