@@ -144,7 +144,7 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.saveToJSON("result_text", value, getMainActivityContext());
                     dataManager.saveToJSON("removeValue", false, getMainActivityContext());
                     dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
-                    showToast("Rechnung wurde übernommen ...");
+                    showToast();
                 } catch (Exception e) {
                     Log.i("createHistoryTextView", String.valueOf(e));
                 }
@@ -154,12 +154,12 @@ public class HistoryActivity extends AppCompatActivity {
         return textView;
     }
 
-    private void showToast(String message) {
+    private void showToast() {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
 
         // Create and show the toast
-        Toast toast = Toast.makeText(context, message, duration);
+        Toast toast = Toast.makeText(context, "Rechnung wurde übernommen ...", duration);
         toast.show();
     }
 
