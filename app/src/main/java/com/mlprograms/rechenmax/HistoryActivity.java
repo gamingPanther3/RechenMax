@@ -53,6 +53,7 @@ public class HistoryActivity extends AppCompatActivity {
         dataManager = new DataManager();
 
         System.out.println("Opened HistoryActivity.java with history.xml");
+        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
 
         // Create an instance of the outer LinearLayout
         LinearLayout outerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
