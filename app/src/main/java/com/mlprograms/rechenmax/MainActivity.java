@@ -2,9 +2,11 @@ package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
 
+import java.math.MathContext;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.icu.text.DecimalFormatSymbols;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -413,6 +415,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void sinusAction() {
         // Check if calculate text is empty and set or add
+        if(getRemoveValue()) {
+            setCalculateText("");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
+            setRemoveValue(false);
+        }
+
         if (getCalculateText().isEmpty()) {
             setCalculateText("sin(");
         } else {
@@ -431,6 +441,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void cosinusAction() {
         // Check if calculate text is empty and set or add
+        if(getRemoveValue()) {
+            setCalculateText("");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
+            setRemoveValue(false);
+        }
+
         if (getCalculateText().isEmpty()) {
             setCalculateText("cos(");
         } else {
@@ -449,6 +467,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void tangensAction() {
         // Check if calculate text is empty and set or add
+        if(getRemoveValue()) {
+            setCalculateText("");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
+            setRemoveValue(false);
+        }
+
         if (getCalculateText().isEmpty()) {
             setCalculateText("tan(");
         } else {
@@ -465,6 +491,14 @@ public class MainActivity extends AppCompatActivity {
      * Handles the insertion or removal of the "e" symbol based on its current presence in the result text.
      */
     private void eAction() {
+        if(getRemoveValue()) {
+            setCalculateText("");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
+            setRemoveValue(false);
+        }
+
         if (!getResultText().contains("e+") && !getResultText().contains("e-")) {
             dataManager.saveToJSON("eNotation", true, getApplicationContext());
             addResultText("e");
@@ -478,6 +512,14 @@ public class MainActivity extends AppCompatActivity {
      * Appends or sets the text "π" to the calculation input and sets the rotate operator flag to true.
      */
     private void piAction() {
+        if(getRemoveValue()) {
+            setCalculateText("");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
+            setRemoveValue(false);
+        }
+
         if (getCalculateText().isEmpty()) {
             setCalculateText("π");
         } else {
@@ -493,7 +535,9 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add opening parenthesis accordingly
         if(getRemoveValue()) {
             setCalculateText("");
-            setResultText("0");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
             setRemoveValue(false);
         }
 
@@ -520,7 +564,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(getRemoveValue()) {
             setCalculateText("");
-            setResultText("0");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
             setRemoveValue(false);
         }
 
@@ -554,6 +600,9 @@ public class MainActivity extends AppCompatActivity {
 
         if(getRemoveValue()) {
             setCalculateText("");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
             setRemoveValue(false);
         }
 
@@ -581,6 +630,14 @@ public class MainActivity extends AppCompatActivity {
      */
     private void powerAction() {
         setLastOp("^");
+
+        if(getRemoveValue()) {
+            setCalculateText("");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
+            setRemoveValue(false);
+        }
 
         if(!getRotateOperator()) {
             setRemoveValue(true);
@@ -1229,7 +1286,7 @@ public class MainActivity extends AppCompatActivity {
             if (text.matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)$")) {
                 formattedNumber = text;
             } else {
-                final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#,###.####");
+                final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#,###.#########################");
                 formattedNumber = decimalFormat.format(v);
             }
         }
@@ -1238,7 +1295,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void formatResultTextAfterType() {
-        String text = getResultText();
+        String text = getResultText().replace(".", "");
         if (text != null) {
             boolean isNegative = text.startsWith("-");
             if (isNegative) {
@@ -1246,15 +1303,37 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // Check for scientific notation
-            if (text.toLowerCase().contains("e-")) {
+            if (text.toLowerCase().matches(".*[eE].*")) {
                 try {
-                    BigDecimal bigDecimalResult = new BigDecimal(text);
-                    String formattedNumber = bigDecimalResult.toPlainString(); // Convert to plain string to remove scientific notation
+                    BigDecimal bigDecimalResult = new BigDecimal(text.replace(",", "."), MathContext.DECIMAL128); // Increased precision
+                    String formattedNumber = bigDecimalResult.toPlainString();
+                    formattedNumber = formattedNumber.replace(".", ","); // Replace dot with comma
+
+                    // Extract the exponent part and shift the decimal point accordingly
+                    String[] parts = formattedNumber.split("[eE]");
+                    if (parts.length == 2) {
+                        int exponent = Integer.parseInt(parts[1]);
+                        String[] numberParts = parts[0].split(",");
+                        if (exponent < 0) {
+                            // Shift decimal point to the left, allowing up to 9 positions
+                            int shiftIndex = Math.min(numberParts[0].length() + exponent, 9);
+                            formattedNumber = numberParts[0].substring(0, shiftIndex) + "," +
+                                    numberParts[0].substring(shiftIndex) + numberParts[1] + "e" + exponent;
+                        } else {
+                            // Shift decimal point to the right
+                            int shiftIndex = Math.min(numberParts[0].length() + exponent, numberParts[0].length());
+                            formattedNumber = numberParts[0].substring(0, shiftIndex) + "," +
+                                    numberParts[0].substring(shiftIndex) + numberParts[1];
+                        }
+                    }
+
                     if (isNegative) {
                         formattedNumber = "-" + formattedNumber;
                     }
-                    formattedNumber = formattedNumber.replace(".", ","); // Replace dot with comma
+
                     setResultText(formattedNumber);
+                    adjustTextSize();
+                    formatResultTextAfterCalculate(getResultText());
                     return;
                 } catch (NumberFormatException e) {
                     System.out.println("Ungültiges Zahlenformat: " + text);
@@ -1275,20 +1354,19 @@ public class MainActivity extends AppCompatActivity {
             if (!isInvalidInput(getResultText())) {
                 DecimalFormat decimalFormat = new DecimalFormat("#,###");
                 try {
-                    BigDecimal bigDecimalResult = new BigDecimal(result);
+                    BigDecimal bigDecimalResult = new BigDecimal(result, MathContext.DECIMAL128); // Increased precision
                     String formattedNumber = decimalFormat.format(bigDecimalResult);
-                    if (isNegative) {
-                        formattedNumber = "-" + formattedNumber;
-                    }
-                    setResultText(formattedNumber + result2);
+                    setResultText(formattedNumber + result2.replace(".", ","));
                 } catch (NumberFormatException e) {
-                    System.out.println("Ungültiges Zahlenformat");
+                    System.out.println("Ungültiges Zahlenformat: " + result);
                 }
             } else if (getIsNotation()) {
                 setIsNotation(false);
             }
         }
+        adjustTextSize();
     }
+
 
     /**
      * This method adjusts the text size of the result label based on its length.
