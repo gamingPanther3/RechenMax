@@ -154,20 +154,34 @@ public class CalculatorActivity {
         return matcher.matches();
     }
 
+    /**
+     * Converts a scientific notation string to decimal format.
+     *
+     * @param str The input string in scientific notation.
+     * @return A string representing the decimal format of the input.
+     * @throws IllegalArgumentException if the exponent is greater than 1000.
+     */
     public static String convertScientificToDecimal(final String str) {
+        // Replace commas with dots for proper decimal representation
         final String formattedInput = str.replace(",", ".");
+
+        // Define the pattern for scientific notation
         final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$");
         final Matcher matcher = pattern.matcher(formattedInput);
         final StringBuffer sb = new StringBuffer();
 
+        // Process matches found in the input string
         while (matcher.find()) {
+            // Extract number and exponent parts from the match
             final String numberPart = matcher.group(1);
             String exponentPart = matcher.group(3);
 
+            // Remove the 'e' or 'E' from the exponent part
             if (exponentPart != null) {
                 exponentPart = exponentPart.substring(1);
             }
 
+            // Check and handle the case where the exponent is too large
             if (exponentPart != null) {
                 final int exponent = Integer.parseInt(exponentPart);
 
@@ -175,25 +189,32 @@ public class CalculatorActivity {
                     throw new IllegalArgumentException("Wert zu groß");
                 }
 
+                // Determine the sign of the number and create a BigDecimal object
                 final String sign = formattedInput.startsWith("-") ? "-" : "";
                 final BigDecimal number = new BigDecimal(numberPart);
 
+                // Negate the number if the input starts with a minus sign
                 if (formattedInput.startsWith("-")) {
                     number.negate();
                 }
 
+                // Scale the number by the power of ten specified by the exponent
                 final BigDecimal scaledNumber = number.scaleByPowerOfTen(exponent);
+
+                // Append the scaled number to the result buffer
                 matcher.appendReplacement(sb, sign + scaledNumber.stripTrailingZeros().toPlainString());
             }
         }
 
+        // Append the remaining part of the input string to the result buffer
         matcher.appendTail(sb);
 
-        // Überprüfen, ob sb zwei Minuszeichen enthält, und gegebenenfalls eines entfernen
+        // Check if the result buffer contains two consecutive minus signs and remove one if necessary
         if (sb.indexOf("--") != -1) {
             sb.replace(sb.indexOf("--"), sb.indexOf("--") + 2, "-");
         }
 
+        // Return the final result as a string
         return sb.toString();
     }
 
@@ -209,11 +230,17 @@ public class CalculatorActivity {
         return str.replaceAll("[^0-9.,\\-]", "");
     }
 
+    /**
+     * Tokenizes a mathematical expression, breaking it into individual components such as numbers, operators, and functions.
+     *
+     * @param expression The input mathematical expression to be tokenized.
+     * @return A list of tokens extracted from the expression.
+     */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
         // Log.i("tokenize","Input Expression: " + expression);
 
-        // Replace all spaces in the expression
+        // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
 
         List<String> tokens = new ArrayList<>();
@@ -259,8 +286,8 @@ public class CalculatorActivity {
     }
 
     /**
-     * This method evaluates a mathematical expression represented as a list of tokens.
-     * It first converts the expression from infix notation to postfix notation, then evaluates the postfix expression.
+     * Evaluates a mathematical expression represented as a list of tokens.
+     * Converts the expression from infix notation to postfix notation, then evaluates the postfix expression.
      *
      * @param tokens The mathematical expression in infix notation.
      * @return The result of the expression.
@@ -275,16 +302,8 @@ public class CalculatorActivity {
     }
 
     /**
-     * This method applies an operator to two operands. The operands and the operator are passed as parameters.
-     * It supports the following operations: addition, subtraction, multiplication, division, square root, factorial, and power.
-     * <p>
-     * For each operation, it checks the operator and performs the corresponding operation.
-     * <p>
-     * For division, it checks if the second operand is zero to avoid division by zero. If it is, it returns "Unendlich" (Infinity).
-     * <p>
-     * For the square root operation, it checks if the second operand is negative as the root of a negative number is not defined. If it is, it throws an exception.
-     * <p>
-     * If the operator is not recognized, it throws an exception.
+     * Applies an operator to two operands. Supports addition, subtraction, multiplication, division, square root, factorial, and power operations.
+     * Checks the operator and performs the corresponding operation.
      *
      * @param operand1 The first operand for the operation.
      * @param operand2 The second operand for the operation.
@@ -295,6 +314,7 @@ public class CalculatorActivity {
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
         DataManager dataManager1 = new DataManager(mainActivity);
         final String mode = dataManager1.readFromJSON("functionMode", mainActivity.getApplicationContext());
+
         switch (operator) {
             case "+":
                 return operand1.add(operand2);
@@ -339,7 +359,7 @@ public class CalculatorActivity {
                 }
 
             default:
-                throw new IllegalArgumentException("Unbekannter Operator: " + operator);
+                throw new IllegalArgumentException("Unbekanner Operator: " + operator);
         }
     }
 
@@ -438,6 +458,13 @@ public class CalculatorActivity {
         }
     }
 
+    /**
+     * Evaluates a mathematical expression represented in postfix notation.
+     *
+     * @param postfixTokens The list of tokens in postfix notation.
+     * @return The result of the expression.
+     * @throws IllegalArgumentException If there is a syntax error in the expression or the stack size is not 1 at the end.
+     */
     public static BigDecimal evaluatePostfix(final List<String> postfixTokens) {
         // Create a stack to store numbers
         final List<BigDecimal> stack = new ArrayList<>();
@@ -476,6 +503,12 @@ public class CalculatorActivity {
         return stack.get(0);
     }
 
+    /**
+     * Applies an operator to numbers in the stack based on the given operator.
+     *
+     * @param operator The operator to be applied.
+     * @param stack The stack containing numbers.
+     */
     private static void applyOperatorToStack(String operator, List<BigDecimal> stack) {
         // If the operator is "!", apply the operator to only one number
         if (operator.equals("!")) {
@@ -506,6 +539,12 @@ public class CalculatorActivity {
         }
     }
 
+    /**
+     * Evaluates a mathematical function and adds the result to the stack.
+     *
+     * @param function The function to be evaluated.
+     * @param stack The stack containing numbers.
+     */
     private static void evaluateFunction(String function, List<BigDecimal> stack) {
         // Implement the evaluation of functions like sin, cos, tan.
         // You can use BigDecimalMath library or Java Math class for standard functions
@@ -555,11 +594,23 @@ public class CalculatorActivity {
         }
     }
 
+    /**
+     * Checks if a given angle in degrees is a multiple of 90.
+     *
+     * @param degrees The angle in degrees to be checked.
+     * @return true if the angle is a multiple of 90, false otherwise.
+     */
     private static boolean isMultipleOf90(double degrees) {
         // Check if degrees is a multiple of 90
         return Math.abs(degrees % 90) == 0;
     }
 
+    /**
+     * Converts a mathematical expression from infix notation to postfix notation.
+     *
+     * @param infixTokens The list of tokens in infix notation.
+     * @return The list of tokens in postfix notation.
+     */
     public static List<String> infixToPostfix(final List<String> infixTokens) {
         final List<String> postfixTokens = new ArrayList<>();
         final Stack<String> stack = new Stack<>();
@@ -612,14 +663,20 @@ public class CalculatorActivity {
         return postfixTokens;
     }
 
+    /**
+     * Checks if the given token represents a recognized trigonometric function.
+     *
+     * @param token The token to be checked.
+     * @return true if the token represents a trigonometric function, false otherwise.
+     */
     public static boolean isFunction(final String token) {
         // Check if the token is one of the recognized trigonometric functions
         return token.equals("sin(") || token.equals("cos(") || token.equals("tan(");
     }
 
     /**
-     * This method checks if a token is a number.
-     * It tries to create a BigDecimal from the token. If it succeeds, the token is a number. If it fails, the token is not a number.
+     * Checks if a token is a number.
+     * It attempts to create a BigDecimal from the token. If successful, the token is considered a number; otherwise, it is not.
      *
      * @param token The token to be checked.
      * @return True if the token is a number, false otherwise.
@@ -637,6 +694,12 @@ public class CalculatorActivity {
         }
     }
 
+    /**
+     * Checks if the given token represents a recognized non-functional operator.
+     *
+     * @param token The token to be checked.
+     * @return true if the token represents a non-functional operator, false otherwise.
+     */
     public static boolean isOperator(final String token) {
         // Check if the token is one of the recognized non-functional operators
         return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") ||
@@ -644,7 +707,7 @@ public class CalculatorActivity {
     }
 
     /**
-     * This method determines the precedence of an operator.
+     * Determines the precedence of an operator.
      * Precedence rules determine the order in which expressions involving both unary and binary operators are evaluated.
      *
      * @param operator The operator to be checked.
