@@ -103,7 +103,7 @@
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle4"
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -112,11 +112,79 @@
             android:textSize="15sp"/>
 
         <TextView
-            android:id="@+id/releaseNotesFutureFeatures4"
+            android:id="@+id/releaseNotesFutureFeatures5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="Die neue Funktion erlaubt das Aufrufen alter Rechnungen durch einfaches Klicken auf eine Aufgabe im Verlauf.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sinus, Cosinus und Tangens"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Diese neue Funktion bietet eine erweiterte Funktionalität im Bereich trigonometrischer Funktionen. Man kann jetzt Sinus, Cosinus und Tangens von Winkeln problemlos berechnen.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Manuelles eingeben von Notationen"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Für zusätzliche Flexibilität erlaubt die App nun das manuelle Eingeben von Notationen. Folgen Sie einfach diesen Schritten: Geben Sie eine beliebige Zahl ein, drücken Sie die 'e +/-' Taste (für '×10'), wählen Sie Plus ('+') oder Minus ('-') für einen positiven oder negativen Exponenten. Geben Sie anschließend Ihren Exponenten nach dem Plus oder Minus ein, und die Zahl wird automatisch umgerechnet.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="PI π"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Die neueste Version der App unterstützt jetzt die Verwendung von PI (π), einer mathematischen Konstanten, die das Verhältnis des Umfangs eines Kreises zu seinem Durchmesser repräsentiert.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Gradmaß und Bogenmaß"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Gradmaß und Bogenmaß werden nun unterstützt, wodurch flexibles Wechseln zwischen den beiden Maßeinheiten möglich ist. Das Gradmaß findet typischerweise Anwendung in geometrischen und trigonometrischen Berechnungen, während das Bogenmaß in fortgeschritteneren mathematischen Konzepten wie der Differentialrechnung relevant ist.\n"
             android:textColor="#000000" />
 
         <TextView
