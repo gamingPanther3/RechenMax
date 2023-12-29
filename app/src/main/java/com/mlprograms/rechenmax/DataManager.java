@@ -21,12 +21,13 @@ import java.nio.file.Files;
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.2.1
- * @date 27.12.2023
+ * @version 1.3.6
+ * @date 29.12.2023
  *
  *  | Names                            | Values                   | Context                              |
  *  |----------------------------------|--------------------------|--------------------------------------|
  *  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
+ *  | functionMode                     | Deg / Rad                | MainActivity                         |
  *  | settingReleaseNotesSwitch        | true / false             | SettingsActivity                     |
  *  | removeValue                      | true / false             | MainActivity                         |
  *  | settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity     |
@@ -41,6 +42,7 @@ import java.nio.file.Files;
  *  | calculate_text                   | String                   | MainActivity                         |
  *  | lastop                           | String                   | MainActivity                         |
  *  | isNotation                       | Boolean                  | MainActivity                         |
+ *  | eNotation                        | Boolean                  | MainActivity                         |
  */
 public class DataManager {
 
@@ -216,6 +218,9 @@ public class DataManager {
         if(readFromJSON("selectedSpinnerSetting", applicationContext) == null) {
             saveToJSON("selectedSpinnerSetting", "System", applicationContext);
         }
+        if(readFromJSON("functionMode", applicationContext) == null) {
+            saveToJSON("functionMode", "Deg", applicationContext);
+        }
         if(readFromJSON("settingReleaseNotesSwitch", applicationContext) == null) {
             saveToJSON("settingReleaseNotesSwitch", "true", applicationContext);
         }
@@ -257,6 +262,9 @@ public class DataManager {
         }
         if(readFromJSON("isNotation", applicationContext) == null) {
             saveToJSON("isNotation", "false", applicationContext);
+        }
+        if(readFromJSON("eNotation", applicationContext) == null) {
+            saveToJSON("eNotation", "false", applicationContext);
         }
         mainActivity.showAllSettings();
     }
