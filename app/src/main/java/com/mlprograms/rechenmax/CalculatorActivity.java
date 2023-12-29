@@ -1,5 +1,6 @@
 package com.mlprograms.rechenmax;
 
+import android.util.Log;
 import android.annotation.SuppressLint;
 
 import java.math.BigDecimal;
@@ -16,15 +17,11 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.7.9
- * @date 28.12.2023
+ * @version 1.8.3
+ * @date 29.12.2023
  */
 
 public class CalculatorActivity {
-    /**
-     * Instance of DataManager to handle data-related tasks such as saving and retrieving data.
-     */
-    private static DataManager dataManager;
 
     // Declaration of a static variable of type MainActivity. This variable is used to access the methods and variables of the MainActivity class.
     @SuppressLint("StaticFieldLeak")
@@ -69,13 +66,14 @@ public class CalculatorActivity {
                     .replace(".", "")
                     .replace(",", ".")
                     .replace("E", "e")
+                    .replace("π", "3,1415926535897932384626433832")
                     .trim();
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
                 // (Assuming these methods are defined elsewhere in your code)
-                try {
-                    dataManager.saveToJSON("isNotation", true, mainActivity.getApplicationContext());
+                try {DataManager dataManager1 = new DataManager(mainActivity);
+                    dataManager1.saveToJSON("isNotation", true, mainActivity.getApplicationContext());
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -156,75 +154,46 @@ public class CalculatorActivity {
         return matcher.matches();
     }
 
-    /**
-     * Converts a string in scientific notation to decimal notation.
-     *
-     * @param str The string in scientific notation to be converted.
-     * @return The string in decimal notation.
-     * @throws IllegalArgumentException if the exponent part of the scientific notation is greater than 1000.
-     */
     public static String convertScientificToDecimal(final String str) {
-        // Replace commas with dots to handle different locales using commas as decimal separators
         final String formattedInput = str.replace(",", ".");
-
-        // Define a regular expression pattern to match scientific notation
         final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$");
-
-        // Create a matcher for the formatted input string based on the pattern
         final Matcher matcher = pattern.matcher(formattedInput);
-
-        // Create a StringBuffer to hold the result of the conversion
         final StringBuffer sb = new StringBuffer();
 
-        // Iterate through each match in the input string
         while (matcher.find()) {
-            // Extract the number part and the exponent part of the match
             final String numberPart = matcher.group(1);
             String exponentPart = matcher.group(3);
 
-            // Remove the 'e' or 'E' from the exponent part
             if (exponentPart != null) {
                 exponentPart = exponentPart.substring(1);
             }
 
-            // Check if there is an exponent part
             if (exponentPart != null) {
-                // Parse the exponent as an integer
                 final int exponent = Integer.parseInt(exponentPart);
 
-                // Check if the exponent is greater than 1000, throw an exception if true
                 if (exponent > 1000) {
-                    throw new IllegalArgumentException("Value too large");
+                    throw new IllegalArgumentException("Wert zu groß");
                 }
 
-                // Determine the sign based on the original input
                 final String sign = formattedInput.startsWith("-") ? "-" : "";
-
-                // Create a BigDecimal from the number part
                 final BigDecimal number = new BigDecimal(numberPart);
 
-                // Negate the number if the original input starts with a minus sign
                 if (formattedInput.startsWith("-")) {
                     number.negate();
                 }
 
-                // Scale the number by the power of ten of the exponent
                 final BigDecimal scaledNumber = number.scaleByPowerOfTen(exponent);
-
-                // Append the result to the StringBuffer
                 matcher.appendReplacement(sb, sign + scaledNumber.stripTrailingZeros().toPlainString());
             }
         }
 
-        // Append the remaining input string after the last match to the result
         matcher.appendTail(sb);
 
-        // Check if the StringBuffer contains two consecutive minus signs and remove one if found
+        // Überprüfen, ob sb zwei Minuszeichen enthält, und gegebenenfalls eines entfernen
         if (sb.indexOf("--") != -1) {
             sb.replace(sb.indexOf("--"), sb.indexOf("--") + 2, "-");
         }
 
-        // Return the final result of the conversion
         return sb.toString();
     }
 
@@ -240,17 +209,9 @@ public class CalculatorActivity {
         return str.replaceAll("[^0-9.,\\-]", "");
     }
 
-    /**
-     * This method tokenizes a mathematical expression.
-     * It separates the input string into meaningful units, such as numbers, operators, and parentheses.
-     * The output is a list of tokens in the order they appear in the expression.
-     *
-     * @param expression The mathematical expression to be tokenized.
-     * @return A list of tokens representing the components of the mathematical expression.
-     */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        //Log.i("tokenize","Input Expression: " + expression);
+        // Log.i("tokenize","Input Expression: " + expression);
 
         // Replace all spaces in the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -266,19 +227,23 @@ public class CalculatorActivity {
             if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || expressionWithoutSpaces.charAt(i - 1) == '(' || isOperator(String.valueOf(expressionWithoutSpaces.charAt(i - 1)))))) {
                 currentToken.append(c);
             } else {
-                // If the character is an operator, add the current token to the list and reset the current token
+                // If the character is an operator or a parenthesis, add the current token to the list and reset the current token
                 if (currentToken.length() > 0) {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);
                 }
-                // Check if the character is a minus sign and is followed by an opening parenthesis
-                if (c == '-' && i < expressionWithoutSpaces.length() - 1 && expressionWithoutSpaces.charAt(i + 1) == '(') {
-                    // If so, add a "NEGATIVE" token to represent the negative sign before the opening parenthesis
-                    tokens.add("NEGATIVE");
-                } else {
-                    // Otherwise, add the character as an operator
-                    tokens.add(Character.toString(c));
+
+                // If the character sequence is "sin()", "cos()", or "tan()", add it as a single token
+                if (i + 4 <= expressionWithoutSpaces.length()) {
+                    String trigFunction = expressionWithoutSpaces.substring(i, i + 4);
+                    if (trigFunction.equals("sin(") || trigFunction.equals("cos(") || trigFunction.equals("tan(")) {
+                        tokens.add(trigFunction);
+                        i += 3; // Skip the next three characters (already processed)
+                        continue;
+                    }
                 }
+
+                tokens.add(Character.toString(c));
             }
         }
 
@@ -288,7 +253,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print tokens
-        //Log.i("tokenize","Tokens: " + tokens);
+        // Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -303,6 +268,7 @@ public class CalculatorActivity {
     public static BigDecimal evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
         final List<String> postfixTokens = infixToPostfix(tokens);
+        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -327,6 +293,8 @@ public class CalculatorActivity {
      * @throws IllegalArgumentException If the operator is not recognized or if the second operand for the square root operation is negative.
      */
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
+        DataManager dataManager1 = new DataManager(mainActivity);
+        final String mode = dataManager1.readFromJSON("functionMode", mainActivity.getApplicationContext());
         switch (operator) {
             case "+":
                 return operand1.add(operand2);
@@ -350,6 +318,26 @@ public class CalculatorActivity {
                 return factorial(operand1);
             case "^":
                 return pow(operand1, operand2);
+
+            case "sin(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.sin(operand2.doubleValue()));
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue())));
+                }
+            case "cos(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.cos(operand2.doubleValue()));
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue())));
+                }
+            case "tan(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.tan(operand2.doubleValue()));
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue())));
+                }
+
             default:
                 throw new IllegalArgumentException("Unbekannter Operator: " + operator);
         }
@@ -450,14 +438,6 @@ public class CalculatorActivity {
         }
     }
 
-    /**
-     * This method evaluates a postfix expression.
-     * The input is a list of tokens in the postfix expression.
-     * The output is the result of the expression as a BigDecimal.
-     *
-     * @param postfixTokens The list of tokens in the postfix expression.
-     * @return The result of the expression as a BigDecimal.
-     */
     public static BigDecimal evaluatePostfix(final List<String> postfixTokens) {
         // Create a stack to store numbers
         final List<BigDecimal> stack = new ArrayList<>();
@@ -465,53 +445,30 @@ public class CalculatorActivity {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            //Log.i("evaluatePostfix","Token: " + token);
+            // Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
                 stack.add(new BigDecimal(token));
-            } else if (isOperator(token)) { // If the token is an operator, apply the operator to the numbers in the stack
-                // If the operator is "!", apply the operator to only one number
-                if (token.equals("!")) {
-                    final BigDecimal operand1 = stack.remove(stack.size() - 1);
-                    final BigDecimal result = applyOperator(operand1, BigDecimal.ZERO, token);
-                    stack.add(result);
-                }
-                // If the operator is not "!", apply the operator to two numbers
-                else {
-                    final BigDecimal operand2 = stack.remove(stack.size() - 1);
-                    // If the operator is not ROOT, apply the operator to two numbers
-                    if (!token.equals(ROOT)) {
-                        final BigDecimal operand1 = stack.remove(stack.size() - 1);
-                        final BigDecimal result = applyOperator(operand1, operand2, token);
-                        stack.add(result);
-                    }
-                    // If the operator is ROOT, apply the operator to only one number
-                    else {
-                        final BigDecimal operand2SquareRoot;
-                        if (operand2.compareTo(BigDecimal.ZERO) < 0) {
-                            // If the operand is negative, throw an exception or handle it as needed
-                            throw new IllegalArgumentException("Nur reelle Zahlen");
-                        } else {
-                            operand2SquareRoot = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
-                        }
-                        stack.add(operand2SquareRoot);
-                    }
-                }
-            }
-            // If the token is neither a number nor an operator, throw an exception
-            else {
-                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
+            } else if (isOperator(token)) {
+                // If the token is an operator, apply the operator to the numbers in the stack
+                applyOperatorToStack(token, stack);
+            } else if (isFunction(token)) {
+                // If the token is a function, evaluate the function and add the result to the stack
+                evaluateFunction(token, stack);
+            } else {
+                // If the token is neither a number, operator, nor function, throw an exception
+                // Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException("Syntax Fehler");
             }
 
             // Debugging: Print current stack
-            //Log.i("evaluatePostfix","Stack: " + stack);
+            // Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            //Log.i("evaluatePostfix","Stacksize != 1");
+            // Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException("Syntax Fehler");
         }
 
@@ -519,67 +476,145 @@ public class CalculatorActivity {
         return stack.get(0);
     }
 
-    /**
-     * This method converts an infix expression to a postfix expression.
-     * The input is a list of tokens in the infix expression.
-     * The output is a list of tokens in the postfix expression.
-     *
-     * @param infixTokens The list of tokens in the infix expression.
-     * @return The list of tokens in the postfix expression.
-     */
+    private static void applyOperatorToStack(String operator, List<BigDecimal> stack) {
+        // If the operator is "!", apply the operator to only one number
+        if (operator.equals("!")) {
+            final BigDecimal operand1 = stack.remove(stack.size() - 1);
+            final BigDecimal result = applyOperator(operand1, BigDecimal.ZERO, operator);
+            stack.add(result);
+        }
+        // If the operator is not "!", apply the operator to two numbers
+        else {
+            final BigDecimal operand2 = stack.remove(stack.size() - 1);
+            // If the operator is not ROOT, apply the operator to two numbers
+            if (!operator.equals(ROOT)) {
+                final BigDecimal operand1 = stack.remove(stack.size() - 1);
+                final BigDecimal result = applyOperator(operand1, operand2, operator);
+                stack.add(result);
+            }
+            // If the operator is ROOT, apply the operator to only one number
+            else {
+                final BigDecimal operand2SquareRoot;
+                if (operand2.compareTo(BigDecimal.ZERO) < 0) {
+                    // If the operand is negative, throw an exception or handle it as needed
+                    throw new IllegalArgumentException("Nur reelle Zahlen");
+                } else {
+                    operand2SquareRoot = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
+                }
+                stack.add(operand2SquareRoot);
+            }
+        }
+    }
+
+    private static void evaluateFunction(String function, List<BigDecimal> stack) {
+        // Implement the evaluation of functions like sin, cos, tan.
+        // You can use BigDecimalMath library or Java Math class for standard functions
+        // Add the result of the function evaluation to the stack
+        DataManager dataManager1 = new DataManager(mainActivity);
+        final String mode = dataManager1.readFromJSON("functionMode", mainActivity.getApplicationContext());
+
+        switch (function) {
+            case "sin(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.sin(operand.doubleValue()));
+                } else { // if mode equals 'Deg'
+                    result = BigDecimal.valueOf(Math.sin(Math.toRadians(operand.doubleValue())));
+                }
+                stack.add(result);
+                break;
+            }
+            case "cos(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.cos(operand.doubleValue()));
+                } else { // if mode equals 'Deg'
+                    result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue())));
+                }
+                stack.add(result);
+                break;
+            }
+            case "tan(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.tan(operand.doubleValue()));
+                } else { // if mode equals 'Deg'
+                    double degrees = operand.doubleValue();
+                    if (isMultipleOf90(degrees)) {
+                        // Check if the tangent of multiples of 90 degrees is being calculated
+                        throw new ArithmeticException("Nicht definiert");
+                    }
+                    result = BigDecimal.valueOf(Math.tan(Math.toRadians(degrees)));
+                }
+                stack.add(result);
+                break;
+            }
+        }
+    }
+
+    private static boolean isMultipleOf90(double degrees) {
+        // Check if degrees is a multiple of 90
+        return Math.abs(degrees % 90) == 0;
+    }
+
     public static List<String> infixToPostfix(final List<String> infixTokens) {
-        // Create a list to store the postfix tokens
         final List<String> postfixTokens = new ArrayList<>();
-        // Create a stack to store the operators
         final Stack<String> stack = new Stack<>();
 
-        // Iterate through each token in the infix list
         for (final String token : infixTokens) {
             // Debugging: Print current token and stack
-            //Log.i("infixToPostfix","Current Token: " + token);
-            //Log.i("infixToPostfix","Stack: " + stack);
+            Log.i("infixToPostfix", "Current Token: " + token);
+            Log.i("infixToPostfix", "Stack: " + stack);
 
-            // If the token is a number, add it to the postfix list
             if (isNumber(token)) {
                 postfixTokens.add(token);
-            }
-            // If the token is an operator, apply the operator to the numbers in the postfix list
-            else if (isOperator(token)) {
-                // While the stack is not empty and the operator on the stack has higher or equal precedence, add the operator to the postfix list
-                while (!stack.isEmpty() && precedence(stack.peek()) >= precedence(token)) {
+            } else if (isFunction(token)) {
+                stack.push(token);
+            } else if (isOperator(token) && token.equals("-")) {
+                while (!stack.isEmpty() && precedence(stack.peek()) >= precedence(token) && !isFunction(stack.peek())) {
                     postfixTokens.add(stack.pop());
                 }
-                // Add the current operator to the stack
                 stack.push(token);
-            }
-            // If the token is an opening parenthesis, add it to the stack
-            else if (token.equals("(")) {
-                stack.push(token);
-            }
-            // If the token is a closing parenthesis, add all operators to the postfix list until an opening parenthesis is found
-            else if (token.equals(")")) {
-                while (!stack.peek().equals("(")) {
+            } else if (isOperator(token)) {
+                while (!stack.isEmpty() && precedence(stack.peek()) >= precedence(token) && !isFunction(stack.peek())) {
                     postfixTokens.add(stack.pop());
                 }
-                // Remove the opening parenthesis from the stack
-                stack.pop();
+                stack.push(token);
+            } else if (token.equals("(")) {
+                stack.push(token);
+            } else if (token.equals(")")) {
+                while (!stack.isEmpty() && !stack.peek().equals("(")) {
+                    postfixTokens.add(stack.pop());
+                }
+                if (!stack.isEmpty() && stack.peek().equals("(")) {
+                    stack.pop(); // Remove the opening parenthesis
+                    if (!stack.isEmpty() && isFunction(stack.peek())) {
+                        postfixTokens.add(stack.pop());
+                    }
+                }
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            // Log.i("infixToPostfix","Postfix Tokens: " + postfixTokens);
-            // Log.i("infixToPostfix","Stack after Token Processing: " + stack);
+            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
-        // Add all remaining operators on the stack to the postfix list
         while (!stack.isEmpty()) {
             postfixTokens.add(stack.pop());
         }
 
         // Debugging: Print final postfixTokens
-        //Log.i("infixToPostfix","Final Postfix Tokens: " + postfixTokens);
+        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
-        // Return the postfix list
         return postfixTokens;
+    }
+
+    public static boolean isFunction(final String token) {
+        // Check if the token is one of the recognized trigonometric functions
+        return token.equals("sin(") || token.equals("cos(") || token.equals("tan(");
     }
 
     /**
@@ -602,16 +637,10 @@ public class CalculatorActivity {
         }
     }
 
-    /**
-     * This method checks if a token is an operator.
-     * It checks if the token is one of the following operators: "+", "-", "*", "/", "^", "√", "!".
-     *
-     * @param token The token to be checked.
-     * @return True if the token is an operator, false otherwise.
-     */
     public static boolean isOperator(final String token) {
-        // Check if the token is one of the recognized operators
-        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("^") || token.equals("√") || token.equals("!");
+        // Check if the token is one of the recognized non-functional operators
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") ||
+                token.equals("^") || token.equals("√") || token.equals("!");
     }
 
     /**
@@ -649,6 +678,12 @@ public class CalculatorActivity {
             // If the operator is factorial, return 5
             case "!":
                 return 5;
+
+            // If the operator is sine, cosine, or tangent, return 6
+            case "sin(":
+            case "cos(":
+            case "tan(":
+                return 6;
 
             // If the operator is not recognized, throw an exception
             default:

@@ -37,6 +37,16 @@
                 android:layout_height="1dp"
                 android:layout_weight="1"/>
 
+            <TextView
+                android:id="@+id/functionMode_text"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:text="Deg"
+                android:textSize="@dimen/calcButtonTextSize"
+                android:tooltipText="Modus" />
+
             <Button
                 android:id="@+id/history_button"
                 android:layout_width="40dp"
@@ -176,7 +186,7 @@
                 android:tag="sin"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/sin"
@@ -188,7 +198,7 @@
                 android:tag="cos"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/cos"
@@ -200,7 +210,7 @@
                 android:tag="tan"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/tan"
@@ -212,12 +222,24 @@
                 android:tag="e"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/e"
                 android:textSize="@dimen/calcButtonTextSize2"
                 style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/pi"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="pi"
+                android:text="@string/pi"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="@dimen/calcButtonTextSize2" />
         </LinearLayout>
 
         <LinearLayout

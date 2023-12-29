@@ -34,6 +34,7 @@
     <string name="cos">cos(x)</string>
     <string name="tan">tan(x)</string>
     <string name="e">e +/-</string>
+    <string name="pi">π</string>
 
     <string-array name="setting_display_mode_options">
         <item>Systemstandard</item>
@@ -42,4 +43,10 @@
     </string-array>
 
     <string name="mode_prompt">Wähle einen Modus aus</string>
+
+    <string-array name="settings_function_options">
+        <item>Gradmaß (Deg)</item>
+        <item>Bogenmaß (Rad)</item>
+    </string-array>
+    <string name="function_text">Einstellung ‘Grad- / Bogenmaß’ ermöglicht die Auswahl zwischen zwei gängigen Maßeinheiten für Winkel: Grad und Bogenmaß. Ein Grad teilt den Winkel in 360 Teile, die einen vollen Kreis bilden. Im Bogenmaß wird der Winkel basierend auf dem Radius eines Kreises gemessen. Ein voller Kreis entspricht 2π Radian, wobei π etwa 3.14159 ist. Ein rechter Winkel beträgt π/2 Radian. Das Bogenmaß ermöglicht präzise Verhältnisse zwischen Winkel und Kreisradius und wird in fortgeschrittenen mathematischen Berechnungen verwendet.</string>
 </resources>
