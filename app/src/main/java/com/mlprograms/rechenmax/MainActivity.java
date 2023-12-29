@@ -33,8 +33,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.4.6
- * @date 27.12.2023
+ * @version 1.5.0
+ * @date 29.12.2023
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -240,11 +240,13 @@ public class MainActivity extends AppCompatActivity {
                     if (data.equals("true")) {
                         buttonRow1.setVisibility(View.GONE);
                         buttonRow2.setVisibility(View.GONE);
+                        assert function_mode_text != null;
                         function_mode_text.setVisibility(View.GONE);
                         dataManager.saveToJSON("showScienceRow", false, getApplicationContext());
                     } else if (data.equals("false")) {
                         buttonRow1.setVisibility(View.VISIBLE);
                         buttonRow2.setVisibility(View.VISIBLE);
+                        assert function_mode_text != null;
                         function_mode_text.setVisibility(View.VISIBLE);
                         dataManager.saveToJSON("showScienceRow", true, getApplicationContext());
                     }
@@ -263,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.functionMode_text);
 
         final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-        if(buttonRow1 != null && buttonRow1 != null && data != null) {
+        if(buttonRow1 != null && buttonRow2 != null &&  textView != null &&data != null) {
             if(data.equals("true")) {
                 buttonRow2.setVisibility(View.VISIBLE);
                 buttonRow2.setVisibility(View.VISIBLE);
@@ -290,7 +292,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
-
 
     /**
      * Sets up the listener for the calculate button.
@@ -406,6 +407,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Appends or sets the text "sin(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
     private void sinusAction() {
         // Check if calculate text is empty and set or add
         if (getCalculateText().isEmpty()) {
@@ -420,6 +425,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Appends or sets the text "cos(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
     private void cosinusAction() {
         // Check if calculate text is empty and set or add
         if (getCalculateText().isEmpty()) {
@@ -434,6 +443,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Appends or sets the text "tan(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
     private void tangensAction() {
         // Check if calculate text is empty and set or add
         if (getCalculateText().isEmpty()) {
@@ -448,8 +461,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Handles the insertion or removal of the "e" symbol based on its current presence in the result text.
+     */
     private void eAction() {
-        if(!getResultText().contains("e+") && !getResultText().contains("e-")) {
+        if (!getResultText().contains("e+") && !getResultText().contains("e-")) {
             dataManager.saveToJSON("eNotation", true, getApplicationContext());
             addResultText("e");
         } else if (getResultText().contains("e") && !getResultText().contains("e+") || !getResultText().contains("e-")) {
@@ -458,8 +474,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Appends or sets the text "π" to the calculation input and sets the rotate operator flag to true.
+     */
     private void piAction() {
-        if(getCalculateText().isEmpty()) {
+        if (getCalculateText().isEmpty()) {
             setCalculateText("π");
         } else {
             addCalculateText("π");
@@ -1323,8 +1342,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("setIsNotation", "isNotation: '" + val + "'");
     }
     public boolean getIsNotation() {
-        final boolean val = Boolean.parseBoolean(dataManager.readFromJSON("isNotation", getApplicationContext()));
-        return val;
+        return Boolean.parseBoolean(dataManager.readFromJSON("isNotation", getApplicationContext()));
     }
     public void setRotateOperator(final boolean rotate) {
         dataManager.saveToJSON("rotate_op", rotate, getApplicationContext());
@@ -1332,8 +1350,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public boolean getRotateOperator() {
         Log.i("setRotateOperator", "rotate_op: '" + dataManager.readFromJSON("rotate_op", getApplicationContext()) + "'");
-        final boolean rotate = Boolean.parseBoolean(dataManager.readFromJSON("rotate_op", getApplicationContext()));
-        return rotate;
+        return Boolean.parseBoolean(dataManager.readFromJSON("rotate_op", getApplicationContext()));
     }
     public String getLastOp() {
         final String last_op = dataManager.readFromJSON("lastop", getApplicationContext());
@@ -1353,6 +1370,7 @@ public class MainActivity extends AppCompatActivity {
         if(value == null) {
             dataManager.saveToJSON("removeValue", "false", getApplicationContext());
         }
+        assert value != null;
         return value.equals("true");
     }
     public void setRemoveValue(final boolean b) {
