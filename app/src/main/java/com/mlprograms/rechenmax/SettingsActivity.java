@@ -135,14 +135,38 @@ public class SettingsActivity extends AppCompatActivity {
         });
         // Declare a Spinner object
         Spinner spinner = findViewById(R.id.settings_display_mode_spinner);
-        Integer num = getSelectedSettingPosition();
+        Integer num = getSelectedSettingPositionDisplayMode();
+        if(num != null) {
+            spinner.setSelection(num);
+        }
+        Spinner finalSpinner = spinner;
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (finalSpinner.getSelectedItem().toString()) {
+                    case "Bogenmaß (Rad)":
+                        dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
+                    case "Gradmaß (Deg)":
+                        dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
+                }
+                updateSpinnerFunctionMode(parent);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+
+        // Declare a Spinner object
+        spinner = findViewById(R.id.settings_function_spinner);
+        num = getSelectedSettingPositionFunction();
         if(num != null) {
             spinner.setSelection(num);
         }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                updateSpinner(parent);
+                updateSpinnerFunctionMode(parent);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -211,7 +235,7 @@ public class SettingsActivity extends AppCompatActivity {
      */
     public void updateSpinner2(AdapterView<?> parent) {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        final String readselectedSetting = parent.getSelectedItem().toString();
+        final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
 
         // Check if the TextView object is null before calling methods on it
         TextView textView = null;
@@ -222,7 +246,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(textView != null) {
             textView.setTextSize(20);
             switch (readselectedSetting) {
-                case "Dunkelmodus":
+                case "Dark":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
@@ -230,11 +254,11 @@ public class SettingsActivity extends AppCompatActivity {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.white));
                     }
                     break;
-                case "Tageslichtmodus":
+                case "Light":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
                     textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     break;
-                case "Systemstandard":
+                case "System":
                     dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
                     if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                         if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
@@ -251,10 +275,35 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
+     * This method updates the second spinner based on the selected setting.
+     * @param parent The AdapterView where the selection happened.
+     */
+    public void updateSpinnerFunctionMode(AdapterView<?> parent) {
+
+        // Check if the TextView object is null before calling methods on it
+        TextView textView = null;
+        if(parent.getChildAt(0) instanceof TextView) {
+            textView = (TextView) parent.getChildAt(0);
+        }
+
+        if(textView != null) {
+            textView.setTextSize(20);
+            switch (getSelectedSettingPositionFunction()) {
+                case 0:
+                    dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
+                    break;
+                case 1:
+                    dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
+                    break;
+            }
+        }
+    }
+
+    /**
      * This method gets the position of the selected setting.
      * @return The position of the selected setting.
      */
-    public Integer getSelectedSettingPosition() {
+    public Integer getSelectedSettingPositionDisplayMode() {
         Integer num = null;
         final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
 
@@ -268,6 +317,27 @@ public class SettingsActivity extends AppCompatActivity {
                     break;
                 case "Dark":
                     num = 2;
+                    break;
+            }
+        }
+        return num;
+    }
+
+    /**
+     * This method gets the position of the selected setting.
+     * @return The position of the selected setting.
+     */
+    public Integer getSelectedSettingPositionFunction() {
+        Integer num = null;
+        final String readselectedSetting = dataManager.readFromJSON("functionMode", getMainActivityContext());
+
+        if(readselectedSetting != null) {
+            switch (readselectedSetting) {
+                case "Deg":
+                    num = 0;
+                    break;
+                case "Rad":
+                    num = 1;
                     break;
             }
         }
@@ -354,9 +424,14 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
         TextView settingsCredits = findViewById(R.id.credits_view);
+        TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
+        TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
 
-        Spinner spinner = findViewById(R.id.settings_display_mode_spinner);
-        updateSpinner2(spinner);
+        Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
+        Spinner spinner2 = findViewById(R.id.settings_function_spinner);
+        updateSpinner2(spinner1);
+        updateSpinner2(spinner2);
+
         @SuppressLint("CutPasteId") Button backbutton = findViewById(R.id.settings_return_button);
 
         if(getSelectedSetting() != null) {
@@ -403,6 +478,10 @@ public class SettingsActivity extends AppCompatActivity {
                         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                        settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
+                        settingsFunctionModeTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                        settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
+                        settingsFunctionModeText.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
@@ -420,6 +499,10 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
+                settingsFunctionModeTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
+                settingsFunctionModeText.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
 
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
@@ -468,6 +551,9 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
         TextView settingsCredits = findViewById(R.id.credits_view);
 
+        TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
+        TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
+
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
@@ -482,6 +568,11 @@ public class SettingsActivity extends AppCompatActivity {
         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+
+        settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsFunctionModeTitle.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingsFunctionModeText.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
     }
 
     /**
