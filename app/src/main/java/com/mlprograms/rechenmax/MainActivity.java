@@ -459,12 +459,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void piAction() {
-        if(getRemoveValue()) {
-            setCalculateText("");
-            setResultText("0");
-            setRemoveValue(false);
-        }
-
         if(getCalculateText().isEmpty()) {
             setCalculateText("π");
         } else {
