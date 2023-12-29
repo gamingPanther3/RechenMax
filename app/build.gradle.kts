@@ -41,4 +41,5 @@ dependencies {
     implementation("org.testng:testng:6.9.6")
     implementation("junit:junit:4.13.2")
     implementation("org.apache.commons:commons-math3:3.6.1")
+    testImplementation("junit:junit:4.13.1")
 }
