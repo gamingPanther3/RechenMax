@@ -70,7 +70,6 @@ public class DataManager {
         // Declare a SettingsActivity object
     }
 
-
     /**
      * This method is used to create a new JSON file in the application's file directory.
      *
