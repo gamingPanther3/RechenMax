@@ -138,6 +138,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="" />
+
+            <TextView
+                android:id="@+id/settings_function_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Grad- / Bogenmaß"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/settings_function_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/function_text"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="14.4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <Spinner
+                android:id="@+id/settings_function_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/settings_function_options"
+                android:gravity="center_horizontal"
+                android:prompt="@string/mode_prompt"
+                android:spinnerMode="dialog" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
         </LinearLayout>
     </ScrollView>
 
