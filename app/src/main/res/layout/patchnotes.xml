@@ -55,7 +55,7 @@
             android:id="@+id/releaseNotesOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="\n\n"
+            android:text="Die neueste Version unserer App führt aufregende Funktionen ein, um die Benutzerfreundlichkeit zu steigern. Dazu gehören automatisches Scrollen für mehr Platz, erhöhte Rundungsgenauigkeit bis zur elften Nachkommastelle und die Möglichkeit, vorherige Berechnungen aufzurufen. Für flexible mathematische Ausdrücke ermöglicht die App nun auch das manuelle Eingeben von Notationen. Die Unterstützung von PI (π), Gradmaß und Bogenmaß erweitert die Anwendungsmöglichkeiten. Zudem wurden Probleme wie unvollständige Anzeige von Berechnungsbereichen behoben, um eine verbesserte Leistung zu gewährleisten."
             android:textColor="#000000"
             android:textSize="15sp" />
 
