@@ -333,7 +333,6 @@ public class CalculatorActivity {
                 return factorial(operand1);
             case "^":
                 return pow(operand1, operand2);
-
             case "sin(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.sin(operand2.doubleValue()));
@@ -352,7 +351,6 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue())));
                 }
-
             default:
                 throw new IllegalArgumentException("Unbekanner Operator: " + operator);
         }
