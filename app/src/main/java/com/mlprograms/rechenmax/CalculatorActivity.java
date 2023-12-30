@@ -63,6 +63,7 @@ public class CalculatorActivity {
             String trim = calc.replace('×', '*')
                     .replace('÷', '/')
                     .replace("=", "")
+                    .replace(".", "")
                     .replace(",", ".")
                     .replace("E", "e")
                     .replace("π", "3,1415926535897932384626433832")
@@ -229,7 +230,7 @@ public class CalculatorActivity {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        // Log.i("tokenize","Input Expression: " + expression);
+        Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -271,7 +272,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print tokens
-        // Log.i("tokenize","Tokens: " + tokens);
+        Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
