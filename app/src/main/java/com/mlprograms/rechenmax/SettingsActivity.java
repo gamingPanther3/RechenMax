@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.health.SystemHealthManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         //dataManager.deleteJSON(getApplicationContext());
         dataManager.createJSON(getApplicationContext());
         //resetReleaseNoteConfig(getApplicationContext());
+        dataManager.initializeSettings(getMainActivityContext());
 
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switchDisplayMode(currentNightMode);
@@ -134,22 +136,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
         // Declare a Spinner object
-        Spinner spinner = findViewById(R.id.settings_display_mode_spinner);
-        Integer num = getSelectedSettingPositionDisplayMode();
-        if(num != null) {
-            spinner.setSelection(num);
-        }
-        Spinner finalSpinner = spinner;
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (finalSpinner.getSelectedItem().toString()) {
-                    case "Bogenmaß (Rad)":
-                        dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
-                    case "Gradmaß (Deg)":
-                        dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
-                }
-                updateSpinnerFunctionMode(parent);
+                updateSpinner(parent);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -158,14 +149,24 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         // Declare a Spinner object
-        spinner = findViewById(R.id.settings_function_spinner);
-        num = getSelectedSettingPositionFunction();
-        if(num != null) {
-            spinner.setSelection(num);
+        Spinner spinner2 = findViewById(R.id.settings_function_spinner);
+        final String mode = dataManager.readFromJSON("functionMode", getMainActivityContext());
+        if(mode.equals("Deg")) {
+            spinner2.setSelection(0);
+        } else {
+            spinner2.setSelection(1);
         }
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (spinner2.getSelectedItem().toString()) {
+                    case "Gradmaß (Deg)":
+                        dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
+                        break;
+                    case "Bogenmaß (Rad)":
+                        dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
+                        break;
+                }
                 updateSpinnerFunctionMode(parent);
             }
             @Override
@@ -279,7 +280,6 @@ public class SettingsActivity extends AppCompatActivity {
      * @param parent The AdapterView where the selection happened.
      */
     public void updateSpinnerFunctionMode(AdapterView<?> parent) {
-
         // Check if the TextView object is null before calling methods on it
         TextView textView = null;
         if(parent.getChildAt(0) instanceof TextView) {
@@ -288,11 +288,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(textView != null) {
             textView.setTextSize(20);
-            switch (getSelectedSettingPositionFunction()) {
-                case 0:
+            switch (dataManager.readFromJSON("functionMode", getMainActivityContext())) {
+                case "Rad":
                     dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
                     break;
-                case 1:
+                case "Deg":
                     dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
                     break;
             }
@@ -305,7 +305,8 @@ public class SettingsActivity extends AppCompatActivity {
      */
     public Integer getSelectedSettingPositionDisplayMode() {
         Integer num = null;
-        final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
+        String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
+        System.out.println("readselectedSetting:" + readselectedSetting);
 
         if(readselectedSetting != null) {
             switch (readselectedSetting) {
@@ -317,27 +318,6 @@ public class SettingsActivity extends AppCompatActivity {
                     break;
                 case "Dark":
                     num = 2;
-                    break;
-            }
-        }
-        return num;
-    }
-
-    /**
-     * This method gets the position of the selected setting.
-     * @return The position of the selected setting.
-     */
-    public Integer getSelectedSettingPositionFunction() {
-        Integer num = null;
-        final String readselectedSetting = dataManager.readFromJSON("functionMode", getMainActivityContext());
-
-        if(readselectedSetting != null) {
-            switch (readselectedSetting) {
-                case "Deg":
-                    num = 0;
-                    break;
-                case "Rad":
-                    num = 1;
                     break;
             }
         }

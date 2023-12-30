@@ -265,7 +265,6 @@ public class DataManager {
         if(readFromJSON("eNotation", applicationContext) == null) {
             saveToJSON("eNotation", "false", applicationContext);
         }
-        mainActivity.showAllSettings();
     }
 
     /**
