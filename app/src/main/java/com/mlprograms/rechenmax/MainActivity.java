@@ -535,14 +535,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private void parenthesisOnAction() {
         // Check if calculate text is empty and set or add opening parenthesis accordingly
-        if(getRemoveValue()) {
-            setCalculateText("");
-            if(isInvalidInput(getResultText())) {
-                setResultText("0");
-            }
-            setRemoveValue(false);
-        }
-
         if (getCalculateText().isEmpty()) {
             setCalculateText("(");
         } else {
@@ -563,14 +555,6 @@ public class MainActivity extends AppCompatActivity {
     private void parenthesisOffAction() {
         Pattern pattern = Pattern.compile("√\\(\\d+\\)$");
         Matcher matcher = pattern.matcher(getCalculateText());
-
-        if(getRemoveValue()) {
-            setCalculateText("");
-            if(isInvalidInput(getResultText())) {
-                setResultText("0");
-            }
-            setRemoveValue(false);
-        }
 
         if(!getCalculateText().isEmpty()) {
             if (matcher.find()) {
@@ -1066,7 +1050,7 @@ public class MainActivity extends AppCompatActivity {
         final String new_op = op.replace("*", "×").replace("/", "÷");
 
         // Check if there is one operator at the end
-        if (getResultText().length() > 1) {
+        if (getResultText().length() > 1 && (new_op.equals("+") || new_op.equals("-"))) {
             int lastIndex = getResultText().length() - 1;
             char lastChar = getResultText().charAt(lastIndex);
 
