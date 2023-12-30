@@ -106,7 +106,7 @@ public class CalculatorActivity {
                 return "Wert zu groß";
             }
             // If the result is larger than a certain threshold, return it in scientific notation
-            if (result.compareTo(new BigDecimal("1000000000000000000")) >= 0) {
+            if (result.compareTo(new BigDecimal("1000000000000000000")) >= 0 || result.precision() > 17) {
                 return String.format(Locale.GERMANY, "%.10e", result);
             } else {
                 // Otherwise, return the result in decimal notation
@@ -189,7 +189,7 @@ public class CalculatorActivity {
                     scaledNumber = number.divide(BigDecimal.TEN.pow(-exponent));
                 }
 
-                // Append the scaled number to the result buffer
+                // Remove trailing zeros and append the scaled number to the result buffer
                 String result = sign + scaledNumber.stripTrailingZeros().toPlainString();
                 if (result.startsWith(".")) {
                     result = "0" + result;

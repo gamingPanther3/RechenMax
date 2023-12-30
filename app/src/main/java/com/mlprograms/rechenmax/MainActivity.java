@@ -29,6 +29,7 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1032,9 +1033,11 @@ public class MainActivity extends AppCompatActivity {
         assert clipData != null;
         ClipData.Item item = clipData.getItemAt(0);
         String text = (String) item.getText();
+
         if (text != null && text.replace(".", "").matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)?$")) {
             setRemoveValue(false);
-            formatResultTextAfterCalculate(text);
+            setResultText(text);
+            formatResultTextAfterCalculate();
         } else {
             setResultText("Ungültige Eingabe");
             setRemoveValue(true);
@@ -1233,19 +1236,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Code snippet to save calculation to history
-        final String value = dataManager.readFromJSON("historyTextViewNumber", getApplicationContext());
-        if (value == null) {
-            dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
-        } else {
-            final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
-            final int new_value = old_value + 1;
+        final Context context1 = getApplicationContext();
+        new Thread(() -> {
+            runOnUiThread(() -> {
+                final String value = dataManager.readFromJSON("historyTextViewNumber", context1);
+                if (value == null) {
+                    dataManager.saveToJSON("historyTextViewNumber", "0", context1);
+                } else {
+                    final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", context1));
+                    final int new_value = old_value + 1;
 
-            dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), getApplicationContext());
-            dataManager.saveToJSON(String.valueOf(old_value + 1), getCalculateText() + " " + getResultText(), getApplicationContext());
-        }
+                    dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), context1);
+                    dataManager.saveToJSON(String.valueOf(old_value + 1), getCalculateText() + " " + getResultText(), context1);
+                }
 
-        // Log historyTextViewNumber value for debugging
-        Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
+                // Log historyTextViewNumber value for debugging
+                Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
+            });
+        }).start();
     }
 
 
@@ -1268,27 +1276,22 @@ public class MainActivity extends AppCompatActivity {
                 text.contains("Unbekannte Funktion");
     }
 
-    /**
-     * This method formats the result text after a calculation.
-     *
-     * @param text The text to be formatted. This should be a string representation of the result of a calculation.
-     * @return Returns a string representation of the formatted number.
-     */
-
-    private void formatResultTextAfterCalculate(String text) {
+    private void formatResultTextAfterCalculate() {
         String formattedNumber;
-        double v = Double.parseDouble(text.replace(".", "").replace(",", "."));
-        if (text.length() >= 18) {
+        double v = Double.parseDouble(getResultText().replace(".", "").replace(",", "."));
+
+        if (getResultText().length() >= 18) {
             int exponent = (int) Math.floor(Math.log10(v));
             formattedNumber = String.format("%.8fE%+d", v / Math.pow(10, exponent), exponent);
         } else {
-            if (text.matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)$")) {
-                formattedNumber = text;
+            if (getResultText().matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)$")) {
+                formattedNumber = getResultText();
             } else {
                 final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#,###.#########################");
                 formattedNumber = decimalFormat.format(v);
             }
         }
+
         setResultText(formattedNumber);
     }
 
@@ -1331,7 +1334,7 @@ public class MainActivity extends AppCompatActivity {
 
                     setResultText(formattedNumber); // change to
                     adjustTextSize();
-                    formatResultTextAfterCalculate(getResultText());
+                    formatResultTextAfterCalculate();
                     return;
                 } catch (NumberFormatException e) {
                     System.out.println("Ungültiges Zahlenformat: " + text);
