@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:text="Deg"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:tooltipText="Grad (Deg) / Bogenmaß (Rad)" />
+                android:tooltipText="Gradmaß (Deg) / Bogenmaß (Rad)" />
 
             <Button
                 android:id="@+id/history_button"
