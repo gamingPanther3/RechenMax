@@ -971,9 +971,8 @@ public class MainActivity extends AppCompatActivity {
      * @param num The number corresponding to the clicked button. This number will be added to the result text.
      */
     public void NumberAction(String num) {
-        String resultText = getResultText();
         String calculateText = getCalculateText();
-        if (isInvalidInput(resultText) || isInvalidInput(calculateText)) {
+        if (isInvalidInput(getResultText()) || isInvalidInput(calculateText)) {
             setCalculateText("");
             setRemoveValue(true);
         }
@@ -984,9 +983,10 @@ public class MainActivity extends AppCompatActivity {
             setResultText("0");
             setRemoveValue(false);
         }
-        if (resultText.replace(".", "").replace(",", "").replace("-", "").length() < 18) {
-            if (resultText.equals("0") || resultText.equals("-0")) {
-                setResultText(resultText.replace("0", num));
+
+        if (getResultText().replace(".", "").replace(",", "").replace("-", "").length() < 18) {
+            if (getResultText().equals("0") || getResultText().equals("-0")) {
+                setResultText(getResultText().replace("0", num));
             } else {
                 addResultText(num);
             }
@@ -1034,8 +1034,7 @@ public class MainActivity extends AppCompatActivity {
         String text = (String) item.getText();
         if (text != null && text.replace(".", "").matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)?$")) {
             setRemoveValue(false);
-            String result = formatResultTextAfterCalculate(text);
-            setResultText(result.toLowerCase());
+            formatResultTextAfterCalculate(text);
         } else {
             setResultText("Ungültige Eingabe");
             setRemoveValue(true);
@@ -1275,8 +1274,8 @@ public class MainActivity extends AppCompatActivity {
      * @param text The text to be formatted. This should be a string representation of the result of a calculation.
      * @return Returns a string representation of the formatted number.
      */
-    @SuppressLint("DefaultLocale")
-    public String formatResultTextAfterCalculate(String text) {
+
+    private void formatResultTextAfterCalculate(String text) {
         String formattedNumber;
         double v = Double.parseDouble(text.replace(".", "").replace(",", "."));
         if (text.length() >= 18) {
@@ -1291,7 +1290,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         setResultText(formattedNumber);
-        return formattedNumber;
     }
 
     public void formatResultTextAfterType() {
@@ -1331,7 +1329,7 @@ public class MainActivity extends AppCompatActivity {
                         formattedNumber = "-" + formattedNumber;
                     }
 
-                    setResultText(formattedNumber);
+                    setResultText(formattedNumber); // change to
                     adjustTextSize();
                     formatResultTextAfterCalculate(getResultText());
                     return;
@@ -1356,7 +1354,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     BigDecimal bigDecimalResult = new BigDecimal(result, MathContext.DECIMAL128); // Increased precision
                     String formattedNumber = decimalFormat.format(bigDecimalResult);
-                    setResultText(formattedNumber + result2.replace(".", ","));
+                    setResultText(formattedNumber + result2.replace(".", ",")); // change to
                 } catch (NumberFormatException e) {
                     System.out.println("Ungültiges Zahlenformat: " + result);
                 }
@@ -1366,7 +1364,6 @@ public class MainActivity extends AppCompatActivity {
         }
         adjustTextSize();
     }
-
 
     /**
      * This method adjusts the text size of the result label based on its length.

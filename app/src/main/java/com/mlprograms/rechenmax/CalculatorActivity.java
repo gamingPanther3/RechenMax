@@ -128,24 +128,18 @@ public class CalculatorActivity {
         }
     }
 
-    /**
-     * This method checks if a string is in scientific notation. Scientific notation is a way of expressing numbers that are too large or too small to be conveniently written in decimal form.
-     *
-     * @param str The string to be checked.
-     * @return True if the string is in scientific notation, false otherwise.
-     */
     public static boolean isScientificNotation(final String str) {
         // The input string is formatted by replacing all commas with dots. This is because in some locales, a comma is used as the decimal separator.
         final String formattedInput = str.replace(",", ".");
 
         // A regular expression pattern is defined to match the scientific notation. The pattern is as follows:
-        // "^([-+]?\\d+(\\.\\d+)?)(e[+-]\\d+)$"
+        // "^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$"
         // Explanation of the pattern:
         // "^" - start of the line
-        // "([-+]?\\d+(\\.\\d+)?)" - matches a number which may be negative or positive, and may have a decimal part
-        // "(e[+-]\\d+)" - matches 'e' followed by an optional '+' or '-' sign, followed by one or more digits
+        // "([-+]?\\d+(\\.\\d+)?)"" - matches a number which may be negative or positive, and may have a decimal part
+        // "([eE][-+]?\\d+)" - matches 'e' or 'E' followed by an optional '+' or '-' sign, followed by one or more digits
         // "$" - end of the line
-        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)(e[+-]?\\d+)$");
+        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$");
 
         // The pattern is used to create a matcher for the formatted input string
         final Matcher matcher = pattern.matcher(formattedInput);
@@ -154,23 +148,16 @@ public class CalculatorActivity {
         return matcher.matches();
     }
 
-    /**
-     * Converts a scientific notation string to decimal format.
-     *
-     * @param str The input string in scientific notation.
-     * @return A string representing the decimal format of the input.
-     * @throws IllegalArgumentException if the exponent is greater than 1000.
-     */
     public static String convertScientificToDecimal(final String str) {
         // Replace commas with dots for proper decimal representation
         final String formattedInput = str.replace(",", ".");
 
         // Define the pattern for scientific notation
-        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$");
+        final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)");
         final Matcher matcher = pattern.matcher(formattedInput);
         final StringBuffer sb = new StringBuffer();
 
-        // Process matches found in the input string
+        // Process all matches found in the input string
         while (matcher.find()) {
             // Extract number and exponent parts from the match
             final String numberPart = matcher.group(1);
@@ -185,24 +172,29 @@ public class CalculatorActivity {
             if (exponentPart != null) {
                 final int exponent = Integer.parseInt(exponentPart);
 
-                if (exponent > 1000) {
-                    throw new IllegalArgumentException("Wert zu groß");
-                }
-
                 // Determine the sign of the number and create a BigDecimal object
-                final String sign = formattedInput.startsWith("-") ? "-" : "";
-                final BigDecimal number = new BigDecimal(numberPart);
+                final String sign = numberPart.startsWith("-") ? "-" : "";
+                BigDecimal number = new BigDecimal(numberPart);
 
                 // Negate the number if the input starts with a minus sign
-                if (formattedInput.startsWith("-")) {
-                    number.negate();
+                if (numberPart.startsWith("-")) {
+                    number = number.negate();
                 }
 
                 // Scale the number by the power of ten specified by the exponent
-                final BigDecimal scaledNumber = number.scaleByPowerOfTen(exponent);
+                BigDecimal scaledNumber;
+                if (exponent >= 0) {
+                    scaledNumber = number.scaleByPowerOfTen(exponent);
+                } else {
+                    scaledNumber = number.divide(BigDecimal.TEN.pow(-exponent));
+                }
 
                 // Append the scaled number to the result buffer
-                matcher.appendReplacement(sb, sign + scaledNumber.stripTrailingZeros().toPlainString());
+                String result = sign + scaledNumber.stripTrailingZeros().toPlainString();
+                if (result.startsWith(".")) {
+                    result = "0" + result;
+                }
+                matcher.appendReplacement(sb, result);
             }
         }
 
@@ -215,7 +207,8 @@ public class CalculatorActivity {
         }
 
         // Return the final result as a string
-        return sb.toString();
+        System.out.println(sb);
+        return sb.toString().replace(",", "").replace(".", ",");
     }
 
     /**
