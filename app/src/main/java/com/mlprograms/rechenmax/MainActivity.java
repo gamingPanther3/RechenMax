@@ -1355,9 +1355,29 @@ public class MainActivity extends AppCompatActivity {
                         formattedNumber = "-" + formattedNumber;
                     }
 
+
                     setResultText(formattedNumber.replace("E", "e"));
+
                     adjustTextSize();
                     formatResultTextAfterType();
+
+                    // Code snippet to save calculation to history
+                    final Context context1 = getApplicationContext();
+                    String finalText = text;
+                    new Thread(() -> runOnUiThread(() -> {
+                        final String value = dataManager.readFromJSON("historyTextViewNumber", context1);
+                        if (value == null) {
+                            dataManager.saveToJSON("historyTextViewNumber", "0", context1);
+                        } else {
+                            final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", context1));
+
+                            dataManager.saveToJSON("historyTextViewNumber", Integer.toString(old_value + 1), context1);
+                            dataManager.saveToJSON(String.valueOf(old_value + 1), finalText.replace("E", "e") + " = " + getResultText(), context1);
+                        }
+
+                        // Log historyTextViewNumber value for debugging
+                        Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
+                    })).start();
                     return;
                 } catch (NumberFormatException e) {
                     System.out.println("Ungültiges Zahlenformat: " + text);
