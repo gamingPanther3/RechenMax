@@ -1192,6 +1192,21 @@ public class MainActivity extends AppCompatActivity {
         TextView calculatelabel = findViewById(R.id.calculate_label);
         TextView resultlabel = findViewById(R.id.result_label);
 
+        // Check if there is one operator at the end
+        if (getResultText().length() > 1) {
+            int lastIndex = getResultText().length() - 1;
+            char lastChar = getResultText().charAt(lastIndex);
+
+            // Check if the last character isn't an operator
+            if (isOperator(String.valueOf(lastChar))) {
+                setResultText(getResultText() + "0");
+                dataManager.saveToJSON("eNotation", false, getApplicationContext());
+                setRemoveValue(false);
+                formatResultTextAfterType();
+                return;
+            }
+        }
+
         // Check for valid input before performing calculations
         if (!isInvalidInput(getResultText()) && !isInvalidInput(getCalculateText())) {
             // Handle calculation based on the rotate operator flag
