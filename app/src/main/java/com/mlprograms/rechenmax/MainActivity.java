@@ -37,8 +37,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.5.0
- * @date 29.12.2023
+ * @version 1.6.2
+ * @date 30.12.2023
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -961,7 +961,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void NumberAction(String num) {
         if (dataManager.readFromJSON("eNotation", getApplicationContext()).equals("true")) {
-            setResultText(getResultText() + num);
+            addResultText(num);
             dataManager.saveToJSON("eNotation", "false", getApplicationContext());
         } else {
             String calculateText = getCalculateText();
@@ -1298,42 +1298,35 @@ public class MainActivity extends AppCompatActivity {
                 text.contains("Unbekannte Funktion");
     }
 
-    private void formatResultTextAfterCalculate() {
-        String formattedNumber;
-        double v = Double.parseDouble(getResultText().replace(".", "").replace(",", "."));
-
-        if (getResultText().length() >= 18) {
-            int exponent = (int) Math.floor(Math.log10(v));
-            formattedNumber = String.format("%.8fE%+d", v / Math.pow(10, exponent), exponent);
-        } else {
-            if (getResultText().matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)$")) {
-                formattedNumber = getResultText();
-            } else {
-                final java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("#,###.#########################");
-                formattedNumber = decimalFormat.format(v);
-            }
-        }
-
-        setResultText(formattedNumber.replace("E", "e"));
-    }
-
+    /**
+     * Formats the result text after a mathematical operation has been performed.
+     * This method handles various formats, including scientific notation and decimal formatting.
+     */
     public void formatResultTextAfterType() {
+        // Get the result text
         String text = getResultText();
+
+        // Check if result text is not null
         if (text != null) {
-            text = text.replace(".", "");
+            // Replace dot with comma
+            text = text.replace(".", ",");
+
+            // Check if the number is negative
             boolean isNegative = text.startsWith("-");
             if (isNegative) {
+                // If negative, remove the negative sign for further processing
                 text = text.substring(1);
             }
 
             // Check for scientific notation
             if (text.toLowerCase().matches(".*[eE].*")) {
                 try {
-                    BigDecimal bigDecimalResult = new BigDecimal(text.replace(",", "."), MathContext.DECIMAL128); // Increased precision
+                    // Convert scientific notation to BigDecimal with increased precision
+                    BigDecimal bigDecimalResult = new BigDecimal(text.replace(",", "."), MathContext.DECIMAL128);
                     String formattedNumber = bigDecimalResult.toPlainString();
-                    formattedNumber = formattedNumber.replace(".", ","); // Replace dot with comma
+                    formattedNumber = formattedNumber.replace(".", ",");
 
-                    // Extract the exponent part and shift the decimal point accordingly
+                    // Extract exponent part and shift decimal point accordingly
                     String[] parts = formattedNumber.split("[eE]");
                     if (parts.length == 2) {
                         int exponent = Integer.parseInt(parts[1]);
@@ -1351,17 +1344,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
+                    // Add negative sign if necessary and set the result text
                     if (isNegative) {
                         formattedNumber = "-" + formattedNumber;
                     }
-
-
                     setResultText(formattedNumber.replace("E", "e"));
 
+                    // Adjust text size and recursively call the method
                     adjustTextSize();
                     formatResultTextAfterType();
 
-                    // Code snippet to save calculation to history
+                    // Save calculation to history in a separate thread
                     final Context context1 = getApplicationContext();
                     String finalText = text;
                     new Thread(() -> runOnUiThread(() -> {
@@ -1380,14 +1373,17 @@ public class MainActivity extends AppCompatActivity {
                     })).start();
                     return;
                 } catch (NumberFormatException e) {
-                    System.out.println("Ungültiges Zahlenformat: " + text);
+                    // Handle invalid number format in scientific notation
+                    System.out.println("Invalid number format: " + text);
                 }
             }
 
+            // Handle non-scientific notation
             int index = text.indexOf(',');
             String result;
             String result2;
             if (index != -1) {
+                // Split the text into integral and fractional parts
                 result = text.substring(0, index).replace(".", "");
                 result2 = text.substring(index);
             } else {
@@ -1395,18 +1391,27 @@ public class MainActivity extends AppCompatActivity {
                 result2 = "";
             }
 
+            // Check for invalid input
             if (!isInvalidInput(getResultText())) {
+                // Format the integral part using DecimalFormat
                 DecimalFormat decimalFormat = new DecimalFormat("#,###");
                 try {
-                    BigDecimal bigDecimalResult = new BigDecimal(result, MathContext.DECIMAL128); // Increased precision
-                    String formattedNumber = decimalFormat.format(bigDecimalResult);
-                    setResultText((isNegative ? "-" : "") + formattedNumber + result2.replace(".", ",").replace("E", "e"));
+                    BigDecimal bigDecimalResult1 = new BigDecimal(result, MathContext.DECIMAL128);
+                    String formattedNumber1 = decimalFormat.format(bigDecimalResult1);
+                    String formattedNumber2 = result2;
+
+                    // Set the result text with formatted numbers
+                    setResultText((isNegative ? "-" : "") + formattedNumber1 + formattedNumber2);
                 } catch (NumberFormatException e) {
-                    System.out.println("Ungültiges Zahlenformat: " + result);
+                    // Handle invalid number format in the integral part
+                    System.out.println("Invalid number format: " + result);
                 }
             } else if (getIsNotation()) {
+                // Reset scientific notation flag if needed
                 setIsNotation(false);
             }
+
+            // Adjust text size
             adjustTextSize();
         }
     }
