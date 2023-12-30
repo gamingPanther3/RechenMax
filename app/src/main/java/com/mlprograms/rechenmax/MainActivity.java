@@ -1,5 +1,6 @@
 package com.mlprograms.rechenmax;
 
+import static com.mlprograms.rechenmax.CalculatorActivity.isOperator;
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
 
 import java.math.MathContext;
@@ -972,24 +973,33 @@ public class MainActivity extends AppCompatActivity {
      * @param num The number corresponding to the clicked button. This number will be added to the result text.
      */
     public void NumberAction(String num) {
-        String calculateText = getCalculateText();
-        if (isInvalidInput(getResultText()) || isInvalidInput(calculateText)) {
-            setCalculateText("");
-            setRemoveValue(true);
-        }
-        if (getRemoveValue()) {
-            if (isInvalidInput(calculateText) || calculateText.contains("=")) {
+        if (dataManager.readFromJSON("eNotation", getApplicationContext()).equals("true")) {
+            setResultText(getResultText() + num);
+            dataManager.saveToJSON("eNotation", "false", getApplicationContext());
+        } else {
+            String calculateText = getCalculateText();
+            if (isInvalidInput(getResultText()) || isInvalidInput(calculateText)) {
                 setCalculateText("");
+                setRemoveValue(true);
             }
-            setResultText("0");
-            setRemoveValue(false);
-        }
+            if (getRemoveValue()) {
+                if (isInvalidInput(calculateText) || calculateText.contains("=")) {
+                    setCalculateText("");
+                }
+                setResultText("0");
+                setRemoveValue(false);
+            }
 
-        if (getResultText().replace(".", "").replace(",", "").replace("-", "").length() < 18) {
-            if (getResultText().equals("0") || getResultText().equals("-0")) {
-                setResultText(getResultText().replace("0", num));
-            } else {
-                addResultText(num);
+            if (getResultText().replace(".", "").replace(",", "").length() < 18) {
+                if (getResultText().equals("0")) {
+                    setResultText(num);
+                } else if (getResultText().equals("-0")) {
+                    // Replace "0" with the new digit, and add the negative sign back
+                    setResultText("-" + num);
+                } else {
+                    // Add the new digit, and add the negative sign back if needed
+                    addResultText(num);
+                }
             }
         }
         formatResultTextAfterType();
@@ -1055,26 +1065,36 @@ public class MainActivity extends AppCompatActivity {
         setLastOp(op);
         final String new_op = op.replace("*", "×").replace("/", "÷");
 
-        if (dataManager.readFromJSON("eNotation", getApplicationContext()).equals("true") && (new_op.equals("+") || new_op.equals("-"))) {
-            setResultText(getResultText() + new_op);
-            dataManager.saveToJSON("eNotation", "false", getApplicationContext());
-        } else {
-            if(!getRotateOperator()) {
-                setLastNumber(getResultText());
-                if (getCalculateText().contains("=")) {
-                    setCalculateText(getResultText() + " " + new_op);
-                } else {
-                    addCalculateText(getResultText() + " " + new_op);
-                }
-                setRemoveValue(true);
+        // Check if there is one operator at the end
+        if (getResultText().length() > 1) {
+            int lastIndex = getResultText().length() - 1;
+            char lastChar = getResultText().charAt(lastIndex);
+
+            // Check if the last character isn't an operator
+            if (!isOperator(String.valueOf(lastChar))) {
+                setResultText(getResultText() + new_op);
+                return;
             } else {
-                addCalculateText(new_op);
+                setResultText(getResultText() + "0");
+                dataManager.saveToJSON("eNotation", false, getApplicationContext());
                 setRemoveValue(true);
             }
-            setRotateOperator(false);
-            if(findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
+        if(!getRotateOperator()) {
+            setLastNumber(getResultText());
+            if (getCalculateText().contains("=")) {
+                setCalculateText(getResultText() + " " + new_op);
+            } else {
+                addCalculateText(getResultText() + " " + new_op);
             }
+            setRemoveValue(true);
+        } else {
+            addCalculateText(new_op);
+            setRemoveValue(true);
+        }
+        setRotateOperator(false);
+        if(findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
         }
     }
 
@@ -1256,7 +1276,6 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-
     /**
      * This method checks if the input text is invalid.
      *
@@ -1357,7 +1376,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     BigDecimal bigDecimalResult = new BigDecimal(result, MathContext.DECIMAL128); // Increased precision
                     String formattedNumber = decimalFormat.format(bigDecimalResult);
-                    setResultText(formattedNumber + result2.replace(".", ",")); // change to
+                    setResultText((isNegative ? "-" : "") + formattedNumber + result2.replace(".", ",")); // change to
                 } catch (NumberFormatException e) {
                     System.out.println("Ungültiges Zahlenformat: " + result);
                 }
@@ -1479,10 +1498,9 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    @SuppressLint("SetTextI18n")
     public void addResultText(final String s) {
         TextView resulttext = findViewById(R.id.result_label);
-        resulttext.setText(getResultText() + s);
+        if(resulttext != null) { resulttext.setText(getResultText() + s); }
     }
     public void setResultText(final String s) {
         TextView resulttext = findViewById(R.id.result_label);
