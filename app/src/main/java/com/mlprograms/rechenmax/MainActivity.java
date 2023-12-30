@@ -30,6 +30,7 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1310,8 +1311,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if result text is not null
         if (text != null) {
-            // Replace dot with comma
-            text = text.replace(".", ",");
 
             // Check if the number is negative
             boolean isNegative = text.startsWith("-");
