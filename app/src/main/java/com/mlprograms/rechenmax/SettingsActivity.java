@@ -54,7 +54,8 @@ public class SettingsActivity extends AppCompatActivity {
         //dataManager.deleteJSON(getApplicationContext());
         dataManager.createJSON(getApplicationContext());
         //resetReleaseNoteConfig(getApplicationContext());
-        dataManager.initializeSettings(getMainActivityContext());
+
+        mainActivity.showAllSettings();
 
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switchDisplayMode(currentNightMode);
@@ -137,9 +138,28 @@ public class SettingsActivity extends AppCompatActivity {
         });
         // Declare a Spinner object
         Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
+        final String mode1 = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
+        if(mode1.equals("System")) {
+            spinner1.setSelection(0);
+        } else if (mode1.equals("Light")) {
+            spinner1.setSelection(1);
+        } else {
+            spinner1.setSelection(2);
+        }
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (mode1) {
+                    case "System":
+                        dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
+                        break;
+                    case "Light":
+                        dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
+                        break;
+                    case "Dark":
+                        dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
+                        break;
+                }
                 updateSpinner(parent);
             }
             @Override
@@ -150,8 +170,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Declare a Spinner object
         Spinner spinner2 = findViewById(R.id.settings_function_spinner);
-        final String mode = dataManager.readFromJSON("functionMode", getMainActivityContext());
-        if(mode.equals("Deg")) {
+        final String mode2 = dataManager.readFromJSON("functionMode", getMainActivityContext());
+        if(mode2.equals("Deg")) {
             spinner2.setSelection(0);
         } else {
             spinner2.setSelection(1);
@@ -297,31 +317,6 @@ public class SettingsActivity extends AppCompatActivity {
                     break;
             }
         }
-    }
-
-    /**
-     * This method gets the position of the selected setting.
-     * @return The position of the selected setting.
-     */
-    public Integer getSelectedSettingPositionDisplayMode() {
-        Integer num = null;
-        String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
-        System.out.println("readselectedSetting:" + readselectedSetting);
-
-        if(readselectedSetting != null) {
-            switch (readselectedSetting) {
-                case "System":
-                    num = 0;
-                    break;
-                case "Light":
-                    num = 1;
-                    break;
-                case "Dark":
-                    num = 2;
-                    break;
-            }
-        }
-        return num;
     }
 
     /**
