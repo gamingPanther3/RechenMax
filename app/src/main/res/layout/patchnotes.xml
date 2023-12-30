@@ -150,7 +150,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Für zusätzliche Flexibilität erlaubt die App nun das manuelle Eingeben von Notationen. Folgen Sie einfach diesen Schritten: Geben Sie eine beliebige Zahl ein, drücken Sie die 'e +/-' Taste (für '×10'), wählen Sie Plus ('+') oder Minus ('-') für einen positiven oder negativen Exponenten. Geben Sie anschließend Ihren Exponenten nach dem Plus oder Minus ein, und die Zahl wird automatisch umgerechnet.\n"
+            android:text="Für zusätzliche Flexibilität erlaubt die App nun das manuelle Eingeben von Notationen. Folgen Sie einfach diesen Schritten: Geben Sie eine beliebige Zahl ein, drücken Sie die 'e±' Taste (für '×10'), wählen Sie Plus ('+') oder Minus ('-') für einen positiven oder negativen Exponenten. Geben Sie anschließend Ihren Exponenten nach dem Plus oder Minus ein, und die Zahl wird automatisch umgerechnet.\n"
             android:textColor="#000000" />
 
         <TextView
@@ -240,6 +240,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Unter bestimmten Umständen wurden wissenschaftliche Notationen nicht korrekt umgewandelt. Dieses Problem wurde behoben, um eine zuverlässigere Funktionalität zu gewährleisten.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Verbesserte Ergebnisformatierung"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Das Problem mit der fehlerhaften Ergebnisformatierung wurde behoben, um eine präzisere und konsistentere Anzeige zu gewährleisten.\n"
             android:textColor="#000000"
             android:textSize="15sp" />
 
