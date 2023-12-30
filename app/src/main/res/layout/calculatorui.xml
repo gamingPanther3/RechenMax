@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:text="Deg"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:tooltipText="Modus" />
+                android:tooltipText="Grad (Deg) / Bogenmaß (Rad)" />
 
             <Button
                 android:id="@+id/history_button"
@@ -156,7 +156,7 @@
                 android:text="@string/PasteFromClipboardButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:tooltipText="Zwischenablage einfügen"
+                android:tooltipText="Wert einfügen"
                 style="?android:attr/buttonBarButtonStyle" />
 
             <Button
@@ -190,6 +190,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/sin"
+                android:tooltipText="Sinus"
                 android:textSize="@dimen/calcButtonTextSize2"
                 style="?android:attr/buttonBarButtonStyle" />
 
@@ -202,6 +203,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/cos"
+                android:tooltipText="Cosinus"
                 android:textSize="@dimen/calcButtonTextSize2"
                 style="?android:attr/buttonBarButtonStyle" />
 
@@ -214,6 +216,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/tan"
+                android:tooltipText="Tangens"
                 android:textSize="@dimen/calcButtonTextSize2"
                 style="?android:attr/buttonBarButtonStyle" />
 
@@ -226,6 +229,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/e"
+                android:tooltipText="Manuelle Notation"
                 android:textSize="@dimen/calcButtonTextSize2"
                 style="?android:attr/buttonBarButtonStyle" />
 
@@ -238,6 +242,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="pi"
                 android:text="@string/pi"
+                android:tooltipText="PI"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2" />
         </LinearLayout>
@@ -252,15 +257,16 @@
 
             <Button
                 android:id="@+id/clipOn"
-                android:tag="("
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
+                android:tag="("
+                android:tooltipText="Klammer auf"
                 android:text="@string/clipOn"
-                android:textSize="@dimen/calcButtonTextSize"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="@dimen/calcButtonTextSize" />
 
             <Button
                 android:id="@+id/clipOff"
@@ -271,6 +277,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/clipOff"
+                android:tooltipText="Klammer zu"
                 android:textSize="@dimen/calcButtonTextSize"
                 style="?android:attr/buttonBarButtonStyle" />
             
@@ -283,6 +290,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="x!"
+                android:tooltipText="Fakultät"
                 android:textSize="@dimen/calcButtonTextSize"
                 style="?android:attr/buttonBarButtonStyle" />
 
@@ -295,6 +303,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/power"
+                android:tooltipText="Exponent"
                 android:textSize="@dimen/calcButtonTextSize"
                 style="?android:attr/buttonBarButtonStyle" />
 
@@ -307,6 +316,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/root"
+                android:tooltipText="Quadratwurzel"
                 android:textSize="@dimen/calcButtonTextSize"
                 style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
