@@ -35,7 +35,7 @@
                 android:id="@+id/releaseNotesReleaseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Veröffentlichungsdatum: 12:00 Uhr - 31.12.2023"
+                android:text="@string/release_date"
                 android:gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textColor="#000000"
@@ -46,7 +46,7 @@
             android:id="@+id/releaseNotesOverviewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Übersicht"
+            android:text="@string/übersicht"
             android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="30sp" />
@@ -63,7 +63,7 @@
             android:id="@+id/releaseNotesFeaturesTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Neue Funktionen"
+            android:text="@string/neue_funktionen"
             android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="30sp" />
@@ -191,7 +191,7 @@
             android:id="@+id/releaseNotesBugsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Behobene Fehler"
+            android:text="@string/behobene_fehler"
             android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="30sp" />
@@ -294,7 +294,7 @@
                 android:id="@+id/okay_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Verstanden"
+                android:text="@string/verstanden"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>

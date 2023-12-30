@@ -49,4 +49,9 @@
         <item>Bogenmaß (Rad)</item>
     </string-array>
     <string name="function_text">Einstellung ‘Grad- / Bogenmaß’ ermöglicht die Auswahl zwischen zwei gängigen Maßeinheiten für Winkel: Grad und Bogenmaß. Ein Grad teilt den Winkel in 360 Teile, die einen vollen Kreis bilden. Im Bogenmaß wird der Winkel basierend auf dem Radius eines Kreises gemessen. Ein voller Kreis entspricht 2π Radian, wobei π etwa 3.14159 ist. Ein rechter Winkel beträgt π/2 Radian. Das Bogenmaß ermöglicht präzise Verhältnisse zwischen Winkel und Kreisradius und wird in fortgeschrittenen mathematischen Berechnungen verwendet.</string>
+    <string name="verstanden">Verstanden</string>
+    <string name="neue_funktionen">Neue Funktionen</string>
+    <string name="behobene_fehler">Behobene Fehler</string>
+    <string name="übersicht">Übersicht</string>
+    <string name="release_date">Veröffentlichungsdatum: 12:00 Uhr - 31.12.2023</string>
 </resources>
