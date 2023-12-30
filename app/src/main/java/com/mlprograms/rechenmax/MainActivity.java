@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
         // Initialize DataManager with the current context
         dataManager = new DataManager(this);
 
+        // Show all settings
+        showAllSettings();
+
         // Create JSON file and check for its existence
         dataManager.createJSON(getApplicationContext());
         dataManager.initializeSettings(getApplicationContext());
@@ -1315,8 +1318,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void formatResultTextAfterType() {
-        String text = getResultText().replace(".", "");
+        String text = getResultText();
         if (text != null) {
+            text = text.replace(".", "");
             boolean isNegative = text.startsWith("-");
             if (isNegative) {
                 text = text.substring(1);
@@ -1383,8 +1387,8 @@ public class MainActivity extends AppCompatActivity {
             } else if (getIsNotation()) {
                 setIsNotation(false);
             }
+            adjustTextSize();
         }
-        adjustTextSize();
     }
 
     /**
