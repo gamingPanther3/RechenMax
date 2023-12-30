@@ -63,7 +63,6 @@ public class CalculatorActivity {
             String trim = calc.replace('×', '*')
                     .replace('÷', '/')
                     .replace("=", "")
-                    .replace(".", "")
                     .replace(",", ".")
                     .replace("E", "e")
                     .replace("π", "3,1415926535897932384626433832")
@@ -107,7 +106,7 @@ public class CalculatorActivity {
             }
             // If the result is larger than a certain threshold, return it in scientific notation
             if (result.compareTo(new BigDecimal("1000000000000000000")) >= 0 || result.precision() > 17) {
-                return String.format(Locale.GERMANY, "%.10e", result);
+                return String.format(Locale.GERMAN, "%.10e", result);
             } else {
                 // Otherwise, return the result in decimal notation
                 return result.stripTrailingZeros().toPlainString().replace('.', ',');
@@ -150,7 +149,7 @@ public class CalculatorActivity {
 
     public static String convertScientificToDecimal(final String str) {
         // Replace commas with dots for proper decimal representation
-        final String formattedInput = str.replace(",", ".");
+        final String formattedInput = str;
 
         // Define the pattern for scientific notation
         final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)");
@@ -207,8 +206,7 @@ public class CalculatorActivity {
         }
 
         // Return the final result as a string
-        System.out.println(sb);
-        return sb.toString().replace(",", "").replace(".", ",");
+        return sb.toString();
     }
 
     /**
@@ -465,7 +463,7 @@ public class CalculatorActivity {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            // Log.i("evaluatePostfix","Token: " + token);
+            Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -478,17 +476,17 @@ public class CalculatorActivity {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                // Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException("Syntax Fehler");
             }
 
             // Debugging: Print current stack
-            // Log.i("evaluatePostfix","Stack: " + stack);
+            Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            // Log.i("evaluatePostfix","Stacksize != 1");
+            Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException("Syntax Fehler");
         }
 
