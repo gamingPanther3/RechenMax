@@ -33,7 +33,7 @@
     <string name="sin">sin(x)</string>
     <string name="cos">cos(x)</string>
     <string name="tan">tan(x)</string>
-    <string name="e">e +/-</string>
+    <string name="e">e ±</string>
     <string name="pi">π</string>
 
     <string-array name="setting_display_mode_options">
