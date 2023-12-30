@@ -82,6 +82,9 @@ public class CalculatorActivity {
             }
 
             // Tokenize the expression and handle negative exponent in division
+
+            // final String expression = convertScientificToDecimal(trim);
+            // final List<String> tokens = tokenize(expression);
             final List<String> tokens = tokenize(trim);
 
             for (int i = 0; i < tokens.size() - 1; i++) {
