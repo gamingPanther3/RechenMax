@@ -28,9 +28,10 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 
 - **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen wie Sinus, Cosinus, Tangens oder Pi zu nutzen.
 
-- **Manuelle Eingabe der Wissenschaftlichen Notationen**: Sie können wissenschaftliche Notationen auch manuell eingeben.
-  - Beispiel: Um 6.022 x 10^23 einzugeben, geben Sie 6.022e23 ein.
-  - Beispiel: Um 2.718 x 10^-5 einzugeben, geben Sie 2.718e-5 ein.
+- **Manuelle Eingabe der Wissenschaftlichen Notationen**: Geben Sie wissenschaftliche Notationen manuell ein.
+  - Beispiel: Um 6,022e+23 einzugeben, drücken Sie die gewünschte Zahl (6), ein optionales Komma, optionale Zahlen, dann auf die "e±" Taste, "+" oder "-" für einen positiven oder negativen Exponent und dann wieder eine gewünschte Zahl (für den Exponenten), dann wird die Notation automatisch in eine Dezimalzahl umgerechnet.
+    
+  - Beispiel: Um 2,718e-5 einzugeben, drücken Sie die gewünschte Zahl (2), drücken Sie auf die Komma-Taste, geben sie "718" ein, drücken Sie dann auf die "e±" Taste, "-" für einen negativen Exponent und dann den gewünschten Exponenten, in dem fall ist es "5", dann wird die Notation automatisch in eine Dezimalzahl umgerechnet.
 
 - **Benutzerfreundliches Design**: Mit seinem sauberen und intuitiven Design ist RechenMax einfach zu bedienen und bietet eine optimale Benutzererfahrung.
 
