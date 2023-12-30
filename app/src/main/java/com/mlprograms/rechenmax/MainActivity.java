@@ -1047,7 +1047,7 @@ public class MainActivity extends AppCompatActivity {
         if (text != null && text.replace(".", "").matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)?$")) {
             setRemoveValue(false);
             setResultText(text);
-            formatResultTextAfterCalculate();
+            formatResultTextAfterType();
         } else {
             setResultText("Ungültige Eingabe");
             setRemoveValue(true);
@@ -1251,6 +1251,7 @@ public class MainActivity extends AppCompatActivity {
         setRemoveValue(true);
         formatResultTextAfterType();
         adjustTextSize();
+
         if (findViewById(R.id.calculate_scrollview) != null) {
             scrollToBottom(findViewById(R.id.calculate_scrollview));
         }
@@ -1311,7 +1312,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        setResultText(formattedNumber);
+        setResultText(formattedNumber.replace("E", "e"));
     }
 
     public void formatResultTextAfterType() {
@@ -1351,9 +1352,9 @@ public class MainActivity extends AppCompatActivity {
                         formattedNumber = "-" + formattedNumber;
                     }
 
-                    setResultText(formattedNumber); // change to
+                    setResultText(formattedNumber.replace("E", "e"));
                     adjustTextSize();
-                    formatResultTextAfterCalculate();
+                    formatResultTextAfterType();
                     return;
                 } catch (NumberFormatException e) {
                     System.out.println("Ungültiges Zahlenformat: " + text);
@@ -1376,7 +1377,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     BigDecimal bigDecimalResult = new BigDecimal(result, MathContext.DECIMAL128); // Increased precision
                     String formattedNumber = decimalFormat.format(bigDecimalResult);
-                    setResultText((isNegative ? "-" : "") + formattedNumber + result2.replace(".", ",")); // change to
+                    setResultText((isNegative ? "-" : "") + formattedNumber + result2.replace(".", ",").replace("E", "e"));
                 } catch (NumberFormatException e) {
                     System.out.println("Ungültiges Zahlenformat: " + result);
                 }
