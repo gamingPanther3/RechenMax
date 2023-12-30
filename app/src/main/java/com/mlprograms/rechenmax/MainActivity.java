@@ -1053,7 +1053,9 @@ public class MainActivity extends AppCompatActivity {
         final String new_op = op.replace("*", "×").replace("/", "÷");
 
         // Check if there is one operator at the end
-        if (getResultText().length() > 1 && (new_op.equals("+") || new_op.equals("-"))) {
+
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("true") && getResultText().length() > 1 && (new_op.equals("+") || new_op.equals("-"))) {
             int lastIndex = getResultText().length() - 1;
             char lastChar = getResultText().charAt(lastIndex);
 
