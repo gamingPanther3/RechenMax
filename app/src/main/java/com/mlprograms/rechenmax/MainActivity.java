@@ -1349,7 +1349,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if result text is not null
         if (text != null) {
-            text = text.replace(".", "");
 
             // Check if the number is negative
             boolean isNegative = text.startsWith("-");
@@ -1362,7 +1361,7 @@ public class MainActivity extends AppCompatActivity {
             if (text.toLowerCase().matches(".*[eE].*")) {
                 try {
                     // Convert scientific notation to BigDecimal with increased precision
-                    BigDecimal bigDecimalResult = new BigDecimal(text.replace(",", "."), MathContext.DECIMAL128);
+                    BigDecimal bigDecimalResult = new BigDecimal(text.replace(".", "").replace(",", "."), MathContext.DECIMAL128);
                     String formattedNumber = bigDecimalResult.toPlainString();
                     formattedNumber = formattedNumber.replace(".", ",");
 
