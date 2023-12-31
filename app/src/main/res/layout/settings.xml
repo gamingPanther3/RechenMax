@@ -192,8 +192,8 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingBottom="20dp"
-            android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz.\nVersion: 1.5.5"
+            android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz.\nVersion: 1.5.7"
             android:textColor="@color/colorBTNForegroundAccent"
             android:textSize="12dp" />
     </FrameLayout>
-</LinearLayout>
+</LinearLayout
