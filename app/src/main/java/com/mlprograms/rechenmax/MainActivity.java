@@ -38,8 +38,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.6.2
- * @date 30.12.2023
+ * @version 1.6.3
+ * @date 31.12.2023
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -606,21 +606,16 @@ public class MainActivity extends AppCompatActivity {
         if (mode.equals("false")) {
             final String calc_text = getCalculateText().replace(" ", "");
 
-            if(getRemoveValue()) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-                setRemoveValue(false);
-            }
-
             if (calc_text.isEmpty()) {
                 addCalculateText(getResultText() + "!");
                 setRotateOperator(true);
             } else {
                 String lastchar = String.valueOf(calc_text.replace(" ", "").charAt(calc_text.length() - 1));
                 if (lastchar.equals("!")) {
-                    addCalculateText(getLastOp() + " " + getResultText() + "!");
+                    addCalculateText(getLastOp().replace("*", "×").replace("/", "÷") + " " + getResultText() + "!");
+                    setRotateOperator(true);
+                } else if(lastchar.equals(")")) {
+                    addCalculateText("!");
                     setRotateOperator(true);
                 } else {
                     addCalculateText(getResultText() + "!");
@@ -1246,7 +1241,7 @@ public class MainActivity extends AppCompatActivity {
                     setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
                 } else {
                     // Handle calculation when equals sign is present
-                    if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\([-+]?(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][-+]?\\d+)?\\)$")) {
+                    if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
                         if (!getLastOp().isEmpty() && !getLastOp().equals("√")) {
                             setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
                         } else {
@@ -1265,7 +1260,7 @@ public class MainActivity extends AppCompatActivity {
                     resultlabel.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
                 } else {
                     // Handle calculation when equals sign is present
-                    if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\([-+]?(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][-+]?\\d+)?\\)$")) {
+                    if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
                         if (!getLastOp().isEmpty()) {
                             calculatelabel.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
                         } else {
