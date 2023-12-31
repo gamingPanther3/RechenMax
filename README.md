@@ -20,10 +20,10 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Um die Fakultät von 5 zu berechnen, geben Sie 5! ein.
 
 <div align="center">
-  <img src="pictures/RM-LM-C.png" alt="RechenMaxBild1" width="225"/>
-  <img src="pictures/RM-DM-C.png" alt="RechenMaxBild2" width="225"/>
-  <img src="pictures/RM-LM-C-S.png" alt="RechenMaxBild3" width="225"/>
-  <img src="pictures/RM-DM-C-S.png" alt="RechenMaxBild4" width="225"/>
+  <img src="pictures/RM-LM-C.png" alt="RechenMaxBild1" width="200"/>
+  <img src="pictures/RM-DM-C.png" alt="RechenMaxBild2" width="200"/>
+  <img src="pictures/RM-LM-C-S.png" alt="RechenMaxBild3" width="200"/>
+  <img src="pictures/RM-DM-C-S.png" alt="RechenMaxBild4" width="200"/>
 </div>  
 
 - **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen wie Sinus, Cosinus, Tangens oder Pi zu nutzen.
@@ -39,10 +39,10 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
 
 <div align="center">
-  <img src="pictures/RM-LM-H.png" alt="RechenMaxBild1" width="225"/>
-  <img src="pictures/RM-DM-H.png" alt="RechenMaxBild2" width="225"/>
-  <img src="pictures/RM-LM-S.png" alt="RechenMaxBild3" width="225"/>
-  <img src="pictures/RM-DM-S.png" alt="RechenMaxBild4" width="225"/>
+  <img src="pictures/RM-LM-H.png" alt="RechenMaxBild1" width="200"/>
+  <img src="pictures/RM-DM-H.png" alt="RechenMaxBild2" width="200"/>
+  <img src="pictures/RM-LM-S.png" alt="RechenMaxBild3" width="200"/>
+  <img src="pictures/RM-DM-S.png" alt="RechenMaxBild4" width="200"/>
 </div>
 
 ### Verwendung
