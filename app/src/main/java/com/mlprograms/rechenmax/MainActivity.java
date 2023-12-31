@@ -1349,6 +1349,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if result text is not null
         if (text != null) {
+            text = text.replace(".", "");
 
             // Check if the number is negative
             boolean isNegative = text.startsWith("-");
