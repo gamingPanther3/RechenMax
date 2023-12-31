@@ -335,21 +335,21 @@ public class CalculatorActivity {
                 return pow(operand1, operand2);
             case "sin(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.sin(operand2.doubleValue()));
+                    return BigDecimal.valueOf(Math.sin(operand2.doubleValue())).setScale(5, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue())));
+                    return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(5, RoundingMode.DOWN);
                 }
             case "cos(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.cos(operand2.doubleValue()));
+                    return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(5, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue())));
+                    return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(5, RoundingMode.DOWN);
                 }
             case "tan(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.tan(operand2.doubleValue()));
+                    return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(5, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue())));
+                    return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(5, RoundingMode.DOWN);
                 }
             default:
                 throw new IllegalArgumentException("Unbekanner Operator: " + operator);
@@ -550,9 +550,9 @@ public class CalculatorActivity {
                 BigDecimal operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.sin(operand.doubleValue()));
+                    result = BigDecimal.valueOf(Math.sin(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.sin(Math.toRadians(operand.doubleValue())));
+                    result = BigDecimal.valueOf(Math.sin(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -561,9 +561,9 @@ public class CalculatorActivity {
                 BigDecimal operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.cos(operand.doubleValue()));
+                    result = BigDecimal.valueOf(Math.cos(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue())));
+                    result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -572,14 +572,14 @@ public class CalculatorActivity {
                 BigDecimal operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.tan(operand.doubleValue()));
+                    result = BigDecimal.valueOf(Math.tan(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     double degrees = operand.doubleValue();
                     if (isMultipleOf90(degrees)) {
                         // Check if the tangent of multiples of 90 degrees is being calculated
                         throw new ArithmeticException("Nicht definiert");
                     }
-                    result = BigDecimal.valueOf(Math.tan(Math.toRadians(degrees)));
+                    result = BigDecimal.valueOf(Math.tan(Math.toRadians(degrees))).setScale(10, RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
