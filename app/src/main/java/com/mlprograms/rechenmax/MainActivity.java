@@ -226,6 +226,29 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(R.id.pi, this::piAction);
 
         setScienceButtonListener();
+
+        if(findViewById(R.id.functionMode_text) != null) {
+            findViewById(R.id.functionMode_text).setOnClickListener(view -> changeFunctionMode());
+        }
+    }
+
+    private void changeFunctionMode() {
+        final TextView function_mode_text = findViewById(R.id.functionMode_text);
+        final String mode = dataManager.readFromJSON("functionMode", getApplicationContext());
+
+        switch (mode) {
+            case "Deg":
+                dataManager.saveToJSON("functionMode", "Rad", getApplicationContext());
+                break;
+            case "Rad":
+                dataManager.saveToJSON("functionMode", "Deg", getApplicationContext());
+                break;
+        }
+
+        if (findViewById(R.id.functionMode_text) != null) {
+            function_mode_text.setText(dataManager.readFromJSON("functionMode", getApplicationContext()));
+            Log.i("changeFunctionMode", "functionMode: " + dataManager.readFromJSON("functionMode", getApplicationContext()));
+        }
     }
 
     /**
@@ -369,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the listener for all number buttons
+     * Sets up the listener for all buttons
      *
      * @param buttonId The ID of the button to which the listener is to be set.
      * @param action The action which belongs to the button.
