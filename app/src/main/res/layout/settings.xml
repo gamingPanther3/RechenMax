@@ -196,4 +196,4 @@
             android:textColor="@color/colorBTNForegroundAccent"
             android:textSize="12dp" />
     </FrameLayout>
-</LinearLayout
+</LinearLayout>
