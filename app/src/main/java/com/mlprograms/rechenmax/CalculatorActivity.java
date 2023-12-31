@@ -66,7 +66,7 @@ public class CalculatorActivity {
                     .replace(".", "")
                     .replace(",", ".")
                     .replace("E", "e")
-                    .replace("π", "3,1415926535897932384626433832")
+                    .replace("π", "3.1415926535897932384626433832")
                     .trim();
 
             // If the expression is in scientific notation, convert it to decimal notation
