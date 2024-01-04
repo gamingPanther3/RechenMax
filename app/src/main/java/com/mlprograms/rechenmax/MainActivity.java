@@ -38,8 +38,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.6.3
- * @date 31.12.2023
+ * @version 1.6.4
+ * @date 04.01.2024
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -446,14 +446,6 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
-            if(getRemoveValue()) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-                setRemoveValue(false);
-            }
-
             if (getCalculateText().isEmpty()) {
                 setCalculateText("sin(");
             } else {
@@ -475,14 +467,6 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
-            if(getRemoveValue()) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-                setRemoveValue(false);
-            }
-
             if (getCalculateText().isEmpty()) {
                 setCalculateText("cos(");
             } else {
@@ -504,14 +488,6 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
-            if(getRemoveValue()) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-                setRemoveValue(false);
-            }
-
             if (getCalculateText().isEmpty()) {
                 setCalculateText("tan(");
             } else {
@@ -1045,23 +1021,26 @@ public class MainActivity extends AppCompatActivity {
      * @param c The operation to be performed. This can be "MC" to clear the clipboard, "MR" to retrieve data from the clipboard, or "MS" to save data to the clipboard.
      */
     public void ClipboardAction(final String c) {
-        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        switch (c) {
-            case "MC": {
-                ClipData clipData = ClipData.newPlainText("", "");
-                clipboardManager.setPrimaryClip(clipData);
-                break;
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            switch (c) {
+                case "MC": {
+                    ClipData clipData = ClipData.newPlainText("", "");
+                    clipboardManager.setPrimaryClip(clipData);
+                    break;
+                }
+                case "MR":
+                    handleMRAction(clipboardManager);
+                    break;
+                case "MS": {
+                    ClipData clipData = ClipData.newPlainText("", getResultText());
+                    clipboardManager.setPrimaryClip(clipData);
+                    break;
+                }
             }
-            case "MR":
-                handleMRAction(clipboardManager);
-                break;
-            case "MS": {
-                ClipData clipData = ClipData.newPlainText("", getResultText());
-                clipboardManager.setPrimaryClip(clipData);
-                break;
-            }
+            adjustTextSize();
         }
-        adjustTextSize();
     }
 
     /**
