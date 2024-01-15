@@ -335,21 +335,21 @@ public class CalculatorActivity {
                 return pow(operand1, operand2);
             case "sin(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.sin(operand2.doubleValue())).setScale(5, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.sin(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(5, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
             case "cos(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(5, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(5, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
             case "tan(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(5, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(5, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
             default:
                 throw new IllegalArgumentException("Unbekanner Operator: " + operator);
