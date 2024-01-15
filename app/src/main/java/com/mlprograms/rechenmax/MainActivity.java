@@ -1298,23 +1298,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Code snippet to save calculation to history
         final Context context1 = getApplicationContext();
-        new Thread(() -> {
-            runOnUiThread(() -> {
-                final String value = dataManager.readFromJSON("historyTextViewNumber", context1);
-                if (value == null) {
-                    dataManager.saveToJSON("historyTextViewNumber", "0", context1);
-                } else {
-                    final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", context1));
-                    final int new_value = old_value + 1;
+        new Thread(() -> runOnUiThread(() -> {
+            final String value = dataManager.readFromJSON("historyTextViewNumber", context1);
+            if (value == null) {
+                dataManager.saveToJSON("historyTextViewNumber", "0", context1);
+            } else {
+                final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", context1));
+                final int new_value = old_value + 1;
 
-                    dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), context1);
-                    dataManager.saveToJSON(String.valueOf(old_value + 1), getCalculateText() + " " + getResultText(), context1);
-                }
+                dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), context1);
+                dataManager.saveToJSON(String.valueOf(old_value + 1), getCalculateText() + " " + getResultText(), context1);
+            }
 
-                // Log historyTextViewNumber value for debugging
-                Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
-            });
-        }).start();
+            // Log historyTextViewNumber value for debugging
+            Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
+        })).start();
     }
 
     /**
