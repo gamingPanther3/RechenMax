@@ -339,11 +339,23 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
+            case "sin^-1(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.asin(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.toDegrees(Math.asin(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
             case "cos(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
+            case "cos^-1(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.acos(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.toDegrees(Math.acos(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
             case "tan(":
                 if (mode != null && mode.equals("Rad")) {
@@ -351,8 +363,14 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
+            case "tan^-1(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.atan(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.toDegrees(Math.atan(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
             default:
-                throw new IllegalArgumentException("Unbekanner Operator: " + operator);
+                throw new IllegalArgumentException("Unbekannter Operator: '" + operator + "'");
         }
     }
 
