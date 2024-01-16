@@ -239,10 +239,10 @@ public class DataManager {
             saveToJSON("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
         }
         if(readFromJSON("showScienceRow", applicationContext) == null) {
-            saveToJSON("showScienceRow", false, applicationContext);
+            saveToJSON("showScienceRow", "false", applicationContext);
         }
         if(readFromJSON("rotate_op", applicationContext) == null) {
-            saveToJSON("rotate_op", false, applicationContext);
+            saveToJSON("rotate_op", "false", applicationContext);
         }
         if(readFromJSON("lastnumber", applicationContext) == null) {
             saveToJSON("lastnumber", "0", applicationContext);

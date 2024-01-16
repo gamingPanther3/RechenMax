@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="RechenMax 1.5.7"
+                android:text="RechenMax 1.5.8"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
             android:id="@+id/releaseNotesOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="\nDie neueste Version vom RechenMax führt aufregende Funktionen ein, um die Benutzerfreundlichkeit zu steigern. Dazu gehören automatisches Scrollen für mehr Platz, erhöhte Rundungsgenauigkeit bis zur elften Nachkommastelle und die Möglichkeit, vorherige Berechnungen aufzurufen. Für flexible mathematische Ausdrücke ermöglicht die App nun auch das manuelle Eingeben von Notationen. Die Unterstützung von PI (π), Gradmaß und Bogenmaß erweitert die Anwendungsmöglichkeiten. Zudem wurden Probleme wie unvollständige Anzeige von Berechnungsbereichen behoben, um eine verbesserte Leistung zu gewährleisten.\n"
+            android:text="\nIn dieser Version des RechenMax stehen neue Funktionen zur Verfügung, um mathematische Berechnungen zu optimieren. Automatisches Scrollen ermöglicht einfaches Navigieren durch umfangreiche Berechnungen. Bei Bedarf erfolgt im oberen Berechnungsbereich automatische Bildlaufbewegung nach unten. Rundungsgenauigkeit wurde von der zehnten auf die elfte Nachkommastelle erhöht, für präzisere Dezimalzahlen. Aufrufen vorheriger Berechnungen ermöglicht einfaches Wiederherstellen und Überprüfen früherer Aufgaben durch Klick auf die entsprechende Aufgabe im Verlauf. Für trigonometrische Aufgaben bietet der RechenMax erweiterte Funktionen zur Berechnung von Sinus, Cosinus und Tangens im Grad- und Bogenmaß. Inverse trigonometrische Funktionen wie Sinus^-1 (sin⁻¹), Cosinus^-1 (cos⁻¹) und Tangens^-1 (tan⁻¹) stehen nun ebenfalls zur Verfügung, wobei bestimmte Einschränkungen im Definitionsbereich zu beachten sind. Möglichkeit zum manuellen Eingeben von Notationen verleiht zusätzliche Flexibilität. Durch einfache Schritte können komplexe Ausdrücke erstellt und berechnet werden. RechenMax unterstützt nun Verwendung der mathematischen Konstanten PI (π) für präzise Kreisberechnungen. Mit Unterstützung von Gradmaß und Bogenmaß kann flexibel zwischen den beiden Maßeinheiten gewechselt werden, je nach Anforderungen mathematischer Konzepte. Diese Version behebt auch wichtige Fehler, darunter Probleme mit Anzeige von Berechnungsbereichen, Optimierung der Faktoriellenberechnung, korrekte Umwandlung von wissenschaftlichen Notationen und verbesserte Ergebnisformatierung für präzisere Anzeige.\n"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -134,6 +134,23 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="Diese neue Funktion bietet eine erweiterte Funktionalität im Bereich trigonometrischer Funktionen. Man kann jetzt Sinus, Cosinus und Tangens im Gradmaß sowie auch im Bogenmaß problemlos berechnen.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inverse trigonometrische Funktionen"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Darüber hinaus können Sie nun auch die inversen trigonometrischen Funktionen Sinus^-1 (sin⁻¹), Cosinus^-1 (cos⁻¹) und Tangens^-1 (tan⁻¹) verwenden. Bitte beachten Sie, dass diese Funktionen bestimmte Einschränkungen haben und nur für Werte im gültigen Definitionsbereich definiert sind.\n"
             android:textColor="#000000" />
 
         <TextView

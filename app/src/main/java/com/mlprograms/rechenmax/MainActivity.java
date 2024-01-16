@@ -255,7 +255,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setScienceButtonState() {
-        if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("false")) {
+        final String value = dataManager.readFromJSON("showScienceRow", getApplicationContext());
+        if(value.equals("false")) {
             dataManager.saveToJSON("showScienceRow", "true", getApplicationContext());
         } else {
             dataManager.saveToJSON("showScienceRow", "false", getApplicationContext());
@@ -272,17 +273,14 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
         LinearLayout buttonRow3 = findViewById(R.id.scientificRow3);
         LinearLayout buttonLayout = findViewById(R.id.button_layout);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
 
         if (function_mode_text != null) {
             function_mode_text.setText(dataManager.readFromJSON("functionMode", getApplicationContext()));
         }
 
-        final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-
-        Log.e("Debug", data);
-        if(buttonRow1 != null && buttonRow2 != null && buttonRow3 != null && data != null) {
-            if (data.equals("true")) {
+        if(buttonRow1 != null && buttonRow2 != null && buttonRow3 != null && buttonLayout != null) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
+            if (dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("false")) {
                 layoutParams.weight = 4;
                 buttonLayout.setLayoutParams(layoutParams);
 
@@ -292,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
 
                 assert function_mode_text != null;
                 function_mode_text.setVisibility(View.GONE);
-            } else if (data.equals("false")) {
+            } else {
                 layoutParams.weight = 7;
                 buttonLayout.setLayoutParams(layoutParams);
 
@@ -775,6 +773,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.calculatorui);
         dataManager.loadNumbers();
         checkDarkmodeSetting();
+        dataManager.saveToJSON("showScienceRow", "false", getApplicationContext());
         showOrHideScienceButtonState();
         setUpListeners();
     }
