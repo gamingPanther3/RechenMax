@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         checkScienceButtonState();
         checkDarkmodeSetting();
         formatResultTextAfterType();
+        setScienceButtonListener();
         adjustTextSize();
 
         // Scroll down in the calculate label
@@ -222,6 +223,9 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(R.id.sinus, this::sinusAction);
         setButtonListener(R.id.cosinus, this::cosinusAction);
         setButtonListener(R.id.tangens, this::tangensAction);
+        setButtonListener(R.id.asinus, this::aSinusAction);
+        setButtonListener(R.id.acosinus, this::aCosinusAction);
+        setButtonListener(R.id.atangens, this::aTangensAction);
         setButtonListener(R.id.e, this::eAction);
         setButtonListener(R.id.pi, this::piAction);
 
@@ -266,17 +270,26 @@ public class MainActivity extends AppCompatActivity {
             toggleButton.setOnClickListener(v -> {
                 LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
                 LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
+                LinearLayout buttonRow3 = findViewById(R.id.scientificRow3);
+                LinearLayout buttonLayout = findViewById(R.id.button_layout);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
                 final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
                 if(buttonRow1 != null && buttonRow2 != null && data != null) {
                     if (data.equals("true")) {
                         buttonRow1.setVisibility(View.GONE);
                         buttonRow2.setVisibility(View.GONE);
+                        buttonRow3.setVisibility(View.GONE);
+                        layoutParams.weight = 4;
+                        buttonLayout.setLayoutParams(layoutParams);
                         assert function_mode_text != null;
                         function_mode_text.setVisibility(View.GONE);
                         dataManager.saveToJSON("showScienceRow", false, getApplicationContext());
                     } else if (data.equals("false")) {
                         buttonRow1.setVisibility(View.VISIBLE);
                         buttonRow2.setVisibility(View.VISIBLE);
+                        buttonRow3.setVisibility(View.VISIBLE);
+                        layoutParams.weight = 7;
+                        buttonLayout.setLayoutParams(layoutParams);
                         assert function_mode_text != null;
                         function_mode_text.setVisibility(View.VISIBLE);
                         dataManager.saveToJSON("showScienceRow", true, getApplicationContext());
@@ -460,6 +473,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Appends or sets the text "sin⁻¹(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void aSinusAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("sin⁻¹(");
+            } else {
+                addCalculateText("sin⁻¹(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+    }
+
+    /**
      * Appends or sets the text "cos(" to the calculation input.
      * Scrolls to the bottom of the scroll view if it exists.
      */
@@ -481,6 +515,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Appends or sets the text "cos⁻¹(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void aCosinusAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("cos⁻¹(");
+            } else {
+                addCalculateText("cos⁻¹(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+    }
+
+    /**
      * Appends or sets the text "tan(" to the calculation input.
      * Scrolls to the bottom of the scroll view if it exists.
      */
@@ -492,6 +547,27 @@ public class MainActivity extends AppCompatActivity {
                 setCalculateText("tan(");
             } else {
                 addCalculateText("tan(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+    }
+
+    /**
+     * Appends or sets the text "tan(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void aTangensAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("tan⁻¹(");
+            } else {
+                addCalculateText("tan⁻¹(");
             }
 
             // Scroll to the bottom of the scroll view if it exists
@@ -1201,6 +1277,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * This method takes a mathematical expression as input, checks if parentheses are
+     * balanced, and adds missing parentheses as needed to balance the expression.
+     *
+     * @param input The input mathematical expression.
+     * @return The balanced mathematical expression.
+     */
+    public static String balanceParentheses(String input) {
+        // Count the number of opening and closing parentheses
+        int openCount = 0;
+        int closeCount = 0;
+
+        if(input.contains("=")) {
+            input = input.replace(" =", "");
+        }
+
+        for (char ch : input.toCharArray()) {
+            if (ch == '(') {
+                openCount++;
+            } else if (ch == ')') {
+                closeCount++;
+            }
+        }
+
+        // Add missing opening parentheses
+        while (openCount < closeCount) {
+            input = "(" + input;
+            openCount++;
+        }
+
+        // Add missing closing parentheses
+        while (closeCount < openCount) {
+            input = input + ")";
+            closeCount++;
+        }
+
+        return input;
+    }
+
+    /**
      * This method is called when the calculate button is clicked.
      * It performs the calculation based on the current calculate text and updates the result text with the result of the calculation.
      * If the rotate operator is true, it handles the calculation in a specific way.
@@ -1287,6 +1402,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Reset rotate operator flag, format result text, adjust text size, and scroll to bottom if necessary
+        setCalculateText(balanceParentheses(getCalculateText()));
         setRotateOperator(false);
         setRemoveValue(true);
         formatResultTextAfterType();
@@ -1343,7 +1459,7 @@ public class MainActivity extends AppCompatActivity {
         String text = getResultText();
 
         // Check if result text is not null
-        if (text != null) {
+        if (text != null && !isInvalidInput(text)) {
 
             // Check if the number is negative
             boolean isNegative = text.startsWith("-");

@@ -33,6 +33,9 @@
     <string name="sin">sin(x)</string>
     <string name="cos">cos(x)</string>
     <string name="tan">tan(x)</string>
+    <string name="asin">sin⁻¹(x)</string>
+    <string name="acos">cos⁻¹(x)</string>
+    <string name="atan">tan⁻¹(x)</string>
     <string name="e">e±</string>
     <string name="pi">π</string>
 

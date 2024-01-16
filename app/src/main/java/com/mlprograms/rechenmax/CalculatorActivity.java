@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.8.3
- * @date 29.12.2023
+ * @version 1.8.5
+ * @date 15.01.2023
  */
 
 public class CalculatorActivity {
@@ -125,8 +125,8 @@ public class CalculatorActivity {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            // Handle all other exceptions
-            return "Syntax Fehler";
+            Log.e("Exception", e.toString());
+            return "Syntax Fehler3";
         }
     }
 
@@ -255,12 +255,18 @@ public class CalculatorActivity {
                     currentToken.setLength(0);
                 }
 
-                // If the character sequence is "sin()", "cos()", or "tan()", add it as a single token
                 if (i + 4 <= expressionWithoutSpaces.length()) {
                     String trigFunction = expressionWithoutSpaces.substring(i, i + 4);
                     if (trigFunction.equals("sin(") || trigFunction.equals("cos(") || trigFunction.equals("tan(")) {
-                        tokens.add(trigFunction);
+                        tokens.add(trigFunction); // Add the full function name
                         i += 3; // Skip the next three characters (already processed)
+                        continue;
+                    }
+                } else if (i + 6 <= expressionWithoutSpaces.length()) {
+                    String trigFunction = expressionWithoutSpaces.substring(i, i + 6);
+                     if (trigFunction.equals("sin⁻¹(") || trigFunction.equals("cos⁻¹(") || trigFunction.equals("tan⁻¹(")) {
+                        tokens.add(trigFunction); // Add the full function name
+                        i += 5; // Skip the next five characters (already processed)
                         continue;
                     }
                 }
@@ -339,7 +345,7 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
-            case "sin^-1(":
+            case "sin⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.asin(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
@@ -351,7 +357,7 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
-            case "cos^-1(":
+            case "cos⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.acos(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
@@ -363,7 +369,7 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
-            case "tan^-1(":
+            case "tan⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.atan(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
@@ -497,7 +503,7 @@ public class CalculatorActivity {
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
                 Log.i("evaluatePostfix","Token is neither a number nor an operator");
-                throw new IllegalArgumentException("Syntax Fehler");
+                throw new IllegalArgumentException("Syntax Fehler1");
             }
 
             // Debugging: Print current stack
@@ -507,7 +513,7 @@ public class CalculatorActivity {
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
             Log.i("evaluatePostfix","Stacksize != 1");
-            throw new IllegalArgumentException("Syntax Fehler");
+            throw new IllegalArgumentException("Syntax Fehler2");
         }
 
         // Return the result
@@ -575,6 +581,21 @@ public class CalculatorActivity {
                 stack.add(result);
                 break;
             }
+            case "sin⁻¹(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
+                    throw new ArithmeticException("Ungültiger Wert");
+                }
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.asin(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    result = BigDecimal.valueOf(Math.toDegrees(Math.asin(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
+                stack.add(result);
+                break;
+            }
+
             case "cos(": {
                 BigDecimal operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
@@ -582,6 +603,20 @@ public class CalculatorActivity {
                     result = BigDecimal.valueOf(Math.cos(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
+                stack.add(result);
+                break;
+            }
+            case "cos⁻¹(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
+                    throw new ArithmeticException("Ungültiger Wert");
+                }
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.acos(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    result = BigDecimal.valueOf(Math.toDegrees(Math.acos(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -602,6 +637,18 @@ public class CalculatorActivity {
                 stack.add(result);
                 break;
             }
+            case "tan⁻¹(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.atan(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    result = BigDecimal.valueOf(Math.toDegrees(Math.atan(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
+                stack.add(result);
+                break;
+            }
+
         }
     }
 
@@ -682,7 +729,8 @@ public class CalculatorActivity {
      */
     public static boolean isFunction(final String token) {
         // Check if the token is one of the recognized trigonometric functions
-        return token.equals("sin(") || token.equals("cos(") || token.equals("tan(");
+        return token.equals("sin(") || token.equals("cos(") || token.equals("tan(") ||
+                token.equals("sin⁻¹(") || token.equals("cos⁻¹(") || token.equals("tan⁻¹(");
     }
 
     /**
@@ -757,6 +805,9 @@ public class CalculatorActivity {
             case "sin(":
             case "cos(":
             case "tan(":
+            case "sin⁻¹(":
+            case "cos⁻¹(":
+            case "tan⁻¹(":
                 return 6;
 
             // If the operator is not recognized, throw an exception

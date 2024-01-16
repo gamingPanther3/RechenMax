@@ -121,10 +121,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="5">
+        android:layout_weight="6">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -175,6 +176,54 @@
 
         <LinearLayout
             android:id="@+id/scientificRow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorLightBackground"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/asinus"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="sin"
+                android:text="@string/asin"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="@dimen/calcButtonTextSize2"
+                android:tooltipText="Sinus" />
+
+            <Button
+                android:id="@+id/acosinus"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="cos"
+                android:text="@string/acos"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="@dimen/calcButtonTextSize2"
+                android:tooltipText="Cosinus" />
+
+            <Button
+                android:id="@+id/atangens"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="tan"
+                android:text="@string/atan"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="@dimen/calcButtonTextSize2"
+                android:tooltipText="Tangens" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scientificRow2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorLightBackground"
@@ -248,7 +297,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/scientificRow2"
+            android:id="@+id/scientificRow3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorLightBackground"
