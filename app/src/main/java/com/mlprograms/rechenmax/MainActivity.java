@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
         dataManager.loadNumbers();
-        setUpListeners();
         showOrHideScienceButtonState();
+        setUpListeners();
         checkDarkmodeSetting();
         formatResultTextAfterType();
         adjustTextSize();
@@ -261,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             dataManager.saveToJSON("showScienceRow", "false", getApplicationContext());
         }
+        Log.i("debug", "row:" + dataManager.readFromJSON("showScienceRow", getApplicationContext()));
         showOrHideScienceButtonState();
     }
 
@@ -773,7 +774,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.calculatorui);
         dataManager.loadNumbers();
         checkDarkmodeSetting();
-        dataManager.saveToJSON("showScienceRow", "false", getApplicationContext());
         showOrHideScienceButtonState();
         setUpListeners();
     }
