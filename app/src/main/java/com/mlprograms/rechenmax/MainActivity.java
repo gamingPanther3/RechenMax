@@ -1287,10 +1287,9 @@ public class MainActivity extends AppCompatActivity {
         // Count the number of opening and closing parentheses
         int openCount = 0;
         int closeCount = 0;
+        final String oldInput = input;
 
-        if(input.contains("=")) {
-            input = input.replace(" =", "");
-        }
+        input = input.replace(" =", "");
 
         for (char ch : input.toCharArray()) {
             if (ch == '(') {
@@ -1302,17 +1301,21 @@ public class MainActivity extends AppCompatActivity {
 
         // Add missing opening parentheses
         while (openCount < closeCount) {
-            input = "(" + input;
+            input = "( " + input;
             openCount++;
         }
 
         // Add missing closing parentheses
         while (closeCount < openCount) {
-            input = input + ")";
+            input = input + " )";
             closeCount++;
         }
 
-        return input;
+        if(oldInput.contains("=")) {
+            return input + " =";
+        } else {
+            return input;
+        }
     }
 
     /**
@@ -1329,8 +1332,6 @@ public class MainActivity extends AppCompatActivity {
     public void Calculate() {
         // Replace special characters for proper calculation
         String calcText = getCalculateText().replace("*", "×").replace("/", "÷");
-        TextView calculatelabel = findViewById(R.id.calculate_label);
-        TextView resultlabel = findViewById(R.id.result_label);
 
         // Check if there is one operator at the end
         if (getResultText().length() > 1) {
@@ -1355,6 +1356,7 @@ public class MainActivity extends AppCompatActivity {
                     // Handle calculation when equals sign is not present
                     setLastNumber(getResultText());
                     setCalculateText(calcText + " =");
+                    setCalculateText(balanceParentheses(getCalculateText()));
                     setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
                 } else {
                     // Handle calculation when equals sign is present
@@ -1364,8 +1366,10 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             setCalculateText(getResultText() + " =");
                         }
+                        setCalculateText(balanceParentheses(getCalculateText()));
                         setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
                     } else {
+                        setCalculateText(balanceParentheses(getCalculateText()));
                         setResultText(CalculatorActivity.calculate(getCalculateText()));
                     }
                 }
@@ -1373,18 +1377,21 @@ public class MainActivity extends AppCompatActivity {
                 if (!calcText.contains("=")) {
                     // Handle calculation when equals sign is not present
                     setLastNumber(getResultText());
-                    calculatelabel.setText(calcText + " " + getResultText() + " =");
-                    resultlabel.setText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
+                    setCalculateText(calcText + " " + getResultText() + " =");
+                    setCalculateText(balanceParentheses(getCalculateText()));
+                    setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
                 } else {
                     // Handle calculation when equals sign is present
                     if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
                         if (!getLastOp().isEmpty()) {
-                            calculatelabel.setText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+                            setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
                         } else {
-                            calculatelabel.setText(getResultText() + " =");
+                            setCalculateText(getResultText() + " =");
                         }
-                        resultlabel.setText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
+                        setCalculateText(balanceParentheses(getCalculateText()));
+                        setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
                     } else {
+                        setCalculateText(balanceParentheses(getCalculateText()));
                         setResultText(CalculatorActivity.calculate(getCalculateText()));
                     }
                 }
@@ -1402,7 +1409,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Reset rotate operator flag, format result text, adjust text size, and scroll to bottom if necessary
-        setCalculateText(balanceParentheses(getCalculateText()));
         setRotateOperator(false);
         setRemoveValue(true);
         formatResultTextAfterType();

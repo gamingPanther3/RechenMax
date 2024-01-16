@@ -69,6 +69,8 @@ public class CalculatorActivity {
                     .replace("π", "3.1415926535897932384626433832")
                     .trim();
 
+            Log.e("debug", "trim:" + trim);
+
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
                 // (Assuming these methods are defined elsewhere in your code)
@@ -262,7 +264,8 @@ public class CalculatorActivity {
                         i += 3; // Skip the next three characters (already processed)
                         continue;
                     }
-                } else if (i + 6 <= expressionWithoutSpaces.length()) {
+                }
+                if (i + 6 <= expressionWithoutSpaces.length()) {
                     String trigFunction = expressionWithoutSpaces.substring(i, i + 6);
                      if (trigFunction.equals("sin⁻¹(") || trigFunction.equals("cos⁻¹(") || trigFunction.equals("tan⁻¹(")) {
                         tokens.add(trigFunction); // Add the full function name
