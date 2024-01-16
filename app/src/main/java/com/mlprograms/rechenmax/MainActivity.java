@@ -120,10 +120,9 @@ public class MainActivity extends AppCompatActivity {
         // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
         dataManager.loadNumbers();
         setUpListeners();
-        checkScienceButtonState();
+        showOrHideScienceButtonState();
         checkDarkmodeSetting();
         formatResultTextAfterType();
-        setScienceButtonListener();
         adjustTextSize();
 
         // Scroll down in the calculate label
@@ -229,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(R.id.e, this::eAction);
         setButtonListener(R.id.pi, this::piAction);
 
-        setScienceButtonListener();
+        setButtonListener(R.id.scientificButton, this::setScienceButtonState);
 
         if(findViewById(R.id.functionMode_text) != null) {
             findViewById(R.id.functionMode_text).setOnClickListener(view -> changeFunctionMode());
@@ -255,71 +254,57 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Sets up the listener for the scientific buttons
-     */
-    private void setScienceButtonListener() {
-
-        final TextView function_mode_text = findViewById(R.id.functionMode_text);
-        if (function_mode_text != null) {
-            function_mode_text.setText(dataManager.readFromJSON("functionMode", getApplicationContext()));
+    private void setScienceButtonState() {
+        if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("false")) {
+            dataManager.saveToJSON("showScienceRow", "true", getApplicationContext());
+        } else {
+            dataManager.saveToJSON("showScienceRow", "false", getApplicationContext());
         }
-
-        Button toggleButton = findViewById(R.id.scientificButton);
-        if(toggleButton != null) {
-            toggleButton.setOnClickListener(v -> {
-                LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
-                LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
-                LinearLayout buttonRow3 = findViewById(R.id.scientificRow3);
-                LinearLayout buttonLayout = findViewById(R.id.button_layout);
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
-                final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-                if(buttonRow1 != null && buttonRow2 != null && data != null) {
-                    if (data.equals("true")) {
-                        buttonRow1.setVisibility(View.GONE);
-                        buttonRow2.setVisibility(View.GONE);
-                        buttonRow3.setVisibility(View.GONE);
-                        layoutParams.weight = 4;
-                        buttonLayout.setLayoutParams(layoutParams);
-                        assert function_mode_text != null;
-                        function_mode_text.setVisibility(View.GONE);
-                        dataManager.saveToJSON("showScienceRow", false, getApplicationContext());
-                    } else if (data.equals("false")) {
-                        buttonRow1.setVisibility(View.VISIBLE);
-                        buttonRow2.setVisibility(View.VISIBLE);
-                        buttonRow3.setVisibility(View.VISIBLE);
-                        layoutParams.weight = 7;
-                        buttonLayout.setLayoutParams(layoutParams);
-                        assert function_mode_text != null;
-                        function_mode_text.setVisibility(View.VISIBLE);
-                        dataManager.saveToJSON("showScienceRow", true, getApplicationContext());
-                    }
-                }
-                Log.i("setScienceButtonListener", "showScienceRow: " + dataManager.readFromJSON("showScienceRow", getApplicationContext()));
-            });
-        }
+        showOrHideScienceButtonState();
     }
 
     /**
      * Checks the state of the science button
      */
-    public void checkScienceButtonState() {
+    private void showOrHideScienceButtonState() {
+        final TextView function_mode_text = findViewById(R.id.functionMode_text);
         LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
         LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
-        TextView textView = findViewById(R.id.functionMode_text);
+        LinearLayout buttonRow3 = findViewById(R.id.scientificRow3);
+        LinearLayout buttonLayout = findViewById(R.id.button_layout);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
+
+        if (function_mode_text != null) {
+            function_mode_text.setText(dataManager.readFromJSON("functionMode", getApplicationContext()));
+        }
 
         final String data = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-        if(buttonRow1 != null && buttonRow2 != null &&  textView != null &&data != null) {
-            if(data.equals("true")) {
-                buttonRow2.setVisibility(View.VISIBLE);
-                buttonRow2.setVisibility(View.VISIBLE);
-                textView.setVisibility(View.VISIBLE);
-            } else {
+
+        Log.e("Debug", data);
+        if(buttonRow1 != null && buttonRow2 != null && buttonRow3 != null && data != null) {
+            if (data.equals("true")) {
+                layoutParams.weight = 4;
+                buttonLayout.setLayoutParams(layoutParams);
+
                 buttonRow1.setVisibility(View.GONE);
                 buttonRow2.setVisibility(View.GONE);
-                textView.setVisibility(View.GONE);
+                buttonRow3.setVisibility(View.GONE);
+
+                assert function_mode_text != null;
+                function_mode_text.setVisibility(View.GONE);
+            } else if (data.equals("false")) {
+                layoutParams.weight = 7;
+                buttonLayout.setLayoutParams(layoutParams);
+
+                buttonRow1.setVisibility(View.VISIBLE);
+                buttonRow2.setVisibility(View.VISIBLE);
+                buttonRow3.setVisibility(View.VISIBLE);
+
+                assert function_mode_text != null;
+                function_mode_text.setVisibility(View.VISIBLE);
             }
         }
+        Log.i("setScienceButtonListener", "showScienceRow: " + dataManager.readFromJSON("showScienceRow", getApplicationContext()));
     }
 
     /**
@@ -790,7 +775,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.calculatorui);
         dataManager.loadNumbers();
         checkDarkmodeSetting();
-        checkScienceButtonState();
+        showOrHideScienceButtonState();
         setUpListeners();
     }
 
