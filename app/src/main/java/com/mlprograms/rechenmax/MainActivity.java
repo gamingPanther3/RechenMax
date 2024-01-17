@@ -30,6 +30,8 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import org.w3c.dom.Text;
+
 import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.Objects;
@@ -231,8 +233,8 @@ public class MainActivity extends AppCompatActivity {
 
         setButtonListener(R.id.scientificButton, this::setScienceButtonState);
 
-        setLongButtonClickListener(R.id.calculate_label, this::saveCalculateLabelData);
-        setLongButtonClickListener(R.id.result_label, this::saveResultLabelData);
+        setLongTextViewClickListener(R.id.calculate_label, this::saveCalculateLabelData);
+        setLongTextViewClickListener(R.id.result_label, this::saveResultLabelData);
 
         if(findViewById(R.id.functionMode_text) != null) {
             findViewById(R.id.functionMode_text).setOnClickListener(view -> changeFunctionMode());
@@ -401,13 +403,13 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Sets up the listener for all buttons
      *
-     * @param buttonId The ID of the button to which the listener is to be set.
+     * @param textViewId The ID of the button to which the listener is to be set.
      * @param action The action which belongs to the button.
      */
-    private void setButtonListener(int buttonId, Runnable action) {
-        Button btn = findViewById(buttonId);
-        if(btn != null) {
-            btn.setOnClickListener(v -> {
+    private void setButtonListener(int textViewId, Runnable action) {
+        TextView textView = findViewById(textViewId);
+        if(textView != null) {
+            textView.setOnClickListener(v -> {
                 action.run();
                 dataManager.saveNumbers(getApplicationContext());
             });
@@ -415,36 +417,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the listener for all buttons
+     * Sets up the listener for all buttons.
      *
-     * @param buttonId The ID of the button to which the listener is to be set.
+     * @param textViewId The ID of the button to which the listener is to be set.
      * @param action The action which belongs to the button.
      */
-    private void setLongButtonClickListener(int buttonId, Runnable action) {
-        Button btn = findViewById(buttonId);
-        if(btn != null) {
-            btn.setOnLongClickListener(v -> {
+    private void setLongTextViewClickListener(int textViewId, Runnable action) {
+        // Find the TextView with the specified ID
+        TextView textView = findViewById(textViewId);
+
+        // Check if the TextView is not null
+        if (textView != null) {
+            // Set a long click listener for the TextView
+            textView.setOnLongClickListener(v -> {
+                // Execute the specified action when the TextView is long-clicked
                 action.run();
+                // Return false to indicate that the event is not consumed
                 return false;
             });
         }
     }
 
+    /**
+     * Saves the result label data to the clipboard.
+     */
     private void saveResultLabelData() {
+        // Get the system clipboard manager
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
+        // Create a ClipData with plain text representing the result text
         ClipData clipData = ClipData.newPlainText("", getResultText());
+
+        // Set the created ClipData as the primary clip on the clipboard
         clipboardManager.setPrimaryClip(clipData);
 
+        // Display a toast indicating that the data has been saved
         showToast();
     }
 
+    /**
+     * Saves the calculate label data to the clipboard.
+     */
     private void saveCalculateLabelData() {
+        // Get the system clipboard manager
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
+        // Create a ClipData with plain text representing the calculate text
         ClipData clipData = ClipData.newPlainText("", getCalculateText());
+
+        // Set the created ClipData as the primary clip on the clipboard
         clipboardManager.setPrimaryClip(clipData);
 
+        // Display a toast indicating that the data has been saved
         showToast();
     }
 
@@ -455,7 +479,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void showToast() {
         Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
+        int duration = Toast.LENGTH_LONG;
 
         // Create and show the toast
         Toast toast = Toast.makeText(context, "Wert wurde gespeichert ...", duration);
