@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.icu.text.DecimalFormat;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -230,6 +231,9 @@ public class MainActivity extends AppCompatActivity {
 
         setButtonListener(R.id.scientificButton, this::setScienceButtonState);
 
+        setLongButtonClickListener(R.id.calculate_label, this::saveCalculateLabelData);
+        setLongButtonClickListener(R.id.result_label, this::saveResultLabelData);
+
         if(findViewById(R.id.functionMode_text) != null) {
             findViewById(R.id.functionMode_text).setOnClickListener(view -> changeFunctionMode());
         }
@@ -408,6 +412,54 @@ public class MainActivity extends AppCompatActivity {
                 dataManager.saveNumbers(getApplicationContext());
             });
         }
+    }
+
+    /**
+     * Sets up the listener for all buttons
+     *
+     * @param buttonId The ID of the button to which the listener is to be set.
+     * @param action The action which belongs to the button.
+     */
+    private void setLongButtonClickListener(int buttonId, Runnable action) {
+        Button btn = findViewById(buttonId);
+        if(btn != null) {
+            btn.setOnLongClickListener(v -> {
+                action.run();
+                return false;
+            });
+        }
+    }
+
+    private void saveResultLabelData() {
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        ClipData clipData = ClipData.newPlainText("", getResultText());
+        clipboardManager.setPrimaryClip(clipData);
+
+        showToast();
+    }
+
+    private void saveCalculateLabelData() {
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        ClipData clipData = ClipData.newPlainText("", getCalculateText());
+        clipboardManager.setPrimaryClip(clipData);
+
+        showToast();
+    }
+
+    /**
+     * This method displays a toast on the screen.
+     * It retrieves the context of the current application and sets the duration of the toast to short.
+     * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
+     */
+    private void showToast() {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+        // Create and show the toast
+        Toast toast = Toast.makeText(context, "Wert wurde gespeichert ...", duration);
+        toast.show();
     }
 
     /**
