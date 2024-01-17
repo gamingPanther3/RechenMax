@@ -109,7 +109,7 @@
                     android:id="@+id/result_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="40dp"
+                    android:paddingTop="20dp"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:text="@string/result_label"
@@ -200,7 +200,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2.1"
+                android:layout_weight="2"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="cos"
                 android:text="@string/acos"
@@ -329,7 +329,7 @@
                 android:tooltipText="Klammer zu"
                 android:textSize="@dimen/calcButtonTextSize"
                 style="?android:attr/buttonBarButtonStyle" />
-            
+
             <Button
                 android:id="@+id/faculty"
                 android:tag="!x"

@@ -38,8 +38,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.6.4
- * @date 04.01.2024
+ * @version 1.6.6
+ * @date 17.01.2024
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
         dataManager.loadNumbers();
-        showOrHideScienceButtonState();
         setUpListeners();
+        showOrHideScienceButtonState();
         checkDarkmodeSetting();
         formatResultTextAfterType();
         adjustTextSize();
@@ -274,6 +274,8 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
         LinearLayout buttonRow3 = findViewById(R.id.scientificRow3);
         LinearLayout buttonLayout = findViewById(R.id.button_layout);
+        TextView resultLabel = findViewById(R.id.result_label);
+        TextView calculateLabel = findViewById(R.id.calculate_label);
 
         if (function_mode_text != null) {
             function_mode_text.setText(dataManager.readFromJSON("functionMode", getApplicationContext()));
@@ -284,6 +286,8 @@ public class MainActivity extends AppCompatActivity {
             if (dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("false")) {
                 layoutParams.weight = 4;
                 buttonLayout.setLayoutParams(layoutParams);
+                resultLabel.setPadding(10, 100, 10, 0);
+                calculateLabel.setPadding(10, 100, 10, 0);
 
                 buttonRow1.setVisibility(View.GONE);
                 buttonRow2.setVisibility(View.GONE);
@@ -294,6 +298,8 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 layoutParams.weight = 7;
                 buttonLayout.setLayoutParams(layoutParams);
+                resultLabel.setPadding(10, 20, 10, 0);
+                calculateLabel.setPadding(10, 10, 10, 0);
 
                 buttonRow1.setVisibility(View.VISIBLE);
                 buttonRow2.setVisibility(View.VISIBLE);
@@ -443,6 +449,14 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
             if (getCalculateText().isEmpty()) {
                 setCalculateText("sin(");
             } else {
@@ -454,6 +468,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -464,6 +479,14 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
             if (getCalculateText().isEmpty()) {
                 setCalculateText("sin⁻¹(");
             } else {
@@ -475,6 +498,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -485,6 +509,14 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
             if (getCalculateText().isEmpty()) {
                 setCalculateText("cos(");
             } else {
@@ -496,6 +528,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -506,6 +539,14 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
             if (getCalculateText().isEmpty()) {
                 setCalculateText("cos⁻¹(");
             } else {
@@ -517,6 +558,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -527,6 +569,14 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
             if (getCalculateText().isEmpty()) {
                 setCalculateText("tan(");
             } else {
@@ -538,6 +588,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -548,6 +599,14 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
             if (getCalculateText().isEmpty()) {
                 setCalculateText("tan⁻¹(");
             } else {
@@ -559,6 +618,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -586,6 +646,7 @@ public class MainActivity extends AppCompatActivity {
             setResultText(getResultText().replace("e+", "").replace("e-", "").replace("e", ""));
             dataManager.saveToJSON("eNotation", false, getApplicationContext());
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -594,6 +655,14 @@ public class MainActivity extends AppCompatActivity {
     private void piAction() {
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
             if (getCalculateText().isEmpty()) {
                 setCalculateText("π");
             } else {
@@ -601,6 +670,7 @@ public class MainActivity extends AppCompatActivity {
             }
             setRotateOperator(true);
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -610,6 +680,19 @@ public class MainActivity extends AppCompatActivity {
         // Check if calculate text is empty and set or add opening parenthesis accordingly
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if(getRemoveValue()) {
+                setResultText("0");
+                setRemoveValue(false);
+            }
+
             if (getCalculateText().isEmpty()) {
                 setCalculateText("(");
             } else {
@@ -621,6 +704,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -631,6 +715,19 @@ public class MainActivity extends AppCompatActivity {
     private void parenthesisOffAction() {
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if(getRemoveValue()) {
+                setResultText("0");
+                setRemoveValue(false);
+            }
+
             Pattern pattern = Pattern.compile("√\\(\\d+\\)$");
             Matcher matcher = pattern.matcher(getCalculateText());
 
@@ -650,6 +747,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -663,6 +761,14 @@ public class MainActivity extends AppCompatActivity {
     private void factorial() {
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
+            if(getRemoveValue()) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(false);
+            }
+
             final String calc_text = getCalculateText().replace(" ", "");
 
             if (calc_text.isEmpty()) {
@@ -685,6 +791,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -726,6 +833,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -752,7 +860,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
-
+        formatResultTextAfterType();
     }
 
     /**
@@ -1099,8 +1207,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 }
             }
-            adjustTextSize();
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -1123,7 +1231,7 @@ public class MainActivity extends AppCompatActivity {
             setResultText("Ungültige Eingabe");
             setRemoveValue(true);
         }
-        adjustTextSize();
+        formatResultTextAfterType();
     }
 
     /**
@@ -1172,7 +1280,7 @@ public class MainActivity extends AppCompatActivity {
                 scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
-
+        formatResultTextAfterType();
     }
 
     /**
@@ -1225,11 +1333,11 @@ public class MainActivity extends AppCompatActivity {
             if (getResultText().isEmpty() || getResultText().equals("")) {
                 setResultText("0");
             }
-            formatResultTextAfterType();
             dataManager.saveNumbers(getApplicationContext());
         } else {
             setResultText(getResultText().replace("e+", "").replace("e-", "").replace("e", ""));
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -1245,6 +1353,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             setResultText("-" + getResultText());
         }
+        formatResultTextAfterType();
     }
 
     /**
@@ -1258,6 +1367,7 @@ public class MainActivity extends AppCompatActivity {
                 addResultText(",");
             }
         }
+        formatResultTextAfterType();
     }
 
     /**
