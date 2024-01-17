@@ -764,16 +764,21 @@ public class MainActivity extends AppCompatActivity {
                 setRemoveValue(true);
             }
 
-            if(getRemoveValue()) {
-                setResultText("0");
-                setRemoveValue(false);
-            }
-
             if (getCalculateText().isEmpty()) {
                 setCalculateText("(");
             } else {
-                addCalculateText("(");
+                char lastChar = getCalculateText().replace(" ", "")
+                        .charAt(getCalculateText().replace(" ", "")
+                                .replace("×", "*")
+                                .replace("÷", "/").length() - 1);
+
+                if(!isOperator(String.valueOf(lastChar)) && !String.valueOf(lastChar).equals("(")) {
+                    addCalculateText(getLastOp() + " (");
+                } else {
+                    addCalculateText(" (");
+                }
             }
+            setRotateOperator(false);
 
             // Scroll to the bottom of the scroll view if it exists
             if (findViewById(R.id.calculate_scrollview) != null) {
@@ -796,25 +801,19 @@ public class MainActivity extends AppCompatActivity {
                 if(isInvalidInput(getResultText())) {
                     setResultText("0");
                 }
-                setRemoveValue(true);
-            }
-
-            if(getRemoveValue()) {
-                setResultText("0");
-                setRemoveValue(false);
             }
 
             Pattern pattern = Pattern.compile("√\\(\\d+\\)$");
             Matcher matcher = pattern.matcher(getCalculateText());
 
-            if(!getCalculateText().isEmpty()) {
+            if(!getCalculateText().isEmpty() && getCalculateText().contains("(")) {
                 if (matcher.find()) {
                     addCalculateText(")");
                 } else {
                     if(!getRotateOperator()) {
                         addCalculateText(getResultText() + " )");
                     } else {
-                        addCalculateText(")");
+                        addCalculateText(getLastOp() + " " + getResultText() + " )");
                     }
                 }
                 setRotateOperator(true);
@@ -1807,11 +1806,11 @@ public class MainActivity extends AppCompatActivity {
     public String getLastOp() {
         final String last_op = dataManager.readFromJSON("lastop", getApplicationContext());
         if(last_op != null) {
-            return last_op;
+            return last_op.replace("*", "×").replace("/", "÷");
         } else {
             dataManager.saveToJSON("lastop", "+", getApplicationContext());
         }
-        return getLastOp();
+        return getLastOp().replace("*", "×").replace("/", "÷");
     }
     public void setLastOp(final String s) {
         dataManager.saveToJSON("lastop", s, getApplicationContext());
