@@ -767,15 +767,15 @@ public class MainActivity extends AppCompatActivity {
             if (getCalculateText().isEmpty()) {
                 setCalculateText("(");
             } else {
-                char lastChar = getCalculateText().replace(" ", "")
-                        .charAt(getCalculateText().replace(" ", "")
-                                .replace("×", "*")
-                                .replace("÷", "/").length() - 1);
+                final String text = getCalculateText().replace(" ", "")
+                        .replace("×", "*").replace("÷", "/");
+                char lastChar = text.charAt(text.length() - 1);
+                Log.e("debug",String.valueOf(lastChar));
 
                 if(!isOperator(String.valueOf(lastChar)) && !String.valueOf(lastChar).equals("(")) {
                     addCalculateText(getLastOp() + " (");
                 } else {
-                    addCalculateText(" (");
+                    addCalculateText("(");
                 }
             }
             setRotateOperator(false);

@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Die neue Funktion erlaubt das Aufrufen alter Rechnungen durch einfaches Klicken auf eine Aufgabe im Verlauf.\n"
+            android:text="Langes Drücken: Durch langes Drücken auf einen Eintrag im Verlauf wird die zugehörige Rechnung automatisch in die Zwischenablage kopiert. Kurzes Drücken: Ein kurzer Tastendruck auf einen Verlaufeintrag fügt die entsprechende Rechnung direkt in den Taschenrechner ein.\n"
             android:textColor="#000000" />
 
         <TextView
@@ -202,6 +202,40 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="Gradmaß und Bogenmaß werden nun unterstützt, wodurch flexibles Wechseln zwischen den beiden Maßeinheiten möglich ist. Das Gradmaß findet typischerweise Anwendung in geometrischen und trigonometrischen Berechnungen, während das Bogenmaß in fortgeschritteneren mathematischen Konzepten relevant ist.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Automatische Vervollständigung von Klammern"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Jetzt werden fehlende Klammern automatisch erkannt und automatisch ergänzt, was die Eingabe von Ausdrücken weiter vereinfacht.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Verbesserte Klammernbehandlung"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Die Handhabung von Klammern wurde optimiert, um eine fehlerfreie Verarbeitung von mathematischen oder logischen Ausdrücken zu gewährleisten.\n"
             android:textColor="#000000" />
 
         <TextView
