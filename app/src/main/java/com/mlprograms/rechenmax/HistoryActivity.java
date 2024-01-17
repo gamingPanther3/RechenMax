@@ -1,5 +1,7 @@
 package com.mlprograms.rechenmax;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.util.Log;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -160,6 +162,24 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
+        textView.setOnLongClickListener(v -> {
+            TextView clickedTextView = (TextView) v;
+            String clickedText = clickedTextView.getText().toString();
+
+            // Get the system clipboard manager
+            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+            // Create a ClipData with plain text representing the result text
+            ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " ") );
+
+            // Set the created ClipData as the primary clip on the clipboard
+            clipboardManager.setPrimaryClip(clipData);
+
+            // Display a toast indicating that the data has been saved
+            showToastCopy();
+            return false;
+        });
+
         return textView;
     }
 
@@ -174,6 +194,20 @@ public class HistoryActivity extends AppCompatActivity {
 
         // Create and show the toast
         Toast toast = Toast.makeText(context, "Rechnung wurde übernommen ...", duration);
+        toast.show();
+    }
+
+    /**
+     * This method displays a toast on the screen.
+     * It retrieves the context of the current application and sets the duration of the toast to short.
+     * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
+     */
+    private void showToastCopy() {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+        // Create and show the toast
+        Toast toast = Toast.makeText(context, "Rechnung wurde kopiert ...", duration);
         toast.show();
     }
 
@@ -603,7 +637,27 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets up the listener for all buttons.
+     *
+     * @param textViewId The ID of the button to which the listener is to be set.
+     * @param action The action which belongs to the button.
+     */
+    private void setLongTextViewClickListener(int textViewId, Runnable action) {
+        // Find the TextView with the specified ID
+        TextView textView = findViewById(textViewId);
 
+        // Check if the TextView is not null
+        if (textView != null) {
+            // Set a long click listener for the TextView
+            textView.setOnLongClickListener(v -> {
+                // Execute the specified action when the TextView is long-clicked
+                action.run();
+                // Return false to indicate that the event is not consumed
+                return false;
+            });
+        }
+    }
 
     /**
      * This static method sets the context of the MainActivity.
