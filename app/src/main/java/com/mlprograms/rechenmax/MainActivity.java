@@ -813,7 +813,15 @@ public class MainActivity extends AppCompatActivity {
                     if(!getRotateOperator()) {
                         addCalculateText(getResultText() + " )");
                     } else {
-                        addCalculateText(getLastOp() + " " + getResultText() + " )");
+                        final String text = getCalculateText().replace(" ", "")
+                                .replace("×", "*").replace("÷", "/");
+                        char lastChar = text.charAt(text.length() - 1);
+
+                        if(String.valueOf(lastChar).equals(")")) {
+                            addCalculateText(" )");
+                        } else {
+                            addCalculateText(getLastOp() + " " + getResultText() + " )");
+                        }
                     }
                 }
                 setRotateOperator(true);
