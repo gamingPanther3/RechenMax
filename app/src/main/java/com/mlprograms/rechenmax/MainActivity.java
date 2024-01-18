@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
     public void showAllSettings() {
         // Print and log each application setting
         System.out.println("\n");
+        Log.i("all settings", "---       all settings        ---");
         Log.i("showAllSettings", "selectedSpinnerSetting:          :'" + dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext()) + "'");
         Log.i("showAllSettings", "functionMode                     :'" + dataManager.readFromJSON("functionMode", getApplicationContext()) + "'");
         Log.i("showAllSettings", "settingReleaseNotesSwitch        :'" + dataManager.readFromJSON("settingReleaseNotesSwitch", getApplicationContext()) + "'");
@@ -160,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("showAllSettings", "lastop                           :'" + dataManager.readFromJSON("lastop", getApplicationContext()) + "'");
         Log.i("showAllSettings", "isNotation                       :'" + dataManager.readFromJSON("isNotation", getApplicationContext()) + "'");
         Log.i("showAllSettings", "eNotation                        :'" + dataManager.readFromJSON("eNotation", getApplicationContext()) + "'");
+        Log.i("all settings", "---       all settings        ---");
         System.out.println("\n");
     }
 
@@ -267,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             dataManager.saveToJSON("showScienceRow", "false", getApplicationContext());
         }
-        Log.i("debug", "row:" + dataManager.readFromJSON("showScienceRow", getApplicationContext()));
         showOrHideScienceButtonState();
     }
 
@@ -770,7 +771,6 @@ public class MainActivity extends AppCompatActivity {
                 final String text = getCalculateText().replace(" ", "")
                         .replace("×", "*").replace("÷", "/");
                 char lastChar = text.charAt(text.length() - 1);
-                Log.e("debug",String.valueOf(lastChar));
 
                 if(!isOperator(String.valueOf(lastChar)) && !String.valueOf(lastChar).equals("(")) {
                     addCalculateText(getLastOp() + " (");
