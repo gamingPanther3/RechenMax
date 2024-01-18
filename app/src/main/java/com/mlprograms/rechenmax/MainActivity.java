@@ -926,12 +926,6 @@ public class MainActivity extends AppCompatActivity {
     private void rootAction() {
         final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
         if (mode.equals("false")) {
-            if(getRemoveValue()) {
-                setCalculateText("");
-                setResultText("0");
-                setRemoveValue(false);
-            }
-
             if(!getRotateOperator()) {
                 addCalculateText("√(");
             } else if (!getCalculateText().isEmpty()){
