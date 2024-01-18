@@ -276,23 +276,34 @@ public class HistoryActivity extends AppCompatActivity {
         line.setBackgroundColor(lineColor);
     }
 
+    /**
+     * This method is responsible for creating and displaying an empty TextView in the history
+     * section of the application. It first checks if a TextView already exists and removes it if
+     * present. Then, it creates a new TextView with a specific message indicating an empty history.
+     * The TextView is assigned a unique ID (R.id.history_empty_textview), and its text color is set
+     * based on the current night mode and true dark mode. Additionally, the method sets the text size
+     * and gravity for proper alignment. Finally, the newly created TextView is added to the layout.
+     *
+     * Note: This method is typically called when the history section is empty, providing a visual
+     * indication to the user that there is no history data available.
+     */
     private void createEmptyHistoryTextView() {
-        // Überprüfen Sie, ob die TextView bereits vorhanden ist, und entfernen Sie sie ggf.
+        // Check if the TextView already exists and remove it if present
         deleteEmptyHistoryTextView();
 
-        // Erstellen Sie die leere TextView
+        // Create the empty TextView with a specific message
         TextView emptyTextView = createHistoryTextView("\n\n\n\n\n\n\nDein Verlauf ist leer.");
-        emptyTextView.setId(R.id.history_empty_textview); // Fügen Sie die ID hinzu
+        emptyTextView.setId(R.id.history_empty_textview); // Add the ID
 
-        // Setzen Sie die Textfarbe basierend auf dem aktuellen Nachtmodus und true dark mode
+        // Set the text color based on the current night mode and true dark mode
         int textColor = calculateTextColor();
         emptyTextView.setTextColor(textColor);
 
-        // Setzen Sie die Textgröße und die Schwerkraft
+        // Set the text size and gravity
         emptyTextView.setTextSize(35f);
         emptyTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
-        // Fügen Sie die TextView zum Layout hinzu
+        // Add the TextView to the layout
         final LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
         linearLayout.addView(emptyTextView);
     }
@@ -619,9 +630,28 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This recursive method traverses a ViewGroup, typically a layout, and changes the foreground
+     * and background colors of each child View. It takes as parameters the ViewGroup to traverse,
+     * the new foreground color, and the new background color. For each child View, it sets the
+     * background color and, if the child is a TextView, it also changes the text color. If the child
+     * is itself a ViewGroup, the method is called recursively to ensure all nested Views are
+     * processed.
+     *
+     * Note: This method is useful for applying a consistent color scheme to all child Views within
+     * a given layout, and it can be used, for example, to implement a dark mode or change the
+     * appearance of a specific section of the UI.
+     *
+     * @param layout The ViewGroup to traverse and update colors.
+     * @param foregroundColor The new color for the foreground (text color) of TextViews.
+     * @param backgroundColor The new color for the background of Views.
+     */
     private void changeTextViewColorsRecursive(ViewGroup layout, int foregroundColor, int backgroundColor) {
+        // Iterate through each child View in the ViewGroup
         for (int i = 0; i < layout.getChildCount(); i++) {
             View v = layout.getChildAt(i);
+
+            // Set the background color for the current child View
             v.setBackgroundColor(backgroundColor);
 
             // If the child is a TextView, change the foreground and background colors

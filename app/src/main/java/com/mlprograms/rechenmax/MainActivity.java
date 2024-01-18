@@ -243,10 +243,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method is responsible for toggling between two function modes, namely "Deg" (Degrees)
+     * and "Rad" (Radians). It retrieves the current function mode from the application's stored data
+     * using a DataManager and then switches it to the opposite mode. After updating the mode, it
+     * updates the displayed text in a TextView with the new mode. Additionally, it logs the change
+     * using Android's Log class for debugging purposes.
+     *
+     * Note: The function mode is stored and retrieved from persistent storage to ensure that the
+     * selected mode persists across application sessions.
+     */
     private void changeFunctionMode() {
+        // Get reference to the TextView for displaying function mode
         final TextView function_mode_text = findViewById(R.id.functionMode_text);
+
+        // Read the current function mode from the stored data
         final String mode = dataManager.readFromJSON("functionMode", getApplicationContext());
 
+        // Toggle between "Deg" and "Rad" modes
         switch (mode) {
             case "Deg":
                 dataManager.saveToJSON("functionMode", "Rad", getApplicationContext());
@@ -256,19 +270,37 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        if (findViewById(R.id.functionMode_text) != null) {
+        // Update the displayed text with the new function mode
+        if (function_mode_text != null) {
             function_mode_text.setText(dataManager.readFromJSON("functionMode", getApplicationContext()));
+
+            // Log the function mode change
             Log.i("changeFunctionMode", "functionMode: " + dataManager.readFromJSON("functionMode", getApplicationContext()));
         }
     }
 
+    /**
+     * This method manages the state of a science button within the application. It reads the
+     * current state of the science button from the application's stored data using a DataManager.
+     * The state is toggled (from "true" to "false" or vice versa), and then the method calls
+     * another method, showOrHideScienceButtonState(), to handle the visual representation or
+     * behavior associated with the state change.
+     *
+     * Note: The state of the science button is stored and retrieved from persistent storage to
+     * ensure that the selected state persists across application sessions.
+     */
     private void setScienceButtonState() {
+        // Read the current state of the science button from the stored data
         final String value = dataManager.readFromJSON("showScienceRow", getApplicationContext());
-        if(value.equals("false")) {
+
+        // Toggle the state of the science button
+        if (value.equals("false")) {
             dataManager.saveToJSON("showScienceRow", "true", getApplicationContext());
         } else {
             dataManager.saveToJSON("showScienceRow", "false", getApplicationContext());
         }
+
+        // Handle the visual representation or behavior associated with the state change
         showOrHideScienceButtonState();
     }
 
