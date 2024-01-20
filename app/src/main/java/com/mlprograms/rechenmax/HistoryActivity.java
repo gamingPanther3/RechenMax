@@ -7,6 +7,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -134,50 +135,60 @@ public class HistoryActivity extends AppCompatActivity {
         textView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
         textView.setGravity(Gravity.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.history_result_size));
+        AtomicBoolean clickListener = new AtomicBoolean(true);
+
+        textView.setOnLongClickListener(v -> {
+            try {
+                TextView clickedTextView = (TextView) v;
+                String clickedText = clickedTextView.getText().toString();
+
+                // Get the system clipboard manager
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+                // Create a ClipData with plain text representing the result text
+                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " ") );
+
+                // Set the created ClipData as the primary clip on the clipboard
+                clipboardManager.setPrimaryClip(clipData);
+
+                // Display a toast indicating that the data has been saved
+                showToastCopy();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            clickListener.set(false);
+            return false;
+        });
 
         // Add a click listener to the TextView
         textView.setOnClickListener(v -> {
-            // Output the text of the clicked TextView to the console
-            TextView clickedTextView = (TextView) v;
-            String clickedText = clickedTextView.getText().toString();
+            if(clickListener.get()) {
+                // Output the text of the clicked TextView to the console
+                TextView clickedTextView = (TextView) v;
+                String clickedText = clickedTextView.getText().toString();
 
-            // Split at "=" character
-            String[] parts = clickedText.split("=");
+                // Split at "=" character
+                String[] parts = clickedText.split("=");
 
-            // Check and remove leading and trailing spaces
-            if (parts.length == 2) {
-                String key = parts[0].trim();
-                String value = parts[1].trim();
-                System.out.println("Key: '" + key + "'");
-                System.out.println("Value: '" + value + "'");
-                try {
-                    dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
-                    dataManager.saveToJSON("result_text", value, getMainActivityContext());
-                    dataManager.saveToJSON("removeValue", false, getMainActivityContext());
-                    dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
-                    showToast();
-                } catch (Exception e) {
-                    Log.i("createHistoryTextView", String.valueOf(e));
+                // Check and remove leading and trailing spaces
+                if (parts.length == 2) {
+                    String key = parts[0].trim();
+                    String value = parts[1].trim();
+                    System.out.println("Key: '" + key + "'");
+                    System.out.println("Value: '" + value + "'");
+                    try {
+                        dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
+                        dataManager.saveToJSON("result_text", value, getMainActivityContext());
+                        dataManager.saveToJSON("removeValue", false, getMainActivityContext());
+                        dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
+                        showToast();
+                    } catch (Exception e) {
+                        Log.i("createHistoryTextView", String.valueOf(e));
+                    }
                 }
             }
-        });
-
-        textView.setOnLongClickListener(v -> {
-            TextView clickedTextView = (TextView) v;
-            String clickedText = clickedTextView.getText().toString();
-
-            // Get the system clipboard manager
-            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
-            // Create a ClipData with plain text representing the result text
-            ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " ") );
-
-            // Set the created ClipData as the primary clip on the clipboard
-            clipboardManager.setPrimaryClip(clipData);
-
-            // Display a toast indicating that the data has been saved
-            showToastCopy();
-            return false;
+            clickListener.set(true);
         });
 
         return textView;
