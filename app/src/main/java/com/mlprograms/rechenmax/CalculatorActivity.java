@@ -256,19 +256,44 @@ public class CalculatorActivity {
                     tokens.add(currentToken.toString());
                     currentToken.setLength(0);
                 }
-
+                if (i + 3 <= expressionWithoutSpaces.length()) {
+                    String function = expressionWithoutSpaces.substring(i, i + 3);
+                    if (function.equals("ln(")) {
+                        tokens.add(function); // Add the full function name
+                        i += 2; // Skip the next three characters (already processed)
+                        continue;
+                    }
+                }
                 if (i + 4 <= expressionWithoutSpaces.length()) {
-                    String trigFunction = expressionWithoutSpaces.substring(i, i + 4);
-                    if (trigFunction.equals("sin(") || trigFunction.equals("cos(") || trigFunction.equals("tan(")) {
-                        tokens.add(trigFunction); // Add the full function name
+                    String function = expressionWithoutSpaces.substring(i, i + 4);
+                    if (function.equals("sin(") || function.equals("cos(") || function.equals("tan(")) {
+                        tokens.add(function); // Add the full function name
+                        i += 3; // Skip the next three characters (already processed)
+                        continue;
+                    }
+                    if (function.equals("log(")) {
+                        tokens.add(function); // Add the full function name
                         i += 3; // Skip the next three characters (already processed)
                         continue;
                     }
                 }
+                if (i + 5 <= expressionWithoutSpaces.length()) {
+                    String function = expressionWithoutSpaces.substring(i, i + 5);
+                    if (function.equals("sinh(") || function.equals("cosh(") || function.equals("tanh(")) {
+                        tokens.add(function); // Add the full function name
+                        i += 4; // Skip the next three characters (already processed)
+                        continue;
+                    }
+                    if (function.equals("log₂(")) {
+                        tokens.add(function); // Add the full function name
+                        i += 4; // Skip the next three characters (already processed)
+                        continue;
+                    }
+                }
                 if (i + 6 <= expressionWithoutSpaces.length()) {
-                    String trigFunction = expressionWithoutSpaces.substring(i, i + 6);
-                     if (trigFunction.equals("sin⁻¹(") || trigFunction.equals("cos⁻¹(") || trigFunction.equals("tan⁻¹(")) {
-                        tokens.add(trigFunction); // Add the full function name
+                    String function = expressionWithoutSpaces.substring(i, i + 6);
+                     if (function.equals("sin⁻¹(") || function.equals("cos⁻¹(") || function.equals("tan⁻¹(")) {
+                        tokens.add(function); // Add the full function name
                         i += 5; // Skip the next five characters (already processed)
                         continue;
                     }
@@ -342,11 +367,23 @@ public class CalculatorActivity {
                 return factorial(operand1);
             case "^":
                 return pow(operand1, operand2);
+            case "log(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(10, RoundingMode.DOWN);
+            case "log₂(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(2)).setScale(10, RoundingMode.DOWN);
+            case "ln(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
             case "sin(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.sin(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
+            case "sinh(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.sinh(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.sinh(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
             case "sin⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
@@ -360,6 +397,12 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
+            case "cosh(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.cosh(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.cosh(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
             case "cos⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.acos(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -371,6 +414,12 @@ public class CalculatorActivity {
                     return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
+            case "tanh(":
+                if (mode != null && mode.equals("Rad")) {
+                    return BigDecimal.valueOf(Math.tanh(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    return BigDecimal.valueOf(Math.tanh(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
             case "tan⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
@@ -573,6 +622,30 @@ public class CalculatorActivity {
         final String mode = dataManager1.readFromJSON("functionMode", mainActivity.getApplicationContext());
 
         switch (function) {
+            case "log(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log10(operand.doubleValue())).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "log₂(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(2)).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "ln(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue())).setScale(10, RoundingMode.DOWN));
+                break;
+            }
             case "sin(": {
                 BigDecimal operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
@@ -580,6 +653,17 @@ public class CalculatorActivity {
                     result = BigDecimal.valueOf(Math.sin(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.sin(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
+                stack.add(result);
+                break;
+            }
+            case "sinh(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.sinh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    result = BigDecimal.valueOf(Math.sinh(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -598,7 +682,6 @@ public class CalculatorActivity {
                 stack.add(result);
                 break;
             }
-
             case "cos(": {
                 BigDecimal operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
@@ -606,6 +689,17 @@ public class CalculatorActivity {
                     result = BigDecimal.valueOf(Math.cos(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                }
+                stack.add(result);
+                break;
+            }
+            case "cosh(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.cosh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    result = BigDecimal.valueOf(Math.cosh(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -640,6 +734,18 @@ public class CalculatorActivity {
                 stack.add(result);
                 break;
             }
+            case "tanh(": {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                BigDecimal result;
+                if (mode != null && mode.equals("Rad")) {
+                    result = BigDecimal.valueOf(Math.tanh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                } else { // if mode equals 'Deg'
+                    double degrees = operand.doubleValue();
+                    result = BigDecimal.valueOf(Math.tanh(Math.toRadians(degrees))).setScale(10, RoundingMode.DOWN);
+                }
+                stack.add(result);
+                break;
+            }
             case "tan⁻¹(": {
                 BigDecimal operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
@@ -651,7 +757,6 @@ public class CalculatorActivity {
                 stack.add(result);
                 break;
             }
-
         }
     }
 
@@ -733,6 +838,8 @@ public class CalculatorActivity {
     public static boolean isFunction(final String token) {
         // Check if the token is one of the recognized trigonometric functions
         return token.equals("sin(") || token.equals("cos(") || token.equals("tan(") ||
+                token.equals("sinh(") || token.equals("cosh(") || token.equals("tanh(") ||
+                token.equals("log(") || token.equals("log₂(") || token.equals("ln(") ||
                 token.equals("sin⁻¹(") || token.equals("cos⁻¹(") || token.equals("tan⁻¹(");
     }
 
@@ -804,10 +911,16 @@ public class CalculatorActivity {
             case "!":
                 return 5;
 
-            // If the operator is sine, cosine, or tangent, return 6
+            // If the operator is sine, cosine, or tangent ..., return 6
+            case "log(":
+            case "log₂(":
+            case "ln(":
             case "sin(":
             case "cos(":
             case "tan(":
+            case "sinh(":
+            case "cosh(":
+            case "tanh(":
             case "sin⁻¹(":
             case "cos⁻¹(":
             case "tan⁻¹(":

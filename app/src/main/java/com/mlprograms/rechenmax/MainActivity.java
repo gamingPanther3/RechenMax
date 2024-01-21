@@ -227,13 +227,23 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(R.id.sinus, this::sinusAction);
         setButtonListener(R.id.cosinus, this::cosinusAction);
         setButtonListener(R.id.tangens, this::tangensAction);
+        setButtonListener(R.id.sinush, this::sinushAction);
+        setButtonListener(R.id.cosinush, this::cosinushAction);
+        setButtonListener(R.id.tangensh, this::tangenshAction);
+
         setButtonListener(R.id.asinus, this::aSinusAction);
         setButtonListener(R.id.acosinus, this::aCosinusAction);
         setButtonListener(R.id.atangens, this::aTangensAction);
+
+        setButtonListener(R.id.log, this::logAction);
+        setButtonListener(R.id.log2x, this::log2Action);
+        setButtonListener(R.id.ln, this::lnAction);
+
         setButtonListener(R.id.e, this::eAction);
         setButtonListener(R.id.pi, this::piAction);
 
         setButtonListener(R.id.scientificButton, this::setScienceButtonState);
+        setButtonListener(R.id.shift, this::setShiftButtonState);
 
         setLongTextViewClickListener(R.id.calculate_label, this::saveCalculateLabelData);
         setLongTextViewClickListener(R.id.result_label, this::saveResultLabelData);
@@ -305,13 +315,69 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * This method manages the state of a shift button within the application. It reads the
+     * current state of the shift button from the application's stored data using a DataManager.
+     * The state is toggled (from "true" to "false" or vice versa), and then the method calls
+     * another method, shiftButtonAction(), to handle the visual representation or
+     * behavior associated with the state change.
+     *
+     * Note: The state of the shift button is stored and retrieved from persistent storage to
+     * ensure that the selected state persists across application sessions.
+     */
+    private void setShiftButtonState() {
+        // Read the current state of the science button from the stored data
+        final String value = dataManager.readFromJSON("showShiftRow", getApplicationContext());
+
+        // Toggle the state of the science button
+        if (value.equals("false")) {
+            dataManager.saveToJSON("showShiftRow", "true", getApplicationContext());
+        } else {
+            dataManager.saveToJSON("showShiftRow", "false", getApplicationContext());
+        }
+        // Handle the visual representation or behavior associated with the state change
+        shiftButtonAction();
+    }
+
+    private void shiftButtonAction() {
+        LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
+        LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
+        LinearLayout buttonRow12 = findViewById(R.id.scientificRow12);
+        LinearLayout buttonRow22 = findViewById(R.id.scientificRow22);
+        TextView shiftModeText = findViewById(R.id.shiftMode_text);
+
+        // Read the current state of the science button from the stored data
+        final String shiftValue = dataManager.readFromJSON("showShiftRow", getApplicationContext());
+        final String rowValue = dataManager.readFromJSON("showScienceRow", getApplicationContext());
+
+        // Toggle the state of the science button
+        if (rowValue.equals("true") && shiftValue.equals("true")) {
+            buttonRow1.setVisibility(View.GONE);
+            buttonRow2.setVisibility(View.GONE);
+            buttonRow12.setVisibility(View.VISIBLE);
+            buttonRow22.setVisibility(View.VISIBLE);
+            shiftModeText.setText("2");
+        } else if (rowValue.equals("true") && shiftValue.equals("false")) {
+            buttonRow1.setVisibility(View.VISIBLE);
+            buttonRow2.setVisibility(View.VISIBLE);
+            buttonRow12.setVisibility(View.GONE);
+            buttonRow22.setVisibility(View.GONE);
+            shiftModeText.setText("1");
+        }
+    }
+
+    /**
      * Checks the state of the science button
      */
     private void showOrHideScienceButtonState() {
-        final TextView function_mode_text = findViewById(R.id.functionMode_text);
+        TextView function_mode_text = findViewById(R.id.functionMode_text);
+        TextView shiftModeText = findViewById(R.id.shiftMode_text);
         LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
         LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
+        LinearLayout buttonRow12 = findViewById(R.id.scientificRow12);
+        LinearLayout buttonRow22 = findViewById(R.id.scientificRow22);
         LinearLayout buttonRow3 = findViewById(R.id.scientificRow3);
+        Button shiftButton = findViewById(R.id.shift);
+
         LinearLayout buttonLayout = findViewById(R.id.button_layout);
         TextView resultLabel = findViewById(R.id.result_label);
         TextView calculateLabel = findViewById(R.id.calculate_label);
@@ -320,7 +386,8 @@ public class MainActivity extends AppCompatActivity {
             function_mode_text.setText(dataManager.readFromJSON("functionMode", getApplicationContext()));
         }
 
-        if(buttonRow1 != null && buttonRow2 != null && buttonRow3 != null && buttonLayout != null) {
+        if(buttonRow1 != null && buttonRow12 != null && buttonRow2 != null && buttonRow3 != null && buttonLayout != null) {
+
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
             if (dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("false")) {
                 layoutParams.weight = 4;
@@ -330,10 +397,15 @@ public class MainActivity extends AppCompatActivity {
 
                 buttonRow1.setVisibility(View.GONE);
                 buttonRow2.setVisibility(View.GONE);
+                buttonRow12.setVisibility(View.GONE);
+                buttonRow22.setVisibility(View.GONE);
                 buttonRow3.setVisibility(View.GONE);
+                shiftButton.setVisibility(View.GONE);
 
                 assert function_mode_text != null;
+                assert shiftModeText != null;
                 function_mode_text.setVisibility(View.GONE);
+                shiftModeText.setVisibility(View.GONE);
             } else {
                 layoutParams.weight = 7;
                 buttonLayout.setLayoutParams(layoutParams);
@@ -342,13 +414,18 @@ public class MainActivity extends AppCompatActivity {
 
                 buttonRow1.setVisibility(View.VISIBLE);
                 buttonRow2.setVisibility(View.VISIBLE);
+                buttonRow12.setVisibility(View.VISIBLE);
+                buttonRow22.setVisibility(View.VISIBLE);
                 buttonRow3.setVisibility(View.VISIBLE);
+                shiftButton.setVisibility(View.VISIBLE);
 
                 assert function_mode_text != null;
+                assert shiftModeText != null;
                 function_mode_text.setVisibility(View.VISIBLE);
+                shiftModeText.setVisibility(View.VISIBLE);
             }
         }
-        Log.i("setScienceButtonListener", "showScienceRow: " + dataManager.readFromJSON("showScienceRow", getApplicationContext()));
+        shiftButtonAction();
     }
 
     /**
@@ -581,6 +658,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Appends or sets the text "sinh(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void sinushAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("sinh(");
+            } else {
+                addCalculateText("sinh(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    /**
      * Appends or sets the text "sin⁻¹(" to the calculation input.
      * Scrolls to the bottom of the scroll view if it exists.
      */
@@ -630,6 +737,36 @@ public class MainActivity extends AppCompatActivity {
                 setCalculateText("cos(");
             } else {
                 addCalculateText("cos(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    /**
+     * Appends or sets the text "cosh(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void cosinushAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("cosh(");
+            } else {
+                addCalculateText("cosh(");
             }
 
             // Scroll to the bottom of the scroll view if it exists
@@ -701,7 +838,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Appends or sets the text "tan(" to the calculation input.
+     * Appends or sets the text "tanh(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void tangenshAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("tanh(");
+            } else {
+                addCalculateText("tanh(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    /**
+     * Appends or sets the text "tan⁻¹(" to the calculation input.
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aTangensAction() {
@@ -720,6 +887,84 @@ public class MainActivity extends AppCompatActivity {
                 setCalculateText("tan⁻¹(");
             } else {
                 addCalculateText("tan⁻¹(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    private void logAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("log(");
+            } else {
+                addCalculateText("log(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    private void log2Action() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("log₂(");
+            } else {
+                addCalculateText("log₂(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    private void lnAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("ln(");
+            } else {
+                addCalculateText("ln(");
             }
 
             // Scroll to the bottom of the scroll view if it exists
@@ -1045,6 +1290,7 @@ public class MainActivity extends AppCompatActivity {
         TextView historyButton = findViewById(R.id.history_button);
         TextView settingsButton = findViewById(R.id.settings_button);
         TextView scienceButton = findViewById(R.id.scientificButton);
+        Button shiftButton = findViewById(R.id.shift);
         int newColorBTNBackgroundAccent = 0;
         int newColorBTNForegroundAccent = 0;
 
@@ -1066,6 +1312,9 @@ public class MainActivity extends AppCompatActivity {
                             if (scienceButton != null) {
                                 scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
                             }
+                            if (shiftButton != null) {
+                                shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_light));
+                            }
 
                             if (trueDarkMode != null && trueDarkMode.equals("true")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
@@ -1078,6 +1327,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 if (settingsButton != null) {
                                     settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_true_darkmode));
+                                }
+                                if (shiftButton != null) {
+                                    shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_true_darkmode));
                                 }
                             } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
@@ -1096,6 +1348,9 @@ public class MainActivity extends AppCompatActivity {
                             if (scienceButton != null) {
                                 scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
                             }
+                            if (shiftButton != null) {
+                                shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24));
+                            }
                             break;
                     }
                     break;
@@ -1111,6 +1366,9 @@ public class MainActivity extends AppCompatActivity {
                     if (scienceButton != null) {
                         scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
                     }
+                    if (shiftButton != null) {
+                        shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24));
+                    }
                     break;
                 case "Dunkelmodus":
                     dataManager = new DataManager(this);
@@ -1122,6 +1380,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (scienceButton != null) {
                         scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
+                    }
+                    if (shiftButton != null) {
+                        shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_light));
                     }
                     if (trueDarkMode != null) {
                         if (trueDarkMode.equals("false")) {
@@ -1139,6 +1400,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                             if (settingsButton != null) {
                                 settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_true_darkmode));
+                            }
+                            if (shiftButton != null) {
+                                shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_true_darkmode));
                             }
                         }
                     } else {

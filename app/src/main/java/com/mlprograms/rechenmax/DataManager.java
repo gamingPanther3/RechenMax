@@ -21,8 +21,8 @@ import java.nio.file.Files;
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.3.6
- * @date 29.12.2023
+ * @version 1.3.7
+ * @date 21.01.2024
  *
  *  | Names                            | Values                   | Context                              |
  *  |----------------------------------|--------------------------|--------------------------------------|
@@ -43,7 +43,9 @@ import java.nio.file.Files;
  *  | lastop                           | String                   | MainActivity                         |
  *  | isNotation                       | Boolean                  | MainActivity                         |
  *  | eNotation                        | Boolean                  | MainActivity                         |
+ *  | showShiftRow                     | Boolean                  | MainActivity                         |
  */
+
 public class DataManager {
 
     // Declare a MainActivity object
@@ -264,6 +266,9 @@ public class DataManager {
         }
         if(readFromJSON("eNotation", applicationContext) == null) {
             saveToJSON("eNotation", "false", applicationContext);
+        }
+        if(readFromJSON("showShiftRow", applicationContext) == null) {
+            saveToJSON("showShiftRow", "false", applicationContext);
         }
     }
 

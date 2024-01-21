@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="RechenMax 1.5.9"
+                android:text="RechenMax 1.6.0"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
             android:id="@+id/releaseNotesOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="\nIn der neuesten Version des RechenMax haben wir spannende Verbesserungen und neue Funktionen eingeführt: Automatisches Scrollen erleichtert die Navigation bei umfangreichen Berechnungen. Die Rundungsgenauigkeit wurde auf die elfte Nachkommastelle erhöht, für präzisere Dezimalzahlen. Die Verlaufsoptimierung ermöglicht das einfache Wiederherstellen vorheriger Berechnungen und erleichtert das Überprüfen vergangener Aufgaben. In trigonometrischen Aufgaben stehen erweiterte Funktionen zur Berechnung von Sinus, Cosinus und Tangens im Grad- und Bogenmaß zur Verfügung. Ebenso sind inverse trigonometrische Funktionen wie Sinus^-1 (sin⁻¹), Cosinus^-1 (cos⁻¹) und Tangens^-1 (tan⁻¹) nun verfügbar. Die Möglichkeit zur manuellen Eingabe von Notationen verleiht zusätzliche Flexibilität bei der Erstellung und Berechnung komplexer Ausdrücke. Der RechenMax unterstützt die Verwendung der mathematischen Konstanten PI (π) für präzise Kreisberechnungen. Mit der flexiblen Unterstützung von Gradmaß und Bogenmaß kann je nach Bedarf zwischen den beiden Maßeinheiten gewechselt werden. Die Klammernbehandlung wurde optimiert, um eine fehlerfreie Verarbeitung von mathematischen oder logischen Ausdrücken zu gewährleisten. Zudem erkennt die Software nun automatisch fehlende schließende Klammern und fügt sie automatisch hinzu, was die Eingabe von Ausdrücken weiter vereinfacht. In Bezug auf den Verlauf ermöglicht langes Drücken auf einen Eintrag das automatische Kopieren der Rechnung in die Zwischenablage, während kurzes Drücken die Rechnung direkt in den Taschenrechner einfügt. Diese Version behebt auch wichtige Fehler, darunter Anzeige- und Faktoriellenberechnungsprobleme sowie optimierte Ergebnisformatierung für eine präzisere Anzeige.\n"
+            android:text="\nIn der neuesten Version des RechenMax haben wir spannende Verbesserungen und neue Funktionen eingeführt: Automatisches Scrollen erleichtert die Navigation bei umfangreichen Berechnungen. Die Rundungsgenauigkeit wurde auf die elfte Nachkommastelle erhöht, für präzisere Dezimalzahlen. Die Verlaufsoptimierung ermöglicht das einfache Wiederherstellen vorheriger Berechnungen und erleichtert das Überprüfen vergangener Aufgaben. In trigonometrischen Aufgaben stehen erweiterte Funktionen zur Berechnung von Sinus, Cosinus und Tangens im Grad- und Bogenmaß zur Verfügung. Ebenso sind inverse trigonometrische Funktionen wie Sinus^-1 (sin⁻¹), Cosinus^-1 (cos⁻¹) und Tangens^-1 (tan⁻¹) nun verfügbar. Außerdem können Sie jetzt auch hyperbolische Funktionen wie sinh(x), cosh(x) und tanh(x) für beliebige reelle Werte von x berechnen. Die Möglichkeit zur manuellen Eingabe von Notationen verleiht zusätzliche Flexibilität bei der Erstellung und Berechnung komplexer Ausdrücke. Der RechenMax unterstützt die Verwendung der mathematischen Konstanten PI (π) für präzise Kreisberechnungen. Mit der flexiblen Unterstützung von Gradmaß und Bogenmaß kann je nach Bedarf zwischen den beiden Maßeinheiten gewechselt werden. Die Klammernbehandlung wurde optimiert, um eine fehlerfreie Verarbeitung von mathematischen oder logischen Ausdrücken zu gewährleisten. Zudem erkennt die Software nun automatisch fehlende schließende Klammern und fügt sie automatisch hinzu, was die Eingabe von Ausdrücken weiter vereinfacht. In Bezug auf den Verlauf ermöglicht langes Drücken auf einen Eintrag das automatische Kopieren der Rechnung in die Zwischenablage, während kurzes Drücken die Rechnung direkt in den Taschenrechner einfügt. Diese Version behebt auch wichtige Fehler, darunter Anzeige- und Faktoriellenberechnungsprobleme sowie optimierte Ergebnisformatierung für eine präzisere Anzeige.\n"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -134,6 +134,40 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="Diese neue Funktion bietet eine erweiterte Funktionalität im Bereich trigonometrischer Funktionen. Man kann jetzt Sinus, Cosinus und Tangens im Gradmaß sowie auch im Bogenmaß problemlos berechnen.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hyperbolischer Sinus, Kosinus und Tangens"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Diese neue Funktion bietet eine erweiterte Funktionalität im Bereich hyperbolischer Funktionen. Man kann jetzt sinh(x), cosh(x) und tanh(x) für beliebige reelle Werte von x berechnen.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logarithmus-Funktionen"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Die neuen Logarithmus-Funktionen (log(x), log₂(x) und ln(x)) ermöglichen es, verschiedene Logarithmen für beliebige reelle Werte von x zu berechnen:\n"
             android:textColor="#000000" />
 
         <TextView

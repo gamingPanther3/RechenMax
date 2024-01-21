@@ -33,9 +33,18 @@
     <string name="sin">sin(x)</string>
     <string name="cos">cos(x)</string>
     <string name="tan">tan(x)</string>
+    <string name="sinh">sinh(x)</string>
+    <string name="cosh">cosh(x)</string>
+    <string name="tanh">tanh(x)</string>
     <string name="asin">sin⁻¹(x)</string>
     <string name="acos">cos⁻¹(x)</string>
     <string name="atan">tan⁻¹(x)</string>
+    <string name="asinh">sinh⁻¹(x)</string>
+    <string name="acosh">cosh⁻¹(x)</string>
+    <string name="atanh">tanh⁻¹(x)</string>
+    <string name="log">log(x)</string>
+    <string name="log2x">log₂(x)</string>
+    <string name="ln">ln(x)</string>
     <string name="e">e±</string>
     <string name="pi">π</string>
 
@@ -56,5 +65,5 @@
     <string name="neue_funktionen">Neue Funktionen</string>
     <string name="behobene_fehler">Behobene Fehler</string>
     <string name="übersicht">Übersicht</string>
-    <string name="release_date">Veröffentlichungsdatum: 21:03 Uhr - 17.01.2024</string>
+    <string name="release_date">Veröffentlichungsdatum: N/A</string>
 </resources>

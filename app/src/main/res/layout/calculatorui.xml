@@ -30,12 +30,32 @@
                 android:layout_marginLeft="10dp"
                 android:foreground="@drawable/baseline_science_24_light"
                 android:tag="history"
-                android:tooltipText="Verlauf" />
+                android:tooltipText="Wissenschaftlicher Modus" />
+
+            <Button
+                android:id="@+id/shift"
+                android:layout_width="40dp"
+                android:layout_height="44dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:foreground="@drawable/baseline_compare_arrows_24_light"
+                android:tag="history"
+                android:tooltipText="Modus wechseln" />
+
+            <TextView
+                android:id="@+id/shiftMode_text"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="1"
+                android:textSize="@dimen/calcButtonTextSize"
+                android:tooltipText="Modus" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/functionMode_text"
@@ -193,7 +213,7 @@
                 android:text="@string/asin"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:tooltipText="Sinus" />
+                android:tooltipText="inverse hyperbolische Sinusfunktion" />
 
             <Button
                 android:id="@+id/acosinus"
@@ -206,7 +226,7 @@
                 android:text="@string/acos"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:tooltipText="Cosinus" />
+                android:tooltipText="inverse hyperbolische Cosinusfunktion" />
 
             <Button
                 android:id="@+id/atangens"
@@ -219,7 +239,55 @@
                 android:text="@string/atan"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:tooltipText="Tangens" />
+                android:tooltipText="inverse hyperbolische Tangensfunktion" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scientificRow12"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightBackground"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/sinush"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="sin"
+                android:text="@string/sinh"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="@dimen/calcButtonTextSize2"
+                android:tooltipText="hyperbolische Sinusfunktion" />
+
+            <Button
+                android:id="@+id/cosinush"
+                android:tag="cos"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/cosh"
+                android:tooltipText="hyperbolische Cosinusfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/tangensh"
+                android:tag="tan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/tanh"
+                android:tooltipText="hyperbolische Tangensfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
 
         <LinearLayout
@@ -294,6 +362,54 @@
                 android:tooltipText="PI"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scientificRow22"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightBackground"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/log"
+                android:tag="sin"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/log"
+                android:tooltipText="allgemeine Logarithmusfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/log2x"
+                android:tag="cos"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/log2x"
+                android:tooltipText="spezielle Logarithmusfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/ln"
+                android:tag="tan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/ln"
+                android:tooltipText="natürliche Logarithmusfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
 
         <LinearLayout
