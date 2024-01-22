@@ -875,6 +875,7 @@ public class CalculatorActivity {
     public static BigDecimal asinh(BigDecimal x) {
         BigDecimal term1 = x.pow(2).add(BigDecimal.ONE, MathContext.DECIMAL128);
         BigDecimal term2 = x.add(new BigDecimal(Math.sqrt(term1.doubleValue()), MathContext.DECIMAL128));
+
         return new BigDecimal(Math.log(term2.doubleValue()), MathContext.DECIMAL128);
     }
 
@@ -882,6 +883,7 @@ public class CalculatorActivity {
     public static BigDecimal acosh(BigDecimal x) {
         BigDecimal term1 = x.pow(2).subtract(BigDecimal.ONE, MathContext.DECIMAL128);
         BigDecimal term2 = x.add(new BigDecimal(Math.sqrt(term1.doubleValue()), MathContext.DECIMAL128));
+
         return new BigDecimal(Math.log(term2.doubleValue()), MathContext.DECIMAL128);
     }
 
@@ -889,6 +891,11 @@ public class CalculatorActivity {
     public static BigDecimal atanh(BigDecimal x) {
         BigDecimal term1 = BigDecimal.ONE.add(x, MathContext.DECIMAL128);
         BigDecimal term2 = BigDecimal.ONE.subtract(x, MathContext.DECIMAL128);
+
+        if (x.compareTo(BigDecimal.valueOf(-1)) <= 0 || x.compareTo(BigDecimal.valueOf(1)) >= 0) {
+            throw new ArithmeticException("Ungültiger Wert");
+        }
+
         BigDecimal quotient = term1.divide(term2, MathContext.DECIMAL128);
         return new BigDecimal(0.5 * Math.log(quotient.doubleValue()), MathContext.DECIMAL128);
     }

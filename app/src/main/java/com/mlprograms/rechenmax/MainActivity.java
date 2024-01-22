@@ -873,7 +873,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (getCalculateText().isEmpty()) {
-                setCalculateText("cos⁻¹(");
+                setCalculateText("cosh⁻¹(");
             } else {
                 addCalculateText("cosh⁻¹(");
             }
