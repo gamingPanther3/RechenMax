@@ -213,7 +213,7 @@
                 android:text="@string/asin"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:tooltipText="inverse hyperbolische Sinusfunktion" />
+                android:tooltipText="inverse Sinusfunktion" />
 
             <Button
                 android:id="@+id/acosinus"
@@ -226,7 +226,7 @@
                 android:text="@string/acos"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:tooltipText="inverse hyperbolische Cosinusfunktion" />
+                android:tooltipText="inverse Cosinusfunktion" />
 
             <Button
                 android:id="@+id/atangens"
@@ -239,7 +239,7 @@
                 android:text="@string/atan"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:tooltipText="inverse hyperbolische Tangensfunktion" />
+                android:tooltipText="inverse Tangensfunktion" />
         </LinearLayout>
 
         <LinearLayout
@@ -285,6 +285,54 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/tanh"
+                android:tooltipText="hyperbolische Tangensfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scientificRow22"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightBackground"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/asinush"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="sin"
+                android:text="@string/asinh"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="@dimen/calcButtonTextSize2"
+                android:tooltipText="hyperbolische Sinusfunktion" />
+
+            <Button
+                android:id="@+id/acosinush"
+                android:tag="cos"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/acosh"
+                android:tooltipText="hyperbolische Cosinusfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/atangensh"
+                android:tag="tan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/atanh"
                 android:tooltipText="hyperbolische Tangensfunktion"
                 android:textSize="@dimen/calcButtonTextSize2"
                 style="?android:attr/buttonBarButtonStyle" />
@@ -365,7 +413,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/scientificRow22"
+            android:id="@+id/scientificRow13"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorLightBackground"
