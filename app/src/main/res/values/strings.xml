@@ -45,6 +45,7 @@
     <string name="log">log(x)</string>
     <string name="log2x">log₂(x)</string>
     <string name="ln">ln(x)</string>
+    <string name="е">е</string>
     <string name="e">e±</string>
     <string name="pi">π</string>
 

@@ -458,6 +458,19 @@
                 android:tooltipText="natürliche Logarithmusfunktion"
                 android:textSize="@dimen/calcButtonTextSize2"
                 style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/е"
+                android:tag="tan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/е"
+                android:tooltipText="natürliche Logarithmusfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
 
         <LinearLayout

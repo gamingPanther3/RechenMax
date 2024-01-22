@@ -60,6 +60,7 @@ public class CalculatorActivity {
     public static String calculate(final String calc) {
         try {
             // Replace all the special characters in the expression with their corresponding mathematical symbols
+            // important: "е" and "e" are different characters
             String trim = calc.replace('×', '*')
                     .replace('÷', '/')
                     .replace("=", "")
@@ -67,6 +68,7 @@ public class CalculatorActivity {
                     .replace(",", ".")
                     .replace("E", "e")
                     .replace("π", "3.1415926535897932384626433832")
+                    .replaceAll("е", "2.7182818284590452353602874713")
                     .trim();
 
             Log.e("debug", "trim:" + trim);
