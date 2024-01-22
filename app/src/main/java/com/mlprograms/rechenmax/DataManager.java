@@ -44,6 +44,7 @@ import java.nio.file.Files;
  *  | isNotation                       | Boolean                  | MainActivity                         |
  *  | eNotation                        | Boolean                  | MainActivity                         |
  *  | showShiftRow                     | Boolean                  | MainActivity                         |
+ *  | shiftRow                         | Boolean                  | MainActivity                         |
  */
 
 public class DataManager {
@@ -269,6 +270,9 @@ public class DataManager {
         }
         if(readFromJSON("showShiftRow", applicationContext) == null) {
             saveToJSON("showShiftRow", "false", applicationContext);
+        }
+        if(readFromJSON("shiftRow", applicationContext) == null) {
+            saveToJSON("shiftRow", "1", applicationContext);
         }
     }
 

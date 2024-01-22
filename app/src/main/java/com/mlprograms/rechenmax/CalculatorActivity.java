@@ -620,10 +620,11 @@ public class CalculatorActivity {
         // Add the result of the function evaluation to the stack
         DataManager dataManager1 = new DataManager(mainActivity);
         final String mode = dataManager1.readFromJSON("functionMode", mainActivity.getApplicationContext());
+        BigDecimal operand;
 
         switch (function) {
             case "log(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
@@ -631,7 +632,7 @@ public class CalculatorActivity {
                 break;
             }
             case "log₂(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
@@ -639,7 +640,7 @@ public class CalculatorActivity {
                 break;
             }
             case "ln(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
@@ -647,7 +648,7 @@ public class CalculatorActivity {
                 break;
             }
             case "sin(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.sin(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -658,7 +659,7 @@ public class CalculatorActivity {
                 break;
             }
             case "sinh(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.sinh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -669,7 +670,7 @@ public class CalculatorActivity {
                 break;
             }
             case "sin⁻¹(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
                     throw new ArithmeticException("Ungültiger Wert");
@@ -682,8 +683,12 @@ public class CalculatorActivity {
                 stack.add(result);
                 break;
             }
+            case "sinh⁻¹(":
+                operand = stack.remove(stack.size() - 1);
+                stack.add(asinh(operand));
+                break;
             case "cos(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.cos(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -694,7 +699,7 @@ public class CalculatorActivity {
                 break;
             }
             case "cosh(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.cosh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -705,7 +710,7 @@ public class CalculatorActivity {
                 break;
             }
             case "cos⁻¹(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
                     throw new ArithmeticException("Ungültiger Wert");
@@ -718,8 +723,12 @@ public class CalculatorActivity {
                 stack.add(result);
                 break;
             }
+            case "cosh⁻¹(":
+                operand = stack.remove(stack.size() - 1);
+                stack.add(acosh(operand));
+                break;
             case "tan(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.tan(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -735,7 +744,7 @@ public class CalculatorActivity {
                 break;
             }
             case "tanh(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.tanh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -747,7 +756,7 @@ public class CalculatorActivity {
                 break;
             }
             case "tan⁻¹(": {
-                BigDecimal operand = stack.remove(stack.size() - 1);
+                operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.atan(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -757,6 +766,10 @@ public class CalculatorActivity {
                 stack.add(result);
                 break;
             }
+            case "tanh⁻¹(":
+                operand = stack.remove(stack.size() - 1);
+                stack.add(atanh(operand));
+                break;
         }
     }
 
@@ -840,7 +853,30 @@ public class CalculatorActivity {
         return token.equals("sin(") || token.equals("cos(") || token.equals("tan(") ||
                 token.equals("sinh(") || token.equals("cosh(") || token.equals("tanh(") ||
                 token.equals("log(") || token.equals("log₂(") || token.equals("ln(") ||
-                token.equals("sin⁻¹(") || token.equals("cos⁻¹(") || token.equals("tan⁻¹(");
+                token.equals("sin⁻¹(") || token.equals("cos⁻¹(") || token.equals("tan⁻¹(") ||
+                token.equals("sinh⁻¹(") || token.equals("cosh⁻¹(") || token.equals("tanh⁻¹(");
+    }
+
+    // Inverse hyperbolic sine
+    public static BigDecimal asinh(BigDecimal x) {
+        BigDecimal term1 = x.pow(2).add(BigDecimal.ONE, MathContext.DECIMAL128);
+        BigDecimal term2 = x.add(new BigDecimal(Math.sqrt(term1.doubleValue()), MathContext.DECIMAL128));
+        return new BigDecimal(Math.log(term2.doubleValue()), MathContext.DECIMAL128);
+    }
+
+    // Inverse hyperbolic cosine
+    public static BigDecimal acosh(BigDecimal x) {
+        BigDecimal term1 = x.pow(2).subtract(BigDecimal.ONE, MathContext.DECIMAL128);
+        BigDecimal term2 = x.add(new BigDecimal(Math.sqrt(term1.doubleValue()), MathContext.DECIMAL128));
+        return new BigDecimal(Math.log(term2.doubleValue()), MathContext.DECIMAL128);
+    }
+
+    // Inverse hyperbolic tangent
+    public static BigDecimal atanh(BigDecimal x) {
+        BigDecimal term1 = BigDecimal.ONE.add(x, MathContext.DECIMAL128);
+        BigDecimal term2 = BigDecimal.ONE.subtract(x, MathContext.DECIMAL128);
+        BigDecimal quotient = term1.divide(term2, MathContext.DECIMAL128);
+        return new BigDecimal(0.5 * Math.log(quotient.doubleValue()), MathContext.DECIMAL128);
     }
 
     /**
@@ -921,6 +957,9 @@ public class CalculatorActivity {
             case "sinh(":
             case "cosh(":
             case "tanh(":
+            case "sinh⁻¹(":
+            case "cosh⁻¹(":
+            case "tanh⁻¹(":
             case "sin⁻¹(":
             case "cos⁻¹(":
             case "tan⁻¹(":

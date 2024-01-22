@@ -325,43 +325,58 @@ public class MainActivity extends AppCompatActivity {
      * ensure that the selected state persists across application sessions.
      */
     private void setShiftButtonState() {
-        // Read the current state of the science button from the stored data
-        final String value = dataManager.readFromJSON("showShiftRow", getApplicationContext());
-
-        // Toggle the state of the science button
-        if (value.equals("false")) {
-            dataManager.saveToJSON("showShiftRow", "true", getApplicationContext());
+        // Toggle the state of the shift button
+        if (dataManager.readFromJSON("shiftRow", getApplicationContext()).equals("3")) {
+            dataManager.saveToJSON("shiftRow", "1", getApplicationContext());
         } else {
-            dataManager.saveToJSON("showShiftRow", "false", getApplicationContext());
+            final String num = String.valueOf(Integer.parseInt(dataManager.readFromJSON("shiftRow", getApplicationContext())) + 1);
+            dataManager.saveToJSON("shiftRow", num, getApplicationContext());
         }
         // Handle the visual representation or behavior associated with the state change
         shiftButtonAction();
     }
 
+    /**
+     * This method handles the visual representation or behavior associated with the shift button state change.
+     * It adjusts the visibility of different LinearLayouts and updates a TextView based on the current shift button state.
+     */
     private void shiftButtonAction() {
         LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
         LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
         LinearLayout buttonRow12 = findViewById(R.id.scientificRow12);
         LinearLayout buttonRow22 = findViewById(R.id.scientificRow22);
+        LinearLayout buttonRow13 = findViewById(R.id.scientificRow13);
         TextView shiftModeText = findViewById(R.id.shiftMode_text);
 
-        // Read the current state of the science button from the stored data
-        final String shiftValue = dataManager.readFromJSON("showShiftRow", getApplicationContext());
-        final String rowValue = dataManager.readFromJSON("showScienceRow", getApplicationContext());
+        // Read the current state of the shift button from the stored data
+        final String shiftValue = dataManager.readFromJSON("shiftRow", getApplicationContext());
 
-        // Toggle the state of the science button
-        if (rowValue.equals("true") && shiftValue.equals("true")) {
-            buttonRow1.setVisibility(View.GONE);
-            buttonRow2.setVisibility(View.GONE);
-            buttonRow12.setVisibility(View.VISIBLE);
-            buttonRow22.setVisibility(View.VISIBLE);
-            shiftModeText.setText("2");
-        } else if (rowValue.equals("true") && shiftValue.equals("false")) {
-            buttonRow1.setVisibility(View.VISIBLE);
-            buttonRow2.setVisibility(View.VISIBLE);
-            buttonRow12.setVisibility(View.GONE);
-            buttonRow22.setVisibility(View.GONE);
-            shiftModeText.setText("1");
+        // Toggle the visibility of different LinearLayouts and update TextView based on the shift button state
+        switch (shiftValue) {
+            case "1":
+                buttonRow1.setVisibility(View.VISIBLE);
+                buttonRow2.setVisibility(View.VISIBLE);
+                buttonRow12.setVisibility(View.GONE);
+                buttonRow22.setVisibility(View.GONE);
+                buttonRow13.setVisibility(View.GONE);
+                shiftModeText.setText("1");
+                break;
+            case "2":
+                buttonRow1.setVisibility(View.GONE);
+                buttonRow2.setVisibility(View.GONE);
+                buttonRow12.setVisibility(View.VISIBLE);
+                buttonRow22.setVisibility(View.VISIBLE);
+                buttonRow13.setVisibility(View.GONE);
+                shiftModeText.setText("2");
+                break;
+            case "3":
+                buttonRow1.setVisibility(View.GONE);
+                buttonRow2.setVisibility(View.GONE);
+                buttonRow12.setVisibility(View.GONE);
+                buttonRow22.setVisibility(View.GONE);
+                buttonRow13.setVisibility(View.VISIBLE);
+                shiftModeText.setText("3");
+                break;
         }
     }
 
