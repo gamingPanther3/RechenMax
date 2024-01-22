@@ -48,6 +48,8 @@
     <string name="е">е</string>
     <string name="e">e±</string>
     <string name="pi">π</string>
+    <string name="two_root">²√x</string>
+    <string name="three_root">³√x</string>
 
     <string-array name="setting_display_mode_options">
         <item>Systemstandard</item>

@@ -464,10 +464,48 @@
                 android:tag="tan"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
+                android:layout_marginEnd="10dp"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/е"
+                android:tooltipText="natürliche Logarithmusfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scientificRow23"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightBackground"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/two_root"
+                android:tag="tan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:layout_marginEnd="10dp"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/two_root"
+                android:tooltipText="natürliche Logarithmusfunktion"
+                android:textSize="@dimen/calcButtonTextSize2"
+                style="?android:attr/buttonBarButtonStyle" />
+
+            <Button
+                android:id="@+id/three_root"
+                android:tag="tan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:layout_marginEnd="10dp"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/three_root"
                 android:tooltipText="natürliche Logarithmusfunktion"
                 android:textSize="@dimen/calcButtonTextSize2"
                 style="?android:attr/buttonBarButtonStyle" />

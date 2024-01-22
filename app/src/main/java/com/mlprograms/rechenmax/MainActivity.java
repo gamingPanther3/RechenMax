@@ -243,7 +243,9 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(R.id.log2x, this::log2Action);
         setButtonListener(R.id.ln, this::lnAction);
 
+        // important: "е" and "e" are different characters
         setButtonListener(R.id.e, this::eAction);
+        setButtonListener(R.id.е, this::еAction);
         setButtonListener(R.id.pi, this::piAction);
 
         setButtonListener(R.id.scientificButton, this::setScienceButtonState);
@@ -350,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout buttonRow12 = findViewById(R.id.scientificRow12);
         LinearLayout buttonRow22 = findViewById(R.id.scientificRow22);
         LinearLayout buttonRow13 = findViewById(R.id.scientificRow13);
+        LinearLayout buttonRow23 = findViewById(R.id.scientificRow23);
         TextView shiftModeText = findViewById(R.id.shiftMode_text);
 
         // Read the current state of the shift button from the stored data
@@ -363,6 +366,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonRow12.setVisibility(View.GONE);
                 buttonRow22.setVisibility(View.GONE);
                 buttonRow13.setVisibility(View.GONE);
+                buttonRow23.setVisibility(View.GONE);
                 shiftModeText.setText("1");
                 break;
             case "2":
@@ -371,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonRow12.setVisibility(View.VISIBLE);
                 buttonRow22.setVisibility(View.VISIBLE);
                 buttonRow13.setVisibility(View.GONE);
+                buttonRow23.setVisibility(View.GONE);
                 shiftModeText.setText("2");
                 break;
             case "3":
@@ -379,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
                 buttonRow12.setVisibility(View.GONE);
                 buttonRow22.setVisibility(View.GONE);
                 buttonRow13.setVisibility(View.VISIBLE);
+                buttonRow23.setVisibility(View.VISIBLE);
                 shiftModeText.setText("3");
                 break;
         }
@@ -1113,6 +1119,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Handles the insertion or removal of the "e" symbol based on its current presence in the result text.
+     */
+    private void еAction() {
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("е");
+            } else {
+                addCalculateText("е");
+            }
+            setRotateOperator(true);
+        }
+        formatResultTextAfterType();
+    }
+
+    /**
      * Appends or sets the text "π" to the calculation input and sets the rotate operator flag to true.
      */
     private void piAction() {
@@ -1290,11 +1320,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 setRemoveValue(true);
             } else {
-                if (getCalculateText().replace(" ", "").charAt(getCalculateText().replace(" ", "").length() - 1) == ')') {
-                    addCalculateText("^");
-                } else {
-                    addCalculateText("^");
-                }
+                addCalculateText("^");
                 setRemoveValue(true);
                 setRotateOperator(false);
             }
