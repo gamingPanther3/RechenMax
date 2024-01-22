@@ -298,6 +298,14 @@ public class CalculatorActivity {
                         continue;
                     }
                 }
+                if (i + 7 <= expressionWithoutSpaces.length()) {
+                    String function = expressionWithoutSpaces.substring(i, i + 7);
+                    if (function.equals("sinh⁻¹(") || function.equals("cosh⁻¹(") || function.equals("tanh⁻¹(")) {
+                        tokens.add(function); // Add the full function name
+                        i += 6; // Skip the next five characters (already processed)
+                        continue;
+                    }
+                }
 
                 tokens.add(Character.toString(c));
             }
@@ -391,6 +399,8 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.toDegrees(Math.asin(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
+            case "sinh⁻¹(":
+                return asinh(operand2);
             case "cos(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -409,6 +419,8 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.toDegrees(Math.acos(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
+            case "cosh⁻¹(":
+                return acosh(operand2);
             case "tan(":
                 if (mode != null && mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
@@ -427,6 +439,8 @@ public class CalculatorActivity {
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.toDegrees(Math.atan(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
                 }
+            case "tanh⁻¹(":
+                return atanh(operand2);
             default:
                 throw new IllegalArgumentException("Unbekannter Operator: '" + operator + "'");
         }

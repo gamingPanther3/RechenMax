@@ -235,6 +235,10 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(R.id.acosinus, this::aCosinusAction);
         setButtonListener(R.id.atangens, this::aTangensAction);
 
+        setButtonListener(R.id.asinush, this::aSinusHAction);
+        setButtonListener(R.id.acosinush, this::aCosinusHAction);
+        setButtonListener(R.id.atangensh, this::aTangensHAction);
+
         setButtonListener(R.id.log, this::logAction);
         setButtonListener(R.id.log2x, this::log2Action);
         setButtonListener(R.id.ln, this::lnAction);
@@ -733,6 +737,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Appends or sets the text "sin⁻¹(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void aSinusHAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("sinh⁻¹(");
+            } else {
+                addCalculateText("sinh⁻¹(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    /**
      * Appends or sets the text "cos(" to the calculation input.
      * Scrolls to the bottom of the scroll view if it exists.
      */
@@ -823,6 +857,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Appends or sets the text "sin⁻¹(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void aCosinusHAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("cos⁻¹(");
+            } else {
+                addCalculateText("cosh⁻¹(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    /**
      * Appends or sets the text "tan(" to the calculation input.
      * Scrolls to the bottom of the scroll view if it exists.
      */
@@ -902,6 +966,36 @@ public class MainActivity extends AppCompatActivity {
                 setCalculateText("tan⁻¹(");
             } else {
                 addCalculateText("tan⁻¹(");
+            }
+
+            // Scroll to the bottom of the scroll view if it exists
+            if (findViewById(R.id.calculate_scrollview) != null) {
+                scrollToBottom(findViewById(R.id.calculate_scrollview));
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    /**
+     * Appends or sets the text "sin⁻¹(" to the calculation input.
+     * Scrolls to the bottom of the scroll view if it exists.
+     */
+    private void aTangensHAction() {
+        // Check if calculate text is empty and set or add
+        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+        if (mode.equals("false")) {
+            if(getCalculateText().contains("=")) {
+                setCalculateText("");
+                if(isInvalidInput(getResultText())) {
+                    setResultText("0");
+                }
+                setRemoveValue(true);
+            }
+
+            if (getCalculateText().isEmpty()) {
+                setCalculateText("tanh⁻¹(");
+            } else {
+                addCalculateText("tanh⁻¹(");
             }
 
             // Scroll to the bottom of the scroll view if it exists
