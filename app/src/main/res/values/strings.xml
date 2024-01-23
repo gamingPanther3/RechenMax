@@ -44,12 +44,15 @@
     <string name="atanh">tanh⁻¹(x)</string>
     <string name="log">log(x)</string>
     <string name="log2x">log₂(x)</string>
+    <string name="logxx">logₓ(x)</string>
     <string name="ln">ln(x)</string>
     <string name="е">е</string>
     <string name="e">e±</string>
     <string name="pi">π</string>
-    <string name="two_root">²√x</string>
     <string name="three_root">³√x</string>
+    <string name="half">½</string>
+    <string name="third">⅓</string>
+    <string name="quarter">¼</string>
 
     <string-array name="setting_display_mode_options">
         <item>Systemstandard</item>

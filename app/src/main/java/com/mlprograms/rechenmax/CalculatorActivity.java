@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.8.7
- * @date 18.01.2023
+ * @version 1.8.9
+ * @date 23.01.2023
  */
 
 public class CalculatorActivity {
@@ -37,6 +37,7 @@ public class CalculatorActivity {
 
     // Declaration of a constant for the root operation.
     public static final String ROOT = "√";
+    public static final String THIRDROOT = "³√";
 
     /**
      * This method calculates the result of a mathematical expression. The expression is passed as a string parameter.
@@ -69,6 +70,9 @@ public class CalculatorActivity {
                     .replace("E", "e")
                     .replace("π", "3.1415926535897932384626433832")
                     .replaceAll("е", "2.7182818284590452353602874713")
+                    .replace("½", "0.5")
+                    .replace("⅓", "0.33333333333")
+                    .replace("¼", "0.25")
                     .trim();
 
             Log.e("debug", "trim:" + trim);
@@ -130,7 +134,7 @@ public class CalculatorActivity {
             return e.getMessage();
         } catch (Exception e) {
             Log.e("Exception", e.toString());
-            return "Syntax Fehler3";
+            return "Syntax Fehler";
         }
     }
 
@@ -252,6 +256,10 @@ public class CalculatorActivity {
             // add it to the current token
             if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || expressionWithoutSpaces.charAt(i - 1) == '(' || isOperator(String.valueOf(expressionWithoutSpaces.charAt(i - 1)))))) {
                 currentToken.append(c);
+            } else if (i + 3 < expressionWithoutSpaces.length() && expressionWithoutSpaces.startsWith("³√", i)) {
+                // If "³√(" is found, handle the cubic root operation
+                tokens.add(expressionWithoutSpaces.substring(i, i + 2));
+                i += 1;
             } else {
                 // If the character is an operator or a parenthesis, add the current token to the list and reset the current token
                 if (currentToken.length() > 0) {
@@ -262,7 +270,7 @@ public class CalculatorActivity {
                     String function = expressionWithoutSpaces.substring(i, i + 3);
                     if (function.equals("ln(")) {
                         tokens.add(function); // Add the full function name
-                        i += 2; // Skip the next three characters (already processed)
+                        i += 2; // Skip the next characters (already processed)
                         continue;
                     }
                 }
@@ -270,12 +278,12 @@ public class CalculatorActivity {
                     String function = expressionWithoutSpaces.substring(i, i + 4);
                     if (function.equals("sin(") || function.equals("cos(") || function.equals("tan(")) {
                         tokens.add(function); // Add the full function name
-                        i += 3; // Skip the next three characters (already processed)
+                        i += 3; // Skip the next characters (already processed)
                         continue;
                     }
                     if (function.equals("log(")) {
                         tokens.add(function); // Add the full function name
-                        i += 3; // Skip the next three characters (already processed)
+                        i += 3; // Skip the next characters (already processed)
                         continue;
                     }
                 }
@@ -283,12 +291,14 @@ public class CalculatorActivity {
                     String function = expressionWithoutSpaces.substring(i, i + 5);
                     if (function.equals("sinh(") || function.equals("cosh(") || function.equals("tanh(")) {
                         tokens.add(function); // Add the full function name
-                        i += 4; // Skip the next three characters (already processed)
+                        i += 4; // Skip the next characters (already processed)
                         continue;
                     }
-                    if (function.equals("log₂(")) {
+                    if (function.equals("log₂(") || function.equals("log₃(") || function.equals("log₄(") ||
+                            function.equals("log₅(") || function.equals("log₆(") || function.equals("log₇(") ||
+                            function.equals("log₈(") || function.equals("log₉(")) {
                         tokens.add(function); // Add the full function name
-                        i += 4; // Skip the next three characters (already processed)
+                        i += 4; // Skip the next characters (already processed)
                         continue;
                     }
                 }
@@ -296,7 +306,7 @@ public class CalculatorActivity {
                     String function = expressionWithoutSpaces.substring(i, i + 6);
                      if (function.equals("sin⁻¹(") || function.equals("cos⁻¹(") || function.equals("tan⁻¹(")) {
                         tokens.add(function); // Add the full function name
-                        i += 5; // Skip the next five characters (already processed)
+                        i += 5; // Skip the next characters (already processed)
                         continue;
                     }
                 }
@@ -304,7 +314,7 @@ public class CalculatorActivity {
                     String function = expressionWithoutSpaces.substring(i, i + 7);
                     if (function.equals("sinh⁻¹(") || function.equals("cosh⁻¹(") || function.equals("tanh⁻¹(")) {
                         tokens.add(function); // Add the full function name
-                        i += 6; // Skip the next five characters (already processed)
+                        i += 6; // Skip the next characters (already processed)
                         continue;
                     }
                 }
@@ -373,6 +383,8 @@ public class CalculatorActivity {
                 } else {
                     return BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
                 }
+            case THIRDROOT:
+                return BigDecimal.valueOf(Math.pow(operand2.doubleValue(), 1.0 / 3.0));
             case "!":
                 return factorial(operand1);
             case "^":
@@ -381,6 +393,20 @@ public class CalculatorActivity {
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(10, RoundingMode.DOWN);
             case "log₂(":
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(2)).setScale(10, RoundingMode.DOWN);
+            case "log₃(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(3)).setScale(10, RoundingMode.DOWN);
+            case "log₄(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(4)).setScale(10, RoundingMode.DOWN);
+            case "log₅(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(5)).setScale(10, RoundingMode.DOWN);
+            case "log₆(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(6)).setScale(10, RoundingMode.DOWN);
+            case "log₇(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(7)).setScale(10, RoundingMode.DOWN);
+            case "log₈(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(8)).setScale(10, RoundingMode.DOWN);
+            case "log₉(":
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(9)).setScale(10, RoundingMode.DOWN);
             case "ln(":
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
             case "sin(":
@@ -571,7 +597,7 @@ public class CalculatorActivity {
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
                 Log.i("evaluatePostfix","Token is neither a number nor an operator");
-                throw new IllegalArgumentException("Syntax Fehler1");
+                throw new IllegalArgumentException("Syntax Fehler");
             }
 
             // Debugging: Print current stack
@@ -581,7 +607,7 @@ public class CalculatorActivity {
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
             Log.i("evaluatePostfix","Stacksize != 1");
-            throw new IllegalArgumentException("Syntax Fehler2");
+            throw new IllegalArgumentException("Syntax Fehler");
         }
 
         // Return the result
@@ -604,22 +630,32 @@ public class CalculatorActivity {
         // If the operator is not "!", apply the operator to two numbers
         else {
             final BigDecimal operand2 = stack.remove(stack.size() - 1);
-            // If the operator is not ROOT, apply the operator to two numbers
-            if (!operator.equals(ROOT)) {
+            // If the operator is not ROOT and THIRDROOT, apply the operator to two numbers
+            if (!operator.equals(ROOT) && !operator.startsWith(THIRDROOT)) {
                 final BigDecimal operand1 = stack.remove(stack.size() - 1);
                 final BigDecimal result = applyOperator(operand1, operand2, operator);
                 stack.add(result);
             }
             // If the operator is ROOT, apply the operator to only one number
             else {
-                final BigDecimal operand2SquareRoot;
-                if (operand2.compareTo(BigDecimal.ZERO) < 0) {
-                    // If the operand is negative, throw an exception or handle it as needed
-                    throw new IllegalArgumentException("Nur reelle Zahlen");
-                } else {
-                    operand2SquareRoot = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
+                BigDecimal result;
+                switch (operator) {
+                    case ROOT:
+                        if (operand2.compareTo(BigDecimal.ZERO) < 0) {
+                            // If the operand is negative, throw an exception or handle it as needed
+                            throw new IllegalArgumentException("Nur reelle Zahlen");
+                        } else {
+                            result = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
+                        }
+                        break;
+                    case THIRDROOT:
+                        result = BigDecimal.valueOf(Math.pow(operand2.doubleValue(), 1.0 / 3.0));
+                        break;
+                    default:
+                        // Handle other operators if needed
+                        throw new IllegalArgumentException("Unbekannter Operator");
                 }
-                stack.add(operand2SquareRoot);
+                stack.add(result);
             }
         }
     }
@@ -653,6 +689,62 @@ public class CalculatorActivity {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(2)).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "log₃(": {
+                operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(3)).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "log₄(": {
+                operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(4)).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "log₅(": {
+                operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(5)).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "log₆(": {
+                operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(6)).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "log₇(": {
+                operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(7)).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "log₈(": {
+                operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(8)).setScale(10, RoundingMode.DOWN));
+                break;
+            }
+            case "log₉(": {
+                operand = stack.remove(stack.size() - 1);
+                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new IllegalArgumentException("Nicht definiert");
+                }
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(9)).setScale(10, RoundingMode.DOWN));
                 break;
             }
             case "ln(": {
@@ -868,9 +960,12 @@ public class CalculatorActivity {
         // Check if the token is one of the recognized trigonometric functions
         return token.equals("sin(") || token.equals("cos(") || token.equals("tan(") ||
                 token.equals("sinh(") || token.equals("cosh(") || token.equals("tanh(") ||
-                token.equals("log(") || token.equals("log₂(") || token.equals("ln(") ||
-                token.equals("sin⁻¹(") || token.equals("cos⁻¹(") || token.equals("tan⁻¹(") ||
-                token.equals("sinh⁻¹(") || token.equals("cosh⁻¹(") || token.equals("tanh⁻¹(");
+                token.equals("log(") || token.equals("log₂(") || token.equals("log₃(") ||
+                token.equals("log₄(") || token.equals("log₅(") || token.equals("log₆(") ||
+                token.equals("log₇(") || token.equals("log₈(") || token.equals("log₉(")  ||
+                token.equals("ln(") || token.equals("sin⁻¹(") || token.equals("cos⁻¹(") ||
+                token.equals("tan⁻¹(") || token.equals("sinh⁻¹(") || token.equals("cosh⁻¹(") ||
+                token.equals("tanh⁻¹(");
     }
 
     // Inverse hyperbolic sine
@@ -931,7 +1026,7 @@ public class CalculatorActivity {
     public static boolean isOperator(final String token) {
         // Check if the token is one of the recognized non-functional operators
         return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") ||
-                token.equals("^") || token.equals("√") || token.equals("!");
+                token.equals("^") || token.equals("√") || token.equals("!") || token.startsWith("³√");
     }
 
     /**
@@ -962,8 +1057,9 @@ public class CalculatorActivity {
             case "^":
                 return 3;
 
-            // If the operator is square root, return 4
+            // If the operator is root, return 4
             case "√":
+            case "³√":
                 return 4;
 
             // If the operator is factorial, return 5
@@ -973,6 +1069,13 @@ public class CalculatorActivity {
             // If the operator is sine, cosine, or tangent ..., return 6
             case "log(":
             case "log₂(":
+            case "log₃(":
+            case "log₄(":
+            case "log₅(":
+            case "log₆(":
+            case "log₇(":
+            case "log₈(":
+            case "log₉(":
             case "ln(":
             case "sin(":
             case "cos(":

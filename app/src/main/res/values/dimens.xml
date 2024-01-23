@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="calcButtonTextSize">25sp</dimen>
+    <dimen name="calcButtonTextSize1">30sp</dimen>
     <dimen name="calcButtonTextSize2">20sp</dimen>
     <dimen name="historycalculatesize">35sp</dimen>
     <dimen name="historyresultsize">45sp</dimen>

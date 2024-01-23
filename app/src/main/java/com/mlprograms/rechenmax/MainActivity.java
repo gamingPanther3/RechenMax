@@ -7,7 +7,6 @@ import java.math.MathContext;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.icu.text.DecimalFormatSymbols;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,19 +29,15 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import org.w3c.dom.Text;
-
 import java.math.BigDecimal;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.6.6
- * @date 17.01.2024
+ * @version 1.6.9
+ * @date 23.01.2024
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -129,9 +124,7 @@ public class MainActivity extends AppCompatActivity {
         adjustTextSize();
 
         // Scroll down in the calculate label
-        if (findViewById(R.id.calculate_scrollview) != null) {
-            scrollToBottom(findViewById(R.id.calculate_scrollview));
-        }
+        scrollToCalculateLabelBottom();
 
         // Show all settings
         showAllSettings();
@@ -242,11 +235,18 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(R.id.log, this::logAction);
         setButtonListener(R.id.log2x, this::log2Action);
         setButtonListener(R.id.ln, this::lnAction);
+        setButtonListener(R.id.logxx, this::logXAction);
 
         // important: "е" and "e" are different characters
-        setButtonListener(R.id.e, this::eAction);
-        setButtonListener(R.id.е, this::еAction);
+        setButtonListener(R.id.e, this::eAction); // Manuelle Notation
+        setButtonListener(R.id.е, this::еAction); // Eulersche Zahl
         setButtonListener(R.id.pi, this::piAction);
+
+        setButtonListener(R.id.half, this::halfAction);
+        setButtonListener(R.id.third, this::thirdAction);
+        setButtonListener(R.id.quarter, this::quarterAction);
+
+        setButtonListener(R.id.three_root, this::thirdRootAction);
 
         setButtonListener(R.id.scientificButton, this::setScienceButtonState);
         setButtonListener(R.id.shift, this::setShiftButtonState);
@@ -254,8 +254,11 @@ public class MainActivity extends AppCompatActivity {
         setLongTextViewClickListener(R.id.calculate_label, this::saveCalculateLabelData);
         setLongTextViewClickListener(R.id.result_label, this::saveResultLabelData);
 
-        if(findViewById(R.id.functionMode_text) != null) {
+        if (findViewById(R.id.functionMode_text) != null) {
             findViewById(R.id.functionMode_text).setOnClickListener(view -> changeFunctionMode());
+        }
+        if (findViewById(R.id.shiftMode_text) != null) {
+            findViewById(R.id.shiftMode_text).setOnClickListener(view -> setShiftButtonState());
         }
     }
 
@@ -347,46 +350,53 @@ public class MainActivity extends AppCompatActivity {
      * It adjusts the visibility of different LinearLayouts and updates a TextView based on the current shift button state.
      */
     private void shiftButtonAction() {
-        LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
-        LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
+        LinearLayout buttonRow1 = findViewById(R.id.scientificRow11);
+        LinearLayout buttonRow2 = findViewById(R.id.scientificRow21);
         LinearLayout buttonRow12 = findViewById(R.id.scientificRow12);
         LinearLayout buttonRow22 = findViewById(R.id.scientificRow22);
         LinearLayout buttonRow13 = findViewById(R.id.scientificRow13);
         LinearLayout buttonRow23 = findViewById(R.id.scientificRow23);
+        LinearLayout buttonRow3 = findViewById(R.id.scientificRow3);
         TextView shiftModeText = findViewById(R.id.shiftMode_text);
 
         // Read the current state of the shift button from the stored data
         final String shiftValue = dataManager.readFromJSON("shiftRow", getApplicationContext());
+        final String rowValue = dataManager.readFromJSON("showScienceRow", getApplicationContext());
 
         // Toggle the visibility of different LinearLayouts and update TextView based on the shift button state
-        switch (shiftValue) {
-            case "1":
-                buttonRow1.setVisibility(View.VISIBLE);
-                buttonRow2.setVisibility(View.VISIBLE);
-                buttonRow12.setVisibility(View.GONE);
-                buttonRow22.setVisibility(View.GONE);
-                buttonRow13.setVisibility(View.GONE);
-                buttonRow23.setVisibility(View.GONE);
-                shiftModeText.setText("1");
-                break;
-            case "2":
-                buttonRow1.setVisibility(View.GONE);
-                buttonRow2.setVisibility(View.GONE);
-                buttonRow12.setVisibility(View.VISIBLE);
-                buttonRow22.setVisibility(View.VISIBLE);
-                buttonRow13.setVisibility(View.GONE);
-                buttonRow23.setVisibility(View.GONE);
-                shiftModeText.setText("2");
-                break;
-            case "3":
-                buttonRow1.setVisibility(View.GONE);
-                buttonRow2.setVisibility(View.GONE);
-                buttonRow12.setVisibility(View.GONE);
-                buttonRow22.setVisibility(View.GONE);
-                buttonRow13.setVisibility(View.VISIBLE);
-                buttonRow23.setVisibility(View.VISIBLE);
-                shiftModeText.setText("3");
-                break;
+        if(rowValue.equals("true")) {
+            switch (shiftValue) {
+                case "1":
+                    buttonRow1.setVisibility(View.VISIBLE);
+                    buttonRow2.setVisibility(View.VISIBLE);
+                    buttonRow12.setVisibility(View.GONE);
+                    buttonRow22.setVisibility(View.GONE);
+                    buttonRow13.setVisibility(View.GONE);
+                    buttonRow23.setVisibility(View.GONE);
+                    buttonRow3.setVisibility(View.VISIBLE);
+                    shiftModeText.setText("1");
+                    break;
+                case "2":
+                    buttonRow1.setVisibility(View.GONE);
+                    buttonRow2.setVisibility(View.GONE);
+                    buttonRow12.setVisibility(View.VISIBLE);
+                    buttonRow22.setVisibility(View.VISIBLE);
+                    buttonRow13.setVisibility(View.GONE);
+                    buttonRow23.setVisibility(View.GONE);
+                    buttonRow3.setVisibility(View.VISIBLE);
+                    shiftModeText.setText("2");
+                    break;
+                case "3":
+                    buttonRow1.setVisibility(View.GONE);
+                    buttonRow2.setVisibility(View.GONE);
+                    buttonRow12.setVisibility(View.GONE);
+                    buttonRow22.setVisibility(View.GONE);
+                    buttonRow13.setVisibility(View.VISIBLE);
+                    buttonRow23.setVisibility(View.VISIBLE);
+                    buttonRow3.setVisibility(View.VISIBLE);
+                    shiftModeText.setText("3");
+                    break;
+            }
         }
     }
 
@@ -396,11 +406,17 @@ public class MainActivity extends AppCompatActivity {
     private void showOrHideScienceButtonState() {
         TextView function_mode_text = findViewById(R.id.functionMode_text);
         TextView shiftModeText = findViewById(R.id.shiftMode_text);
-        LinearLayout buttonRow1 = findViewById(R.id.scientificRow1);
-        LinearLayout buttonRow2 = findViewById(R.id.scientificRow2);
+
+        LinearLayout buttonRow1 = findViewById(R.id.scientificRow11);
         LinearLayout buttonRow12 = findViewById(R.id.scientificRow12);
+        LinearLayout buttonRow13 = findViewById(R.id.scientificRow13);
+
+        LinearLayout buttonRow2 = findViewById(R.id.scientificRow21);
         LinearLayout buttonRow22 = findViewById(R.id.scientificRow22);
+        LinearLayout buttonRow23 = findViewById(R.id.scientificRow23);
+
         LinearLayout buttonRow3 = findViewById(R.id.scientificRow3);
+
         Button shiftButton = findViewById(R.id.shift);
 
         LinearLayout buttonLayout = findViewById(R.id.button_layout);
@@ -411,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
             function_mode_text.setText(dataManager.readFromJSON("functionMode", getApplicationContext()));
         }
 
-        if(buttonRow1 != null && buttonRow12 != null && buttonRow2 != null && buttonRow3 != null && buttonLayout != null) {
+        if(buttonLayout != null) {
 
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
             if (dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("false")) {
@@ -424,8 +440,10 @@ public class MainActivity extends AppCompatActivity {
                 buttonRow2.setVisibility(View.GONE);
                 buttonRow12.setVisibility(View.GONE);
                 buttonRow22.setVisibility(View.GONE);
-                buttonRow3.setVisibility(View.GONE);
+                buttonRow13.setVisibility(View.GONE);
+                buttonRow23.setVisibility(View.GONE);
                 shiftButton.setVisibility(View.GONE);
+                buttonRow3.setVisibility(View.GONE);
 
                 assert function_mode_text != null;
                 assert shiftModeText != null;
@@ -441,8 +459,10 @@ public class MainActivity extends AppCompatActivity {
                 buttonRow2.setVisibility(View.VISIBLE);
                 buttonRow12.setVisibility(View.VISIBLE);
                 buttonRow22.setVisibility(View.VISIBLE);
-                buttonRow3.setVisibility(View.VISIBLE);
+                buttonRow13.setVisibility(View.VISIBLE);
+                buttonRow23.setVisibility(View.VISIBLE);
                 shiftButton.setVisibility(View.VISIBLE);
+                buttonRow3.setVisibility(View.VISIBLE);
 
                 assert function_mode_text != null;
                 assert shiftModeText != null;
@@ -658,25 +678,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void sinusAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("sin(");
+                } else {
+                    addCalculateText("sin(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("sin(");
-            } else {
-                addCalculateText("sin(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -688,25 +704,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void sinushAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("sinh(");
+                } else {
+                    addCalculateText("sinh(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("sinh(");
-            } else {
-                addCalculateText("sinh(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -718,25 +730,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void aSinusAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("sin⁻¹(");
+                } else {
+                    addCalculateText("sin⁻¹(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("sin⁻¹(");
-            } else {
-                addCalculateText("sin⁻¹(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -748,25 +756,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void aSinusHAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("sinh⁻¹(");
+                } else {
+                    addCalculateText("sinh⁻¹(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("sinh⁻¹(");
-            } else {
-                addCalculateText("sinh⁻¹(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -778,25 +782,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void cosinusAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("cos(");
+                } else {
+                    addCalculateText("cos(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("cos(");
-            } else {
-                addCalculateText("cos(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -808,25 +808,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void cosinushAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("cosh(");
+                } else {
+                    addCalculateText("cosh(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("cosh(");
-            } else {
-                addCalculateText("cosh(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -838,25 +834,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void aCosinusAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("cos⁻¹(");
+                } else {
+                    addCalculateText("cos⁻¹(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("cos⁻¹(");
-            } else {
-                addCalculateText("cos⁻¹(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -868,25 +860,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void aCosinusHAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("cosh⁻¹(");
+                } else {
+                    addCalculateText("cosh⁻¹(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("cosh⁻¹(");
-            } else {
-                addCalculateText("cosh⁻¹(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -898,25 +886,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void tangensAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("tan(");
+                } else {
+                    addCalculateText("tan(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("tan(");
-            } else {
-                addCalculateText("tan(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -928,25 +912,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void tangenshAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("tanh(");
+                } else {
+                    addCalculateText("tanh(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("tanh(");
-            } else {
-                addCalculateText("tanh(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -958,25 +938,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void aTangensAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("tan⁻¹(");
+                } else {
+                    addCalculateText("tan⁻¹(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("tan⁻¹(");
-            } else {
-                addCalculateText("tan⁻¹(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -988,25 +964,21 @@ public class MainActivity extends AppCompatActivity {
      */
     private void aTangensHAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("tanh⁻¹(");
+                } else {
+                    addCalculateText("tanh⁻¹(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("tanh⁻¹(");
-            } else {
-                addCalculateText("tanh⁻¹(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -1014,25 +986,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void logAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("log(");
+                } else {
+                    addCalculateText("log(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("log(");
-            } else {
-                addCalculateText("log(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -1040,25 +1008,51 @@ public class MainActivity extends AppCompatActivity {
 
     private void log2Action() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("log₂(");
+                } else {
+                    addCalculateText("log₂(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("log₂(");
-            } else {
-                addCalculateText("log₂(");
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
+        }
+        formatResultTextAfterType();
+    }
 
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+    private void logXAction() {
+        // Check if calculate text is empty and set or add
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                if(getCalculateText().contains("=")) {
+                    setCalculateText("");
+                    if(isInvalidInput(getResultText())) {
+                        setResultText("0");
+                    }
+                    setRemoveValue(true);
+                }
+
+                dataManager.saveToJSON("logX", "true", getApplicationContext());
+                setRotateOperator(true);
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("log");
+                } else {
+                    addCalculateText("log");
+                }
+
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -1066,25 +1060,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void lnAction() {
         // Check if calculate text is empty and set or add
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("ln(");
+                } else {
+                    addCalculateText("ln(");
                 }
-                setRemoveValue(true);
-            }
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("ln(");
-            } else {
-                addCalculateText("ln(");
-            }
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -1094,51 +1084,78 @@ public class MainActivity extends AppCompatActivity {
      * Handles the insertion or removal of the "e" symbol based on its current presence in the result text.
      */
     private void eAction() {
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getRemoveValue()) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-                setRemoveValue(false);
-            }
+        // Check if logarithmic mode is disabled
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            // Read the current eNotation mode from the data manager
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
 
-            if (!getResultText().contains("e+") && !getResultText().contains("e-")) {
-                dataManager.saveToJSON("eNotation", true, getApplicationContext());
-                addResultText("e");
-            } else if (getResultText().contains("e") && !getResultText().contains("e+") || !getResultText().contains("e-")) {
+            // Check if eNotation mode is currently set to false
+            if (mode.equals("false")) {
+                // Check if the remove value flag is set
+                if(getRemoveValue()) {
+                    setCalculateText("");
+                    // If the result text is invalid, set it to "0"
+                    if(isInvalidInput(getResultText())) {
+                        setResultText("0");
+                    }
+                    setRemoveValue(false);
+                }
+
+                // Add or remove "e" based on its current presence in the result text
+                if (!getResultText().contains("e+") && !getResultText().contains("e-")) {
+                    dataManager.saveToJSON("eNotation", true, getApplicationContext());
+                    addResultText("e");
+                } else if (getResultText().contains("e") && !getResultText().contains("e+") || !getResultText().contains("e-")) {
+                    dataManager.saveToJSON("eNotation", false, getApplicationContext());
+                    setResultText(getResultText().replace("e", ""));
+                }
+            } else {
+                // Remove all occurrences of "e", "e+", and "e-" from the result text
+                setResultText(getResultText().replace("e+", "").replace("e-", "").replace("e", ""));
                 dataManager.saveToJSON("eNotation", false, getApplicationContext());
-                setResultText(getResultText().replace("e", ""));
             }
-        } else {
-            setResultText(getResultText().replace("e+", "").replace("e-", "").replace("e", ""));
-            dataManager.saveToJSON("eNotation", false, getApplicationContext());
         }
+        // Format the result text after typing
         formatResultTextAfterType();
     }
 
     /**
-     * Handles the insertion or removal of the "e" symbol based on its current presence in the result text.
+     * Handles the insertion or removal of the "е" symbol based on its current presence in the result text.
      */
     private void еAction() {
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-                setRemoveValue(true);
-            }
+        // Check if logarithmic mode is disabled
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            // Read the current eNotation mode from the data manager
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("е");
-            } else {
-                addCalculateText("е");
+            // Check if eNotation mode is currently set to false
+            if (mode.equals("false")) {
+                // Check and handle the calculate text
+                checkCalculateText();
+
+                // Add "е" to the calculate text
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("е");
+                } else {
+                    final String text = getCalculateText().replace(" ", "")
+                            .replace("×", "*").replace("÷", "/");
+                    char lastChar = text.charAt(text.length() - 1);
+
+                    // Check the last character and add "е" accordingly
+                    if(!isOperator(String.valueOf(lastChar)) && !String.valueOf(lastChar).equals("(")) {
+                        if(getRotateOperator()) {
+                            addCalculateTextWithoutSpace("е");
+                        } else {
+                            addCalculateText(getLastOp() + " е");
+                        }
+                    } else {
+                        addCalculateText("е");
+                    }
+                }
+                setRotateOperator(true);
             }
-            setRotateOperator(true);
         }
+        // Format the result text after typing
         formatResultTextAfterType();
     }
 
@@ -1146,23 +1163,39 @@ public class MainActivity extends AppCompatActivity {
      * Appends or sets the text "π" to the calculation input and sets the rotate operator flag to true.
      */
     private void piAction() {
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-                setRemoveValue(true);
-            }
+        // Check if logarithmic mode is disabled
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            // Read the current eNotation mode from the data manager
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("π");
-            } else {
-                addCalculateText("π");
+            // Check if eNotation mode is currently set to false
+            if (mode.equals("false")) {
+                // Check and handle the calculate text
+                checkCalculateText();
+
+                // Add "π" to the calculate text
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText("π");
+                } else {
+                    final String text = getCalculateText().replace(" ", "")
+                            .replace("×", "*").replace("÷", "/");
+                    char lastChar = text.charAt(text.length() - 1);
+
+                    // Check the last character and add "π" accordingly
+                    if(!isOperator(String.valueOf(lastChar)) && !String.valueOf(lastChar).equals("(")) {
+                        if(getRotateOperator()) {
+                            addCalculateTextWithoutSpace("π");
+                        } else {
+                            addCalculateText(getLastOp() + " π");
+                        }
+                    } else {
+                        addCalculateText("π");
+                    }
+                }
+                setRotateOperator(true);
             }
-            setRotateOperator(true);
         }
+        // Format the result text after typing
         formatResultTextAfterType();
     }
 
@@ -1171,36 +1204,39 @@ public class MainActivity extends AppCompatActivity {
      */
     private void parenthesisOnAction() {
         // Check if calculate text is empty and set or add opening parenthesis accordingly
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-                setRemoveValue(true);
-            }
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                checkCalculateText();
 
-            if (getCalculateText().isEmpty()) {
-                setCalculateText("(");
-            } else {
-                final String text = getCalculateText().replace(" ", "")
-                        .replace("×", "*").replace("÷", "/");
-                char lastChar = text.charAt(text.length() - 1);
+                if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+                    if (getCalculateText().isEmpty()) {
+                        setCalculateText("(");
+                    } else {
+                        final String text = getCalculateText().replace(" ", "")
+                                .replace("×", "*").replace("÷", "/");
+                        char lastChar = text.charAt(text.length() - 1);
 
-                if(!isOperator(String.valueOf(lastChar)) && !String.valueOf(lastChar).equals("(")) {
-                    addCalculateText(getLastOp() + " (");
+                        if(!isOperator(String.valueOf(lastChar)) && !String.valueOf(lastChar).equals("(")) {
+                            if(getRotateOperator()) {
+                                addCalculateTextWithoutSpace("(");
+                            } else {
+                                addCalculateText(getLastOp() + " (");
+                            }
+                        } else {
+                            addCalculateText("(");
+                        }
+                    }
                 } else {
-                    addCalculateText("(");
+                    addCalculateText(getResultText() + " (");
+                    dataManager.saveToJSON("logX", "false", getApplicationContext());
+                    setRemoveValue(true);
                 }
-            }
-            setRotateOperator(false);
-
-            // Scroll to the bottom of the scroll view if it exists
-            if (findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
             }
         }
+        scrollToCalculateLabelBottom();
+
+        setRotateOperator(false);
         formatResultTextAfterType();
     }
 
@@ -1210,39 +1246,41 @@ public class MainActivity extends AppCompatActivity {
      * Otherwise, it adds the result text and a closing parenthesis.
      */
     private void parenthesisOffAction() {
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getCalculateText().contains("=")) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
-                }
-            }
-
-            Pattern pattern = Pattern.compile("√\\(\\d+\\)$");
-            Matcher matcher = pattern.matcher(getCalculateText());
-
-            if(!getCalculateText().isEmpty() && getCalculateText().contains("(")) {
-                if (matcher.find()) {
-                    addCalculateText(")");
-                } else {
-                    if(!getRotateOperator()) {
-                        addCalculateText(getResultText() + " )");
-                    } else {
-                        final String text = getCalculateText().replace(" ", "")
-                                .replace("×", "*").replace("÷", "/");
-                        char lastChar = text.charAt(text.length() - 1);
-
-                        if(String.valueOf(lastChar).equals(")")) {
-                            addCalculateText(" )");
-                        } else {
-                            addCalculateText(getLastOp() + " " + getResultText() + " )");
-                        }
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                if(getCalculateText().contains("=")) {
+                    setCalculateText("");
+                    if(isInvalidInput(getResultText())) {
+                        setResultText("0");
                     }
                 }
-                setRotateOperator(true);
-                if(findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+
+                Pattern pattern = Pattern.compile("√\\(\\d+\\)$");
+                Matcher matcher = pattern.matcher(getCalculateText());
+
+                if(!getCalculateText().isEmpty() && getCalculateText().contains("(")) {
+                    if (matcher.find()) {
+                        addCalculateText(")");
+                    } else {
+                        if(!getRotateOperator()) {
+                            addCalculateText(getResultText() + " )");
+                        } else {
+                            final String text = getCalculateText().replace(" ", "")
+                                    .replace("×", "*").replace("÷", "/");
+                            char lastChar = text.charAt(text.length() - 1);
+
+                            if(String.valueOf(lastChar).equals(")")) {
+                                addCalculateText(" )");
+                            } else {
+                                addCalculateText(getLastOp() + " " + getResultText() + " )");
+                            }
+                        }
+                    }
+                    setRotateOperator(true);
+                    if(findViewById(R.id.calculate_scrollview) != null) {
+                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    }
                 }
             }
         }
@@ -1258,36 +1296,38 @@ public class MainActivity extends AppCompatActivity {
      * 3. If the last character is neither a valid operator nor an opening parenthesis, it appends the last operator and the result with "!" to the calculation text.
      */
     private void factorial() {
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(getRemoveValue()) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                if(getRemoveValue()) {
+                    setCalculateText("");
+                    if(isInvalidInput(getResultText())) {
+                        setResultText("0");
+                    }
+                    setRemoveValue(false);
                 }
-                setRemoveValue(false);
-            }
 
-            final String calc_text = getCalculateText().replace(" ", "");
+                final String calc_text = getCalculateText().replace(" ", "");
 
-            if (calc_text.isEmpty()) {
-                addCalculateText(getResultText() + "!");
-                setRotateOperator(true);
-            } else {
-                String lastchar = String.valueOf(calc_text.replace(" ", "").charAt(calc_text.length() - 1));
-                if (lastchar.equals("!")) {
-                    addCalculateText(getLastOp().replace("*", "×").replace("/", "÷") + " " + getResultText() + "!");
-                    setRotateOperator(true);
-                } else if(lastchar.equals(")")) {
-                    addCalculateText("!");
-                    setRotateOperator(true);
-                } else {
+                if (calc_text.isEmpty()) {
                     addCalculateText(getResultText() + "!");
                     setRotateOperator(true);
+                } else {
+                    String lastchar = String.valueOf(calc_text.replace(" ", "").charAt(calc_text.length() - 1));
+                    if (lastchar.equals("!")) {
+                        addCalculateText(getLastOp().replace("*", "×").replace("/", "÷") + " " + getResultText() + "!");
+                        setRotateOperator(true);
+                    } else if(lastchar.equals(")")) {
+                        addCalculateText("!");
+                        setRotateOperator(true);
+                    } else {
+                        addCalculateText(getResultText() + "!");
+                        setRotateOperator(true);
+                    }
                 }
-            }
-            if(findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                if(findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -1298,34 +1338,36 @@ public class MainActivity extends AppCompatActivity {
      * Depending on the state of the rotate operator flag, it handles the power operation differently.
      */
     private void powerAction() {
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            setLastOp("^");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                setLastOp("^");
 
-            if(getRemoveValue()) {
-                setCalculateText("");
-                if(isInvalidInput(getResultText())) {
-                    setResultText("0");
+                if(getRemoveValue()) {
+                    setCalculateText("");
+                    if(isInvalidInput(getResultText())) {
+                        setResultText("0");
+                    }
+                    setRemoveValue(false);
                 }
-                setRemoveValue(false);
-            }
 
-            if(!getRotateOperator()) {
-                setRemoveValue(true);
-                setLastNumber(getResultText());
-                if (getCalculateText().contains("=")) {
-                    setCalculateText(getResultText() + " ^");
+                if(!getRotateOperator()) {
+                    setRemoveValue(true);
+                    setLastNumber(getResultText());
+                    if (getCalculateText().contains("=")) {
+                        setCalculateText(getResultText() + " ^");
+                    } else {
+                        addCalculateText(getResultText() + " ^");
+                    }
+                    setRemoveValue(true);
                 } else {
-                    addCalculateText(getResultText() + " ^");
+                    addCalculateText("^");
+                    setRemoveValue(true);
+                    setRotateOperator(false);
                 }
-                setRemoveValue(true);
-            } else {
-                addCalculateText("^");
-                setRemoveValue(true);
-                setRotateOperator(false);
-            }
-            if(findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+                if(findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -1336,17 +1378,99 @@ public class MainActivity extends AppCompatActivity {
      * Depending on the state of the rotate operator flag, it handles the root operation differently.
      */
     private void rootAction() {
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("false")) {
-            if(!getRotateOperator()) {
-                addCalculateText("√(");
-            } else if (!getCalculateText().isEmpty()){
-                addCalculateText(getLastOp() + " √(");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                if(!getRotateOperator()) {
+                    addCalculateText("√(");
+                } else if (!getCalculateText().isEmpty()){
+                    addCalculateText(getLastOp() + " √(");
+                }
+                setRemoveValue(true);
+                //setRotateOperator(true);
+                if(findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
-            setRemoveValue(true);
-            //setRotateOperator(true);
-            if(findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
+        formatResultTextAfterType();
+    }
+
+    /**
+     * This method adds a root operation to the calculation text.
+     * Depending on the state of the rotate operator flag, it handles the root operation differently.
+     */
+    private void thirdRootAction() {
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                if(!getRotateOperator()) {
+                    addCalculateText("³√(");
+                } else if (!getCalculateText().isEmpty()){
+                    addCalculateText(getLastOp() + " ³√(");
+                }
+                setRemoveValue(true);
+                //setRotateOperator(true);
+                if(findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    private void halfAction() {
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                if(!getRotateOperator()) {
+                    addCalculateText("½");
+                } else if (!getCalculateText().isEmpty()){
+                    addCalculateText(getLastOp() + " ½");
+                }
+                setRemoveValue(true);
+                setRotateOperator(true);
+                if(findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    private void thirdAction() {
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                if(!getRotateOperator()) {
+                    addCalculateText("⅓");
+                } else if (!getCalculateText().isEmpty()){
+                    addCalculateText(getLastOp() + " ⅓");
+                }
+                setRemoveValue(true);
+                setRotateOperator(true);
+                if(findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
+            }
+        }
+        formatResultTextAfterType();
+    }
+
+    private void quarterAction() {
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("false")) {
+                if(!getRotateOperator()) {
+                    addCalculateText("¼");
+                } else if (!getCalculateText().isEmpty()){
+                    addCalculateText(getLastOp() + " ¼");
+                }
+                setRemoveValue(true);
+                setRotateOperator(true);
+                if(findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -1657,37 +1781,54 @@ public class MainActivity extends AppCompatActivity {
      * @param num The number corresponding to the clicked button. This number will be added to the result text.
      */
     public void NumberAction(String num) {
-        if (dataManager.readFromJSON("eNotation", getApplicationContext()).equals("true")) {
-            addResultText(num);
-            dataManager.saveToJSON("eNotation", "false", getApplicationContext());
-        } else {
-            String calculateText = getCalculateText();
-            if (isInvalidInput(getResultText()) || isInvalidInput(calculateText)) {
-                setCalculateText("");
-                setRemoveValue(true);
-            }
-            if (getRemoveValue()) {
-                if (isInvalidInput(calculateText) || calculateText.contains("=")) {
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            if (dataManager.readFromJSON("eNotation", getApplicationContext()).equals("true")) {
+                addResultText(num);
+                dataManager.saveToJSON("eNotation", "false", getApplicationContext());
+            } else {
+                String calculateText = getCalculateText();
+                if (isInvalidInput(getResultText()) || isInvalidInput(calculateText)) {
                     setCalculateText("");
+                    setRemoveValue(true);
                 }
-                setResultText("0");
-                setRemoveValue(false);
-            }
+                if (getRemoveValue()) {
+                    if (isInvalidInput(calculateText) || calculateText.contains("=")) {
+                        setCalculateText("");
+                    }
+                    setResultText("0");
+                    setRemoveValue(false);
+                }
 
-            if (getResultText().replace(".", "").replace(",", "").length() < 18) {
-                if (getResultText().equals("0")) {
-                    setResultText(num);
-                } else if (getResultText().equals("-0")) {
-                    // Replace "0" with the new digit, and add the negative sign back
-                    setResultText("-" + num);
-                } else {
-                    // Add the new digit, and add the negative sign back if needed
-                    addResultText(num);
+                if (getResultText().replace(".", "").replace(",", "").length() < 18) {
+                    if (getResultText().equals("0")) {
+                        setResultText(num);
+                    } else if (getResultText().equals("-0")) {
+                        // Replace "0" with the new digit, and add the negative sign back
+                        setResultText("-" + num);
+                    } else {
+                        // Add the new digit, and add the negative sign back if needed
+                        addResultText(num);
+                    }
                 }
+            }
+        } else {
+            if (Integer.parseInt(num) >= 2 && Integer.parseInt(num) <= 9) {
+                String small_number = convertToSmallNumber(Integer.parseInt(num));
+                addCalculateTextWithoutSpace(small_number);
+                addCalculateTextWithoutSpace("(");
+                dataManager.saveToJSON("logX", "false", getApplicationContext());
+                setRotateOperator(false);
             }
         }
         formatResultTextAfterType();
         adjustTextSize();
+    }
+
+    private static String convertToSmallNumber(int zahl) {
+        // Unicode-Block für tiefgestellte Zahlen: U+208x
+        char tiefgestellteNull = '\u2080';
+        int tiefgestellteZahl = zahl + (int) tiefgestellteNull;
+        return Character.toString((char) tiefgestellteZahl);
     }
 
     /**
@@ -1749,43 +1890,45 @@ public class MainActivity extends AppCompatActivity {
      * @param op The operation to be performed. This can be any mathematical operation like addition (+), subtraction (-), multiplication (*), or division (/).
      */
     public void OperationAction(final String op) {
-        setLastOp(op);
-        final String new_op = op.replace("*", "×").replace("/", "÷");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            setLastOp(op);
+            final String new_op = op.replace("*", "×").replace("/", "÷");
 
-        // Check if there is one operator at the end
+            // Check if there is one operator at the end
 
-        final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
-        if (mode.equals("true") && getResultText().length() > 1 && (new_op.equals("+") || new_op.equals("-"))) {
-            int lastIndex = getResultText().length() - 1;
-            char lastChar = getResultText().charAt(lastIndex);
+            final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            if (mode.equals("true") && getResultText().length() > 1 && (new_op.equals("+") || new_op.equals("-"))) {
+                int lastIndex = getResultText().length() - 1;
+                char lastChar = getResultText().charAt(lastIndex);
 
-            // Check if the last character isn't an operator
-            if (!isOperator(String.valueOf(lastChar))) {
-                setResultText(getResultText() + new_op);
-                return;
-            } else {
-                setResultText(getResultText() + "0");
-                dataManager.saveToJSON("eNotation", false, getApplicationContext());
-                setRemoveValue(true);
-            }
-        }
-
-        if (mode.equals("false")) {
-            if(!getRotateOperator()) {
-                setLastNumber(getResultText());
-                if (getCalculateText().contains("=")) {
-                    setCalculateText(getResultText() + " " + new_op);
+                // Check if the last character isn't an operator
+                if (!isOperator(String.valueOf(lastChar))) {
+                    setResultText(getResultText() + new_op);
+                    return;
                 } else {
-                    addCalculateText(getResultText() + " " + new_op);
+                    setResultText(getResultText() + "0");
+                    dataManager.saveToJSON("eNotation", false, getApplicationContext());
+                    setRemoveValue(true);
                 }
-                setRemoveValue(true);
-            } else {
-                addCalculateText(new_op);
-                setRemoveValue(true);
             }
-            setRotateOperator(false);
-            if(findViewById(R.id.calculate_scrollview) != null) {
-                scrollToBottom(findViewById(R.id.calculate_scrollview));
+
+            if (mode.equals("false")) {
+                if(!getRotateOperator()) {
+                    setLastNumber(getResultText());
+                    if (getCalculateText().contains("=")) {
+                        setCalculateText(getResultText() + " " + new_op);
+                    } else {
+                        addCalculateText(getResultText() + " " + new_op);
+                    }
+                    setRemoveValue(true);
+                } else {
+                    addCalculateText(new_op);
+                    setRemoveValue(true);
+                }
+                setRotateOperator(false);
+                if(findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                }
             }
         }
         formatResultTextAfterType();
@@ -1806,6 +1949,7 @@ public class MainActivity extends AppCompatActivity {
                 setResultText("0");
                 setCalculateText("");
                 setRotateOperator(false);
+                dataManager.saveToJSON("logX", "false", getApplicationContext());
                 break;
             case "CE":
                 setResultText("0");
@@ -1932,111 +2076,111 @@ public class MainActivity extends AppCompatActivity {
      */
     @SuppressLint("SetTextI18n")
     public void Calculate() {
-        // Replace special characters for proper calculation
-        String calcText = getCalculateText().replace("*", "×").replace("/", "÷");
+        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            // Replace special characters for proper calculation
+            String calcText = getCalculateText().replace("*", "×").replace("/", "÷");
 
-        // Check if there is one operator at the end
-        if (getResultText().length() > 1) {
-            int lastIndex = getResultText().length() - 1;
-            char lastChar = getResultText().charAt(lastIndex);
+            // Check if there is one operator at the end
+            if (getResultText().length() > 1) {
+                int lastIndex = getResultText().length() - 1;
+                char lastChar = getResultText().charAt(lastIndex);
 
-            // Check if the last character isn't an operator
-            if (isOperator(String.valueOf(lastChar))) {
-                setResultText(getResultText() + "0");
-                dataManager.saveToJSON("eNotation", false, getApplicationContext());
-                setRemoveValue(false);
-                formatResultTextAfterType();
-                return;
-            }
-        }
-
-        // Check for valid input before performing calculations
-        if (!isInvalidInput(getResultText()) && !isInvalidInput(getCalculateText())) {
-            // Handle calculation based on the rotate operator flag
-            if (getRotateOperator()) {
-                if (!calcText.contains("=")) {
-                    // Handle calculation when equals sign is not present
-                    setLastNumber(getResultText());
-                    setCalculateText(calcText + " =");
-                    setCalculateText(balanceParentheses(getCalculateText()));
-                    setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
-                } else {
-                    // Handle calculation when equals sign is present
-                    if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
-                        if (!getLastOp().isEmpty() && !getLastOp().equals("√")) {
-                            setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
-                        } else {
-                            setCalculateText(getResultText() + " =");
-                        }
-                        setCalculateText(balanceParentheses(getCalculateText()));
-                        setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
-                    } else {
-                        setCalculateText(balanceParentheses(getCalculateText()));
-                        setResultText(CalculatorActivity.calculate(getCalculateText()));
-                    }
-                }
-            } else {
-                if (!calcText.contains("=")) {
-                    // Handle calculation when equals sign is not present
-                    setLastNumber(getResultText());
-                    setCalculateText(calcText + " " + getResultText() + " =");
-                    setCalculateText(balanceParentheses(getCalculateText()));
-                    setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
-                } else {
-                    // Handle calculation when equals sign is present
-                    if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
-                        if (!getLastOp().isEmpty()) {
-                            setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
-                        } else {
-                            setCalculateText(getResultText() + " =");
-                        }
-                        setCalculateText(balanceParentheses(getCalculateText()));
-                        setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
-                    } else {
-                        setCalculateText(balanceParentheses(getCalculateText()));
-                        setResultText(CalculatorActivity.calculate(getCalculateText()));
-                    }
+                // Check if the last character isn't an operator
+                if (isOperator(String.valueOf(lastChar))) {
+                    setResultText(getResultText() + "0");
+                    dataManager.saveToJSON("eNotation", false, getApplicationContext());
+                    setRemoveValue(false);
+                    formatResultTextAfterType();
+                    return;
                 }
             }
 
-            // Replace special characters back for displaying
-            setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
+            // Check for valid input before performing calculations
+            if (!isInvalidInput(getResultText()) && !isInvalidInput(getCalculateText())) {
+                // Handle calculation based on the rotate operator flag
+                if (getRotateOperator()) {
+                    if (!calcText.contains("=")) {
+                        // Handle calculation when equals sign is not present
+                        setLastNumber(getResultText());
+                        setCalculateText(calcText + " =");
+                        setCalculateText(balanceParentheses(getCalculateText()));
+                        setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
+                    } else {
+                        // Handle calculation when equals sign is present
+                        if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
+                            if (!getLastOp().isEmpty() && !getLastOp().equals("√")) {
+                                setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+                            } else {
+                                setCalculateText(getResultText() + " =");
+                            }
+                            setCalculateText(balanceParentheses(getCalculateText()));
+                            setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
+                        } else {
+                            setCalculateText(balanceParentheses(getCalculateText()));
+                            setResultText(CalculatorActivity.calculate(getCalculateText()));
+                        }
+                    }
+                } else {
+                    if (!calcText.contains("=")) {
+                        // Handle calculation when equals sign is not present
+                        setLastNumber(getResultText());
+                        setCalculateText(calcText + " " + getResultText() + " =");
+                        setCalculateText(balanceParentheses(getCalculateText()));
+                        setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
+                    } else {
+                        // Handle calculation when equals sign is present
+                        if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
+                            if (!getLastOp().isEmpty()) {
+                                setCalculateText(getResultText() + " " + getLastOp() + " " + getLastNumber() + " =");
+                            } else {
+                                setCalculateText(getResultText() + " =");
+                            }
+                            setCalculateText(balanceParentheses(getCalculateText()));
+                            setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
+                        } else {
+                            setCalculateText(balanceParentheses(getCalculateText()));
+                            setResultText(CalculatorActivity.calculate(getCalculateText()));
+                        }
+                    }
+                }
 
-            // Save history, update UI, and set removeValue flag
-            dataManager.saveNumbers(getApplicationContext());
-        } else {
-            // Handle invalid input by resetting result text and calculate text
-            setResultText("0");
-            setCalculateText("");
-        }
+                // Replace special characters back for displaying
+                setCalculateText(getCalculateText().replace("*", "×").replace("/", "÷"));
 
-        // Reset rotate operator flag, format result text, adjust text size, and scroll to bottom if necessary
-        setRotateOperator(false);
-        setRemoveValue(true);
-        formatResultTextAfterType();
-        adjustTextSize();
-
-        if (findViewById(R.id.calculate_scrollview) != null) {
-            scrollToBottom(findViewById(R.id.calculate_scrollview));
-        }
-
-        // Code snippet to save calculation to history
-        final Context context1 = getApplicationContext();
-        new Thread(() -> runOnUiThread(() -> {
-            final String value = dataManager.readFromJSON("historyTextViewNumber", context1);
-            if (value == null) {
-                dataManager.saveToJSON("historyTextViewNumber", "0", context1);
+                // Save history, update UI, and set removeValue flag
+                dataManager.saveNumbers(getApplicationContext());
             } else {
-                final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", context1));
-                final int new_value = old_value + 1;
-
-                dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), context1);
-                dataManager.saveToJSON(String.valueOf(old_value + 1), getCalculateText() + " " + getResultText(), context1);
+                // Handle invalid input by resetting result text and calculate text
+                setResultText("0");
+                setCalculateText("");
             }
 
-            // Log historyTextViewNumber value for debugging
-            Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
-        })).start();
+            // Reset rotate operator flag, format result text, adjust text size, and scroll to bottom if necessary
+            setRotateOperator(false);
+            setRemoveValue(true);
+            formatResultTextAfterType();
+            adjustTextSize();
+
+            scrollToCalculateLabelBottom();
+
+            // Code snippet to save calculation to history
+            final Context context1 = getApplicationContext();
+            new Thread(() -> runOnUiThread(() -> {
+                final String value = dataManager.readFromJSON("historyTextViewNumber", context1);
+                if (value == null) {
+                    dataManager.saveToJSON("historyTextViewNumber", "0", context1);
+                } else {
+                    final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", context1));
+                    final int new_value = old_value + 1;
+
+                    dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), context1);
+                    dataManager.saveToJSON(String.valueOf(old_value + 1), getCalculateText() + " " + getResultText(), context1);
+                }
+
+                // Log historyTextViewNumber value for debugging
+                Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
+            })).start();
+        }
     }
 
     /**
@@ -2055,7 +2199,11 @@ public class MainActivity extends AppCompatActivity {
                 text.contains("Kein Teilen") ||
                 text.contains("Ungültiges Zahlenformat") ||
                 text.contains("Nicht definiert") ||
-                text.contains("Unbekannte Funktion");
+                text.contains("Unbekannte Funktion") ||
+                text.contains("Ungültiges Argument") ||
+                text.contains("Ungültige Basis") ||
+                text.contains("Ungültiger Wert") ||
+                text.contains("Ungültige Basis oder Argument");
     }
 
     /**
@@ -2221,6 +2369,20 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The following methods are simple getter and setter methods for various properties.
      */
+    private void checkCalculateText() {
+        if(getCalculateText().contains("=")) {
+            setCalculateText("");
+            if(isInvalidInput(getResultText())) {
+                setResultText("0");
+            }
+            setRemoveValue(true);
+        }
+    }
+    private void scrollToCalculateLabelBottom() {
+        if (findViewById(R.id.calculate_scrollview) != null) {
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+        }
+    }
     public void setIsNotation(final boolean val) {
         dataManager.saveToJSON("isNotation", val, getApplicationContext());
         Log.i("setIsNotation", "isNotation: '" + val + "'");
@@ -2301,6 +2463,10 @@ public class MainActivity extends AppCompatActivity {
     public void addCalculateText(final String s) {
         TextView calculatetext = findViewById(R.id.calculate_label);
         calculatetext.setText(getCalculateText() + " " + s);
+    }
+    public void addCalculateTextWithoutSpace(final String s) {
+        TextView calculatetext = findViewById(R.id.calculate_label);
+        calculatetext.setText(getCalculateText() + s);
     }
     public void setCalculateText(final String s) {
         TextView calculatetext = findViewById(R.id.calculate_label);
