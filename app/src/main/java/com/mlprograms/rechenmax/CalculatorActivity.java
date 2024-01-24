@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 /**
  * CalculatorActivity
  * @author Max Lemberg
- * @version 1.8.9
- * @date 23.01.2023
+ * @version 1.9.0
+ * @date 24.01.2023
  */
 
 public class CalculatorActivity {
@@ -61,7 +61,7 @@ public class CalculatorActivity {
     public static String calculate(final String calc) {
         try {
             // Replace all the special characters in the expression with their corresponding mathematical symbols
-            // important: "е" and "e" are different characters
+            // important: "е" (German: 'Eulersche-Zahl') and "e" (used for notation) are different characters
             String trim = calc.replace('×', '*')
                     .replace('÷', '/')
                     .replace("=", "")
@@ -77,22 +77,6 @@ public class CalculatorActivity {
 
             Log.e("debug", "trim:" + trim);
 
-            // If the expression is in scientific notation, convert it to decimal notation
-            if (isScientificNotation(trim)) {
-                // (Assuming these methods are defined elsewhere in your code)
-                try {DataManager dataManager1 = new DataManager(mainActivity);
-                    dataManager1.saveToJSON("isNotation", true, mainActivity.getApplicationContext());
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
-                String result = convertScientificToDecimal(trim);
-                return removeNonNumeric(result);
-            }
-
-            // Tokenize the expression and handle negative exponent in division
-
-            // final String expression = convertScientificToDecimal(trim);
-            // final List<String> tokens = tokenize(expression);
             final List<String> tokens = tokenize(trim);
 
             for (int i = 0; i < tokens.size() - 1; i++) {
@@ -136,89 +120,6 @@ public class CalculatorActivity {
             Log.e("Exception", e.toString());
             return "Syntax Fehler";
         }
-    }
-
-    public static boolean isScientificNotation(final String str) {
-        // The input string is formatted by replacing all commas with dots. This is because in some locales, a comma is used as the decimal separator.
-        final String formattedInput = str.replace(",", ".");
-
-        // A regular expression pattern is defined to match the scientific notation. The pattern is as follows:
-        // "^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$"
-        // Explanation of the pattern:
-        // "^" - start of the line
-        // "([-+]?\\d+(\\.\\d+)?)"" - matches a number which may be negative or positive, and may have a decimal part
-        // "([eE][-+]?\\d+)" - matches 'e' or 'E' followed by an optional '+' or '-' sign, followed by one or more digits
-        // "$" - end of the line
-        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$");
-
-        // The pattern is used to create a matcher for the formatted input string
-        final Matcher matcher = pattern.matcher(formattedInput);
-
-        // The method returns true if the matcher finds a match in the input string, indicating that the string is in scientific notation
-        return matcher.matches();
-    }
-
-    public static String convertScientificToDecimal(final String str) {
-        // Replace commas with dots for proper decimal representation
-        final String formattedInput = str;
-
-        // Define the pattern for scientific notation
-        final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)");
-        final Matcher matcher = pattern.matcher(formattedInput);
-        final StringBuffer sb = new StringBuffer();
-
-        // Process all matches found in the input string
-        while (matcher.find()) {
-            // Extract number and exponent parts from the match
-            final String numberPart = matcher.group(1);
-            String exponentPart = matcher.group(3);
-
-            // Remove the 'e' or 'E' from the exponent part
-            if (exponentPart != null) {
-                exponentPart = exponentPart.substring(1);
-            }
-
-            // Check and handle the case where the exponent is too large
-            if (exponentPart != null) {
-                final int exponent = Integer.parseInt(exponentPart);
-
-                // Determine the sign of the number and create a BigDecimal object
-                final String sign = numberPart.startsWith("-") ? "-" : "";
-                BigDecimal number = new BigDecimal(numberPart);
-
-                // Negate the number if the input starts with a minus sign
-                if (numberPart.startsWith("-")) {
-                    number = number.negate();
-                }
-
-                // Scale the number by the power of ten specified by the exponent
-                BigDecimal scaledNumber;
-                if (exponent >= 0) {
-                    scaledNumber = number.scaleByPowerOfTen(exponent);
-                } else {
-                    scaledNumber = number.divide(BigDecimal.TEN.pow(-exponent));
-                }
-
-                // Remove trailing zeros and append the scaled number to the result buffer
-                String result = sign + scaledNumber.stripTrailingZeros().toPlainString();
-                if (result.startsWith(".")) {
-                    result = "0" + result;
-                }
-                matcher.appendReplacement(sb, result);
-            }
-        }
-
-        // Append the remaining part of the input string to the result buffer
-        matcher.appendTail(sb);
-
-        // Check if the result buffer contains two consecutive minus signs and remove one if necessary
-        if (sb.indexOf("--") != -1) {
-            sb.replace(sb.indexOf("--"), sb.indexOf("--") + 2, "-");
-        }
-
-        // Return the final result as a string
-        Log.i("convertScientificToDecimal", "sb:" + sb);
-        return sb.toString();
     }
 
     /**
