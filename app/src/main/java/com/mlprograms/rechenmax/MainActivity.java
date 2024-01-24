@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import org.w3c.dom.Text;
+
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -179,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpListeners() {
         setButtonListener(R.id.history_button, this::switchToHistoryAction);
         setButtonListener(R.id.settings_button, this::switchToSettingsAction);
+        setButtonListener(R.id.graph_button, this::switchToGraphicsAction);
 
         setButtonListener(R.id.okay_button, this::patchNotesOkayButtonAction);
 
@@ -1299,14 +1302,6 @@ public class MainActivity extends AppCompatActivity {
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
             if (mode.equals("false")) {
-                if(getRemoveValue()) {
-                    setCalculateText("");
-                    if(isInvalidInput(getResultText())) {
-                        setResultText("0");
-                    }
-                    setRemoveValue(false);
-                }
-
                 final String calc_text = getCalculateText().replace(" ", "");
 
                 if (calc_text.isEmpty()) {
@@ -1342,14 +1337,7 @@ public class MainActivity extends AppCompatActivity {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
             if (mode.equals("false")) {
                 setLastOp("^");
-
-                if(getRemoveValue()) {
-                    setCalculateText("");
-                    if(isInvalidInput(getResultText())) {
-                        setResultText("0");
-                    }
-                    setRemoveValue(false);
-                }
+                checkCalculateText();
 
                 if(!getRotateOperator()) {
                     setRemoveValue(true);
@@ -1510,6 +1498,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Switches to the settings activity.
+     * It creates a new SettingsActivity, sets the main activity context, and starts the activity.
+     */
+    public void switchToGraphicsAction() {
+        Graphics.setMainActivityContext(this);
+        Intent intent = new Intent(this, Graphics.class);
+        startActivity(intent);
+    }
+
+    /**
      * Switches to the history activity.
      * It creates a new HistoryActivity, sets the main activity context, and starts the activity.
      */
@@ -1546,6 +1544,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     private void switchDisplayMode(int currentNightMode) {
         // Global variables
+        TextView graphButton = findViewById(R.id.graph_button);
         TextView historyButton = findViewById(R.id.history_button);
         TextView settingsButton = findViewById(R.id.settings_button);
         TextView scienceButton = findViewById(R.id.scientificButton);
@@ -1574,6 +1573,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_light));
                             }
+                            if(graphButton != null) {
+                                graphButton.setForeground(getDrawable(R.drawable.baseline_square_foot_24_light));
+                            }
 
                             if (trueDarkMode != null && trueDarkMode.equals("true")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
@@ -1589,6 +1591,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 if (shiftButton != null) {
                                     shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_true_darkmode));
+                                }
+                                if(graphButton != null) {
+                                    graphButton.setForeground(getDrawable(R.drawable.baseline_square_foot_24_true_darkmode));
                                 }
                             } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
@@ -1610,6 +1615,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24));
                             }
+                            if(graphButton != null) {
+                                graphButton.setForeground(getDrawable(R.drawable.baseline_square_foot_24));
+                            }
                             break;
                     }
                     break;
@@ -1628,6 +1636,9 @@ public class MainActivity extends AppCompatActivity {
                     if (shiftButton != null) {
                         shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24));
                     }
+                    if(graphButton != null) {
+                        graphButton.setForeground(getDrawable(R.drawable.baseline_square_foot_24));
+                    }
                     break;
                 case "Dunkelmodus":
                     dataManager = new DataManager(this);
@@ -1642,6 +1653,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (shiftButton != null) {
                         shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_light));
+                    }
+                    if(graphButton != null) {
+                        graphButton.setForeground(getDrawable(R.drawable.baseline_square_foot_24_light));
                     }
                     if (trueDarkMode != null) {
                         if (trueDarkMode.equals("false")) {
@@ -1663,6 +1677,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_true_darkmode));
                             }
+                        }
+                        if(graphButton != null) {
+                            graphButton.setForeground(getDrawable(R.drawable.baseline_square_foot_24_true_darkmode));
                         }
                     } else {
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
