@@ -3,6 +3,8 @@ package com.mlprograms.rechenmax;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -42,6 +46,7 @@ public class HistoryActivity extends AppCompatActivity {
     // Declare a static MainActivity object
     @SuppressLint("StaticFieldLeak")
     private static MainActivity mainActivity;
+    private LinearLayout innerLinearLayout;
 
     /**
      * Called when the activity is starting.
@@ -70,7 +75,7 @@ public class HistoryActivity extends AppCompatActivity {
         LinearLayout outerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
 
         // Create an instance of the inner LinearLayout
-        LinearLayout innerLinearLayout = new LinearLayout(this);
+        innerLinearLayout = new LinearLayout(this);
         innerLinearLayout.setOrientation(LinearLayout.VERTICAL);
 
         // Set the inner LinearLayout as the content of the outer LinearLayout
@@ -90,15 +95,18 @@ public class HistoryActivity extends AppCompatActivity {
                 } else {
                     deleteEmptyHistoryTextView();
                     for (int i = 1; i < Integer.parseInt(Objects.requireNonNull(value)) + 1; i++) {
-                        // Create a new TextView
-                        TextView textView = createHistoryTextView(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
+                        if(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()) != null) {
+                            // Create a new TextView
+                            TextView textView = createHistoryTextView(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
+                            textView.setId(i);
 
-                        // Create a thin line
-                        View line = createLine();
+                            // Create a thin line
+                            View line = createLine();
 
-                        // Add TextView and line to the inner LinearLayout
-                        innerLinearLayout.addView(textView, 0);
-                        innerLinearLayout.addView(line, 1);
+                            // Add TextView and line to the inner LinearLayout
+                            innerLinearLayout.addView(textView, 0);
+                            innerLinearLayout.addView(line, 1);
+                        }
                     }
                     switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
                 }
@@ -161,34 +169,56 @@ public class HistoryActivity extends AppCompatActivity {
             return false;
         });
 
-        // Add a click listener to the TextView
-        textView.setOnClickListener(v -> {
-            if(clickListener.get()) {
-                // Output the text of the clicked TextView to the console
-                TextView clickedTextView = (TextView) v;
-                String clickedText = clickedTextView.getText().toString();
+        textView.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onDoubleClick(View v) {
+                dataManager.saveToJSON(String.valueOf(textView.getId()), null, getApplicationContext());
 
-                // Split at "=" character
-                String[] parts = clickedText.split("=");
+                LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
+                int indexOfTextView = linearLayout.indexOfChild(textView);
+                linearLayout.removeView(textView);
 
-                // Check and remove leading and trailing spaces
-                if (parts.length == 2) {
-                    String key = parts[0].trim();
-                    String value = parts[1].trim();
-                    System.out.println("Key: '" + key + "'");
-                    System.out.println("Value: '" + value + "'");
-                    try {
-                        dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
-                        dataManager.saveToJSON("result_text", value, getMainActivityContext());
-                        dataManager.saveToJSON("removeValue", false, getMainActivityContext());
-                        dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
-                        showToast();
-                    } catch (Exception e) {
-                        Log.i("createHistoryTextView", String.valueOf(e));
-                    }
+                if (indexOfTextView < linearLayout.getChildCount()) {
+                    View nextView = linearLayout.getChildAt(indexOfTextView);
+                    linearLayout.removeView(nextView);
+                }
+
+                if(innerLinearLayout.getChildCount() <= 2) {
+                    resetNamesAndValues();
+                } else {
+                    recreate();
                 }
             }
-            clickListener.set(true);
+
+            @Override
+            public void onSingleClick(View v) {
+                if(clickListener.get()) {
+                    // Output the text of the clicked TextView to the console
+                    TextView clickedTextView = (TextView) v;
+                    String clickedText = clickedTextView.getText().toString();
+
+                    // Split at "=" character
+                    String[] parts = clickedText.split("=");
+
+                    // Check and remove leading and trailing spaces
+                    if (parts.length == 2) {
+                        String key = parts[0].trim();
+                        String value = parts[1].trim();
+                        System.out.println("Key: '" + key + "'");
+                        System.out.println("Value: '" + value + "'");
+                        try {
+                            dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
+                            dataManager.saveToJSON("result_text", value, getMainActivityContext());
+                            dataManager.saveToJSON("removeValue", false, getMainActivityContext());
+                            dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
+                            showToast();
+                        } catch (Exception e) {
+                            Log.i("createHistoryTextView", String.valueOf(e));
+                        }
+                    }
+                }
+                clickListener.set(true);
+            }
         });
 
         return textView;
@@ -435,7 +465,6 @@ public class HistoryActivity extends AppCompatActivity {
         // Perform UI updates here
         LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
         innerLinearLayout.removeAllViews();
-        createEmptyHistoryTextView();
 
         final String value = dataManager.readFromJSON("historyTextViewNumber", getMainActivityContext());
         if (value != null && !value.equals("0")) {
@@ -449,6 +478,8 @@ public class HistoryActivity extends AppCompatActivity {
                 // Create a thin line and add it to the inner LinearLayout
                 innerLinearLayout.addView(createLine());
             }
+        } else {
+            createEmptyHistoryTextView();
         }
     }
 
@@ -735,3 +766,4 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 }
+

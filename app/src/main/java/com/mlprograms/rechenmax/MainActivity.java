@@ -156,6 +156,9 @@ public class MainActivity extends AppCompatActivity {
         Log.i("showAllSettings", "lastop                           :'" + dataManager.readFromJSON("lastop", getApplicationContext()) + "'");
         Log.i("showAllSettings", "isNotation                       :'" + dataManager.readFromJSON("isNotation", getApplicationContext()) + "'");
         Log.i("showAllSettings", "eNotation                        :'" + dataManager.readFromJSON("eNotation", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "showShiftRow                     :'" + dataManager.readFromJSON("showShiftRow", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "shiftRow                         :'" + dataManager.readFromJSON("shiftRow", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "logX                             :'" + dataManager.readFromJSON("logX", getApplicationContext()) + "'");
         Log.i("all settings", "---       all settings        ---");
         System.out.println("\n");
     }
@@ -1265,7 +1268,10 @@ public class MainActivity extends AppCompatActivity {
     private void parenthesisOffAction() {
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+
             if (mode.equals("false")) {
+                checkCalculateText();
+
                 if(getCalculateText().contains("=")) {
                     setCalculateText("");
                     if(isInvalidInput(getResultText())) {
@@ -1323,6 +1329,8 @@ public class MainActivity extends AppCompatActivity {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
             if (mode.equals("false")) {
                 final String calc_text = getCalculateText().replace(" ", "");
+
+                checkCalculateText();
 
                 if (calc_text.isEmpty()) {
                     addCalculateText(getResultText() + "!");
@@ -1388,6 +1396,8 @@ public class MainActivity extends AppCompatActivity {
     private void rootAction() {
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            checkCalculateText();
+
             if (mode.equals("false")) {
                 if(!getRotateOperator()) {
                     addCalculateText("√(");
@@ -1411,6 +1421,8 @@ public class MainActivity extends AppCompatActivity {
     private void thirdRootAction() {
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
+            checkCalculateText();
+
             if (mode.equals("false")) {
                 if(!getRotateOperator()) {
                     addCalculateText("³√(");
@@ -1429,6 +1441,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void halfAction() {
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            checkCalculateText();
+
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
             if (mode.equals("false")) {
                 if(!getRotateOperator()) {
@@ -1448,6 +1462,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void thirdAction() {
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            checkCalculateText();
+
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
             if (mode.equals("false")) {
                 if(!getRotateOperator()) {
@@ -1467,6 +1483,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void quarterAction() {
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+            checkCalculateText();
+
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
             if (mode.equals("false")) {
                 if(!getRotateOperator()) {
@@ -2333,24 +2351,6 @@ public class MainActivity extends AppCompatActivity {
                     // Adjust text size and recursively call the method
                     adjustTextSize();
                     formatResultTextAfterType();
-
-                    // Save calculation to history in a separate thread
-                    final Context context1 = getApplicationContext();
-                    String finalText = text;
-                    new Thread(() -> runOnUiThread(() -> {
-                        final String value = dataManager.readFromJSON("historyTextViewNumber", context1);
-                        if (value == null) {
-                            dataManager.saveToJSON("historyTextViewNumber", "0", context1);
-                        } else {
-                            final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", context1));
-
-                            dataManager.saveToJSON("historyTextViewNumber", Integer.toString(old_value + 1), context1);
-                            dataManager.saveToJSON(String.valueOf(old_value + 1), finalText.replace("E", "e") + " = " + getResultText(), context1);
-                        }
-
-                        // Log historyTextViewNumber value for debugging
-                        Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
-                    })).start();
                     return;
                 } catch (NumberFormatException e) {
                     // Handle invalid number format in scientific notation

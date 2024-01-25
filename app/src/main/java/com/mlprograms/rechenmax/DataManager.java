@@ -203,10 +203,11 @@ public class DataManager {
                 if (jsonRead.has(name)) {
                     setting = jsonRead.getString(name);
                 } else {
-                    Log.e("readFromJSON", "Key: " + name + " does not exist in JSON");
+                    //Log.e("readFromJSON", "Key: " + name + " does not exist in JSON");
                 }
             }
         } catch (IOException | JSONException e) {
+            initializeSettings(mainActivity.getApplicationContext());
             e.printStackTrace();
         }
         return setting;
