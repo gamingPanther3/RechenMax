@@ -610,7 +610,7 @@ public class MainActivity extends AppCompatActivity {
         clipboardManager.setPrimaryClip(clipData);
 
         // Display a toast indicating that the data has been saved
-        showToast();
+        showToastLong("Wert wurde gespeichert ...");
     }
 
     /**
@@ -627,7 +627,7 @@ public class MainActivity extends AppCompatActivity {
         clipboardManager.setPrimaryClip(clipData);
 
         // Display a toast indicating that the data has been saved
-        showToast();
+        showToastLong("Wert wurde gespeichert ...");
     }
 
     /**
@@ -635,12 +635,26 @@ public class MainActivity extends AppCompatActivity {
      * It retrieves the context of the current application and sets the duration of the toast to short.
      * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
      */
-    private void showToast() {
+    private void showToastLong(final String text) {
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_LONG;
 
         // Create and show the toast
-        Toast toast = Toast.makeText(context, "Wert wurde gespeichert ...", duration);
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
+
+    /**
+     * This method displays a toast on the screen.
+     * It retrieves the context of the current application and sets the duration of the toast to short.
+     * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
+     */
+    private void showToastShort(final String text) {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+
+        // Create and show the toast
+        Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
@@ -1276,7 +1290,13 @@ public class MainActivity extends AppCompatActivity {
                             if(String.valueOf(lastChar).equals(")")) {
                                 addCalculateText(" )");
                             } else {
-                                addCalculateText(getLastOp() + " " + getResultText() + " )");
+                                if(!String.valueOf(lastChar).equals("½") &&
+                                        !String.valueOf(lastChar).equals("⅓") &&
+                                        !String.valueOf(lastChar).equals("¼")) {
+                                    addCalculateText(getLastOp() + " " + getResultText() + " )");
+                                } else {
+                                    addCalculateTextWithoutSpace(")");
+                                }
                             }
                         }
                     }
@@ -1885,19 +1905,56 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleMRAction(ClipboardManager clipboardManager) {
         ClipData clipData = clipboardManager.getPrimaryClip();
-        assert clipData != null;
+
+        if (clipData == null || clipData.getItemCount() == 0) {
+            // Handle the case where clipboard data is null or empty
+            showToastShort("Zwischenablage enthält keine Daten ...");
+            return;
+        }
+
         ClipData.Item item = clipData.getItemAt(0);
         String text = (String) item.getText();
 
-        if (text != null && text.replace(".", "").matches("^-?\\d+([.,]\\d*)?([eE][+-]?\\d+)?$")) {
-            setRemoveValue(false);
-            setResultText(text);
-            formatResultTextAfterType();
-        } else {
-            setResultText("Ungültige Eingabe");
-            setRemoveValue(true);
+        String scientificNotationPattern = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
+        String mathTaskPattern = "[-+*/%^()0-9.eE\\s]+";
+
+        if(!text.isEmpty()) {
+            if (text.matches(scientificNotationPattern) && !text.matches(mathTaskPattern)) {
+                final String resultText = getCalculateText();
+
+                setResultText(text);
+                formatResultTextAfterType();
+                final String new_text = getResultText();
+                setResultText(resultText);
+
+                if (getCalculateText().isEmpty()) {
+                    setCalculateText(new_text);
+                } else {
+                    addCalculateText(new_text);
+                }
+            } else if ((text.matches(mathTaskPattern) && !text.matches(scientificNotationPattern)) || text.matches("[-+]?[0-9]+")) {
+                if(!text.matches("[-+]?[0-9]+")) {
+                    if (getCalculateText().isEmpty()) {
+                        setCalculateText(text);
+                    } else {
+                        addCalculateText(text);
+                    }
+                } else {
+                    setResultText(text);
+                }
+            } else {
+                showToastLong("Keine gültige Eingabe ...");
+            }
+
+
+            if (!getCalculateText().isEmpty()) {
+                if (isOperator(String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)))) {
+                    setRotateOperator(false);
+                } else {
+                    setRotateOperator(true);
+                }
+            }
         }
-        formatResultTextAfterType();
     }
 
     /**
@@ -1907,7 +1964,7 @@ public class MainActivity extends AppCompatActivity {
      * @param op The operation to be performed. This can be any mathematical operation like addition (+), subtraction (-), multiplication (*), or division (/).
      */
     public void OperationAction(final String op) {
-        if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
+        if(dataManager.readFromJSON("logX", getApplicationContext() ).equals("false")) {
             setLastOp(op);
             final String new_op = op.replace("*", "×").replace("/", "÷");
 
@@ -2348,27 +2405,19 @@ public class MainActivity extends AppCompatActivity {
         if(getResultText() != null) {
             int len = getResultText().replace(",", "").replace(".", "").replace("-", "").length();
             TextView label = findViewById(R.id.result_label);
-            if(!getResultText().equals("Nur reelle Zahlen")) {
-                if (!getResultText().equals("Ungültige Eingabe")) {
-                    if (len >= 12) {
-                        label.setTextSize(45f);
-                        if (len >= 14) {
-                            label.setTextSize(40f);
-                            if (len >= 15) {
-                                label.setTextSize(35f);
-                                if(len >= 17) {
-                                    label.setTextSize(31f);
-                                }
-                            }
+            if (len >= 12) {
+                label.setTextSize(45f);
+                if (len >= 14) {
+                    label.setTextSize(40f);
+                    if (len >= 15) {
+                        label.setTextSize(35f);
+                        if(len >= 17) {
+                            label.setTextSize(31f);
                         }
-                    } else {
-                        label.setTextSize(55f);
                     }
-                } else {
-                    label.setTextSize(45f);
                 }
             } else {
-                label.setTextSize(50f);
+                label.setTextSize(55f);
             }
         }
     }
