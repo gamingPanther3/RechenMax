@@ -273,6 +273,91 @@
             android:textColor="#000000" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Löschen einzelner Berechnungen"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Mit einem Doppelklick können einzelne Berechnungen im Verlauf entfernt werden.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Eulersche Zahl"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Die Eulersche Zahl wurde implementiert, um Berechnungen zu erweitern.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Kubikwurzel"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Kubikwurzelfunktion '³√' für erweiterte Berechnungen integriert.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Brüche"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="In dieser Version wurden '½', '⅓' und '¼' hinzugefügt, um die Berechnungen zu diversifizieren und präzisere Resultate zu erzielen.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Brüche"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures19"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Verbesserte Funktionalität für das Einfügen von Werten.\n"
+            android:textColor="#000000" />
+
+        <TextView
             android:id="@+id/releaseNotesBugsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
