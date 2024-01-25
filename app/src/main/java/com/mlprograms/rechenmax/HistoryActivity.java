@@ -679,28 +679,6 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets up the listener for all buttons.
-     *
-     * @param textViewId The ID of the button to which the listener is to be set.
-     * @param action The action which belongs to the button.
-     */
-    private void setLongTextViewClickListener(int textViewId, Runnable action) {
-        // Find the TextView with the specified ID
-        TextView textView = findViewById(textViewId);
-
-        // Check if the TextView is not null
-        if (textView != null) {
-            // Set a long click listener for the TextView
-            textView.setOnLongClickListener(v -> {
-                // Execute the specified action when the TextView is long-clicked
-                action.run();
-                // Return false to indicate that the event is not consumed
-                return false;
-            });
-        }
-    }
-
-    /**
      * This static method sets the context of the MainActivity.
      * @param activity The MainActivity whose context is to be set.
      */
