@@ -46,26 +46,36 @@
                 android:id="@+id/shiftMode_text"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginStart="10dp"
+                android:paddingLeft="10dp"
                 android:gravity="center"
                 android:text="1"
                 android:textSize="@dimen/calcButtonTextSize"
                 android:tooltipText="Modus" />
+
+            <TextView
+                android:id="@+id/functionMode_text"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="Deg"
+                android:textSize="@dimen/calcButtonTextSize"
+                android:tooltipText="Gradmaß (Deg) / Bogenmaß (Rad)" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/functionMode_text"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginEnd="20dp"
-                android:gravity="center"
-                android:text="Deg"
-                android:textSize="@dimen/calcButtonTextSize"
-                android:tooltipText="Gradmaß (Deg) / Bogenmaß (Rad)" />
+            <Button
+                android:id="@+id/graph_button"
+                android:layout_width="40dp"
+                android:layout_height="34dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginEnd="10dp"
+                android:foreground="@drawable/baseline_square_foot_24_light"
+                android:tag="history"
+                android:tooltipText="Verlauf" />
 
             <Button
                 android:id="@+id/history_button"
