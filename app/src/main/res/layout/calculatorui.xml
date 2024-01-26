@@ -68,16 +68,6 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/graph_button"
-                android:layout_width="40dp"
-                android:layout_height="34dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginEnd="10dp"
-                android:foreground="@drawable/baseline_square_foot_24_light"
-                android:tag="history"
-                android:tooltipText="Verlauf" />
-
-            <Button
                 android:id="@+id/history_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

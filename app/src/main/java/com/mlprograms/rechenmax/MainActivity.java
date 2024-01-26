@@ -1571,7 +1571,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("UseCompatLoadingForDrawables")
     private void switchDisplayMode(int currentNightMode) {
         // Global variables
-        TextView graphButton = findViewById(R.id.graph_button);
         TextView historyButton = findViewById(R.id.history_button);
         TextView settingsButton = findViewById(R.id.settings_button);
         TextView scienceButton = findViewById(R.id.scientificButton);
