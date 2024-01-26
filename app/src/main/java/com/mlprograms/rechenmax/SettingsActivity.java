@@ -194,6 +194,13 @@ public class SettingsActivity extends AppCompatActivity {
                 // do nothing
             }
         });
+
+        Button helpButton = findViewById(R.id.help_button);
+        helpButton.setOnClickListener(v -> {
+            HelpActivity.setMainActivityContext(this);
+            Intent intent = new Intent(this, HelpActivity.class);
+            startActivity(intent);
+        });
     }
 
     /**
@@ -390,6 +397,7 @@ public class SettingsActivity extends AppCompatActivity {
         ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
         LinearLayout settingsLayout = findViewById(R.id.settings_layout);
         Button settingsReturnButton = findViewById(R.id.settings_return_button);
+        Button helpButton = findViewById(R.id.help_button);
 
         TextView settingsTitle = findViewById(R.id.settings_title);
         TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
@@ -424,11 +432,17 @@ public class SettingsActivity extends AppCompatActivity {
                                 if(backbutton != null) {
                                     backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
                                 }
+                                if (helpButton != null) {
+                                    helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                                }
                             } else {
                                 updateUI(R.color.darkmode_black, R.color.darkmode_white);
 
                                 if(backbutton != null) {
                                     backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                                }
+                                if (helpButton != null) {
+                                    helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
                                 }
                             }
                         } else {
@@ -442,6 +456,8 @@ public class SettingsActivity extends AppCompatActivity {
                         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
                         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                        helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                        helpButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         settingsTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         settingsScrollView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
@@ -463,6 +479,8 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
                 settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                helpButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 settingsTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 settingsScrollView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
@@ -491,12 +509,18 @@ public class SettingsActivity extends AppCompatActivity {
                         if(backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
                         }
+                        if (helpButton != null) {
+                            helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                        }
                     } else {
                         updateUI(R.color.darkmode_black, R.color.darkmode_white);
                         updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
 
                         if(backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                        }
+                        if (helpButton != null) {
+                            helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
                         }
                     }
                 } else {
@@ -517,6 +541,7 @@ public class SettingsActivity extends AppCompatActivity {
         ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
         LinearLayout settingsLayout = findViewById(R.id.settings_layout);
         Button settingsReturnButton = findViewById(R.id.settings_return_button);
+        Button settingsHelpButton = findViewById(R.id.help_button);
         TextView settingsTitle = findViewById(R.id.settings_title);
         TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
         TextView settingsReleaseNotesText = findViewById(R.id.settings_release_notes_text);
@@ -532,6 +557,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingsHelpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+        settingsHelpButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsTitle.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsScrollView.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));

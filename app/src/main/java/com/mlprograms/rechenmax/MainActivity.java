@@ -29,8 +29,6 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import org.w3c.dom.Text;
-
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -266,7 +264,6 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.shiftMode_text).setOnClickListener(view -> setShiftButtonState());
         }
     }
-
     /**
      * This method is responsible for toggling between two function modes, namely "Deg" (Degrees)
      * and "Rad" (Radians). It retrieves the current function mode from the application's stored data
@@ -1574,6 +1571,7 @@ public class MainActivity extends AppCompatActivity {
         TextView historyButton = findViewById(R.id.history_button);
         TextView settingsButton = findViewById(R.id.settings_button);
         TextView scienceButton = findViewById(R.id.scientificButton);
+        TextView helpButton = findViewById(R.id.help_button);
         Button shiftButton = findViewById(R.id.shift);
         int newColorBTNBackgroundAccent = 0;
         int newColorBTNForegroundAccent = 0;
@@ -1599,6 +1597,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_light));
                             }
+                            if (helpButton != null) {
+                                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                            }
 
                             if (trueDarkMode != null && trueDarkMode.equals("true")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
@@ -1614,6 +1615,9 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 if (shiftButton != null) {
                                     shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_true_darkmode));
+                                }
+                                if (helpButton != null) {
+                                    helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
                                 }
                             } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
@@ -1635,6 +1639,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24));
                             }
+                            if (helpButton != null) {
+                                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                            }
                             break;
                     }
                     break;
@@ -1653,6 +1660,9 @@ public class MainActivity extends AppCompatActivity {
                     if (shiftButton != null) {
                         shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24));
                     }
+                    if (helpButton != null) {
+                        helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                    }
                     break;
                 case "Dunkelmodus":
                     dataManager = new DataManager(this);
@@ -1667,6 +1677,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (shiftButton != null) {
                         shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_light));
+                    }
+                    if (helpButton != null) {
+                        helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
                     }
                     if (trueDarkMode != null) {
                         if (trueDarkMode.equals("false")) {
@@ -1687,6 +1700,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_true_darkmode));
+                            }
+                            if (helpButton != null) {
+                                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
                             }
                         }
                     } else {

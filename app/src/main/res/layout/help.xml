@@ -1,0 +1,405 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/helpUI"
+    android:background="@color/colorBTNBackgroundAccent"
+    tools:context=".HelpActivity" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="15sp"
+        android:paddingEnd="15sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorLightBackground"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/help_return_button"
+                android:layout_width="50dp"
+                android:layout_height="44dp"
+                android:layout_gravity="left|center_vertical"
+                android:foreground="@drawable/baseline_arrow_back_24_light"
+                android:tag="return"
+                android:textSize="@dimen/calcButtonTextSize"
+                android:tooltipText="Zurück" />
+
+            <TextView
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:gravity="center_vertical"
+                android:text="Einführung / Anleitung"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="27sp" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/helpUIScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:text="Einführung"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="\nIn dieser umfassenden Anleitung wirst du detailliert mit sämtlichen Knöpfen und Funktionen des RechenMax vertraut gemacht. Der RechenMax bietet eine Vielzahl von leistungsstarken Werkzeugen und Möglichkeiten, um deine Rechenanforderungen effizient zu bewältigen. \n"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:text="Grundlagen"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="\nBerechnungsbereiche"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\n1: In diesem Bereich (Berechnungsbereich) wird die von dir eingegebene Berechnung angezeigt."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="2: In diesem Bereich (Ergebnisbereich) wird das Ergebnis der durchgeführten Berechnung angezeigt."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_calculatelabel"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_calculatelabel" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="\nNummernfeld"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nIn diesem Bereich kannst du durch Klicken auf Zahlen diese schrittweise zum aktuellen Ergebnis im Ergebnisbereich hinzufügen. Dies ermöglicht eine einfache Zusammenstellung deiner gewünschten Zahlenkombination und zeigt dir transparent, wie sich das Ergebnis mit jeder Auswahl ändert."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_numpad"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_numpad" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="\nEntfernen / Zurück"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nFür eine präzise Bearbeitung stehen dir verschiedene Löschfunktionen zur Verfügung: '⌫' entfernt die zuletzt hinzugefügte Zahl oder das zuletzt eingegebene Zeichen aus dem Ergebnisbereich, 'CE' löscht den gesamten Ergebnisbereich, und 'C' leert sowohl den Ergebnis- als auch den Berechnungsbereich."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_delete"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_delete" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nKomma"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nDurch das Betätigen des 'Komma-Knopfes' hast du die Möglichkeit, ein Komma zum Ergebnisbereich hinzuzufügen. Es ist dabei zu beachten, dass, falls bereits ein Komma vorhanden ist, kein weiteres hinzugefügt wird. Diese Funktion ermöglicht eine präzise Eingabe von Dezimalstellen."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_comma"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_comma" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="\nNegieren"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nWenn du möchtest, dass eine Zahl negativ wird, betätige den '±'-Knopf. Drücke ihn erneut, wenn die Zahl wieder positiv sein soll. Diese Funktion ermöglicht eine einfache Änderung des Vorzeichens und sorgt dafür, dass du deine Zahlen nach Bedarf schnell und unkompliziert anpassen kannst."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_negative"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_negative" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="\nAddition, Subtraktion, Multiplikation und Division"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nFür Rechenoperationen nutze einfach eines der hervorgehobenen Zeichen. Wenn du beispielsweise '×' auswählst, wird der Operator sofort im Ergebnisbereich eingefügt. Füge dann eine Zahl (z.B., '3') hinzu und setze nach Bedarf weitere Operatoren ein. So gestaltest du deine Rechenabläufe einfach und schrittweise."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_operand"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_operands" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="\nBerechnen"
+                android:textColor="#000000"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nNachdem du deine Berechnung abgeschlossen hast, betätige die '='-Taste, um das Ergebnis zu berechnen. Anschließend wird das Resultat im Ergebnisbereich für dich angezeigt. Diese einfache Vorgehensweise ermöglicht es dir, schnell und unkompliziert die Ergebnisse deiner Rechenoperationen zu erhalten."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_calculate"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_calculate" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nAktionsleiste"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nZusätzlich gibt es eine Aktionsleiste, über die du zwischen verschiedenen Tabs (Verlauf und Einstellungen) sowie dem Wissenschaftsmodus wechseln kannst. Diese Funktion eröffnet dir die Möglichkeit, flexibel zwischen deinem Berechnungsverlauf, individuellen Einstellungen und dem erweiterten Wissenschaftsmodus zu navigieren."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_actionbar"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_actionbar" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
