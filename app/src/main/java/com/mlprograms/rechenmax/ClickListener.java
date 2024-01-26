@@ -4,9 +4,13 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
-public class DoubleClickListener implements View.OnClickListener {
-    private static final long DOUBLE_CLICK_TIME_DELTA = 200; // Zeitintervall zwischen Klicks
+import org.w3c.dom.Text;
+
+public class ClickListener implements View.OnClickListener, View.OnLongClickListener {
+    private static final long DOUBLE_CLICK_TIME_DELTA = 200;
+    private static final long LONG_CLICK_THRESHOLD = 500;
     private long lastClickTime = 0;
+    private long lastDownTime = 0;
     private final Handler handler = new Handler();
     private int clickCount = 0;
 
@@ -35,9 +39,27 @@ public class DoubleClickListener implements View.OnClickListener {
         lastClickTime = clickTime;
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+        long currentDownTime = System.currentTimeMillis();
+        if (currentDownTime - lastDownTime >= LONG_CLICK_THRESHOLD) {
+            onLongClickEvent(v);
+        }
+        lastDownTime = currentDownTime;
+        return true;
+    }
+
+    public void onLongClickEvent(View v) {}
+
+    public void onLongClickEvent(TextView v) {}
+
     public void onDoubleClick(View v) {}
+
+    public void onLongClick(TextView v) {}
+
+    public void onSingleClick(View v) {}
 
     public void onDoubleClick(TextView v) {}
 
-    public void onSingleClick(View v) {}
+    public void onSingleClick(TextView v) {}
 }
