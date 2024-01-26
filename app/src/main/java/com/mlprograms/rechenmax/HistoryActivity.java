@@ -3,8 +3,6 @@ package com.mlprograms.rechenmax;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -169,7 +165,7 @@ public class HistoryActivity extends AppCompatActivity {
             return false;
         });
 
-        textView.setOnClickListener(new DoubleClickListener() {
+        textView.setOnClickListener(new ClickListener() {
             @Override
             public void onDoubleClick(View v) {
                 dataManager.saveToJSON(String.valueOf(textView.getId()), null, getApplicationContext());
