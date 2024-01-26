@@ -26,6 +26,12 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".Graphics"
+            android:exported="false"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:configChanges="uiMode"
             android:exported="true"

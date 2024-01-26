@@ -32,10 +32,11 @@ android {
 }
 
 dependencies {
-    // JUnit is added by default in Android Studio projects.
-    // It's used for pure unit tests and also Espresso UI tests
+    implementation("androidx.core:core:1.8.0")
+    implementation ("net.objecthunter:exp4j:0.4.8")
+    //implementation("com.android.support:support-compat:27.1.1") // Entferne oder kommentiere diese Zeile aus
+    implementation("com.jjoe64:graphview:4.2.2")
     implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
-    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("org.testng:testng:6.9.6")
