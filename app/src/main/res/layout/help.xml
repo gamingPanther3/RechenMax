@@ -105,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.7"
-                        android:text="\n1: In diesem Bereich (Berechnungsbereich) wird die von dir eingegebene Berechnung angezeigt."
+                        android:text="\n1: In diesem Bereich (Berechnungsbereich) wird die von dir eingegebene Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren."
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
@@ -113,7 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="2: In diesem Bereich (Ergebnisbereich) wird das Ergebnis der durchgeführten Berechnung angezeigt."
+                        android:text="2: In diesem Bereich (Ergebnisbereich) wird das Ergebnis der durchgeführten Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren."
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
@@ -400,6 +400,314 @@
                     android:src="@drawable/rm_tdm_actionbar" />
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:text="Verlauf"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nVerlauf aufrufen"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nIn der Aktionsleiste findest du den Verlaufsknopf, der es dir ermöglicht, auf deine vorherigen Berechnungen zuzugreifen und diese anzuzeigen."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_history_button"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_historybutton" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nVerlauf bearbeiten"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nIm Verlauf kannst du vorherige Berechnungen einsehen. Die Löschen-Taste (oben rechts) leert den gesamten Verlauf, der Zurück-Knopf (oben links) führt zum Taschenrechner zurück. Durch langes Drücken wird eine Berechnung in die Zwischenablage kopiert, kurzes Drücken wird sie in den Taschenrechner eingefügt, und doppeltes Tippen löscht eine einzelne Berechnung."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_history"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_history" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nEinstellungen aufrufen"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nWenn du wieder zurück zur Startseite gehst, findest du den Eintellungen-Knopf. Wenn du ihn drückst wirst du zu den Einstellungen von dem Taschernechner weitergeleitet."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_actionbar2"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_settingbutton" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nEinstellungen"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nAn dieser Stelle stehen dir verschiedene Einstellungen mit ausführlichen Beschreibungen zur Verfügung. Wenn du zurück zur Startseite möchtest, verwende einfach den Knopf oben links. Zusätzlich findest du oben rechts den Knopf, der dich zur Einführung des Taschenrechners weiterleitet. So kannst du mühelos auf die gewünschten Funktionen und Informationen zugreifen."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_settings"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_settings" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:text="Erweiterte Funktionen"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nWissenschaftlichen Modus aktivieren"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nUm den wissenschaftlichen Modus zu aktivieren, drücke einfach oben links auf den entsprechenden Knopf. Dadurch werden zusätzliche Funktionen angezeigt."
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_science"
+                    android:layout_width="0dp"
+                    android:layout_height="300sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_sciencebutton" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\nWissenschaftlichen Modus aktivieren"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\nUm den wissenschaftlichen Modus zu aktivieren, drücke einfach oben links auf den entsprechenden Knopf. Dadurch werden zusätzliche Funktionen angezeigt. Außerdem findest du oben links zwei Pfeile, eine Zahl (1, 2 oder 3) und den Modus 'Deg' oder 'Rad'. Mit den Pfeilen kannst du zwischen den Modi des wissenschaftlichen Modus wechseln, die wiederum verschiedene Funktionen beinhalten. 'Deg' (Gradmaß) und 'Rad' (Bogenmaß) werden für verschiedene Anwendungen genutzt.\n\n'(': Setzt eine geöffnete Klammer in den Berechnungsbereich.\n\n')': Setzt eine geschlossene Klammer in den Berechnungsbereich.\n\n'x!': Nimmt die eingegebene Zahl aus dem Ergebnisbereich und fügt sie mit dem Faktoriell-Zeichen ein.\n\n'√x': Die Wurzel aus der Zahl, die aus dem Ergebnisbereich stammt.\n\n'e': Eulersche Zahl (ca. 2,7182)"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/pic_science_actionbar1"
+                        android:layout_width="match_parent"
+                        android:layout_height="300sp"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="5sp"
+                        android:src="@drawable/rm_tdm_scieceactionbar1" />
+
+                    <ImageView
+                        android:id="@+id/pic_science_actionbar2"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="5sp"
+                        android:layout_height="300sp"
+                        android:layout_weight="1"
+                        android:src="@drawable/rm_tdm_scieceactionbar2" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="\n"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.7"
+                        android:text="\n"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/pic_science_actionbar"
+                    android:layout_width="0dp"
+                    android:layout_height="500sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rm_tdm_scieceactionbar" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
