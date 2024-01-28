@@ -54,14 +54,15 @@
     <string name="third">⅓</string>
     <string name="quarter">¼</string>
 
-    <string name="warning">Willst du die Berechnung wirklich dauerhaft aus deinem Verlauf entfernen?</string>
-    <string name="abbrechen">Abbrechen</string>
-    <string name="l_schen">Löschen</string>
-
     <string-array name="setting_display_mode_options">
         <item>Systemstandard</item>
         <item>Tageslichtmodus</item>
         <item>Dunkelmodus</item>
+    </string-array>
+
+    <string-array name="setting_calculation_mode_options">
+        <item>Standard</item>
+        <item>Vereinfacht</item>
     </string-array>
 
     <string name="mode_prompt">Wähle einen Modus aus</string>

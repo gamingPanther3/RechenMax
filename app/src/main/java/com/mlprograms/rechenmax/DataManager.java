@@ -21,8 +21,8 @@ import java.nio.file.Files;
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.3.7
- * @date 21.01.2024
+ * @version 1.3.8
+ * @date 28.01.2024
  *
  *  | Names                            | Values                   | Context                              |
  *  |----------------------------------|--------------------------|--------------------------------------|
@@ -46,6 +46,7 @@ import java.nio.file.Files;
  *  | showShiftRow                     | Boolean                  | MainActivity                         |
  *  | shiftRow                         | Boolean                  | MainActivity                         |
  *  | logX                             | Boolean                  | MainActivity                         |
+ *  | calculationMode                  | Standard / Vereinfacht   | MainActivity                         |
  */
 
 public class DataManager {
@@ -280,6 +281,9 @@ public class DataManager {
         }
         if(readFromJSON("logX", applicationContext) == null) {
             saveToJSON("logX", "false", applicationContext);
+        }
+        if(readFromJSON("calculationMode", applicationContext) == null) {
+            saveToJSON("calculationMode", "Standard", applicationContext);
         }
     }
 

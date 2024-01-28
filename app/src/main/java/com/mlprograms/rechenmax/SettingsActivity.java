@@ -195,6 +195,33 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // Declare a Spinner object
+        Spinner spinner3 = findViewById(R.id.settings_calculation_mode_spinner);
+        final String mode4 = dataManager.readFromJSON("calculationMode", getMainActivityContext());
+        if(mode4.equals("Standard")) {
+            spinner3.setSelection(0);
+        } else {
+            spinner3.setSelection(1);
+        }
+        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (spinner3.getSelectedItem().toString()) {
+                    case "Standard":
+                        dataManager.saveToJSON("calculationMode", "Standard", getMainActivityContext());
+                        break;
+                    case "Vereinfacht":
+                        dataManager.saveToJSON("calculationMode", "Vereinfacht", getMainActivityContext());
+                        break;
+                }
+                updateSpinnerFunctionMode(parent);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+
         Button helpButton = findViewById(R.id.help_button);
         helpButton.setOnClickListener(v -> {
             HelpActivity.setMainActivityContext(this);
@@ -406,14 +433,20 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
         TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
+
+        TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
+        TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
+
         TextView settingsCredits = findViewById(R.id.credits_view);
         TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
         TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
 
         Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
         Spinner spinner2 = findViewById(R.id.settings_function_spinner);
+        Spinner spinner3 = findViewById(R.id.settings_calculation_mode_spinner);
         updateSpinner2(spinner1);
         updateSpinner2(spinner2);
+        updateSpinner2(spinner3);
 
         @SuppressLint("CutPasteId") Button backbutton = findViewById(R.id.settings_return_button);
 
@@ -467,6 +500,8 @@ public class SettingsActivity extends AppCompatActivity {
                         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
+                        settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
+                        settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -490,6 +525,8 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
+                settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
+                settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -549,6 +586,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
         TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
+        TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
+        TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
         TextView settingsCredits = findViewById(R.id.credits_view);
 
         TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
@@ -568,6 +607,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
 
