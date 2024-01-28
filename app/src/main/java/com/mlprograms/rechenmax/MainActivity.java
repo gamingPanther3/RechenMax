@@ -2035,6 +2035,7 @@ public class MainActivity extends AppCompatActivity {
                 case "MC": {
                     ClipData clipData = ClipData.newPlainText("", "");
                     clipboardManager.setPrimaryClip(clipData);
+                    showToastLong("Zwischenablage geleert ...");
                     break;
                 }
                 case "MR":
@@ -2071,30 +2072,15 @@ public class MainActivity extends AppCompatActivity {
         String scientificNotationPattern = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
         String mathTaskPattern = "[-+*/%^()0-9.eE\\s]+";
 
-        if(!text.isEmpty()) {
+        if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            if(!text.isEmpty()) {
+                addCalculateTextWithoutSpace(text);
+            }
+        } else {
             if (text.matches(scientificNotationPattern) && !text.matches(mathTaskPattern)) {
-                final String resultText = getCalculateText();
-
-                setResultText(text);
-                formatResultTextAfterType();
-                final String new_text = getResultText();
-                setResultText(resultText);
-
-                if (getCalculateText().isEmpty()) {
-                    setCalculateText(new_text);
-                } else {
-                    addCalculateText(new_text);
-                }
+                processScientificNotation(text);
             } else if ((text.matches(mathTaskPattern) && !text.matches(scientificNotationPattern)) || text.matches("[-+]?[0-9]+")) {
-                if(!text.matches("[-+]?[0-9]+")) {
-                    if (getCalculateText().isEmpty()) {
-                        setCalculateText(text);
-                    } else {
-                        addCalculateText(text);
-                    }
-                } else {
-                    setResultText(text);
-                }
+                processMathTaskOrNumber(text);
             } else {
                 showToastLong("Keine gültige Eingabe ...");
             }
@@ -2107,6 +2093,32 @@ public class MainActivity extends AppCompatActivity {
                     setRotateOperator(true);
                 }
             }
+        }
+    }
+
+    private void processScientificNotation(String text) {
+        final String resultText = CalculatorActivity.calculate(text);
+        setResultText(text);
+        formatResultTextAfterType();
+        final String new_text = getResultText();
+        setResultText(resultText);
+
+        if (getCalculateText().isEmpty()) {
+            setCalculateText(new_text);
+        } else {
+            addCalculateText(new_text);
+        }
+    }
+
+    private void processMathTaskOrNumber(String text) {
+        if (!text.matches("[-+]?[0-9]+")) {
+            if (getCalculateText().isEmpty()) {
+                setCalculateText(text);
+            } else {
+                addCalculateText(text);
+            }
+        } else {
+            setResultText(text);
         }
     }
 

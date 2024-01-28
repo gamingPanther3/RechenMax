@@ -7,7 +7,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class ClickListener implements View.OnClickListener, View.OnLongClickListener {
-    private static final long DOUBLE_CLICK_TIME_DELTA = 200;
+    private static final long DOUBLE_CLICK_TIME_DELTA = 300;
     private static final long LONG_CLICK_THRESHOLD = 500;
     private long lastClickTime = 0;
     private long lastDownTime = 0;
@@ -23,7 +23,7 @@ public class ClickListener implements View.OnClickListener, View.OnLongClickList
             clickCount++;
             if (clickCount == 2) {
                 onDoubleClick(v);
-                clickCount = 0; // Zurücksetzen, um auf den nächsten Doppelklick zu warten
+                clickCount = 0;
             }
         } else {
             // Single click
