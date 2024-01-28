@@ -162,7 +162,7 @@
                 android:id="@+id/settings_calculation_mode_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mit dieser Einstellung kannst du bestimmen, ob die Eingaben erst in dem Ergebnisbereich geschrieben werden sollen und dann in den Berechnungsbereich mit einem Operator eingefügt werden (Standard). Oder direkt in den Berechnungsbereich geschrieben wird (Vereinfacht)."
+                android:text="Mit dieser Einstellung kannst du festlegen, ob die Eingaben zuerst im Ergebnisbereich angezeigt und dann mit einem Operator in den Berechnungsbereich eingefügt (Standard), oder ob sie direkt im Berechnungsbereich geschrieben werden (Vereinfacht)."
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="14.4dp" />
 
