@@ -151,6 +151,41 @@
                 android:text="" />
 
             <TextView
+                android:id="@+id/settings_calculation_mode_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Berechungsmodus"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/settings_calculation_mode_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mit dieser Einstellung kannst du bestimmen, ob die Eingaben in dem Ergebnisbereich erst geschrieben werden sollen und dann in den Berechnungsbereich eingefügt werden (Standard). Oder direkt in den Berechnungsbereich geschrieben werden (Vereinfacht)."
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="14.4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <Spinner
+                android:id="@+id/settings_calculation_mode_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/setting_calculation_mode_options"
+                android:gravity="center_horizontal"
+                android:prompt="@string/mode_prompt"
+                android:spinnerMode="dialog" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <TextView
                 android:id="@+id/settings_function_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
