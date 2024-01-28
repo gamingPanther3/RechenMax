@@ -105,15 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.7"
-                        android:text="\n1: In diesem Bereich (Berechnungsbereich) wird die von dir eingegebene Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren."
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="2: In diesem Bereich (Ergebnisbereich) wird das Ergebnis der durchgeführten Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren."
+                        android:text="\n1: In diesem Bereich (Berechnungsbereich) wird die von dir eingegebene Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren.\n2: In diesem Bereich (Ergebnisbereich) wird das Ergebnis der durchgeführten Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren."
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
@@ -191,8 +183,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.7"
-                        android:text="\nFür eine präzise Bearbeitung stehen dir verschiedene Löschfunktionen zur Verfügung: '⌫' entfernt die zuletzt hinzugefügte Zahl oder das zuletzt eingegebene Zeichen aus dem Ergebnisbereich, 'CE' löscht den gesamten Ergebnisbereich, und 'C' leert sowohl den Ergebnis- als auch den Berechnungsbereich."
-                        android:textColor="#000000"
+                        android:text="\nFür eine präzise Bearbeitung stehen dir verschiedene Löschfunktionen zur Verfügung: '⌫' entfernt die zuletzt hinzugefügte Zahl oder das zuletzt eingegebene Zeichen aus dem Ergebnisbereich, 'CE' löscht den gesamten Ergebnisbereich und 'C' leert sowohl den Ergebnis- als auch den Berechnungsbereich."                        android:textColor="#000000"
                         android:textSize="15sp" />
 
                 </LinearLayout>
