@@ -30,10 +30,13 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Um den Winkel zu finden, dessen Tangens 1,732 ist, geben Sie tan⁻¹(1.732) ein.
 
 <div align="center">
-  <img src="pictures/RM-LM-C.png" alt="RechenMaxBild1" width="200"/>
-  <img src="pictures/RM-DM-C.png" alt="RechenMaxBild2" width="200"/>
-  <img src="pictures/RM-LM-C-S.png" alt="RechenMaxBild3" width="200"/>
-  <img src="pictures/RM-DM-C-S.png" alt="RechenMaxBild4" width="200"/>
+  <img src="pictures/RM-1.png" alt="RechenMaxBild1" width="200"/>
+  <img src="pictures/RM-2.png" alt="RechenMaxBild2" width="200"/>
+  <img src="pictures/RM-3.png" alt="RechenMaxBild3" width="200"/>
+  <img src="pictures/RM-4.png" alt="RechenMaxBild4" width="200"/>
+  <img src="pictures/RM-5.png" alt="RechenMaxBild2" width="200"/>
+  <img src="pictures/RM-6.png" alt="RechenMaxBild3" width="200"/>
+  <img src="pictures/RM-7.png" alt="RechenMaxBild4" width="200"/>
 </div>  
 
 - **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen wie Sinus, Cosinus, Tangens oder Pi zu nutzen.
@@ -49,10 +52,13 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
 
 <div align="center">
-  <img src="pictures/RM-LM-H.png" alt="RechenMaxBild1" width="200"/>
-  <img src="pictures/RM-DM-H.png" alt="RechenMaxBild2" width="200"/>
-  <img src="pictures/RM-LM-S.png" alt="RechenMaxBild3" width="200"/>
-  <img src="pictures/RM-DM-S.png" alt="RechenMaxBild4" width="200"/>
+  <img src="pictures/RM-8.png" alt="RechenMaxBild1" width="200"/>
+  <img src="pictures/RM-9.png" alt="RechenMaxBild2" width="200"/>
+  <img src="pictures/RM-10.png" alt="RechenMaxBild3" width="200"/>
+  <img src="pictures/RM-11.png" alt="RechenMaxBild4" width="200"/>
+  <img src="pictures/RM-12.png" alt="RechenMaxBild2" width="200"/>
+  <img src="pictures/RM-13.png" alt="RechenMaxBild3" width="200"/>
+  <img src="pictures/RM-14.png" alt="RechenMaxBild4" width="200"/>
 </div>
 
 ### Verwendung
