@@ -59,6 +59,8 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   <img src="pictures/RM-12.png" alt="RechenMaxBild12" width="200"/>
   <img src="pictures/RM-13.png" alt="RechenMaxBild13" width="200"/>
   <img src="pictures/RM-14.png" alt="RechenMaxBild14" width="200"/>
+  <img src="pictures/RM-15.png" alt="RechenMaxBild13" width="200"/>
+  <img src="pictures/RM-16.png" alt="RechenMaxBild14" width="200"/>
 </div>
 
 ### Verwendung
