@@ -617,7 +617,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\nWissenschaftlichen Modus aktivieren"
+                android:text="\nWeitere Funktionen"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -672,7 +672,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\n"
+                android:text="\nWeitere Tabs"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -693,21 +693,59 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="0.7"
-                        android:text="\n"
+                        android:text="\nEs gibt drei verschiedene Tabs mit unterschiedlichen Funktionen, die du durch Drücken des entsprechenden Knopfes wechseln kannst.\n\n Tab 1:\n\n'sin(x)': Sinusfunktion\n'cos(x)': Cosinusfunktion\n'tan(x)': Tangensfunktion\n'e±':\n'π': Kreiszahl PI\n'sin⁻¹(x)': Inverse Sinusfunktion\n'cos⁻¹(x)': Inverse Cosinusfunktion\n'tan⁻¹(x)': Inverse Tangensfunktion\n\nTab 2:\n\n'sinh(x)': Hyperbolische Sinusfunktion\n'cosh(x)': Hyperbolische Cosinusfunktion\n'tanh(x)': Hyperbolische Tangensfunktion\n'sinh⁻¹(x)': Inverse Hyperbolische Sinusfunktion\n'cosh⁻¹(x)': Inverse Hyperbolische Cosinusfunktion\n'tanh⁻¹(x)': Inverse Hyperbolische Tangesfunktion\n\nTab 3:\n\n'log(x)':  Logarithmus zur Basis 10\n'log₂(x)': Logarithmus zur Basis 2\n'logₓ(x)': Logarithmus zur Basis x\n'ln(x)': Natürlicher Logarithmus zur Basis e (ungefähr 2,71828)\n'³√x': Kublikwurzel\n'½': Hälfte (0,5)\n'⅓': Drittel (0,3333...)\n'¼':Viertel (0,25)"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/pic_science_actionbar"
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="500sp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_scieceactionbar" />
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/pic_science_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="300sp"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="5sp"
+                        android:src="@drawable/rm_tdm_science1" />
+
+                    <ImageView
+                        android:id="@+id/pic_science_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="300sp"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="5sp"
+                        android:src="@drawable/rm_tdm_science2" />
+
+                    <ImageView
+                        android:id="@+id/pic_science_3"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="5sp"
+                        android:layout_height="300sp"
+                        android:layout_weight="1"
+                        android:src="@drawable/rm_tdm_science3" />
+
+                </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:gravity="center"
+                android:linksClickable="true"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                android:layout_marginTop="45sp"
+                android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz.\nVersion: 1.6.0"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:textSize="12dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
