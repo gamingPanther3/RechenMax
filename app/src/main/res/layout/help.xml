@@ -69,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:text="\nIn dieser umfassenden Anleitung wirst du detailliert mit sämtlichen Knöpfen und Funktionen des RechenMax vertraut gemacht. Der RechenMax bietet eine Vielzahl von leistungsstarken Werkzeugen und Möglichkeiten, um deine Rechenanforderungen effizient zu bewältigen. \n"
+                android:text="\nBrauchst du Hilfe oder bist du neu hier? Diese umfassende Anleitung führt dich detailliert durch sämtliche Knöpfe und Funktionen des RechenMax. Der RechenMax bietet eine Vielzahl von leistungsstarken Werkzeugen und Möglichkeiten, um deine Rechenanforderungen effizient zu bewältigen.\n"
                 android:textColor="#000000" />
 
             <TextView
