@@ -32,6 +32,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -88,15 +89,14 @@ public class MainActivity extends AppCompatActivity {
         // Create JSON file and check for its existence
         dataManager.createJSON(getApplicationContext());
         dataManager.initializeSettings(getApplicationContext());
-
-        // Get SharedPreferences for first run check
-        prefs = getSharedPreferences("com.mlprograms.RechenMax", MODE_PRIVATE);
+        dataManager.saveToJSON("currentVersion", "1.6.0", getApplicationContext());
 
         // If it's the first run of the application
-        if (prefs.getBoolean("firstrun", true)) {
-            prefs.edit().putBoolean("firstrun", false).apply();
+        if (!Objects.equals(dataManager.readFromJSON("currentVersion", getApplicationContext()), dataManager.readFromJSON("old_version", getApplicationContext()))) {
             // Set the flag to show patch notes and switch to the patch notes layout
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
+            dataManager.saveToJSON("old_version",
+                    dataManager.readFromJSON("currentVersion", getApplicationContext()), getApplicationContext());
             HelpActivity.setMainActivityContext(this);
             Intent intent = new Intent(this, HelpActivity.class);
             startActivity(intent);
@@ -161,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("showAllSettings", "shiftRow                         :'" + dataManager.readFromJSON("shiftRow", getApplicationContext()) + "'");
         Log.i("showAllSettings", "logX                             :'" + dataManager.readFromJSON("logX", getApplicationContext()) + "'");
         Log.i("showAllSettings", "calculationMode                  :'" + dataManager.readFromJSON("calculationMode", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "currentVersion                   :'" + dataManager.readFromJSON("currentVersion", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "old_version                      :'" + dataManager.readFromJSON("old_version", getApplicationContext()) + "'");
         Log.i("all settings", "---       all settings        ---");
         System.out.println("\n");
     }

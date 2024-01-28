@@ -55,10 +55,12 @@ public class SettingsActivity extends AppCompatActivity {
         dataManager.createJSON(getApplicationContext());
         //resetReleaseNoteConfig(getApplicationContext());
 
-        mainActivity.showAllSettings();
-
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switchDisplayMode(currentNightMode);
+        try {
+            switchDisplayMode(currentNightMode);
+        } catch (NullPointerException e) {
+            Log.e("SettingsActivity", "ShowPatchNotes");
+        }
 
         @SuppressLint("CutPasteId") Button button = findViewById(R.id.settings_return_button);
         button.setOnClickListener(v -> returnToCalculator());
