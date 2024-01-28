@@ -283,7 +283,7 @@ public class DataManager {
             saveToJSON("logX", "false", applicationContext);
         }
         if(readFromJSON("calculationMode", applicationContext) == null) {
-            saveToJSON("calculationMode", "Standard", applicationContext);
+            saveToJSON("calculationMode", "Vereinfacht", applicationContext);
         }
     }
 
