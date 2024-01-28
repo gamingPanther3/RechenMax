@@ -92,28 +92,29 @@ public class MainActivity extends AppCompatActivity {
 
         // If it's the first run of the application
         if (prefs.getBoolean("firstrun", true)) {
+            prefs.edit().putBoolean("firstrun", false).apply();
             // Set the flag to show patch notes and switch to the patch notes layout
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
-            setContentView(R.layout.patchnotes);
-            checkDarkmodeSetting();
-            prefs.edit().putBoolean("firstrun", false).apply();
+            HelpActivity.setMainActivityContext(this);
+            Intent intent = new Intent(this, HelpActivity.class);
+            startActivity(intent);
+        } else {
+            // Read values from DataManager
+            final String showPatNot = dataManager.readFromJSON("showPatchNotes", getApplicationContext());
+            final String disablePatNotTemp = dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext());
+
+            // If patch notes are set to be shown and not temporarily disabled, switch to patch notes layout
+            if (showPatNot != null && disablePatNotTemp != null) {
+                if (showPatNot.equals("true") && disablePatNotTemp.equals("false")) {
+                    setContentView(R.layout.patchnotes);
+                    checkDarkmodeSetting();
+                }
+            }
         }
 
         // Log information about patch notes settings
         Log.i("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
         Log.i("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
-
-        // Read values from DataManager
-        final String showPatNot = dataManager.readFromJSON("showPatchNotes", getApplicationContext());
-        final String disablePatNotTemp = dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext());
-
-        // If patch notes are set to be shown and not temporarily disabled, switch to patch notes layout
-        if (showPatNot != null && disablePatNotTemp != null) {
-            if (showPatNot.equals("true") && disablePatNotTemp.equals("false")) {
-                setContentView(R.layout.patchnotes);
-                checkDarkmodeSetting();
-            }
-        }
 
         // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
         dataManager.loadNumbers();

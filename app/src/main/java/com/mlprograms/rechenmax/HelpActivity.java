@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat;
 
 public class HelpActivity extends AppCompatActivity {
 
-    private static SettingsActivity mainActivity;
+    private static Context mainActivity;
     private Context context = this;
 
     /**
@@ -337,6 +337,10 @@ public class HelpActivity extends AppCompatActivity {
      * @param activity The MainActivity whose context is to be set.
      */
     public static void setMainActivityContext(SettingsActivity activity) {
+        mainActivity = activity;
+    }
+
+    public static void setMainActivityContext(MainActivity activity) {
         mainActivity = activity;
     }
 
