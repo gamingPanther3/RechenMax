@@ -370,7 +370,9 @@ public class MainActivity extends AppCompatActivity {
         final String rowValue = dataManager.readFromJSON("showScienceRow", getApplicationContext());
 
         // Toggle the visibility of different LinearLayouts and update TextView based on the shift button state
-        if(rowValue.equals("true")) {
+        if(rowValue.equals("true") && (buttonRow1 != null && buttonRow2 != null && buttonRow12 != null
+                && buttonRow22 != null && buttonRow13 != null && buttonRow23 != null && buttonRow3 != null
+                && shiftModeText != null)) {
             switch (shiftValue) {
                 case "1":
                     buttonRow1.setVisibility(View.VISIBLE);
