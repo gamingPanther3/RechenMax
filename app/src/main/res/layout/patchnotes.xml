@@ -374,6 +374,22 @@
             android:text="Es steht nun eine Hilfefunktion, die in dem Einstellungen zu finden ist, zur Verfügung, die alle Funktionen des Taschenrechners erklärt.\n"
             android:textColor="#000000" />
 
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle21"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Verschiedene Rechenmodi"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures21"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Innerhalb der Einstellungen kannst du nun auch verschiedene Rechenmodi auswählen, um die Funktionalität des Taschenrechners an deine individuellen Bedürfnisse anzupassen.\n"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/releaseNotesBugsTitle"
