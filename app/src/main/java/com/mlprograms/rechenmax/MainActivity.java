@@ -1122,7 +1122,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 dataManager.saveToJSON("logX", "true", getApplicationContext());
-                setRotateOperator(true);
                 if (getCalculateText().isEmpty()) {
                     setCalculateText("log");
                 } else {
@@ -1130,6 +1129,7 @@ public class MainActivity extends AppCompatActivity {
                         addCalculateTextWithoutSpace("log");
                     } else {
                         addCalculateText("log");
+                        setRotateOperator(true);
                     }
                 }
 
@@ -1961,9 +1961,16 @@ public class MainActivity extends AppCompatActivity {
      * @param num The number corresponding to the clicked button. This number will be added to the result text.
      */
     public void NumberAction(String num) {
+        boolean b = Integer.parseInt(num) >= 2 && Integer.parseInt(num) <= 9;
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-            addCalculateTextWithoutSpace(num);
-
+            if (dataManager.readFromJSON("logX", getApplicationContext()).equals("true") && b) {
+                dataManager.saveToJSON("logX", "false", getApplicationContext());
+                String small_number = convertToSmallNumber(Integer.parseInt(num));
+                addCalculateTextWithoutSpace(small_number);
+                addCalculateTextWithoutSpace("(");
+            } else {
+                addCalculateTextWithoutSpace(num);
+            }
             final String calculate_text = balanceParentheses(getCalculateText());
             if(!isInvalidInput(calculate_text)) {
                 setResultText(CalculatorActivity.calculate(calculate_text));
@@ -2002,11 +2009,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } else {
-                if (Integer.parseInt(num) >= 2 && Integer.parseInt(num) <= 9) {
+                if (b) {
+                    dataManager.saveToJSON("logX", "false", getApplicationContext());
                     String small_number = convertToSmallNumber(Integer.parseInt(num));
                     addCalculateTextWithoutSpace(small_number);
                     addCalculateTextWithoutSpace("(");
-                    dataManager.saveToJSON("logX", "false", getApplicationContext());
                     setRotateOperator(false);
                 }
             }
