@@ -1209,12 +1209,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * German: "Eulersche Zahl"
      * Handles the insertion or removal of the "е" symbol based on its current presence in the result text.
      */
     private void еAction() {
         // Check if logarithmic mode is disabled
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("е");
+            setResultText(CalculatorActivity.calculate(getCalculateText()));
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 // Read the current eNotation mode from the data manager

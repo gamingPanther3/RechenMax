@@ -203,8 +203,13 @@ public class HistoryActivity extends AppCompatActivity {
                         System.out.println("Key: '" + key + "'");
                         System.out.println("Value: '" + value + "'");
                         try {
-                            dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
-                            dataManager.saveToJSON("result_text", value, getMainActivityContext());
+                            if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+                                dataManager.saveToJSON("calculate_text", key.replace(" ", ""), getMainActivityContext());
+                                dataManager.saveToJSON("result_text", value.replace(" ", ""), getMainActivityContext());
+                            } else {
+                                dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
+                                dataManager.saveToJSON("result_text", value, getMainActivityContext());
+                            }
                             dataManager.saveToJSON("removeValue", false, getMainActivityContext());
                             dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
                             showToast();
