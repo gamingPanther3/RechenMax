@@ -1,6 +1,5 @@
 package com.mlprograms.rechenmax;
 
-import static com.mlprograms.rechenmax.CalculatorActivity.calculate;
 import static com.mlprograms.rechenmax.CalculatorActivity.isOperator;
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
 
@@ -13,7 +12,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -39,8 +37,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.6.9
- * @date 23.01.2024
+ * @version 1.7.0
+ * @date 29.01.2024
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -53,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
      * Instance of DataManager to handle data-related tasks such as saving and retrieving data.
      */
     private DataManager dataManager;
-
-    /**
-     * Instance of SharedPreferences for storing and retrieving small amounts of primitive data as key-value pairs.
-     */
-    SharedPreferences prefs = null;
 
     /**
      * Called when the activity is starting.
@@ -90,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager.createJSON(getApplicationContext());
         dataManager.initializeSettings(getApplicationContext());
         dataManager.saveToJSON("currentVersion", "1.6.0", getApplicationContext());
+        //dataManager.saveToJSON("old_version", "0", getApplicationContext());
 
         // If it's the first run of the application
         if (!Objects.equals(dataManager.readFromJSON("currentVersion", getApplicationContext()), dataManager.readFromJSON("old_version", getApplicationContext()))) {
@@ -97,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
             dataManager.saveToJSON("showPatchNotes", true, getApplicationContext());
             dataManager.saveToJSON("old_version",
                     dataManager.readFromJSON("currentVersion", getApplicationContext()), getApplicationContext());
+            dataManager.saveToJSON("returnToCalculator", "true", getApplicationContext());
             HelpActivity.setMainActivityContext(this);
             Intent intent = new Intent(this, HelpActivity.class);
             startActivity(intent);
@@ -106,11 +101,9 @@ public class MainActivity extends AppCompatActivity {
             final String disablePatNotTemp = dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext());
 
             // If patch notes are set to be shown and not temporarily disabled, switch to patch notes layout
-            if (showPatNot != null && disablePatNotTemp != null) {
-                if (showPatNot.equals("true") && disablePatNotTemp.equals("false")) {
-                    setContentView(R.layout.patchnotes);
-                    checkDarkmodeSetting();
-                }
+            if (showPatNot.equals("true") && disablePatNotTemp.equals("false")) {
+                setContentView(R.layout.patchnotes);
+                checkDarkmodeSetting();
             }
         }
 
@@ -2220,17 +2213,18 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleBackspaceAction() {
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-            String calculate_text = getCalculateText();
+            if(!getCalculateText().isEmpty()) {
+                String calculate_text = getCalculateText();
 
-            if(String.valueOf(calculate_text.charAt(getCalculateText().length() - 1)).equals("(")) {
-                setCalculateText(removeOperators(calculate_text.substring(0, getCalculateText().length() - 1)));
-            } else {
-                setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
-            }
-            if(getCalculateText().isEmpty() || !String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).matches("\\d")) {
-                setResultText("0");
-            } else if(!getCalculateText().isEmpty() && String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).matches("\\d")) {
-                setResultText(CalculatorActivity.calculate(getCalculateText()));
+                if(String.valueOf(calculate_text.charAt(getCalculateText().length() - 1)).equals("(")) {
+                    setCalculateText(removeOperators(calculate_text.substring(0, getCalculateText().length() - 1)));
+                } else {
+                    setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
+                }
+
+                if(String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).matches("\\d")) {
+                    setResultText(CalculatorActivity.calculate(getCalculateText()));
+                }
             }
         } else {
             String resultText = getResultText();

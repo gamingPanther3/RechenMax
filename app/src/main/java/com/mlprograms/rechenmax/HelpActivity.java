@@ -16,6 +16,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import org.apache.tools.ant.Main;
+
 public class HelpActivity extends AppCompatActivity {
 
     private static Context mainActivity;
@@ -38,7 +40,14 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(R.layout.help);
 
         @SuppressLint("CutPasteId") Button button = findViewById(R.id.help_return_button);
-        button.setOnClickListener(v -> returnToSettings());
+        button.setOnClickListener(v -> {
+            if(dataManager.readFromJSON("returnToCalculator", getMainActivityContext()).equals("true")) {
+                dataManager.saveToJSON("returnToCalculator", "false", getApplicationContext());
+                returnToCalculator();
+            } else {
+                returnToSettings();
+            }
+        });
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
 
@@ -232,7 +241,12 @@ public class HelpActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        returnToSettings();
+        if(dataManager.readFromJSON("returnToCalculator", getMainActivityContext()).equals("true")) {
+            dataManager.saveToJSON("returnToCalculator", "false", getApplicationContext());
+            returnToCalculator();
+        } else {
+            returnToSettings();
+        }
     }
 
     /**
@@ -363,5 +377,13 @@ public class HelpActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * This method returns to the calculator by starting the MainActivity.
+     */
+    public void returnToCalculator() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

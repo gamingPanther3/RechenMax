@@ -21,8 +21,8 @@ import java.nio.file.Files;
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.3.9
- * @date 28.01.2024
+ * @version 1.4.0
+ * @date 29.01.2024
  *
  *  | Names                            | Values                   | Context                              |
  *  |----------------------------------|--------------------------|--------------------------------------|
@@ -41,14 +41,15 @@ import java.nio.file.Files;
  *  | result_text                      | String                   | MainActivity                         |
  *  | calculate_text                   | String                   | MainActivity                         |
  *  | lastop                           | String                   | MainActivity                         |
- *  | isNotation                       | Boolean                  | MainActivity                         |
- *  | eNotation                        | Boolean                  | MainActivity                         |
- *  | showShiftRow                     | Boolean                  | MainActivity                         |
- *  | shiftRow                         | Boolean                  | MainActivity                         |
- *  | logX                             | Boolean                  | MainActivity                         |
+ *  | isNotation                       | true / false             | MainActivity                         |
+ *  | eNotation                        | true / false             | MainActivity                         |
+ *  | showShiftRow                     | true / false             | MainActivity                         |
+ *  | shiftRow                         | true / false             | MainActivity                         |
+ *  | logX                             | true / false             | MainActivity                         |
  *  | calculationMode                  | Standard / Vereinfacht   | MainActivity                         |
  *  | currentVersion                   | String                   | MainActivity                         |
  *  | old_version                      | String                   | MainActivity                         |
+ *  | returnToCalculator               | true / false             | MainActivity                         |
  */
 
 public class DataManager {
@@ -292,6 +293,9 @@ public class DataManager {
         }
         if(readFromJSON("old_version", applicationContext) == null) {
             saveToJSON("old_version", "0", applicationContext);
+        }
+        if(readFromJSON("returnToCalculator", applicationContext) == null) {
+            saveToJSON("returnToCalculator", "false", applicationContext);
         }
     }
 
