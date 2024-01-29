@@ -170,7 +170,7 @@ public class SettingsActivity extends AppCompatActivity {
                         dataManager.saveToJSON("calculationMode", "Vereinfacht", getMainActivityContext());
                         break;
                 }
-                updateSpinnerFunctionMode(parent);
+                updateSpinner2(parent);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
