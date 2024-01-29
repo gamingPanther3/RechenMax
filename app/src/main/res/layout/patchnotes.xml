@@ -401,11 +401,45 @@
             android:textSize="30sp" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="\nHilfefunktion"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesText_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Es kam vor, dass nach dem Zurückkehren von der Hilfefunktion ein Fehler angezeigt wurde.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Hilfeknopf"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesText_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Der Hilfeknopf wurde in den Einstellungen nicht aktualisiert, wenn der Echte Dunkelmodus geändert wurde.\n"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/releaseNotesFutureFeaturesSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\nAnzeigen der Berechnungsbereiche"
+            android:text="Anzeigen der Berechnungsbereiche"
             android:textColor="#000000"
             android:textSize="15sp"/>
 
