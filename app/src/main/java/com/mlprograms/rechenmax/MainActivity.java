@@ -2221,10 +2221,12 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
                 }
-
-                if(String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).matches("\\d")) {
+                if(!getCalculateText().isEmpty() && String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).matches("\\d")) {
                     setResultText(CalculatorActivity.calculate(getCalculateText()));
                 }
+            }
+            if(getCalculateText().isEmpty()) {
+                setResultText("0");
             }
         } else {
             String resultText = getResultText();
