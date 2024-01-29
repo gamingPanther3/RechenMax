@@ -90,53 +90,7 @@ public class SettingsActivity extends AppCompatActivity {
             dataManager.saveToJSON("settingsTrueDarkMode", isChecked, getMainActivityContext());
             Log.i("Settings", "settingsTrueDarkMode=" + dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext()));
 
-            dataManager = new DataManager();
-            int currentNightMode1 = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            updateSpinner(findViewById(R.id.settings_display_mode_spinner));
-            @SuppressLint("CutPasteId") Button backbutton = findViewById(R.id.settings_return_button);
-
-            String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
-            if(currentNightMode1 == Configuration.UI_MODE_NIGHT_YES) {
-                if (trueDarkMode != null && trueDarkMode.equals("true") && (getSelectedSetting().equals("Dunkelmodus") || getSelectedSetting().equals("Systemstandard"))) {
-                    updateUI(R.color.darkmode_black, R.color.darkmode_white);
-                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
-                } else if (trueDarkMode != null && trueDarkMode.equals("false") && (getSelectedSetting().equals("Dunkelmodus") || getSelectedSetting().equals("Systemstandard"))) {
-                    updateUI(R.color.black, R.color.white);
-                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
-                }
-            } else if(currentNightMode1 == Configuration.UI_MODE_NIGHT_NO) {
-                if (trueDarkMode != null && trueDarkMode.equals("true") && (getSelectedSetting().equals("Dunkelmodus") || getSelectedSetting().equals("Systemstandard"))) {
-                    updateUI(R.color.darkmode_black, R.color.darkmode_white);
-                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
-                } else if (trueDarkMode != null && trueDarkMode.equals("false") && (getSelectedSetting().equals("Dunkelmodus") || getSelectedSetting().equals("Systemstandard"))) {
-                    updateUI(R.color.black, R.color.white);
-                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
-                }
-                ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
-                LinearLayout settingsLayout = findViewById(R.id.settings_layout);
-                @SuppressLint("CutPasteId") Button settingsReturnButton = findViewById(R.id.settings_return_button);
-
-                TextView settingsTitle = findViewById(R.id.settings_title);
-                @SuppressLint("CutPasteId") TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
-                TextView settingsReleaseNotesText = findViewById(R.id.settings_release_notes_text);
-                TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
-                TextView settingsCredits = findViewById(R.id.credits_view);
-
-                settingsLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
-                settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
-                settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
-                settingsTitle.setTextColor(ContextCompat.getColor(this, R.color.white));
-                settingsTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
-                settingsScrollView.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
-                settingsReleaseNotes.setTextColor(ContextCompat.getColor(this, R.color.white));
-                settingsReleaseNotesText.setTextColor(ContextCompat.getColor(this, R.color.white));
-                settingsTrueDarkMode.setTextColor(ContextCompat.getColor(this, R.color.white));
-                settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.white));
-                settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.white));
-                settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
-
-                switchDisplayMode(Configuration.UI_MODE_NIGHT_NO);
-            }
+            switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         });
         // Declare a Spinner object
         Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
