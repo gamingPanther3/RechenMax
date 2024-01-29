@@ -1,6 +1,5 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -26,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="RechenMax 1.6.0"
+                android:text="@string/rechenmax_version"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -55,7 +54,7 @@
             android:id="@+id/releaseNotesOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="\nDie neueste RechenMax-Version bringt aufregende Verbesserungen und Funktionen mit sich. Automatisches Scrollen erleichtert die Navigation bei umfangreichen Berechnungen, während die Rundungsgenauigkeit für präzisere Dezimalzahlen auf die elfte Nachkommastelle erhöht wurde. Der Verlauf wurde optimiert, um vorherige Berechnungen mühelos wiederherzustellen und vergangene Aufgaben zu überprüfen. In trigonometrischen Aufgaben stehen erweiterte Funktionen für Sinus, Cosinus und Tangens im Grad- und Bogenmaß zur Verfügung. Inverse trigonometrische Funktionen (sin⁻¹, cos⁻¹, tan⁻¹) sowie hyperbolische Funktionen wie sinh(x), cosh(x) und tanh(x) sind nun ebenfalls verfügbar. Die manuelle Eingabe von Notationen bietet zusätzliche Flexibilität bei der Erstellung und Berechnung komplexer Ausdrücke. Der RechenMax unterstützt jetzt die Verwendung der mathematischen Konstanten PI (π) für präzise Kreisberechnungen. Mit der flexiblen Unterstützung von Gradmaß und Bogenmaß kann je nach Bedarf zwischen den beiden Maßeinheiten gewechselt werden. Die Klammernbehandlung wurde optimiert, um die fehlerfreie Verarbeitung von mathematischen oder logischen Ausdrücken sicherzustellen. Die Software erkennt automatisch fehlende schließende Klammern und fügt sie hinzu, was die Eingabe von Ausdrücken weiter vereinfacht. Im Verlauf ermöglicht langes Drücken auf einen Eintrag das automatische Kopieren der Rechnung in die Zwischenablage, während kurzes Drücken die Rechnung direkt in den Taschenrechner einfügt. Diese Version behebt zudem wichtige Fehler, darunter Anzeige- und Faktoriellenberechnungsprobleme, sowie optimierte Ergebnisformatierung für eine präzisere Anzeige.\n"
+            android:text="@string/patchnotes_overview"
             android:textColor="#000000"
             android:textSize="15sp" />
 
