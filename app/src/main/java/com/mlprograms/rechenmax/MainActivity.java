@@ -5,8 +5,10 @@ import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
 
 import java.math.MathContext;
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,7 @@ import android.icu.text.DecimalFormat;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.math.BigDecimal;
@@ -37,19 +40,12 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.7.0
+ * @version 1.7.1
  * @date 29.01.2024
  */
 
 public class MainActivity extends AppCompatActivity {
-    /**
-     * The context of the current object. Useful for accessing resources, launching new activities, etc.
-     */
     private Context context = this;
-
-    /**
-     * Instance of DataManager to handle data-related tasks such as saving and retrieving data.
-     */
     private DataManager dataManager;
 
     /**
@@ -65,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Set the content view to the calculator UI layout
+        stopBackgroundService();
         setContentView(R.layout.calculatorui);
 
         // Set the context to this instance
@@ -77,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DataManager(this);
 
         // Show all settings
-        showAllSettings();
+        //showAllSettings();
 
         // Create JSON file and check for its existence
         dataManager.createJSON(getApplicationContext());
@@ -107,10 +104,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // Log information about patch notes settings
-        Log.i("MainActivity", "showPatchNotes=" + dataManager.readFromJSON("showPatchNotes", getApplicationContext()));
-        Log.i("MainActivity", "disablePatchNotesTemporary=" + dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()));
-
         // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
         dataManager.loadNumbers();
         setUpListeners();
@@ -124,6 +117,23 @@ public class MainActivity extends AppCompatActivity {
 
         // Show all settings
         showAllSettings();
+        requestNotificationPermission();
+    }
+
+    public void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                Log.e("Notification Permission", "Permission Granted");
+                dataManager.saveToJSON("notifications", "true", getApplicationContext());
+            } else {
+                Log.e("Notification Permission", "Permission Denied");
+                dataManager.saveToJSON("notifications", "false", getApplicationContext());
+            }
+        }
     }
 
     /**
@@ -156,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("showAllSettings", "calculationMode                  :'" + dataManager.readFromJSON("calculationMode", getApplicationContext()) + "'");
         Log.i("showAllSettings", "currentVersion                   :'" + dataManager.readFromJSON("currentVersion", getApplicationContext()) + "'");
         Log.i("showAllSettings", "old_version                      :'" + dataManager.readFromJSON("old_version", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "returnToCalculator               :'" + dataManager.readFromJSON("returnToCalculator", getApplicationContext()) + "'");
         Log.i("all settings", "---       all settings        ---");
         System.out.println("\n");
     }
@@ -1937,10 +1948,19 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void onDestroy() {
         super.onDestroy();
+
         if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
             dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
         }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            startService(new Intent(this, BackgroundService.class));
+        }
         finish();
+    }
+
+    private void stopBackgroundService() {
+        Intent serviceIntent = new Intent(this, BackgroundService.class);
+        stopService(serviceIntent);
     }
 
     /**
