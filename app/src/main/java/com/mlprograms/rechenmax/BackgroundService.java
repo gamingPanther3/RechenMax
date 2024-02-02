@@ -20,7 +20,7 @@ public class BackgroundService extends Service {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     //                                                 ms  * ss * mm * hh * tt
-    private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 60 * 24;
+    private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 60 * 24 * 4;
     private long lastBackgroundTime = System.currentTimeMillis();
     private boolean isServiceRunning = true;
 
