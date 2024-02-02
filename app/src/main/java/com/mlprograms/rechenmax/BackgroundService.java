@@ -19,7 +19,7 @@ public class BackgroundService extends Service {
     private static final String CHANNEL_ID = "BackgroundServiceChannel";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
-    //                                                 ms  * ss * mm * hh * tt
+    //                                                 ms  * ss * mm * hh * t
     private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 60 * 24 * 4;
     private long lastBackgroundTime = System.currentTimeMillis();
     private boolean isServiceRunning = true;
@@ -61,7 +61,7 @@ public class BackgroundService extends Service {
 
     private void checkNotification(long currentTime) {
         if (currentTime - lastBackgroundTime > NOTIFICATION_INTERVAL) {
-            sendNotification(this, 2,"Vergiss mich nicht!", "Hey, du hast schon eine Weile nicht mehr gerechnet. Vielleicht wird es mal wieder Zeit.");
+            sendNotification(this, 2,"Vergiss mich nicht!", "Hey, du hast schon eine Weile nichts mehr gerechnet. Vielleicht wird es mal wieder Zeit.");
             lastBackgroundTime = currentTime;
         }
         if(!NotificationHelper.isNotificationActive(this, 1)) {
