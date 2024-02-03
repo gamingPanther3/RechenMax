@@ -7,7 +7,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -83,11 +82,7 @@ public class BackgroundService extends Service {
 
     public Notification buildNotification() {
         Notification.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder = new Notification.Builder(this, CHANNEL_ID_1);
-        } else {
-            builder = new Notification.Builder(this);
-        }
+        builder = new Notification.Builder(this, CHANNEL_ID_1);
 
         builder.setDefaults(0);
 
@@ -98,15 +93,13 @@ public class BackgroundService extends Service {
     }
 
     private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel serviceChannel = new NotificationChannel(
-                    CHANNEL_ID_1,
-                    "RechenMax Background Service",
-                    NotificationManager.IMPORTANCE_MIN
-            );
+        NotificationChannel serviceChannel = new NotificationChannel(
+                CHANNEL_ID_1,
+                "RechenMax Background Service",
+                NotificationManager.IMPORTANCE_MIN
+        );
 
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(serviceChannel);
-        }
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(serviceChannel);
     }
 }
