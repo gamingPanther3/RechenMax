@@ -14,13 +14,16 @@ import android.os.Looper;
 import android.util.Log;
 
 public class BackgroundService extends Service {
-    private static final int NOTIFICATION_ID = 1;
-    private static final String TAG = "BackgroundService";
-    private static final String CHANNEL_ID = "BackgroundServiceChannel";
+    private static final int NOTIFICATION_ID_1 = 1;
+    private static final int NOTIFICATION_ID_2 = 2;
+    private static final String CHANNEL_ID_1 = "BackgroundServiceChannel";
+    private static final String CHANNEL_NAME_1 = "BackgroundService";
+    private static final String CHANNEL_ID_2 = "RechenMax";
+    private static final String CHANNEL_NAME_2 = "Erinnerung";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     //                                                 ms  * ss * mm * hh * t
-    private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 60 * 24 * 4;
+    private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 1 * 1 * 1; // = 4 days = 1000 * 60 * 60 * 24 * 4
     private long lastBackgroundTime = System.currentTimeMillis();
     private boolean isServiceRunning = true;
 
@@ -30,7 +33,7 @@ public class BackgroundService extends Service {
             long currentTime = System.currentTimeMillis();
             if (isServiceRunning) {
                 checkNotification(currentTime);
-                handler.postDelayed(this, 600000);
+                handler.postDelayed(this, 60000); // 600000
             }
             Log.d("Remaining Time", "Remaining Time: " + ((NOTIFICATION_INTERVAL + 1000 - (currentTime - lastBackgroundTime)) / 1000) + "s");
         }
@@ -45,14 +48,15 @@ public class BackgroundService extends Service {
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
-        NotificationHelper.cancelNotification(this, NOTIFICATION_ID);
-        startForeground(NOTIFICATION_ID, buildNotification());
-        Log.d(TAG, "Service created");
+        NotificationHelper.cancelNotification(this, NOTIFICATION_ID_1);
+        NotificationHelper.cancelNotification(this, NOTIFICATION_ID_2);
+        startForeground(NOTIFICATION_ID_1, buildNotification());
+        Log.d(CHANNEL_NAME_1, "Service created");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "Service started");
+        Log.d(CHANNEL_NAME_1, "Service started");
 
         handler.post(notificationRunnable);
 
@@ -61,11 +65,11 @@ public class BackgroundService extends Service {
 
     private void checkNotification(long currentTime) {
         if (currentTime - lastBackgroundTime > NOTIFICATION_INTERVAL) {
-            sendNotification(this, 2,"Vergiss mich nicht!", "Hey, du hast schon eine Weile nichts mehr gerechnet. Vielleicht wird es mal wieder Zeit.");
+            sendNotification(this, 2,"Vergiss mich nicht!", "Hey, du hast schon eine Weile nichts mehr gerechnet. Vielleicht wird es mal wieder Zeit.", CHANNEL_ID_2, CHANNEL_NAME_2);
             lastBackgroundTime = currentTime;
         }
         if(!NotificationHelper.isNotificationActive(this, 1)) {
-            startForeground(NOTIFICATION_ID, buildNotification());
+            startForeground(NOTIFICATION_ID_1, buildNotification());
         }
     }
 
@@ -74,13 +78,13 @@ public class BackgroundService extends Service {
         super.onDestroy();
         isServiceRunning = false;
         handler.removeCallbacks(notificationRunnable);
-        Log.d(TAG, "Service destroyed");
+        Log.d(CHANNEL_NAME_1, "Service destroyed");
     }
 
     public Notification buildNotification() {
         Notification.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder = new Notification.Builder(this, CHANNEL_ID);
+            builder = new Notification.Builder(this, CHANNEL_ID_1);
         } else {
             builder = new Notification.Builder(this);
         }
@@ -96,9 +100,9 @@ public class BackgroundService extends Service {
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "Rechenmax Service",
-                    NotificationManager.IMPORTANCE_DEFAULT
+                    CHANNEL_ID_1,
+                    "RechenMax Background Service",
+                    NotificationManager.IMPORTANCE_MIN
             );
 
             NotificationManager manager = getSystemService(NotificationManager.class);

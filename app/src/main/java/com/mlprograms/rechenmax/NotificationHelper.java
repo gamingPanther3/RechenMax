@@ -13,10 +13,7 @@ import androidx.core.app.NotificationCompat;
 
 public class NotificationHelper {
 
-    private static final String CHANNEL_ID = "RechenMax";
-    private static final String CHANNEL_NAME = "Erinnerung";
-
-    public static void sendNotification(Context context, int notificationId, String title, String content) {
+    public static void sendNotification(Context context, int notificationId, String title, String content, String CHANNEL_ID, String CHANNEL_NAME) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

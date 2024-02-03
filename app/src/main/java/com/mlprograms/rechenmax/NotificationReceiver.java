@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.PowerManager;
 
 public class NotificationReceiver extends BroadcastReceiver {
+    private static final String CHANNEL_ID = "BackgroundServiceChannel";
+    private static final String CHANNEL_NAME = "BackgroundService";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -15,7 +17,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         String title = intent.getStringExtra("title");
         String content = intent.getStringExtra("content");
-        NotificationHelper.sendNotification(context, 2, title, content);
+        NotificationHelper.sendNotification(context, 2, title, content, CHANNEL_ID, CHANNEL_NAME);
 
         if (wakeLock.isHeld()) {
             wakeLock.release();
