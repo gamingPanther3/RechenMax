@@ -12,7 +12,6 @@ public class ToastHelper {
     public static void showToastLong(final String text, Context context) {
         int duration = Toast.LENGTH_LONG;
 
-        // Create and show the toast
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
@@ -25,7 +24,6 @@ public class ToastHelper {
     public static void showToastShort(final String text, Context context) {
         int duration = Toast.LENGTH_SHORT;
 
-        // Create and show the toast
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
