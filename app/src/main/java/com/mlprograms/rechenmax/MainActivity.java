@@ -2,6 +2,7 @@ package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.CalculatorActivity.isOperator;
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
+import static com.mlprograms.rechenmax.ToastHelper.*;
 
 import java.math.MathContext;
 import android.annotation.SuppressLint;
@@ -27,7 +28,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.icu.text.DecimalFormat;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -127,10 +127,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                Log.e("Notification Permission", "Permission Granted");
+                Log.e("Notification Permission", "Notification Permission Granted");
                 dataManager.saveToJSON("notifications", "true", getApplicationContext());
             } else {
-                Log.e("Notification Permission", "Permission Denied");
+                Log.e("Notification Permission", "Notification Permission Denied");
                 dataManager.saveToJSON("notifications", "false", getApplicationContext());
             }
         }
@@ -621,7 +621,7 @@ public class MainActivity extends AppCompatActivity {
         clipboardManager.setPrimaryClip(clipData);
 
         // Display a toast indicating that the data has been saved
-        showToastLong("Wert wurde gespeichert ...");
+        showToastLong("Wert wurde gespeichert ...", getApplicationContext());
     }
 
     /**
@@ -638,35 +638,7 @@ public class MainActivity extends AppCompatActivity {
         clipboardManager.setPrimaryClip(clipData);
 
         // Display a toast indicating that the data has been saved
-        showToastLong("Wert wurde gespeichert ...");
-    }
-
-    /**
-     * This method displays a toast on the screen.
-     * It retrieves the context of the current application and sets the duration of the toast to short.
-     * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
-     */
-    private void showToastLong(final String text) {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_LONG;
-
-        // Create and show the toast
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
-
-    /**
-     * This method displays a toast on the screen.
-     * It retrieves the context of the current application and sets the duration of the toast to short.
-     * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
-     */
-    private void showToastShort(final String text) {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-
-        // Create and show the toast
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+        showToastLong("Wert wurde gespeichert ...", getApplicationContext());
     }
 
     /**
@@ -1178,7 +1150,7 @@ public class MainActivity extends AppCompatActivity {
     private void eAction() {
         // Check if logarithmic mode is disabled
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-            addCalculateTextWithoutSpace("e");
+            showToastLong("Diese Taste ist im aktuellen Modus deaktiviert.", getApplicationContext());
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 // Read the current eNotation mode from the data manager
@@ -2057,7 +2029,7 @@ public class MainActivity extends AppCompatActivity {
                 case "MC": {
                     ClipData clipData = ClipData.newPlainText("", "");
                     clipboardManager.setPrimaryClip(clipData);
-                    showToastLong("Zwischenablage geleert ...");
+                    showToastLong("Zwischenablage geleert ...", getApplicationContext());
                     break;
                 }
                 case "MR":
@@ -2084,7 +2056,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (clipData == null || clipData.getItemCount() == 0) {
             // Handle the case where clipboard data is null or empty
-            showToastShort("Zwischenablage enthält keine Daten ...");
+            showToastShort("Zwischenablage enthält keine Daten ...", getApplicationContext());
             return;
         }
 
@@ -2104,7 +2076,7 @@ public class MainActivity extends AppCompatActivity {
             } else if ((text.matches(mathTaskPattern) && !text.matches(scientificNotationPattern)) || text.matches("[-+]?[0-9]+")) {
                 processMathTaskOrNumber(text);
             } else {
-                showToastLong("Keine gültige Eingabe ...");
+                showToastLong("Keine gültige Eingabe ...", getApplicationContext());
             }
 
 

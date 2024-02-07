@@ -11,6 +11,7 @@ public class BootReceiver extends BroadcastReceiver {
         if (intent.getAction() != null && intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 
             Intent serviceIntent = new Intent(context, BackgroundService.class);
+            serviceIntent.putExtra("started_by_boot_receiver", true);
             context.startService(serviceIntent);
         }
     }
