@@ -8,49 +8,44 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.4.1
- * @date 31.01.2024
- *
- *  | Names                            | Values                   | Context                              |
- *  |----------------------------------|--------------------------|--------------------------------------|
- *  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
- *  | functionMode                     | Deg / Rad                | MainActivity                         |
- *  | settingReleaseNotesSwitch        | true / false             | SettingsActivity                     |
- *  | removeValue                      | true / false             | MainActivity                         |
- *  | settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity     |
- *  | showPatchNotes                   | true / false             | MainActivity -> SettingsActivity     |
- *  | disablePatchNotesTemporary       | true / false             | MainActivity -> SettingsActivity     |
- *  | showReleaseNotesOnVeryFirstStart | true / false             | MainActivity                         |
- *  | showScienceRow                   | true / false             | MainActivity                         |
- *  | rotate_op                        | true / false             | MainActivity                         |
- *  | lastnumber                       | Integer                  | MainActivity                         |
- *  | historyTextViewNumber            | Integer                  | MainActivity                         |
- *  | result_text                      | String                   | MainActivity                         |
- *  | calculate_text                   | String                   | MainActivity                         |
- *  | lastop                           | String                   | MainActivity                         |
- *  | isNotation                       | true / false             | MainActivity                         |
- *  | eNotation                        | true / false             | MainActivity                         |
- *  | showShiftRow                     | true / false             | MainActivity                         |
- *  | shiftRow                         | true / false             | MainActivity                         |
- *  | logX                             | true / false             | MainActivity                         |
- *  | calculationMode                  | Standard / Vereinfacht   | MainActivity                         |
- *  | currentVersion                   | String                   | MainActivity                         |
- *  | old_version                      | String                   | MainActivity                         |
- *  | returnToCalculator               | true / false             | MainActivity                         |
+ * @version 1.4.2
+ * @date 09.02.2024
  */
+
+//  | Names                            | Values                   | Context                              |
+//  |----------------------------------|--------------------------|--------------------------------------|
+//  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
+//  | functionMode                     | Deg / Rad                | MainActivity                         |
+//  | settingReleaseNotesSwitch        | true / false             | SettingsActivity                     |
+//  | removeValue                      | true / false             | MainActivity                         |
+//  | settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity     |
+//  | showPatchNotes                   | true / false             | MainActivity -> SettingsActivity     |
+//  | disablePatchNotesTemporary       | true / false             | MainActivity -> SettingsActivity     |
+//  | showReleaseNotesOnVeryFirstStart | true / false             | MainActivity                         |
+//  | showScienceRow                   | true / false             | MainActivity                         |
+//  | rotate_op                        | true / false             | MainActivity                         |
+//  | lastnumber                       | Integer                  | MainActivity                         |
+//  | historyTextViewNumber            | Integer                  | MainActivity                         |
+//  | result_text                      | String                   | MainActivity                         |
+//  | calculate_text                   | String                   | MainActivity                         |
+//  | lastop                           | String                   | MainActivity                         |
+//  | isNotation                       | true / false             | MainActivity                         |
+//  | eNotation                        | true / false             | MainActivity                         |
+//  | showShiftRow                     | true / false             | MainActivity                         |
+//  | shiftRow                         | true / false             | MainActivity                         |
+//  | logX                             | true / false             | MainActivity                         |
+//  | calculationMode                  | Standard / Vereinfacht   | MainActivity                         |
+//  | currentVersion                   | String                   | MainActivity                         |
+//  | old_version                      | String                   | MainActivity                         |
+//  | returnToCalculator               | true / false             | MainActivity                         |
 
 public class DataManager {
 

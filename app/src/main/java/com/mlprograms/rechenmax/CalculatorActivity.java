@@ -37,7 +37,7 @@ public class CalculatorActivity {
 
     // Declaration of a constant for the root operation.
     public static final String ROOT = "√";
-    public static final String THIRDROOT = "³√";
+    public static final String THIRD_ROOT = "³√";
 
     /**
      * This method calculates the result of a mathematical expression. The expression is passed as a string parameter.
@@ -133,6 +133,11 @@ public class CalculatorActivity {
         }
     }
 
+    /**
+     * isScientificNotation method checks if a given string is in scientific notation.
+     * @param str The input string to be checked.
+     * @return True if the string is in scientific notation, otherwise false.
+     */
     public static boolean isScientificNotation(final String str) {
         // The input string is formatted by replacing all commas with dots. This is because in some locales, a comma is used as the decimal separator.
         final String formattedInput = str.replace(",", ".");
@@ -153,6 +158,11 @@ public class CalculatorActivity {
         return matcher.matches();
     }
 
+    /**
+     * convertScientificToDecimal method converts a number in scientific notation to decimal representation.
+     * @param str The input string in scientific notation.
+     * @return The decimal representation of the input string.
+     */
     public static String convertScientificToDecimal(final String str) {
         // Replace commas with dots for proper decimal representation
         final String formattedInput = str;
@@ -346,7 +356,7 @@ public class CalculatorActivity {
     }
 
     /**
-     * Applies an operator to two operands. Supports addition, subtraction, multiplication, division, square root, factorial, and power operations.
+     * Applies an operator to two operands. Supports addition, subtraction, multiplication, division, square root, factorial, and power operations ... .
      * Checks the operator and performs the corresponding operation.
      *
      * @param operand1 The first operand for the operation.
@@ -378,7 +388,7 @@ public class CalculatorActivity {
                 } else {
                     return BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
                 }
-            case THIRDROOT:
+            case THIRD_ROOT:
                 return BigDecimal.valueOf(Math.pow(operand2.doubleValue(), 1.0 / 3.0));
             case "!":
                 return factorial(operand1);
@@ -626,7 +636,7 @@ public class CalculatorActivity {
         else {
             final BigDecimal operand2 = stack.remove(stack.size() - 1);
             // If the operator is not ROOT and THIRDROOT, apply the operator to two numbers
-            if (!operator.equals(ROOT) && !operator.startsWith(THIRDROOT)) {
+            if (!operator.equals(ROOT) && !operator.startsWith(THIRD_ROOT)) {
                 final BigDecimal operand1 = stack.remove(stack.size() - 1);
                 final BigDecimal result = applyOperator(operand1, operand2, operator);
                 stack.add(result);
@@ -643,7 +653,7 @@ public class CalculatorActivity {
                             result = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
                         }
                         break;
-                    case THIRDROOT:
+                    case THIRD_ROOT:
                         result = BigDecimal.valueOf(Math.pow(operand2.doubleValue(), 1.0 / 3.0));
                         break;
                     default:

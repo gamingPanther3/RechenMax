@@ -40,8 +40,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.7.1
- * @date 29.01.2024
+ * @version 1.7.2
+ * @date 09.02.2024
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -120,6 +120,15 @@ public class MainActivity extends AppCompatActivity {
         requestNotificationPermission();
     }
 
+    /**
+     * This method requests notification permission from the user.
+     * It checks if the device's SDK version is at least TIRAMISU (an imaginary version for demonstration purposes).
+     * If the app does not have the permission to post notifications, it requests the permission from the user.
+     * After requesting permission, it checks whether the permission was granted or denied.
+     * If permission is granted, it logs a message indicating permission granted and saves the notification preference to JSON.
+     * If permission is denied, it logs a message indicating permission denied and saves the notification preference to JSON accordingly.
+     * This method is typically called when the app requires notification permission to perform certain tasks.
+     */
     public void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -1032,6 +1041,14 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method performs the action of adding "log(" to the calculation text.
+     * It checks if the "logX" flag is false in the JSON file, indicating that the logarithm function is not currently selected.
+     * If the mode is not in "eNotation", it proceeds to add "log(" to the calculation text.
+     * The method handles cases where the calculation text is empty or not, and whether to add "log(" with or without spaces depending on the calculation mode.
+     * It also scrolls to the bottom of the scroll view if it exists.
+     * After adding "log(" to the calculation text, it formats the result text accordingly.
+     */
     private void logAction() {
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
@@ -1058,6 +1075,10 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method performs the action of adding "log₂(" to the calculation text.
+     * It follows a similar procedure to the logAction() method but adds "log₂(" instead of "log(".
+     */
     private void log2Action() {
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
@@ -1084,6 +1105,12 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method performs the action of indicating the selection of the logarithm function in the calculation text.
+     * It sets the "logX" flag to true in the JSON file and adds "log" to the calculation text.
+     * Depending on the calculation mode, it adds "log" with or without spaces.
+     * After adding "log" to the calculation text, it formats the result text accordingly.
+     */
     private void logXAction() {
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
@@ -1118,6 +1145,10 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method performs the action of adding "ln(" to the calculation text.
+     * It follows a similar procedure to the logAction() method but adds "ln(" instead of "log(".
+     */
     private void lnAction() {
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
@@ -1532,6 +1563,14 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method performs the action of adding "½" (half) to the calculation text.
+     * It first checks the calculation mode, and if it's "Vereinfacht" (simplified), it directly adds "½" without spaces and calculates the result.
+     * If the calculation mode is not "Vereinfacht", it checks if the logarithm function is not selected ("logX" is false).
+     * Then, it checks if the current mode is not "eNotation" to proceed with adding "½" to the calculation text accordingly.
+     * It sets flags for removing the value and rotating the operator and scrolls to the bottom of the scroll view if it exists.
+     * After adding "½" to the calculation text, it formats the result text accordingly.
+     */
     private void halfAction() {
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("½");
@@ -1559,6 +1598,10 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method performs the action of adding "⅓" (third) to the calculation text.
+     * It follows a similar procedure to the halfAction() method but adds "⅓" instead of "½".
+     */
     private void thirdAction() {
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("⅓");
@@ -1586,6 +1629,10 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method performs the action of adding "¼" (quarter) to the calculation text.
+     * It follows a similar procedure to the halfAction() method but adds "¼" instead of "½".
+     */
     private void quarterAction() {
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("¼");
@@ -1924,15 +1971,51 @@ public class MainActivity extends AppCompatActivity {
         if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
             dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
         }
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            startService(new Intent(this, BackgroundService.class));
-        }
+        startBackgroundService();
+
         finish();
     }
 
+    /**
+     * onPause method is called when the activity is paused.
+     * It starts the background service.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        startBackgroundService();
+    }
+
+    /**
+     * onResume method is called when the activity is resumed.
+     * It stops the background service.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        stopBackgroundService();
+    }
+
+    /**
+     * This method stops the background service.
+     * It creates an intent to stop the BackgroundService and calls stopService() with that intent.
+     * This method is typically called when the activity is being destroyed or when it's no longer necessary to run the background service.
+     */
     private void stopBackgroundService() {
         Intent serviceIntent = new Intent(this, BackgroundService.class);
         stopService(serviceIntent);
+    }
+
+    /**
+     * This method starts a background service if the necessary permission is granted.
+     * It checks if the app has the required permission to post notifications.
+     * If the permission is granted, it starts the BackgroundService.
+     * This method is typically called when the window loses focus.
+     */
+    private void startBackgroundService() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            startService(new Intent(this, BackgroundService.class));
+        }
     }
 
     /**
@@ -2008,10 +2091,18 @@ public class MainActivity extends AppCompatActivity {
         adjustTextSize();
     }
 
-    private static String convertToSmallNumber(int zahl) {
+    /**
+     * This method converts an integer into a string representing a small number.
+     * It utilizes Unicode characters for subscript numbers (Unicode Block: U+208x).
+     * For example, it converts 0 to "₀", 1 to "₁", 2 to "₂", and so on.
+     *
+     * @param num An integer to be converted to a small number.
+     * @return A string representing the small number.
+     */
+    private static String convertToSmallNumber(int num) {
         // Unicode-Block für tiefgestellte Zahlen: U+208x
         char tiefgestellteNull = '\u2080';
-        int tiefgestellteZahl = zahl + (int) tiefgestellteNull;
+        int tiefgestellteZahl = num + (int) tiefgestellteNull;
         return Character.toString((char) tiefgestellteZahl);
     }
 
@@ -2090,6 +2181,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method processes scientific notation in the provided text.
+     * It first calculates the result of the provided text using the CalculatorActivity's calculate() method.
+     * Then, it sets the result text to the original input text, formats it, and saves it as new_text.
+     * After that, it resets the result text to the calculated result.
+     * If the calculation text is empty, it sets it to new_text; otherwise, it appends new_text to the existing calculation text.
+     * @param text The text containing scientific notation to be processed.
+     */
     private void processScientificNotation(String text) {
         final String resultText = CalculatorActivity.calculate(text);
         setResultText(text);
@@ -2104,6 +2203,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method processes mathematical tasks or numbers in the provided text.
+     * If the text does not match the pattern of a mathematical task (e.g., "+", "-", "*", "/", "^") or a number,
+     * it adds the text to the calculation text if it's not empty; otherwise, it sets the calculation text to the provided text.
+     * If the text represents a number, it sets the result text to the provided text.
+     * @param text The text containing a mathematical task or number to be processed.
+     */
     private void processMathTaskOrNumber(String text) {
         if (!text.matches("[-+]?[0-9]+")) {
             if (getCalculateText().isEmpty()) {
@@ -2214,7 +2320,7 @@ public class MainActivity extends AppCompatActivity {
                     setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
                 }
                 if(!getCalculateText().isEmpty() && String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).matches("\\d")) {
-                    setResultText(CalculatorActivity.calculate(getCalculateText()));
+                    setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
                 }
             }
             if(getCalculateText().isEmpty()) {
@@ -2249,6 +2355,15 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method removes operators from the end of the input string.
+     * It iterates through the input string from the end and checks if any of the predefined operators match the substring.
+     * If an operator is found, it subtracts its length from the index and continues the iteration.
+     * If no operator is found, it breaks the loop.
+     * Finally, it returns the substring of the input string up to the index where the last operator was found.
+     * @param input The input string from which operators are to be removed.
+     * @return The input string with operators removed from the end.
+     */
     public static String removeOperators(String input) {
         String[] operators = {"³√", "ln", "log₂", "log₃", "log₄", "log₅", "log₆", "log₇", "log₈",
                 "log₉", "tanh⁻¹", "cosh⁻¹", "sinh⁻¹", "tan⁻¹", "cos⁻¹", "sin⁻¹", "tanh", "cosh",

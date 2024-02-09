@@ -17,23 +17,34 @@ import android.util.Log;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * This class represents a background service for RechenMax app.
+ * It sends reminders at specified intervals and manages the service lifecycle.
+ */
 public class BackgroundService extends Service {
+    // Notification IDs and channel IDs for the service and reminders
     private static final int NOTIFICATION_ID_1 = 1;
     private static final int NOTIFICATION_ID_2 = 2;
     private static final String CHANNEL_ID_1 = "BackgroundServiceChannel";
     private static final String CHANNEL_NAME_1 = "BackgroundService";
     private static final String CHANNEL_ID_2 = "RechenMax";
     private static final String CHANNEL_NAME_2 = "Erinnerung";
+
+    // Name for shared preferences file and key for last background time
     private static final String PREFS_NAME = "BackgroundServicePrefs";
     private static final String LAST_BACKGROUND_TIME_KEY = "lastBackgroundTime";
+
+    // Interval for reminders (4 days)
     private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 60 * 24 * 4; // 1000 * 60 * 60 * 24 * 4 = 4 days
-    //                                                 ms  * ss * mm * hh * t
+
+    // Handler for scheduling reminders, and other variables
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean startedByBootReceiver = false;
     private final Random random = new Random();
     private SharedPreferences sharedPreferences;
     private boolean isServiceRunning = true;
 
+    // Runnable for sending reminders at intervals
     private final Runnable notificationRunnable = new Runnable() {
         @Override
         public void run() {
@@ -45,11 +56,18 @@ public class BackgroundService extends Service {
         }
     };
 
+    /**
+     * onBind method required by Service class but not used in this implementation.
+     */
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
+    /**
+     * onCreate method initializes necessary variables and creates notification channels.
+     * It also cancels any existing notifications and starts the service in the foreground.
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -62,6 +80,10 @@ public class BackgroundService extends Service {
         Log.d(CHANNEL_NAME_1, "Service created");
     }
 
+    /**
+     * onStartCommand method called when the service is started.
+     * Starts the notificationRunnable for scheduling reminders and updates the last background time.
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(CHANNEL_NAME_1, "Service started");
@@ -77,6 +99,11 @@ public class BackgroundService extends Service {
         return START_STICKY;
     }
 
+    /**
+     * checkNotification method checks if a reminder needs to be sent based on the last background time.
+     * If the time since the last background exceeds the notification interval, a random reminder is sent.
+     * If the main notification is not active, the foreground service is restarted.
+     */
     private void checkNotification() {
         if (System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_INTERVAL) {
             final int num = random.nextInt(4);
@@ -102,14 +129,24 @@ public class BackgroundService extends Service {
         }
     }
 
+    /**
+     * getLastBackgroundTime method retrieves the last background time from shared preferences.
+     */
     public long getLastBackgroundTime() {
         return sharedPreferences.getLong(LAST_BACKGROUND_TIME_KEY, System.currentTimeMillis());
     }
 
+    /**
+     * setLastBackgroundTime method sets the last background time in shared preferences.
+     */
     private void setLastBackgroundTime(long time) {
         sharedPreferences.edit().putLong(LAST_BACKGROUND_TIME_KEY, time).apply();
     }
 
+    /**
+     * onDestroy method called when the service is destroyed.
+     * Updates the last background time, stops the service, and removes callbacks from the handler.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -119,6 +156,9 @@ public class BackgroundService extends Service {
         Log.d(CHANNEL_NAME_1, "Service destroyed");
     }
 
+    /**
+     * buildNotification method constructs the foreground notification for the service.
+     */
     public Notification buildNotification() {
         Notification.Builder builder;
         builder = new Notification.Builder(this, CHANNEL_ID_1);
@@ -127,10 +167,13 @@ public class BackgroundService extends Service {
 
         return builder.setContentTitle("RechenMax im Hintergrund")
                 .setContentText("RechenMax ist nun im Hintergrund aktiv.")
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.rechenmax_notification_icon)
                 .build();
     }
 
+    /**
+     * createNotificationChannel method creates the notification channel for the service.
+     */
     private void createNotificationChannel() {
         NotificationChannel serviceChannel = new NotificationChannel(
                 CHANNEL_ID_1,
