@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // Call the superclass onCreate method
         super.onCreate(savedInstanceState);
+        stopBackgroundService();
 
         // Set the content view to the calculator UI layout
-        stopBackgroundService();
         setContentView(R.layout.calculatorui);
 
         // Set the context to this instance

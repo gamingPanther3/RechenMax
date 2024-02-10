@@ -1,8 +1,10 @@
 package com.mlprograms.rechenmax;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.health.SystemHealthManager;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 /**
@@ -48,6 +51,8 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        stopBackgroundService();
+
         setContentView(R.layout.settings);
 
         dataManager = new DataManager();
@@ -184,6 +189,48 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, HelpActivity.class);
             startActivity(intent);
         });
+    }
+
+    /**
+     * onPause method is called when the activity is paused.
+     * It starts the background service.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        startBackgroundService();
+    }
+
+    /**
+     * onResume method is called when the activity is resumed.
+     * It stops the background service.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        stopBackgroundService();
+    }
+
+    /**
+     * This method stops the background service.
+     * It creates an intent to stop the BackgroundService and calls stopService() with that intent.
+     * This method is typically called when the activity is being destroyed or when it's no longer necessary to run the background service.
+     */
+    private void stopBackgroundService() {
+        Intent serviceIntent = new Intent(this, BackgroundService.class);
+        stopService(serviceIntent);
+    }
+
+    /**
+     * This method starts a background service if the necessary permission is granted.
+     * It checks if the app has the required permission to post notifications.
+     * If the permission is granted, it starts the BackgroundService.
+     * This method is typically called when the window loses focus.
+     */
+    private void startBackgroundService() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            startService(new Intent(this, BackgroundService.class));
+        }
     }
 
     /**
