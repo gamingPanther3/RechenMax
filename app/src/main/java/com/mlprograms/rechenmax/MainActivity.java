@@ -2100,10 +2100,10 @@ public class MainActivity extends AppCompatActivity {
      * @return A string representing the small number.
      */
     private static String convertToSmallNumber(int num) {
-        // Unicode-Block für tiefgestellte Zahlen: U+208x
-        char tiefgestellteNull = '\u2080';
-        int tiefgestellteZahl = num + (int) tiefgestellteNull;
-        return Character.toString((char) tiefgestellteZahl);
+        // Unicode block for subscript numbers: U+208x
+        char subNull = '\u2080';
+        int subNum = num + (int) subNull;
+        return Character.toString((char) subNum);
     }
 
     /**
@@ -2172,11 +2172,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             if (!getCalculateText().isEmpty()) {
-                if (isOperator(String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)))) {
-                    setRotateOperator(false);
-                } else {
-                    setRotateOperator(true);
-                }
+                setRotateOperator(!isOperator(String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1))));
             }
         }
     }
