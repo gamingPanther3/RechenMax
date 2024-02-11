@@ -1,6 +1,5 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorLightBackground"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
 
             <Button
                 android:id="@+id/help_return_button"
@@ -29,16 +29,17 @@
                 android:foreground="@drawable/baseline_arrow_back_24_light"
                 android:tag="return"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:tooltipText="Zurück" />
+                android:tooltipText="Zurück"
+                tools:ignore="RtlHardcoded" />
 
             <TextView
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:gravity="center_vertical"
-                android:text="Einführung / Anleitung"
+                android:text="@string/einf_hrung_anleitung"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="27sp" />
 
@@ -48,66 +49,82 @@
     <ScrollView
         android:id="@+id/helpUIScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingStart="30dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="20sp"
-                android:text="Einführung"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:text="@string/einführung"
                 android:textColor="#000000"
-                android:textSize="30sp"
+                android:textSize="@dimen/calcButtonTextSize"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="\nBrauchst du Hilfe oder bist du neu hier? Diese umfassende Anleitung führt dich detailliert durch sämtliche Knöpfe und Funktionen des RechenMax. Der RechenMax bietet eine Vielzahl von leistungsstarken Werkzeugen und Möglichkeiten, um deine Rechenanforderungen effizient zu bewältigen.\n"
-                android:textColor="#000000" />
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/einführung_text"
+                android:textColor="#000000"
+                android:textSize="@dimen/calcButtonTextSize" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:text="Grundlagen"
+                android:layout_height="70dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/grundlagen"
                 android:textColor="#000000"
-                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="\nBerechnungsbereiche"
-                android:textColor="#000000"
-                android:textSize="20sp"/>
+                android:text="@string/nberechnungsbereiche"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
+                android:textColor="#000000" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="420dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\n1: In diesem Bereich (Berechnungsbereich) wird die von dir eingegebene Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren.\n2: In diesem Bereich (Ergebnisbereich) wird das Ergebnis der durchgeführten Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren."
+                        android:layout_weight="1"
+                        android:text="@string/berechnungsbereich"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -122,11 +139,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="\nNummernfeld"
+                android:text="@string/nummernfeld"
                 android:textColor="#000000"
-                android:textSize="20sp"/>
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -136,17 +155,20 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nIn diesem Bereich kannst du durch Klicken auf Zahlen diese schrittweise zum aktuellen Ergebnis im Ergebnisbereich hinzufügen. Dies ermöglicht eine einfache Zusammenstellung deiner gewünschten Zahlenkombination und zeigt dir transparent, wie sich das Ergebnis mit jeder Auswahl ändert."
+                        android:layout_weight="1.7"
+                        android:text="@string/nummernfeld_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -161,11 +183,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="\nEntfernen / Zurück"
+                android:text="@string/entfernen_zurück"
                 android:textColor="#000000"
-                android:textSize="20sp"/>
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -175,16 +199,20 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nFür eine präzise Bearbeitung stehen dir verschiedene Löschfunktionen zur Verfügung: '⌫' entfernt die zuletzt hinzugefügte Zahl oder das zuletzt eingegebene Zeichen aus dem Ergebnisbereich, 'CE' löscht den gesamten Ergebnisbereich und 'C' leert sowohl den Ergebnis- als auch den Berechnungsbereich."                        android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:layout_weight="1"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/entfernen_zurück_text"                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -199,10 +227,12 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\nKomma"
+                android:layout_height="70dp"
+                android:text="@string/komma"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -213,17 +243,21 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nDurch das Betätigen des 'Komma-Knopfes' hast du die Möglichkeit, ein Komma zum Ergebnisbereich hinzuzufügen. Es ist dabei zu beachten, dass, falls bereits ein Komma vorhanden ist, kein weiteres hinzugefügt wird. Diese Funktion ermöglicht eine präzise Eingabe von Dezimalstellen."
+                        android:layout_weight="1"
+                        android:text="@string/komma_text"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -238,11 +272,14 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="\nNegieren"
+                android:text="@string/negieren"
                 android:textColor="#000000"
-                android:textSize="20sp"/>
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -252,17 +289,22 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nWenn du möchtest, dass eine Zahl negativ wird, betätige den '±'-Knopf. Drücke ihn erneut, wenn die Zahl wieder positiv sein soll. Diese Funktion ermöglicht eine einfache Änderung des Vorzeichens und sorgt dafür, dass du deine Zahlen nach Bedarf schnell und unkompliziert anpassen kannst."
+                        android:layout_weight="1"
+                        android:text="@string/negieren_text"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -277,11 +319,14 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="\nAddition, Subtraktion, Multiplikation und Division"
+                android:text="@string/add_sub_mul_div"
                 android:textColor="#000000"
-                android:textSize="20sp"/>
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -291,17 +336,20 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nFür Rechenoperationen nutze einfach eines der hervorgehobenen Zeichen. Wenn du beispielsweise '×' auswählst, wird der Operator sofort im Ergebnisbereich eingefügt. Füge dann eine Zahl (z.B., '3') hinzu und setze nach Bedarf weitere Operatoren ein. So gestaltest du deine Rechenabläufe einfach und schrittweise."
+                        android:layout_weight="1"
+                        android:text="@string/add_sub_mul_div_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp" />
 
                 </LinearLayout>
 
@@ -316,11 +364,14 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="\nBerechnen"
+                android:text="@string/berechnen"
                 android:textColor="#000000"
-                android:textSize="20sp"/>
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -330,17 +381,22 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nNachdem du deine Berechnung abgeschlossen hast, betätige die '='-Taste, um das Ergebnis zu berechnen. Anschließend wird das Resultat im Ergebnisbereich für dich angezeigt. Diese einfache Vorgehensweise ermöglicht es dir, schnell und unkompliziert die Ergebnisse deiner Rechenoperationen zu erhalten."
+                        android:layout_weight="1"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        android:text="@string/berechen_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -355,10 +411,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\nAktionsleiste"
+                android:layout_height="70dp"
+                android:text="@string/aktionsleiste"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -369,17 +428,21 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nZusätzlich gibt es eine Aktionsleiste, über die du zwischen verschiedenen Tabs (Verlauf und Einstellungen) sowie dem Wissenschaftsmodus wechseln kannst. Diese Funktion eröffnet dir die Möglichkeit, flexibel zwischen deinem Berechnungsverlauf, individuellen Einstellungen und dem erweiterten Wissenschaftsmodus zu navigieren."
+                        android:layout_weight="1"
+                        android:text="@string/aktionsleiste_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -394,19 +457,25 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="20sp"
-                android:text="Verlauf"
+                android:text="@string/verlauf"
                 android:textColor="#000000"
-                android:textSize="30sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\nVerlauf aufrufen"
+                android:layout_height="70dp"
+                android:text="@string/verlauf_aufrufen"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -417,17 +486,21 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nIn der Aktionsleiste findest du den Verlaufsknopf, der es dir ermöglicht, auf deine vorherigen Berechnungen zuzugreifen und diese anzuzeigen."
+                        android:layout_weight="1"
+                        android:text="@string/verlauf_aufrufen_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -442,10 +515,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\nVerlauf bearbeiten"
+                android:layout_height="70dp"
+                android:text="@string/verlauf_bearbeiten"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -456,17 +532,21 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nIm Verlauf kannst du vorherige Berechnungen einsehen. Die Löschen-Taste (oben rechts) leert den gesamten Verlauf, der Zurück-Knopf (oben links) führt zum Taschenrechner zurück. Durch langes Drücken wird eine Berechnung in die Zwischenablage kopiert, durch kurzes Drücken wird sie in den Taschenrechner eingefügt, und doppeltes Tippen löscht eine einzelne Berechnung."
+                        android:layout_weight="1"
+                        android:text="@string/verlauf_bearbeiten_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -481,10 +561,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\nEinstellungen aufrufen"
+                android:layout_height="70dp"
+                android:text="@string/einstellungen_aufrufen"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -495,17 +578,21 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nWenn du wieder zurück zur Startseite gehst, findest du den Eintellungen-Knopf. Wenn du ihn drückst wirst du zu den Einstellungen von dem Taschenrechner weitergeleitet."
+                        android:layout_weight="1"
+                        android:text="@string/eintellungen_aufrufen"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -520,10 +607,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\nEinstellungen"
+                android:layout_height="70dp"
+                android:text="@string/einstellungen"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -534,17 +624,21 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nAn dieser Stelle stehen dir verschiedene Einstellungen mit ausführlichen Beschreibungen zur Verfügung. Wenn du zurück zur Startseite möchtest, verwende einfach den Knopf oben links. Zusätzlich findest du oben rechts den Knopf, der dich zur Einführung des Taschenrechners weiterleitet. So kannst du mühelos auf die gewünschten Funktionen und Informationen zugreifen."
+                        android:layout_weight="1"
+                        android:text="@string/einstellungen_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -559,19 +653,25 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="20sp"
-                android:text="Erweiterte Funktionen"
+                android:text="@string/erweiterte_funktionen"
                 android:textColor="#000000"
-                android:textSize="30sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\nWissenschaftlichen Modus aktivieren"
+                android:layout_height="70dp"
+                android:text="@string/wissenschaftlichen_modus_aktivieren"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -582,17 +682,21 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nUm den wissenschaftlichen Modus zu aktivieren, drücke einfach oben links auf den entsprechenden Knopf. Dadurch werden zusätzliche Funktionen angezeigt."
+                        android:layout_weight="1.7"
+                        android:text="@string/wissenschaftlichen_modus_aktivieren_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -607,10 +711,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="\nWeitere Funktionen"
+                android:layout_height="70dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/weitere_funktionen"
                 android:textColor="#000000"
-                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -618,26 +725,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.7"
+                    android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                    android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:text="@string/weitere_funktionen_text"
+                    android:textColor="#000000"
+                    tools:ignore="NestedWeights" />
+
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nWenn der wissenschaftliche Modus aktiviert ist, werden zusätzliche Funktionen angezeigt. Oben links siehst du zwei Pfeile, daneben eine Zahl (1, 2 oder 3) und den Modus 'Deg' oder 'Rad'. Mit den Pfeilen und dem ausgewählten Modus, den die Zahl angibt, kannst du zwischen den Modi des wissenschaftlichen Modus wechseln, die verschiedene Funktionen beinhalten. Zusätzlich kannst du mit 'Deg' das Gradmaß und mit 'Rad' das Bogenmaß einstellen.\n\n'(': Setzt eine geöffnete Klammer in den Berechnungsbereich.\n\n')': Setzt eine geschlossene Klammer in den Berechnungsbereich.\n\n'x!': Nimmt die eingegebene Zahl aus dem Ergebnisbereich und fügt sie mit dem Faktoriell-Zeichen ein.\n\n'√x': Die Wurzel aus der Zahl, die aus dem Ergebnisbereich stammt.\n\n'e': Eulersche Zahl (ca. 2,7182)"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -647,7 +750,8 @@
                         android:layout_height="400sp"
                         android:layout_weight="1"
                         android:layout_marginBottom="5sp"
-                        android:src="@drawable/rm_tdm_scieceactionbar1" />
+                        android:src="@drawable/rm_tdm_scieceactionbar1"
+                        tools:ignore="NestedWeights" />
 
                     <ImageView
                         android:id="@+id/pic_science_actionbar2"
@@ -663,7 +767,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\nWeitere Tabs"
+                android:text="@string/weitere_tabs"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -676,17 +780,20 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="1.7"
                     android:orientation="vertical"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.7"
-                        android:text="\nEs gibt drei verschiedene Tabs mit unterschiedlichen Funktionen, die du durch Drücken des entsprechenden Knopfes wechseln kannst.\n\n Tab 1:\n\n'sin(x)': Sinusfunktion\n'cos(x)': Cosinusfunktion\n'tan(x)': Tangensfunktion\n'e±':\n'π': Kreiszahl PI\n'sin⁻¹(x)': Inverse Sinusfunktion\n'cos⁻¹(x)': Inverse Cosinusfunktion\n'tan⁻¹(x)': Inverse Tangensfunktion\n\nTab 2:\n\n'sinh(x)': Hyperbolische Sinusfunktion\n'cosh(x)': Hyperbolische Cosinusfunktion\n'tanh(x)': Hyperbolische Tangensfunktion\n'sinh⁻¹(x)': Inverse Hyperbolische Sinusfunktion\n'cosh⁻¹(x)': Inverse Hyperbolische Cosinusfunktion\n'tanh⁻¹(x)': Inverse Hyperbolische Tangesfunktion\n\nTab 3:\n\n'log(x)':  Logarithmus zur Basis 10\n'log₂(x)': Logarithmus zur Basis 2\n'logₓ(x)': Logarithmus zur Basis x\n'ln(x)': Natürlicher Logarithmus zur Basis e (ungefähr 2,71828)\n'³√x': Kubikwurzel\n'½': Hälfte (0,5)\n'⅓': Drittel (0,3333...)\n'¼':Viertel (0,25)"
+                        android:layout_height="1150dp"
+                        android:layout_weight="1"
+                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:text="@string/weitere_tabs_text"
                         android:textColor="#000000"
-                        android:textSize="15sp" />
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -699,24 +806,25 @@
                     <ImageView
                         android:id="@+id/pic_science_1"
                         android:layout_width="match_parent"
-                        android:layout_height="400sp"
+                        android:layout_height="400dp"
                         android:layout_weight="1"
-                        android:layout_marginBottom="5sp"
-                        android:src="@drawable/rm_tdm_science1" />
+                        android:layout_marginBottom="50sp"
+                        android:src="@drawable/rm_tdm_science1"
+                        tools:ignore="NestedWeights" />
 
                     <ImageView
                         android:id="@+id/pic_science_2"
                         android:layout_width="match_parent"
-                        android:layout_height="400sp"
+                        android:layout_height="400dp"
                         android:layout_weight="1"
-                        android:layout_marginBottom="5sp"
+                        android:layout_marginBottom="50sp"
                         android:src="@drawable/rm_tdm_science2" />
 
                     <ImageView
                         android:id="@+id/pic_science_3"
                         android:layout_width="match_parent"
                         android:layout_marginTop="5sp"
-                        android:layout_height="400sp"
+                        android:layout_height="400dp"
                         android:layout_weight="1"
                         android:src="@drawable/rm_tdm_science3" />
 
@@ -730,9 +838,12 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:gravity="center"
                 android:layout_marginTop="45sp"
-                android:text="\nErsteller: Max Lemberg\nCopyright: © 2023 Max Lemberg. Alle Rechte vorbehalten.\nLizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz.\nVersion: 1.6.0"
+                android:text="@string/copyright"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="12dp" />
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

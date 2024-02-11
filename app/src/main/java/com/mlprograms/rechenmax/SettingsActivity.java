@@ -642,7 +642,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (v instanceof Switch) {
                     String switchText = ((Switch) v).getText().toString();
                     // Define a string of spaces
-                    String space = "                                                      ";
+                    String space = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";
                     switchText = switchText + space;
                     ((Switch) v).setText(switchText);
                 }

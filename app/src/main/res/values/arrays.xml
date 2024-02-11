@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="auto_text_sizes_calculatorui">
+        <item>19sp</item>
+        <item>21sp</item>
+        <item>35sp</item>
+        <item>40sp</item>
+    </array>
+
+    <array name="auto_text_sizes_helpui">
+        <item>12sp</item>
+        <item>16sp</item>
+        <item>20sp</item>
+        <item>24sp</item>
+        <item>25sp</item>
+        <item>30sp</item>
+        <item>35sp</item>
+        <item>40sp</item>
+    </array>
+
+    <array name="auto_text_sizes_settingsui">
+        <item>15sp</item>
+        <item>20sp</item>
+        <item>30sp</item>
+        <item>35sp</item>
+        <item>40sp</item>
+    </array>
+
+    <array name="auto_text_sizes_historyui">
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+    </array>
+
+    <array name="auto_text_sizes_historyui_2">
+        <item>45sp</item>
+    </array>
+
+    <array name="auto_text_sizes_historyui_3">
+        <item>45</item>
+    </array>
+</resources>

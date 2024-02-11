@@ -15,6 +15,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
