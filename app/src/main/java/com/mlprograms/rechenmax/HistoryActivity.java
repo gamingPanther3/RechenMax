@@ -1,11 +1,10 @@
 package com.mlprograms.rechenmax;
 
-import android.Manifest;
+import static com.mlprograms.rechenmax.ToastHelper.*;
+
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.pm.PackageManager;
 import android.util.Log;
-import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +12,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
@@ -56,8 +54,6 @@ public class HistoryActivity extends AppCompatActivity {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stopBackgroundService();
-
         setContentView(R.layout.history);
 
         // Initialize DataManager
@@ -161,7 +157,7 @@ public class HistoryActivity extends AppCompatActivity {
                 clipboardManager.setPrimaryClip(clipData);
 
                 // Display a toast indicating that the data has been saved
-                showToastCopy();
+                showToastShort("Rechnung wurde kopiert ...", getApplicationContext());
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -217,7 +213,8 @@ public class HistoryActivity extends AppCompatActivity {
                             }
                             dataManager.saveToJSON("removeValue", false, getMainActivityContext());
                             dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
-                            showToast();
+
+                            showToastShort("Rechnung wurde übernommen ...", getApplicationContext());
                         } catch (Exception e) {
                             Log.i("createHistoryTextView", String.valueOf(e));
                         }
@@ -228,34 +225,6 @@ public class HistoryActivity extends AppCompatActivity {
         });
 
         return textView;
-    }
-
-    /**
-     * This method displays a toast on the screen.
-     * It retrieves the context of the current application and sets the duration of the toast to short.
-     * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
-     */
-    private void showToast() {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-
-        // Create and show the toast
-        Toast toast = Toast.makeText(context, "Rechnung wurde übernommen ...", duration);
-        toast.show();
-    }
-
-    /**
-     * This method displays a toast on the screen.
-     * It retrieves the context of the current application and sets the duration of the toast to short.
-     * A toast with the message "Rechnung wurde übernommen ..." is created and displayed.
-     */
-    private void showToastCopy() {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-
-        // Create and show the toast
-        Toast toast = Toast.makeText(context, "Rechnung wurde kopiert ...", duration);
-        toast.show();
     }
 
     /**
@@ -716,48 +685,6 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     /**
-     * onPause method is called when the activity is paused.
-     * It starts the background service.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        startBackgroundService();
-    }
-
-    /**
-     * onResume method is called when the activity is resumed.
-     * It stops the background service.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        stopBackgroundService();
-    }
-
-    /**
-     * This method stops the background service.
-     * It creates an intent to stop the BackgroundService and calls stopService() with that intent.
-     * This method is typically called when the activity is being destroyed or when it's no longer necessary to run the background service.
-     */
-    private void stopBackgroundService() {
-        Intent serviceIntent = new Intent(this, BackgroundService.class);
-        stopService(serviceIntent);
-    }
-
-    /**
-     * This method starts a background service if the necessary permission is granted.
-     * It checks if the app has the required permission to post notifications.
-     * If the permission is granted, it starts the BackgroundService.
-     * This method is typically called when the window loses focus.
-     */
-    private void startBackgroundService() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            startService(new Intent(this, BackgroundService.class));
-        }
-    }
-
-    /**
      * This static method sets the context of the MainActivity.
      * @param activity The MainActivity whose context is to be set.
      */
@@ -814,4 +741,3 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 }
-
