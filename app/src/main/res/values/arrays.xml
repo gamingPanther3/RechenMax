@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="auto_text_sizes_calculatorui">
-        <item>19sp</item>
-        <item>21sp</item>
-        <item>35sp</item>
+        <item>19dp</item>
+        <item>21dp</item>
+        <item>35dp</item>
+        <item>40dp</item>
+    </array>
+
+    <array name="auto_text_sizes_calculatorui_3">
         <item>40sp</item>
+        <item>45sp</item>
+        <item>50sp</item>
+        <item>55sp</item>
+        <item>60sp</item>
+        <item>75sp</item>
+        <item>80sp</item>
+        <item>95sp</item>
+        <item>80sp</item>
     </array>
 
     <array name="auto_text_sizes_helpui">

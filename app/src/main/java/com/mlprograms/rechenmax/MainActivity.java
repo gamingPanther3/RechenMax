@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -106,12 +108,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
-        dataManager.loadNumbers();
         setUpListeners();
         showOrHideScienceButtonState();
         checkDarkmodeSetting();
         formatResultTextAfterType();
         adjustTextSize();
+        dataManager.loadNumbers();
 
         // Scroll down in the calculate label
         scrollToCalculateLabelBottom();
@@ -343,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Handle the visual representation or behavior associated with the state change
         showOrHideScienceButtonState();
+        adjustTextSize();
     }
 
     /**
@@ -2291,9 +2294,11 @@ public class MainActivity extends AppCompatActivity {
                 setCalculateText("");
                 setRotateOperator(false);
                 dataManager.saveToJSON("logX", "false", getApplicationContext());
+                adjustTextSize();
                 break;
             case "CE":
                 setResultText("0");
+                adjustTextSize();
                 break;
         }
         adjustTextSize();
@@ -2350,6 +2355,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         formatResultTextAfterType();
+        adjustTextSize();
     }
 
     /**
@@ -2720,10 +2726,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     BigDecimal bigDecimalResult1 = new BigDecimal(result, MathContext.DECIMAL128);
                     String formattedNumber1 = decimalFormat.format(bigDecimalResult1);
-                    String formattedNumber2 = result2;
 
                     // Set the result text with formatted numbers
-                    setResultText((isNegative ? "-" : "") + formattedNumber1 + formattedNumber2);
+                    setResultText((isNegative ? "-" : "") + formattedNumber1 + result2);
                 } catch (NumberFormatException e) {
                     // Handle invalid number format in the integral part
                     System.out.println("Invalid number format: " + result);
@@ -2739,30 +2744,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This method adjusts the text size of the result label based on its length.
-     * If the result text is not "Nur reelle Zahlen" and its length is 12 or more, the text size is reduced to fit the label.
-     * If the result text is "Ungültige Eingabe" or "Nur reelle Zahlen", the text size is set to a specific value.
+     * Adjusts the text size of two TextViews dynamically.
+     * <p>
+     * This method is responsible for adjusting the text size of TextViews in two separate ScrollViews
+     * to ensure better readability and user experience. It first scrolls the first ScrollView to the bottom,
+     * then adjusts the text size of the label within it using a uniform text size configuration.
+     * After that, it scrolls the second ScrollView to the top and adjusts the text size of the label within
+     * it using another uniform text size configuration.
+     * <p>
+     * Note: The TextViews and ScrollViews are assumed to be defined in the layout XML with specific IDs:
+     * - R.id.calculate_scrollview: ScrollView containing the first TextView
+     * - R.id.calculate_label: TextView whose text size needs adjustment within the first ScrollView
+     * - R.id.result_scrollview: ScrollView containing the second TextView
+     * - R.id.result_label: TextView whose text size needs adjustment within the second ScrollView
      */
-    public void adjustTextSize() {
-        if(getResultText() != null) {
-            int len = getResultText().replace(",", "").replace(".", "").replace("-", "").length();
-            TextView label = findViewById(R.id.result_label);
-            if (len >= 12) {
-                label.setTextSize(45f);
-                if (len >= 14) {
-                    label.setTextSize(40f);
-                    if (len >= 15) {
-                        label.setTextSize(35f);
-                        if(len >= 17) {
-                            label.setTextSize(31f);
-                        }
-                    }
-                }
+        public void adjustTextSize() {
+            ScrollView scrollView1 = findViewById(R.id.calculate_scrollview);
+            scrollView1.post(() -> scrollView1.fullScroll(ScrollView.FOCUS_DOWN));
+
+            TextView label1 = findViewById(R.id.calculate_label);
+            if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
+                label1.setAutoSizeTextTypeUniformWithConfiguration(30, 45, 1, TypedValue.COMPLEX_UNIT_SP);
             } else {
-                label.setTextSize(55f);
+                label1.setAutoSizeTextTypeUniformWithConfiguration(45, 60, 1, TypedValue.COMPLEX_UNIT_SP);
+            }
+
+            ScrollView scrollView2 = findViewById(R.id.result_scrollview);
+            scrollView2.post(() -> scrollView2.fullScroll(ScrollView.FOCUS_UP));
+
+            TextView label2 = findViewById(R.id.result_label);
+            if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
+                label2.setAutoSizeTextTypeUniformWithConfiguration(30, 60, 1, TypedValue.COMPLEX_UNIT_SP);
+            } else {
+                label2.setAutoSizeTextTypeUniformWithConfiguration(45, 60, 1, TypedValue.COMPLEX_UNIT_SP);
             }
         }
-    }
+
 
     /**
      * This method is called when the back button is pressed.

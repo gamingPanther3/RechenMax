@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -118,6 +119,7 @@
 
         </LinearLayout>
 
+
         <ScrollView
             android:id="@+id/calculate_scrollview"
             android:layout_width="wrap_content"
@@ -136,6 +138,10 @@
                     android:id="@+id/calculate_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="30sp"
+                    app:autoSizeMaxTextSize="45sp"
+                    app:autoSizeStepGranularity="1sp"
                     android:gravity="end|center_vertical"
                     android:paddingStart="10sp"
                     android:paddingTop="15dp"
@@ -148,10 +154,11 @@
         </ScrollView>
 
         <ScrollView
-            android:layout_width="wrap_content"
+            android:id="@+id/result_scrollview"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_gravity="right|bottom"
+            android:layout_weight="1"
             tools:ignore="RtlHardcoded">
 
             <LinearLayout
@@ -160,14 +167,19 @@
 
                 <TextView
                     android:id="@+id/result_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="100dp"
+                    android:gravity="center_vertical|end"
                     android:paddingStart="10dp"
+                    android:paddingTop="20dp"
                     android:paddingEnd="10dp"
                     android:text="@string/result_label"
-                    android:textSize="60sp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    app:autoSizeMaxTextSize="60sp"
+                    app:autoSizeMinTextSize="30sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform" />
 
             </LinearLayout>
         </ScrollView>

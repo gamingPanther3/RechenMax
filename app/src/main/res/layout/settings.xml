@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/settingsUI"
     tools:context="com.mlprograms.rechenmax.MainActivity" >
@@ -24,23 +25,19 @@
             android:foreground="@drawable/baseline_arrow_back_24_light"
             android:tag="return"
             android:textSize="@dimen/calcButtonTextSize"
-            android:tooltipText="Zurück"
-            tools:ignore="RtlHardcoded" />
+            android:tooltipText="Zurück" />
 
         <TextView
             android:id="@+id/settings_title"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:backgroundTint="@color/white"
             android:gravity="center_vertical"
-            android:text="@string/einstellungen"
+            android:text="Einstellungen"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:autoSizeTextType="uniform"
-            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-            android:autoSizeStepGranularity="1sp"
-            android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui" />
+            android:textSize="@dimen/calcButtonTextSize" />
 
         <Button
             android:id="@+id/help_button"
@@ -50,20 +47,19 @@
             android:layout_marginEnd="10dp"
             android:foreground="@drawable/baseline_help_outline_24_light"
             android:tag="help"
-            android:tooltipText="Hife"
-            tools:ignore="RtlHardcoded" />
+            android:tooltipText="Hife" />
 
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/settings_sroll_textview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="841dp"
         android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
@@ -75,28 +71,21 @@
 
             <Switch
                 android:id="@+id/settings_release_notes"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/release_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Release-Notes"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui"
+                android:textSize="30dp"
                 android:thumb="@drawable/settings_switch_thumb"
-                android:track="@drawable/settings_switch_track"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                android:track="@drawable/settings_switch_track" />
 
             <TextView
                 android:id="@+id/settings_release_notes_text"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:text="@string/release_notes_text"
+                android:layout_height="wrap_content"
+                android:text="Wenn diese Option aktiviert ist, werden die Versionshinweise bei jedem Start des Taschenrechners angezeigt. Unabhängig von dieser Einstellung, werden die Versionshinweise nach jeder Installation der neuesten Version automatisch präsentiert."
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui" />
+                android:textSize="14.4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -106,24 +95,18 @@
             <TextView
                 android:id="@+id/settings_display_mode_title"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/anzeigemodus"
+                android:layout_height="wrap_content"
+                android:text="Anzeigemodus"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui" />
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/settings_display_mode_text"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="@string/display_mode_text"
+                android:layout_height="wrap_content"
+                android:text="Mit dieser Option lässt sich der Anzeigemodus des Taschenrechners auswählen."
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui" />
+                android:textSize="14.4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -133,7 +116,7 @@
             <Spinner
                 android:id="@+id/settings_display_mode_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:entries="@array/setting_display_mode_options"
                 android:gravity="center_horizontal"
                 android:prompt="@string/mode_prompt"
@@ -146,28 +129,21 @@
 
             <Switch
                 android:id="@+id/settings_true_darkmode"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/echter_dunkelmodus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Echter Dunkelmodus"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui"
+                android:textSize="30dp"
                 android:thumb="@drawable/settings_switch_thumb"
-                android:track="@drawable/settings_switch_track"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                android:track="@drawable/settings_switch_track" />
 
             <TextView
                 android:id="@+id/settings_true_darkmode_text"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:text="@string/true_darkmode_text"
+                android:layout_height="wrap_content"
+                android:text="Diese Einstellung bewirkt, dass das Schwarz intensiver und das Weiß leicht gedimmt wird, wenn sie aktiviert ist. Bitte beachten Sie, dass diese Einstellung nur wirksam wird, wenn der Dunkelmodus aktiviert ist."
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui" />
+                android:textSize="14.4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -177,24 +153,18 @@
             <TextView
                 android:id="@+id/settings_calculation_mode_title"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/berechungsmodus"
+                android:layout_height="wrap_content"
+                android:text="Berechungsmodus"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui" />
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/settings_calculation_mode_text"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:text="@string/calculation_mode_text"
+                android:layout_height="wrap_content"
+                android:text="Mit dieser Einstellung kannst du festlegen, ob die Eingaben zuerst im Ergebnisbereich angezeigt und dann mit einem Operator in den Berechnungsbereich eingefügt (Standard), oder ob sie direkt im Berechnungsbereich geschrieben werden (Vereinfacht)."
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui" />
+                android:textSize="14.4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -204,7 +174,7 @@
             <Spinner
                 android:id="@+id/settings_calculation_mode_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:entries="@array/setting_calculation_mode_options"
                 android:gravity="center_horizontal"
                 android:prompt="@string/mode_prompt"
@@ -218,24 +188,18 @@
             <TextView
                 android:id="@+id/settings_function_title"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/deg_rad"
+                android:layout_height="wrap_content"
+                android:text="Grad- / Bogenmaß"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui" />
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/settings_function_text"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="wrap_content"
                 android:text="@string/function_text"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui" />
+                android:textSize="14.4dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -245,7 +209,7 @@
             <Spinner
                 android:id="@+id/settings_function_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:entries="@array/settings_function_options"
                 android:gravity="center_horizontal"
                 android:prompt="@string/mode_prompt"
