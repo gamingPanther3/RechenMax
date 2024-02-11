@@ -241,12 +241,8 @@ public class HistoryActivity extends AppCompatActivity {
         );
 
         // Set the margin for horizontal spacing on the right and left to 10dp
-        lineLayoutParams.setMargins(
-                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
-                0,
-                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
-                0
-        );
+        lineLayoutParams.setMarginEnd(getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal));
+        lineLayoutParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal));
 
         line.setLayoutParams(lineLayoutParams);
         line.setBackgroundColor(ContextCompat.getColor(this, R.color.history_line_color));
