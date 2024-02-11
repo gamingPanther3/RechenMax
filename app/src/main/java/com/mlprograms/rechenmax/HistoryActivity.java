@@ -330,7 +330,7 @@ public class HistoryActivity extends AppCompatActivity {
      * The TextView is assigned a unique ID (R.id.history_empty_textview), and its text color is set
      * based on the current night mode and true dark mode. Additionally, the method sets the text size
      * and gravity for proper alignment. Finally, the newly created TextView is added to the layout.
-     *
+     * <p>
      * Note: This method is typically called when the history section is empty, providing a visual
      * indication to the user that there is no history data available.
      */
