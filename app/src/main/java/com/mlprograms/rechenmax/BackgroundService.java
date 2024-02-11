@@ -44,7 +44,9 @@ public class BackgroundService extends Service {
     private SharedPreferences sharedPreferences;
     private boolean isServiceRunning = true;
 
-    // Runnable for sending reminders at intervals
+    /**
+     * Runnable for sending reminders at intervals
+     */
     private final Runnable notificationRunnable = new Runnable() {
         @Override
         public void run() {
