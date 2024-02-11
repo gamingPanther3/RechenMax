@@ -332,7 +332,7 @@ public class DataManager {
 
             if (calculatelabel != null && resultlabel != null) {
                 calculatelabel.setText(calculateText);
-                if (resultText != null && !resultText.equals("")) {
+                if (resultText != null && !resultText.isEmpty()) {
                     resultlabel.setText(resultText);
                 } else {
                     resultlabel.setText("0");
