@@ -33,7 +33,8 @@ public class CalculatorActivity {
     }
 
     // Declaration of a constant of type MathContext with a precision of 10. This is used for division to ensure a precision of 10 decimal places.
-    private static final MathContext MC = new MathContext(11, RoundingMode.HALF_UP);
+    private static final MathContext MC = new MathContext(Integer.MAX_VALUE, RoundingMode.HALF_UP);
+
 
     // Declaration of a constant for the root operation.
     public static final String ROOT = "√";
@@ -75,7 +76,7 @@ public class CalculatorActivity {
                     .replace("¼", "0.25")
                     .trim();
 
-            Log.e("debug", "trim:" + trim);
+            //Log.e("debug", "trim:" + trim);
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
@@ -110,13 +111,8 @@ public class CalculatorActivity {
             if (Double.isInfinite(resultDouble)) {
                 return "Wert zu groß";
             }
-            // If the result is larger than a certain threshold, return it in scientific notation
-            if (result.compareTo(new BigDecimal("1000000000000000000")) >= 0 || result.precision() > 17) {
-                return String.format(Locale.GERMAN, "%.10e", result);
-            } else {
-                // Otherwise, return the result in decimal notation
-                return result.stripTrailingZeros().toPlainString().replace('.', ',');
-            }
+            // return the result in decimal notation
+            return result.stripTrailingZeros().toPlainString().replace('.', ',');
         } catch (ArithmeticException e) {
             // Handle exceptions related to arithmetic errors
             if (Objects.equals(e.getMessage(), "Wert zu groß")) {
@@ -128,7 +124,7 @@ public class CalculatorActivity {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            Log.e("Exception", e.toString());
+            //Log.e("Exception", e.toString());
             return "Syntax Fehler";
         }
     }
@@ -163,13 +159,10 @@ public class CalculatorActivity {
      * @param str The input string in scientific notation.
      * @return The decimal representation of the input string.
      */
-    public static String convertScientificToDecimal(final String str) {
-        // Replace commas with dots for proper decimal representation
-        final String formattedInput = str;
-
+    public static String convertScientificToDecimal(final String str) {;
         // Define the pattern for scientific notation
         final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)");
-        final Matcher matcher = pattern.matcher(formattedInput);
+        final Matcher matcher = pattern.matcher(str);
         final StringBuffer sb = new StringBuffer();
 
         // Process all matches found in the input string
@@ -222,7 +215,7 @@ public class CalculatorActivity {
         }
 
         // Return the final result as a string
-        Log.i("convertScientificToDecimal", "sb:" + sb);
+        //Log.i("convertScientificToDecimal", "sb:" + sb);
         return sb.toString();
     }
 
@@ -246,7 +239,7 @@ public class CalculatorActivity {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        Log.i("tokenize","Input Expression: " + expression);
+        //Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -334,7 +327,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print tokens
-        Log.i("tokenize","Tokens: " + tokens);
+        //Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -349,7 +342,7 @@ public class CalculatorActivity {
     public static BigDecimal evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
         final List<String> postfixTokens = infixToPostfix(tokens);
-        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
+        //Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -371,11 +364,11 @@ public class CalculatorActivity {
 
         switch (operator) {
             case "+":
-                return operand1.add(operand2);
+                return operand1.add(operand2, MC);
             case "-":
-                return operand1.subtract(operand2);
+                return operand1.subtract(operand2, MC);
             case "*":
-                return operand1.multiply(operand2);
+                return operand1.multiply(operand2, MC);
             case "/":
                 if (operand2.compareTo(BigDecimal.ZERO) == 0) {
                     throw new ArithmeticException("Kein Teilen durch 0");
@@ -395,82 +388,82 @@ public class CalculatorActivity {
             case "^":
                 return pow(operand1, operand2);
             case "log(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₂(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(2)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(2)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₃(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(3)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(3)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₄(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(4)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(4)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₅(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(5)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(5)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₆(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(6)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(6)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₇(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(7)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(7)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₈(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(8)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(8)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₉(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(9)).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(9)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "ln(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                return BigDecimal.valueOf(Math.log(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "sin(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.sin(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.sin(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "sinh(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.sinh(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.sinh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.sinh(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.sinh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "sin⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.asin(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.asin(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.toDegrees(Math.asin(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.toDegrees(Math.asin(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "sinh⁻¹(":
                 return asinh(operand2);
             case "cos(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "cosh(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.cosh(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.cosh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.cosh(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.cosh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "cos⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.acos(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.acos(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.toDegrees(Math.acos(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.toDegrees(Math.acos(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "cosh⁻¹(":
                 return acosh(operand2);
             case "tan(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "tanh(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.tanh(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.tanh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.tanh(Math.toRadians(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.tanh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "tan⁻¹(":
                 if (mode != null && mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.atan(operand2.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.atan(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.toDegrees(Math.atan(operand2.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    return BigDecimal.valueOf(Math.toDegrees(Math.atan(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "tanh⁻¹(":
                 return atanh(operand2);
@@ -588,7 +581,7 @@ public class CalculatorActivity {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            Log.i("evaluatePostfix","Token: " + token);
+            //Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -601,17 +594,17 @@ public class CalculatorActivity {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException("Syntax Fehler");
             }
 
             // Debugging: Print current stack
-            Log.i("evaluatePostfix","Stack: " + stack);
+            //Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            Log.i("evaluatePostfix","Stacksize != 1");
+            //Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException("Syntax Fehler");
         }
 
@@ -685,7 +678,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log10(operand.doubleValue())).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log10(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "log₂(": {
@@ -693,7 +686,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(2)).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(2)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "log₃(": {
@@ -701,7 +694,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(3)).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(3)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "log₄(": {
@@ -709,7 +702,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(4)).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(4)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "log₅(": {
@@ -717,7 +710,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(5)).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(5)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "log₆(": {
@@ -725,7 +718,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(6)).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(6)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "log₇(": {
@@ -733,7 +726,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(7)).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(7)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "log₈(": {
@@ -741,7 +734,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(8)).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(8)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "log₉(": {
@@ -749,7 +742,7 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(9)).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(9)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "ln(": {
@@ -757,16 +750,16 @@ public class CalculatorActivity {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException("Nicht definiert");
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue())).setScale(10, RoundingMode.DOWN));
+                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "sin(": {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.sin(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.sin(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.sin(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.sin(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -775,9 +768,9 @@ public class CalculatorActivity {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.sinh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.sinh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.sinh(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.sinh(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -789,9 +782,9 @@ public class CalculatorActivity {
                     throw new ArithmeticException("Ungültiger Wert");
                 }
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.asin(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.asin(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.toDegrees(Math.asin(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.toDegrees(Math.asin(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -804,9 +797,9 @@ public class CalculatorActivity {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.cos(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.cos(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -815,9 +808,9 @@ public class CalculatorActivity {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.cosh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.cosh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.cosh(Math.toRadians(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.cosh(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -829,9 +822,9 @@ public class CalculatorActivity {
                     throw new ArithmeticException("Ungültiger Wert");
                 }
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.acos(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.acos(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.toDegrees(Math.acos(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.toDegrees(Math.acos(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -844,14 +837,14 @@ public class CalculatorActivity {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.tan(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.tan(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     double degrees = operand.doubleValue();
                     if (isMultipleOf90(degrees)) {
                         // Check if the tangent of multiples of 90 degrees is being calculated
                         throw new ArithmeticException("Nicht definiert");
                     }
-                    result = BigDecimal.valueOf(Math.tan(Math.toRadians(degrees))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.tan(Math.toRadians(degrees))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -860,10 +853,10 @@ public class CalculatorActivity {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.tanh(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.tanh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     double degrees = operand.doubleValue();
-                    result = BigDecimal.valueOf(Math.tanh(Math.toRadians(degrees))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.tanh(Math.toRadians(degrees))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -872,9 +865,9 @@ public class CalculatorActivity {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (mode != null && mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.atan(operand.doubleValue())).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.atan(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.toDegrees(Math.atan(operand.doubleValue()))).setScale(10, RoundingMode.DOWN);
+                    result = BigDecimal.valueOf(Math.toDegrees(Math.atan(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -909,8 +902,8 @@ public class CalculatorActivity {
 
         for (final String token : infixTokens) {
             // Debugging: Print current token and stack
-            Log.i("infixToPostfix", "Current Token: " + token);
-            Log.i("infixToPostfix", "Stack: " + stack);
+            //Log.i("infixToPostfix", "Current Token: " + token);
+            //Log.i("infixToPostfix", "Stack: " + stack);
 
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -941,8 +934,8 @@ public class CalculatorActivity {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
-            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
+            //Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            //Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
         while (!stack.isEmpty()) {
@@ -950,7 +943,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print final postfixTokens
-        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
+        //Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
         return postfixTokens;
     }
