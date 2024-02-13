@@ -2655,9 +2655,6 @@ public class MainActivity extends AppCompatActivity {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
             layoutParams.weight = 1;
             scrollView.setLayoutParams(layoutParams);
-
-            TextView textView = findViewById(R.id.result_label);
-            textView.setAutoSizeTextTypeUniformWithConfiguration(50, 60, 1, TypedValue.COMPLEX_UNIT_SP);
         }
 
         scrollToTop(findViewById(R.id.calculate_scrollview));
@@ -2885,11 +2882,6 @@ public class MainActivity extends AppCompatActivity {
                 setResultText("0");
             }
             setRemoveValue(true);
-        }
-    }
-    private void scrollToCalculateLabelBottom() {
-        if (findViewById(R.id.calculate_scrollview) != null) {
-            scrollToBottom(findViewById(R.id.calculate_scrollview));
         }
     }
     public void setIsNotation(final boolean val) {
