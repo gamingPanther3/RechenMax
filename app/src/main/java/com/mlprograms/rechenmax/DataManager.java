@@ -98,16 +98,6 @@ public class DataManager {
     }
 
     /**
-     * This method is used to delete the JSON file from the application's file directory.
-     *
-     * @param applicationContext The application context, which is used to get the application's file directory.
-     */
-    public void deleteJSON(Context applicationContext) {
-        File file = new File(applicationContext.getFilesDir(), JSON_FILE);
-        file.delete();
-    }
-
-    /**
      * This method is used to save a boolean value to a JSON file.
      * It first checks if the file exists, and if not, it creates a new file.
      * It then reads the content of the file and converts it to a JSONObject.

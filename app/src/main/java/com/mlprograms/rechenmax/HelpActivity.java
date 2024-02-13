@@ -2,29 +2,26 @@ package com.mlprograms.rechenmax;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import org.apache.tools.ant.Main;
-
 public class HelpActivity extends AppCompatActivity {
 
+    @SuppressLint("StaticFieldLeak")
     private static Context mainActivity;
-    private Context context = this;
+    private final Context context = this;
 
     /**
      * Instance of DataManager to handle data-related tasks such as saving and retrieving data.
@@ -157,7 +154,7 @@ public class HelpActivity extends AppCompatActivity {
             }
 
             // Updating UI elements
-            changeTextViewColors(findViewById(R.id.helpUIScrollView), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            changeTextViewColors(newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
             changeButtonColors(findViewById(R.id.helpUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
         } else {
             dataManager.saveToJSON("selectedSpinnerSetting", "System", getApplicationContext());
@@ -335,13 +332,12 @@ public class HelpActivity extends AppCompatActivity {
     /**
      * This method is used to change the colors of the TextViews in a given layout.
      *
-     * @param viewById
      * @param foregroundColor The color to be set as the text color of the TextViews.
      *                        This should be a resolved color, not a resource id.
      * @param backgroundColor The color to be set as the background color of the TextViews and the layout.
      *                        This should be a resolved color, not a resource id.
      */
-    private void changeTextViewColors(ScrollView viewById, int foregroundColor, int backgroundColor) {
+    private void changeTextViewColors(int foregroundColor, int backgroundColor) {
         ViewGroup layout = findViewById(R.id.helpUI);
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
@@ -363,7 +359,7 @@ public class HelpActivity extends AppCompatActivity {
      * background color and, if the child is a TextView, it also changes the text color. If the child
      * is itself a ViewGroup, the method is called recursively to ensure all nested Views are
      * processed.
-     *
+     * <p>
      * Note: This method is useful for applying a consistent color scheme to all child Views within
      * a given layout, and it can be used, for example, to implement a dark mode or change the
      * appearance of a specific section of the UI.

@@ -162,7 +162,7 @@ public class HistoryActivity extends AppCompatActivity {
                 // Display a toast indicating that the data has been saved
                 showToastShort("Rechnung wurde kopiert ...", getApplicationContext());
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
             }
 
             clickListener.set(false);
@@ -696,7 +696,7 @@ public class HistoryActivity extends AppCompatActivity {
      * background color and, if the child is a TextView, it also changes the text color. If the child
      * is itself a ViewGroup, the method is called recursively to ensure all nested Views are
      * processed.
-     *
+     * <p>
      * Note: This method is useful for applying a consistent color scheme to all child Views within
      * a given layout, and it can be used, for example, to implement a dark mode or change the
      * appearance of a specific section of the UI.

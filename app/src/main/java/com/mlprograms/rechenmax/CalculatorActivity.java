@@ -81,7 +81,7 @@ public class CalculatorActivity {
                 try {DataManager dataManager = new DataManager(mainActivity);
                     dataManager.saveToJSON("isNotation", true, mainActivity.getApplicationContext());
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
                 String result = convertScientificToDecimal(trim);
                 return removeNonNumeric(result);
@@ -179,6 +179,7 @@ public class CalculatorActivity {
                 final int exponent = Integer.parseInt(exponentPart);
 
                 // Determine the sign of the number and create a BigDecimal object
+                assert numberPart != null;
                 final String sign = numberPart.startsWith("-") ? "-" : "";
                 BigDecimal number = new BigDecimal(numberPart);
 

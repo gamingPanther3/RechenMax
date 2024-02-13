@@ -15,7 +15,6 @@ import android.os.Looper;
 import android.util.Log;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This class represents a background service for RechenMax app.

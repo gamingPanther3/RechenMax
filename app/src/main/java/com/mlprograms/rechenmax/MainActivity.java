@@ -2,49 +2,37 @@ package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.CalculatorActivity.isOperator;
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
-import static com.mlprograms.rechenmax.ToastHelper.*;
+import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
+import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
 
-import java.math.MathContext;
-import android.annotation.SuppressLint;
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.LocaleConfig;
-import android.app.LocaleManager;
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.icu.text.DecimalFormat;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.LocaleList;
-import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.Intent;
-import android.icu.text.DecimalFormat;
-import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.math.BigDecimal;
-import java.util.Locale;
+import java.math.MathContext;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -316,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
      * using a DataManager and then switches it to the opposite mode. After updating the mode, it
      * updates the displayed text in a TextView with the new mode. Additionally, it logs the change
      * using Android's Log class for debugging purposes.
-     *
+     * <p>
      * Note: The function mode is stored and retrieved from persistent storage to ensure that the
      * selected mode persists across application sessions.
      */
@@ -352,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
      * The state is toggled (from "true" to "false" or vice versa), and then the method calls
      * another method, showOrHideScienceButtonState(), to handle the visual representation or
      * behavior associated with the state change.
-     *
+     * <p>
      * Note: The state of the science button is stored and retrieved from persistent storage to
      * ensure that the selected state persists across application sessions.
      */
@@ -378,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
      * The state is toggled (from "true" to "false" or vice versa), and then the method calls
      * another method, shiftButtonAction(), to handle the visual representation or
      * behavior associated with the state change.
-     *
+     * <p>
      * Note: The state of the shift button is stored and retrieved from persistent storage to
      * ensure that the selected state persists across application sessions.
      */
@@ -523,11 +511,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         shiftButtonAction();
-    }
-
-    private void showOrHideScienceButtonState(boolean mode) {
-        dataManager.saveToJSON("showScienceRow", mode, getApplicationContext());
-        showOrHideScienceButtonState();
     }
 
     /**
@@ -2135,7 +2118,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private static String convertToSmallNumber(int num) {
         // Unicode block for subscript numbers: U+208x
-        char subNull = '\u2080';
+        char subNull = '₀';
         int subNum = num + (int) subNull;
         return Character.toString((char) subNum);
     }
@@ -2509,24 +2492,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Add missing opening parentheses
+        StringBuilder inputBuilder1 = new StringBuilder(input);
         while (openCount < closeCount) {
             if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-                input = "(" + input;
+                inputBuilder1.insert(0, "(");
             } else {
-                input = "( " + input;
+                inputBuilder1.insert(0, "( ");
             }
             openCount++;
         }
+        input = inputBuilder1.toString();
 
         // Add missing closing parentheses
+        StringBuilder inputBuilder = new StringBuilder(input);
         while (closeCount < openCount) {
             if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-                input = input + ")";
+                inputBuilder.append(")");
             } else {
-                input = input + " )";
+                inputBuilder.append(" )");
             }
             closeCount++;
         }
+        input = inputBuilder.toString();
 
         if(oldInput.contains("=")) {
             if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
@@ -2948,6 +2935,7 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    @SuppressLint("SetTextI18n")
     public void addResultText(final String s) {
         TextView resulttext = findViewById(R.id.result_label);
         if(resulttext != null) { resulttext.setText(getResultText() + s); }
@@ -2965,6 +2953,7 @@ public class MainActivity extends AppCompatActivity {
         TextView calculatetext = findViewById(R.id.calculate_label);
         calculatetext.setText(getCalculateText() + " " + s);
     }
+    @SuppressLint("SetTextI18n")
     public void addCalculateTextWithoutSpace(final String s) {
         TextView calculatetext = findViewById(R.id.calculate_label);
         calculatetext.setText(getCalculateText() + s);
