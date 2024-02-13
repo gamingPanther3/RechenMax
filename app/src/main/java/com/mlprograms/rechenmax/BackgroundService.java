@@ -9,15 +9,13 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.util.Calendar;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This class represents a background service for RechenMax app.
@@ -31,14 +29,13 @@ public class BackgroundService extends Service {
     private static final String CHANNEL_NAME_1 = "BackgroundService";
     private static final String CHANNEL_ID_2 = "RechenMax";
     private static final String CHANNEL_NAME_2 = "Erinnerung";
-    private static final String CHANNEL_NAME_3 = "Tipps";
 
     // Name for shared preferences file and key for last background time
     private static final String PREFS_NAME = "BackgroundServicePrefs";
     private static final String LAST_BACKGROUND_TIME_KEY = "lastBackgroundTime";
 
     // Interval for reminders (4 days)
-    private static final long NOTIFICATION_REMINDER_INTERVAL = 1000 * 60 * 60 * 24 * 4; // 1000 * 60 * 60 * 24 * 4 = 4 days
+    private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 60 * 24 * 4; // 1000 * 60 * 60 * 24 * 4 = 4 days
 
     // Handler for scheduling reminders, and other variables
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -57,7 +54,7 @@ public class BackgroundService extends Service {
                 checkNotification();
                 handler.postDelayed(this, 600000); // 600000 = 10min
             }
-            Log.d("Remaining Time", "Remaining Time: " + ((NOTIFICATION_REMINDER_INTERVAL + 1000 - (System.currentTimeMillis() - getLastBackgroundTime())) / 1000) + "s");
+            Log.d("Remaining Time", "Remaining Time: " + ((NOTIFICATION_INTERVAL + 1000 - (System.currentTimeMillis() - getLastBackgroundTime())) / 1000) + "s");
         }
     };
 
@@ -110,10 +107,7 @@ public class BackgroundService extends Service {
      * If the main notification is not active, the foreground service is restarted.
      */
     private void checkNotification() {
-        Calendar calendar = Calendar.getInstance();
-        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
-
-        if (hour >= 10 && hour <= 20 && (System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_REMINDER_INTERVAL)) {
+        if (System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_INTERVAL) {
             final int num = random.nextInt(4);
             System.out.println(num);
             switch(num) {
@@ -131,17 +125,6 @@ public class BackgroundService extends Service {
                     break;
             }
             setLastBackgroundTime(System.currentTimeMillis());
-        } else if (hour >= 12 && hour <= 15) {
-            List<String> stringList = List.of(
-                    "Hallo",
-                    "Welt",
-                    "dies",
-                    "ist",
-                    "eine",
-                    "Liste",
-                    "mit",
-                    "Strings"
-            );
         }
         if(!NotificationHelper.isNotificationActive(this, 1)) {
             startForeground(NOTIFICATION_ID_1, buildNotification());
