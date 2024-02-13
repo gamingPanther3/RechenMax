@@ -195,6 +195,19 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
+     * onDestroy method is called when the activity is closed.
+     * It starts the background service.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dataManager != null && dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
+            dataManager.saveToJSON("disablePatchNotesTemporary", "false", getApplicationContext());
+        }
+        startBackgroundService();
+    }
+
+    /**
      * onPause method is called when the activity is paused.
      * It starts the background service.
      */

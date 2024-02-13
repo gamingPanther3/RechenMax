@@ -1,6 +1,5 @@
 package com.mlprograms.rechenmax;
 
-import android.util.Log;
 import android.annotation.SuppressLint;
 
 import java.math.BigDecimal;
@@ -8,7 +7,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Stack;
 import java.util.regex.Matcher;
