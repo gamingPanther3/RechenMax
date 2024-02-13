@@ -391,6 +391,57 @@
             android:textColor="#000000" />
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Hintergrundaktivität"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures22"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Die App versetzt sich automatisch in den Hintergrund, sobald sie geschlossen wird. Dies wird durch eine Benachrichtigung angezeigt.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle23"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Benachrichtigungen"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures23"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="RechenMax sendet eine Benachrichtigung, wenn die App innerhalb eines 4-Tage-Intervalls nicht genutzt wurde und die Erlaubnis dazu erteilt wurde.\n"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Tipps"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures24"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="RechenMax sendet täglich auch einen Tipp, der hilfreiche Hinweise oder Hintergrundinformationen enthält.\n"
+            android:textColor="#000000" />
+
+        <TextView
             android:id="@+id/releaseNotesBugsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
