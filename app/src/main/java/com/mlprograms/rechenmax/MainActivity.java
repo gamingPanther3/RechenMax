@@ -2163,6 +2163,7 @@ public class MainActivity extends AppCompatActivity {
                 case "MS": {
                     ClipData clipData = ClipData.newPlainText("", getResultText());
                     clipboardManager.setPrimaryClip(clipData);
+                    showToastShort("Inhalt wurde in die Zwischenablage kopiert...", getApplicationContext());
                     break;
                 }
             }
@@ -2194,6 +2195,7 @@ public class MainActivity extends AppCompatActivity {
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             if(!text.isEmpty()) {
                 addCalculateTextWithoutSpace(text);
+                showToastLong("Zwischenablage wurde eingefügt ...", getApplicationContext());
             }
         } else {
             if (text.matches(scientificNotationPattern) && !text.matches(mathTaskPattern)) {
@@ -2555,23 +2557,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 setCalculateText(balanceParentheses(getCalculateText()));
                 setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
-
-                ScrollView calculate_scrollview = findViewById(R.id.calculate_scrollview);
-                TextView label1 = findViewById(R.id.calculate_label);
-                TextView label2 = findViewById(R.id.result_label);
-                if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
-                    scrollToBottom(calculate_scrollview);
-                    //label1.setTextSize(30f);
-                    label1.setAutoSizeTextTypeUniformWithConfiguration(10, 20, 1, TypedValue.COMPLEX_UNIT_SP);
-                    //label2.setTextSize(40f);
-                    label2.setAutoSizeTextTypeUniformWithConfiguration(30, 50, 1, TypedValue.COMPLEX_UNIT_SP);
-                } else {
-                    //label1.setTextSize(40f);
-                    label1.setAutoSizeTextTypeUniformWithConfiguration(10, 20, 1, TypedValue.COMPLEX_UNIT_SP);
-                    //label2.setTextSize(50f);
-                    label2.setAutoSizeTextTypeUniformWithConfiguration(40, 60, 1, TypedValue.COMPLEX_UNIT_SP);
-                }
-                formatResultTextAfterType();
             }
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
@@ -2657,9 +2642,22 @@ public class MainActivity extends AppCompatActivity {
                 setRotateOperator(false);
                 setRemoveValue(true);
             }
+        }
 
-            formatResultTextAfterType();
-            adjustTextSize();
+        formatResultTextAfterType();
+        adjustTextSize();
+        String calculate = getCalculateText();
+
+        if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            setCalculateText("");
+
+            ScrollView scrollView = findViewById(R.id.result_scrollview);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
+            layoutParams.weight = 1;
+            scrollView.setLayoutParams(layoutParams);
+
+            TextView textView = findViewById(R.id.result_label);
+            textView.setAutoSizeTextTypeUniformWithConfiguration(50, 60, 1, TypedValue.COMPLEX_UNIT_SP);
         }
 
         scrollToTop(findViewById(R.id.calculate_scrollview));
@@ -2675,7 +2673,7 @@ public class MainActivity extends AppCompatActivity {
                 final int new_value = old_value + 1;
 
                 dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), context1);
-                String calculate_text = getCalculateText();
+                String calculate_text = calculate;
                 if(!calculate_text.contains("=")) {
                     calculate_text = calculate_text + " =";
                 }
@@ -2834,28 +2832,32 @@ public class MainActivity extends AppCompatActivity {
                     scrollToBottom(calculate_scrollview);
                     if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
                         //label1.setTextSize(35f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(25, 35, 1, TypedValue.COMPLEX_UNIT_SP);
                         //label2.setTextSize(30f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
                     } else {
                         //label1.setTextSize(30f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(20, 30, 1, TypedValue.COMPLEX_UNIT_SP);
                         //label2.setTextSize(35f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(40, 50, 1, TypedValue.COMPLEX_UNIT_SP);
                     }
                 } else {
                     if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
                         //label1.setTextSize(45f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(45, 55, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
                         //label2.setTextSize(40f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(40, 50, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(45, 55, 1, TypedValue.COMPLEX_UNIT_SP);
                     } else {
                         //label1.setTextSize(40f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(40, 50, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
                         //label2.setTextSize(45f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(45, 55, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(50, 60, 1, TypedValue.COMPLEX_UNIT_SP);
                     }
                 }
+
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) result_scrollview.getLayoutParams();
+                layoutParams.weight = 2;
+                result_scrollview.setLayoutParams(layoutParams);
 
                 calculate_scrollview.post(() -> calculate_scrollview.fullScroll(ScrollView.FOCUS_DOWN));
                 result_scrollview.post(() -> result_scrollview.fullScroll(ScrollView.FOCUS_UP));
