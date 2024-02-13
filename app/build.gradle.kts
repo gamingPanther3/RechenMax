@@ -25,6 +25,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -34,7 +35,7 @@ android {
 dependencies {
     implementation("androidx.core:core:1.8.0")
     implementation ("net.objecthunter:exp4j:0.4.8")
-    //implementation("com.android.support:support-compat:27.1.1") // Entferne oder kommentiere diese Zeile aus
+    // implementation("com.android.support:support-compat:27.1.1")
     implementation("com.jjoe64:graphview:4.2.2")
     implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
     implementation("com.google.android.material:material:1.9.0")

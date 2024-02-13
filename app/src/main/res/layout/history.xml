@@ -34,7 +34,7 @@
             android:layout_height="60dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="@string/verlauf"
+            android:text="@string/history"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:tooltipText="Zwischenablage einfügen" />

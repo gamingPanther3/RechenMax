@@ -30,7 +30,13 @@
         <item>40sp</item>
     </array>
 
-    <array name="auto_text_sizes_settingsui">
+    <array name="auto_text_sizes_settingsui1">
+        <item>30sp</item>
+        <item>35sp</item>
+        <item>40sp</item>
+    </array>
+
+    <array name="auto_text_sizes_settingsui2">
         <item>15sp</item>
         <item>20sp</item>
         <item>30sp</item>

@@ -39,7 +39,7 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:gravity="center_vertical"
-                android:text="@string/einf_hrung_anleitung"
+                android:text="@string/introductionInstructions"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="27sp" />
 
@@ -66,7 +66,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:text="@string/einführung"
+                android:text="@string/introduction"
                 android:textColor="#000000"
                 android:textSize="@dimen/calcButtonTextSize"
                 android:textStyle="bold" />
@@ -78,7 +78,7 @@
                 android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:text="@string/einführung_text"
+                android:text="@string/introductionText"
                 android:textColor="#000000"
                 android:textSize="@dimen/calcButtonTextSize" />
 
@@ -89,7 +89,7 @@
                 android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:text="@string/grundlagen"
+                android:text="@string/basics"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="@string/nberechnungsbereiche"
+                android:text="@string/calculationAreas"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                 android:autoSizeStepGranularity="1sp"
@@ -119,7 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/berechnungsbereich"
+                        android:text="@string/calculationArea"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                         android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
@@ -142,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="@string/nummernfeld"
+                android:text="@string/numberField"
                 android:textColor="#000000"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
@@ -164,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1.7"
-                        android:text="@string/nummernfeld_text"
+                        android:text="@string/numberFieldText"
                         android:textColor="#000000"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                         android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
@@ -186,7 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="@string/entfernen_zurück"
+                android:text="@string/removeBack"
                 android:textColor="#000000"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
@@ -211,7 +211,7 @@
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                         android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                         android:autoSizeStepGranularity="1sp"
-                        android:text="@string/entfernen_zurück_text"                        android:textColor="#000000"
+                        android:text="@string/removeBackText"                        android:textColor="#000000"
                         android:textSize="15sp"
                         tools:ignore="NestedWeights" />
 
@@ -229,7 +229,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/komma"
+                android:text="@string/comma"
                 android:textColor="#000000"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
@@ -252,7 +252,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/komma_text"
+                        android:text="@string/commaText"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                         android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
@@ -275,7 +275,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="@string/negieren"
+                android:text="@string/negate"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -298,7 +298,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/negieren_text"
+                        android:text="@string/negateText"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                         android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
@@ -322,7 +322,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="@string/add_sub_mul_div"
+                android:text="@string/addSubMulDiv"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -345,7 +345,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/add_sub_mul_div_text"
+                        android:text="@string/addSubMulDivText"
                         android:textColor="#000000"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -367,7 +367,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:textStyle="bold"
-                android:text="@string/berechnen"
+                android:text="@string/calculate"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -394,7 +394,7 @@
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                         android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                         android:autoSizeStepGranularity="1sp"
-                        android:text="@string/berechen_text"
+                        android:text="@string/calculateText"
                         android:textColor="#000000"
                         android:textSize="15sp"
                         tools:ignore="NestedWeights" />
@@ -413,7 +413,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/aktionsleiste"
+                android:text="@string/actionbar"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -437,7 +437,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/aktionsleiste_text"
+                        android:text="@string/actionbarText"
                         android:textColor="#000000"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -460,7 +460,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="20sp"
-                android:text="@string/verlauf"
+                android:text="@string/history"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -471,7 +471,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/verlauf_aufrufen"
+                android:text="@string/callUpHistory"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -495,7 +495,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/verlauf_aufrufen_text"
+                        android:text="@string/callUpHistoryText"
                         android:textColor="#000000"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -517,7 +517,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/verlauf_bearbeiten"
+                android:text="@string/editHistory"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -541,7 +541,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/verlauf_bearbeiten_text"
+                        android:text="@string/editHistoryText"
                         android:textColor="#000000"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -563,7 +563,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/einstellungen_aufrufen"
+                android:text="@string/callUpSettings"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -587,7 +587,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/eintellungen_aufrufen"
+                        android:text="@string/callUpSettingsText"
                         android:textColor="#000000"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -609,7 +609,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/einstellungen"
+                android:text="@string/settings"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -633,7 +633,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/einstellungen_text"
+                        android:text="@string/settingsText"
                         android:textColor="#000000"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -656,7 +656,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="20sp"
-                android:text="@string/erweiterte_funktionen"
+                android:text="@string/advancedFeatures"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -667,7 +667,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/wissenschaftlichen_modus_aktivieren"
+                android:text="@string/enableScientificMode"
                 android:textColor="#000000"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -691,7 +691,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1.7"
-                        android:text="@string/wissenschaftlichen_modus_aktivieren_text"
+                        android:text="@string/enableScientificModeText"
                         android:textColor="#000000"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -717,7 +717,7 @@
                 android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:text="@string/weitere_funktionen"
+                android:text="@string/moreFunctions"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
@@ -734,7 +734,7 @@
                     android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                     android:autoSizeStepGranularity="1sp"
                     android:autoSizeTextType="uniform"
-                    android:text="@string/weitere_funktionen_text"
+                    android:text="@string/moreFunctionText"
                     android:textColor="#000000"
                     tools:ignore="NestedWeights" />
 
@@ -767,10 +767,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/weitere_tabs"
+                android:layout_height="70dp"
+                android:text="@string/moreTabs"
                 android:textColor="#000000"
-                android:textSize="20sp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -792,7 +795,7 @@
                         android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                         android:autoSizeStepGranularity="1sp"
                         android:autoSizeTextType="uniform"
-                        android:text="@string/weitere_tabs_text"
+                        android:text="@string/moreTabsText"
                         android:textColor="#000000"
                         tools:ignore="NestedWeights" />
 
@@ -800,7 +803,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -808,8 +811,8 @@
                         android:id="@+id/pic_science_1"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
-                        android:layout_weight="1"
                         android:layout_marginBottom="50sp"
+                        android:layout_weight="1"
                         android:src="@drawable/rm_tdm_science1"
                         tools:ignore="NestedWeights" />
 
@@ -817,34 +820,20 @@
                         android:id="@+id/pic_science_2"
                         android:layout_width="match_parent"
                         android:layout_height="400dp"
-                        android:layout_weight="1"
                         android:layout_marginBottom="50sp"
+                        android:layout_weight="1"
                         android:src="@drawable/rm_tdm_science2" />
 
                     <ImageView
                         android:id="@+id/pic_science_3"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="5sp"
                         android:layout_height="400dp"
+                        android:layout_marginTop="5sp"
                         android:layout_weight="1"
                         android:src="@drawable/rm_tdm_science3" />
 
                 </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:gravity="center"
-                android:layout_marginTop="45sp"
-                android:text="@string/copyright"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

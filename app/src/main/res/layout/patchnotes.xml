@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="@string/rechenmax_version"
+                android:text="@string/appVersion"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -34,7 +34,7 @@
                 android:id="@+id/releaseNotesReleaseDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/release_date"
+                android:text="@string/releaseDate"
                 android:gravity="center_horizontal"
                 android:textSize="15sp"
                 android:textColor="#000000"
@@ -45,7 +45,7 @@
             android:id="@+id/releaseNotesOverviewTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/übersicht"
+            android:text="@string/overview"
             android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="30sp" />
@@ -54,7 +54,7 @@
             android:id="@+id/releaseNotesOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/patchnotes_overview"
+            android:text="@string/patchnotesOverviewText"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -62,7 +62,7 @@
             android:id="@+id/releaseNotesFeaturesTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/neue_funktionen"
+            android:text="@string/newFunctions"
             android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="30sp" />
@@ -394,7 +394,7 @@
             android:id="@+id/releaseNotesBugsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/behobene_fehler"
+            android:text="@string/fixedBugs"
             android:textStyle="bold"
             android:textColor="#000000"
             android:textSize="30sp" />
@@ -502,7 +502,7 @@
             android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="30sp"
-            android:text="Systemanforderung"/>
+            android:text="@string/systemRequirement"/>
 
         <TextView
             android:id="@+id/releaseNotesAPIVersion"
@@ -525,13 +525,14 @@
                 android:layout_weight="1"
                 android:textColor="#000000"
                 android:checked="false"
-                android:text="Diesen Text nicht mehr anzeigen"/>
+                android:text="@string/dontShowThisTextAgain"/>
 
             <Button
                 android:id="@+id/okay_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/verstanden"
+                android:layout_gravity="center_vertical"
+                android:text="@string/understood"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
