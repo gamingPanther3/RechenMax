@@ -164,8 +164,6 @@ public class BackgroundService extends Service {
         Notification.Builder builder;
         builder = new Notification.Builder(this, CHANNEL_ID_1);
 
-        builder.setDefaults(0);
-
         return builder.setContentTitle("RechenMax im Hintergrund")
                 .setContentText("RechenMax ist nun im Hintergrund aktiv.")
                 .setSmallIcon(R.drawable.rechenmax_notification_icon)

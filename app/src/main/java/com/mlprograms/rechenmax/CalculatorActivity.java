@@ -157,7 +157,7 @@ public class CalculatorActivity {
      * @param str The input string in scientific notation.
      * @return The decimal representation of the input string.
      */
-    public static String convertScientificToDecimal(final String str) {;
+    public static String convertScientificToDecimal(final String str) {
         // Define the pattern for scientific notation
         final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)");
         final Matcher matcher = pattern.matcher(str);

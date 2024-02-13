@@ -1091,7 +1091,8 @@
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:text="@string/CommaButton"
                 android:tooltipText="Komma"
-                style="?android:attr/buttonBarButtonStyle" />
+                style="?android:attr/buttonBarButtonStyle"
+                tools:ignore="TooManyViews" />
 
             <Button
                 android:id="@+id/calculate"

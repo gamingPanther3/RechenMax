@@ -251,9 +251,7 @@ public class HistoryActivity extends AppCompatActivity {
         line.setBackgroundColor(ContextCompat.getColor(this, R.color.history_line_color));
 
         // Add an OnConfigurationChangedListener to update line color on configuration changes
-        line.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-            updateLineColor(line);
-        });
+        line.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> updateLineColor(line));
 
         return line;
     }
@@ -264,7 +262,7 @@ public class HistoryActivity extends AppCompatActivity {
      * @param line The line view to update.
      */
     private void updateLineColor(View line) {
-        int lineColor = 0;
+        int lineColor;
         int nightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
         dataManager = new DataManager();
