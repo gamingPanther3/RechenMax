@@ -7,14 +7,22 @@ import static com.mlprograms.rechenmax.ToastHelper.*;
 import java.math.MathContext;
 import android.annotation.SuppressLint;
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.LocaleConfig;
+import android.app.LocaleManager;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.LocaleList;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -36,6 +44,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -112,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         showOrHideScienceButtonState();
         checkDarkmodeSetting();
         formatResultTextAfterType();
-        adjustTextSize();
         dataManager.loadNumbers();
 
         // Scroll down in the calculate label
@@ -121,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         // Show all settings
         showAllSettings();
         requestNotificationPermission();
+        adjustTextSize();
     }
 
     /**
@@ -196,6 +205,21 @@ public class MainActivity extends AppCompatActivity {
     private void scrollToBottom(final ScrollView scrollView) {
         // Executes the scrolling to the bottom of the ScrollView in a Runnable.
         scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_DOWN));
+    }
+
+    /**
+     * Scrolls a ScrollView to the top of its content.
+     * <p>
+     * This method posts a Runnable to the ScrollView's message queue, which
+     * ensures that the scrolling operation is executed after the view is
+     * created and laid out. It uses the fullScroll method with FOCUS_UP
+     * parameter to scroll the ScrollView to the bottom.
+     *
+     * @param scrollView The ScrollView to be scrolled to the top.
+     */
+    private void scrollToTop(final ScrollView scrollView) {
+        // Executes the scrolling to the bottom of the ScrollView in a Runnable.
+        scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_UP));
     }
 
     /**
@@ -368,6 +392,7 @@ public class MainActivity extends AppCompatActivity {
         }
         // Handle the visual representation or behavior associated with the state change
         shiftButtonAction();
+        adjustTextSize();
     }
 
     /**
@@ -498,6 +523,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         shiftButtonAction();
+    }
+
+    private void showOrHideScienceButtonState(boolean mode) {
+        dataManager.saveToJSON("showScienceRow", mode, getApplicationContext());
+        showOrHideScienceButtonState();
     }
 
     /**
@@ -2295,10 +2325,26 @@ public class MainActivity extends AppCompatActivity {
                 setRotateOperator(false);
                 dataManager.saveToJSON("logX", "false", getApplicationContext());
                 adjustTextSize();
+
+                TextView label1 = findViewById(R.id.calculate_label);
+                TextView label2 = findViewById(R.id.result_label);
+                if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
+                    label1.setTextSize(45f);
+                    label2.setTextSize(45f);
+                } else {
+                    label1.setTextSize(60f);
+                    label2.setTextSize(75f);
+                }
                 break;
             case "CE":
                 setResultText("0");
                 adjustTextSize();
+                TextView label = findViewById(R.id.calculate_label);
+                if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("false")) {
+                    label.setTextSize(60f);
+                } else {
+                    label.setTextSize(45f);
+                }
                 break;
         }
         adjustTextSize();
@@ -2752,31 +2798,44 @@ public class MainActivity extends AppCompatActivity {
      * After that, it scrolls the second ScrollView to the top and adjusts the text size of the label within
      * it using another uniform text size configuration.
      * <p>
-     * Note: The TextViews and ScrollViews are assumed to be defined in the layout XML with specific IDs:
+     * Note: The TextViews and ScrollViews are defined in the layout XML with specific IDs:
+     * <br>
      * - R.id.calculate_scrollview: ScrollView containing the first TextView
+     * <br>
      * - R.id.calculate_label: TextView whose text size needs adjustment within the first ScrollView
+     * <br>
      * - R.id.result_scrollview: ScrollView containing the second TextView
+     * <br>
      * - R.id.result_label: TextView whose text size needs adjustment within the second ScrollView
      */
         public void adjustTextSize() {
-            ScrollView scrollView1 = findViewById(R.id.calculate_scrollview);
-            scrollView1.post(() -> scrollView1.fullScroll(ScrollView.FOCUS_DOWN));
+            if(findViewById(R.id.calculate_label) != null && findViewById(R.id.result_label) != null) {
+                ScrollView scrollView1 = findViewById(R.id.calculate_scrollview);
+                scrollView1.post(() -> scrollView1.fullScroll(ScrollView.FOCUS_DOWN));
 
-            TextView label1 = findViewById(R.id.calculate_label);
-            if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
-                label1.setAutoSizeTextTypeUniformWithConfiguration(30, 45, 1, TypedValue.COMPLEX_UNIT_SP);
-            } else {
-                label1.setAutoSizeTextTypeUniformWithConfiguration(45, 60, 1, TypedValue.COMPLEX_UNIT_SP);
+                TextView label1 = findViewById(R.id.calculate_label);
+                if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
+                    label1.setAutoSizeTextTypeUniformWithConfiguration(30, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                } else {
+                    label1.setAutoSizeTextTypeUniformWithConfiguration(30, 60, 1, TypedValue.COMPLEX_UNIT_SP);
+                }
+
+                ScrollView scrollView2 = findViewById(R.id.result_scrollview);
+                scrollView2.post(() -> scrollView2.fullScroll(ScrollView.FOCUS_UP));
+
+                TextView label2 = findViewById(R.id.result_label);
+                if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
+                    label2.setAutoSizeTextTypeUniformWithConfiguration(30, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                } else {
+                    label2.setAutoSizeTextTypeUniformWithConfiguration(45, 75, 1, TypedValue.COMPLEX_UNIT_SP);
+                }
             }
 
-            ScrollView scrollView2 = findViewById(R.id.result_scrollview);
-            scrollView2.post(() -> scrollView2.fullScroll(ScrollView.FOCUS_UP));
-
-            TextView label2 = findViewById(R.id.result_label);
-            if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
-                label2.setAutoSizeTextTypeUniformWithConfiguration(30, 60, 1, TypedValue.COMPLEX_UNIT_SP);
+            scrollToBottom(findViewById(R.id.calculate_scrollview));
+            if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+                scrollToTop(findViewById(R.id.result_scrollview));
             } else {
-                label2.setAutoSizeTextTypeUniformWithConfiguration(45, 60, 1, TypedValue.COMPLEX_UNIT_SP);
+                scrollToBottom(findViewById(R.id.result_scrollview));
             }
         }
 

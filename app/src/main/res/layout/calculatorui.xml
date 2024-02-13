@@ -63,7 +63,7 @@
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:paddingStart="10dp"
-                android:text="@string/_1"
+                android:text="@string/shiftMode"
                 android:textSize="@dimen/calcButtonTextSize"
                 android:tooltipText="Modus"
                 tools:ignore="RtlSymmetry" />
@@ -122,12 +122,12 @@
 
         <ScrollView
             android:id="@+id/calculate_scrollview"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:autoSizeTextType="uniform"
-            android:autoSizeMaxTextSize="@dimen/maxTextViewSize"
             android:layout_gravity="right|bottom"
+            android:layout_weight="3"
+            android:autoSizeMaxTextSize="@dimen/maxTextViewSize"
+            android:autoSizeTextType="uniform"
             tools:ignore="NestedWeights,RtlHardcoded">
 
             <LinearLayout
@@ -137,18 +137,19 @@
                 <TextView
                     android:id="@+id/calculate_label"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:autoSizeTextType="uniform"
-                    app:autoSizeMinTextSize="30sp"
-                    app:autoSizeMaxTextSize="45sp"
-                    app:autoSizeStepGranularity="1sp"
+                    android:layout_height="match_parent"
+                    android:minHeight="40sp"
                     android:gravity="end|center_vertical"
                     android:paddingStart="10sp"
                     android:paddingTop="15dp"
                     android:paddingEnd="10sp"
                     android:text="@string/calculate_label"
                     android:textColor="@color/black"
-                    android:textSize="35sp" />
+                    android:textSize="35sp"
+                    app:autoSizeMaxTextSize="45sp"
+                    app:autoSizeMinTextSize="30sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform" />
 
             </LinearLayout>
         </ScrollView>
@@ -158,22 +159,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="right|bottom"
-            android:layout_weight="1"
+            android:layout_weight="2"
             tools:ignore="RtlHardcoded">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp">
 
                 <TextView
                     android:id="@+id/result_label"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:minHeight="100dp"
-                    android:gravity="center_vertical|end"
-                    android:paddingStart="10dp"
-                    android:paddingTop="20dp"
-                    android:paddingEnd="10dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end|center_vertical"
+                    android:minHeight="150dp"
+                    android:paddingStart="10sp"
+                    android:paddingTop="15dp"
+                    android:paddingEnd="10sp"
                     android:text="@string/result_label"
                     android:textColor="@color/black"
                     app:autoSizeMaxTextSize="60sp"
