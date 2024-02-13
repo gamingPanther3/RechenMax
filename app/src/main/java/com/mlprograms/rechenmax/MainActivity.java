@@ -2553,6 +2553,7 @@ public class MainActivity extends AppCompatActivity {
             if(getCalculateText().isEmpty()) {
                 setResultText("0");
             } else {
+                setCalculateText(balanceParentheses(getCalculateText()));
                 setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
 
                 ScrollView calculate_scrollview = findViewById(R.id.calculate_scrollview);
@@ -2833,26 +2834,26 @@ public class MainActivity extends AppCompatActivity {
                     scrollToBottom(calculate_scrollview);
                     if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
                         //label1.setTextSize(35f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(25, 35, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
                         //label2.setTextSize(30f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(20, 30, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
                     } else {
                         //label1.setTextSize(30f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(20, 30, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
                         //label2.setTextSize(35f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(25, 35, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
                     }
                 } else {
                     if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
                         //label1.setTextSize(45f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(45, 55, 1, TypedValue.COMPLEX_UNIT_SP);
                         //label2.setTextSize(40f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(40, 50, 1, TypedValue.COMPLEX_UNIT_SP);
                     } else {
                         //label1.setTextSize(40f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(40, 50, 1, TypedValue.COMPLEX_UNIT_SP);
                         //label2.setTextSize(45f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(45, 55, 1, TypedValue.COMPLEX_UNIT_SP);
                     }
                 }
 

@@ -138,7 +138,7 @@
                     android:id="@+id/calculate_label"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:minHeight="40sp"
+                    android:minHeight="70sp"
                     android:gravity="end|center_vertical"
                     android:paddingStart="10sp"
                     android:paddingTop="15dp"
