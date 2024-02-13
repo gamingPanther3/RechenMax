@@ -33,7 +33,7 @@ public class CalculatorActivity {
     }
 
     // Declaration of a constant of type MathContext with a precision of 10. This is used for division to ensure a precision of 10 decimal places.
-    private static final MathContext MC = new MathContext(Integer.MAX_VALUE, RoundingMode.HALF_UP);
+    private static final MathContext MC = new MathContext(24, RoundingMode.HALF_UP);
 
 
     // Declaration of a constant for the root operation.
@@ -194,7 +194,7 @@ public class CalculatorActivity {
                 if (exponent >= 0) {
                     scaledNumber = number.scaleByPowerOfTen(exponent);
                 } else {
-                    scaledNumber = number.divide(BigDecimal.TEN.pow(-exponent));
+                    scaledNumber = number.divide(BigDecimal.TEN.pow(-exponent), MC);
                 }
 
                 // Remove trailing zeros and append the scaled number to the result buffer
