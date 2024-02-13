@@ -134,6 +134,7 @@
     <string name="calculationMode">Berechungsmodus</string>
     <string name="deg_rad">Grad- / Bogenmaß</string>
     <string name="historyIsEmpty">Dein Verlauf ist leer.</string>
+    <string name="helpPictureContentDescription">TODO</string>
 
 
 </resources>

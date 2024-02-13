@@ -134,7 +134,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_calculatelabel" />
+                    android:src="@drawable/rm_tdm_calculatelabel"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -178,7 +179,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_numpad" />
+                    android:src="@drawable/rm_tdm_numpad"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -222,7 +224,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_delete" />
+                    android:src="@drawable/rm_tdm_delete"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -267,7 +270,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_comma" />
+                    android:src="@drawable/rm_tdm_comma"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -314,7 +318,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_negative" />
+                    android:src="@drawable/rm_tdm_negative"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -350,7 +355,8 @@
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                         android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp" />
+                        android:autoSizeStepGranularity="1sp"
+                        tools:ignore="NestedWeights" />
 
                 </LinearLayout>
 
@@ -359,7 +365,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_operands" />
+                    android:src="@drawable/rm_tdm_operands"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -406,7 +413,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_calculate" />
+                    android:src="@drawable/rm_tdm_calculate"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -452,7 +460,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_actionbar" />
+                    android:src="@drawable/rm_tdm_actionbar"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -510,7 +519,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_historybutton" />
+                    android:src="@drawable/rm_tdm_historybutton"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -556,7 +566,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_history" />
+                    android:src="@drawable/rm_tdm_history"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -602,7 +613,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_settingbutton" />
+                    android:src="@drawable/rm_tdm_settingbutton"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -648,7 +660,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_settings" />
+                    android:src="@drawable/rm_tdm_settings"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -706,7 +719,8 @@
                     android:layout_width="0dp"
                     android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_sciencebutton" />
+                    android:src="@drawable/rm_tdm_sciencebutton"
+                    android:contentDescription="@string/helpPictureContentDescription" />
 
             </LinearLayout>
 
@@ -736,8 +750,7 @@
                     android:autoSizeTextType="uniform"
                     android:text="@string/moreFunctionText"
                     android:textColor="#000000"
-                    tools:ignore="NestedWeights" />
-
+                    tools:ignore="NestedWeights,TooManyViews" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -752,7 +765,8 @@
                         android:layout_weight="1"
                         android:layout_marginBottom="5sp"
                         android:src="@drawable/rm_tdm_scieceactionbar1"
-                        tools:ignore="NestedWeights" />
+                        tools:ignore="NestedWeights"
+                        android:contentDescription="@string/helpPictureContentDescription"/>
 
                     <ImageView
                         android:id="@+id/pic_science_actionbar2"
@@ -760,7 +774,8 @@
                         android:layout_marginTop="5sp"
                         android:layout_height="400sp"
                         android:layout_weight="1"
-                        android:src="@drawable/rm_tdm_scieceactionbar2" />
+                        android:src="@drawable/rm_tdm_scieceactionbar2"
+                        android:contentDescription="@string/helpPictureContentDescription" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -779,7 +794,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -797,7 +813,7 @@
                         android:autoSizeTextType="uniform"
                         android:text="@string/moreTabsText"
                         android:textColor="#000000"
-                        tools:ignore="NestedWeights" />
+                        tools:ignore="InefficientWeight,NestedWeights" />
 
                 </LinearLayout>
 
@@ -814,6 +830,7 @@
                         android:layout_marginBottom="50sp"
                         android:layout_weight="1"
                         android:src="@drawable/rm_tdm_science1"
+                        android:contentDescription="@string/helpPictureContentDescription"
                         tools:ignore="NestedWeights" />
 
                     <ImageView
@@ -822,7 +839,8 @@
                         android:layout_height="400dp"
                         android:layout_marginBottom="50sp"
                         android:layout_weight="1"
-                        android:src="@drawable/rm_tdm_science2" />
+                        android:src="@drawable/rm_tdm_science2"
+                        android:contentDescription="@string/helpPictureContentDescription"/>
 
                     <ImageView
                         android:id="@+id/pic_science_3"
@@ -830,7 +848,8 @@
                         android:layout_height="400dp"
                         android:layout_marginTop="5sp"
                         android:layout_weight="1"
-                        android:src="@drawable/rm_tdm_science3" />
+                        android:src="@drawable/rm_tdm_science3"
+                        android:contentDescription="@string/helpPictureContentDescription"/>
 
                 </LinearLayout>
             </LinearLayout>
