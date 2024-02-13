@@ -125,7 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="right|bottom"
-            android:layout_weight="3"
+            android:layout_weight="1.3"
             android:autoSizeMaxTextSize="@dimen/maxTextViewSize"
             android:autoSizeTextType="uniform"
             tools:ignore="NestedWeights,RtlHardcoded">
@@ -144,12 +144,7 @@
                     android:paddingTop="15dp"
                     android:paddingEnd="10sp"
                     android:text="@string/calculate_label"
-                    android:textColor="@color/black"
-                    android:textSize="35sp"
-                    app:autoSizeMaxTextSize="45sp"
-                    app:autoSizeMinTextSize="30sp"
-                    app:autoSizeStepGranularity="1sp"
-                    app:autoSizeTextType="uniform" />
+                    android:textColor="@color/black" />
 
             </LinearLayout>
         </ScrollView>
@@ -169,18 +164,13 @@
                 <TextView
                     android:id="@+id/result_label"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="end|center_vertical"
-                    android:minHeight="150dp"
+                    android:minHeight="60dp"
                     android:paddingStart="10sp"
-                    android:paddingTop="15dp"
                     android:paddingEnd="10sp"
                     android:text="@string/result_label"
-                    android:textColor="@color/black"
-                    app:autoSizeMaxTextSize="60sp"
-                    app:autoSizeMinTextSize="30sp"
-                    app:autoSizeStepGranularity="1sp"
-                    app:autoSizeTextType="uniform" />
+                    android:textColor="@color/black" />
 
             </LinearLayout>
         </ScrollView>

@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager.loadNumbers();
 
         // Scroll down in the calculate label
-        scrollToCalculateLabelBottom();
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
 
         // Show all settings
         showAllSettings();
@@ -1386,7 +1386,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        scrollToCalculateLabelBottom();
+        scrollToBottom(findViewById(R.id.calculate_scrollview));
 
         setRotateOperator(false);
         formatResultTextAfterType();
@@ -2285,6 +2285,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (mode.equals("false")) {
+
                     if(!getRotateOperator()) {
                         setLastNumber(getResultText());
                         if (getCalculateText().contains("=")) {
@@ -2552,8 +2553,24 @@ public class MainActivity extends AppCompatActivity {
             if(getCalculateText().isEmpty()) {
                 setResultText("0");
             } else {
-                setCalculateText(balanceParentheses(getCalculateText()));
-                setResultText(CalculatorActivity.calculate(getCalculateText()));
+                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+
+                ScrollView calculate_scrollview = findViewById(R.id.calculate_scrollview);
+                TextView label1 = findViewById(R.id.calculate_label);
+                TextView label2 = findViewById(R.id.result_label);
+                if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
+                    scrollToBottom(calculate_scrollview);
+                    //label1.setTextSize(30f);
+                    label1.setAutoSizeTextTypeUniformWithConfiguration(10, 20, 1, TypedValue.COMPLEX_UNIT_SP);
+                    //label2.setTextSize(40f);
+                    label2.setAutoSizeTextTypeUniformWithConfiguration(30, 50, 1, TypedValue.COMPLEX_UNIT_SP);
+                } else {
+                    //label1.setTextSize(40f);
+                    label1.setAutoSizeTextTypeUniformWithConfiguration(10, 20, 1, TypedValue.COMPLEX_UNIT_SP);
+                    //label2.setTextSize(50f);
+                    label2.setAutoSizeTextTypeUniformWithConfiguration(40, 60, 1, TypedValue.COMPLEX_UNIT_SP);
+                }
+                formatResultTextAfterType();
             }
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
@@ -2639,12 +2656,12 @@ public class MainActivity extends AppCompatActivity {
                 setRotateOperator(false);
                 setRemoveValue(true);
             }
+
+            formatResultTextAfterType();
+            adjustTextSize();
         }
 
-        formatResultTextAfterType();
-        adjustTextSize();
-
-        scrollToCalculateLabelBottom();
+        scrollToTop(findViewById(R.id.calculate_scrollview));
 
         // Code snippet to save calculation to history
         final Context context1 = getApplicationContext();
@@ -2783,9 +2800,6 @@ public class MainActivity extends AppCompatActivity {
                 // Reset scientific notation flag if needed
                 setIsNotation(false);
             }
-
-            // Adjust text size
-            adjustTextSize();
         }
     }
 
@@ -2810,32 +2824,40 @@ public class MainActivity extends AppCompatActivity {
      */
         public void adjustTextSize() {
             if(findViewById(R.id.calculate_label) != null && findViewById(R.id.result_label) != null) {
-                ScrollView scrollView1 = findViewById(R.id.calculate_scrollview);
-                scrollView1.post(() -> scrollView1.fullScroll(ScrollView.FOCUS_DOWN));
+                ScrollView calculate_scrollview = findViewById(R.id.calculate_scrollview);
+                ScrollView result_scrollview = findViewById(R.id.result_scrollview);
 
                 TextView label1 = findViewById(R.id.calculate_label);
-                if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
-                    label1.setAutoSizeTextTypeUniformWithConfiguration(30, 45, 1, TypedValue.COMPLEX_UNIT_SP);
-                } else {
-                    label1.setAutoSizeTextTypeUniformWithConfiguration(30, 60, 1, TypedValue.COMPLEX_UNIT_SP);
-                }
-
-                ScrollView scrollView2 = findViewById(R.id.result_scrollview);
-                scrollView2.post(() -> scrollView2.fullScroll(ScrollView.FOCUS_UP));
-
                 TextView label2 = findViewById(R.id.result_label);
                 if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
-                    label2.setAutoSizeTextTypeUniformWithConfiguration(30, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                    scrollToBottom(calculate_scrollview);
+                    if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+                        //label1.setTextSize(35f);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(25, 35, 1, TypedValue.COMPLEX_UNIT_SP);
+                        //label2.setTextSize(30f);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(20, 30, 1, TypedValue.COMPLEX_UNIT_SP);
+                    } else {
+                        //label1.setTextSize(30f);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(20, 30, 1, TypedValue.COMPLEX_UNIT_SP);
+                        //label2.setTextSize(35f);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(25, 35, 1, TypedValue.COMPLEX_UNIT_SP);
+                    }
                 } else {
-                    label2.setAutoSizeTextTypeUniformWithConfiguration(45, 75, 1, TypedValue.COMPLEX_UNIT_SP);
+                    if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+                        //label1.setTextSize(45f);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                        //label2.setTextSize(40f);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
+                    } else {
+                        //label1.setTextSize(40f);
+                        label1.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
+                        //label2.setTextSize(45f);
+                        label2.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                    }
                 }
-            }
 
-            scrollToBottom(findViewById(R.id.calculate_scrollview));
-            if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-                scrollToTop(findViewById(R.id.result_scrollview));
-            } else {
-                scrollToBottom(findViewById(R.id.result_scrollview));
+                calculate_scrollview.post(() -> calculate_scrollview.fullScroll(ScrollView.FOCUS_DOWN));
+                result_scrollview.post(() -> result_scrollview.fullScroll(ScrollView.FOCUS_UP));
             }
         }
 
