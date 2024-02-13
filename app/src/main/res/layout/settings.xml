@@ -261,8 +261,10 @@
     </ScrollView>
 
     <FrameLayout
+        android:id="@+id/copyrightFrameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorBTNBackgroundAccent">
 
         <TextView
             android:id="@+id/credits_view"

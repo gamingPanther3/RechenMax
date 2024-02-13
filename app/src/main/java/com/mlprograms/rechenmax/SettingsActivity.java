@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -30,6 +31,8 @@ import androidx.core.content.ContextCompat;
  * @version 1.0.0
  * @date 03.12.2023
  */
+
+// I don't remember what I was thinking, but it works
 public class SettingsActivity extends AppCompatActivity {
 
     // Declare a DataManager object
@@ -441,6 +444,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
 
         TextView settingsCredits = findViewById(R.id.credits_view);
+        FrameLayout frameLayout = findViewById(R.id.copyrightFrameLayout);
         TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
         TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
 
@@ -507,6 +511,7 @@ public class SettingsActivity extends AppCompatActivity {
                         settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                        frameLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsFunctionModeTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                         settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -532,6 +537,7 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                frameLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsFunctionModeTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
                 settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -592,6 +598,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
         TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
         TextView settingsCredits = findViewById(R.id.credits_view);
+        FrameLayout frameLayout = findViewById(R.id.copyrightFrameLayout);
 
         TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
         TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
@@ -614,6 +621,7 @@ public class SettingsActivity extends AppCompatActivity {
         settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        frameLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
 
         settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, textColor));
