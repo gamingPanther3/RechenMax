@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="settingDisplayModeOptions">
+        <item>System default</item>
+        <item>Daylight mode</item>
+        <item>Dark mode</item>
+    </string-array>
+
+    <string-array name="settingCalculationModeOptions">
+        <item>default</item>
+        <item>Simplified</item>
+    </string-array>
+
+    <string-array name="settingsFunctionOptions">
+        <item>Degree measure (Deg)</item>
+        <item>Radians (Rad)</item>
+    </string-array>
+
+    <string name="releaseDate">Release date: N/A (work in progress)</string>
+    <string name="patchnotesOverviewText">The latest RechenMax version brings exciting improvements and features. Automatic scrolling makes it easier to navigate large calculations, while the rounding precision has been increased to the eleventh decimal place for more precise decimal numbers. History has been optimized to effortlessly restore previous calculations and review past tasks. In trigonometric tasks, advanced functions for sine, cosine and tangent in degrees and radians are available. Inverse trigonometric functions (sin⁻¹, cos⁻¹, tan⁻¹) as well as hyperbolic functions such as sinh(x), cosh(x) and tanh(x) are now also available. Manual notation entry provides additional flexibility when creating and calculating complex expressions. The RechnenMax now supports the use of the mathematical constant PI (π) for precise circle calculations. With the flexible support of degrees and radians, you can switch between the two units of measurement as needed. Brackets handling has been optimized to ensure error-free processing of mathematical or logical expressions. The software automatically detects and adds missing closing brackets, further simplifying expression entry. In history, long-pressing on an entry allows the invoice to be automatically copied to the clipboard, while short-pressing pastes the invoice directly into the calculator. This release also fixes important bugs, including display and factorial calculation issues, as well as optimized result formatting for more accurate display.</string>
+    <string name="overview">Overview</string>
+    <string name="newFunctions">New function</string>
+    <string name="fixedBugs">Fixed bugs</string>
+    <string name="systemRequirement">System requirements</string>
+    <string name="dontShowThisTextAgain">Don\'t show this text again</string>
+    <string name="understood">Understood</string>
+    <string name="copyright">Creator: Max Lemberg Copyright: © 2023 Max Lemberg. All rights reserved. License: This product is licensed under the Apache 2.0 License. Version: 1.6.3</string>
+
+    <string name="calculationAreas">Calculation areas</string>
+    <string name="calculationArea">1: This area (calculation area) displays the calculation you entered. You can also copy the contents of the area by long-pressing the area. 2: The result of the calculation carried out is displayed in this area (result area). You can also copy the contents of the area by long-pressing the area.</string>
+    <string name="calculateText">After you have completed your calculation, press the \'=\' key to calculate the result. The result will then be displayed for you in the results area. This simple procedure allows you to get the results of your calculations quickly and easily.</string>
+    <string name="calculate">Calculate</string>
+    <string name="calculationModeText">With this setting you can specify whether the entries are first displayed in the results area and then inserted into the calculation area using an operator (standard), or whether they are written directly in the calculation area (simplified).</string>
+    <string name="calculationMode">Calculation mode</string>
+
+    <string name="numberField">Number field</string>
+    <string name="numberFieldText">In this area you can click on numbers to gradually add them to the current result in the results area. This allows you to easily put together your desired combination of numbers and shows you transparently how the result changes with each selection.</string>
+
+    <string name="history">History</string>
+    <string name="callUpHistory">Call up history</string>
+    <string name="callUpHistoryText">In the action bar you will find the history button, which allows you to access and view your previous calculations. This handy button makes it easier for you to quickly find your previous calculations and refer back to them when needed, whether to check results or repeat previous calculations.</string>
+    <string name="editHistoryText">You can view previous calculations in the history. The delete button (top right) clears the entire history, the back button (top left) returns to the calculator. A long press copies a calculation to the clipboard, a short press pastes it into the calculator, and a double tap deletes a single calculation.</string>
+    <string name="historyIsEmpty">Your history is empty.</string>
+    <string name="editHistory">Edit history</string>
+
+    <string name="settings">Settings</string>
+    <string name="callUpSettings">Call up settings</string>
+    <string name="settingsText">Various settings with detailed descriptions are available to you here. If you want to go back to the home page, just use the button at the top left. In addition, you will find the button at the top right that will take you to the introduction to the calculator. This means you can easily access the functions and information you want.</string>
+    <string name="callUpSettingsText">If you go back to the home page, you will find the Settings button. If you press it you will be redirected to the calculator settings.</string>
+
+    <string name="removeBack">Remove/Back</string>
+    <string name="removeBackText">For precise editing, various delete functions are available: \'⌫\' removes the last number or character entered from the result area, \'CE\' deletes the entire result area and \'C\' empties both the result and calculation areas.</string>
+
+    <string name="enableScientificMode">Enable scientific mode</string>
+    <string name="enableScientificModeText">To activate scientific mode, simply press the corresponding button in the top left. This will reveal additional features.</string>
+
+    <string name="advancedFeatures">Advanced features</string>
+    <string name="moreFunctionText">When scientific mode is enabled, additional features appear. At the top left you see two arrows, next to them a number (1, 2 or 3) and the mode \'Deg\' or \'Rad\'. Using the arrows and the selected mode indicated by the number, you can switch between scientific mode modes, which contain different functions. In addition, you can set the degree with \'Deg\' and the radian with \'Rad\'. \'(\': Puts an open bracket in the calculation area. \')\': Puts a closed bracket in the calculation area. \'x!\': Takes the entered number from the result area and inserts it with the factorial character. \'√x\': The root of the number that comes from the result range. \'e\': Euler\'s number (approx. 2.7182)</string>
+    <string name="moreFunctions">More functions</string>
+    <string name="functionText">The \'Degrees / Radians\' setting allows you to choose between two common units of measurement for angles: degrees and radians. One degree divides the angle into 360 parts, which form a full circle. In radians, angle is measured based on the radius of a circle. A full circle is equal to 2π radians, where π is approximately 3.14159. A right angle is π/2 radians. Radians allow precise relationships between angle and circle radius and are used in advanced mathematical calculations.</string>
+    <string name="moreTabsText">There are three different tabs with different functions, which you can switch by pressing the corresponding button. Tab 1: \'sin(x)\': Sine function \'cos(x)\': Cosine function \'tan(x)\': Tangent function \'e±\': \'π\': Circle number PI \'sin⁻¹(x)\': Inverse sine function \' cos⁻¹(x)\': Inverse cosine function \'tan⁻¹(x)\': Inverse tangent function Tab 2: \'sinh(x)\': Hyperbolic sine function \'cosh(x)\': Hyperbolic cosine function \'tanh(x)\': Hyperbolic Tangent function \'sinh⁻¹(x)\': Inverse hyperbolic sine function \'cosh⁻¹(x)\': Inverse hyperbolic cosine function \'tanh⁻¹(x)\': Inverse hyperbolic tangent function Tab 3: \'log(x)\': Logarithm to the base 10 \'log₂(x)\': logarithm to base 2 \'logₓ(x)\': logarithm to base x \'ln(x)\': natural logarithm to base e (approximately 2.71828) \'³√x\': cube root \'½ \': half (0.5) \'⅓\': third (0.3333…) \'¼\': quarter (0.25)</string>
+    <string name="moreTabs">More tabs</string>
+
+    <string name="actionbar">Action bar</string>
+    <string name="actionbarText">There is also an action bar that allows you to switch between different tabs (history and settings) as well as science mode. This function gives you the opportunity to flexibly navigate between your calculation history, individual settings and the advanced science mode.</string>
+
+    <string name="trueDarkmode">True dark mode</string>
+    <string name="trueDarkmodeText">This setting causes the blacks to become more intense and the whites to dim slightly when activated. Please note that this setting only takes effect when dark mode is enabled.</string>
+
+    <string name="releasenotes">Release-Notes</string>
+    <string name="releasenotesText">If this option is enabled, the release notes will be displayed every time you start the calculator. Regardless of this setting, the release notes are automatically presented after each installation of the latest version.</string>
+
+    <string name="displayMode">display mode</string>
+    <string name="displayModeText">This option allows you to select the display mode of the calculator.</string>
+
+    <string name="basics">Basics</string>
+
+    <string name="introductionInstructions">Introduction/Instructions</string>
+    <string name="introductionText">Do you need help or are you new here? This comprehensive guide will take you through all the buttons and functions of the RechenMax in detail. RechenMax offers a variety of powerful tools and options to efficiently handle your computing needs.</string>
+    <string name="introduction">Introduction</string>
+
+    <string name="addSubMulDiv">Addition, subtraction, multiplication and division</string>
+    <string name="addSubMulDivText">For arithmetic operations, simply use one of the highlighted characters. For example, if you select \'×\', the operator will be immediately inserted in the results pane. Then add a number (e.g., \'3\') and use additional operators as needed. This is how you design your calculation processes simply and step by step.</string>
+
+    <string name="comma">comma</string>
+    <string name="commaText">By pressing the \'Comma button\' you have the option to add a comma to the results area. It is important to note that if a comma is already present, no more will be added. This function allows precise entry of decimal places.</string>
+
+    <string name="negate">Negate</string>
+    <string name="negateText">If you want a number to become negative, press the \'±\' button. Press it again if you want the number to be positive again. This feature allows you to easily change the sign and ensures that you can quickly and easily adjust your numbers as needed.</string>
+
+    <string name="deg_rad">Degrees/radians</string>
+
+    <string name="mode_prompt">Choose a mode</string>
+</resources>
