@@ -7,7 +7,7 @@
     </string-array>
 
     <string-array name="settingCalculationModeOptions">
-        <item>default</item>
+        <item>Default</item>
         <item>Simplified</item>
     </string-array>
 
@@ -19,7 +19,7 @@
     <string name="releaseDate">Release date: N/A (work in progress)</string>
     <string name="patchnotesOverviewText">The latest RechenMax version brings exciting improvements and features. Automatic scrolling makes it easier to navigate large calculations, while the rounding precision has been increased to the eleventh decimal place for more precise decimal numbers. History has been optimized to effortlessly restore previous calculations and review past tasks. In trigonometric tasks, advanced functions for sine, cosine and tangent in degrees and radians are available. Inverse trigonometric functions (sin⁻¹, cos⁻¹, tan⁻¹) as well as hyperbolic functions such as sinh(x), cosh(x) and tanh(x) are now also available. Manual notation entry provides additional flexibility when creating and calculating complex expressions. The RechnenMax now supports the use of the mathematical constant PI (π) for precise circle calculations. With the flexible support of degrees and radians, you can switch between the two units of measurement as needed. Brackets handling has been optimized to ensure error-free processing of mathematical or logical expressions. The software automatically detects and adds missing closing brackets, further simplifying expression entry. In history, long-pressing on an entry allows the invoice to be automatically copied to the clipboard, while short-pressing pastes the invoice directly into the calculator. This release also fixes important bugs, including display and factorial calculation issues, as well as optimized result formatting for more accurate display.</string>
     <string name="overview">Overview</string>
-    <string name="newFunctions">New function</string>
+    <string name="newFunctions">New functions</string>
     <string name="fixedBugs">Fixed bugs</string>
     <string name="systemRequirement">System requirements</string>
     <string name="dontShowThisTextAgain">Don\'t show this text again</string>
@@ -70,7 +70,7 @@
     <string name="releasenotes">Release-Notes</string>
     <string name="releasenotesText">If this option is enabled, the release notes will be displayed every time you start the calculator. Regardless of this setting, the release notes are automatically presented after each installation of the latest version.</string>
 
-    <string name="displayMode">display mode</string>
+    <string name="displayMode">Display mode</string>
     <string name="displayModeText">This option allows you to select the display mode of the calculator.</string>
 
     <string name="basics">Basics</string>
@@ -91,4 +91,61 @@
     <string name="deg_rad">Degrees/radians</string>
 
     <string name="mode_prompt">Choose a mode</string>
+    <string name="patchnotes1">Automatic scrolling</string>
+    <string name="patchnotes2">If necessary, the upper calculation area automatically scrolls downwards.</string>
+    <string name="patchnotes3">Increasing rounding accuracy</string>
+    <string name="patchnotes4">The rounding precision of the decimal number has been increased from the tenth to the eleventh decimal place.</string>
+    <string name="patchnotes5">Recall previous calculations</string>
+    <string name="patchnotes6">Long press: Long-pressing an entry in the history automatically copies the associated invoice to the clipboard. Short press: A short press on a history entry inserts the corresponding calculation directly into the calculator.</string>
+    <string name="patchnotes7">Sine, cosine and tangent</string>
+    <string name="patchnotes8">This new function offers expanded functionality in the area of trigonometric functions. You can now easily calculate sine, cosine and tangent in degrees as well as in radians.</string>
+    <string name="patchnotes9">Hyperbolic sine, cosine and tangent</string>
+    <string name="patchnotes10">This new feature provides expanded functionality in the area of hyperbolic functions. One can now calculate sinh(x), cosh(x) and tanh(x) for arbitrary real values of x.</string>
+    <string name="patchnotes11">Logarithm functions</string>
+    <string name="patchnotes12">The new logarithm functions (log(x), log₂(x) and ln(x)) make it possible to calculate different logarithms for any real values of x:</string>
+    <string name="patchnotes13">Inverse trigonometric functions</string>
+    <string name="patchnotes14">In addition, you can now also use the inverse trigonometric functions sine^-1 (sin⁻¹), cosine^-1 (cos⁻¹) and tangent^-1 (tan⁻¹). Please note that these functions have certain limitations and are only defined for values in the valid definition range.</string>
+    <string name="patchnotes15">Entering notations manually</string>
+    <string name="patchnotes16">For added flexibility, the app now allows notations to be entered manually. Just follow these steps: Enter any number, press the \'e±\' key (for \'×10\'), select plus (\'+\') or minus (\'-\') for a positive or negative exponent . Then enter your exponent after the plus or minus and the number will be converted automatically.</string>
+    <string name="patchnotes17">The circle number PI (π)</string>
+    <string name="patchnotes18">CalculationMax now supports the use of PI (π), a mathematical constant that represents the ratio of a circle\'s circumference to its diameter.</string>
+    <string name="patchnotes19">Degrees and radians</string>
+    <string name="patchnotes20">Degrees and radians are now supported, allowing flexible switching between the two units of measurement. The degree measure is typically used in geometric and trigonometric calculations, while the radian measure is relevant in more advanced mathematical concepts.</string>
+    <string name="patchnotes21">Brackets autocompletion</string>
+    <string name="patchnotes22">Missing brackets are now automatically detected and automatically completed, further simplifying the entry of expressions.</string>
+    <string name="patchnotes23">Improved bracket handling</string>
+    <string name="patchnotes24">The handling of parentheses has been optimized to ensure error-free processing of mathematical or logical expressions.</string>
+    <string name="patchnotes25">Delete individual calculations</string>
+    <string name="patchnotes26">Individual calculations can be removed in the history with a double click.</string>
+    <string name="patchnotes27">Euler\'s number</string>
+    <string name="patchnotes28">Euler\'s number was implemented to extend calculations.</string>
+    <string name="patchnotes29">Cube root</string>
+    <string name="patchnotes30">Cube root function \'³√\' integrated for advanced calculations.</string>
+    <string name="patchnotes31">Fractions</string>
+    <string name="patchnotes32">In this version \'½\', \'⅓\' and \'¼\' have been added to diversify the calculations and achieve more precise results.</string>
+    <string name="patchnotes33">Insert</string>
+    <string name="patchnotes34">Improved functionality for inserting values.</string>
+    <string name="patchnotes35">Help function</string>
+    <string name="patchnotes36">There is now a help function, which can be found in the settings, which explains all the functions of the calculator.</string>
+    <string name="patchnotes37">Different calculation modes</string>
+    <string name="patchnotes38">Within the settings you can now select different calculation modes to adapt the functionality of the calculator to your individual needs.</string>
+    <string name="patchnotes39">Background activity</string>
+    <string name="patchnotes40">The app automatically goes into the background as soon as it is closed. This will be indicated by a notification.</string>
+    <string name="patchnotes41">Notifications</string>
+    <string name="patchnotes42">RakeMax sends a notification if the app has not been used within a 4-day interval and permission has been granted.</string>
+    <string name="patchnotes43">Hints</string>
+    <string name="patchnotes44">RakeMax also sends a tip every day that contains helpful tips or background information.</string>
+    <string name="patchnotes45">Help function</string>
+    <string name="patchnotes46">"Es kam vor, dass nach dem Zurückkehren von der Hilfefunktion ein Fehler angezeigt wurde. "</string>
+    <string name="patchnotes47">Help button</string>
+    <string name="patchnotes48">The help button was not updated in Settings when changing True Dark Mode.</string>
+    <string name="patchnotes49">Show the calculation areas</string>
+    <string name="patchnotes50">It could happen that under certain circumstances the calculation areas were not displayed or were only partially displayed.</string>
+    <string name="patchnotes51">Calculate the factorial</string>
+    <string name="patchnotes52">The factorial calculation has been optimized to ensure that the calculator does not crash due to extremely large numbers.</string>
+    <string name="patchnotes53">Converting the notations</string>
+    <string name="patchnotes54">Under certain circumstances, scientific notations were not converted correctly. This issue has been resolved to ensure more reliable functionality.</string>
+    <string name="patchnotes55">Improved results formatting</string>
+    <string name="patchnotes56">Fixed the incorrect result formatting issue to ensure more accurate and consistent display.</string>
+    <string name="systemRequirementsText">Minimum Android version: 10\nRecommended Android version: 13 or higher\nMaximum Android version: 14</string>
 </resources>

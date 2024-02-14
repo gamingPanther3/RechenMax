@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\nAutomatisches Scrollen"
+            android:text="@string/patchnotes1"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Falls erforderlich, erfolgt im oberen Berechnungsbereich eine automatische Bildlaufbewegung nach unten.\n"
+            android:text="@string/patchnotes2"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\Erhöhung der Rundungsgenauigkeit"
+            android:text="@string/patchnotes3"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Die Rundungsgenauigkeit der Dezimalzahl wurde von der zehnten auf die elfte Nachkommastelle erhöht.\n"
+            android:text="@string/patchnotes4"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -110,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Aufrufen vorheriger Berechnungen"
+            android:text="@string/patchnotes5"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -120,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Langes Drücken: Durch langes Drücken auf einen Eintrag im Verlauf wird die zugehörige Rechnung automatisch in die Zwischenablage kopiert. Kurzes Drücken: Ein kurzer Tastendruck auf einen Verlaufeintrag fügt die entsprechende Rechnung direkt in den Taschenrechner ein.\n"
+            android:text="@string/patchnotes6"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -128,7 +128,7 @@
             android:id="@+id/releaseNotesFutureFeaturesSubtitle6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sinus, Cosinus und Tangens"
+            android:text="@string/patchnotes7"
             android:textColor="#000000"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Diese neue Funktion bietet eine erweiterte Funktionalität im Bereich trigonometrischer Funktionen. Man kann jetzt Sinus, Cosinus und Tangens im Gradmaß sowie auch im Bogenmaß problemlos berechnen.\n"
+            android:text="@string/patchnotes8"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -147,7 +147,7 @@
             android:id="@+id/releaseNotesFutureFeaturesSubtitle13"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hyperbolischer Sinus, Kosinus und Tangens"
+            android:text="@string/patchnotes9"
             android:textColor="#000000"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -158,7 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Diese neue Funktion bietet eine erweiterte Funktionalität im Bereich hyperbolischer Funktionen. Man kann jetzt sinh(x), cosh(x) und tanh(x) für beliebige reelle Werte von x berechnen.\n"
+            android:text="@string/patchnotes10"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -166,7 +166,7 @@
             android:id="@+id/releaseNotesFutureFeaturesSubtitle14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logarithmus-Funktionen"
+            android:text="@string/patchnotes11"
             android:textColor="#000000"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -177,7 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Die neuen Logarithmus-Funktionen (log(x), log₂(x) und ln(x)) ermöglichen es, verschiedene Logarithmen für beliebige reelle Werte von x zu berechnen:\n"
+            android:text="@string/patchnotes12"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -185,7 +185,7 @@
             android:id="@+id/releaseNotesFutureFeaturesSubtitle10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inverse trigonometrische Funktionen"
+            android:text="@string/patchnotes13"
             android:textColor="#000000"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -196,7 +196,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Darüber hinaus können Sie nun auch die inversen trigonometrischen Funktionen Sinus^-1 (sin⁻¹), Cosinus^-1 (cos⁻¹) und Tangens^-1 (tan⁻¹) verwenden. Bitte beachten Sie, dass diese Funktionen bestimmte Einschränkungen haben und nur für Werte im gültigen Definitionsbereich definiert sind.\n"
+            android:text="@string/patchnotes14"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -205,7 +205,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Manuelles eingeben von Notationen"
+            android:text="@string/patchnotes15"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -215,7 +215,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Für zusätzliche Flexibilität erlaubt die App nun das manuelle Eingeben von Notationen. Folgen Sie einfach diesen Schritten: Geben Sie eine beliebige Zahl ein, drücken Sie die 'e±' Taste (für '×10'), wählen Sie Plus ('+') oder Minus ('-') für einen positiven oder negativen Exponenten. Geben Sie anschließend Ihren Exponenten nach dem Plus oder Minus ein, und die Zahl wird automatisch umgerechnet.\n"
+            android:text="@string/patchnotes16"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -224,7 +224,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Die Kreiszahl PI (π)"
+            android:text="@string/patchnotes17"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -234,7 +234,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Der RechenMax unterstützt jetzt die Verwendung von PI (π), einer mathematischen Konstanten, die das Verhältnis des Umfangs eines Kreises zu seinem Durchmesser repräsentiert.\n"
+            android:text="@string/patchnotes18"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -243,7 +243,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Gradmaß und Bogenmaß"
+            android:text="@string/patchnotes19"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -253,7 +253,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Gradmaß und Bogenmaß werden nun unterstützt, wodurch flexibles Wechseln zwischen den beiden Maßeinheiten möglich ist. Das Gradmaß findet typischerweise Anwendung in geometrischen und trigonometrischen Berechnungen, während das Bogenmaß in fortgeschritteneren mathematischen Konzepten relevant ist.\n"
+            android:text="@string/patchnotes20"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -262,7 +262,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Automatische Vervollständigung von Klammern"
+            android:text="@string/patchnotes21"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -272,7 +272,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Jetzt werden fehlende Klammern automatisch erkannt und automatisch ergänzt, was die Eingabe von Ausdrücken weiter vereinfacht.\n"
+            android:text="@string/patchnotes22"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -281,7 +281,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Verbesserte Klammernbehandlung"
+            android:text="@string/patchnotes23"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -291,7 +291,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Die Handhabung von Klammern wurde optimiert, um eine fehlerfreie Verarbeitung von mathematischen oder logischen Ausdrücken zu gewährleisten.\n"
+            android:text="@string/patchnotes24"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -300,7 +300,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Löschen einzelner Berechnungen"
+            android:text="@string/patchnotes25"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -310,7 +310,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Mit einem Doppelklick können einzelne Berechnungen im Verlauf entfernt werden.\n"
+            android:text="@string/patchnotes26"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -319,7 +319,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Eulersche Zahl"
+            android:text="@string/patchnotes27"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -329,7 +329,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Die Eulersche Zahl wurde implementiert, um Berechnungen zu erweitern.\n"
+            android:text="@string/patchnotes28"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -338,7 +338,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Kubikwurzel"
+            android:text="@string/patchnotes29"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -348,7 +348,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Kubikwurzelfunktion '³√' für erweiterte Berechnungen integriert.\n"
+            android:text="@string/patchnotes30"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -357,7 +357,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Brüche"
+            android:text="@string/patchnotes31"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -367,7 +367,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="In dieser Version wurden '½', '⅓' und '¼' hinzugefügt, um die Berechnungen zu diversifizieren und präzisere Resultate zu erzielen.\n"
+            android:text="@string/patchnotes32"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -376,7 +376,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Brüche"
+            android:text="@string/patchnotes33"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -386,7 +386,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Verbesserte Funktionalität für das Einfügen von Werten.\n"
+            android:text="@string/patchnotes34"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -395,7 +395,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Hilfefunktion"
+            android:text="@string/patchnotes35"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -405,7 +405,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Es steht nun eine Hilfefunktion, die in dem Einstellungen zu finden ist, zur Verfügung, die alle Funktionen des Taschenrechners erklärt.\n"
+            android:text="@string/patchnotes36"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -414,7 +414,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Verschiedene Rechenmodi"
+            android:text="@string/patchnotes37"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -424,7 +424,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Innerhalb der Einstellungen kannst du nun auch verschiedene Rechenmodi auswählen, um die Funktionalität des Taschenrechners an deine individuellen Bedürfnisse anzupassen.\n"
+            android:text="@string/patchnotes38"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -433,7 +433,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Hintergrundaktivität"
+            android:text="@string/patchnotes39"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -443,7 +443,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="Die App versetzt sich automatisch in den Hintergrund, sobald sie geschlossen wird. Dies wird durch eine Benachrichtigung angezeigt.\n"
+            android:text="@string/patchnotes40"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -452,7 +452,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Benachrichtigungen"
+            android:text="@string/patchnotes41"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -462,7 +462,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="RechenMax sendet eine Benachrichtigung, wenn die App innerhalb eines 4-Tage-Intervalls nicht genutzt wurde und die Erlaubnis dazu erteilt wurde.\n"
+            android:text="@string/patchnotes42"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -471,7 +471,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Tipps"
+            android:text="@string/patchnotes43"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -481,7 +481,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:text="RechenMax sendet täglich auch einen Tipp, der hilfreiche Hinweise oder Hintergrundinformationen enthält.\n"
+            android:text="@string/patchnotes44"
             android:textColor="#000000"
             tools:ignore="HardcodedText"/>
 
@@ -500,7 +500,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="\nHilfefunktion"
+            android:text="@string/patchnotes45"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -509,7 +509,7 @@
             android:id="@+id/releaseNotesFutureFeaturesText_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Es kam vor, dass nach dem Zurückkehren von der Hilfefunktion ein Fehler angezeigt wurde.\n"
+            android:text="@string/patchnotes46"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -519,7 +519,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Hilfeknopf"
+            android:text="@string/patchnotes47"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -528,7 +528,7 @@
             android:id="@+id/releaseNotesFutureFeaturesText_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Der Hilfeknopf wurde in den Einstellungen nicht aktualisiert, wenn der Echte Dunkelmodus geändert wurde.\n"
+            android:text="@string/patchnotes48"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -538,7 +538,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Anzeigen der Berechnungsbereiche"
+            android:text="@string/patchnotes49"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -547,7 +547,7 @@
             android:id="@+id/releaseNotesFutureFeaturesText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Es konnte vorkommen, dass die Berechnungsbereiche unter bestimmten Umständen nicht oder nur teilweise angezeigt wurden.\n"
+            android:text="@string/patchnotes50"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -556,7 +556,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Berechnen der Fakultät"
+            android:text="@string/patchnotes51"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -564,24 +564,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Die Faktoriellenberechnung wurde optimiert, um sicherzustellen, dass der Taschenrechner nicht durch extrem große Zahlen abstürzt.\n"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Umwandeln der Notationen"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Unter bestimmten Umständen wurden wissenschaftliche Notationen nicht korrekt umgewandelt. Dieses Problem wurde behoben, um eine zuverlässigere Funktionalität zu gewährleisten.\n"
+            android:text="@string/patchnotes52"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -590,7 +573,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="Verbesserte Ergebnisformatierung"
+            android:text="@string/patchnotes53"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -598,7 +581,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Das Problem mit der fehlerhaften Ergebnisformatierung wurde behoben, um eine präzisere und konsistentere Anzeige zu gewährleisten.\n"
+            android:text="@string/patchnotes54"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/patchnotes55"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/patchnotes56"
             android:textColor="#000000"
             android:textSize="15sp"
             tools:ignore="HardcodedText"/>
@@ -618,7 +618,7 @@
             android:layout_height="wrap_content"
             android:textColor="#000000"
             android:textSize="15sp"
-            android:text="\nMinimale Android-Version: 10\nEmpfohlene Android-Version: 13 oder höher\nMaximale Android-Version: 14\n"
+            android:text="@string/systemRequirementsText"
             tools:ignore="HardcodedText"/>
 
         <LinearLayout

@@ -269,8 +269,8 @@
             android:linksClickable="true"
             android:maxWidth="530dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:paddingTop="5dp"
+            android:paddingRight="20dp"
             android:paddingBottom="5dp"
             android:text="@string/copyright"
             android:textColor="@color/colorBTNForegroundAccent" />
