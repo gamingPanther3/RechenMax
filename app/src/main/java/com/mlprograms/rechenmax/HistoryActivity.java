@@ -301,39 +301,16 @@ public class HistoryActivity extends AppCompatActivity {
      * indication to the user that there is no history data available.
      */
     private void createEmptyHistoryTextView() {
-        // Check if the TextView already exists and remove it if present
-        deleteEmptyHistoryTextView();
-
-        // Create the empty TextView with a specific message
         TextView emptyTextView = createHistoryTextView("\n\n\n\n\n\n\nDein Verlauf ist leer.");
-        emptyTextView.setId(R.id.history_empty_textview); // Add the ID
-
-        // Set the text color based on the current night mode and true dark mode
-        int textColor = calculateTextColor();
-        emptyTextView.setTextColor(textColor);
-
-        // Set the text size and gravity
-        emptyTextView.setTextSize(35f);
-        emptyTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-
-        // Add the TextView to the layout
-        final LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
-        linearLayout.addView(emptyTextView);
+        emptyTextView.setVisibility(View.VISIBLE);
     }
 
     /**
      * Diese Methode entfernt die leere TextView aus dem Layout, falls vorhanden.
      */
     private void deleteEmptyHistoryTextView() {
-        // Finden Sie die TextView im Layout und entfernen Sie sie
-        final LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
-        for (int i = 0; i < linearLayout.getChildCount(); i++) {
-            View child = linearLayout.getChildAt(i);
-            if (child instanceof TextView && child.getId() == R.id.history_empty_textview) {
-                linearLayout.removeView(child);
-                break;
-            }
-        }
+        TextView emptyTextView = createHistoryTextView("\n\n\n\n\n\n\nDein Verlauf ist leer.");
+        emptyTextView.setVisibility(View.GONE);
     }
 
     /**
@@ -631,6 +608,10 @@ public class HistoryActivity extends AppCompatActivity {
         }
         if (historyTextView != null) {
             historyTextView.setTextColor(newColorBTNForegroundAccent);
+        }
+        if ((TextView) findViewById(R.id.history_empty_textview) != null) {
+            TextView emptyTextView =  findViewById(R.id.history_empty_textview);
+            emptyTextView.setTextColor(newColorBTNForegroundAccent);
         }
 
         // Change the foreground and background colors of all buttons in your layout
