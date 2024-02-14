@@ -133,8 +133,9 @@
     <string name="calculationModeText">Mit dieser Einstellung kannst du festlegen, ob die Eingaben zuerst im Ergebnisbereich angezeigt und dann mit einem Operator in den Berechnungsbereich eingefügt (Standard), oder ob sie direkt im Berechnungsbereich geschrieben werden (Vereinfacht).</string>
     <string name="calculationMode">Berechungsmodus</string>
     <string name="deg_rad">Grad- / Bogenmaß</string>
-    <string name="historyIsEmpty">Dein Verlauf ist leer.</string>
+    <string name="historyIsEmpty">\n\n\n\n\n\n\nDein Verlauf ist leer.</string>
     <string name="helpPictureContentDescription" translatable="false">TODO</string>
+
     <string name="patchnotes1">\nAutomatisches Scrollen</string>
     <string name="patchnotes2">Falls erforderlich, erfolgt im oberen Berechnungsbereich eine automatische Bildlaufbewegung nach unten.\n</string>
     <string name="patchnotes3">Erhöhung der Rundungsgenauigkeit</string>
@@ -178,8 +179,8 @@
     <string name="patchnotes41">Benachrichtigungen</string>
     <string name="patchnotes42">RechenMax sendet eine Benachrichtigung, wenn die App innerhalb eines 4-Tage-Intervalls nicht genutzt wurde und die Erlaubnis dazu erteilt wurde.\n</string>
     <string name="patchnotes43">Tipps</string>
-    <string name="patchnotes44">RechenMax sendet täglich auch einen Tipp, der hilfreiche Hinweise oder Hintergrundinformationen enthält.\n</string>
-    <string name="patchnotes45">" Hilfefunktion"</string>
+    <string name="patchnotes44">"RechenMax sendet täglich auch einen Tipp, der hilfreiche Hinweise oder Hintergrundinformationen enthält. "</string>
+    <string name="patchnotes45">"Hilfefunktion"</string>
     <string name="patchnotes46">"Es kam vor, dass nach dem Zurückkehren von der Hilfefunktion ein Fehler angezeigt wurde. "</string>
     <string name="patchnotes47">Hilfeknopf</string>
     <string name="patchnotes48">Der Hilfeknopf wurde in den Einstellungen nicht aktualisiert, wenn der Echte Dunkelmodus geändert wurde.\n</string>
@@ -191,7 +192,25 @@
     <string name="patchnotes54">Unter bestimmten Umständen wurden wissenschaftliche Notationen nicht korrekt umgewandelt. Dieses Problem wurde behoben, um eine zuverlässigere Funktionalität zu gewährleisten.\n</string>
     <string name="patchnotes55">Verbesserte Ergebnisformatierung</string>
     <string name="patchnotes56">Das Problem mit der fehlerhaften Ergebnisformatierung wurde behoben, um eine präzisere und konsistentere Anzeige zu gewährleisten.\n</string>
+
     <string name="systemRequirementsText">\nMinimale Android-Version: 10\nEmpfohlene Android-Version: 13 oder höher\nMaximale Android-Version: 14\n</string>
-
-
+    <string name="dailyHints">Tägliche Tipps</string>
+    <string name="dailyHintsText">Mit dieser Einstellung kannst du einstellen, ob dir Täglich ein Tipp oder eine Information über den Taschenrechner geschickt wird.</string>
+    <string name="scientificMode">Wissenschaftlicher Modus</string>
+    <string name="changeMode">Modus wechseln</string>
+    <string name="mode">Modus</string>
+    <string name="degreeRadians">Gradmaß (Deg) / Bogenmaß (Rad)</string>
+    <string name="emptyClipboard">Zwischenablage leeren</string>
+    <string name="pasteNumber">Wert einfügen</string>
+    <string name="copyNumber">Wert kopieren</string>
+    <string name="inverseSine">inverse Sinusfunktion</string>
+    <string name="inverseCosine">inverse Cosinusfunktion</string>
+    <string name="inverseTangent">inverse Tangensfunktion</string>
+    <string name="sine">Sinus</string>
+    <string name="cosine">Cosinus</string>
+    <string name="tangent">Tangens</string>
+    <string name="manuallyNotation">Manuelle Notation</string>
+    <string name="piWord" translatable="false">PI</string>
+    <string name="hyperbolicSine">hyperbolische Sinusfunktion</string>
+    <string name="hyperbolicCosine">hyperbolische Cosinusfunktion</string>
 </resources>

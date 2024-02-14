@@ -235,18 +235,41 @@
                 android:id="@+id/settings_function_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/settingsFunctionOptions"
-                android:gravity="center_horizontal"
-                android:prompt="@string/mode_prompt"
                 android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
+                android:entries="@array/settingsFunctionOptions"
+                android:gravity="center_horizontal"
+                android:prompt="@string/mode_prompt"
                 android:spinnerMode="dialog" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="50sp"
+                android:layout_height="wrap_content"
                 android:text="" />
+
+            <Switch
+                android:id="@+id/settings_daily_hints"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/dailyHints"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:id="@+id/settings_daily_hints_text"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/dailyHintsText"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform" />
 
         </LinearLayout>
     </ScrollView>

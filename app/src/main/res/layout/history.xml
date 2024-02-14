@@ -71,6 +71,14 @@
             android:orientation="horizontal">
 
             <!-- TextView's added by HistoryActivity.java -->
+            <TextView
+                android:id="@+id/history_empty_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/historyIsEmpty"
+                android:textColor="@android:color/black"
+                android:textSize="35sp"
+                android:gravity="center_vertical|center_horizontal" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

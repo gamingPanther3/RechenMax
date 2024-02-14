@@ -34,7 +34,7 @@
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:foreground="@drawable/baseline_science_24_light"
                 android:tag="history"
-                android:tooltipText="Wissenschaftlicher Modus"
+                android:tooltipText="@string/scientificMode"
                 tools:ignore="RtlHardcoded" />
 
             <Button
@@ -49,7 +49,7 @@
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:foreground="@drawable/baseline_compare_arrows_24_light"
                 android:tag="history"
-                android:tooltipText="Modus wechseln"
+                android:tooltipText="@string/changeMode"
                 tools:ignore="RtlHardcoded" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:paddingStart="10dp"
                 android:text="@string/shiftMode"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:tooltipText="Modus"
+                android:tooltipText="@string/mode"
                 tools:ignore="RtlSymmetry" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:tooltipText="Gradmaß (Deg) / Bogenmaß (Rad)" />
+                android:tooltipText="@string/degreeRadians" />
 
             <View
                 android:layout_width="0dp"
@@ -98,7 +98,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="Verlauf"
+                android:tooltipText="@string/history"
                 tools:ignore="RtlHardcoded" />
 
             <Button
@@ -113,7 +113,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="Einstellungen"
+                android:tooltipText="@string/settings"
                 tools:ignore="RtlHardcoded" />
 
         </LinearLayout>
@@ -203,7 +203,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="Zwischenablage leeren"
+                android:tooltipText="@string/emptyClipboard"
                 style="?android:attr/buttonBarButtonStyle" />
 
             <Button
@@ -220,7 +220,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="Wert einfügen"
+                android:tooltipText="@string/pasteNumber"
                 style="?android:attr/buttonBarButtonStyle" />
 
             <Button
@@ -237,7 +237,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="Wert kopieren"
+                android:tooltipText="@string/copyNumber"
                 style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
 
@@ -265,7 +265,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="inverse Sinusfunktion" />
+                android:tooltipText="@string/inverseSine" />
 
             <Button
                 android:id="@+id/acosinus"
@@ -282,7 +282,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="inverse Cosinusfunktion" />
+                android:tooltipText="@string/inverseCosine" />
 
             <Button
                 android:id="@+id/atangens"
@@ -299,7 +299,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="inverse Tangensfunktion" />
+                android:tooltipText="@string/inverseTangent" />
         </LinearLayout>
 
         <LinearLayout
@@ -320,7 +320,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/sin"
-                android:tooltipText="Sinus"
+                android:tooltipText="@string/sine"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
@@ -336,7 +336,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/cos"
-                android:tooltipText="Cosinus"
+                android:tooltipText="@string/cosine"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
@@ -356,7 +356,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="Tangens"
+                android:tooltipText="@string/tangent"
                 style="?android:attr/buttonBarButtonStyle" />
 
             <Button
@@ -373,7 +373,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="Manuelle Notation" />
+                android:tooltipText="@string/manuallyNotation" />
 
             <Button
                 android:id="@+id/pi"
@@ -384,7 +384,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="pi"
                 android:text="@string/pi"
-                android:tooltipText="PI"
+                android:tooltipText="@string/piWord"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -415,7 +415,7 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="hyperbolische Sinusfunktion" />
+                android:tooltipText="@string/hyperbolicSine" />
 
             <Button
                 android:id="@+id/cosinush"
@@ -426,7 +426,7 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/cosh"
-                android:tooltipText="hyperbolische Cosinusfunktion"
+                android:tooltipText="@string/hyperbolicCosine"
                 android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
