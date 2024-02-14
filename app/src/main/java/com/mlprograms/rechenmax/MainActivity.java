@@ -192,7 +192,9 @@ public class MainActivity extends AppCompatActivity {
      */
     private void scrollToBottom(final ScrollView scrollView) {
         // Executes the scrolling to the bottom of the ScrollView in a Runnable.
-        scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_DOWN));
+        if(scrollView != null) {
+            scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_DOWN));
+        }
     }
 
     /**
@@ -1239,6 +1241,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * German: "Eulersche Zahl"
      * Handles the insertion or removal of the "е" symbol based on its current presence in the result text.
+     * <p>
+     * Note: "е" is not "e"
      */
     private void еAction() {
         // Check if logarithmic mode is disabled
