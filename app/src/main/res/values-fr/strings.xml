@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="settingDisplayModeOptions">
+        <item>Norme du système</item>
+        <item>Mode lumière du jour</item>
+        <item>Mode sombre</item>
+    </string-array>
+
+    <string-array name="settingCalculationModeOptions">
+        <item>Défaut</item>
+        <item>Simplifié</item>
+    </string-array>
+
+    <string-array name="settingsFunctionOptions">
+        <item>Degré (Deg)</item>
+            <item>Radians (Rad)</item>
+    </string-array>
+
     <string name="releaseDate">Date de sortie : N/A (travail en cours)</string>
     <string name="patchnotesOverviewText">La dernière version de RechnerMax apporte des améliorations et des fonctionnalités intéressantes. Le défilement automatique facilite la navigation dans les calculs volumineux, tandis que la précision de l\'arrondi a été augmentée jusqu\'à la onzième décimale pour des nombres décimaux plus précis. L\'historique a été optimisé pour restaurer sans effort les calculs précédents et revoir les tâches passées. Dans les tâches trigonométriques, des fonctions avancées pour le sinus, le cosinus et la tangente en degrés et en radians sont disponibles. Les fonctions trigonométriques inverses (sin⁻¹, cos⁻¹, tan⁻¹) ainsi que les fonctions hyperboliques telles que sinh(x), cosh(x) et tanh(x) sont désormais également disponibles. La saisie manuelle des notations offre une flexibilité supplémentaire lors de la création et du calcul d\'expressions complexes. TherechnerMax prend désormais en charge l\'utilisation de la constante mathématique PI (π) pour des calculs de cercle précis. Grâce à la prise en charge flexible des degrés et des radians, vous pouvez basculer entre les deux unités de mesure selon vos besoins. La gestion des parenthèses a été optimisée pour garantir un traitement sans erreur des expressions mathématiques ou logiques. Le logiciel détecte et ajoute automatiquement les crochets fermants manquants, simplifiant ainsi davantage la saisie des expressions. Dans l\'histoire, un appui long sur une entrée permet de copier automatiquement la facture dans le presse-papier, tandis qu\'un appui court colle la facture directement dans la calculatrice. Cette version corrige également des bugs importants, notamment des problèmes d\'affichage et de calcul factoriel, ainsi qu\'un formatage optimisé des résultats pour un affichage plus précis.</string>
     <string name="overview">Aperçu</string>
@@ -21,7 +37,7 @@
     <string name="callUpHistory">Appeler l\'historique</string>
     <string name="callUpHistoryText">Dans la barre d\'action, vous trouverez le bouton historique, qui vous permet d\'accéder et de visualiser vos calculs précédents. Ce bouton pratique vous permet de retrouver plus facilement et rapidement vos calculs précédents et d\'y revenir en cas de besoin, que ce soit pour vérifier les résultats ou répéter les calculs précédents.</string>
     <string name="editHistoryText">Vous pouvez afficher les calculs précédents dans l\'historique. Le bouton Supprimer (en haut à droite) efface tout l\'historique, le bouton Précédent (en haut à gauche) renvoie à la calculatrice. Un appui long copie un calcul dans le presse-papiers, un appui court le colle dans la calculatrice et un double appui supprime un seul calcul.</string>
-    <string name="historyIsEmpty">Votre historique est vide.</string>
+    <string name="historyIsEmpty">\n\n\n\n\n\n\nVotre historique est vide.</string>
     <string name="editHistory">Modifier l\'historique</string>
     <string name="settings">Paramètres</string>
     <string name="callUpSettings">Appeler les paramètres</string>
@@ -46,7 +62,7 @@
     <string name="displayMode">mode d\'affichage</string>
     <string name="displayModeText">Cette option permet de sélectionner le mode d\'affichage de la calculatrice.</string>
     <string name="basics">Les bases</string>
-    <string name="introductionInstructions">Introduction/Instructions</string>
+    <string name="introductionInstructions">Introduction</string>
     <string name="introductionText">Avez-vous besoin d\'aide ou êtes-vous nouveau ici ? Ce guide complet vous guidera en détail à travers tous les boutons et fonctions de RechenMax. RechenMax propose une variété d\'outils et d\'options puissants pour répondre efficacement à vos besoins informatiques.</string>
     <string name="introduction">introduction</string>
     <string name="addSubMulDiv">Addition, soustraction, multiplication et division</string>

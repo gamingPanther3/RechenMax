@@ -66,7 +66,7 @@
     <string name="removeBack">" Entfernen / Zurück"</string>
     <string name="callUpSettings">" Einstellungen aufrufen"</string>
     <string name="settings">"Einstellungen"</string>
-    <string name="introductionInstructions">Einführung / Anleitung</string>
+    <string name="introductionInstructions">Einführung</string>
     <string name="introduction">Einführung</string>
     <string name="commaText">" Durch das Betätigen des 'Komma-Knopfes' hast du die Möglichkeit, ein Komma zum Ergebnisbereich hinzuzufügen. Es ist dabei zu beachten, dass, falls bereits ein Komma vorhanden ist, kein weiteres hinzugefügt wird. Diese Funktion ermöglicht eine präzise Eingabe von Dezimalstellen."</string>
     <string name="introductionText">" Brauchst du Hilfe oder bist du neu hier? Diese umfassende Anleitung führt dich detailliert durch sämtliche Knöpfe und Funktionen des RechenMax. Der RechenMax bietet eine Vielzahl von leistungsstarken Werkzeugen und Möglichkeiten, um deine Rechenanforderungen effizient zu bewältigen. "</string>
