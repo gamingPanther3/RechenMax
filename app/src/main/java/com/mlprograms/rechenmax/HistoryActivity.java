@@ -301,6 +301,22 @@ public class HistoryActivity extends AppCompatActivity {
      * indication to the user that there is no history data available.
      */
     private void createEmptyHistoryTextView() {
+        if(findViewById(R.id.history_empty_textview) == null) {
+            TextView emptyTextView = new TextView(this);
+            emptyTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            emptyTextView.setId(R.id.history_empty_textview);
+            emptyTextView.setText(getString(R.string.historyIsEmpty));
+            emptyTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+            emptyTextView.setTextSize(35f);
+            emptyTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+
+            LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
+            linearLayout.addView(emptyTextView);
+        }
+
         TextView emptyTextView = createHistoryTextView("\n\n\n\n\n\n\nDein Verlauf ist leer.");
         emptyTextView.setVisibility(View.VISIBLE);
     }
@@ -443,7 +459,6 @@ public class HistoryActivity extends AppCompatActivity {
         int currentNightMode = newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK;
         switchDisplayMode(currentNightMode);
 
-        // Rufen Sie die Methode auf, um die Textfarbe zu aktualisieren, nur wenn die TextView vorhanden ist
         final TextView emptyHistoryTextView = findViewById(R.id.history_empty_textview);
         if (emptyHistoryTextView != null) {
             updateTextViewColor(emptyHistoryTextView);
