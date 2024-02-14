@@ -137,6 +137,9 @@
     <string name="patchnotes54">Unter bestimmten Umständen wurden wissenschaftliche Notationen nicht korrekt umgewandelt. Dieses Problem wurde behoben, um eine zuverlässigere Funktionalität zu gewährleisten.\n</string>
     <string name="patchnotes55">Verbesserte Ergebnisformatierung</string>
     <string name="patchnotes56">Das Problem mit der fehlerhaften Ergebnisformatierung wurde behoben, um eine präzisere und konsistentere Anzeige zu gewährleisten.\n</string>
+    <string name="patchnotes57">\nSprachen</string>
+    <string name="patchnotes58">Der Taschenrechner ist nun in Deutsch, Englisch und Französisch verfügbar.</string>
+
     <string name="systemRequirementsText">\nMinimale Android-Version: 10\nEmpfohlene Android-Version: 13 oder höher\nMaximale Android-Version: 14\n</string>
     <string name="piWord">PI</string>
     <string name="hyperbolicSine">hyperbolische Sinusfunktion</string>

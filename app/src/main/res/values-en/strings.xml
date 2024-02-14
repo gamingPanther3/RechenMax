@@ -147,6 +147,9 @@
     <string name="patchnotes54">Under certain circumstances, scientific notations were not converted correctly. This issue has been resolved to ensure more reliable functionality.\n</string>
     <string name="patchnotes55">Improved results formatting</string>
     <string name="patchnotes56">Fixed the incorrect result formatting issue to ensure more accurate and consistent display.</string>
+    <string name="patchnotes57">\nLanguages</string>
+    <string name="patchnotes58">The calculator is now available in German, English and French.</string>
+
     <string name="systemRequirementsText">Minimum Android version: 10\nRecommended Android version: 13 or higher\nMaximum Android version: 14</string>
 
     <string name="dailyHints">Daily Hints</string>

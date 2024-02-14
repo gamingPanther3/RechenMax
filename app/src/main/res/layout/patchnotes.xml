@@ -486,6 +486,25 @@
             tools:ignore="HardcodedText"/>
 
         <TextView
+            android:id="@+id/releaseNotesFutureFeaturesSubtitle25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/patchnotes57"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            android:id="@+id/releaseNotesFutureFeatures25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="@string/patchnotes58"
+            android:textColor="#000000"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
             android:id="@+id/releaseNotesBugsTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

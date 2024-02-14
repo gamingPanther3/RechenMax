@@ -124,14 +124,17 @@
     <string name="patchnotes49">Visualiser les zones de calcul</string>
     <string name="patchnotes50">Il pouvait arriver que dans certaines circonstances les zones de calcul ne soient pas affichées ou ne le soient que partiellement.</string>
     <string name="patchnotes51">Calculer la factorielle</string>
-    <string name="dailyHints">Conseils quotidiens</string>
-    <string name="dailyHintsText">Avec ce paramètre, vous pouvez définir si vous recevrez chaque jour un pourboire ou des informations sur la calculatrice.</string>
-    <string name="patchnotes54">Dans certaines circonstances, les notations scientifiques n\'étaient pas converties correctement. Ce problème a été résolu pour garantir une fonctionnalité plus fiable.</string>
-    <string name="patchnotes55">Formatage des résultats amélioré</string>
-    <string name="patchnotes56">Correction du problème de formatage incorrect des résultats pour garantir un affichage plus précis et cohérent.</string>
-    <string name="systemRequirementsText">Version Android minimale : 10\nVersion Android recommandée : 13 ou supérieure\nVersion Android maximale : 14</string>
     <string name="patchnotes52">Le calcul factoriel a été optimisé pour garantir que la calculatrice ne plante pas en raison de nombres extrêmement grands.</string>
     <string name="patchnotes53">Conversion des notations</string>
+    <string name="patchnotes54">Dans certaines circonstances, les notations scientifiques n\'étaient pas converties correctement. Ce problème a été résolu pour garantir une fonctionnalité plus fiable.</string>
+    <string name="patchnotes55">Formatage des résultats amélioré</string>
+    <string name="patchnotes56">Correction du problème de formata
+    <string name="patchnotes57">\nLangues</string>
+    <string name="patchnotes58">Le calculateur est désormais disponible en allemand, anglais et français.</string>ge incorrect des résultats pour garantir un affichage plus précis et cohérent.</string>
+
+    <string name="dailyHints">Conseils quotidiens</string>
+    <string name="dailyHintsText">Avec ce paramètre, vous pouvez définir si vous recevrez chaque jour un pourboire ou des informations sur la calculatrice.</string>
+    <string name="systemRequirementsText">Version Android minimale : 10\nVersion Android recommandée : 13 ou supérieure\nVersion Android maximale : 14</string>
     <string name="app_name">RechenMax</string>
     <string name="hyperbolicSine">fonction sinus hyperbolique</string>
     <string name="scientificMode">Mode scientifique</string>
@@ -149,6 +152,4 @@
     <string name="tangent">Tangente</string>
     <string name="manuallyNotation">Notation manuelle</string>
     <string name="hyperbolicCosine">fonction cosinus hyperbolique</string>
-
-
 </resources>
