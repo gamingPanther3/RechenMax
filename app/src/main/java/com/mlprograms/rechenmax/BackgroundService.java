@@ -100,7 +100,7 @@ public class BackgroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        // only for debugging: dataManager.saveToJSON("notificationSent", false, this);
+        // only for reset: dataManager.saveToJSON("notificationSent", false, this);
         allowDailyNotifications = Boolean.parseBoolean(dataManager.readFromJSON("allowDailyNotifications", this));
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
@@ -188,7 +188,6 @@ public class BackgroundService extends Service {
             setLastBackgroundTime(System.currentTimeMillis());
         } else if (allowDailyNotifications && currentTime >= min && currentTime <= max) {
             final int chance = random.nextInt(20);
-            Log.e("DEBUG", String.valueOf(chance));
 
             if(!notificationSent) {
                 if(chance == 1) {
