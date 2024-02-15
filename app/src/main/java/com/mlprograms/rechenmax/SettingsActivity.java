@@ -24,13 +24,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import org.w3c.dom.Text;
-
 /**
  * SettingsActivity
  * @author Max Lemberg
- * @version 1.0.0
- * @date 03.12.2023
+ * @version 1.0.3
+ * @date 14.02.2023
  */
 
 // I don't remember what I was thinking, but it works
@@ -78,11 +76,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         Switch settingsReleaseNotesSwitch = findViewById(R.id.settings_release_notes);
         Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
-        Switch settingsDailyHints = findViewById(R.id.settings_daily_hints);
+        Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
 
         updateSwitchState(settingsReleaseNotesSwitch, "settingReleaseNotesSwitch");
         updateSwitchState(settingsTrueDarkMode, "settingsTrueDarkMode");
-        updateSwitchState(settingsDailyHints, "settingsDailyHints");
+        updateSwitchState(allowDailyNotifications, "allowDailyNotifications");
 
         appendSpaceToSwitches(findViewById(R.id.settingsUI));
         final String setRelNotSwitch= dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext());
@@ -103,9 +101,9 @@ public class SettingsActivity extends AppCompatActivity {
 
             switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         });
-        settingsDailyHints.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataManager.saveToJSON("settingsDailyHints", isChecked, getMainActivityContext());
-            Log.i("Settings", "settingsDailyHints=" + dataManager.readFromJSON("settingsDailyHints", getMainActivityContext()));
+        allowDailyNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            dataManager.saveToJSON("allowDailyNotifications", isChecked, getMainActivityContext());
+            Log.i("Settings", "allowDailyNotifications=" + dataManager.readFromJSON("allowDailyNotifications", getMainActivityContext()));
         });
 
         // Declare a Spinner object
@@ -460,8 +458,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
         TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
-        TextView settingsDailyHints = findViewById(R.id.settings_daily_hints);
-        TextView settingsDailyHintsText = findViewById(R.id.settings_daily_hints_text);
+        TextView allowDailyNotifications = findViewById(R.id.settings_daily_hints);
+        TextView allowDailyNotificationsText = findViewById(R.id.settings_daily_hints_text);
 
         TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
         TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
@@ -530,8 +528,8 @@ public class SettingsActivity extends AppCompatActivity {
                         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsDailyHints.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsDailyHintsText.setTextColor(ContextCompat.getColor(this, R.color.black));
+                        allowDailyNotifications.setTextColor(ContextCompat.getColor(this, R.color.black));
+                        allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                         settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -558,8 +556,8 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsDailyHints.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsDailyHintsText.setTextColor(ContextCompat.getColor(this, R.color.black));
+                allowDailyNotifications.setTextColor(ContextCompat.getColor(this, R.color.black));
+                allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
                 settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -623,8 +621,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
         TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
-        TextView settingsDailyHints = findViewById(R.id.settings_daily_hints);
-        TextView settingsDailyHintsText = findViewById(R.id.settings_daily_hints_text);
+        TextView allowDailyNotifications = findViewById(R.id.settings_daily_hints);
+        TextView allowDailyNotificationsText = findViewById(R.id.settings_daily_hints_text);
 
         TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
         TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
@@ -648,8 +646,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
-        settingsDailyHints.setTextColor(ContextCompat.getColor(this, textColor));
-        settingsDailyHintsText.setTextColor(ContextCompat.getColor(this, textColor));
+        allowDailyNotifications.setTextColor(ContextCompat.getColor(this, textColor));
+        allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
