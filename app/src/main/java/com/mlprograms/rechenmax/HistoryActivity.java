@@ -145,6 +145,11 @@ public class HistoryActivity extends AppCompatActivity {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.history_result_size));
         AtomicBoolean clickListener = new AtomicBoolean(true);
 
+        TextView emptyTextView = findViewById(R.id.history_empty_textview);
+        if(emptyTextView != null) {
+            emptyTextView.setVisibility(View.GONE);
+        }
+
         textView.setOnLongClickListener(v -> {
             try {
                 TextView clickedTextView = (TextView) v;
