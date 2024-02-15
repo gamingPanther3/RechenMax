@@ -317,7 +317,7 @@ public class HistoryActivity extends AppCompatActivity {
             linearLayout.addView(emptyTextView);
         }
 
-        TextView emptyTextView = createHistoryTextView("\n\n\n\n\n\n\nDein Verlauf ist leer.");
+        TextView emptyTextView = findViewById(R.id.history_empty_textview);
         emptyTextView.setVisibility(View.VISIBLE);
 
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
@@ -329,37 +329,6 @@ public class HistoryActivity extends AppCompatActivity {
     private void deleteEmptyHistoryTextView() {
         TextView emptyTextView = createHistoryTextView("\n\n\n\n\n\n\nDein Verlauf ist leer.");
         emptyTextView.setVisibility(View.GONE);
-    }
-
-    /**
-     * Diese Methode berechnet die Textfarbe basierend auf dem aktuellen Nachtmodus und dem true dark mode.
-     * @return Die berechnete Textfarbe.
-     */
-    private int calculateTextColor() {
-        int textColor;
-        int nightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-
-        dataManager = new DataManager();
-
-        String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
-
-        if (getSelectedSetting().equals("Systemstandard")) {
-            if (nightMode == Configuration.UI_MODE_NIGHT_YES) {
-                if ("true".equals(trueDarkMode)) {
-                    textColor = ContextCompat.getColor(this, R.color.darkmode_white);
-                } else {
-                    textColor = ContextCompat.getColor(this, R.color.white);
-                }
-            } else {
-                textColor = ContextCompat.getColor(this, android.R.color.black);
-            }
-        } else if (getSelectedSetting().equals("Tageslichtmodus")) {
-            textColor = ContextCompat.getColor(this, android.R.color.black);
-        } else {
-            textColor = ContextCompat.getColor(this, android.R.color.white);
-        }
-
-        return textColor;
     }
 
     /**
