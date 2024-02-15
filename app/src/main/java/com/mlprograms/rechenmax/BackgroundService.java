@@ -1,6 +1,18 @@
 package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.NotificationHelper.sendNotification;
+import static com.mlprograms.rechenmax.NotificationText.mainNotificationContentEnglish;
+import static com.mlprograms.rechenmax.NotificationText.mainNotificationContentFrench;
+import static com.mlprograms.rechenmax.NotificationText.mainNotificationContentSpanish;
+import static com.mlprograms.rechenmax.NotificationText.mainNotificationTitleEnglish;
+import static com.mlprograms.rechenmax.NotificationText.mainNotificationTitleFrench;
+import static com.mlprograms.rechenmax.NotificationText.mainNotificationTitleSpanish;
+import static com.mlprograms.rechenmax.NotificationText.notificationHintsListEnglish;
+import static com.mlprograms.rechenmax.NotificationText.notificationHintsListFrench;
+import static com.mlprograms.rechenmax.NotificationText.notificationHintsListGerman;
+import static com.mlprograms.rechenmax.NotificationText.mainNotificationTitleGerman;
+import static com.mlprograms.rechenmax.NotificationText.mainNotificationContentGerman;
+import static com.mlprograms.rechenmax.NotificationText.notificationHintsListSpanish;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -12,8 +24,12 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.text.format.DateFormat;
 import android.util.Log;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -22,12 +38,15 @@ import java.util.Random;
  */
 public class BackgroundService extends Service {
     // Notification IDs and channel IDs for the service and reminders
-    private static final int NOTIFICATION_ID_1 = 1;
-    private static final int NOTIFICATION_ID_2 = 2;
+    private static final int NOTIFICATION_ID_BACKGROUND = 1;
+    private static final int NOTIFICATION_ID_REMEMBER = 2;
+    private static final int NOTIFICATION_ID_HINTS = 3;
     private static final String CHANNEL_ID_1 = "BackgroundServiceChannel";
     private static final String CHANNEL_NAME_1 = "BackgroundService";
-    private static final String CHANNEL_ID_2 = "RechenMax";
+    private static final String CHANNEL_ID_2 = "RechenMax Remember";
     private static final String CHANNEL_NAME_2 = "Erinnerung";
+    private static final String CHANNEL_ID_3 = "RechenMax Hints";
+    private static final String CHANNEL_NAME_3 = "Tipps";
 
     // Name for shared preferences file and key for last background time
     private static final String PREFS_NAME = "BackgroundServicePrefs";
@@ -37,11 +56,14 @@ public class BackgroundService extends Service {
     private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 60 * 24 * 4; // 1000 * 60 * 60 * 24 * 4 = 4 days
 
     // Handler for scheduling reminders, and other variables
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private boolean startedByBootReceiver = false;
-    private final Random random = new Random();
     private SharedPreferences sharedPreferences;
+    private final DataManager dataManager = new DataManager();
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Random random = new Random();
     private boolean isServiceRunning = true;
+    private static Context context;
+    private boolean allowDailyNotifications;
+    private boolean startedByBootReceiver = false;
 
     /**
      * Runnable for sending reminders at intervals
@@ -50,12 +72,19 @@ public class BackgroundService extends Service {
         @Override
         public void run() {
             if (isServiceRunning) {
-                checkNotification();
+                checkBackgroundServiceNotification();
                 handler.postDelayed(this, 600000); // 600000 = 10min
+                checkNotification();
             }
             Log.d("Remaining Time", "Remaining Time: " + ((NOTIFICATION_INTERVAL + 1000 - (System.currentTimeMillis() - getLastBackgroundTime())) / 1000) + "s");
         }
     };
+
+    private void checkBackgroundServiceNotification() {
+        if(!NotificationHelper.isNotificationActive(this, 1)) {
+            startForeground(NOTIFICATION_ID_BACKGROUND, buildNotification());
+        }
+    }
 
     /**
      * onBind method required by Service class but not used in this implementation.
@@ -72,12 +101,14 @@ public class BackgroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        // only for debugging: dataManager.saveToJSON("notificationSent", false, this);
+        allowDailyNotifications = Boolean.parseBoolean(dataManager.readFromJSON("allowDailyNotifications", this));
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
         createNotificationChannel();
-        NotificationHelper.cancelNotification(this, NOTIFICATION_ID_1);
-        NotificationHelper.cancelNotification(this, NOTIFICATION_ID_2);
-        startForeground(NOTIFICATION_ID_1, buildNotification());
+        NotificationHelper.cancelNotification(this, NOTIFICATION_ID_BACKGROUND);
+        NotificationHelper.cancelNotification(this, NOTIFICATION_ID_REMEMBER);
+        startForeground(NOTIFICATION_ID_BACKGROUND, buildNotification());
         Log.d(CHANNEL_NAME_1, "Service created");
     }
 
@@ -106,28 +137,120 @@ public class BackgroundService extends Service {
      * If the main notification is not active, the foreground service is restarted.
      */
     private void checkNotification() {
+        final int currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
+        final boolean notificationSent = Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this));
+        final String language = Locale.getDefault().getDisplayLanguage();
+
+        final int min = 12; // default 12
+        final int max = 15; // default 15
+
+        Log.e("DEBUG", "time:                       " + currentTime);
+        Log.e("DEBUG", "allowDailyNotifications:    " + allowDailyNotifications);
+        Log.e("DEBUG", "NotificationSent:           " + dataManager.readFromJSON("notificationSent", this));
+
+        String title_hints = "Wusstest du schon?";
+        String content_hints = getRandomElement(notificationHintsListGerman);
+
+        switch (language) {
+            case "English":
+                title_hints = "Did you know?";
+                content_hints = getRandomElement(notificationHintsListEnglish);
+                break;
+            case "français":
+                title_hints = "Saviez-vous?";
+                content_hints = getRandomElement(notificationHintsListFrench);
+                break;
+            case "español":
+                title_hints = "¿Sabías que?";
+                content_hints = getRandomElement(notificationHintsListSpanish);
+                break;
+        }
+
         if (System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_INTERVAL) {
-            final int num = random.nextInt(4);
-            System.out.println(num);
-            switch(num) {
-                case 0:
-                    sendNotification(this, 2, "Vergiss mich nicht!", "Hey, du hast schon eine Weile nichts mehr gerechnet. Vielleicht wird es mal wieder Zeit.", CHANNEL_ID_2, CHANNEL_NAME_2);
+            String title_remember = getRandomElement(mainNotificationTitleGerman);
+            String content_remember = getRandomElement(mainNotificationContentGerman);
+
+            switch (language) {
+                case "English":
+                    title_remember = getRandomElement(mainNotificationTitleEnglish);
+                    content_remember = getRandomElement(mainNotificationContentEnglish);
                     break;
-                case 1:
-                    sendNotification(this, 2, "Es wird Zeit zu rechnen!", "Dein RechenMax gähnt vor Langeweile. Zeit für ein paar knifflige Berechnungen!", CHANNEL_ID_2, CHANNEL_NAME_2);
+                case "français":
+                    title_remember = getRandomElement(mainNotificationTitleFrench);
+                    content_remember = getRandomElement(mainNotificationContentFrench);
                     break;
-                case 2:
-                    sendNotification(this, 2, "Rechenzeit!", "Berechne die Antwort auf das Leben, das Universum und alles!", CHANNEL_ID_2, CHANNEL_NAME_2);
-                    break;
-                case 3:
-                    sendNotification(this, 2, "RechenMax wartet!", "RechenMax freut sich auf dich!", CHANNEL_ID_2, CHANNEL_NAME_2);
+                case "español":
+                    title_remember = getRandomElement(mainNotificationTitleSpanish);
+                    content_remember = getRandomElement(mainNotificationContentSpanish);
                     break;
             }
+
+            sendNotification(this, NOTIFICATION_ID_REMEMBER, title_remember, content_remember, CHANNEL_ID_2, CHANNEL_NAME_2);
             setLastBackgroundTime(System.currentTimeMillis());
+        } else if (allowDailyNotifications && currentTime >= min && currentTime <= max) {
+            final int chance = random.nextInt(20);
+            Log.e("DEBUG", String.valueOf(chance));
+
+            if(!notificationSent) {
+                if(chance == 1) {
+                    dataManager.saveToJSON("notificationSent", true, this);
+                    sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_3, CHANNEL_NAME_3);
+                }
+            }
+        } else if (currentTime >= max && !notificationSent) {
+            dataManager.saveToJSON("notificationSent", true, this);
+            sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_3, CHANNEL_NAME_3);
         }
-        if(!NotificationHelper.isNotificationActive(this, 1)) {
-            startForeground(NOTIFICATION_ID_1, buildNotification());
+
+        if (currentTime >= 0 && currentTime <= 1 && notificationSent) {
+            dataManager.saveToJSON("notificationSent", false, this);
         }
+    }
+
+    public static String getRandomElement(List<String> list) {
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(list.size());
+        return list.get(randomIndex);
+    }
+
+    /**
+     * This static method sets the context of the MainActivity.
+     * @param activity The MainActivity whose context is to be set.
+     */
+    public static void setMainActivityContext(MainActivity activity) {
+        context = activity;
+    }
+
+    /**
+     * This static method sets the context of the MainActivity.
+     * @param activity The MainActivity whose context is to be set.
+     */
+    public static void setMainActivityContext(HistoryActivity activity) {
+        context = activity;
+    }
+
+    /**
+     * This static method sets the context of the MainActivity.
+     * @param activity The MainActivity whose context is to be set.
+     */
+    public static void setMainActivityContext(SettingsActivity activity) {
+        context = activity;
+    }
+
+    /**
+     * This static method sets the context of the MainActivity.
+     * @param activity The MainActivity whose context is to be set.
+     */
+    public static void setMainActivityContext(HelpActivity activity) {
+        context = activity;
+    }
+
+    /**
+     * This method gets the context of the MainActivity.
+     * @return The context of the MainActivity.
+     */
+    public Context getMainActivityContext() {
+        return context;
     }
 
     /**
@@ -163,11 +286,30 @@ public class BackgroundService extends Service {
     public Notification buildNotification() {
         Notification.Builder builder;
         builder = new Notification.Builder(this, CHANNEL_ID_1);
+        final String language = Locale.getDefault().getDisplayLanguage();
 
-        return builder.setContentTitle("RechenMax im Hintergrund")
-                .setContentText("RechenMax ist nun im Hintergrund aktiv.")
-                .setSmallIcon(R.drawable.rechenmax_notification_icon)
-                .build();
+        switch (language) {
+            case "English":
+                return builder.setContentTitle("RechenMax in the background")
+                        .setContentText("RechenMax is now active in the background.")
+                        .setSmallIcon(R.drawable.rechenmax_notification_icon)
+                        .build();
+            case "français":
+                return builder.setContentTitle("RechenMax en arrière-plan")
+                        .setContentText("RechenMax est maintenant actif en arrière-plan.")
+                        .setSmallIcon(R.drawable.rechenmax_notification_icon)
+                        .build();
+            case "español":
+                return builder.setContentTitle("RechenMax en segundo plano")
+                        .setContentText("RechenMax está ahora activo en segundo plano.")
+                        .setSmallIcon(R.drawable.rechenmax_notification_icon)
+                        .build();
+            default:
+                return builder.setContentTitle("RechenMax im Hintergrund")
+                        .setContentText("RechenMax ist nun im Hintergrund aktiv.")
+                        .setSmallIcon(R.drawable.rechenmax_notification_icon)
+                        .build();
+        }
     }
 
     /**
