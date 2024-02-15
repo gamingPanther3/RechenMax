@@ -61,7 +61,6 @@ public class BackgroundService extends Service {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Random random = new Random();
     private boolean isServiceRunning = true;
-    private static Context context;
     private boolean allowDailyNotifications;
     private boolean startedByBootReceiver = false;
 
@@ -211,46 +210,6 @@ public class BackgroundService extends Service {
         Random rand = new Random();
         int randomIndex = rand.nextInt(list.size());
         return list.get(randomIndex);
-    }
-
-    /**
-     * This static method sets the context of the MainActivity.
-     * @param activity The MainActivity whose context is to be set.
-     */
-    public static void setMainActivityContext(MainActivity activity) {
-        context = activity;
-    }
-
-    /**
-     * This static method sets the context of the MainActivity.
-     * @param activity The MainActivity whose context is to be set.
-     */
-    public static void setMainActivityContext(HistoryActivity activity) {
-        context = activity;
-    }
-
-    /**
-     * This static method sets the context of the MainActivity.
-     * @param activity The MainActivity whose context is to be set.
-     */
-    public static void setMainActivityContext(SettingsActivity activity) {
-        context = activity;
-    }
-
-    /**
-     * This static method sets the context of the MainActivity.
-     * @param activity The MainActivity whose context is to be set.
-     */
-    public static void setMainActivityContext(HelpActivity activity) {
-        context = activity;
-    }
-
-    /**
-     * This method gets the context of the MainActivity.
-     * @return The context of the MainActivity.
-     */
-    public Context getMainActivityContext() {
-        return context;
     }
 
     /**
