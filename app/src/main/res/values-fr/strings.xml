@@ -152,4 +152,25 @@
     <string name="tangent">Tangente</string>
     <string name="manuallyNotation">Notation manuelle</string>
     <string name="hyperbolicCosine">fonction cosinus hyperbolique</string>
+
+    <string name="parenthesisOn">Parenthèse ouverte</string>
+    <string name="parenthesisOff">Parenthèse fermée</string>
+    <string name="faculty">Factorielle</string>
+    <string name="exponential">Exponentielle</string>
+    <string name="squareroot">Racine carrée</string>
+    <string name="eulersNumber">Nombre d\'Euler (2,718..)</string>
+    <string name="clearResult">Effacer le résultat</string>
+    <string name="clearAll">Tout effacer</string>
+    <string name="backspace">Retour arrière</string>
+    <string name="divide">Division</string>
+    <string name="multiply">Multiplication</string>
+    <string name="subtract">Soustraction</string>
+    <string name="add">Addition</string>
+    <string name="generalLogarithmFunction">Fonction logarithmique générale</string>
+    <string name="specialLogarithmFunction">Fonction logarithmique spéciale</string>
+    <string name="manualLogarithmFunction">Fonction logarithmique manuelle</string>
+    <string name="naturalLogarithmFunction">Fonction logarithmique naturelle</string>
+
+    <string name="help">Aide</string>
+    <string name="back">Retour</string>
 </resources>

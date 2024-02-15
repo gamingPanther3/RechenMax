@@ -158,4 +158,25 @@
     <string name="piWord" translatable="false">PI</string>
     <string name="hyperbolicSine">hyperbolische Sinusfunktion</string>
     <string name="hyperbolicCosine">hyperbolische Cosinusfunktion</string>
+
+    <string name="parenthesisOn">Klammer auf</string>
+    <string name="parenthesisOff">Klammer zu</string>
+    <string name="faculty">Fakultät</string>
+    <string name="exponential">Exponent</string>
+    <string name="squareroot">Quadratwurzel</string>
+    <string name="eulersNumber">Eulersche Zahl (2,718..)</string>
+    <string name="clearResult">Ergebnis leeren</string>
+    <string name="clearAll">Alles leeren</string>
+    <string name="backspace">Zurück</string>
+    <string name="divide">Division</string>
+    <string name="multiply">Multiplikation</string>
+    <string name="subtract">Subtraktion</string>
+    <string name="add">Addition</string>
+    <string name="generalLogarithmFunction">allgemeine Logarithmusfunktion</string>
+    <string name="specialLogarithmFunction">spezielle Logarithmusfunktion</string>
+    <string name="manualLogarithmFunction">manuelle Logarithmusfunktion</string>
+    <string name="naturalLogarithmFunction">natürliche Logarithmusfunktion</string>
+
+    <string name="help">Hife</string>
+    <string name="back">Zurück</string>
 </resources>

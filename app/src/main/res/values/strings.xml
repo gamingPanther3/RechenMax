@@ -104,8 +104,8 @@
     <string name="addSubMulDivText">"Für Rechenoperationen nutze einfach eines der hervorgehobenen Zeichen. Wenn du beispielsweise '×' auswählst, wird der Operator sofort im Ergebnisbereich eingefügt. Füge dann eine Zahl (z.B., '3') hinzu und setze nach Bedarf weitere Operatoren ein. So gestaltest du deine Rechenabläufe einfach und schrittweise."</string>
     <string name="introductionInstructions">Einführung</string>
     <string name="calculateText">"Nachdem du deine Berechnung abgeschlossen hast, betätige die '='-Taste, um das Ergebnis zu berechnen. Anschließend wird das Resultat im Ergebnisbereich für dich angezeigt. Diese einfache Vorgehensweise ermöglicht es dir, schnell und unkompliziert die Ergebnisse deiner Rechenoperationen zu erhalten."</string>
-    <string name="calculate">"Berechnen"</string>
-    <string name="actionbar">"Aktionsleiste"</string>
+    <string name="calculate">Berechnen</string>
+    <string name="actionbar">Aktionsleiste</string>
     <string name="actionbarText">Zusätzlich gibt es eine Aktionsleiste, über die du zwischen verschiedenen Tabs (Verlauf und Einstellungen) sowie dem Wissenschaftsmodus wechseln kannst. Diese Funktion eröffnet dir die Möglichkeit, flexibel zwischen deinem Berechnungsverlauf, individuellen Einstellungen und dem erweiterten Wissenschaftsmodus zu navigieren.</string>
     <string name="history">Verlauf</string>
     <string name="callUpHistory">Verlauf aufrufen</string>
@@ -215,4 +215,25 @@
     <string name="piWord" translatable="false">PI</string>
     <string name="hyperbolicSine">hyperbolische Sinusfunktion</string>
     <string name="hyperbolicCosine">hyperbolische Cosinusfunktion</string>
+
+    <string name="parenthesisOn">Klammer auf</string>
+    <string name="parenthesisOff">Klammer zu</string>
+    <string name="faculty">Fakultät</string>
+    <string name="exponential">Exponent</string>
+    <string name="squareroot">Quadratwurzel</string>
+    <string name="eulersNumber">Eulersche Zahl (2,718..)</string>
+    <string name="clearResult">Ergebnis leeren</string>
+    <string name="clearAll">Alles leeren</string>
+    <string name="backspace">Zurück</string>
+    <string name="divide">Division</string>
+    <string name="multiply">Multiplikation</string>
+    <string name="subtract">Subtraktion</string>
+    <string name="add">Addition</string>
+    <string name="generalLogarithmFunction">allgemeine Logarithmusfunktion</string>
+    <string name="specialLogarithmFunction">spezielle Logarithmusfunktion</string>
+    <string name="manualLogarithmFunction">manuelle Logarithmusfunktion</string>
+    <string name="naturalLogarithmFunction">natürliche Logarithmusfunktion</string>
+
+    <string name="help">Hife</string>
+    <string name="back">Zurück</string>
 </resources>

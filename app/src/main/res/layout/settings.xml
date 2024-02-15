@@ -26,7 +26,7 @@
             android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
             android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform"
-            android:tooltipText="Zurück"
+            android:tooltipText="@string/back"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -49,12 +49,12 @@
             android:layout_height="40dp"
             android:layout_gravity="right|center_vertical"
             android:layout_marginEnd="10dp"
-            android:foreground="@drawable/baseline_help_outline_24_light"
-            android:tag="help"
-            android:tooltipText="Hife"
             android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
             android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform"
+            android:foreground="@drawable/baseline_help_outline_24_light"
+            android:tag="help"
+            android:tooltipText="@string/help"
             tools:ignore="RtlHardcoded" />
 
     </LinearLayout>

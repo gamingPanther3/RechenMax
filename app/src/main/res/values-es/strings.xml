@@ -170,4 +170,25 @@
     <string name="piWord" translatable="false">PI</string>
     <string name="hyperbolicSine">Función seno hiperbólico</string>
     <string name="hyperbolicCosine">Función coseno hiperbólico</string>
+
+    <string name="parenthesisOn">Paréntesis abierto</string>
+    <string name="parenthesisOff">Paréntesis cerrado</string>
+    <string name="faculty">Factorial</string>
+    <string name="exponential">Exponencial</string>
+    <string name="squareroot">Raíz cuadrada</string>
+    <string name="eulersNumber">Número de Euler (2,718..)</string>
+    <string name="clearResult">Borrar resultado</string>
+    <string name="clearAll">Borrar todo</string>
+    <string name="backspace">Retroceso</string>
+    <string name="divide">División</string>
+    <string name="multiply">Multiplicación</string>
+    <string name="subtract">Resta</string>
+    <string name="add">Suma</string>
+    <string name="generalLogarithmFunction">Función logarítmica general</string>
+    <string name="specialLogarithmFunction">Función logarítmica especial</string>
+    <string name="manualLogarithmFunction">Función logarítmica manual</string>
+    <string name="naturalLogarithmFunction">Función logarítmica natural</string>
+
+    <string name="help">Ayuda</string>
+    <string name="back">Atrás</string>
 </resources>

@@ -108,7 +108,7 @@
     <string name="patchnotes15">Entering notations manually</string>
     <string name="patchnotes16">For added flexibility, the app now allows notations to be entered manually. Just follow these steps: Enter any number, press the \'e±\' key (for \'×10\'), select plus (\'+\') or minus (\'-\') for a positive or negative exponent . Then enter your exponent after the plus or minus and the number will be converted automatically.\n</string>
     <string name="patchnotes17">The circle number PI (π)</string>
-    <string name="patchnotes18">CalculationMax now supports the use of PI (π), a mathematical constant that represents the ratio of a circle\'s circumference to its diameter.\n</string>
+    <string name="patchnotes18">RechenMax now supports the use of PI (π), a mathematical constant that represents the ratio of a circle\'s circumference to its diameter.\n</string>
     <string name="patchnotes19">Degrees and radians</string>
     <string name="patchnotes20">Degrees and radians are now supported, allowing flexible switching between the two units of measurement. The degree measure is typically used in geometric and trigonometric calculations, while the radian measure is relevant in more advanced mathematical concepts.\n</string>
     <string name="patchnotes21">Brackets autocompletion</string>
@@ -171,4 +171,25 @@
     <string name="tangent">Tangent</string>
     <string name="manuallyNotation">Manual notation</string>
     <string name="hyperbolicCosine">hyperbolic cosine function</string>
+
+    <string name="parenthesisOn">Parenthesis open</string>
+    <string name="parenthesisOff">Parenthesis close</string>
+    <string name="faculty">Faculty</string>
+    <string name="exponential">Exponential</string>
+    <string name="squareroot">Square root</string>
+    <string name="eulersNumber">Euler\'s number (2,718..)</string>
+    <string name="clearResult">Clear result</string>
+    <string name="clearAll">Clear all</string>
+    <string name="backspace">Backspace</string>
+    <string name="divide">Division</string>
+    <string name="multiply">Multiplication</string>
+    <string name="subtract">Subtraction</string>
+    <string name="add">Addition</string>
+    <string name="generalLogarithmFunction">General logarithmic function</string>
+    <string name="specialLogarithmFunction">Special logarithmic function</string>
+    <string name="manualLogarithmFunction">Manual logarithmic function</string>
+    <string name="naturalLogarithmFunction">Natural logarithmic function</string>
+
+    <string name="help">Help</string>
+    <string name="back">Back</string>
 </resources>
