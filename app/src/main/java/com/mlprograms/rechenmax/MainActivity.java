@@ -176,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i("showAllSettings", "currentVersion                   :'" + dataManager.readFromJSON("currentVersion", getApplicationContext()) + "'");
         Log.i("showAllSettings", "old_version                      :'" + dataManager.readFromJSON("old_version", getApplicationContext()) + "'");
         Log.i("showAllSettings", "returnToCalculator               :'" + dataManager.readFromJSON("returnToCalculator", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "allowDailyNotifications          :'" + dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()) + "'");
+        Log.i("showAllSettings", "notificationSent                 :'" + dataManager.readFromJSON("notificationSent", getApplicationContext()) + "'");
         Log.i("all settings", "---       all settings        ---");
         System.out.println("\n");
     }
