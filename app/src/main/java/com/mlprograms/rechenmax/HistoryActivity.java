@@ -319,6 +319,8 @@ public class HistoryActivity extends AppCompatActivity {
 
         TextView emptyTextView = createHistoryTextView("\n\n\n\n\n\n\nDein Verlauf ist leer.");
         emptyTextView.setVisibility(View.VISIBLE);
+
+        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
 
     /**
