@@ -138,9 +138,24 @@
     <string name="patchnotes55">Verbesserte Ergebnisformatierung</string>
     <string name="patchnotes56">Das Problem mit der fehlerhaften Ergebnisformatierung wurde behoben, um eine präzisere und konsistentere Anzeige zu gewährleisten.\n</string>
     <string name="patchnotes57">\nSprachen</string>
-    <string name="patchnotes58">Der Taschenrechner ist nun in Deutsch, Englisch und Französisch verfügbar.</string>
+    <string name="patchnotes58">Der Taschenrechner ist nun in Deutsch, Englisch, Spanisch und Französisch verfügbar.</string>
 
     <string name="systemRequirementsText">\nMinimale Android-Version: 10\nEmpfohlene Android-Version: 13 oder höher\nMaximale Android-Version: 14\n</string>
-    <string name="piWord">PI</string>
+    <string name="scientificMode">Wissenschaftlicher Modus</string>
+    <string name="changeMode">Modus wechseln</string>
+    <string name="mode">Modus</string>
+    <string name="degreeRadians">Gradmaß (Deg) / Bogenmaß (Rad)</string>
+    <string name="emptyClipboard">Zwischenablage leeren</string>
+    <string name="pasteNumber">Wert einfügen</string>
+    <string name="copyNumber">Wert kopieren</string>
+    <string name="inverseSine">inverse Sinusfunktion</string>
+    <string name="inverseCosine">inverse Cosinusfunktion</string>
+    <string name="inverseTangent">inverse Tangensfunktion</string>
+    <string name="sine">Sinus</string>
+    <string name="cosine">Cosinus</string>
+    <string name="tangent">Tangens</string>
+    <string name="manuallyNotation">Manuelle Notation</string>
+    <string name="piWord" translatable="false">PI</string>
     <string name="hyperbolicSine">hyperbolische Sinusfunktion</string>
+    <string name="hyperbolicCosine">hyperbolische Cosinusfunktion</string>
 </resources>

@@ -128,9 +128,9 @@
     <string name="patchnotes53">Conversion des notations</string>
     <string name="patchnotes54">Dans certaines circonstances, les notations scientifiques n\'étaient pas converties correctement. Ce problème a été résolu pour garantir une fonctionnalité plus fiable.</string>
     <string name="patchnotes55">Formatage des résultats amélioré</string>
-    <string name="patchnotes56">Correction du problème de formata
+    <string name="patchnotes56">Correction du problème de formata ge incorrect des résultats pour garantir un affichage plus précis et cohérent.</string>
     <string name="patchnotes57">\nLangues</string>
-    <string name="patchnotes58">Le calculateur est désormais disponible en allemand, anglais et français.</string>ge incorrect des résultats pour garantir un affichage plus précis et cohérent.</string>
+    <string name="patchnotes58">La calculatrice est désormais disponible en allemand, en anglais, en espagnol et en français.</string>
 
     <string name="dailyHints">Conseils quotidiens</string>
     <string name="dailyHintsText">Avec ce paramètre, vous pouvez définir si vous recevrez chaque jour un pourboire ou des informations sur la calculatrice.</string>
