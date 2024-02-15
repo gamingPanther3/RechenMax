@@ -143,10 +143,6 @@ public class BackgroundService extends Service {
         final int min = 12; // default 12
         final int max = 15; // default 15
 
-        Log.e("DEBUG", "time:                       " + currentTime);
-        Log.e("DEBUG", "allowDailyNotifications:    " + allowDailyNotifications);
-        Log.e("DEBUG", "NotificationSent:           " + dataManager.readFromJSON("notificationSent", this));
-
         String title_hints = "Wusstest du schon?";
         String content_hints = getRandomElement(notificationHintsListGerman);
 
