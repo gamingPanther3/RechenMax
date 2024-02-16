@@ -84,6 +84,7 @@
 
     <string name="comma">coma</string>
     <string name="commaText">Al presionar el botón \'Coma\', tienes la opción de agregar una coma al área de resultados. Es importante tener en cuenta que si ya hay una coma presente, no se agregará otra. Esta función permite la entrada precisa de decimales.</string>
+    <string name="commaButton">,</string>
 
     <string name="negate">Negar</string>
     <string name="negateText">Si quieres que un número se vuelva negativo, presiona el botón \'±\'. Presiónalo nuevamente si quieres que el número sea positivo nuevamente. Esta función te permite cambiar fácilmente el signo y garantiza que puedas ajustar tus números rápidamente según sea necesario.</string>

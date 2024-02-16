@@ -69,6 +69,7 @@
     <string name="addSubMulDivText">Pour les opérations arithmétiques, utilisez simplement l\'un des caractères en surbrillance. Par exemple, si vous sélectionnez « × », l\'opérateur sera immédiatement inséré dans le volet des résultats. Ajoutez ensuite un nombre (par exemple « 3 ») et utilisez des opérateurs supplémentaires si nécessaire. C\'est ainsi que vous concevez vos processus de calcul de manière simple et étape par étape.</string>
     <string name="comma">virgule</string>
     <string name="commaText">En appuyant sur le « bouton Virgule », vous avez la possibilité d\'ajouter une virgule à la zone de résultats. Il est important de noter que si une virgule est déjà présente, aucune autre ne sera ajoutée. Cette fonction permet une saisie précise des décimales.</string>
+    <string name="commaButton">,</string>
     <string name="negate">Nier</string>
     <string name="negateText">Si vous souhaitez qu\'un nombre devienne négatif, appuyez sur le bouton « ± ». Appuyez à nouveau si vous souhaitez que le nombre redevienne positif. Cette fonctionnalité vous permet de changer facilement le signe et garantit que vous pouvez ajuster rapidement et facilement vos numéros selon vos besoins.</string>
     <string name="deg_rad">Degrés/radians</string>

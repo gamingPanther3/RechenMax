@@ -1079,19 +1079,19 @@
 
             <Button
                 android:id="@+id/comma"
-                android:tag=","
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:text="@string/CommaButton"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag=","
+                android:text="@string/commaButton"
+                android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/comma"
-                style="?android:attr/buttonBarButtonStyle"
                 tools:ignore="TooManyViews" />
 
             <Button

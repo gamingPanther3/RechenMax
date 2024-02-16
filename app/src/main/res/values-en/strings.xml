@@ -84,6 +84,7 @@
 
     <string name="comma">comma</string>
     <string name="commaText">By pressing the \'Comma button\' you have the option to add a comma to the results area. It is important to note that if a comma is already present, no more will be added. This function allows precise entry of decimal places.</string>
+    <string name="commaButton">.</string>
 
     <string name="negate">Negate</string>
     <string name="negateText">If you want a number to become negative, press the \'±\' button. Press it again if you want the number to be positive again. This feature allows you to easily change the sign and ensures that you can quickly and easily adjust your numbers as needed.</string>

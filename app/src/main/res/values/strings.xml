@@ -10,7 +10,7 @@
     <string name="SubtractButton" translatable="false">-</string>
     <string name="AddButton" translatable="false">+</string>
     <string name="NegativButton" translatable="false">±</string>
-    <string name="CommaButton" translatable="false">,</string>
+    <string name="commaButton">,</string>
     <string name="CalculateButton" translatable="false">=</string>
     <string name="BackspaceButton" translatable="false">⌫</string>
     <string name="ClearAllButton" translatable="false">C</string>
