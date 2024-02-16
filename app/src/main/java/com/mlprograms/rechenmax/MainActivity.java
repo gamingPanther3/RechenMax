@@ -2019,6 +2019,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         stopBackgroundService();
+        formatResultTextAfterType();
     }
 
     /**
@@ -2777,7 +2778,20 @@ public class MainActivity extends AppCompatActivity {
             // Check for invalid input
             if (!isInvalidInput(getResultText())) {
                 // Format the integral part using DecimalFormat
-                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+                Locale locale = Locale.getDefault();
+
+                // default: German, French, Spanish
+                symbols.setDecimalSeparator(',');
+                symbols.setGroupingSeparator('.');
+
+                if (locale.getLanguage().equals("en")) {
+                    symbols.setDecimalSeparator('.');
+                    symbols.setGroupingSeparator(',');
+                }
+
+                DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
+                //decimalFormat.setGroupingUsed(false);
                 try {
                     BigDecimal bigDecimalResult1 = new BigDecimal(result, MathContext.DECIMAL128);
                     String formattedNumber1 = decimalFormat.format(bigDecimalResult1);
