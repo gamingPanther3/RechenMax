@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.icu.text.DecimalFormat;
+import android.icu.text.DecimalFormatSymbols;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,7 @@ import androidx.core.content.ContextCompat;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -2461,12 +2463,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void CommaAction() {
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-            addCalculateTextWithoutSpace(",");
+            addCalculateTextWithoutSpace(getString(R.string.commaButton));
         } else {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
             if (mode.equals("false")) {
-                if (!getResultText().contains(",")) {
-                    addResultText(",");
+                if (!getResultText().contains(getString(R.string.commaButton))) {
+                    addResultText(getString(R.string.commaButton));
                 }
             }
         }
@@ -2705,6 +2707,7 @@ public class MainActivity extends AppCompatActivity {
     public void formatResultTextAfterType() {
         // Get the result text
         String text = getResultText();
+        System.out.println(getResultText());
 
         // Check if result text is not null
         if (text != null && !isInvalidInput(text)) {
@@ -2792,6 +2795,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * Adjusts the text size of two TextViews dynamically.
      * <p>
@@ -2811,48 +2815,48 @@ public class MainActivity extends AppCompatActivity {
      * <br>
      * - R.id.result_label: TextView whose text size needs adjustment within the second ScrollView
      */
-        public void adjustTextSize() {
-            if(findViewById(R.id.calculate_label) != null && findViewById(R.id.result_label) != null) {
-                ScrollView calculate_scrollview = findViewById(R.id.calculate_scrollview);
-                ScrollView result_scrollview = findViewById(R.id.result_scrollview);
+    public void adjustTextSize() {
+        if(findViewById(R.id.calculate_label) != null && findViewById(R.id.result_label) != null) {
+            ScrollView calculate_scrollview = findViewById(R.id.calculate_scrollview);
+            ScrollView result_scrollview = findViewById(R.id.result_scrollview);
 
-                TextView label1 = findViewById(R.id.calculate_label);
-                TextView label2 = findViewById(R.id.result_label);
-                if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
-                    scrollToBottom(calculate_scrollview);
-                    if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-                        //label1.setTextSize(35f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(25, 35, 1, TypedValue.COMPLEX_UNIT_SP);
-                        //label2.setTextSize(30f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
-                    } else {
-                        //label1.setTextSize(30f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(20, 30, 1, TypedValue.COMPLEX_UNIT_SP);
-                        //label2.setTextSize(35f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(40, 50, 1, TypedValue.COMPLEX_UNIT_SP);
-                    }
+            TextView label1 = findViewById(R.id.calculate_label);
+            TextView label2 = findViewById(R.id.result_label);
+            if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
+                scrollToBottom(calculate_scrollview);
+                if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+                    //label1.setTextSize(35f);
+                    label1.setAutoSizeTextTypeUniformWithConfiguration(25, 35, 1, TypedValue.COMPLEX_UNIT_SP);
+                    //label2.setTextSize(30f);
+                    label2.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
                 } else {
-                    if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-                        //label1.setTextSize(45f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
-                        //label2.setTextSize(40f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(45, 55, 1, TypedValue.COMPLEX_UNIT_SP);
-                    } else {
-                        //label1.setTextSize(40f);
-                        label1.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
-                        //label2.setTextSize(45f);
-                        label2.setAutoSizeTextTypeUniformWithConfiguration(50, 60, 1, TypedValue.COMPLEX_UNIT_SP);
-                    }
+                    //label1.setTextSize(30f);
+                    label1.setAutoSizeTextTypeUniformWithConfiguration(20, 30, 1, TypedValue.COMPLEX_UNIT_SP);
+                    //label2.setTextSize(35f);
+                    label2.setAutoSizeTextTypeUniformWithConfiguration(40, 50, 1, TypedValue.COMPLEX_UNIT_SP);
                 }
-
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) result_scrollview.getLayoutParams();
-                layoutParams.weight = 2;
-                result_scrollview.setLayoutParams(layoutParams);
-
-                calculate_scrollview.post(() -> calculate_scrollview.fullScroll(ScrollView.FOCUS_DOWN));
-                result_scrollview.post(() -> result_scrollview.fullScroll(ScrollView.FOCUS_UP));
+            } else {
+                if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+                    //label1.setTextSize(45f);
+                    label1.setAutoSizeTextTypeUniformWithConfiguration(35, 45, 1, TypedValue.COMPLEX_UNIT_SP);
+                    //label2.setTextSize(40f);
+                    label2.setAutoSizeTextTypeUniformWithConfiguration(45, 55, 1, TypedValue.COMPLEX_UNIT_SP);
+                } else {
+                    //label1.setTextSize(40f);
+                    label1.setAutoSizeTextTypeUniformWithConfiguration(30, 40, 1, TypedValue.COMPLEX_UNIT_SP);
+                    //label2.setTextSize(45f);
+                    label2.setAutoSizeTextTypeUniformWithConfiguration(50, 60, 1, TypedValue.COMPLEX_UNIT_SP);
+                }
             }
+
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) result_scrollview.getLayoutParams();
+            layoutParams.weight = 2;
+            result_scrollview.setLayoutParams(layoutParams);
+
+            calculate_scrollview.post(() -> calculate_scrollview.fullScroll(ScrollView.FOCUS_DOWN));
+            result_scrollview.post(() -> result_scrollview.fullScroll(ScrollView.FOCUS_UP));
         }
+    }
 
 
     /**
