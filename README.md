@@ -5,7 +5,7 @@
 
 ## Übersicht
 
-RechenMax ist eine leistungsstarke und benutzerfreundliche Taschenrechner-App, die eine Vielzahl von mathematischen Operationen unterstützt. Von grundlegenden Rechenoperationen bis hin zu komplexen wissenschaftlichen Berechnungen, RechenMax ist perfekt auf die Anforderungen einer breiten Palette von Anwendungen zugeschnitten.
+RechenMax ist eine leistungsstarke und benutzerfreundliche Taschenrechner-App, die eine Vielzahl von mathematischen Operationen unterstützt. Von grundlegenden Rechenoperationen bis hin zu komplexen wissenschaftlichen Berechnungen, RechenMax ist perfekt auf die Anforderungen einer breiten Palette von Anwendungen zugeschnitten. Außerdem ist der Taschenrechner in Deutsch, Englisch, Französisch und Spanisch verfügbar.
 
 ### Funktionen
 
