@@ -264,7 +264,7 @@
             <TextView
                 android:id="@+id/settings_notifications_text"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="100dp"
                 android:text="@string/notificationsText"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
