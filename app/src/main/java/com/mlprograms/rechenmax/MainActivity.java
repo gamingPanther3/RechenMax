@@ -566,7 +566,6 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Calculate();
                     dataManager.saveNumbers(getApplicationContext());
-                    dataManager.saveToJSON("pressedCalculate", true, getApplicationContext());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -2708,9 +2707,11 @@ public class MainActivity extends AppCompatActivity {
         adjustTextSize();
         String calculate = getCalculateText();
 
-        if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-            setCalculateText("");
+        if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht") &&
+            !isInvalidInput(getResultText())) {
+            dataManager.saveToJSON("pressedCalculate", true, getApplicationContext());
 
+            setCalculateText("");
             ScrollView scrollView = findViewById(R.id.result_scrollview);
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
             layoutParams.weight = 1;
