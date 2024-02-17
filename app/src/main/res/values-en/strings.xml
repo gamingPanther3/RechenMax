@@ -134,9 +134,9 @@
     <string name="patchnotes39">Background activity</string>
     <string name="patchnotes40">The app automatically goes into the background as soon as it is closed. This will be indicated by a notification.\n</string>
     <string name="patchnotes41">Notifications</string>
-    <string name="patchnotes42">RechenMax sends a notification if the app has not been used within a 4-day interval and permission has been granted.\n</string>
+    <string name="patchnotes42">RechenMax sends a notification if the app has not been used within a 4-day interval and permission has been granted. Also, keep in mind that this feature is only available starting from API 33 (Android 13).\n</string>
     <string name="patchnotes43">Hints</string>
-    <string name="patchnotes44">RechenMax also sends a Hint every day that contains helpful hints or background information.\n</string>
+    <string name="patchnotes44">RechenMax also sends a Hint every day that contains helpful hints or background information. Also, keep in mind that this feature is only available starting from API 33 (Android 13).\n</string>
     <string name="patchnotes45">Help function</string>
     <string name="patchnotes46">"It happened that after returning from the help function, an error was displayed.\n</string>
     <string name="patchnotes47">Help button</string>

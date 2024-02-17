@@ -133,9 +133,9 @@
     <string name="patchnotes39">Actividad en segundo plano</string>
     <string name="patchnotes40">La aplicación pasa automáticamente al segundo plano tan pronto como se cierra. Esto se indicará con una notificación.\n</string>
     <string name="patchnotes41">Notificaciones</string>
-    <string name="patchnotes42">En el menú de configuración, puedes habilitar o deshabilitar las notificaciones. Las notificaciones aparecen cuando la aplicación está en segundo plano y se está utilizando una función que puede notificarte.\n</string>
+    <string name="patchnotes42">En el menú de configuración, puedes habilitar o deshabilitar las notificaciones. Las notificaciones aparecen cuando la aplicación está en segundo plano y se está utilizando una función que puede notificarte.  Además, ten en cuenta que esta función solo está disponible a partir de API 33 (Android 13).\n</string>
     <string name="patchnotes43">Inicio de sesión</string>
-    <string name="patchnotes44">Puedes iniciar sesión en la aplicación si deseas sincronizar tus cálculos a través de dispositivos. Esto permite el acceso a tu historial en múltiples dispositivos.\n</string>
+    <string name="patchnotes44">Puedes iniciar sesión en la aplicación si deseas sincronizar tus cálculos a través de dispositivos. Esto permite el acceso a tu historial en múltiples dispositivos.  Además, ten en cuenta que esta función solo está disponible a partir de API 33 (Android 13).\n</string>
     <string name="patchnotes45">Registro de actividad</string>
     <string name="patchnotes46">La aplicación almacena tus cálculos, incluso si cierras la aplicación. Si quieres borrar tu historial, puedes hacerlo en la configuración.\n</string>
     <string name="patchnotes47">Modo oscuro</string>
