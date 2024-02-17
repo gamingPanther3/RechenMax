@@ -120,6 +120,16 @@ public class MainActivity extends AppCompatActivity {
         showAllSettings();
         requestNotificationPermission();
         adjustTextSize();
+
+        if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true") &&
+            dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            setCalculateText("");
+
+            ScrollView scrollView = findViewById(R.id.result_scrollview);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
+            layoutParams.weight = 1;
+            scrollView.setLayoutParams(layoutParams);
+        }
     }
 
     /**
@@ -364,6 +374,16 @@ public class MainActivity extends AppCompatActivity {
         // Handle the visual representation or behavior associated with the state change
         showOrHideScienceButtonState();
         adjustTextSize();
+
+        if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true") &&
+                dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            setCalculateText("");
+
+            ScrollView scrollView = findViewById(R.id.result_scrollview);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
+            layoutParams.weight = 1;
+            scrollView.setLayoutParams(layoutParams);
+        }
     }
 
     /**
@@ -546,6 +566,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Calculate();
                     dataManager.saveNumbers(getApplicationContext());
+                    dataManager.saveToJSON("pressedCalculate", true, getApplicationContext());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -565,6 +586,7 @@ public class MainActivity extends AppCompatActivity {
                 final String num = v.getTag().toString();
                 NumberAction(num);
                 dataManager.saveNumbers(getApplicationContext());
+                dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
             });
         }
     }
@@ -581,6 +603,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(v -> {
                 OperationAction(operation);
                 dataManager.saveNumbers(getApplicationContext());
+                dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
             });
         }
     }
@@ -597,6 +620,12 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(v -> {
                 EmptyAction(action);
                 dataManager.saveNumbers(getApplicationContext());
+                dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
+
+                ScrollView scrollView = findViewById(R.id.result_scrollview);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
+                layoutParams.weight = 2;
+                scrollView.setLayoutParams(layoutParams);
             });
         }
     }
@@ -684,6 +713,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(v -> {
                 NegativAction();
                 dataManager.saveNumbers(getApplicationContext());
+
             });
         }
     }
@@ -700,6 +730,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(v -> {
                 ClipboardAction(action);
                 dataManager.saveNumbers(getApplicationContext());
+                dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
             });
         }
     }
@@ -709,6 +740,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void sinusAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -740,6 +772,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void sinushAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -769,6 +802,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aSinusAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -799,6 +833,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aSinusHAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -829,6 +864,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void cosinusAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -859,6 +895,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void cosinushAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -889,6 +926,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aCosinusAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -919,6 +957,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aCosinusHAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -949,6 +988,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void tangensAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -979,6 +1019,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void tangenshAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -1009,6 +1050,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aTangensAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -1039,6 +1081,7 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aTangensHAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -1073,6 +1116,7 @@ public class MainActivity extends AppCompatActivity {
      * After adding "log(" to the calculation text, it formats the result text accordingly.
      */
     private void logAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -1103,6 +1147,7 @@ public class MainActivity extends AppCompatActivity {
      * It follows a similar procedure to the logAction() method but adds "log₂(" instead of "log(".
      */
     private void log2Action() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -1135,6 +1180,7 @@ public class MainActivity extends AppCompatActivity {
      * After adding "log" to the calculation text, it formats the result text accordingly.
      */
     private void logXAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -1173,6 +1219,7 @@ public class MainActivity extends AppCompatActivity {
      * It follows a similar procedure to the logAction() method but adds "ln(" instead of "log(".
      */
     private void lnAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add
         if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -1202,6 +1249,7 @@ public class MainActivity extends AppCompatActivity {
      * Handles the insertion or removal of the "e" symbol based on its current presence in the result text.
      */
     private void eAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if logarithmic mode is disabled
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             showToastLong("Diese Taste ist im aktuellen Modus deaktiviert.", getApplicationContext());
@@ -1249,6 +1297,7 @@ public class MainActivity extends AppCompatActivity {
      * Note: "е" is not "e"
      */
     private void еAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if logarithmic mode is disabled
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("е");
@@ -1295,6 +1344,7 @@ public class MainActivity extends AppCompatActivity {
      * Appends or sets the text "π" to the calculation input and sets the rotate operator flag to true.
      */
     private void piAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if logarithmic mode is disabled
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("π");
@@ -1341,6 +1391,7 @@ public class MainActivity extends AppCompatActivity {
      * This method adds an opening parenthesis to the calculation text.
      */
     private void parenthesisOnAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if calculate text is empty and set or add opening parenthesis accordingly
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("(");
@@ -1389,6 +1440,7 @@ public class MainActivity extends AppCompatActivity {
      * Otherwise, it adds the result text and a closing parenthesis.
      */
     private void parenthesisOffAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace(")");
         } else {
@@ -1453,6 +1505,7 @@ public class MainActivity extends AppCompatActivity {
      * 3. If the last character is neither a valid operator nor an opening parenthesis, it appends the last operator and the result with "!" to the calculation text.
      */
     private void factorial() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("!");
             setResultText(CalculatorActivity.calculate(getCalculateText()));
@@ -1495,6 +1548,7 @@ public class MainActivity extends AppCompatActivity {
      * Depending on the state of the rotate operator flag, it handles the power operation differently.
      */
     private void powerAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("^");
         } else {
@@ -1533,6 +1587,7 @@ public class MainActivity extends AppCompatActivity {
      * Depending on the state of the rotate operator flag, it handles the root operation differently.
      */
     private void rootAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("√(");
         } else {
@@ -1563,6 +1618,7 @@ public class MainActivity extends AppCompatActivity {
      * Depending on the state of the rotate operator flag, it handles the root operation differently.
      */
     private void thirdRootAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("³√(");
         } else {
@@ -1597,6 +1653,7 @@ public class MainActivity extends AppCompatActivity {
      * After adding "½" to the calculation text, it formats the result text accordingly.
      */
     private void halfAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("½");
             setResultText(CalculatorActivity.calculate(getCalculateText()));
@@ -1628,6 +1685,7 @@ public class MainActivity extends AppCompatActivity {
      * It follows a similar procedure to the halfAction() method but adds "⅓" instead of "½".
      */
     private void thirdAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("⅓");
             setResultText(CalculatorActivity.calculate(getCalculateText()));
@@ -1659,6 +1717,7 @@ public class MainActivity extends AppCompatActivity {
      * It follows a similar procedure to the halfAction() method but adds "¼" instead of "½".
      */
     private void quarterAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("¼");
             setResultText(CalculatorActivity.calculate(getCalculateText()));
@@ -2039,6 +2098,7 @@ public class MainActivity extends AppCompatActivity {
      * This method is typically called when the window loses focus.
      */
     private void startBackgroundService() {
+        stopBackgroundService();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             startService(new Intent(this, BackgroundService.class));
         }
@@ -2353,6 +2413,7 @@ public class MainActivity extends AppCompatActivity {
      * It then formats the result text and saves the numbers to the application context.
      */
     private void handleBackspaceAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             if(!getCalculateText().isEmpty()) {
                 String calculate_text = getCalculateText();
@@ -2444,6 +2505,7 @@ public class MainActivity extends AppCompatActivity {
      * If the first character of the result text is not "-", it adds "-" to the beginning of the result text.
      */
     public void NegativAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("-");
         } else {
@@ -2463,6 +2525,7 @@ public class MainActivity extends AppCompatActivity {
      * It adds a comma to the result text if it does not already contain a comma.
      */
     public void CommaAction() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace(getString(R.string.commaButton));
         } else {
@@ -2547,6 +2610,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @SuppressLint("SetTextI18n")
     public void Calculate() {
+        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             if(getCalculateText().isEmpty()) {
                 setResultText("0");
@@ -2667,6 +2731,11 @@ public class MainActivity extends AppCompatActivity {
 
                 dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), context1);
                 String calculate_text = calculate;
+
+                if(calculate_text.isEmpty()) {
+                    calculate_text = "0";
+                }
+
                 if(!calculate_text.contains("=")) {
                     calculate_text = calculate_text + " =";
                 }
