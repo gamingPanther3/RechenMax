@@ -174,4 +174,7 @@
 
     <string name="help">Aide</string>
     <string name="back">Retour</string>
+    <string name="notifications">Notifications</string>
+    <string name="notificationsText">Pour recevoir des notifications, activez ce paramètre. Cependant, veuillez noter que vous devez autoriser l\'application à vous envoyer des notifications.</string>
+
 </resources>

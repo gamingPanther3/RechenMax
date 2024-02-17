@@ -192,4 +192,7 @@
 
     <string name="help">Ayuda</string>
     <string name="back">Atrás</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="notificationsText">Para recibir notificaciones, activa esta configuración. Sin embargo, ten en cuenta que debes permitir que la aplicación te envíe notificaciones.</string>
+
 </resources>

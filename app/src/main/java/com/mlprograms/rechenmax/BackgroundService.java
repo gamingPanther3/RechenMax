@@ -61,7 +61,6 @@ public class BackgroundService extends Service {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Random random = new Random();
     private boolean isServiceRunning = true;
-    private boolean allowDailyNotifications;
 
     /**
      * Runnable for sending reminders at intervals
@@ -99,15 +98,16 @@ public class BackgroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //dataManager.saveToJSON("notificationSent", false, this);
-        allowDailyNotifications = Boolean.parseBoolean(dataManager.readFromJSON("allowDailyNotifications", this));
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        if(dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true")) {
+            //dataManager.saveToJSON("notificationSent", false, this);
 
-        createNotificationChannel();
-        NotificationHelper.cancelNotification(this, NOTIFICATION_ID_BACKGROUND);
-        NotificationHelper.cancelNotification(this, NOTIFICATION_ID_REMEMBER);
-        startForeground(NOTIFICATION_ID_BACKGROUND, buildNotification());
-        Log.d(CHANNEL_NAME_BACKGROUND, "Service created");
+            createNotificationChannel();
+            NotificationHelper.cancelNotification(this, NOTIFICATION_ID_BACKGROUND);
+            NotificationHelper.cancelNotification(this, NOTIFICATION_ID_REMEMBER);
+            startForeground(NOTIFICATION_ID_BACKGROUND, buildNotification());
+            Log.d(CHANNEL_NAME_BACKGROUND, "Service created");
+        }
     }
 
     /**
@@ -116,15 +116,17 @@ public class BackgroundService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(CHANNEL_NAME_BACKGROUND, "Service started");
+        if(dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true")) {
+            Log.d(CHANNEL_NAME_BACKGROUND, "Service started");
 
-        boolean startedByBootReceiver = intent != null && intent.getBooleanExtra("started_by_boot_receiver", false);
+            boolean startedByBootReceiver = intent != null && intent.getBooleanExtra("started_by_boot_receiver", false);
 
-        if(!startedByBootReceiver) {
-            setLastBackgroundTime(System.currentTimeMillis());
+            if(!startedByBootReceiver) {
+                setLastBackgroundTime(System.currentTimeMillis());
+            }
+
+            handler.post(notificationRunnable);
         }
-
-        handler.post(notificationRunnable);
 
         return START_STICKY;
     }
@@ -180,19 +182,22 @@ public class BackgroundService extends Service {
 
             sendNotification(this, NOTIFICATION_ID_REMEMBER, title_remember, content_remember, CHANNEL_ID_REMEMBER, CHANNEL_NAME_REMEMBER, true);
             setLastBackgroundTime(System.currentTimeMillis());
-        } else if (allowDailyNotifications && currentTime >= min && currentTime <= max) {
+        } else if (currentTime >= min && currentTime <= max &&
+                dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true")) {
             if(!Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this)) && random.nextInt(20) == 1) {
                 dataManager.saveToJSON("notificationSent", true, this);
                 sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, CHANNEL_NAME_HINTS, true);
             }
         }
 
-        if (currentTime >= max && !Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this))) {
+        if (currentTime >= max && !Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this)) &&
+                dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true")) {
             dataManager.saveToJSON("notificationSent", true, this);
             sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, CHANNEL_NAME_HINTS, true);
         }
 
-        if (currentTime >= 0 && currentTime <= 1 && Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this))) {
+        if (currentTime >= 0 && currentTime <= 1 && Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this)) &&
+                dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true")) {
             dataManager.saveToJSON("notificationSent", false, this);
         }
     }

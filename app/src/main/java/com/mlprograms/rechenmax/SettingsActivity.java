@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -49,6 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
      * @param savedInstanceState The Bundle containing the saved state, or null if the activity is
      *                         being created for the first time.
      */
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @SuppressLint({"UseCompatLoadingForDrawables", "UseSwitchCompatOrMaterialCode", "CutPasteId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +80,17 @@ public class SettingsActivity extends AppCompatActivity {
         Switch settingsReleaseNotesSwitch = findViewById(R.id.settings_release_notes);
         Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
         Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
+        Switch allowNotifications = findViewById(R.id.settings_notifications);
+
+        allowNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true"));
+
+        allowDailyNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
+                dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true"));
 
         updateSwitchState(settingsReleaseNotesSwitch, "settingReleaseNotesSwitch");
         updateSwitchState(settingsTrueDarkMode, "settingsTrueDarkMode");
-        updateSwitchState(allowDailyNotifications, "allowDailyNotifications");
 
         appendSpaceToSwitches(findViewById(R.id.settingsUI));
         final String setRelNotSwitch= dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext());
@@ -101,9 +111,46 @@ public class SettingsActivity extends AppCompatActivity {
 
             switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         });
+
         allowDailyNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataManager.saveToJSON("allowDailyNotifications", isChecked, getMainActivityContext());
+            if(isChecked && allowNotifications.isChecked()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+                }
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                    dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
+                    allowDailyNotifications.setChecked(true);
+                } else {
+                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                    allowDailyNotifications.setChecked(false);
+                }
+            } else {
+                allowDailyNotifications.setChecked(false);
+                dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+            }
             Log.i("Settings", "allowDailyNotifications=" + dataManager.readFromJSON("allowDailyNotifications", getMainActivityContext()));
+        });
+        allowNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+                    }
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                        dataManager.saveToJSON("allowNotification", true, getApplicationContext());
+                    } else {
+                        dataManager.saveToJSON("allowNotification", false, getApplicationContext());
+                        allowNotifications.setChecked(false);
+                        allowDailyNotifications.setChecked(false);
+                    }
+                }
+            } else {
+                dataManager.saveToJSON("allowNotification", false, getApplicationContext());
+                allowNotifications.setChecked(false);
+                allowDailyNotifications.setChecked(false);
+            }
+            Log.i("Settings", "allowNotification=" + dataManager.readFromJSON("allowNotification", getMainActivityContext()));
         });
 
         // Declare a Spinner object
@@ -458,6 +505,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
         TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
+        TextView allowNotifications = findViewById(R.id.settings_notifications);
+        TextView allowNotificationsText = findViewById(R.id.settings_notifications_text);
         TextView allowDailyNotifications = findViewById(R.id.settings_daily_hints);
         TextView allowDailyNotificationsText = findViewById(R.id.settings_daily_hints_text);
 
@@ -472,6 +521,7 @@ public class SettingsActivity extends AppCompatActivity {
         Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
         Spinner spinner2 = findViewById(R.id.settings_function_spinner);
         Spinner spinner3 = findViewById(R.id.settings_calculation_mode_spinner);
+
         updateSpinner2(spinner1);
         updateSpinner2(spinner2);
         updateSpinner2(spinner3);
@@ -512,61 +562,11 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
                         // Nightmode is not activated
-
-                        // Set the colors for the Button and the TextView
-                        settingsLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                        settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
-                        settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                        helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
-                        helpButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                        settingsTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                        settingsScrollView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                        settingsReleaseNotes.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsReleaseNotesText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsTrueDarkMode.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        allowDailyNotifications.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                        frameLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                        settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsFunctionModeTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                        settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                        settingsFunctionModeText.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                        updateUI(R.color.white, R.color.black);
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
-                settingsLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
-                settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
-                helpButton.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                settingsTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                settingsScrollView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                settingsReleaseNotes.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsReleaseNotesText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsTrueDarkMode.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                allowDailyNotifications.setTextColor(ContextCompat.getColor(this, R.color.black));
-                allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsCredits.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsCredits.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                frameLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsFunctionModeTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, R.color.black));
-                settingsFunctionModeText.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
+                updateUI(R.color.white, R.color.black);
 
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
@@ -621,6 +621,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
         TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
+        TextView allowNotifications = findViewById(R.id.settings_notifications);
+        TextView allowNotificationsText = findViewById(R.id.settings_notifications_text);
         TextView allowDailyNotifications = findViewById(R.id.settings_daily_hints);
         TextView allowDailyNotificationsText = findViewById(R.id.settings_daily_hints_text);
 
@@ -646,6 +648,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
+        allowNotifications.setTextColor(ContextCompat.getColor(this, textColor));
+        allowNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
         allowDailyNotifications.setTextColor(ContextCompat.getColor(this, textColor));
         allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, textColor));
