@@ -278,7 +278,7 @@ public class DataManager {
             saveToJSON("calculationMode", "Standard", applicationContext);
         }
         if(readFromJSON("currentVersion", applicationContext) == null) {
-            saveToJSON("currentVersion", "1.6.0", applicationContext);
+            saveToJSON("currentVersion", "1.6.3", applicationContext);
         }
         if(readFromJSON("old_version", applicationContext) == null) {
             saveToJSON("old_version", "0", applicationContext);
