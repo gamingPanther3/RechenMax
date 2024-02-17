@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 
+import androidx.core.app.NotificationCompat;
+
 /**
  * NotificationReceiver class extends BroadcastReceiver and handles notifications received from the system.
  * It sends notifications using NotificationHelper.
@@ -26,7 +28,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         String title = intent.getStringExtra("title");
         String content = intent.getStringExtra("content");
-        NotificationHelper.sendNotification(context, 2, title, content, CHANNEL_ID, CHANNEL_NAME);
+        NotificationHelper.sendNotification(context, 2, title, content, CHANNEL_ID, CHANNEL_NAME, true);
 
         if (wakeLock.isHeld()) {
             wakeLock.release();

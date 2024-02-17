@@ -48,6 +48,7 @@ import java.nio.file.Files;
 //  | returnToCalculator               | true / false             | MainActivity                         |
 //  | settingsDailyHints               | true / false             | SettingsActivity                     |
 //  | notificationSent                 | true / false             | BackgroundService                    |
+//  | pressedCalculate                 | true / false             | MainActivity                         |
 
 public class DataManager {
 
@@ -289,6 +290,9 @@ public class DataManager {
         }
         if(readFromJSON("notificationSent", applicationContext) == null) {
             saveToJSON("notificationSent", "false", applicationContext);
+        }
+        if(readFromJSON("pressedCalculate", applicationContext) == null) {
+            saveToJSON("pressedCalculate", "false", applicationContext);
         }
     }
 

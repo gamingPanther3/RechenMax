@@ -24,11 +24,13 @@ public class NotificationHelper {
      * @param CHANNEL_ID The ID of the notification channel.
      * @param CHANNEL_NAME The name of the notification channel.
      */
-    public static void sendNotification(Context context, int notificationId, String title, String content, String CHANNEL_ID, String CHANNEL_NAME) {
+    public static void sendNotification(Context context, int notificationId, String title, String content, String CHANNEL_ID, String CHANNEL_NAME, boolean fullScreenIntent) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-        notificationManager.createNotificationChannel(channel);
+        NotificationChannel channel = notificationManager.getNotificationChannel(CHANNEL_ID);
+        if (channel == null) {
+            channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(channel);
+        }
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("title", title);
@@ -45,9 +47,14 @@ public class NotificationHelper {
                 .setAutoCancel(true)
                 .setVisibility(NotificationCompat.VISIBILITY_PRIVATE);
 
+        if(fullScreenIntent) {
+            builder.setFullScreenIntent(pendingIntent, true);
+        }
+
         Notification notification = builder.build();
         notificationManager.notify(notificationId, notification);
     }
+
 
     /**
      * cancelNotification method cancels a notification with the specified notificationId.

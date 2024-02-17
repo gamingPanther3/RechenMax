@@ -41,12 +41,12 @@ public class BackgroundService extends Service {
     private static final int NOTIFICATION_ID_BACKGROUND = 1;
     private static final int NOTIFICATION_ID_REMEMBER = 2;
     private static final int NOTIFICATION_ID_HINTS = 3;
-    private static final String CHANNEL_ID_1 = "BackgroundServiceChannel";
-    private static final String CHANNEL_NAME_1 = "BackgroundService";
-    private static final String CHANNEL_ID_2 = "RechenMax Remember";
-    private static final String CHANNEL_NAME_2 = "Erinnerung";
-    private static final String CHANNEL_ID_3 = "RechenMax Hints";
-    private static final String CHANNEL_NAME_3 = "Tipps";
+    private static final String CHANNEL_ID_BACKGROUND = "BackgroundServiceChannel";
+    private static final String CHANNEL_NAME_BACKGROUND = "BackgroundService";
+    private static final String CHANNEL_ID_REMEMBER = "RechenMax Remember";
+    private static final String CHANNEL_NAME_REMEMBER = "Erinnerung";
+    private static final String CHANNEL_ID_HINTS = "RechenMax Hints";
+    private static final String CHANNEL_NAME_HINTS = "Tipps";
 
     // Name for shared preferences file and key for last background time
     private static final String PREFS_NAME = "BackgroundServicePrefs";
@@ -62,7 +62,6 @@ public class BackgroundService extends Service {
     private final Random random = new Random();
     private boolean isServiceRunning = true;
     private boolean allowDailyNotifications;
-    private boolean startedByBootReceiver = false;
 
     /**
      * Runnable for sending reminders at intervals
@@ -80,7 +79,7 @@ public class BackgroundService extends Service {
     };
 
     private void checkBackgroundServiceNotification() {
-        if(!NotificationHelper.isNotificationActive(this, 1)) {
+        if(!NotificationHelper.isNotificationActive(this, NOTIFICATION_ID_BACKGROUND)) {
             startForeground(NOTIFICATION_ID_BACKGROUND, buildNotification());
         }
     }
@@ -100,7 +99,7 @@ public class BackgroundService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        // only for reset: dataManager.saveToJSON("notificationSent", false, this);
+        //dataManager.saveToJSON("notificationSent", false, this);
         allowDailyNotifications = Boolean.parseBoolean(dataManager.readFromJSON("allowDailyNotifications", this));
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
@@ -108,7 +107,7 @@ public class BackgroundService extends Service {
         NotificationHelper.cancelNotification(this, NOTIFICATION_ID_BACKGROUND);
         NotificationHelper.cancelNotification(this, NOTIFICATION_ID_REMEMBER);
         startForeground(NOTIFICATION_ID_BACKGROUND, buildNotification());
-        Log.d(CHANNEL_NAME_1, "Service created");
+        Log.d(CHANNEL_NAME_BACKGROUND, "Service created");
     }
 
     /**
@@ -117,9 +116,9 @@ public class BackgroundService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(CHANNEL_NAME_1, "Service started");
+        Log.d(CHANNEL_NAME_BACKGROUND, "Service started");
 
-        startedByBootReceiver = intent != null && intent.getBooleanExtra("started_by_boot_receiver", false);
+        boolean startedByBootReceiver = intent != null && intent.getBooleanExtra("started_by_boot_receiver", false);
 
         if(!startedByBootReceiver) {
             setLastBackgroundTime(System.currentTimeMillis());
@@ -137,7 +136,6 @@ public class BackgroundService extends Service {
      */
     private void checkNotification() {
         final int currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
-        final boolean notificationSent = Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this));
         final String language = Locale.getDefault().getDisplayLanguage();
 
         final int min = 12; // default 12
@@ -180,23 +178,21 @@ public class BackgroundService extends Service {
                     break;
             }
 
-            sendNotification(this, NOTIFICATION_ID_REMEMBER, title_remember, content_remember, CHANNEL_ID_2, CHANNEL_NAME_2);
+            sendNotification(this, NOTIFICATION_ID_REMEMBER, title_remember, content_remember, CHANNEL_ID_REMEMBER, CHANNEL_NAME_REMEMBER, true);
             setLastBackgroundTime(System.currentTimeMillis());
         } else if (allowDailyNotifications && currentTime >= min && currentTime <= max) {
-            final int chance = random.nextInt(20);
-
-            if(!notificationSent) {
-                if(chance == 1) {
-                    dataManager.saveToJSON("notificationSent", true, this);
-                    sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_3, CHANNEL_NAME_3);
-                }
+            if(!Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this)) && random.nextInt(20) == 1) {
+                dataManager.saveToJSON("notificationSent", true, this);
+                sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, CHANNEL_NAME_HINTS, true);
             }
-        } else if (currentTime >= max && !notificationSent) {
-            dataManager.saveToJSON("notificationSent", true, this);
-            sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_3, CHANNEL_NAME_3);
         }
 
-        if (currentTime >= 0 && currentTime <= 1 && notificationSent) {
+        if (currentTime >= max && !Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this))) {
+            dataManager.saveToJSON("notificationSent", true, this);
+            sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, CHANNEL_NAME_HINTS, true);
+        }
+
+        if (currentTime >= 0 && currentTime <= 1 && Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this))) {
             dataManager.saveToJSON("notificationSent", false, this);
         }
     }
@@ -231,7 +227,7 @@ public class BackgroundService extends Service {
         setLastBackgroundTime(System.currentTimeMillis());
         isServiceRunning = false;
         handler.removeCallbacks(notificationRunnable);
-        Log.d(CHANNEL_NAME_1, "Service destroyed");
+        Log.d(CHANNEL_NAME_BACKGROUND, "Service destroyed");
     }
 
     /**
@@ -239,7 +235,7 @@ public class BackgroundService extends Service {
      */
     public Notification buildNotification() {
         Notification.Builder builder;
-        builder = new Notification.Builder(this, CHANNEL_ID_1);
+        builder = new Notification.Builder(this, CHANNEL_ID_BACKGROUND);
         final String language = Locale.getDefault().getDisplayLanguage();
 
         switch (language) {
@@ -271,8 +267,8 @@ public class BackgroundService extends Service {
      */
     private void createNotificationChannel() {
         NotificationChannel serviceChannel = new NotificationChannel(
-                CHANNEL_ID_1,
-                "RechenMax Background Service",
+                CHANNEL_ID_BACKGROUND,
+                CHANNEL_NAME_BACKGROUND,
                 NotificationManager.IMPORTANCE_MIN
         );
 
