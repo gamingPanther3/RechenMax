@@ -7,6 +7,7 @@ import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -118,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Show all settings
         showAllSettings();
-        requestNotificationPermission();
         adjustTextSize();
 
         if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true") &&
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             layoutParams.weight = 1;
             scrollView.setLayoutParams(layoutParams);
         }
+        //requestNotificationPermission();
     }
 
     /**
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 
     /**
      * Prints and logs various application settings for debugging purposes.
