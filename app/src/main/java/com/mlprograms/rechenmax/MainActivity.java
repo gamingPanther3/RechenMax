@@ -2732,7 +2732,7 @@ public class MainActivity extends AppCompatActivity {
                 if(!calculate_text.contains("=")) {
                     calculate_text = calculate_text + " =";
                 }
-                dataManager.saveToJSON(String.valueOf(old_value + 1),calculate_text + " " + getResultText(), context1);
+                dataManager.saveToJSON(String.valueOf(old_value + 1),balanceParentheses(calculate_text) + " " + getResultText(), context1);
             }
 
             // Log historyTextViewNumber value for debugging

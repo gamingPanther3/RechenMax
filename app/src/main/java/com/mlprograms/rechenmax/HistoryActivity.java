@@ -199,6 +199,7 @@ public class HistoryActivity extends AppCompatActivity {
             public void onSingleClick(View v) {
                 if(clickListener.get()) {
                     // Output the text of the clicked TextView to the console
+                    dataManager.saveToJSON("pressedCalculate", false, getMainActivityContext());
                     TextView clickedTextView = (TextView) v;
                     String clickedText = clickedTextView.getText().toString();
 
