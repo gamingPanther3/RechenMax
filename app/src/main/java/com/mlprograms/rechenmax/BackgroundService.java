@@ -99,6 +99,9 @@ public class BackgroundService extends Service {
     public void onCreate() {
         super.onCreate();
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        if(dataManager.readFromJSON("allowNotification", getApplicationContext()) == null) {
+         dataManager.saveToJSON("allowNotification", false, getApplicationContext());
+        }
         if(dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true")) {
             //dataManager.saveToJSON("notificationSent", false, this);
 

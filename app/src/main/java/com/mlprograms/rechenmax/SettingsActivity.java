@@ -26,6 +26,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.w3c.dom.Text;
+
 /**
  * SettingsActivity
  * @author Max Lemberg
@@ -81,6 +83,21 @@ public class SettingsActivity extends AppCompatActivity {
         Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
         Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
         Switch allowNotifications = findViewById(R.id.settings_notifications);
+
+        TextView allowNotificationText = findViewById(R.id.settings_notifications_text);
+        TextView allowDailyNotificationText = findViewById(R.id.settings_daily_hints_text);
+
+        if(!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
+            allowNotifications.setVisibility(View.GONE);
+            allowDailyNotifications.setVisibility(View.GONE);
+            allowNotificationText.setVisibility(View.GONE);
+            allowDailyNotificationText.setVisibility(View.GONE);
+        } else {
+            allowNotifications.setVisibility(View.VISIBLE);
+            allowDailyNotifications.setVisibility(View.VISIBLE);
+            allowNotificationText.setVisibility(View.VISIBLE);
+            allowDailyNotificationText.setVisibility(View.VISIBLE);
+        }
 
         allowNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
                 dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true"));
@@ -265,16 +282,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     * onPause method is called when the activity is paused.
-     * It starts the background service.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        startBackgroundService();
-    }
-
-    /**
      * onResume method is called when the activity is resumed.
      * It stops the background service.
      */
@@ -301,6 +308,7 @@ public class SettingsActivity extends AppCompatActivity {
      * This method is typically called when the window loses focus.
      */
     private void startBackgroundService() {
+        stopBackgroundService();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             startService(new Intent(this, BackgroundService.class));
         }
@@ -538,15 +546,36 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }
                         } else {
+                            if(backbutton != null) {
+                                backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                            }
+                            if (helpButton != null) {
+                                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                            }
+
                             updateUI(R.color.black, R.color.white);
                         }
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
                         // Nightmode is not activated
+                        if(backbutton != null) {
+                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
+                        }
+                        if (helpButton != null) {
+                            helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                        }
+
                         updateUI(R.color.white, R.color.black);
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
+                if(backbutton != null) {
+                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
+                }
+                if (helpButton != null) {
+                    helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                }
+
                 updateUI(R.color.white, R.color.black);
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
@@ -575,6 +604,13 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                     }
                 } else {
+                    if(backbutton != null) {
+                        backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                    }
+                    if (helpButton != null) {
+                        helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                    }
+
                     updateUI(R.color.black, R.color.white);
                     updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
                 }
@@ -615,9 +651,7 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
 
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
-        settingsReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
-        settingsHelpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
         settingsHelpButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsTitle.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));

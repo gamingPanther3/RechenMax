@@ -263,16 +263,6 @@ public class HelpActivity extends AppCompatActivity {
     }
 
     /**
-     * onPause method is called when the activity is paused.
-     * It starts the background service.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        startBackgroundService();
-    }
-
-    /**
      * onResume method is called when the activity is resumed.
      * It stops the background service.
      */
