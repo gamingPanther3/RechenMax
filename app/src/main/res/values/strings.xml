@@ -74,7 +74,7 @@
 
     <!-- Patch-Notes -->
     <string name="appVersion" translatable="false">RechenMax 1.6.3</string>
-    <string name="releaseDate">Veröffentlichungsdatum: N/A (work in progress)</string>
+    <string name="releaseDate">Veröffentlichungsdatum: 17.02.24 – 18Uhr</string>
     <string name="overview">Übersicht</string>
     <string name="newFunctions">Neue Funktionen</string>
     <string name="fixedBugs">Behobene Fehler</string>
