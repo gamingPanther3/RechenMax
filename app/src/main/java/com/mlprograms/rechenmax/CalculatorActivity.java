@@ -1,6 +1,7 @@
 package com.mlprograms.rechenmax;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -69,16 +70,16 @@ public class CalculatorActivity {
                     .replace("E", "e")
                     .replace("π", "3.1415926535897932384626433832")
                     .replaceAll("е", "2.7182818284590452353602874713")
-                    .replace("½", "0.5")
-                    .replace("⅓", "0.33333333333")
-                    .replace("¼", "0.25");
+                    .replace("½", "0,5")
+                    .replace("⅓", "0,33333333333")
+                    .replace("¼", "0,25");
 
             if (Locale.getDefault().getLanguage().equals("en")) {
                 trim = commonReplacements.trim();
             } else {
                 trim = commonReplacements.replace(".", "").replace(",", ".").trim();
             }
-
+            trim = addParentheses(trim);
 
             //Log.e("debug", "trim:" + trim);
 
@@ -131,6 +132,39 @@ public class CalculatorActivity {
             //Log.e("Exception", e.toString());
             return "Syntax Fehler";
         }
+    }
+
+    public static String addParentheses(String input) {
+        StringBuilder result = new StringBuilder();
+        boolean numberFlag = false;
+
+        for (int i = 0; i < input.length(); i++) {
+            char currentChar = input.charAt(i);
+
+            if (Character.isDigit(currentChar) || String.valueOf(currentChar).equals(".") || String.valueOf(currentChar).equals(",")) {
+                if (!numberFlag) {
+                    result.append("(");
+                    numberFlag = true;
+                }
+                result.append(currentChar);
+            } else if (currentChar == '!') {
+                result.append(currentChar);
+                result.append(")");
+                numberFlag = false;
+            } else {
+                if (numberFlag) {
+                    result.append(")");
+                    numberFlag = false;
+                }
+                result.append(currentChar);
+            }
+        }
+
+        if (numberFlag) {
+            result.append(")");
+        }
+
+        return result.toString();
     }
 
     /**

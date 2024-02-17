@@ -114,11 +114,15 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
         dataManager.loadNumbers();
 
+        if(!getCalculateText().isEmpty()) {
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+        }
+
         // Scroll down in the calculate label
         scrollToBottom(findViewById(R.id.calculate_scrollview));
 
         // Show all settings
-        showAllSettings();
+        //showAllSettings();
         adjustTextSize();
 
         if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true") &&
@@ -1302,7 +1306,7 @@ public class MainActivity extends AppCompatActivity {
         // Check if logarithmic mode is disabled
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("е");
-            setResultText(CalculatorActivity.calculate(getCalculateText()));
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 // Read the current eNotation mode from the data manager
@@ -1349,7 +1353,7 @@ public class MainActivity extends AppCompatActivity {
         // Check if logarithmic mode is disabled
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("π");
-            setResultText(CalculatorActivity.calculate(getCalculateText()));
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 // Read the current eNotation mode from the data manager
@@ -1509,7 +1513,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("!");
-            setResultText(CalculatorActivity.calculate(getCalculateText()));
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
@@ -1657,7 +1661,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("½");
-            setResultText(CalculatorActivity.calculate(getCalculateText()));
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 checkCalculateText();
@@ -1689,7 +1693,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("⅓");
-            setResultText(CalculatorActivity.calculate(getCalculateText()));
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 checkCalculateText();
@@ -1721,7 +1725,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             addCalculateTextWithoutSpace("¼");
-            setResultText(CalculatorActivity.calculate(getCalculateText()));
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 checkCalculateText();
@@ -2420,6 +2424,8 @@ public class MainActivity extends AppCompatActivity {
             }
             if(getCalculateText().isEmpty()) {
                 setResultText("0");
+            } else {
+                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
             }
         } else {
             String resultText = getResultText();
@@ -2651,7 +2657,7 @@ public class MainActivity extends AppCompatActivity {
                                 setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
                             } else {
                                 setCalculateText(balanceParentheses(getCalculateText()));
-                                setResultText(CalculatorActivity.calculate(getCalculateText()));
+                                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
                             }
                         }
                     } else {
@@ -2673,7 +2679,7 @@ public class MainActivity extends AppCompatActivity {
                                 setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
                             } else {
                                 setCalculateText(balanceParentheses(getCalculateText()));
-                                setResultText(CalculatorActivity.calculate(getCalculateText()));
+                                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
                             }
                         }
                     }
@@ -2770,7 +2776,6 @@ public class MainActivity extends AppCompatActivity {
     public void formatResultTextAfterType() {
         // Get the result text
         String text = getResultText();
-        System.out.println(getResultText());
 
         // Check if result text is not null
         if (text != null && !isInvalidInput(text)) {

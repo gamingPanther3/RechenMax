@@ -62,7 +62,6 @@ public class HistoryActivity extends AppCompatActivity {
         // Initialize DataManager
         dataManager = new DataManager();
 
-        System.out.println("Opened HistoryActivity.java with history.xml");
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
 
         Button historyReturnButton = findViewById(R.id.history_return_button);
@@ -210,8 +209,6 @@ public class HistoryActivity extends AppCompatActivity {
                     if (parts.length == 2) {
                         String key = parts[0].trim();
                         String value = parts[1].trim();
-                        System.out.println("Key: '" + key + "'");
-                        System.out.println("Value: '" + value + "'");
                         try {
                             if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
                                 dataManager.saveToJSON("calculate_text", key.replace(" ", ""), getMainActivityContext());
