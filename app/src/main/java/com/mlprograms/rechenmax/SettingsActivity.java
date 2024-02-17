@@ -119,6 +119,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                     dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
+                    allowNotifications.setChecked(true);
                     allowDailyNotifications.setChecked(true);
                 } else {
                     dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
@@ -139,6 +140,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                         dataManager.saveToJSON("allowNotification", true, getApplicationContext());
+                        allowNotifications.setChecked(true);
                     } else {
                         dataManager.saveToJSON("allowNotification", false, getApplicationContext());
                         allowNotifications.setChecked(false);
@@ -245,6 +247,8 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, HelpActivity.class);
             startActivity(intent);
         });
+
+        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
 
     /**
@@ -493,30 +497,7 @@ public class SettingsActivity extends AppCompatActivity {
      */
     @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables"})
     private void switchDisplayMode(int currentNightMode) {
-        ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
-        LinearLayout settingsLayout = findViewById(R.id.settings_layout);
-        Button settingsReturnButton = findViewById(R.id.settings_return_button);
         Button helpButton = findViewById(R.id.help_button);
-
-        TextView settingsTitle = findViewById(R.id.settings_title);
-        TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
-        TextView settingsReleaseNotesText = findViewById(R.id.settings_release_notes_text);
-        @SuppressLint("UseSwitchCompatOrMaterialCode") Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
-        TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
-        TextView settingsDisplayModeText = findViewById(R.id.settings_display_mode_text);
-        TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
-        TextView allowNotifications = findViewById(R.id.settings_notifications);
-        TextView allowNotificationsText = findViewById(R.id.settings_notifications_text);
-        TextView allowDailyNotifications = findViewById(R.id.settings_daily_hints);
-        TextView allowDailyNotificationsText = findViewById(R.id.settings_daily_hints_text);
-
-        TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
-        TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
-
-        TextView settingsCredits = findViewById(R.id.credits_view);
-        FrameLayout frameLayout = findViewById(R.id.copyrightFrameLayout);
-        TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
-        TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
 
         Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
         Spinner spinner2 = findViewById(R.id.settings_function_spinner);
@@ -567,7 +548,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
                 updateUI(R.color.white, R.color.black);
-
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
                 String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
