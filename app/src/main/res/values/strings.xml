@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RechenMax</string>
+    <string name="app_name" translatable="false">RechenMax</string>
     <string name="calculate_label" translatable="false" />
     <string name="result_label" translatable="false">0</string>
     <string name="EmptyClipboardButton" translatable="false">MC</string>
