@@ -134,7 +134,7 @@
     <string name="patchnotes58">La calculatrice est désormais disponible en allemand, en anglais, en espagnol et en français.</string>
 
     <string name="dailyHints">Conseils quotidiens</string>
-    <string name="dailyHintsText">Avec ce paramètre, vous pouvez définir si vous recevrez chaque jour un pourboire ou des informations sur la calculatrice.</string>
+    <string name="dailyHintsText">Avec ce paramètre, vous pouvez choisir de recevoir quotidiennement un conseil ou des informations sur la calculatrice. Veuillez noter que cette fonctionnalité n\'est disponible qu'à partir de l'API 33 (Android 13).</string>
     <string name="systemRequirementsText">Version Android minimale : 10\nVersion Android recommandée : 13 ou supérieure\nVersion Android maximale : 14</string>
     <string name="app_name">RechenMax</string>
     <string name="hyperbolicSine">fonction sinus hyperbolique</string>
@@ -175,6 +175,5 @@
     <string name="help">Aide</string>
     <string name="back">Retour</string>
     <string name="notifications">Notifications</string>
-    <string name="notificationsText">Pour recevoir des notifications, activez ce paramètre. Cependant, veuillez noter que vous devez autoriser l\'application à vous envoyer des notifications.</string>
-
+    <string name="notificationsText">Pour recevoir des notifications, activez ce paramètre. Cependant, veuillez noter que vous devez autoriser l\'application à vous envoyer des notifications. De plus, gardez à l'esprit que cette fonctionnalité n'est disponible qu'à partir de l'API 33 (Android 13).</string>
 </resources>

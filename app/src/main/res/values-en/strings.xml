@@ -155,7 +155,7 @@
     <string name="systemRequirementsText">Minimum Android version: 10\nRecommended Android version: 13 or higher\nMaximum Android version: 14</string>
 
     <string name="dailyHints">Daily Hints</string>
-    <string name="dailyHintsText">With this setting you can set whether you will be sent a hint or information about the calculator every day.</string>
+    <string name="dailyHintsText">With this setting, you can choose whether to receive a daily tip or information about the calculator. Please note that this feature is only available starting from API 33 (Android 13).</string>
     <string name="piWord">PI</string>
     <string name="hyperbolicSine">hyperbolic sine function</string>
     <string name="scientificMode">Scientific mode</string>
@@ -195,6 +195,5 @@
     <string name="help">Help</string>
     <string name="back">Back</string>
     <string name="notifications">Notifications</string>
-    <string name="notificationsText">To receive notifications, enable this setting. However, please note that you must allow the app to send you notifications.</string>
-
+    <string name="notificationsText">To receive notifications, enable this setting. However, please note that you must allow the app to send you notifications. Also, keep in mind that this feature is only available starting from API 33 (Android 13).</string>
 </resources>

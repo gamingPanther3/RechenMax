@@ -182,5 +182,5 @@
     <string name="help">Hife</string>
     <string name="back">Zurück</string>
     <string name="notifications">Benachrichtigungen</string>
-    <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden.</string>
+    <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist.</string>
 </resources>
