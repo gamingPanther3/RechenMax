@@ -183,8 +183,10 @@ public class BackgroundService extends Service {
                     break;
             }
 
-            sendNotification(this, NOTIFICATION_ID_REMEMBER, title_remember, content_remember, CHANNEL_ID_REMEMBER, CHANNEL_NAME_REMEMBER, true);
-            setLastBackgroundTime(System.currentTimeMillis());
+            if (currentTime >= 14 && currentTime <= 18) {
+                sendNotification(this, NOTIFICATION_ID_REMEMBER, title_remember, content_remember, CHANNEL_ID_REMEMBER, CHANNEL_NAME_REMEMBER, true);
+                setLastBackgroundTime(System.currentTimeMillis());
+            }
         } else if (currentTime >= min && currentTime <= max &&
                 dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true")) {
             if(!Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this)) && random.nextInt(20) == 1) {
