@@ -79,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
         //showAllSettings();
 
         // Create JSON file and check for its existence
-        dataManager.createJSON(getApplicationContext());
-        dataManager.initializeSettings(getApplicationContext());
+        dataManager.createJSON(this);
+        dataManager.initializeSettings(this);
         dataManager.saveToJSON("currentVersion", "1.6.0", getApplicationContext());
         //dataManager.saveToJSON("old_version", "0", getApplicationContext());
 
@@ -148,15 +148,7 @@ public class MainActivity extends AppCompatActivity {
     public void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
-            }
-
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                Log.e("Notification Permission", "Notification Permission Granted");
-                dataManager.saveToJSON("notifications", "true", getApplicationContext());
-            } else {
-                Log.e("Notification Permission", "Notification Permission Denied");
-                dataManager.saveToJSON("notifications", "false", getApplicationContext());
+                requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 100);
             }
         }
     }

@@ -289,6 +289,9 @@ public class DataManager {
         if(readFromJSON("returnToCalculator", applicationContext) == null) {
             saveToJSON("returnToCalculator", "false", applicationContext);
         }
+        if(readFromJSON("allowNotification", applicationContext) == null) {
+            saveToJSON("allowNotification", "false", applicationContext);
+        }
         if(readFromJSON("allowDailyNotifications", applicationContext) == null) {
             saveToJSON("allowDailyNotifications", "false", applicationContext);
         }

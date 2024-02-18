@@ -116,10 +116,10 @@ public class BackgroundService extends Service {
         Log.e("DEBUG", allowRememberNotifications);
         Log.e("DEBUG", allowDailyNotifications);
 
-        if ("true".equals(allowNotification) && ("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications))) {
+        if ("true".equals(allowNotification) && (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
             //dataManager.saveToJSON("notificationSent", false, this);
 
-            createNotificationChannel();
+            createNotificationChannel(this);
             NotificationHelper.cancelNotification(this, NOTIFICATION_ID_BACKGROUND);
             NotificationHelper.cancelNotification(this, NOTIFICATION_ID_REMEMBER);
             startForeground(NOTIFICATION_ID_BACKGROUND, buildNotification());
@@ -137,7 +137,7 @@ public class BackgroundService extends Service {
         String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
         String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
 
-        if ("true".equals(allowNotification) && ("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications))) {
+        if ("true".equals(allowNotification) && (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
             Log.d(CHANNEL_NAME_BACKGROUND, "Service started");
 
             boolean startedByBootReceiver = intent != null && intent.getBooleanExtra("started_by_boot_receiver", false);
@@ -291,8 +291,8 @@ public class BackgroundService extends Service {
     /**
      * createNotificationChannel method creates the notification channel for the service.
      */
-    private void createNotificationChannel() {
-        NotificationManager manager = getSystemService(NotificationManager.class);
+    public static void createNotificationChannel(Context context) {
+        NotificationManager manager = context.getSystemService(NotificationManager.class);
 
         NotificationChannel backgroundChannel = new NotificationChannel(
                 CHANNEL_ID_BACKGROUND,
