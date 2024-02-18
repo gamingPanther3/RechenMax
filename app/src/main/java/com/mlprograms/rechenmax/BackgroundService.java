@@ -117,7 +117,7 @@ public class BackgroundService extends Service {
         Log.e("DEBUG", allowDailyNotifications);
 
         if ("true".equals(allowNotification) && ("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications))) {
-            dataManager.saveToJSON("notificationSent", false, this);
+            //dataManager.saveToJSON("notificationSent", false, this);
 
             createNotificationChannel();
             NotificationHelper.cancelNotification(this, NOTIFICATION_ID_BACKGROUND);
