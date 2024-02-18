@@ -1,7 +1,15 @@
 package com.mlprograms.rechenmax;
 
+import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
+import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
+import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_BACKGROUND;
+import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_REMEMBER;
+import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_HINTS;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,7 +34,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import org.w3c.dom.Text;
+import java.util.Locale;
 
 /**
  * SettingsActivity
@@ -86,14 +94,9 @@ public class SettingsActivity extends AppCompatActivity {
         updateSwitchState(settingsTrueDarkMode, "settingsTrueDarkMode");
 
         appendSpaceToSwitches(findViewById(R.id.settingsUI));
-        final String setRelNotSwitch= dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext());
-
-        if (setRelNotSwitch != null) {
-            settingsReleaseNotesSwitch.setChecked(setRelNotSwitch.equals("true"));
-        }
 
         settingsReleaseNotesSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataManager.saveToJSON("settingReleaseNotesSwitch", isChecked, getMainActivityContext());
+            dataManager.saveToJSON("settingReleaseNotesSwitch", isChecked, getApplicationContext());
             dataManager.saveToJSON("showPatchNotes", isChecked, getMainActivityContext());
             dataManager.saveToJSON("disablePatchNotesTemporary", isChecked, getMainActivityContext());
             Log.i("Settings", "settingReleaseNotesSwitch=" + dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext()));
@@ -105,137 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
             switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         });
 
-        Switch allowNotifications = findViewById(R.id.settings_notifications);
-        Switch allowRememberNotification = findViewById(R.id.settings_remember);
-        Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
-
-        TextView allowNotificationText = findViewById(R.id.settings_notifications_text);
-        TextView allowRememberNotificationText = findViewById(R.id.settings_remember_text);
-        TextView allowDailyNotificationText = findViewById(R.id.settings_daily_hints_text);
-
-        if(!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
-            allowNotifications.setVisibility(View.GONE);
-            allowNotificationText.setVisibility(View.GONE);
-
-            allowRememberNotification.setVisibility(View.GONE);
-            allowRememberNotificationText.setVisibility(View.GONE);
-
-            allowDailyNotifications.setVisibility(View.GONE);
-            allowDailyNotificationText.setVisibility(View.GONE);
-        } else {
-            allowNotifications.setVisibility(View.VISIBLE);
-            allowNotificationText.setVisibility(View.VISIBLE);
-
-            allowRememberNotification.setVisibility(View.VISIBLE);
-            allowRememberNotificationText.setVisibility(View.VISIBLE);
-
-            allowDailyNotifications.setVisibility(View.VISIBLE);
-            allowDailyNotificationText.setVisibility(View.VISIBLE);
-        }
-
-        allowNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
-                dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true"));
-
-        allowRememberNotification.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
-                dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
-                dataManager.readFromJSON("allowRememberNotifications", getApplicationContext()).equals("true") &&
-                dataManager.readFromJSON("allowRememberNotificationsActive", getApplicationContext()).equals("true"));
-
-        allowDailyNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
-                dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
-                dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true") &&
-                dataManager.readFromJSON("allowDailyNotificationsActive", getApplicationContext()).equals("true"));
-
-        allowNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
-                    }
-
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                        dataManager.saveToJSON("allowNotification", true, getApplicationContext());
-                        allowNotifications.setChecked(true);
-
-                        if(dataManager.readFromJSON("allowRememberNotificationsActive", getApplicationContext()).equals("true")) {
-                            allowRememberNotification.setChecked(true);
-                        }
-                        if(dataManager.readFromJSON("allowDailyNotificationsActive", getApplicationContext()).equals("true")) {
-                            allowDailyNotifications.setChecked(true);
-                        }
-                    } else {
-                        dataManager.saveToJSON("allowNotification", false, getApplicationContext());
-                        allowNotifications.setChecked(false);
-                        allowDailyNotifications.setChecked(false);
-                        allowRememberNotification.setChecked(false);
-                    }
-                }
-            } else {
-                dataManager.saveToJSON("allowNotification", false, getApplicationContext());
-                allowNotifications.setChecked(false);
-                allowDailyNotifications.setChecked(false);
-                allowRememberNotification.setChecked(false);
-            }
-            Log.i("Settings", "allowNotification=" + dataManager.readFromJSON("allowNotification", getMainActivityContext()));
-        });
-        allowRememberNotification.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked && !allowNotifications.isChecked()) {
-                ToastHelper.showToastShort("Schalte vorher die Benachrichtigungen ein.", this);
-                allowRememberNotification.setChecked(false);
-                return;
-            }
-
-            if(isChecked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
-                }
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                    dataManager.saveToJSON("allowRememberNotifications", true, getMainActivityContext());
-                    dataManager.saveToJSON("allowRememberNotificationsActive", true, getApplicationContext());
-                    allowNotifications.setChecked(true);
-                    allowRememberNotification.setChecked(true);
-                } else {
-                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
-                    dataManager.saveToJSON("allowRememberNotificationsActive", false, getApplicationContext());
-                    allowRememberNotification.setChecked(false);
-                }
-            } else {
-                allowRememberNotification.setChecked(false);
-                if(allowNotifications.isChecked()) {
-                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
-                    dataManager.saveToJSON("allowRememberNotificationsActive", false, getApplicationContext());
-                }
-            }
-        });
-        allowDailyNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked && !allowNotifications.isChecked()) {
-                ToastHelper.showToastShort("Schalte vorher die Benachrichtigungen ein.", this);
-                allowDailyNotifications.setChecked(false);
-                return;
-            }
-
-            if(isChecked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
-                }
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                    dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
-                    dataManager.saveToJSON("allowDailyNotificationsActive", true, getApplicationContext());
-                    allowNotifications.setChecked(true);
-                    allowDailyNotifications.setChecked(true);
-                } else {
-                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
-                    dataManager.saveToJSON("allowDailyNotificationsActive", false, getApplicationContext());
-                    allowDailyNotifications.setChecked(false);
-                }
-            } else {
-                allowDailyNotifications.setChecked(false);
-                if(allowNotifications.isChecked()) {
-                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
-                    dataManager.saveToJSON("allowDailyNotificationsActive", false, getApplicationContext());
-                }
-            }
-        });
+        createNotificationButtonListeners();
 
         // Declare a Spinner object
         Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
@@ -331,6 +204,223 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+        updateSpinner(spinner1);
+        updateSpinner(spinner2);
+        updateSpinner(spinner3);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private void createNotificationButtonListeners() {
+        Switch allowNotifications = findViewById(R.id.settings_notifications);
+        Switch allowRememberNotification = findViewById(R.id.settings_remember);
+        Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
+
+        TextView allowNotificationText = findViewById(R.id.settings_notifications_text);
+        TextView allowRememberNotificationText = findViewById(R.id.settings_remember_text);
+        TextView allowDailyNotificationText = findViewById(R.id.settings_daily_hints_text);
+
+        allowNotifications.setVisibility(View.GONE);
+        allowNotificationText.setVisibility(View.GONE);
+        allowRememberNotification.setVisibility(View.GONE);
+        allowRememberNotificationText.setVisibility(View.GONE);
+        allowDailyNotifications.setVisibility(View.GONE);
+        allowDailyNotificationText.setVisibility(View.GONE);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            allowNotifications.setVisibility(View.VISIBLE);
+            allowNotificationText.setVisibility(View.VISIBLE);
+            allowRememberNotification.setVisibility(View.VISIBLE);
+            allowRememberNotificationText.setVisibility(View.VISIBLE);
+            allowDailyNotifications.setVisibility(View.VISIBLE);
+            allowDailyNotificationText.setVisibility(View.VISIBLE);
+        }
+
+        if(!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND) ||
+                (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)) {
+            dataManager.saveToJSON("allowNotifications", false, getApplicationContext());
+            dataManager.saveToJSON("allowRememberNotifications", false, getApplicationContext());
+            dataManager.saveToJSON("allowDailyNotifications", false, getApplicationContext());
+            allowNotifications.setChecked(false);
+            allowRememberNotification.setChecked(false);
+            allowDailyNotifications.setChecked(false);
+            return;
+        } else {
+            final boolean value = Boolean.parseBoolean(String.valueOf((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)));
+            dataManager.saveToJSON("allowNotifications", value, getApplicationContext());
+            allowNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                    dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true"));
+        }
+
+        if(!isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
+            dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+            allowRememberNotification.setChecked(false);
+        } else {
+            final boolean value = Boolean.parseBoolean(String.valueOf((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)));
+            dataManager.saveToJSON("allowRememberNotifications", value, getApplicationContext());
+            allowRememberNotification.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                    dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
+                    dataManager.readFromJSON("allowRememberNotifications", getApplicationContext()).equals("true") &&
+                    dataManager.readFromJSON("allowRememberNotificationsActive", getApplicationContext()).equals("true"));
+        }
+
+        if(!isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
+            dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+            allowDailyNotifications.setChecked(false);
+        } else {
+            final boolean value = Boolean.parseBoolean(String.valueOf((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)));
+            dataManager.saveToJSON("allowDailyNotifications", value, getApplicationContext());
+            allowDailyNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                    dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
+                    dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true") &&
+                    dataManager.readFromJSON("allowDailyNotificationsActive", getApplicationContext()).equals("true"));
+        }
+
+        allowNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
+                dataManager.saveToJSON("allowNotifications", false, getApplicationContext());
+                activateChannelMessage();
+                allowNotifications.setChecked(false);
+                return;
+            }
+
+            if(isChecked) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 100);
+                    }
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED &&
+                        isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
+                        dataManager.saveToJSON("allowNotification", true, getApplicationContext());
+                        allowNotifications.setChecked(true);
+
+                        if(dataManager.readFromJSON("allowRememberNotificationsActive", getApplicationContext()).equals("true")) {
+                            allowRememberNotification.setChecked(true);
+                        }
+                        if(dataManager.readFromJSON("allowDailyNotificationsActive", getApplicationContext()).equals("true")) {
+                            allowDailyNotifications.setChecked(true);
+                        }
+                    } else {
+                        dataManager.saveToJSON("allowNotification", false, getApplicationContext());
+                        allowNotifications.setChecked(false);
+                        allowDailyNotifications.setChecked(false);
+                        allowRememberNotification.setChecked(false);
+                    }
+                }
+            } else {
+                dataManager.saveToJSON("allowNotification", false, getApplicationContext());
+                allowNotifications.setChecked(false);
+                allowDailyNotifications.setChecked(false);
+                allowRememberNotification.setChecked(false);
+            }
+            Log.i("Settings", "allowNotification=" + dataManager.readFromJSON("allowNotification", getMainActivityContext()));
+        });
+        allowRememberNotification.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked && !allowNotifications.isChecked()) {
+                turnOnNotificationsMessage();
+                allowRememberNotification.setChecked(false);
+                return;
+            }
+            if(!isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
+                dataManager.saveToJSON("allowRememberNotifications", false, getApplicationContext());
+                activateChannelMessage();
+                allowDailyNotifications.setChecked(false);
+                return;
+            }
+
+            if(isChecked) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED &&
+                    isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
+                    dataManager.saveToJSON("allowRememberNotifications", true, getMainActivityContext());
+                    dataManager.saveToJSON("allowRememberNotificationsActive", true, getApplicationContext());
+                    allowNotifications.setChecked(true);
+                    allowRememberNotification.setChecked(true);
+                } else {
+                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSON("allowRememberNotificationsActive", false, getApplicationContext());
+                    allowRememberNotification.setChecked(false);
+                }
+            } else {
+                allowRememberNotification.setChecked(false);
+                if(allowNotifications.isChecked()) {
+                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSON("allowRememberNotificationsActive", false, getApplicationContext());
+                }
+            }
+        });
+        allowDailyNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked && !allowNotifications.isChecked()) {
+                turnOnNotificationsMessage();
+                allowDailyNotifications.setChecked(false);
+                return;
+            }
+            if(!isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
+                dataManager.saveToJSON("allowDailyNotifications", false, getApplicationContext());
+                activateChannelMessage();
+                allowDailyNotifications.setChecked(false);
+                return;
+            }
+
+            if(isChecked) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED &&
+                    isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
+                    dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
+                    dataManager.saveToJSON("allowDailyNotificationsActive", true, getApplicationContext());
+                    allowNotifications.setChecked(true);
+                    allowDailyNotifications.setChecked(true);
+                } else {
+                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSON("allowDailyNotificationsActive", false, getApplicationContext());
+                    allowDailyNotifications.setChecked(false);
+                }
+            } else {
+                allowDailyNotifications.setChecked(false);
+                if(allowNotifications.isChecked()) {
+                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSON("allowDailyNotificationsActive", false, getApplicationContext());
+                }
+            }
+        });
+    }
+
+    private void turnOnNotificationsMessage() {
+        if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+            showToastShort("Turn on notifications first.", this);
+        } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+            showToastShort("Activez d'abord les notifications.", this);
+        } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+            showToastShort("Activa primero las notificaciones.", this);
+        } else {
+            showToastShort("Schalte vorher die Benachrichtigungen ein.", this);
+        }
+    }
+
+    private void activateChannelMessage() {
+        if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+            showToastLong("Please enable the channel in your phone's settings beforehand.", this);
+        } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+            showToastLong("Veuillez activer le canal dans les paramètres de votre téléphone au préalable.", this);
+        } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+            showToastLong("Por favor, activa el canal en la configuración de tu teléfono antes.", this);
+        } else {
+            showToastLong("Bitte aktiviere den Kanal zuvor in den Einstellungen deines Handys.", this);
+        }
+    }
+
+    private boolean isChannelPermissionGranted(Context context, String channelId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                NotificationChannel channel = notificationManager.getNotificationChannel(channelId);
+                if (channel != null) {
+                    return channel.getImportance() != NotificationManager.IMPORTANCE_NONE;
+                }
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -354,6 +444,9 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         stopBackgroundService();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            createNotificationButtonListeners();
+        }
     }
 
     /**
@@ -403,6 +496,9 @@ public class SettingsActivity extends AppCompatActivity {
             textView.setTextSize(20);
             switch (readselectedSetting) {
                 case "Dunkelmodus":
+                case "Dark mode":
+                case "Modo oscuro":
+                case "Mode sombre":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     switchDisplayMode(currentNightMode);
                     if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
@@ -412,11 +508,17 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                     break;
                 case "Tageslichtmodus":
+                case "Daylight mode":
+                case "Modo diurno":
+                case "Mode lumière du jour":
                     dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
                     textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     switchDisplayMode(currentNightMode);
                     break;
                 case "Systemstandard":
+                case "System default":
+                case "Por defecto del sistema":
+                case "Norme du système":
                     dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
                     if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                         if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {

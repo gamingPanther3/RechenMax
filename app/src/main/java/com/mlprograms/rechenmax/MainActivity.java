@@ -7,7 +7,6 @@ import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -687,7 +686,15 @@ public class MainActivity extends AppCompatActivity {
         clipboardManager.setPrimaryClip(clipData);
 
         // Display a toast indicating that the data has been saved
-        showToastLong("Wert wurde gespeichert ...", getApplicationContext());
+        if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+            showToastLong("The value has been saved ...", getApplicationContext());
+        } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+            showToastLong("La valeur a été enregistrée ...", getApplicationContext());
+        } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+            showToastLong("El valor ha sido guardado ...", getApplicationContext());
+        } else {
+            showToastLong("Der Wert wurde gespeichert ...", getApplicationContext());
+        }
     }
 
     /**
@@ -704,7 +711,15 @@ public class MainActivity extends AppCompatActivity {
         clipboardManager.setPrimaryClip(clipData);
 
         // Display a toast indicating that the data has been saved
-        showToastLong("Wert wurde gespeichert ...", getApplicationContext());
+        if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+            showToastLong("The value has been saved ...", getApplicationContext());
+        } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+            showToastLong("La valeur a été enregistrée ...", getApplicationContext());
+        } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+            showToastLong("El valor ha sido guardado ...", getApplicationContext());
+        } else {
+            showToastLong("Der Wert wurde gespeichert ...", getApplicationContext());
+        }
     }
 
     /**
@@ -1257,7 +1272,15 @@ public class MainActivity extends AppCompatActivity {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         // Check if logarithmic mode is disabled
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-            showToastLong("Diese Taste ist im aktuellen Modus deaktiviert.", getApplicationContext());
+            if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                showToastLong("This button is disabled in the current mode.", getApplicationContext());
+            } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                showToastLong("Ce bouton est désactivé dans le mode actuel.", getApplicationContext());
+            } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                showToastLong("Este botón está desactivado en el modo actual.", getApplicationContext());
+            } else {
+                showToastLong("Diese Taste ist im aktuellen Modus deaktiviert..", getApplicationContext());
+            }
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
                 // Read the current eNotation mode from the data manager
@@ -2202,7 +2225,16 @@ public class MainActivity extends AppCompatActivity {
                 case "MC": {
                     ClipData clipData = ClipData.newPlainText("", "");
                     clipboardManager.setPrimaryClip(clipData);
-                    showToastLong("Zwischenablage geleert ...", getApplicationContext());
+                    if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                        showToastLong("Clipboard cleared ...", getApplicationContext());
+                    } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                        showToastLong("Presse-papiers vidé ...", getApplicationContext());
+                    } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                        showToastLong("Portapapeles vaciado ...", getApplicationContext());
+                    } else {
+                        showToastLong("Zwischenablage geleert ...", getApplicationContext());
+                    }
+
                     break;
                 }
                 case "MR":
@@ -2211,7 +2243,15 @@ public class MainActivity extends AppCompatActivity {
                 case "MS": {
                     ClipData clipData = ClipData.newPlainText("", getResultText());
                     clipboardManager.setPrimaryClip(clipData);
-                    showToastShort("Inhalt wurde in die Zwischenablage kopiert...", getApplicationContext());
+                    if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                        showToastLong("Clipboard cleared ...", getApplicationContext());
+                    } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                        showToastLong("Presse-papiers vidé ...", getApplicationContext());
+                    } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                        showToastLong("Portapapeles vaciado ...", getApplicationContext());
+                    } else {
+                        showToastLong("Zwischenablage geleert ...", getApplicationContext());
+                    }
                     break;
                 }
             }
@@ -2230,7 +2270,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (clipData == null || clipData.getItemCount() == 0) {
             // Handle the case where clipboard data is null or empty
-            showToastShort("Zwischenablage enthält keine Daten ...", getApplicationContext());
+            if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                showToastShort("Clipboard does not contain any data ...", getApplicationContext());
+            } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                showToastShort("Le presse-papiers ne contient aucune donnée ...", getApplicationContext());
+            } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                showToastShort("El portapapeles no contiene ningún dato ...", getApplicationContext());
+            } else {
+                showToastShort("Zwischenablage enthält keine Daten ...", getApplicationContext());
+            }
+
             return;
         }
 
@@ -2243,7 +2292,15 @@ public class MainActivity extends AppCompatActivity {
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             if(!text.isEmpty()) {
                 addCalculateTextWithoutSpace(text);
-                showToastLong("Zwischenablage wurde eingefügt ...", getApplicationContext());
+                if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                    showToastShort("Content copied to clipboard...", getApplicationContext());
+                } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                    showToastShort("Contenu copié dans le presse-papiers...", getApplicationContext());
+                } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                    showToastShort("Contenido copiado al portapapeles...", getApplicationContext());
+                } else {
+                    showToastLong("Zwischenablage wurde eingefügt ...", getApplicationContext());
+                }
             }
         } else {
             if (text.matches(scientificNotationPattern) && !text.matches(mathTaskPattern)) {
@@ -2251,7 +2308,15 @@ public class MainActivity extends AppCompatActivity {
             } else if ((text.matches(mathTaskPattern) && !text.matches(scientificNotationPattern)) || text.matches("[-+]?[0-9]+")) {
                 processMathTaskOrNumber(text);
             } else {
-                showToastLong("Keine gültige Eingabe ...", getApplicationContext());
+                if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                    showToastLong("Invalid input ...", getApplicationContext());
+                } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                    showToastLong("Entrée invalide ...", getApplicationContext());
+                } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                    showToastLong("Entrada inválida ...", getApplicationContext());
+                } else {
+                    showToastLong("Keine gültige Eingabe ...", getApplicationContext());
+                }
             }
 
 

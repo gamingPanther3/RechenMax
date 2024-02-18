@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -164,7 +165,16 @@ public class HistoryActivity extends AppCompatActivity {
                 clipboardManager.setPrimaryClip(clipData);
 
                 // Display a toast indicating that the data has been saved
-                showToastShort("Rechnung wurde kopiert ...", getApplicationContext());
+                if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                    showToastShort("Invoice has been copied ...", getApplicationContext());
+                } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                    showToastShort("La facture a été copiée ...", getApplicationContext());
+                } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                    showToastShort("La factura ha sido copiada ...", getApplicationContext());
+                } else {
+                    showToastShort("Rechnung wurde kopiert ...", getApplicationContext());
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -220,7 +230,15 @@ public class HistoryActivity extends AppCompatActivity {
                             dataManager.saveToJSON("removeValue", false, getMainActivityContext());
                             dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
 
-                            showToastShort("Rechnung wurde übernommen ...", getApplicationContext());
+                            if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                                showToastShort("Invoice has been accepted ...", getApplicationContext());
+                            } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                                showToastShort("La facture a été acceptée ...", getApplicationContext());
+                            } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                                showToastShort("La factura ha sido aceptada ...", getApplicationContext());;
+                            } else {
+                                showToastShort("Rechnung wurde übernommen ...", getApplicationContext());
+                            }
                         } catch (Exception e) {
                             Log.i("createHistoryTextView", String.valueOf(e));
                         }

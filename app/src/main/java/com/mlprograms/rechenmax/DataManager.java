@@ -296,10 +296,10 @@ public class DataManager {
             saveToJSON("allowRememberNotifications", "false", applicationContext);
         }
         if(readFromJSON("allowDailyNotificationsActive", applicationContext) == null) {
-            saveToJSON("allowDailyNotificationsActive", "false", applicationContext);
+            saveToJSON("allowDailyNotificationsActive", "true", applicationContext);
         }
         if(readFromJSON("allowRememberNotificationsActive", applicationContext) == null) {
-            saveToJSON("allowRememberNotificationsActive", "false", applicationContext);
+            saveToJSON("allowRememberNotificationsActive", "true", applicationContext);
         }
         if(readFromJSON("notificationSent", applicationContext) == null) {
             saveToJSON("notificationSent", "false", applicationContext);
