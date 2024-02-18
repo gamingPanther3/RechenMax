@@ -51,6 +51,8 @@ import java.nio.file.Files;
 //  | allowNotification                | true / false             | SettingsActivity                         |
 //  | allowRememberNotifications       | true / false             | SettingsActivity                         |
 //  | allowDailyNotifications          | true / false             | SettingsActivity                     |
+//  | allowRememberNotificationsActive | true / false             | SettingsActivity                     |
+//  | allowDailyNotificationsActive    | true / false             | SettingsActivity                     |
 
 public class DataManager {
 
@@ -292,6 +294,12 @@ public class DataManager {
         }
         if(readFromJSON("allowRememberNotifications", applicationContext) == null) {
             saveToJSON("allowRememberNotifications", "false", applicationContext);
+        }
+        if(readFromJSON("allowDailyNotificationsActive", applicationContext) == null) {
+            saveToJSON("allowDailyNotificationsActive", "false", applicationContext);
+        }
+        if(readFromJSON("allowRememberNotificationsActive", applicationContext) == null) {
+            saveToJSON("allowRememberNotificationsActive", "false", applicationContext);
         }
         if(readFromJSON("notificationSent", applicationContext) == null) {
             saveToJSON("notificationSent", "false", applicationContext);

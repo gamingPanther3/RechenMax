@@ -82,6 +82,29 @@ public class SettingsActivity extends AppCompatActivity {
         Switch settingsReleaseNotesSwitch = findViewById(R.id.settings_release_notes);
         Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
 
+        updateSwitchState(settingsReleaseNotesSwitch, "settingReleaseNotesSwitch");
+        updateSwitchState(settingsTrueDarkMode, "settingsTrueDarkMode");
+
+        appendSpaceToSwitches(findViewById(R.id.settingsUI));
+        final String setRelNotSwitch= dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext());
+
+        if (setRelNotSwitch != null) {
+            settingsReleaseNotesSwitch.setChecked(setRelNotSwitch.equals("true"));
+        }
+
+        settingsReleaseNotesSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            dataManager.saveToJSON("settingReleaseNotesSwitch", isChecked, getMainActivityContext());
+            dataManager.saveToJSON("showPatchNotes", isChecked, getMainActivityContext());
+            dataManager.saveToJSON("disablePatchNotesTemporary", isChecked, getMainActivityContext());
+            Log.i("Settings", "settingReleaseNotesSwitch=" + dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext()));
+        });
+        settingsTrueDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            dataManager.saveToJSON("settingsTrueDarkMode", isChecked, getMainActivityContext());
+            Log.i("Settings", "settingsTrueDarkMode=" + dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext()));
+
+            switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+        });
+
         Switch allowNotifications = findViewById(R.id.settings_notifications);
         Switch allowRememberNotification = findViewById(R.id.settings_remember);
         Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
@@ -115,34 +138,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         allowRememberNotification.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
                 dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
-                dataManager.readFromJSON("allowRememberNotifications", getApplicationContext()).equals("true"));
+                dataManager.readFromJSON("allowRememberNotifications", getApplicationContext()).equals("true") &&
+                dataManager.readFromJSON("allowRememberNotificationsActive", getApplicationContext()).equals("true"));
 
         allowDailyNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
                 dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
-                dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true"));
-
-        updateSwitchState(settingsReleaseNotesSwitch, "settingReleaseNotesSwitch");
-        updateSwitchState(settingsTrueDarkMode, "settingsTrueDarkMode");
-
-        appendSpaceToSwitches(findViewById(R.id.settingsUI));
-        final String setRelNotSwitch= dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext());
-
-        if (setRelNotSwitch != null) {
-            settingsReleaseNotesSwitch.setChecked(setRelNotSwitch.equals("true"));
-        }
-
-        settingsReleaseNotesSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataManager.saveToJSON("settingReleaseNotesSwitch", isChecked, getMainActivityContext());
-            dataManager.saveToJSON("showPatchNotes", isChecked, getMainActivityContext());
-            dataManager.saveToJSON("disablePatchNotesTemporary", isChecked, getMainActivityContext());
-            Log.i("Settings", "settingReleaseNotesSwitch=" + dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext()));
-        });
-        settingsTrueDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataManager.saveToJSON("settingsTrueDarkMode", isChecked, getMainActivityContext());
-            Log.i("Settings", "settingsTrueDarkMode=" + dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext()));
-
-            switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
-        });
+                dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true") &&
+                dataManager.readFromJSON("allowDailyNotificationsActive", getApplicationContext()).equals("true"));
 
         allowNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked) {
@@ -154,6 +156,13 @@ public class SettingsActivity extends AppCompatActivity {
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                         dataManager.saveToJSON("allowNotification", true, getApplicationContext());
                         allowNotifications.setChecked(true);
+
+                        if(dataManager.readFromJSON("allowRememberNotificationsActive", getApplicationContext()).equals("true")) {
+                            allowRememberNotification.setChecked(true);
+                        }
+                        if(dataManager.readFromJSON("allowDailyNotificationsActive", getApplicationContext()).equals("true")) {
+                            allowDailyNotifications.setChecked(true);
+                        }
                     } else {
                         dataManager.saveToJSON("allowNotification", false, getApplicationContext());
                         allowNotifications.setChecked(false);
@@ -176,24 +185,27 @@ public class SettingsActivity extends AppCompatActivity {
                 return;
             }
 
-            if(isChecked && allowNotifications.isChecked()) {
+            if(isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
                 }
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                     dataManager.saveToJSON("allowRememberNotifications", true, getMainActivityContext());
+                    dataManager.saveToJSON("allowRememberNotificationsActive", true, getApplicationContext());
                     allowNotifications.setChecked(true);
                     allowRememberNotification.setChecked(true);
                 } else {
                     dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSON("allowRememberNotificationsActive", false, getApplicationContext());
                     allowRememberNotification.setChecked(false);
                 }
             } else {
                 allowRememberNotification.setChecked(false);
-                dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                if(allowNotifications.isChecked()) {
+                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSON("allowRememberNotificationsActive", false, getApplicationContext());
+                }
             }
-
-            Log.i("Settings", "allowRememberNotifications=" + dataManager.readFromJSON("allowRememberNotifications", getMainActivityContext()));
         });
         allowDailyNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked && !allowNotifications.isChecked()) {
@@ -202,24 +214,27 @@ public class SettingsActivity extends AppCompatActivity {
                 return;
             }
 
-            if(isChecked && allowNotifications.isChecked()) {
+            if(isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
                 }
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                     dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
+                    dataManager.saveToJSON("allowDailyNotificationsActive", true, getApplicationContext());
                     allowNotifications.setChecked(true);
                     allowDailyNotifications.setChecked(true);
                 } else {
                     dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSON("allowDailyNotificationsActive", false, getApplicationContext());
                     allowDailyNotifications.setChecked(false);
                 }
             } else {
                 allowDailyNotifications.setChecked(false);
-                dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                if(allowNotifications.isChecked()) {
+                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSON("allowDailyNotificationsActive", false, getApplicationContext());
+                }
             }
-
-            Log.i("Settings", "allowDailyNotifications=" + dataManager.readFromJSON("allowDailyNotifications", getMainActivityContext()));
         });
 
         // Declare a Spinner object

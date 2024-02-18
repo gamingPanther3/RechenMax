@@ -177,5 +177,5 @@
     <string name="help">Aide</string>
     <string name="back">Retour</string>
     <string name="notifications">Notifications</string>
-    <string name="notificationsText">Pour recevoir des notifications, activez ce paramètre. Cependant, veuillez noter que vous devez autoriser l\'application à vous envoyer des notifications. De plus, gardez à l\'esprit que cette fonctionnalité n\'est disponible qu\'à partir de l\'API 33 (Android 13). De plus, les rappels ou les conseils quotidiens doivent être activés pour qu'une notification soit envoyée.</string>
+    <string name="notificationsText">Pour recevoir des notifications, activez ce paramètre. Cependant, veuillez noter que vous devez autoriser l\'application à vous envoyer des notifications. De plus, gardez à l\'esprit que cette fonctionnalité n\'est disponible qu\'à partir de l\'API 33 (Android 13). De plus, les rappels ou les conseils quotidiens doivent être activés pour qu\'une notification soit envoyée.</string>
 </resources>
