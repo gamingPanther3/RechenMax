@@ -81,26 +81,41 @@ public class SettingsActivity extends AppCompatActivity {
 
         Switch settingsReleaseNotesSwitch = findViewById(R.id.settings_release_notes);
         Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
-        Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
+
         Switch allowNotifications = findViewById(R.id.settings_notifications);
+        Switch allowRememberNotification = findViewById(R.id.settings_remember);
+        Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
 
         TextView allowNotificationText = findViewById(R.id.settings_notifications_text);
+        TextView allowRememberNotificationText = findViewById(R.id.settings_remember_text);
         TextView allowDailyNotificationText = findViewById(R.id.settings_daily_hints_text);
 
         if(!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)) {
             allowNotifications.setVisibility(View.GONE);
-            allowDailyNotifications.setVisibility(View.GONE);
             allowNotificationText.setVisibility(View.GONE);
+
+            allowRememberNotification.setVisibility(View.GONE);
+            allowRememberNotificationText.setVisibility(View.GONE);
+
+            allowDailyNotifications.setVisibility(View.GONE);
             allowDailyNotificationText.setVisibility(View.GONE);
         } else {
             allowNotifications.setVisibility(View.VISIBLE);
-            allowDailyNotifications.setVisibility(View.VISIBLE);
             allowNotificationText.setVisibility(View.VISIBLE);
+
+            allowRememberNotification.setVisibility(View.VISIBLE);
+            allowRememberNotificationText.setVisibility(View.VISIBLE);
+
+            allowDailyNotifications.setVisibility(View.VISIBLE);
             allowDailyNotificationText.setVisibility(View.VISIBLE);
         }
 
         allowNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
                 dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true"));
+
+        allowRememberNotification.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
+                dataManager.readFromJSON("allowRememberNotifications", getApplicationContext()).equals("true"));
 
         allowDailyNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
                 dataManager.readFromJSON("allowNotification", getApplicationContext()).equals("true") &&
@@ -129,7 +144,64 @@ public class SettingsActivity extends AppCompatActivity {
             switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         });
 
+        allowNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+                    }
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                        dataManager.saveToJSON("allowNotification", true, getApplicationContext());
+                        allowNotifications.setChecked(true);
+                    } else {
+                        dataManager.saveToJSON("allowNotification", false, getApplicationContext());
+                        allowNotifications.setChecked(false);
+                        allowDailyNotifications.setChecked(false);
+                        allowRememberNotification.setChecked(false);
+                    }
+                }
+            } else {
+                dataManager.saveToJSON("allowNotification", false, getApplicationContext());
+                allowNotifications.setChecked(false);
+                allowDailyNotifications.setChecked(false);
+                allowRememberNotification.setChecked(false);
+            }
+            Log.i("Settings", "allowNotification=" + dataManager.readFromJSON("allowNotification", getMainActivityContext()));
+        });
+        allowRememberNotification.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked && !allowNotifications.isChecked()) {
+                ToastHelper.showToastShort("Schalte vorher die Benachrichtigungen ein.", this);
+                allowRememberNotification.setChecked(false);
+                return;
+            }
+
+            if(isChecked && allowNotifications.isChecked()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
+                }
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                    dataManager.saveToJSON("allowRememberNotifications", true, getMainActivityContext());
+                    allowNotifications.setChecked(true);
+                    allowRememberNotification.setChecked(true);
+                } else {
+                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                    allowRememberNotification.setChecked(false);
+                }
+            } else {
+                allowRememberNotification.setChecked(false);
+                dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+            }
+
+            Log.i("Settings", "allowRememberNotifications=" + dataManager.readFromJSON("allowRememberNotifications", getMainActivityContext()));
+        });
         allowDailyNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked && !allowNotifications.isChecked()) {
+                ToastHelper.showToastShort("Schalte vorher die Benachrichtigungen ein.", this);
+                allowDailyNotifications.setChecked(false);
+                return;
+            }
+
             if(isChecked && allowNotifications.isChecked()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
@@ -146,30 +218,8 @@ public class SettingsActivity extends AppCompatActivity {
                 allowDailyNotifications.setChecked(false);
                 dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
             }
-            Log.i("Settings", "allowDailyNotifications=" + dataManager.readFromJSON("allowDailyNotifications", getMainActivityContext()));
-        });
-        allowNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 1);
-                    }
 
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                        dataManager.saveToJSON("allowNotification", true, getApplicationContext());
-                        allowNotifications.setChecked(true);
-                    } else {
-                        dataManager.saveToJSON("allowNotification", false, getApplicationContext());
-                        allowNotifications.setChecked(false);
-                        allowDailyNotifications.setChecked(false);
-                    }
-                }
-            } else {
-                dataManager.saveToJSON("allowNotification", false, getApplicationContext());
-                allowNotifications.setChecked(false);
-                allowDailyNotifications.setChecked(false);
-            }
-            Log.i("Settings", "allowNotification=" + dataManager.readFromJSON("allowNotification", getMainActivityContext()));
+            Log.i("Settings", "allowDailyNotifications=" + dataManager.readFromJSON("allowDailyNotifications", getMainActivityContext()));
         });
 
         // Declare a Spinner object
@@ -639,6 +689,8 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsDisplayModeTitle = findViewById(R.id.settings_display_mode_title);
         TextView allowNotifications = findViewById(R.id.settings_notifications);
         TextView allowNotificationsText = findViewById(R.id.settings_notifications_text);
+        TextView allowRememberNotifications = findViewById(R.id.settings_remember);
+        TextView allowRememberNotificationsText = findViewById(R.id.settings_remember_text);
         TextView allowDailyNotifications = findViewById(R.id.settings_daily_hints);
         TextView allowDailyNotificationsText = findViewById(R.id.settings_daily_hints_text);
 
@@ -664,6 +716,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsDisplayModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         allowNotifications.setTextColor(ContextCompat.getColor(this, textColor));
         allowNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
+        allowRememberNotifications.setTextColor(ContextCompat.getColor(this, textColor));
+        allowRememberNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
         allowDailyNotifications.setTextColor(ContextCompat.getColor(this, textColor));
         allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, textColor));

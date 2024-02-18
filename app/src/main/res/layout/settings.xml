@@ -159,11 +159,11 @@
                 android:id="@+id/settings_true_darkmode_text"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:text="@string/trueDarkmodeText"
-                android:textColor="@color/colorBTNForegroundAccent"
                 android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
                 android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform" />
+                android:autoSizeTextType="uniform"
+                android:text="@string/trueDarkmodeText"
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <TextView
                 android:id="@+id/settings_calculation_mode_title"
@@ -264,12 +264,40 @@
             <TextView
                 android:id="@+id/settings_notifications_text"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="140dp"
                 android:text="@string/notificationsText"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <Switch
+                android:id="@+id/settings_remember"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/remember"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:id="@+id/settings_remember_text"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/rememberText"
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <TextView
                 android:layout_width="match_parent"

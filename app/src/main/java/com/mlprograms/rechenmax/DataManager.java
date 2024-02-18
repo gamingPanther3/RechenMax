@@ -46,10 +46,11 @@ import java.nio.file.Files;
 //  | currentVersion                   | String                   | MainActivity                         |
 //  | old_version                      | String                   | MainActivity                         |
 //  | returnToCalculator               | true / false             | MainActivity                         |
-//  | settingsDailyHints               | true / false             | SettingsActivity                     |
 //  | notificationSent                 | true / false             | BackgroundService                    |
 //  | pressedCalculate                 | true / false             | MainActivity                         |
-//  | allowNotification                | true / false             | MainActivity                         |
+//  | allowNotification                | true / false             | SettingsActivity                         |
+//  | allowRememberNotifications       | true / false             | SettingsActivity                         |
+//  | allowDailyNotifications          | true / false             | SettingsActivity                     |
 
 public class DataManager {
 
@@ -288,6 +289,9 @@ public class DataManager {
         }
         if(readFromJSON("allowDailyNotifications", applicationContext) == null) {
             saveToJSON("allowDailyNotifications", "false", applicationContext);
+        }
+        if(readFromJSON("allowRememberNotifications", applicationContext) == null) {
+            saveToJSON("allowRememberNotifications", "false", applicationContext);
         }
         if(readFromJSON("notificationSent", applicationContext) == null) {
             saveToJSON("notificationSent", "false", applicationContext);
