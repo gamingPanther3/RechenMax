@@ -1,11 +1,11 @@
 package com.mlprograms.rechenmax;
 
+import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_BACKGROUND;
+import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_HINTS;
+import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_REMEMBER;
 import static com.mlprograms.rechenmax.BackgroundService.createNotificationChannel;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
-import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_BACKGROUND;
-import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_REMEMBER;
-import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_HINTS;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -13,11 +13,11 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +53,8 @@ public class SettingsActivity extends AppCompatActivity {
     // Declare a static MainActivity object
     @SuppressLint("StaticFieldLeak")
     private static MainActivity mainActivity;
+    private static final String PREFS_NAME = "NotificationPermissionPrefs";
+    private static final String PERMISSION_GRANTED_KEY = "permission_granted";
 
     /**
      * The `savedInstanceState` Bundle contains data that was saved in {@link #onSaveInstanceState}
@@ -208,10 +210,7 @@ public class SettingsActivity extends AppCompatActivity {
         updateSpinner(spinner2);
         updateSpinner(spinner3);
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            requestNotificationPermission();
-            createNotificationChannel(this);
-        }
+        createNotificationChannel(this);
         createNotificationButtonListeners();
     }
 
@@ -275,6 +274,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             allowNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                boolean isPermissionGranted = isNotificationPermissionGranted();
+                if (!isPermissionGranted) {
+                    requestNotificationPermission();
+                }
+
                 if(!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
                     dataManager.saveToJSON("allowNotifications", false, getMainActivityContext());
                     activateNotificationMessage();
@@ -388,9 +392,14 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 100);
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        boolean isPermissionGranted = sharedPreferences.getBoolean(PERMISSION_GRANTED_KEY, false);
+
+        if (!isPermissionGranted) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 100);
+                }
             }
         }
     }
@@ -400,12 +409,24 @@ public class SettingsActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == 100) {
+            savePermissionStatus(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 createNotificationButtonListeners();
             }
         }
     }
 
+    private boolean isNotificationPermissionGranted() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(PERMISSION_GRANTED_KEY, false);
+    }
+
+    private void savePermissionStatus(boolean isGranted) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(PERMISSION_GRANTED_KEY, isGranted);
+        editor.apply();
+    }
 
     private void turnOnNotificationsMessage() {
         if(Locale.getDefault().getDisplayLanguage().equals("English")) {
