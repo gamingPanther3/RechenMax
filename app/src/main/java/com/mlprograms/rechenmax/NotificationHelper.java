@@ -1,7 +1,6 @@
 package com.mlprograms.rechenmax;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -22,15 +21,9 @@ public class NotificationHelper {
      * @param title The title of the notification.
      * @param content The content of the notification.
      * @param CHANNEL_ID The ID of the notification channel.
-     * @param CHANNEL_NAME The name of the notification channel.
      */
-    public static void sendNotification(Context context, int notificationId, String title, String content, String CHANNEL_ID, String CHANNEL_NAME, boolean fullScreenIntent) {
+    public static void sendNotification(Context context, int notificationId, String title, String content, String CHANNEL_ID, boolean fullScreenIntent) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationChannel channel = notificationManager.getNotificationChannel(CHANNEL_ID);
-        if (channel == null) {
-            channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(channel);
-        }
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("title", title);

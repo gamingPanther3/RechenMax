@@ -1,20 +1,16 @@
 package com.mlprograms.rechenmax;
 
+import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_BACKGROUND;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
-
-import androidx.core.app.NotificationCompat;
 
 /**
  * NotificationReceiver class extends BroadcastReceiver and handles notifications received from the system.
  * It sends notifications using NotificationHelper.
  */
 public class NotificationReceiver extends BroadcastReceiver {
-    // Channel ID and name for the background service channel
-    private static final String CHANNEL_ID = "BackgroundServiceChannel";
-    private static final String CHANNEL_NAME = "BackgroundService";
 
     /**
      * onReceive method called when a notification is received.
@@ -28,7 +24,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         String title = intent.getStringExtra("title");
         String content = intent.getStringExtra("content");
-        NotificationHelper.sendNotification(context, 2, title, content, CHANNEL_ID, CHANNEL_NAME, true);
+        NotificationHelper.sendNotification(context, 2, title, content, CHANNEL_ID_BACKGROUND, true);
 
         if (wakeLock.isHeld()) {
             wakeLock.release();

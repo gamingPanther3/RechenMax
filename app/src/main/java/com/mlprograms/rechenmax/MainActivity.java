@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
         dataManager.loadNumbers();
 
-        if(!getCalculateText().isEmpty()) {
+        if(findViewById(R.id.calculate_label) != null && findViewById(R.id.result_label) != null && !getCalculateText().isEmpty()) {
             setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         }
 
@@ -2057,6 +2057,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+        stopBackgroundService();
         if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
             dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
         }
