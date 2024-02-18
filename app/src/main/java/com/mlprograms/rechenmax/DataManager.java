@@ -16,8 +16,8 @@ import java.nio.file.Files;
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.4.2
- * @date 09.02.2024
+ * @version 1.4.5
+ * @date 18.02.2024
  */
 
 //  | Names                            | Values                   | Context                              |
@@ -48,8 +48,8 @@ import java.nio.file.Files;
 //  | returnToCalculator               | true / false             | MainActivity                         |
 //  | notificationSent                 | true / false             | BackgroundService                    |
 //  | pressedCalculate                 | true / false             | MainActivity                         |
-//  | allowNotification                | true / false             | SettingsActivity                         |
-//  | allowRememberNotifications       | true / false             | SettingsActivity                         |
+//  | allowNotification                | true / false             | SettingsActivity                     |
+//  | allowRememberNotifications       | true / false             | SettingsActivity                     |
 //  | allowDailyNotifications          | true / false             | SettingsActivity                     |
 //  | allowRememberNotificationsActive | true / false             | SettingsActivity                     |
 //  | allowDailyNotificationsActive    | true / false             | SettingsActivity                     |
