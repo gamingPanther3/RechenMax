@@ -73,7 +73,7 @@ public class BackgroundService extends Service {
             if (isServiceRunning) {
                 final int currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
                 final String language = Locale.getDefault().getDisplayLanguage();
-                handler.postDelayed(this, 10000); // 600000 = 10min
+                handler.postDelayed(this, 600000); // 600000 = 10min
 
                 checkBackgroundServiceNotification();
 
@@ -112,9 +112,9 @@ public class BackgroundService extends Service {
         String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
         String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
 
-        Log.e("DEBUG", allowNotification);
-        Log.e("DEBUG", allowRememberNotifications);
-        Log.e("DEBUG", allowDailyNotifications);
+        //Log.e("DEBUG", allowNotification);
+        //Log.e("DEBUG", allowRememberNotifications);
+        //Log.e("DEBUG", allowDailyNotifications);
 
         if ("true".equals(allowNotification) && (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
             //dataManager.saveToJSON("notificationSent", false, this);
