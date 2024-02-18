@@ -197,7 +197,9 @@
 
     <string name="systemRequirementsText">\nMinimale Android-Version: 10\nEmpfohlene Android-Version: 13 oder höher\nMaximale Android-Version: 14\n</string>
     <string name="dailyHints">Tägliche Tipps</string>
-    <string name="dailyHintsText">Mit dieser Einstellung kannst du einstellen, ob dir Täglich ein Tipp oder eine Information über den Taschenrechner geschickt wird. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist.</string>
+    <string name="dailyHintsText">Mit dieser Einstellung kannst du einstellen, ob dir Täglich ein Tipp oder eine Information über den Taschenrechner geschickt wird.</string>
+    <string name="remember">Erinnerung</string>
+    <string name="rememberText">Mit dieser Einstellung kannst du festlegen, ob dir eine Benachrichtigung gesendet wird, die dich alle vier Tage daran erinnert, den Taschenrechner zu nutzen, falls du ihn nicht verwendet hast.</string>
     <string name="scientificMode">Wissenschaftlicher Modus</string>
     <string name="changeMode">Modus wechseln</string>
     <string name="mode">Modus</string>
@@ -237,5 +239,5 @@
     <string name="help">Hife</string>
     <string name="back">Zurück</string>
     <string name="notifications">Benachrichtigungen</string>
-    <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist.</string>
+    <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist. Zusätzlich müssen die Erinnerungen oder täglichen Tipps aktiviert sein, damit eine Benachrichtigung gesendet wird.</string>
 </resources>

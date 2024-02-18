@@ -56,7 +56,6 @@
     <string name="negate">"Negieren"</string>
     <string name="calculateText">"Nachdem du deine Berechnung abgeschlossen hast, betätige die '='-Taste, um das Ergebnis zu berechnen. Anschließend wird das Resultat im Ergebnisbereich für dich angezeigt. Diese einfache Vorgehensweise ermöglicht es dir, schnell und unkompliziert die Ergebnisse deiner Rechenoperationen zu erhalten."</string>
     <string name="comma">"Komma"</string>
-    <string name="app_name">RechenMax</string>
     <string name="commaButton">,</string>
     <string name="numberFieldText">"In diesem Bereich kannst du durch Klicken auf Zahlen diese schrittweise zum aktuellen Ergebnis im Ergebnisbereich hinzufügen. Dies ermöglicht eine einfache Zusammenstellung deiner gewünschten Zahlenkombination und zeigt dir transparent, wie sich das Ergebnis mit jeder Auswahl ändert."</string>
     <string name="callUpHistoryText">"In der Aktionsleiste findest du den Verlaufsknopf, der es dir ermöglicht, auf deine vorherigen Berechnungen zuzugreifen und diese anzuzeigen. Dieser praktische Knopf erleichtert es dir, deine bisherigen Berechnungen schnell wiederzufinden und bei Bedarf darauf zurückzugreifen, sei es, um Ergebnisse zu überprüfen oder vergangene Rechenoperationen zu wiederholen."</string>
@@ -82,6 +81,8 @@
 
     <string name="dailyHints">Tägliche Tipps</string>
     <string name="dailyHintsText">Mit dieser Einstellung kannst du einstellen, ob dir Täglich ein Tipp oder eine Information über den Taschenrechner geschickt wird.</string>
+    <string name="remember">Erinnerung</string>
+    <string name="rememberText">Mit dieser Einstellung kannst du festlegen, ob dir eine Benachrichtigung gesendet wird, die dich alle vier Tage daran erinnert, den Taschenrechner zu nutzen, falls du ihn nicht verwendet hast.</string>
 
     <string name="patchnotes1">\nAutomatisches Scrollen</string>
     <string name="patchnotes2">Falls erforderlich, erfolgt im oberen Berechnungsbereich eine automatische Bildlaufbewegung nach unten.\n</string>
@@ -182,5 +183,5 @@
     <string name="help">Hife</string>
     <string name="back">Zurück</string>
     <string name="notifications">Benachrichtigungen</string>
-    <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist.</string>
+    <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist. Zusätzlich müssen die Erinnerungen oder täglichen Tipps aktiviert sein, damit eine Benachrichtigung gesendet wird.</string>
 </resources>

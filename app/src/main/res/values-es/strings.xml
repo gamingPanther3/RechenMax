@@ -152,8 +152,12 @@
     <string name="patchnotes58">La calculadora ahora está disponible en alemán, inglés, español y francés.</string>
 
     <string name="systemRequirementsText">\nVersión mínima de Android: 10\nVersión recomendada de Android: 13 o superior\nVersión máxima de Android: 14\n</string>
+
     <string name="dailyHints">Consejos diarios</string>
-    <string name="dailyHintsText">Con esta configuración, puedes elegir si recibir un consejo diario o información sobre la calculadora. Ten en cuenta que esta función solo está disponible a partir de la API 33 (Android 13).</string>
+    <string name="dailyHintsText">Con esta configuración, puedes elegir si recibir un consejo diario o información sobre la calculadora.</string>
+    <string name="remember">Recordatorio</string>
+    <string name="rememberText">Con esta configuración, puedes elegir si recibir una notificación recordándote usar la calculadora cada cuatro días en caso de que no la hayas utilizado.</string>
+
     <string name="scientificMode">Modo científico</string>
     <string name="changeMode">Cambiar modo</string>
     <string name="mode">Modo</string>
@@ -193,5 +197,5 @@
     <string name="help">Ayuda</string>
     <string name="back">Atrás</string>
     <string name="notifications">Notificaciones</string>
-    <string name="notificationsText">Para recibir notificaciones, activa esta configuración. Sin embargo, ten en cuenta que debes permitir que la aplicación te envíe notificaciones. Además, ten en cuenta que esta función solo está disponible a partir de API 33 (Android 13).</string>
+    <string name="notificationsText">Para recibir notificaciones, activa esta configuración. Sin embargo, ten en cuenta que debes permitir que la aplicación te envíe notificaciones. Además, ten en cuenta que esta función solo está disponible a partir de API 33 (Android 13). Además, los recordatorios o consejos diarios deben estar activados para que se envíe una notificación.</string>
 </resources>
