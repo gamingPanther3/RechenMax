@@ -71,18 +71,21 @@ public class BackgroundService extends Service {
         @Override
         public void run() {
             if (isServiceRunning) {
-                final int currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
-                final String language = Locale.getDefault().getDisplayLanguage();
                 handler.postDelayed(this, 600000); // 600000 = 10min
+                String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
+                String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
+
+                Log.e("DEBUG", allowRememberNotifications);
+                Log.e("DEBUG", allowDailyNotifications);
 
                 checkBackgroundServiceNotification();
 
-                if(dataManager.readFromJSON("allowRememberNotifications", getApplicationContext()).equals("true")) {
-                    checkRememberNotification(currentTime, language);
+                if(allowRememberNotifications.equals("true")) {
+                    checkRememberNotification();
                 }
 
-                if(dataManager.readFromJSON("allowDailyNotifications", getApplicationContext()).equals("true")) {
-                    checkHintNotification(currentTime, language);
+                if(allowDailyNotifications.equals("true")) {
+                    checkHintNotification();
                 }
             }
             Log.d("Remaining Time", "Remaining Time: " + ((NOTIFICATION_INTERVAL + 1000 - (System.currentTimeMillis() - getLastBackgroundTime())) / 1000) + "s");
@@ -111,10 +114,6 @@ public class BackgroundService extends Service {
         String allowNotification = dataManager.readFromJSON("allowNotification", getApplicationContext());
         String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
         String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
-
-        //Log.e("DEBUG", allowNotification);
-        //Log.e("DEBUG", allowRememberNotifications);
-        //Log.e("DEBUG", allowDailyNotifications);
 
         if ("true".equals(allowNotification) && (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
             //dataManager.saveToJSON("notificationSent", false, this);
@@ -163,7 +162,9 @@ public class BackgroundService extends Service {
      * If the time since the last background exceeds the notification interval, a random reminder is sent.
      * If the main notification is not active, the foreground service is restarted.
      */
-    private void checkRememberNotification(final int currentTime, final String language) {
+    private void checkRememberNotification() {
+        final int currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
+        final String language = Locale.getDefault().getDisplayLanguage();
 
         if ((System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_INTERVAL) || (System.currentTimeMillis() - getLastBackgroundTime() <= 0)) {
             String title_remember = getRandomElement(mainNotificationTitleGerman);
@@ -191,7 +192,10 @@ public class BackgroundService extends Service {
         }
     }
 
-    private void checkHintNotification(final int currentTime, final String language) {
+    private void checkHintNotification() {
+        final int currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
+        final String language = Locale.getDefault().getDisplayLanguage();
+
         String title_hints = "Wusstest du schon?";
         String content_hints = getRandomElement(notificationHintsListGerman);
 
