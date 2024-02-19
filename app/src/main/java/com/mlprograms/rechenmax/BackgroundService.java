@@ -75,8 +75,8 @@ public class BackgroundService extends Service {
                 String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
                 String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
 
-                Log.e("DEBUG", allowRememberNotifications);
-                Log.e("DEBUG", allowDailyNotifications);
+                //Log.e("DEBUG", allowRememberNotifications);
+                //Log.e("DEBUG", allowDailyNotifications);
 
                 checkBackgroundServiceNotification();
 
