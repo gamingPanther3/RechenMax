@@ -8,14 +8,23 @@ public class NotificationText {
             "Vergiss mich nicht!",
             "Es wird Zeit zu rechnen!",
             "Rechenzeit!",
-            "RechenMax wartet!"
+            "Zeit für den RechenMax",
+            "Zeit fürs Rechnen!",
+            "Denk an mich!",
+            "Rechenmax macht dein Leben einfacher",
+            "Bereit für den RechenMax?",
+            "Hast du Rechenmax heute schon genutzt?"
     );
 
     public static List<String> mainNotificationContentGerman = Arrays.asList(
             "Hey, du hast schon eine Weile nichts mehr gerechnet. Vielleicht wird es mal wieder Zeit.",
             "Dein RechenMax gähnt vor Langeweile. Zeit für ein paar knifflige Berechnungen!",
             "Berechne die Antwort auf das Leben, das Universum und alles!",
-            "RechenMax freut sich auf dich!"
+            "RechenMax freut sich auf dich!",
+            "Mach dein Leben leichter mit dem RechenMax",
+            "Verpasse nicht die gelegenheit! RechenMax ist deine Lösung.",
+            "Der RechenMax ist dein persönlicher Mathematikassistent.",
+            "Ist jetzt der perfekte Zeitpunkt für den RechenMax?"
     );
 
     public static List<String> notificationHintsListGerman = Arrays.asList(
@@ -32,7 +41,7 @@ public class NotificationText {
             "Der Taschenrechner wurde in Deutschland entwickelt.",
             "42 ist die Antwort auf das gesamte Universum.",
             "Im RechenMax gibt es neben den Grundrechenarten auch weitere Funktionen.",
-            "Der Taschenrechner wurde mithilfe von Java erstellt",
+            "Der Taschenrechner wurde mithilfe von Java erstellt.",
             "Der RechenMax wird regelmäßig aktualisiert.",
             "Es wird ständig am Taschenrechner weiter gearbeitet.",
             "Hoffentlich gefällt dir der RechenMax.",
@@ -44,21 +53,40 @@ public class NotificationText {
             "Den RechenMax und weitere Projekte findest du auf GitHub.",
             "Besuche doch: 'https://sites.google.com/view/ml-programs' um mehr zu erfahren.",
             "1 + 1 ergibt 2.",
-            "Besuche doch: 'https://github.com/gamingPanther3' um mehr zu erfahren."
+            "Besuche doch: 'https://github.com/gamingPanther3' um mehr zu erfahren.",
+            "Der RechenMax wurde von einem Max erschaffen.",
+            "Der RechenMax bietet viele verschiedene Rechenoperatoren an.",
+            "Der RechenMax ist ideal für schnelle Berechnungen.",
+            "Der RechenMax ist vielseitig einsetzbar.",
+            "Die Schwester des Erfinders hat diesen Satz geschrieben.",
+            "RechenMax ist eine unverzichtbare App.",
+            "Dank RechenMax kann man mathematische Aufgaben auch unterwegs lösen.",
+            "RechenMax kann schnell rechnen.",
+            "Die App RechenMax ist für jeden perfekt geeignet."
     );
 
     public static List<String> mainNotificationTitleEnglish = Arrays.asList(
             "Don't forget me!",
             "It's time to calculate!",
             "Calculating time!",
-            "RechenMax is waiting!"
+            "RechenMax is waiting!",
+            "Time for RechenMax.",
+            "Time for calculation!",
+            "Think of me!",
+            "RechenMax makes your life easier.",
+            "Ready for RechenMax?",
+            "Have you used RechenMax today?"
     );
 
     public static List<String> mainNotificationContentEnglish = Arrays.asList(
             "Hey, you haven't calculated anything in a while. Maybe it's time to do it again.",
             "Your RechenMax is yawning out of boredom. Time for some tricky calculations!",
             "Calculate the answer to life, the universe, and everything!",
-            "RechenMax is looking forward to seeing you!"
+            "RechenMax is looking forward to meeting you!",
+            "Make your life easier with RechenMax.",
+            "Don't miss the opportunity! RechenMax is your solution.",
+            "RechenMax is your personal mathematics assistant.",
+            "Is now the perfect time for RechenMax?"
     );
 
     public static List<String> notificationHintsListEnglish = Arrays.asList(
@@ -87,7 +115,16 @@ public class NotificationText {
             "You can find RechenMax and other projects on GitHub.",
             "Visit: 'https://sites.google.com/view/ml-programs' to learn more.",
             "1 + 1 equals 2.",
-            "Visit: 'https://github.com/gamingPanther3' to learn more."
+            "Visit: 'https://github.com/gamingPanther3' to learn more.",
+            "The RechenMax was created by a Max.",
+            "The RechenMax offers many different arithmetic operators.",
+            "The RechenMax is ideal for quick calculations.",
+            "The RechenMax is versatile.",
+            "The inventor's sister wrote this sentence.",
+            "RechenMax is an indispensable app.",
+            "Thanks to RechenMax, mathematical tasks can also be solved on the go.",
+            "RechenMax can calculate quickly.",
+            "The RechenMax app is perfect for everyone."
     );
 
 
@@ -95,14 +132,24 @@ public class NotificationText {
             "N'oublie pas de moi!",
             "Il est temps de calculer!",
             "Temps de calcul!",
-            "RechenMax attend!"
+            "RechenMax attend!",
+            "C'est l'heure pour RechenMax.",
+            "C'est l'heure de calculer !",
+            "Pense à moi !",
+            "RechenMax rend ta vie plus facile.",
+            "Prêt pour RechenMax ?",
+            "As-tu déjà utilisé RechenMax aujourd'hui ?"
     );
 
     public static List<String> mainNotificationContentFrench = Arrays.asList(
             "Hé, tu n'as pas calculé depuis un moment. Peut-être est-il temps de s'y remettre.",
             "Ton RechenMax s'ennuie à mourir. Il est temps de se lancer dans des calculs complexes!",
             "Calcule la réponse à la vie, à l'univers et à tout!",
-            "RechenMax a hâte de te voir!"
+            "RechenMax a hâte de te voir!",
+            "Facilite-toi la vie avec RechenMax.",
+            "Ne rate pas l'occasion ! RechenMax est ta solution.",
+            "RechenMax est ton assistant personnel en mathématiques.",
+            "Est-ce le moment parfait pour RechenMax ?"
     );
 
     public static List<String> notificationHintsListFrench = Arrays.asList(
@@ -129,22 +176,40 @@ public class NotificationText {
             "Vous pouvez trouver RechenMax et d'autres projets sur GitHub.",
             "Visitez : 'https://sites.google.com/view/ml-programs' pour en savoir plus.",
             "1 + 1 égale 2.",
-            "Visitez : 'https://github.com/gamingPanther3' pour en savoir plus."
+            "Visitez : 'https://github.com/gamingPanther3' pour en savoir plus.",
+            "Le RechenMax a été créé par un Max.",
+            "Le RechenMax propose de nombreux opérateurs arithmétiques différents.",
+            "Le RechenMax est idéal pour les calculs rapides.",
+            "Le RechenMax est polyvalent.",
+            "La sœur de l'inventeur a écrit cette phrase.",
+            "RechenMax est une application indispensable.",
+            "Grâce à RechenMax, les tâches mathématiques peuvent également être résolues en déplacement.",
+            "RechenMax peut calculer rapidement.",
+            "L'application RechenMax est parfaite pour tout le monde."
     );
-
 
     public static List<String> mainNotificationTitleSpanish = Arrays.asList(
             "¡No me olvides!",
             "¡Es hora de calcular!",
             "¡Tiempo de cálculo!",
-            "¡RechenMax está esperando!"
+            "¡RechenMax está esperando!",
+            "Es hora de RechenMax.",
+            "¡Es hora de calcular!",
+            "¡Piensa en mí!",
+            "RechenMax facilita tu vida.",
+            "¿Listo para RechenMax?",
+            "¿Ya has utilizado RechenMax hoy?"
     );
 
     public static List<String> mainNotificationContentSpanish = Arrays.asList(
             "¡Hola! Hace un tiempo que no has hecho cálculos. Quizás sea hora de hacerlo de nuevo.",
             "Tu RechenMax se aburre. ¡Es hora de hacer algunos cálculos complicados!",
             "¡Calcula la respuesta a la vida, el universo y todo!",
-            "¡RechenMax está emocionado de verte!"
+            "¡RechenMax está emocionado de verte!",
+            "Facilita tu vida con RechenMax.",
+            "¡No pierdas la oportunidad! RechenMax es tu solución.",
+            "RechenMax es tu asistente personal de matemáticas.",
+            "¿Es ahora el momento perfecto para RechenMax?"
     );
 
     public static List<String> notificationHintsListSpanish = Arrays.asList(
@@ -173,6 +238,15 @@ public class NotificationText {
             "Puedes encontrar RechenMax y otros proyectos en GitHub.",
             "Visita: 'https://sites.google.com/view/ml-programs' para obtener más información.",
             "1 + 1 es igual a 2.",
-            "Visita: 'https://github.com/gamingPanther3' para obtener más información."
+            "Visita: 'https://github.com/gamingPanther3' para obtener más información.",
+            "El RechenMax fue creado por un Max.",
+            "El RechenMax ofrece muchos operadores aritméticos diferentes.",
+            "El RechenMax es ideal para cálculos rápidos.",
+            "El RechenMax es versátil.",
+            "La hermana del inventor escribió esta frase.",
+            "RechenMax es una aplicación indispensable.",
+            "Gracias a RechenMax, las tareas matemáticas también se pueden resolver sobre la marcha.",
+            "RechenMax puede calcular rápidamente.",
+            "La aplicación RechenMax es perfecta para todos."
     );
 }

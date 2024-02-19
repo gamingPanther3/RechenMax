@@ -404,6 +404,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -411,6 +412,17 @@ public class SettingsActivity extends AppCompatActivity {
         if (requestCode == 100) {
             savePermissionStatus(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                Switch allowNotifications = findViewById(R.id.settings_notifications);
+                Switch allowRememberNotification = findViewById(R.id.settings_remember);
+                Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
+
+                dataManager.saveToJSON("allowNotification", true, getMainActivityContext());
+                dataManager.saveToJSON("allowRememberNotifications", true, getMainActivityContext());
+                dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
+                allowNotifications.setChecked(true);
+                allowDailyNotifications.setChecked(true);
+                allowRememberNotification.setChecked(true);
+
                 createNotificationButtonListeners();
             }
         }
