@@ -2071,8 +2071,6 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void onDestroy() {
         super.onDestroy();
-
-        stopBackgroundService();
         if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
             dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
         }
