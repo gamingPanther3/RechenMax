@@ -17,6 +17,7 @@ import static com.mlprograms.rechenmax.NotificationText.notificationHintsListSpa
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -266,28 +267,36 @@ public class BackgroundService extends Service {
         builder = new Notification.Builder(this, CHANNEL_ID_BACKGROUND);
         final String language = Locale.getDefault().getDisplayLanguage();
 
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        String contentTitle;
+        String contentText;
+
         switch (language) {
             case "English":
-                return builder.setContentTitle("RechenMax in the background")
-                        .setContentText("RechenMax is now active in the background.")
-                        .setSmallIcon(R.drawable.rechenmax_notification_icon)
-                        .build();
+                contentTitle = "RechenMax in the background";
+                contentText = "RechenMax is now active in the background.";
+                break;
             case "français":
-                return builder.setContentTitle("RechenMax en arrière-plan")
-                        .setContentText("RechenMax est maintenant actif en arrière-plan.")
-                        .setSmallIcon(R.drawable.rechenmax_notification_icon)
-                        .build();
+                contentTitle = "RechenMax en arrière-plan";
+                contentText = "RechenMax est maintenant actif en arrière-plan.";
+                break;
             case "español":
-                return builder.setContentTitle("RechenMax en segundo plano")
-                        .setContentText("RechenMax está ahora activo en segundo plano.")
-                        .setSmallIcon(R.drawable.rechenmax_notification_icon)
-                        .build();
+                contentTitle = "RechenMax en segundo plano";
+                contentText = "RechenMax está ahora activo en segundo plano.";
+                break;
             default:
-                return builder.setContentTitle("RechenMax im Hintergrund")
-                        .setContentText("RechenMax ist nun im Hintergrund aktiv.")
-                        .setSmallIcon(R.drawable.rechenmax_notification_icon)
-                        .build();
+                contentTitle = "RechenMax im Hintergrund";
+                contentText = "RechenMax ist nun im Hintergrund aktiv.";
+                break;
         }
+
+        return builder.setContentTitle(contentTitle)
+                .setContentText(contentText)
+                .setSmallIcon(R.drawable.rechenmax_notification_icon)
+                .setContentIntent(pendingIntent)
+                .build();
     }
 
     /**
