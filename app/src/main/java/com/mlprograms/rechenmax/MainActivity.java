@@ -2074,9 +2074,18 @@ public class MainActivity extends AppCompatActivity {
         if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
             dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
         }
-        startBackgroundService();
+    }
 
-        finish();
+    /**
+     * onPause method is called when the activity is paused.
+     * It starts the background service.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            startBackgroundService();
+        }
     }
 
     /**
@@ -2096,8 +2105,12 @@ public class MainActivity extends AppCompatActivity {
      * This method is typically called when the activity is being destroyed or when it's no longer necessary to run the background service.
      */
     private void stopBackgroundService() {
-        Intent serviceIntent = new Intent(this, BackgroundService.class);
-        stopService(serviceIntent);
+        try {
+            Intent serviceIntent = new Intent(this, BackgroundService.class);
+            stopService(serviceIntent);
+        } catch (Exception e) {
+            Log.e("stopBackgroundService", e.toString());
+        }
     }
 
     /**
@@ -2108,8 +2121,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private void startBackgroundService() {
         stopBackgroundService();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            startService(new Intent(this, BackgroundService.class));
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                startService(new Intent(this, BackgroundService.class));
+            }
+        } catch (Exception e) {
+            Log.e("startBackgoundService", e.toString());
         }
     }
 
@@ -2281,7 +2298,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             if(!text.isEmpty()) {
-                addCalculateTextWithoutSpace(text);
+                addCalculateTextWithoutSpace(text.replace(" ", ""));
                 if(Locale.getDefault().getDisplayLanguage().equals("English")) {
                     showToastShort("Content copied to clipboard...", getApplicationContext());
                 } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
@@ -2313,6 +2330,9 @@ public class MainActivity extends AppCompatActivity {
             if (!getCalculateText().isEmpty()) {
                 setRotateOperator(!isOperator(String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1))));
             }
+        }
+        if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         }
     }
 

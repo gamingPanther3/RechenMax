@@ -492,16 +492,27 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     * onDestroy method is called when the activity is closed.
+     * This method is called when the activity is destroyed.
+     * It checks if "disablePatchNotesTemporary" is true in the JSON file, and if so, it saves "disablePatchNotesTemporary" as false in the JSON file.
+     * It then calls the finish() method to close the activity.
+     */
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
+            dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
+        }
+    }
+
+    /**
+     * onPause method is called when the activity is paused.
      * It starts the background service.
      */
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (dataManager != null && dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
-            dataManager.saveToJSON("disablePatchNotesTemporary", "false", getApplicationContext());
+    protected void onPause() {
+        super.onPause();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            startBackgroundService();
         }
-        startBackgroundService();
     }
 
     /**
@@ -517,14 +528,19 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * This method stops the background service.
      * It creates an intent to stop the BackgroundService and calls stopService() with that intent.
      * This method is typically called when the activity is being destroyed or when it's no longer necessary to run the background service.
      */
     private void stopBackgroundService() {
-        Intent serviceIntent = new Intent(this, BackgroundService.class);
-        stopService(serviceIntent);
+        try {
+            Intent serviceIntent = new Intent(this, BackgroundService.class);
+            stopService(serviceIntent);
+        } catch (Exception e) {
+            Log.e("stopBackgroundService", e.toString());
+        }
     }
 
     /**
@@ -535,8 +551,12 @@ public class SettingsActivity extends AppCompatActivity {
      */
     private void startBackgroundService() {
         stopBackgroundService();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            startService(new Intent(this, BackgroundService.class));
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                startService(new Intent(this, BackgroundService.class));
+            }
+        } catch (Exception e) {
+            Log.e("startBackgoundService", e.toString());
         }
     }
 

@@ -108,14 +108,12 @@ public class BackgroundService extends Service {
     public void onCreate() {
         super.onCreate();
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        if(dataManager.readFromJSON("allowNotification", getApplicationContext()) == null) {
-            dataManager.saveToJSON("allowNotification", false, getApplicationContext());
-        }
         String allowNotification = dataManager.readFromJSON("allowNotification", getApplicationContext());
         String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
         String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
 
-        if ("true".equals(allowNotification) && (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
+        if ("true".equals(allowNotification) &&
+                (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
             //dataManager.saveToJSON("notificationSent", false, this);
 
             createNotificationChannel(this);
