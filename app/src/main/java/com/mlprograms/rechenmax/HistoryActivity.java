@@ -109,6 +109,7 @@ public class HistoryActivity extends AppCompatActivity {
                             innerLinearLayout.addView(line, 1);
                         }
                     }
+                    innerLinearLayout.removeViewAt(innerLinearLayout.getChildCount() - 1);
                     switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
                 }
             });
@@ -604,9 +605,6 @@ public class HistoryActivity extends AppCompatActivity {
                 returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
 
                 updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
-            } else {
-                historyReturnButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
-                historyDeleteButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
             }
         }
     }

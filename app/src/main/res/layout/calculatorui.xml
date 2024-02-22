@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calculatorUI"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/calculatorUI"
     tools:context="com.mlprograms.rechenmax.MainActivity">
 
     <LinearLayout
@@ -28,10 +27,10 @@
                 android:layout_height="38dp"
                 android:layout_gravity="left|center_vertical"
                 android:layout_marginStart="10dp"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:foreground="@drawable/baseline_science_24_light"
                 android:tag="history"
                 android:tooltipText="@string/scientificMode"
@@ -39,15 +38,15 @@
 
             <Button
                 android:id="@+id/shift"
-                android:layout_width="40dp"
-                android:layout_height="44dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_gravity="left|center_vertical"
                 android:layout_marginStart="10dp"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:foreground="@drawable/baseline_compare_arrows_24_light"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/compare_arrows_light"
                 android:tag="history"
                 android:tooltipText="@string/changeMode"
                 tools:ignore="RtlHardcoded" />
@@ -72,12 +71,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:text="@string/deg"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:textSize="@dimen/calcButtonTextSize"
                 android:tooltipText="@string/degreeRadians" />
 
@@ -87,32 +86,47 @@
                 android:layout_weight="1" />
 
             <Button
+                android:id="@+id/convert_button"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginEnd="10dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/convertbutton"
+                android:tag="history"
+                android:tooltipText="@string/convert"
+                tools:ignore="RtlHardcoded" />
+
+            <Button
                 android:id="@+id/history_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginEnd="10dp"
-                android:foreground="@drawable/baseline_history_24_light"
-                android:tag="history"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/historyicon_light"
+                android:tag="history"
                 android:tooltipText="@string/history"
                 tools:ignore="RtlHardcoded" />
 
             <Button
                 android:id="@+id/settings_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_gravity="right|center_vertical"
                 android:layout_marginEnd="10dp"
-                android:foreground="@drawable/baseline_settings_24_light"
-                android:tag="new_button"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/settings_light"
+                android:tag="new_button"
                 android:tooltipText="@string/settings"
                 tools:ignore="RtlHardcoded" />
 
@@ -167,9 +181,9 @@
                     android:minHeight="70dp"
                     android:paddingStart="10sp"
                     android:paddingEnd="10sp"
-                    android:textSize="45sp"
                     android:text="@string/result_label"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="45sp" />
 
             </LinearLayout>
         </ScrollView>
@@ -179,8 +193,8 @@
         android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="6">
+        android:layout_weight="6"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -191,20 +205,20 @@
 
             <Button
                 android:id="@+id/emptyclipboard"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="MC"
                 android:text="@string/EmptyClipboardButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="@string/emptyClipboard"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:tooltipText="@string/emptyClipboard" />
 
             <Button
                 android:id="@+id/pastefromclipboard"
@@ -225,30 +239,30 @@
 
             <Button
                 android:id="@+id/copytoclipboard"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="MS"
                 android:text="@string/CopyToClipBoardButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="@string/copyNumber"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:tooltipText="@string/copyNumber" />
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="visible"
             android:id="@+id/scientificRow11"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorLightBackground"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/asinus"
@@ -256,15 +270,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/asin"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/inverseSine" />
 
             <Button
@@ -273,15 +287,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="cos"
                 android:text="@string/acos"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/inverseCosine" />
 
             <Button
@@ -290,58 +304,58 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/atan"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize2"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/inverseTangent" />
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="visible"
             android:id="@+id/scientificRow21"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:background="@color/colorLightBackground"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/sinus"
-                android:tag="sin"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/sin"
-                android:tooltipText="@string/sine"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="sin"
+                android:text="@string/sin"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/sine" />
 
             <Button
                 android:id="@+id/cosinus"
-                android:tag="cos"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/cos"
-                android:tooltipText="@string/cosine"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="cos"
+                android:text="@string/cos"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/cosine" />
 
             <Button
                 android:id="@+id/tangens"
@@ -365,14 +379,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="e"
                 android:text="@string/e"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/manuallyNotation" />
 
             <Button
@@ -381,25 +395,25 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="pi"
                 android:text="@string/pi"
-                android:tooltipText="@string/piWord"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui" />
+                android:tooltipText="@string/piWord" />
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/scientificRow12"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:background="@color/colorLightBackground"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/sinush"
@@ -407,57 +421,57 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/sinh"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/hyperbolicSine" />
 
             <Button
                 android:id="@+id/cosinush"
-                android:tag="cos"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/cosh"
-                android:tooltipText="@string/hyperbolicCosine"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="cos"
+                android:text="@string/cosh"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/hyperbolicCosine" />
 
             <Button
                 android:id="@+id/tangensh"
-                android:tag="tan"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/tanh"
-                android:tooltipText="hyperbolische Tangensfunktion"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="tan"
+                android:text="@string/tanh"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="hyperbolische Tangensfunktion" />
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/scientificRow22"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:background="@color/colorLightBackground"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/asinush"
@@ -465,57 +479,57 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/asinh"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="inverse hyperbolische Sinusfunktion" />
 
             <Button
                 android:id="@+id/acosinush"
-                android:tag="cos"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/acosh"
-                android:tooltipText="inverse hyperbolische Cosinusfunktion"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="cos"
+                android:text="@string/acosh"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="inverse hyperbolische Cosinusfunktion" />
 
             <Button
                 android:id="@+id/atangensh"
-                android:tag="tan"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/atanh"
-                android:tooltipText="inverse hyperbolische Tangensfunktion"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="tan"
+                android:text="@string/atanh"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="inverse hyperbolische Tangensfunktion" />
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="visible"
             android:id="@+id/scientificRow13"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorLightBackground"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/log"
@@ -523,14 +537,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/log"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/generalLogarithmFunction" />
 
             <Button
@@ -539,14 +553,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="cos"
                 android:text="@string/log2x"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/specialLogarithmFunction" />
 
             <Button
@@ -555,14 +569,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/logxx"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/manualLogarithmFunction" />
 
             <Button
@@ -571,25 +585,25 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.8"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/ln"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/naturalLogarithmFunction" />
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/scientificRow23"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:background="@color/colorLightBackground"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/three_root"
@@ -598,73 +612,73 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="0.5"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/three_root"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="Kubik Wurzel" />
 
             <Button
                 android:id="@+id/half"
-                android:tag="tan"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
                 android:layout_marginEnd="10dp"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/half"
-                android:tooltipText="Hälfte (0,5)"
-                android:autoSizeTextType="uniform"
+                android:layout_weight="2"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="tan"
+                android:text="@string/half"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="Hälfte (0,5)" />
 
             <Button
                 android:id="@+id/third"
-                android:tag="tan"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/third"
-                android:tooltipText="Drittel (0,333)"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="tan"
+                android:text="@string/third"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="Drittel (0,333)" />
 
             <Button
                 android:id="@+id/quarter"
-                android:tag="tan"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
                 android:layout_marginEnd="10dp"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/quarter"
-                android:tooltipText="Viertel (0,25)"
-                android:autoSizeTextType="uniform"
+                android:layout_weight="2"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="tan"
+                android:text="@string/quarter"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="Viertel (0,25)" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/scientificRow3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
             android:layout_weight="1"
+            android:background="@color/colorLightBackground"
             android:orientation="horizontal">
 
             <Button
@@ -673,79 +687,79 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="("
-                android:tooltipText="@string/parenthesisOn"
                 android:text="@string/clipOn"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui" />
+                android:tooltipText="@string/parenthesisOn" />
 
             <Button
                 android:id="@+id/clipOff"
-                android:tag=")"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/clipOff"
-                android:tooltipText="@string/parenthesisOff"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag=")"
+                android:text="@string/clipOff"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/parenthesisOff" />
 
             <Button
                 android:id="@+id/faculty"
-                android:tag="!x"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/x"
-                android:tooltipText="@string/faculty"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="!x"
+                android:text="@string/x"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/faculty" />
 
             <Button
                 android:id="@+id/power"
-                android:tag="^"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/power"
-                android:tooltipText="@string/exponential"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="^"
+                android:text="@string/power"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/exponential" />
 
             <Button
                 android:id="@+id/root"
-                android:tag="^"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/root"
-                android:tooltipText="@string/squareroot"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="^"
+                android:text="@string/root"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/squareroot" />
 
             <Button
                 android:id="@+id/е"
@@ -754,22 +768,22 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/е"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/eulersNumber" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/clearresult"
@@ -789,172 +803,172 @@
 
             <Button
                 android:id="@+id/clearall"
-                android:tag="C"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_marginStart="7dp"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
+                android:layout_weight="1"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="C"
                 android:text="@string/ClearAllButton"
-                android:tooltipText="@string/clearAll"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/clearAll" />
 
             <Button
                 android:id="@+id/backspace"
-                android:tag="⌫"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="⌫"
                 android:text="@string/BackspaceButton"
-                android:tooltipText="@string/backspace"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/backspace" />
 
             <Button
                 android:id="@+id/divide"
-                android:tag="÷"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="÷"
                 android:text="@string/DivideButton"
-                android:tooltipText="@string/divide"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/divide" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/seven"
-                android:tag="7"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/SevenButton"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="7"
+                android:text="@string/SevenButton"
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/eight"
-                android:tag="8"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/EightButton"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="8"
+                android:text="@string/EightButton"
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/nine"
-                android:tag="9"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/NineButton"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="9"
+                android:text="@string/NineButton"
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/multiply"
-                android:tag="×"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:tooltipText="@string/multiply"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="×"
                 android:text="@string/MultiplyButton"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/multiply" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/four"
-                android:tag="4"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="4"
                 android:text="@string/FourButton"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/five"
-                android:tag="5"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="5"
                 android:text="@string/FiveButton"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/six"
-                android:tag="6"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="6"
                 android:text="@string/SixButton"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/subtract"
@@ -976,52 +990,53 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/one"
-                android:tag="1"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="1"
                 android:text="@string/OneButton"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/two"
-                android:tag="2"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/TwoButton"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="2"
+                android:text="@string/TwoButton"
+                android:textColor="@color/colorBTNForegroundAccent" />
+
             <Button
                 android:id="@+id/three"
-                android:tag="3"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="3"
                 android:text="@string/ThreeButton"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/add"
@@ -1043,8 +1058,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/negative"
@@ -1052,30 +1067,30 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="+-"
                 android:text="@string/NegativButton"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:tooltipText="@string/negate" />
 
             <Button
                 android:id="@+id/zero"
-                android:tag="0"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="0"
                 android:text="@string/ZeroButton"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <Button
                 android:id="@+id/comma"
@@ -1096,19 +1111,19 @@
 
             <Button
                 android:id="@+id/calculate"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
-                android:textColor="@color/colorBTNForegroundAccent"
                 android:tag="="
                 android:text="@string/CalculateButton"
-                android:tooltipText="@string/calculate"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                style="?android:attr/buttonBarButtonStyle" />
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/calculate" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

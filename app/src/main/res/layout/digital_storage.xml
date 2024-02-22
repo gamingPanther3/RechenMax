@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:orientation="vertical"
+    android:layout_gravity="bottom">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertBit"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertByte"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKilobit"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKilobyte"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertMegabit"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertMegabyte"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertGigabit"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertGigabyte"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertTerabit"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertTerabyte"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertPetabit"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertPetabyte"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNull"
+            android:textSize="17sp"
+            android:gravity="end|center_vertical"/>
+    </LinearLayout>
+</LinearLayout>

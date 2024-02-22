@@ -240,4 +240,61 @@
     <string name="back">Zurück</string>
     <string name="notifications">Benachrichtigungen</string>
     <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist. Zusätzlich müssen die Erinnerungen oder täglichen Tipps aktiviert sein, damit eine Benachrichtigung gesendet wird.</string>
+
+
+
+    <string name="convert">Umrechnen</string>
+    <string name="convertTitle">Umrechner</string>
+    <string name="convertNull">0,00</string>
+    <!-- Winkel -->
+    <string name="convertDeg">Grad (Deg)</string>
+    <string name="convertRad">Radian (Rad)</string>
+    <string name="convertPitch">Steigung Prozentsatz (%)</string>
+    <string name="convertGon">Gradian (Gon)</string>
+    <string name="convertMrad">mrad (mrad)</string>
+    <string name="convertMinuteOfTheArc">Minute des Bogens (arcmin)</string>
+    <string name="convertSecondArc">Zweiter Bogen (arcsec)</string>
+    <!-- Flächen -->
+    <string name="convertSquareMillimeter">Quadratmillimeter (mm²)</string>
+    <string name="convertSquareCentimeter">Quadratzentimeter (cm²)</string>
+    <string name="convertSquareMeter">Quadratmeter (m²)</string>
+    <string name="convertSquareKilometer">Quadratkilometer (km²)</string>
+    <string name="convertAr">Ar</string>
+    <string name="convertDekar">Dekar</string>
+    <string name="convertHectares">Hektar</string>
+    <string name="convertSquareInch">Quadrat-Inch (in²)</string>
+    <string name="convertSquareFeet">Quadrat-Feet (ft²)</string>
+    <string name="convertSquareYard">Quadrat-Yard (yd²)</string>
+    <string name="convertAcre">Acre</string>
+    <string name="convertSquareMiles">Quadrat-Meilen (mi²)</string>
+    <!-- Digitaler Speicher -->
+    <string name="convertBit">Bit (Bit)</string>
+    <string name="convertByte">Byte (Byte)</string>
+    <string name="convertKilobit">Kilobit (kbit)</string>
+    <string name="convertKilobyte">Kilobyte (kB)</string>
+    <string name="convertMegabit">Megabit (Mbit)</string>
+    <string name="convertMegabyte">Megabyte (MB)</string>
+    <string name="convertGigabit">Gigabit (Gbit)</string>
+    <string name="convertGigabyte">Gigabyte (GB)</string>
+    <string name="convertTerabit">Terabit (Tbit)</string>
+    <string name="convertTerabyte">Terabyte (TB)</string>
+    <string name="convertPetabit">Petabit (Pbit)</string>
+    <string name="convertPetabyte">Petabyte (PB)</string>
+    <!-- Entfernung -->
+    <string name="convertPikometer">Pikometer (pm)</string>
+    <string name="convertNanometer">Nanometer (nm)</string>
+    <string name="convertMikrometer">Mikrometer (µm)</string>
+    <string name="convertMillimeter">Millimeter (mm)</string>
+    <string name="convertCentimeter">Zentimeter (cm)</string>
+    <string name="convertDezimeter">Dezimeter (dm)</string>
+    <string name="convertMeter">Meter (m)</string>
+    <string name="convertHektometer">Hektometer (hm)</string>
+    <string name="convertKilometer">Kilometer (km)</string>
+    <string name="convertFeet">Feet (ft)</string>
+    <string name="convertYard">Yard (yd)</string>
+    <string name="convertMiles">Meilen (mi)</string>
+    <string name="convertSeamiles">Seemeilen (sm)</string>
+    <string name="convertLightyear">Lichtjahr (ly)</string>
+    <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
+
 </resources>

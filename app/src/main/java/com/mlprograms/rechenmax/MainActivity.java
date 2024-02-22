@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         // Create JSON file and check for its existence
         dataManager.createJSON(this);
         dataManager.initializeSettings(this);
-        dataManager.saveToJSON("currentVersion", "1.6.0", getApplicationContext());
         //dataManager.saveToJSON("old_version", "0", getApplicationContext());
 
         // If it's the first run of the application
@@ -229,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpListeners() {
         setButtonListener(R.id.history_button, this::switchToHistoryAction);
         setButtonListener(R.id.settings_button, this::switchToSettingsAction);
+        setButtonListener(R.id.convert_button, this::switchToConvertAction);
 
         setButtonListener(R.id.okay_button, this::patchNotesOkayButtonAction);
 
@@ -1271,7 +1271,7 @@ public class MainActivity extends AppCompatActivity {
             } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
                 showToastLong("Este botón está desactivado en el modo actual.", getApplicationContext());
             } else {
-                showToastLong("Diese Taste ist im aktuellen Modus deaktiviert..", getApplicationContext());
+                showToastLong("Diese Taste ist im aktuellen Modus deaktiviert.", getApplicationContext());
             }
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
@@ -1798,6 +1798,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Switches to the convert activity.
+     * It creates a new ConvertActivity, sets the main activity context, and starts the activity.
+     */
+    public void switchToConvertAction() {
+        ConvertActivity.setMainActivityContext(this);
+        Intent intent = new Intent(this, ConvertActivity.class);
+        startActivity(intent);
+    }
+
+    /**
      * Switches to the history activity.
      * It creates a new HistoryActivity, sets the main activity context, and starts the activity.
      */
@@ -1836,6 +1846,7 @@ public class MainActivity extends AppCompatActivity {
         // Global variables
         TextView historyButton = findViewById(R.id.history_button);
         TextView settingsButton = findViewById(R.id.settings_button);
+        TextView convertButton = findViewById(R.id.convert_button);
         TextView scienceButton = findViewById(R.id.scientificButton);
         TextView helpButton = findViewById(R.id.help_button);
         Button shiftButton = findViewById(R.id.shift);
@@ -1852,16 +1863,19 @@ public class MainActivity extends AppCompatActivity {
                     switch (currentNightMode) {
                         case Configuration.UI_MODE_NIGHT_YES:
                             if (historyButton != null) {
-                                historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
+                                historyButton.setForeground(getDrawable(R.drawable.historyicon_light));
                             }
                             if (settingsButton != null) {
-                                settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
+                                settingsButton.setForeground(getDrawable(R.drawable.settings_light));
+                            }
+                            if (convertButton != null) {
+                                convertButton.setForeground(getDrawable(R.drawable.convertbutton_light));
                             }
                             if (scienceButton != null) {
                                 scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
                             }
                             if (shiftButton != null) {
-                                shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_light));
+                                shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_light));
                             }
                             if (helpButton != null) {
                                 helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
@@ -1874,13 +1888,16 @@ public class MainActivity extends AppCompatActivity {
                                     scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_true_darkmode));
                                 }
                                 if (historyButton != null) {
-                                    historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_true_darkmode));
+                                    historyButton.setForeground(getDrawable(R.drawable.historyicon_true_darkmode));
                                 }
                                 if (settingsButton != null) {
-                                    settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_true_darkmode));
+                                    settingsButton.setForeground(getDrawable(R.drawable.settings_true_darkmode));
+                                }
+                                if (convertButton != null) {
+                                    convertButton.setForeground(getDrawable(R.drawable.convertbutton_true_darkmode));
                                 }
                                 if (shiftButton != null) {
-                                    shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_true_darkmode));
+                                    shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_true_darkmode));
                                 }
                                 if (helpButton != null) {
                                     helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
@@ -1894,16 +1911,19 @@ public class MainActivity extends AppCompatActivity {
                             newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.white);
                             newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.black);
                             if (historyButton != null) {
-                                historyButton.setForeground(getDrawable(R.drawable.baseline_history_24));
+                                historyButton.setForeground(getDrawable(R.drawable.historyicon));
                             }
                             if (settingsButton != null) {
-                                settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24));
+                                settingsButton.setForeground(getDrawable(R.drawable.settings));
                             }
                             if (scienceButton != null) {
                                 scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
                             }
+                            if (convertButton != null) {
+                                convertButton.setForeground(getDrawable(R.drawable.convertbutton));
+                            }
                             if (shiftButton != null) {
-                                shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24));
+                                shiftButton.setForeground(getDrawable(R.drawable.compare_arrows));
                             }
                             if (helpButton != null) {
                                 helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
@@ -1915,16 +1935,19 @@ public class MainActivity extends AppCompatActivity {
                     newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.white);
                     newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.black);
                     if (historyButton != null) {
-                        historyButton.setForeground(getDrawable(R.drawable.baseline_history_24));
+                        historyButton.setForeground(getDrawable(R.drawable.historyicon));
                     }
                     if (settingsButton != null) {
-                        settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24));
+                        settingsButton.setForeground(getDrawable(R.drawable.settings));
                     }
                     if (scienceButton != null) {
                         scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
                     }
+                    if (convertButton != null) {
+                        convertButton.setForeground(getDrawable(R.drawable.convertbutton));
+                    }
                     if (shiftButton != null) {
-                        shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24));
+                        shiftButton.setForeground(getDrawable(R.drawable.compare_arrows));
                     }
                     if (helpButton != null) {
                         helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
@@ -1933,16 +1956,19 @@ public class MainActivity extends AppCompatActivity {
                 case "Dunkelmodus":
                     dataManager = new DataManager(this);
                     if (historyButton != null) {
-                        historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_light));
+                        historyButton.setForeground(getDrawable(R.drawable.historyicon_light));
                     }
                     if (settingsButton != null) {
-                        settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_light));
+                        settingsButton.setForeground(getDrawable(R.drawable.settings_light));
                     }
                     if (scienceButton != null) {
                         scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
                     }
+                    if (convertButton != null) {
+                        convertButton.setForeground(getDrawable(R.drawable.convertbutton_light));
+                    }
                     if (shiftButton != null) {
-                        shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_light));
+                        shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_light));
                     }
                     if (helpButton != null) {
                         helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
@@ -1959,13 +1985,16 @@ public class MainActivity extends AppCompatActivity {
                                 scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_true_darkmode));
                             }
                             if (historyButton != null) {
-                                historyButton.setForeground(getDrawable(R.drawable.baseline_history_24_true_darkmode));
+                                historyButton.setForeground(getDrawable(R.drawable.historyicon_true_darkmode));
                             }
                             if (settingsButton != null) {
-                                settingsButton.setForeground(getDrawable(R.drawable.baseline_settings_24_true_darkmode));
+                                settingsButton.setForeground(getDrawable(R.drawable.settings_true_darkmode));
+                            }
+                            if (convertButton != null) {
+                                convertButton.setForeground(getDrawable(R.drawable.convertbutton_true_darkmode));
                             }
                             if (shiftButton != null) {
-                                shiftButton.setForeground(getDrawable(R.drawable.baseline_compare_arrows_24_true_darkmode));
+                                shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_true_darkmode));
                             }
                             if (helpButton != null) {
                                 helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
@@ -2683,8 +2712,11 @@ public class MainActivity extends AppCompatActivity {
      */
     @SuppressLint("SetTextI18n")
     public void Calculate() {
-        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true")) {
+                return;
+            }
+
             if(getCalculateText().isEmpty()) {
                 setResultText("0");
             } else {
