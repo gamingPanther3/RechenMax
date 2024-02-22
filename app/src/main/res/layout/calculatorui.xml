@@ -23,15 +23,15 @@
 
             <Button
                 android:id="@+id/scientificButton"
-                android:layout_width="40dp"
-                android:layout_height="38dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:layout_gravity="left|center_vertical"
                 android:layout_marginStart="10dp"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:foreground="@drawable/baseline_science_24_light"
+                android:foreground="@drawable/science_light"
                 android:tag="history"
                 android:tooltipText="@string/scientificMode"
                 tools:ignore="RtlHardcoded" />
