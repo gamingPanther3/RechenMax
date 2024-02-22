@@ -131,11 +131,9 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/settingDisplayModeOptions"
                 android:gravity="center_horizontal"
-                android:prompt="@string/mode_prompt"
                 android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
                 android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform"
-                android:spinnerMode="dialog" />
+                android:autoSizeTextType="uniform" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -196,11 +194,9 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/settingCalculationModeOptions"
                 android:gravity="center_horizontal"
-                android:prompt="@string/mode_prompt"
                 android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
                 android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform"
-                android:spinnerMode="dialog" />
+                android:autoSizeTextType="uniform" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -239,9 +235,7 @@
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:entries="@array/settingsFunctionOptions"
-                android:gravity="center_horizontal"
-                android:prompt="@string/mode_prompt"
-                android:spinnerMode="dialog" />
+                android:gravity="center_horizontal" />
 
             <TextView
                 android:layout_width="match_parent"
