@@ -1,27 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="settingDisplayModeOptions">
-        <item>Systemstandard</item>
-        <item>Tageslichtmodus</item>
-        <item>Dunkelmodus</item>
-    </string-array>
+    <string name="systemDefault">Systemstandard</string>
+    <string name="lightMode">Tageslichtmodus</string>
+    <string name="darkmode">Dunkelmodus</string>
 
-    <string-array name="settingCalculationModeOptions">
-        <item>Standard</item>
-        <item>Vereinfacht</item>
-    </string-array>
+    <string name="defaultCalculationMode">Standard</string>
+    <string name="easyCalculationMode">Vereinfacht</string>
 
-    <string-array name="settingsFunctionOptions">
-        <item>Gradmaß (Deg)</item>
-        <item>Bogenmaß (Rad)</item>
-    </string-array>
+    <string name="degree">Gradmaß (Deg)</string>
+    <string name="radian">Bogenmaß (Rad)</string>
 
 
     <string name="releasenotes">Release-Notes</string>
     <string name="releasenotesText">Wenn diese Option aktiviert ist, werden die Versionshinweise bei jedem Start des Taschenrechners angezeigt. Unabhängig von dieser Einstellung, werden die Versionshinweise nach jeder Installation der neuesten Version automatisch präsentiert.</string>
 
-
-    <string name="mode_prompt">Wähle einen Modus aus</string>
     <string name="releaseDate">Veröffentlichungsdatum: 17.02.24 – 18Uhr</string>
     <string name="overview">Übersicht</string>
     <string name="newFunctions">Neue Funktionen</string>
@@ -234,4 +226,5 @@
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
+    <string name="delete">Löschen</string>
 </resources>

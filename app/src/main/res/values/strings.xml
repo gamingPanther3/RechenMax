@@ -1,4 +1,14 @@
 <resources>
+    <string name="systemDefault">Systemstandard</string>
+    <string name="lightMode">Tageslichtmodus</string>
+    <string name="darkmode">Dunkelmodus</string>
+
+    <string name="defaultCalculationMode">Standard</string>
+    <string name="easyCalculationMode">Vereinfacht</string>
+
+    <string name="degree">Gradmaß (Deg)</string>
+    <string name="radian">Bogenmaß (Rad)</string>
+
     <string name="app_name" translatable="false">RechenMax</string>
     <string name="calculate_label" translatable="false" />
     <string name="result_label" translatable="false">0</string>
@@ -53,24 +63,6 @@
     <string name="half" translatable="false">½</string>
     <string name="third" translatable="false">⅓</string>
     <string name="quarter" translatable="false">¼</string>
-
-    <string-array name="settingDisplayModeOptions">
-        <item>Systemstandard</item>
-        <item>Tageslichtmodus</item>
-        <item>Dunkelmodus</item>
-    </string-array>
-
-    <string-array name="settingCalculationModeOptions">
-        <item>Standard</item>
-        <item>Vereinfacht</item>
-    </string-array>
-
-    <string name="mode_prompt">Wähle einen Modus aus</string>
-
-    <string-array name="settingsFunctionOptions">
-        <item>Gradmaß (Deg)</item>
-        <item>Bogenmaß (Rad)</item>
-    </string-array>
 
     <!-- Patch-Notes -->
     <string name="appVersion" translatable="false">RechenMax 1.6.3</string>
@@ -296,5 +288,6 @@
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
+    <string name="delete">Löschen</string>
 
 </resources>

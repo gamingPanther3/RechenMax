@@ -109,7 +109,7 @@ public class HistoryActivity extends AppCompatActivity {
                             innerLinearLayout.addView(line, 1);
                         }
                     }
-                    innerLinearLayout.removeViewAt(innerLinearLayout.getChildCount() - 1);
+                    //innerLinearLayout.removeViewAt(innerLinearLayout.getChildCount() - 1);
                     switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
                 }
             });
@@ -557,16 +557,16 @@ public class HistoryActivity extends AppCompatActivity {
                         newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
 
-                        deleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24_true_darkmode));
-                        returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                        deleteButton.setForeground(getDrawable(R.drawable.trash_true_darkmode));
+                        returnButton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
 
                         updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
                     } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
                         newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
 
-                        deleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24_light));
-                        returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                        deleteButton.setForeground(getDrawable(R.drawable.trash_light));
+                        returnButton.setForeground(getDrawable(R.drawable.arrow_back_light));
 
                         updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
                     }
@@ -577,8 +577,8 @@ public class HistoryActivity extends AppCompatActivity {
 
                     updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
 
-                    historyReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
-                    historyDeleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24));
+                    historyReturnButton.setForeground(getDrawable(R.drawable.arrow_back));
+                    historyDeleteButton.setForeground(getDrawable(R.drawable.trash));
                     break;
             }
         } else if (getSelectedSetting() != null && getSelectedSetting().equals("Tageslichtmodus"))  {
@@ -586,23 +586,23 @@ public class HistoryActivity extends AppCompatActivity {
             newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.white);
             updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
 
-            historyReturnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
-            historyDeleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24));
+            historyReturnButton.setForeground(getDrawable(R.drawable.arrow_back));
+            historyDeleteButton.setForeground(getDrawable(R.drawable.trash));
         } else if (getSelectedSetting() != null && getSelectedSetting().equals("Dunkelmodus")) {
             if(trueDarkMode != null && trueDarkMode.equals("true")) {
                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
 
-                deleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24_true_darkmode));
-                returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                deleteButton.setForeground(getDrawable(R.drawable.trash_true_darkmode));
+                returnButton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
 
                 updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
             } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
 
-                deleteButton.setForeground(getDrawable(R.drawable.baseline_delete_24_light));
-                returnButton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                deleteButton.setForeground(getDrawable(R.drawable.trash_light));
+                returnButton.setForeground(getDrawable(R.drawable.arrow_back_light));
 
                 updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
             }

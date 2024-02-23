@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -50,6 +52,16 @@ public class SettingsActivity extends AppCompatActivity {
 
     // Declare a DataManager object
     DataManager dataManager;
+    private boolean isProgrammaticChange = false;
+    private ArrayList<CustomItems> customListDisplayMode = new ArrayList<>();
+    private ArrayList<CustomItems> customListCalculationMode = new ArrayList<>();
+    private ArrayList<CustomItems> customListFunctionMode = new ArrayList<>();
+    private CustomAdapter customAdapter1;
+    private CustomAdapter customAdapter2;
+    private CustomAdapter customAdapter3;
+    private Spinner customSpinner1;
+    private Spinner customSpinner2;
+    private Spinner customSpinner3;
     // Declare a static MainActivity object
     @SuppressLint("StaticFieldLeak")
     private static MainActivity mainActivity;
@@ -112,31 +124,86 @@ public class SettingsActivity extends AppCompatActivity {
             switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         });
 
-        // Declare a Spinner object
-        Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
-        final String mode1 = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
-        if(mode1.equals("System")) {
-            spinner1.setSelection(0);
-        } else if (mode1.equals("Light")) {
-            spinner1.setSelection(1);
-        } else {
-            spinner1.setSelection(2);
+        customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings));
+        customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day));
+        customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night));
+        customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+
+        customSpinner1 = findViewById(R.id.settings_display_mode_spinner);
+        if(customSpinner1 != null) {
+            customSpinner1.setAdapter(customAdapter1);
+
+            final String mode = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
+            if(mode.equals("System")) {
+                customSpinner1.setSelection(0);
+            } else if (mode.equals("Light")) {
+                customSpinner1.setSelection(1);
+            } else {
+                customSpinner1.setSelection(2);
+            }
         }
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        assert customSpinner1 != null;
+        customSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (mode1) {
-                    case "System":
-                        dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
-                        break;
-                    case "Light":
-                        dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
-                        break;
-                    case "Dark":
-                        dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
-                        break;
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                CustomItems items = (CustomItems) adapterView.getSelectedItem();
+                String spinnerText = items.getSpinnerText();
+
+                if (isProgrammaticChange) {
+                    isProgrammaticChange = false;
+                    return;
                 }
-                updateSpinner(parent);
+
+                if (spinnerText.equals(getString(R.string.systemDefault))) {
+                    dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
+                } else if (spinnerText.equals(getString(R.string.lightMode))) {
+                    dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
+                } else {
+                    dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
+                }
+                updateSpinner(adapterView);
+                switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+
+        customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings));
+        customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.day));
+        customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+
+        customSpinner2 = findViewById(R.id.settings_calculation_mode_spinner);
+        if(customSpinner2 != null) {
+            customSpinner2.setAdapter(customAdapter2);
+
+            final String mode = dataManager.readFromJSON("calculationMode", getMainActivityContext());
+            if(mode.equals("Standard")) {
+                customSpinner2.setSelection(0);
+            } else {
+                customSpinner2.setSelection(1);
+            }
+        }
+
+        assert customSpinner2 != null;
+        customSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                CustomItems items = (CustomItems) adapterView.getSelectedItem();
+                String spinnerText = items.getSpinnerText();
+
+                if (isProgrammaticChange) {
+                    isProgrammaticChange = false;
+                    return;
+                }
+
+                if(spinnerText.equals(getString(R.string.defaultCalculationMode))) {
+                    dataManager.saveToJSON("calculationMode", "Standard", getMainActivityContext());
+                } else {
+                    dataManager.saveToJSON("calculationMode", "Vereinfacht", getMainActivityContext());
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -145,52 +212,36 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         // Declare a Spinner object
-        Spinner spinner2 = findViewById(R.id.settings_function_spinner);
-        final String mode2 = dataManager.readFromJSON("functionMode", getMainActivityContext());
-        if(mode2.equals("Deg")) {
-            spinner2.setSelection(0);
-        } else {
-            spinner2.setSelection(1);
-        }
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (spinner2.getSelectedItem().toString()) {
-                    case "Gradmaß (Deg)":
-                        dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
-                        break;
-                    case "Bogenmaß (Rad)":
-                        dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
-                        break;
-                }
-                updateSpinnerFunctionMode(parent);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // do nothing
-            }
-        });
+        customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree));
+        customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian));
+        customAdapter3 = new CustomAdapter(this, customListFunctionMode);
 
-        // Declare a Spinner object
-        Spinner spinner3 = findViewById(R.id.settings_calculation_mode_spinner);
-        final String mode4 = dataManager.readFromJSON("calculationMode", getMainActivityContext());
-        if(mode4.equals("Standard")) {
-            spinner3.setSelection(0);
-        } else {
-            spinner3.setSelection(1);
+        customSpinner3 = findViewById(R.id.settings_function_spinner);
+        if(customSpinner3 != null) {
+            customSpinner3.setAdapter(customAdapter3);
+
+            final String mode = dataManager.readFromJSON("functionMode", getMainActivityContext());
+            if(mode.equals(getString(R.string.degree))) {
+                customSpinner3.setSelection(0);
+            } else {
+                customSpinner3.setSelection(1);
+            }
         }
-        spinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        assert customSpinner3 != null;
+        customSpinner3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (spinner3.getSelectedItem().toString()) {
-                    case "Standard":
-                        dataManager.saveToJSON("calculationMode", "Standard", getMainActivityContext());
-                        break;
-                    case "Vereinfacht":
-                        dataManager.saveToJSON("calculationMode", "Vereinfacht", getMainActivityContext());
-                        break;
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                CustomItems items = (CustomItems) adapterView.getSelectedItem();
+                String spinnerText = items.getSpinnerText();
+
+                if (spinnerText.equals(getString(R.string.degree))) {
+                    dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
+                } else {
+                    dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
                 }
-                updateSpinner2(parent);
+
+                //updateSpinner2(adapterView);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -206,10 +257,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
-        updateSpinner(spinner1);
-        updateSpinner(spinner2);
-        updateSpinner(spinner3);
-
         createNotificationChannel(this);
         createNotificationButtonListeners();
     }
@@ -572,7 +619,7 @@ public class SettingsActivity extends AppCompatActivity {
      */
     public void updateSpinner(AdapterView<?> parent) {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        final String readselectedSetting = parent.getSelectedItem().toString();
+        final int readselectedSetting = parent.getSelectedItemPosition();
 
         // Check if the TextView object is null before calling methods on it
         TextView textView = null;
@@ -583,10 +630,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(textView != null) {
             textView.setTextSize(20);
             switch (readselectedSetting) {
-                case "Dunkelmodus":
-                case "Dark mode":
-                case "Modo oscuro":
-                case "Mode sombre":
+                case 2:
                     dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     switchDisplayMode(currentNightMode);
                     if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
@@ -595,18 +639,12 @@ public class SettingsActivity extends AppCompatActivity {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.white));
                     }
                     break;
-                case "Tageslichtmodus":
-                case "Daylight mode":
-                case "Modo diurno":
-                case "Mode lumière du jour":
+                case 1:
                     dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
                     textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     switchDisplayMode(currentNightMode);
                     break;
-                case "Systemstandard":
-                case "System default":
-                case "Por defecto del sistema":
-                case "Norme du système":
+                case 0:
                     dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
                     if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                         if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
@@ -758,19 +796,19 @@ public class SettingsActivity extends AppCompatActivity {
      * This method switches the display mode based on the current night mode.
      * @param currentNightMode The current night mode.
      */
-    @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables"})
+    @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables", "CutPasteId"})
     private void switchDisplayMode(int currentNightMode) {
         Button helpButton = findViewById(R.id.help_button);
+        Button backbutton = findViewById(R.id.settings_return_button);
 
-        Spinner spinner1 = findViewById(R.id.settings_display_mode_spinner);
-        Spinner spinner2 = findViewById(R.id.settings_function_spinner);
-        Spinner spinner3 = findViewById(R.id.settings_calculation_mode_spinner);
-
-        updateSpinner2(spinner1);
-        updateSpinner2(spinner2);
-        updateSpinner2(spinner3);
-
-        @SuppressLint("CutPasteId") Button backbutton = findViewById(R.id.settings_return_button);
+        Spinner[] spinners = {
+                findViewById(R.id.settings_display_mode_spinner),
+                findViewById(R.id.settings_function_spinner),
+                findViewById(R.id.settings_calculation_mode_spinner)
+        };
+        for (Spinner spinner : spinners) {
+            updateSpinner2(spinner);
+        }
 
         if(getSelectedSetting() != null) {
             if(getSelectedSetting().equals("Systemstandard")) {
@@ -785,28 +823,123 @@ public class SettingsActivity extends AppCompatActivity {
                                 updateUI(R.color.black, R.color.white);
 
                                 if(backbutton != null) {
-                                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                                    backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                                 }
                                 if (helpButton != null) {
-                                    helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                                    helpButton.setForeground(getDrawable(R.drawable.help_light));
                                 }
+
+                                customListDisplayMode = new ArrayList<>();
+                                customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_light));
+                                customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_light));
+                                customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_light));
+
+                                customListCalculationMode = new ArrayList<>();
+                                customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_light));
+                                customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_light));
+
+                                customListFunctionMode = new ArrayList<>();
+                                customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
+                                customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
+
+                                customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+                                customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+                                customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+
+                                String color = "#FFFFFF";
+                                String backgroundColor = "#151515";
+
+                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+
+                                for (CustomAdapter adapter : adapters) {
+                                    adapter.setTextColor(Color.parseColor(color));
+                                    adapter.setBackgroundColor(Color.parseColor(backgroundColor));
+                                }
+
                             } else {
                                 updateUI(R.color.darkmode_black, R.color.darkmode_white);
 
                                 if(backbutton != null) {
-                                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                                    backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                                 }
                                 if (helpButton != null) {
-                                    helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
+                                    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                                }
+
+                                customListDisplayMode = new ArrayList<>();
+                                customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_true_darkmode));
+                                customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_true_darkmode));
+                                customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_true_darkmode));
+
+                                customListCalculationMode = new ArrayList<>();
+                                customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_true_darkmode));
+                                customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_true_darkmode));
+
+                                customListFunctionMode = new ArrayList<>();
+                                customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_true_darkmode));
+                                customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_true_darkmode));
+
+                                customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+                                customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+                                customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+
+                                String color = "#D5D5D5";
+                                String backgroundColor = "#000000";
+
+                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+
+                                for (CustomAdapter adapter : adapters) {
+                                    adapter.setTextColor(Color.parseColor(color));
+                                    adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                                 }
                             }
+                            customSpinner1.setAdapter(customAdapter1);
+                            customSpinner2.setAdapter(customAdapter2);
+                            customSpinner3.setAdapter(customAdapter3);
+
+                            isProgrammaticChange = true;
+                            customSpinner1.setSelection(0);
                         } else {
                             if(backbutton != null) {
-                                backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                                backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                             }
                             if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                                helpButton.setForeground(getDrawable(R.drawable.help_light));
                             }
+
+                            customListDisplayMode = new ArrayList<>();
+                            customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_light));
+                            customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_light));
+                            customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_light));
+
+                            customListCalculationMode = new ArrayList<>();
+                            customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_light));
+                            customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_light));
+
+                            customListFunctionMode = new ArrayList<>();
+                            customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
+                            customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
+
+                            customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+                            customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+                            customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+
+                            String color = "#FFFFFF";
+                            String backgroundColor = "#151515";
+
+                            CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+
+                            for (CustomAdapter adapter : adapters) {
+                                adapter.setTextColor(Color.parseColor(color));
+                                adapter.setBackgroundColor(Color.parseColor(backgroundColor));
+                            }
+
+                            customSpinner1.setAdapter(customAdapter1);
+                            customSpinner2.setAdapter(customAdapter2);
+                            customSpinner3.setAdapter(customAdapter3);
+
+                            isProgrammaticChange = true;
+                            customSpinner1.setSelection(0);
 
                             updateUI(R.color.black, R.color.white);
                         }
@@ -814,22 +947,90 @@ public class SettingsActivity extends AppCompatActivity {
                     case Configuration.UI_MODE_NIGHT_NO:
                         // Nightmode is not activated
                         if(backbutton != null) {
-                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
+                            backbutton.setForeground(getDrawable(R.drawable.arrow_back));
                         }
                         if (helpButton != null) {
-                            helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                            helpButton.setForeground(getDrawable(R.drawable.help));
                         }
+
+                        customListDisplayMode = new ArrayList<>();
+                        customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings));
+                        customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day));
+                        customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night));
+
+                        customListCalculationMode = new ArrayList<>();
+                        customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced));
+                        customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings));
+
+                        customListFunctionMode = new ArrayList<>();
+                        customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree));
+                        customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian));
+
+                        customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+                        customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+                        customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+
+                        String color = "#000000";
+                        String backgroundColor = "#FFFFFF";
+
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+
+                        for (CustomAdapter adapter : adapters) {
+                            adapter.setTextColor(Color.parseColor(color));
+                            adapter.setBackgroundColor(Color.parseColor(backgroundColor));
+                        }
+
+                        customSpinner1.setAdapter(customAdapter1);
+                        customSpinner2.setAdapter(customAdapter2);
+                        customSpinner3.setAdapter(customAdapter3);
+
+                        isProgrammaticChange = true;
+                        customSpinner1.setSelection(0);
 
                         updateUI(R.color.white, R.color.black);
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
                 if(backbutton != null) {
-                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
+                    backbutton.setForeground(getDrawable(R.drawable.arrow_back));
                 }
                 if (helpButton != null) {
-                    helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                    helpButton.setForeground(getDrawable(R.drawable.help));
                 }
+
+                customListDisplayMode = new ArrayList<>();
+                customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings));
+                customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day));
+                customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night));
+
+                customListCalculationMode = new ArrayList<>();
+                customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced));
+                customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings));
+
+                customListFunctionMode = new ArrayList<>();
+                customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree));
+                customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian));
+
+                customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+                customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+                customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+
+                String color = "#000000";
+                String backgroundColor = "#FFFFFF";
+
+                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+
+                for (CustomAdapter adapter : adapters) {
+                    adapter.setTextColor(Color.parseColor(color));
+                    adapter.setBackgroundColor(Color.parseColor(backgroundColor));
+                }
+
+                customSpinner1.setAdapter(customAdapter1);
+                customSpinner2.setAdapter(customAdapter2);
+                customSpinner3.setAdapter(customAdapter3);
+
+                isProgrammaticChange = true;
+                customSpinner1.setSelection(1);
 
                 updateUI(R.color.white, R.color.black);
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
@@ -842,34 +1043,136 @@ public class SettingsActivity extends AppCompatActivity {
                         updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
 
                         if(backbutton != null) {
-                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                            backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                         }
                         if (helpButton != null) {
-                            helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                            helpButton.setForeground(getDrawable(R.drawable.help_light));
                         }
+
+                        customListDisplayMode = new ArrayList<>();
+                        customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_light));
+                        customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_light));
+                        customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_light));
+
+                        customListCalculationMode = new ArrayList<>();
+                        customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_light));
+                        customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_light));
+
+                        customListFunctionMode = new ArrayList<>();
+                        customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
+                        customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
+
+                        customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+                        customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+                        customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+
+                        String color = "#FFFFFF";
+                        String backgroundColor = "#151515";
+
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+
+                        for (CustomAdapter adapter : adapters) {
+                            adapter.setTextColor(Color.parseColor(color));
+                            adapter.setBackgroundColor(Color.parseColor(backgroundColor));
+                        }
+
                     } else {
                         updateUI(R.color.darkmode_black, R.color.darkmode_white);
                         updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
 
                         if(backbutton != null) {
-                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                            backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                         }
                         if (helpButton != null) {
-                            helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
+                            helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                        }
+
+                        customListDisplayMode = new ArrayList<>();
+                        customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_true_darkmode));
+                        customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_true_darkmode));
+                        customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_true_darkmode));
+
+                        customListCalculationMode = new ArrayList<>();
+                        customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_true_darkmode));
+                        customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_true_darkmode));
+
+                        customListFunctionMode = new ArrayList<>();
+                        customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_true_darkmode));
+                        customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_true_darkmode));
+
+                        customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+                        customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+                        customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+
+                        String color = "#D5D5D5";
+                        String backgroundColor = "#000000";
+
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+
+                        for (CustomAdapter adapter : adapters) {
+                            adapter.setTextColor(Color.parseColor(color));
+                            adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                         }
                     }
+
+                    customSpinner1.setAdapter(customAdapter1);
+                    customSpinner2.setAdapter(customAdapter2);
+                    customSpinner3.setAdapter(customAdapter3);
+
+                    isProgrammaticChange = true;
+                    customSpinner1.setSelection(2);
                 } else {
                     if(backbutton != null) {
-                        backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                        backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                     }
                     if (helpButton != null) {
-                        helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                        helpButton.setForeground(getDrawable(R.drawable.help_light));
                     }
+
+                    customListDisplayMode = new ArrayList<>();
+                    customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_light));
+                    customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_light));
+                    customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_light));
+
+                    customListCalculationMode = new ArrayList<>();
+                    customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_light));
+                    customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_light));
+
+                    customListFunctionMode = new ArrayList<>();
+                    customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
+                    customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
+
+                    customAdapter1 = new CustomAdapter(this, customListDisplayMode);
+                    customAdapter2 = new CustomAdapter(this, customListCalculationMode);
+                    customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+
+                    String color = "#FFFFFF";
+                    String backgroundColor = "#151515";
+
+                    CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+
+                    for (CustomAdapter adapter : adapters) {
+                        adapter.setTextColor(Color.parseColor(color));
+                        adapter.setBackgroundColor(Color.parseColor(backgroundColor));
+                    }
+
+                    customSpinner1.setAdapter(customAdapter1);
+                    customSpinner2.setAdapter(customAdapter2);
+                    isProgrammaticChange = true;
+                    customSpinner1.setSelection(2);
 
                     updateUI(R.color.black, R.color.white);
                     updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
                 }
             }
+            String calculationMode = dataManager.readFromJSON("calculationMode", getMainActivityContext());
+            int selection = calculationMode.equals("Standard") ? 0 : 1;
+            customSpinner2.setSelection(selection);
+
+            calculationMode = dataManager.readFromJSON("functionMode", getMainActivityContext());
+            selection = calculationMode.equals("Deg") ? 0 : 1;
+            customSpinner3.setSelection(selection);
+
         }
     }
 

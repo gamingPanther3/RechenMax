@@ -54,13 +54,14 @@
             <TextView
                 android:id="@+id/shiftMode_text"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:text="@string/shiftMode"
                 android:textSize="@dimen/calcButtonTextSize"
                 android:tooltipText="@string/mode"
@@ -69,15 +70,10 @@
             <TextView
                 android:id="@+id/functionMode_text"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_calculatorui"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/deg"
-                android:textSize="@dimen/calcButtonTextSize"
+                android:textSize="20sp"
                 android:tooltipText="@string/degreeRadians" />
 
             <View

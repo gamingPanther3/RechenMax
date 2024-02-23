@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         scrollToBottom(findViewById(R.id.calculate_scrollview));
 
         // Show all settings
-        //showAllSettings();
+        showAllSettings();
         adjustTextSize();
 
         if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true") &&
@@ -1527,6 +1527,10 @@ public class MainActivity extends AppCompatActivity {
     private void factorial() {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true")) {
+                addCalculateTextWithoutSpace(getResultText() + "!");
+                return;
+            }
             addCalculateTextWithoutSpace("!");
             setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
@@ -1570,6 +1574,10 @@ public class MainActivity extends AppCompatActivity {
     private void powerAction() {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true")) {
+                addCalculateTextWithoutSpace(getResultText() + "^");
+                return;
+            }
             addCalculateTextWithoutSpace("^");
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext()).equals("false")) {
@@ -1673,8 +1681,15 @@ public class MainActivity extends AppCompatActivity {
      * After adding "½" to the calculation text, it formats the result text accordingly.
      */
     private void halfAction() {
-        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true")) {
+                final String input = getResultText() + "÷2= ";
+                setResultText(CalculatorActivity.calculate(balanceParentheses(getResultText() + "÷2")));
+                formatResultTextAfterType();
+                addToHistory(input + getResultText());
+                return;
+            }
+            dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
             addCalculateTextWithoutSpace("½");
             setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
@@ -1705,8 +1720,15 @@ public class MainActivity extends AppCompatActivity {
      * It follows a similar procedure to the halfAction() method but adds "⅓" instead of "½".
      */
     private void thirdAction() {
-        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true")) {
+                final String input = getResultText() + "÷3= ";
+                setResultText(CalculatorActivity.calculate(balanceParentheses(getResultText() + "÷3")));
+                formatResultTextAfterType();
+                addToHistory(input + getResultText());
+                return;
+            }
+            dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
             addCalculateTextWithoutSpace("⅓");
             setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
@@ -1737,8 +1759,15 @@ public class MainActivity extends AppCompatActivity {
      * It follows a similar procedure to the halfAction() method but adds "¼" instead of "½".
      */
     private void quarterAction() {
-        dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true")) {
+                final String input = getResultText() + "÷4= ";
+                setResultText(CalculatorActivity.calculate(balanceParentheses(getResultText() + "÷4")));
+                formatResultTextAfterType();
+                addToHistory(input + getResultText());
+                return;
+            }
+            dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
             addCalculateTextWithoutSpace("¼");
             setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         } else {
@@ -1872,20 +1901,20 @@ public class MainActivity extends AppCompatActivity {
                                 convertButton.setForeground(getDrawable(R.drawable.convertbutton_light));
                             }
                             if (scienceButton != null) {
-                                scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
+                                scienceButton.setForeground(getDrawable(R.drawable.science_light));
                             }
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_light));
                             }
                             if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                                helpButton.setForeground(getDrawable(R.drawable.help_light));
                             }
 
                             if (trueDarkMode != null && trueDarkMode.equals("true")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
                                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
                                 if (scienceButton != null) {
-                                    scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_true_darkmode));
+                                    scienceButton.setForeground(getDrawable(R.drawable.science_true_darkmode));
                                 }
                                 if (historyButton != null) {
                                     historyButton.setForeground(getDrawable(R.drawable.historyicon_true_darkmode));
@@ -1900,7 +1929,7 @@ public class MainActivity extends AppCompatActivity {
                                     shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_true_darkmode));
                                 }
                                 if (helpButton != null) {
-                                    helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
+                                    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
                                 }
                             } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
@@ -1917,7 +1946,7 @@ public class MainActivity extends AppCompatActivity {
                                 settingsButton.setForeground(getDrawable(R.drawable.settings));
                             }
                             if (scienceButton != null) {
-                                scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
+                                scienceButton.setForeground(getDrawable(R.drawable.science));
                             }
                             if (convertButton != null) {
                                 convertButton.setForeground(getDrawable(R.drawable.convertbutton));
@@ -1926,7 +1955,7 @@ public class MainActivity extends AppCompatActivity {
                                 shiftButton.setForeground(getDrawable(R.drawable.compare_arrows));
                             }
                             if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                                helpButton.setForeground(getDrawable(R.drawable.help));
                             }
                             break;
                     }
@@ -1941,7 +1970,7 @@ public class MainActivity extends AppCompatActivity {
                         settingsButton.setForeground(getDrawable(R.drawable.settings));
                     }
                     if (scienceButton != null) {
-                        scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24));
+                        scienceButton.setForeground(getDrawable(R.drawable.science));
                     }
                     if (convertButton != null) {
                         convertButton.setForeground(getDrawable(R.drawable.convertbutton));
@@ -1950,7 +1979,7 @@ public class MainActivity extends AppCompatActivity {
                         shiftButton.setForeground(getDrawable(R.drawable.compare_arrows));
                     }
                     if (helpButton != null) {
-                        helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24));
+                        helpButton.setForeground(getDrawable(R.drawable.help));
                     }
                     break;
                 case "Dunkelmodus":
@@ -1962,7 +1991,7 @@ public class MainActivity extends AppCompatActivity {
                         settingsButton.setForeground(getDrawable(R.drawable.settings_light));
                     }
                     if (scienceButton != null) {
-                        scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_light));
+                        scienceButton.setForeground(getDrawable(R.drawable.science_light));
                     }
                     if (convertButton != null) {
                         convertButton.setForeground(getDrawable(R.drawable.convertbutton_light));
@@ -1971,7 +2000,7 @@ public class MainActivity extends AppCompatActivity {
                         shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_light));
                     }
                     if (helpButton != null) {
-                        helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_light));
+                        helpButton.setForeground(getDrawable(R.drawable.help_light));
                     }
                     if (trueDarkMode != null) {
                         if (trueDarkMode.equals("false")) {
@@ -1982,7 +2011,7 @@ public class MainActivity extends AppCompatActivity {
                             newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
 
                             if (scienceButton != null) {
-                                scienceButton.setForeground(getDrawable(R.drawable.baseline_science_24_true_darkmode));
+                                scienceButton.setForeground(getDrawable(R.drawable.science_true_darkmode));
                             }
                             if (historyButton != null) {
                                 historyButton.setForeground(getDrawable(R.drawable.historyicon_true_darkmode));
@@ -1997,7 +2026,7 @@ public class MainActivity extends AppCompatActivity {
                                 shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_true_darkmode));
                             }
                             if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.baseline_help_outline_24_true_darkmode));
+                                helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
                             }
                         }
                     } else {
@@ -2415,6 +2444,10 @@ public class MainActivity extends AppCompatActivity {
     public void OperationAction(final String op) {
         final String new_op = op.replace("*", "×").replace("/", "÷");
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true")) {
+                addCalculateTextWithoutSpace(getResultText() + new_op);
+                return;
+            }
             addCalculateTextWithoutSpace(new_op);
         } else {
             if(dataManager.readFromJSON("logX", getApplicationContext() ).equals("false")) {
@@ -2629,12 +2662,12 @@ public class MainActivity extends AppCompatActivity {
     public void CommaAction() {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-            addCalculateTextWithoutSpace(getString(R.string.commaButton));
+            addCalculateTextWithoutSpace(",");
         } else {
             final String mode = dataManager.readFromJSON("eNotation", getApplicationContext());
             if (mode.equals("false")) {
-                if (!getResultText().contains(getString(R.string.commaButton))) {
-                    addResultText(getString(R.string.commaButton));
+                if (!getResultText().contains(",")) {
+                    addResultText(",");
                 }
             }
         }
@@ -2811,7 +2844,10 @@ public class MainActivity extends AppCompatActivity {
 
         formatResultTextAfterType();
         adjustTextSize();
-        String calculate = getCalculateText();
+
+        if(!isNumber(getCalculateText())) {
+            addToHistoryAfterCalculate(getCalculateText());
+        }
 
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht") &&
             !isInvalidInput(getResultText())) {
@@ -2825,7 +2861,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         scrollToTop(findViewById(R.id.calculate_scrollview));
+    }
 
+    public static boolean isNumber(String input) {
+        String numberPattern = "^-?\\d+(\\,|\\.)?\\d*(\\.|\\,)?\\d*$";
+        Pattern pattern = Pattern.compile(numberPattern);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
+
+    private void addToHistoryAfterCalculate(String input) {
         // Code snippet to save calculation to history
         final Context context1 = getApplicationContext();
         new Thread(() -> runOnUiThread(() -> {
@@ -2837,7 +2882,36 @@ public class MainActivity extends AppCompatActivity {
                 final int new_value = old_value + 1;
 
                 dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), context1);
-                String calculate_text = calculate;
+                String calculate_text = input;
+
+                if (calculate_text.isEmpty()) {
+                    calculate_text = "0";
+                }
+
+                if (!calculate_text.contains("=")) {
+                    calculate_text = calculate_text + " =";
+                }
+                dataManager.saveToJSON(String.valueOf(old_value + 1), balanceParentheses(calculate_text) + " " + getResultText(), context1);
+            }
+
+            // Log historyTextViewNumber value for debugging
+            Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
+        })).start();
+    }
+
+
+    private void addToHistory(final String input) {
+        // Code snippet to save calculation to history
+        new Thread(() -> runOnUiThread(() -> {
+            final String value = dataManager.readFromJSON("historyTextViewNumber", getApplicationContext());
+            if (value == null) {
+                dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
+            } else {
+                final int old_value = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
+                final int new_value = old_value + 1;
+
+                dataManager.saveToJSON("historyTextViewNumber", Integer.toString(new_value), getApplicationContext());
+                String calculate_text = input;
 
                 if(calculate_text.isEmpty()) {
                     calculate_text = "0";
@@ -2846,11 +2920,11 @@ public class MainActivity extends AppCompatActivity {
                 if(!calculate_text.contains("=")) {
                     calculate_text = calculate_text + " =";
                 }
-                dataManager.saveToJSON(String.valueOf(old_value + 1),balanceParentheses(calculate_text) + " " + getResultText(), context1);
+                dataManager.saveToJSON(String.valueOf(old_value + 1), calculate_text, getApplicationContext());
             }
 
             // Log historyTextViewNumber value for debugging
-            Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", context1));
+            Log.i("Calculate", "historyTextViewNumber: " + dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
         })).start();
     }
 
@@ -2960,10 +3034,10 @@ public class MainActivity extends AppCompatActivity {
                 symbols.setDecimalSeparator(',');
                 symbols.setGroupingSeparator('.');
 
-                if (locale.getLanguage().equals("en")) {
-                    symbols.setDecimalSeparator('.');
-                    symbols.setGroupingSeparator(',');
-                }
+                //if (locale.getLanguage().equals("en")) {
+                //    symbols.setDecimalSeparator('.');
+                //    symbols.setGroupingSeparator(',');
+                //}
 
                 DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
                 //decimalFormat.setGroupingUsed(false);

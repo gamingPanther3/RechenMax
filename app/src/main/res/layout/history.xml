@@ -17,14 +17,14 @@
 
         <Button
             android:id="@+id/history_return_button"
-            android:layout_width="50dp"
-            android:layout_height="43dp"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
             android:layout_gravity="left|center_vertical"
             android:layout_marginStart="10dp"
-            android:foreground="@drawable/baseline_arrow_back_24"
+            android:foreground="@drawable/arrow_back_light"
             android:tag="return"
             android:textSize="@dimen/calcButtonTextSize"
-            android:tooltipText="Zurück"
+            android:tooltipText="@string/back"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -47,13 +47,14 @@
         <Button
             android:id="@+id/history_delete_button"
             android:tag="delete"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_gravity="left|center_vertical"
             android:layout_marginEnd="10dp"
-            android:foreground="@drawable/baseline_delete_24"
+
+            android:foreground="@drawable/trash_light"
             android:textSize="@dimen/calcButtonTextSize"
-            android:tooltipText="Löschen"
+            android:tooltipText="@string/delete"
             tools:ignore="RtlHardcoded" />
     </LinearLayout>
 

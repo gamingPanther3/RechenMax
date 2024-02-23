@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="settingDisplayModeOptions">
-        <item>System default</item>
-        <item>Daylight mode</item>
-        <item>Dark mode</item>
-    </string-array>
+    <string name="systemDefault">System default</string>
+    <string name="lightMode">Daylight mode</string>
+    <string name="darkmode">Dark mode</string>
 
-    <string-array name="settingCalculationModeOptions">
-        <item>Default</item>
-        <item>Simplified</item>
-    </string-array>
+    <string name="defaultCalculationMode">Default</string>
+    <string name="easyCalculationMode">Simplified</string>
 
-    <string-array name="settingsFunctionOptions">
-        <item>Degree measure (Deg)</item>
-        <item>Radians (Rad)</item>
-    </string-array>
+    <string name="degree">Degree measure (Deg)</string>
+    <string name="radian">Radians (Rad)</string>
+
 
     <string name="releaseDate">Release Date: 17.02.24 – 6:00 PM</string>
     <string name="patchnotesOverviewText">The latest RechenMax version brings exciting improvements and features. Automatic scrolling makes it easier to navigate large calculations, while the rounding precision has been increased to the eleventh decimal place for more precise decimal numbers. History has been optimized to effortlessly restore previous calculations and review past tasks. In trigonometric tasks, advanced functions for sine, cosine and tangent in degrees and radians are available. Inverse trigonometric functions (sin⁻¹, cos⁻¹, tan⁻¹) as well as hyperbolic functions such as sinh(x), cosh(x) and tanh(x) are now also available. Manual notation entry provides additional flexibility when creating and calculating complex expressions. The RechnenMax now supports the use of the mathematical constant PI (π) for precise circle calculations. With the flexible support of degrees and radians, you can switch between the two units of measurement as needed. Brackets handling has been optimized to ensure error-free processing of mathematical or logical expressions. The software automatically detects and adds missing closing brackets, further simplifying expression entry. In history, long-pressing on an entry allows the invoice to be automatically copied to the clipboard, while short-pressing pastes the invoice directly into the calculator. This release also fixes important bugs, including display and factorial calculation issues, as well as optimized result formatting for more accurate display.</string>
@@ -91,7 +86,6 @@
 
     <string name="deg_rad">Degrees/radians</string>
 
-    <string name="mode_prompt">Choose a mode</string>
     <string name="patchnotes1">Automatic scrolling</string>
     <string name="patchnotes2">If necessary, the upper calculation area automatically scrolls downwards.\n</string>
     <string name="patchnotes3">Increasing rounding accuracy</string>
@@ -248,4 +242,5 @@
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
+    <string name="delete">Delete</string>
 </resources>

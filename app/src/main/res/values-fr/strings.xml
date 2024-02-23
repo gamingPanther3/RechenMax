@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="settingDisplayModeOptions">
-        <item>Norme du système</item>
-        <item>Mode lumière du jour</item>
-        <item>Mode sombre</item>
-    </string-array>
+    <string name="systemDefault">Norme du système</string>
+    <string name="lightMode">Mode lumière du jour</string>
+    <string name="darkmode">Mode sombre</string>
 
-    <string-array name="settingCalculationModeOptions">
-        <item>Défaut</item>
-        <item>Simplifié</item>
-    </string-array>
+    <string name="defaultCalculationMode">Défaut</string>
+    <string name="easyCalculationMode">Simplifié</string>
 
-    <string-array name="settingsFunctionOptions">
-        <item>Degré (Deg)</item>
-            <item>Radians (Rad)</item>
-    </string-array>
+    <string name="degree">Degré (Deg)</string>
+    <string name="radian">Radians (Rad)</string>
+
 
     <string name="releaseDate">Date de sortie: 17.02.24 – 18h00</string>
     <string name="patchnotesOverviewText">La dernière version de RechnerMax apporte des améliorations et des fonctionnalités intéressantes. Le défilement automatique facilite la navigation dans les calculs volumineux, tandis que la précision de l\'arrondi a été augmentée jusqu\'à la onzième décimale pour des nombres décimaux plus précis. L\'historique a été optimisé pour restaurer sans effort les calculs précédents et revoir les tâches passées. Dans les tâches trigonométriques, des fonctions avancées pour le sinus, le cosinus et la tangente en degrés et en radians sont disponibles. Les fonctions trigonométriques inverses (sin⁻¹, cos⁻¹, tan⁻¹) ainsi que les fonctions hyperboliques telles que sinh(x), cosh(x) et tanh(x) sont désormais également disponibles. La saisie manuelle des notations offre une flexibilité supplémentaire lors de la création et du calcul d\'expressions complexes. TherechnerMax prend désormais en charge l\'utilisation de la constante mathématique PI (π) pour des calculs de cercle précis. Grâce à la prise en charge flexible des degrés et des radians, vous pouvez basculer entre les deux unités de mesure selon vos besoins. La gestion des parenthèses a été optimisée pour garantir un traitement sans erreur des expressions mathématiques ou logiques. Le logiciel détecte et ajoute automatiquement les crochets fermants manquants, simplifiant ainsi davantage la saisie des expressions. Dans l\'histoire, un appui long sur une entrée permet de copier automatiquement la facture dans le presse-papier, tandis qu\'un appui court colle la facture directement dans la calculatrice. Cette version corrige également des bugs importants, notamment des problèmes d\'affichage et de calcul factoriel, ainsi qu\'un formatage optimisé des résultats pour un affichage plus précis.</string>
@@ -72,8 +67,7 @@
     <string name="commaButton">,</string>
     <string name="negate">Nier</string>
     <string name="negateText">Si vous souhaitez qu\'un nombre devienne négatif, appuyez sur le bouton « ± ». Appuyez à nouveau si vous souhaitez que le nombre redevienne positif. Cette fonctionnalité vous permet de changer facilement le signe et garantit que vous pouvez ajuster rapidement et facilement vos numéros selon vos besoins.</string>
-    <string name="deg_rad">Degrés/radians</string>
-    <string name="mode_prompt">Choisissez un mode</string>
+    <string name="deg_rad">Degrés/radians</string>^
     <string name="patchnotes1">Défilement automatique</string>
     <string name="patchnotes2">Si nécessaire, la zone de calcul supérieure défile automatiquement vers le bas.</string>
     <string name="patchnotes3">Augmentation de la précision des arrondis</string>
@@ -228,4 +222,5 @@
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
+    <string name="delete">Supprimer</string>
 </resources>

@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="settingDisplayModeOptions">
-        <item>Por defecto del sistema</item>
-        <item>Modo diurno</item>
-        <item>Modo oscuro</item>
-    </string-array>
+    <string name="systemDefault">Por defecto del sistema</string>
+    <string name="lightMode">Modo diurno</string>
+    <string name="darkmode">Modo oscuro</string>
 
-    <string-array name="settingCalculationModeOptions">
-        <item>Por defecto</item>
-        <item>Simplificado</item>
-    </string-array>
+    <string name="defaultCalculationMode">Por defecto</string>
+    <string name="easyCalculationMode">Simplificado</string>
 
-    <string-array name="settingsFunctionOptions">
-        <item>Medida de grados (Deg)</item>
-        <item>Radianes (Rad)</item>
-    </string-array>
+    <string name="degree">Medida de grados (Deg)</string>
+    <string name="radian">Radianes (Rad)</string>
+
 
     <string name="releaseDate">Fecha de lanzamiento: 17.02.24 – 18:00</string>
     <string name="patchnotesOverviewText">La última versión de RechenMax trae emocionantes mejoras y características. El desplazamiento automático facilita la navegación en cálculos grandes, mientras que la precisión de redondeo se ha aumentado a la décima primera posición decimal para números decimales más precisos. El historial se ha optimizado para restaurar sin esfuerzo cálculos anteriores y revisar tareas pasadas. En tareas trigonométricas, están disponibles funciones avanzadas para seno, coseno y tangente en grados y radianes. Ahora también están disponibles funciones trigonométricas inversas (sin⁻¹, cos⁻¹, tan⁻¹), así como funciones hiperbólicas como senh(x), cosh(x) y tanh(x). La entrada manual de notación proporciona flexibilidad adicional al crear y calcular expresiones complejas. RechnenMax ahora admite el uso de la constante matemática PI (π) para cálculos precisos de círculos. Con el soporte flexible de grados y radianes, puedes cambiar entre las dos unidades de medida según sea necesario. El manejo de paréntesis se ha optimizado para garantizar un procesamiento sin errores de expresiones matemáticas o lógicas. El software detecta y agrega automáticamente paréntesis de cierre faltantes, simplificando aún más la entrada de expresiones. En el historial, al mantener presionada una entrada, la factura se copia automáticamente al portapapeles, mientras que al presionar brevemente, la factura se pega directamente en la calculadora. Esta versión también soluciona errores importantes, incluidos problemas de visualización y cálculo factorial, así como la optimización del formato de resultado para una visualización más precisa.</string>
@@ -91,7 +86,6 @@
 
     <string name="deg_rad">Grados/radianes</string>
 
-    <string name="mode_prompt">Elige un modo</string>
     <string name="patchnotes1">Desplazamiento automático</string>
     <string name="patchnotes2">Si es necesario, el área de cálculo superior se desplaza automáticamente hacia abajo.\n</string>
     <string name="patchnotes3">Aumento de la precisión de redondeo</string>
@@ -248,4 +242,5 @@
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
+    <string name="delete">Borrar</string>
 </resources>
