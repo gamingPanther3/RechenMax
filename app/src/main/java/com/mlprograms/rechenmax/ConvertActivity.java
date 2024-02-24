@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,16 +50,17 @@ public class ConvertActivity extends AppCompatActivity {
 
         customSpinner = findViewById(R.id.convertCustomSpinner);
         ArrayList<CustomItems> customList = new ArrayList<>();
-        customList.add(new CustomItems("Winkel", R.drawable.acute_angle_of_45_degrees_svgrepo_com));
-        customList.add(new CustomItems("Fläche", R.drawable.area_vectormaker_co));
-        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sd_card_svgrepo_com));
-        customList.add(new CustomItems("Entfernung", R.drawable.set_square_svgrepo_com));
-        customList.add(new CustomItems("Volumen", R.drawable.cylinder_shape_svgrepo_com));
+        customList.add(new CustomItems("Winkel", R.drawable.angle));
+        customList.add(new CustomItems("Fläche", R.drawable.area));
+        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard));
+        customList.add(new CustomItems("Entfernung", R.drawable.triangle));
+        customList.add(new CustomItems("Volumen", R.drawable.cylinder));
 
         CustomAdapter customAdapter = new CustomAdapter(this, customList);
 
         if(customSpinner != null) {
             customSpinner.setAdapter(customAdapter);
+            customSpinner.setSelection(3);
         }
     }
 
@@ -184,65 +186,65 @@ public class ConvertActivity extends AppCompatActivity {
 
                         if (trueDarkMode != null) {
                             if (trueDarkMode.equals("false")) {
-                                updateUI(R.color.black, R.color.white);
+                                updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
 
                                 if(backbutton != null) {
-                                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                                    backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                                 }
                             } else {
-                                updateUI(R.color.darkmode_black, R.color.darkmode_white);
+                                updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
 
                                 if(backbutton != null) {
-                                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                                    backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                                 }
                             }
                         } else {
                             if(backbutton != null) {
-                                backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                                backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                             }
 
-                            updateUI(R.color.black, R.color.white);
+                            updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
                         }
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
                         // Nightmode is not activated
                         if(backbutton != null) {
-                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
+                            backbutton.setForeground(getDrawable(R.drawable.arrow_back));
                         }
 
-                        updateUI(R.color.white, R.color.black);
+                        updateUI(Color.parseColor("#FFFFFF"), Color.parseColor("#151515"));
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
                 if(backbutton != null) {
-                    backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24));
+                    backbutton.setForeground(getDrawable(R.drawable.arrow_back));
                 }
 
-                updateUI(R.color.white, R.color.black);
+                updateUI(Color.parseColor("#FFFFFF"), Color.parseColor("#151515"));
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
                 String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
 
                 if (trueDarkMode != null) {
                     if (trueDarkMode.equals("false")) {
-                        updateUI(R.color.black, R.color.white);
+                        updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
 
                         if(backbutton != null) {
-                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                            backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                         }
                     } else {
-                        updateUI(R.color.darkmode_black, R.color.darkmode_white);
+                        updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
 
                         if(backbutton != null) {
-                            backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_true_darkmode));
+                            backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                         }
                     }
                 } else {
                     if(backbutton != null) {
-                        backbutton.setForeground(getDrawable(R.drawable.baseline_arrow_back_24_light));
+                        backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                     }
 
-                    updateUI(R.color.black, R.color.white);
+                    updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
                 }
             }
         }
@@ -271,10 +273,25 @@ public class ConvertActivity extends AppCompatActivity {
         LinearLayout convertLayout = findViewById(R.id.convertlayout);
         ScrollView convertScrollLayout = findViewById(R.id.convertScrollLayout);
 
-        convertReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
-        convertTitle.setTextColor(ContextCompat.getColor(this, textColor));
-        convertLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
-        convertScrollLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        convertReturnButton.setBackgroundColor(backgroundColor);
+        convertTitle.setTextColor(textColor);
+        convertLayout.setBackgroundColor(backgroundColor);
+        convertScrollLayout.setBackgroundColor(backgroundColor);
+
+        setTextViewColors((View) findViewById(R.id.convertUI), textColor, backgroundColor);
+    }
+
+    private void setTextViewColors(View view, int textColor, int backgroundColor) {
+        if (view instanceof TextView) {
+            TextView textView = (TextView) view;
+            textView.setTextColor(textColor);
+            textView.setBackgroundColor(backgroundColor);
+        } else if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                setTextViewColors(viewGroup.getChildAt(i), textColor, backgroundColor);
+            }
+        }
     }
 
     /**

@@ -1,14 +1,14 @@
 package com.mlprograms.rechenmax;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
+import static com.mlprograms.rechenmax.NumberHelper.PI;
+import static com.mlprograms.rechenmax.NumberHelper.e;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -68,8 +68,9 @@ public class CalculatorActivity {
                     .replace('÷', '/')
                     .replace("=", "")
                     .replace("E", "e")
-                    .replace("π", "3,1415926535897932384626433832")
-                    .replaceAll("е", "2,7182818284590452353602874713")
+                    .replace("π", PI)
+                    .replaceAll("е", e)
+                    .replaceAll(" ", "")
                     .replace("½", "0,5")
                     .replace("⅓", "0,33333333333")
                     .replace("¼", "0,25");

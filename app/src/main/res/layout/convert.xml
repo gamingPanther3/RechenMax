@@ -16,11 +16,11 @@
 
         <Button
             android:id="@+id/convert_return_button"
-            android:layout_width="50dp"
+            android:layout_width="45dp"
             android:layout_height="50dp"
             android:layout_gravity="left|center_vertical"
             android:layout_marginLeft="10dp"
-            android:foreground="@drawable/baseline_arrow_back_24_light"
+            android:foreground="@drawable/arrow_back_light"
             android:tag="return"
             android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
             android:autoSizeStepGranularity="1sp"

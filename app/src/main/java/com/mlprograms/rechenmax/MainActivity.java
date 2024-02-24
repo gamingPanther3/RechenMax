@@ -2,6 +2,7 @@ package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.CalculatorActivity.isOperator;
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
+import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
 
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
      *        recently supplied in {@link #onSaveInstanceState}.
      *        <b><i>Note: Otherwise, it is null.</i></b>
      */
+    @SuppressLint("MissingInflatedId")
     protected void onCreate(Bundle savedInstanceState) {
         // Call the superclass onCreate method
         super.onCreate(savedInstanceState);
@@ -109,25 +112,26 @@ public class MainActivity extends AppCompatActivity {
         setUpListeners();
         showOrHideScienceButtonState();
         checkDarkmodeSetting();
-        formatResultTextAfterType();
         dataManager.loadNumbers();
+        formatResultTextAfterType();
 
         if(findViewById(R.id.calculate_label) != null && findViewById(R.id.result_label) != null && !getCalculateText().isEmpty()) {
             setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         }
 
         // Scroll down in the calculate label
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        scrollToStart(findViewById(R.id.calculate_scrollview));
+        scrollToStart(findViewById(R.id.result_scrollview));
 
         // Show all settings
-        showAllSettings();
+        //showAllSettings();
         adjustTextSize();
 
         if(dataManager.readFromJSON("pressedCalculate", getApplicationContext()).equals("true") &&
             dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             setCalculateText("");
 
-            ScrollView scrollView = findViewById(R.id.result_scrollview);
+            HorizontalScrollView scrollView = findViewById(R.id.result_scrollview);
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
             layoutParams.weight = 1;
             scrollView.setLayoutParams(layoutParams);
@@ -200,26 +204,18 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param scrollView The ScrollView to be scrolled to the bottom.
      */
-    private void scrollToBottom(final ScrollView scrollView) {
+    private void scrollToStart(final HorizontalScrollView scrollView) {
         // Executes the scrolling to the bottom of the ScrollView in a Runnable.
         if(scrollView != null) {
-            scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_DOWN));
+            scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_LEFT));
         }
     }
 
-    /**
-     * Scrolls a ScrollView to the top of its content.
-     * <p>
-     * This method posts a Runnable to the ScrollView's message queue, which
-     * ensures that the scrolling operation is executed after the view is
-     * created and laid out. It uses the fullScroll method with FOCUS_UP
-     * parameter to scroll the ScrollView to the bottom.
-     *
-     * @param scrollView The ScrollView to be scrolled to the top.
-     */
-    private void scrollToTop(final ScrollView scrollView) {
+    private void scrollToEnd(final HorizontalScrollView scrollView) {
         // Executes the scrolling to the bottom of the ScrollView in a Runnable.
-        scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_UP));
+        if(scrollView != null) {
+            scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_RIGHT));
+        }
     }
 
     /**
@@ -376,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
                 dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             setCalculateText("");
 
-            ScrollView scrollView = findViewById(R.id.result_scrollview);
+            HorizontalScrollView scrollView = findViewById(R.id.result_scrollview);
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
             layoutParams.weight = 1;
             scrollView.setLayoutParams(layoutParams);
@@ -547,6 +543,9 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(v -> {
                 CommaAction();
                 dataManager.saveNumbers(getApplicationContext());
+
+                scrollToEnd(findViewById(R.id.calculate_scrollview));
+                scrollToStart(findViewById(R.id.result_scrollview));
             });
         }
     }
@@ -563,6 +562,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Calculate();
                     dataManager.saveNumbers(getApplicationContext());
+
+                    scrollToEnd(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.result_scrollview));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -583,6 +585,9 @@ public class MainActivity extends AppCompatActivity {
                 NumberAction(num);
                 dataManager.saveNumbers(getApplicationContext());
                 dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
+
+                scrollToEnd(findViewById(R.id.calculate_scrollview));
+                scrollToStart(findViewById(R.id.result_scrollview));
             });
         }
     }
@@ -600,6 +605,10 @@ public class MainActivity extends AppCompatActivity {
                 OperationAction(operation);
                 dataManager.saveNumbers(getApplicationContext());
                 dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
+                setCalculateText(replacePiWithSymbolInString(getCalculateText()));
+
+                scrollToEnd(findViewById(R.id.calculate_scrollview));
+                scrollToStart(findViewById(R.id.result_scrollview));
             });
         }
     }
@@ -618,10 +627,13 @@ public class MainActivity extends AppCompatActivity {
                 dataManager.saveNumbers(getApplicationContext());
                 dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
 
-                ScrollView scrollView = findViewById(R.id.result_scrollview);
+                HorizontalScrollView scrollView = findViewById(R.id.result_scrollview);
                 LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
                 layoutParams.weight = 2;
                 scrollView.setLayoutParams(layoutParams);
+
+                scrollToStart(findViewById(R.id.calculate_scrollview));
+                scrollToStart(findViewById(R.id.result_scrollview));
             });
         }
     }
@@ -638,6 +650,9 @@ public class MainActivity extends AppCompatActivity {
             textView.setOnClickListener(v -> {
                 action.run();
                 dataManager.saveNumbers(getApplicationContext());
+
+                scrollToEnd(findViewById(R.id.calculate_scrollview));
+                scrollToStart(findViewById(R.id.result_scrollview));
             });
         }
     }
@@ -726,6 +741,8 @@ public class MainActivity extends AppCompatActivity {
                 NegativAction();
                 dataManager.saveNumbers(getApplicationContext());
 
+                scrollToEnd(findViewById(R.id.calculate_scrollview));
+                scrollToStart(findViewById(R.id.result_scrollview));
             });
         }
     }
@@ -771,7 +788,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -802,7 +819,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -833,7 +850,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -864,7 +881,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -895,7 +912,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -926,7 +943,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -957,7 +974,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -988,7 +1005,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1019,7 +1036,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1050,7 +1067,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1081,7 +1098,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1112,7 +1129,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1147,7 +1164,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1178,7 +1195,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1219,7 +1236,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1250,7 +1267,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Scroll to the bottom of the scroll view if it exists
                 if (findViewById(R.id.calculate_scrollview) != null) {
-                    scrollToBottom(findViewById(R.id.calculate_scrollview));
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
         }
@@ -1448,7 +1465,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        scrollToBottom(findViewById(R.id.calculate_scrollview));
+        scrollToStart(findViewById(R.id.calculate_scrollview));
 
         setRotateOperator(false);
         formatResultTextAfterType();
@@ -1506,7 +1523,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         setRotateOperator(true);
                         if(findViewById(R.id.calculate_scrollview) != null) {
-                            scrollToBottom(findViewById(R.id.calculate_scrollview));
+                            scrollToStart(findViewById(R.id.calculate_scrollview));
                         }
                     }
                 }
@@ -1558,7 +1575,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if(findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                        scrollToStart(findViewById(R.id.calculate_scrollview));
                     }
                 }
             }
@@ -1601,7 +1618,7 @@ public class MainActivity extends AppCompatActivity {
                         setRotateOperator(false);
                     }
                     if(findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                        scrollToStart(findViewById(R.id.calculate_scrollview));
                     }
                 }
             }
@@ -1632,7 +1649,7 @@ public class MainActivity extends AppCompatActivity {
                     setRemoveValue(true);
                     //setRotateOperator(true);
                     if(findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                        scrollToStart(findViewById(R.id.calculate_scrollview));
                     }
                 }
             }
@@ -1663,7 +1680,7 @@ public class MainActivity extends AppCompatActivity {
                     setRemoveValue(true);
                     //setRotateOperator(true);
                     if(findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                        scrollToStart(findViewById(R.id.calculate_scrollview));
                     }
                 }
             }
@@ -1706,7 +1723,7 @@ public class MainActivity extends AppCompatActivity {
                     setRemoveValue(true);
                     setRotateOperator(true);
                     if(findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                        scrollToStart(findViewById(R.id.calculate_scrollview));
                     }
                 }
             }
@@ -1745,7 +1762,7 @@ public class MainActivity extends AppCompatActivity {
                     setRemoveValue(true);
                     setRotateOperator(true);
                     if(findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                        scrollToStart(findViewById(R.id.calculate_scrollview));
                     }
                 }
             }
@@ -1784,7 +1801,7 @@ public class MainActivity extends AppCompatActivity {
                     setRemoveValue(true);
                     setRotateOperator(true);
                     if(findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                        scrollToStart(findViewById(R.id.calculate_scrollview));
                     }
                 }
             }
@@ -2257,8 +2274,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        setCalculateText(replacePiWithSymbolInString(getCalculateText()));
+        if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+        }
+
         formatResultTextAfterType();
         adjustTextSize();
+        scrollToEnd(findViewById(R.id.calculate_scrollview));
     }
 
     /**
@@ -2322,6 +2345,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         formatResultTextAfterType();
+
+        scrollToEnd(findViewById(R.id.calculate_scrollview));
+        scrollToStart(findViewById(R.id.result_scrollview));
     }
 
     /**
@@ -2487,13 +2513,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                     setRotateOperator(false);
                     if(findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToBottom(findViewById(R.id.calculate_scrollview));
+                        scrollToStart(findViewById(R.id.calculate_scrollview));
                     }
                 }
             }
         }
 
         formatResultTextAfterType();
+        scrollToEnd(findViewById(R.id.calculate_scrollview));
+        scrollToStart(findViewById(R.id.result_scrollview));
     }
 
     /**
@@ -2512,7 +2540,6 @@ public class MainActivity extends AppCompatActivity {
                 setCalculateText("");
                 setRotateOperator(false);
                 dataManager.saveToJSON("logX", "false", getApplicationContext());
-                adjustTextSize();
 
                 TextView label1 = findViewById(R.id.calculate_label);
                 TextView label2 = findViewById(R.id.result_label);
@@ -2526,7 +2553,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case "CE":
                 setResultText("0");
-                adjustTextSize();
                 TextView label = findViewById(R.id.calculate_label);
                 if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("false")) {
                     label.setTextSize(60f);
@@ -2535,7 +2561,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+
         adjustTextSize();
+
+        scrollToEnd(findViewById(R.id.calculate_scrollview));
+        scrollToStart(findViewById(R.id.result_scrollview));
     }
 
     /**
@@ -2839,13 +2869,15 @@ public class MainActivity extends AppCompatActivity {
                 // Reset rotate operator flag, format result text, adjust text size, and scroll to bottom if necessary
                 setRotateOperator(false);
                 setRemoveValue(true);
+                setCalculateText(replacePiWithSymbolInString(getCalculateText()));
             }
         }
 
         formatResultTextAfterType();
         adjustTextSize();
 
-        if(!isNumber(getCalculateText())) {
+        if(!isNumber(getCalculateText()) &&
+                !getCalculateText().replace("=", "").replace(" ", "").equals("π")) {
             addToHistoryAfterCalculate(getCalculateText());
         }
 
@@ -2854,14 +2886,49 @@ public class MainActivity extends AppCompatActivity {
             dataManager.saveToJSON("pressedCalculate", true, getApplicationContext());
 
             setCalculateText("");
-            ScrollView scrollView = findViewById(R.id.result_scrollview);
+            HorizontalScrollView scrollView = findViewById(R.id.result_scrollview);
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
             layoutParams.weight = 1;
             scrollView.setLayoutParams(layoutParams);
         }
 
-        scrollToTop(findViewById(R.id.calculate_scrollview));
+        scrollToEnd(findViewById(R.id.calculate_scrollview));
+        scrollToStart(findViewById(R.id.result_scrollview));
     }
+
+    private String replacePiWithSymbolInString(String text) {
+        boolean isPI = false;
+        int start, end;
+        int l, m, n;
+
+        for(l = 0; l < text.length(); l++) {
+            if(!(l + 5 < text.length())) {
+                break;
+            }
+
+            isPI = text.startsWith("3,1415", l);
+            if(isPI) {
+                start = l;
+                for(m = 0; m < PI.length(); m++) {
+                    if(l + m >= text.length() || !String.valueOf(PI.charAt(m)).equals(String.valueOf(text.charAt(l + m)))) {
+                        for(n = l + m; n < text.length(); n++) {
+                            if(!Character.isDigit(text.charAt(n))) {
+                                break;
+                            }
+                        }
+                        end = n;
+                        String partBefore = text.substring(0, start);
+                        String partAfter = text.substring(end);
+                        text = partBefore + "π" + partAfter;
+                        isPI = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return text;
+    }
+
 
     public static boolean isNumber(String input) {
         String numberPattern = "^-?\\d+(\\,|\\.)?\\d*(\\.|\\,)?\\d*$";
@@ -3079,14 +3146,18 @@ public class MainActivity extends AppCompatActivity {
      * - R.id.result_label: TextView whose text size needs adjustment within the second ScrollView
      */
     public void adjustTextSize() {
+        if(true) {
+            return;
+        }
+
         if(findViewById(R.id.calculate_label) != null && findViewById(R.id.result_label) != null) {
-            ScrollView calculate_scrollview = findViewById(R.id.calculate_scrollview);
-            ScrollView result_scrollview = findViewById(R.id.result_scrollview);
+            HorizontalScrollView calculate_scrollview = findViewById(R.id.calculate_scrollview);
+            HorizontalScrollView result_scrollview = findViewById(R.id.result_scrollview);
 
             TextView label1 = findViewById(R.id.calculate_label);
             TextView label2 = findViewById(R.id.result_label);
             if(dataManager.readFromJSON("showScienceRow", getApplicationContext()).equals("true")) {
-                scrollToBottom(calculate_scrollview);
+                scrollToStart(calculate_scrollview);
                 if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
                     //label1.setTextSize(35f);
                     label1.setAutoSizeTextTypeUniformWithConfiguration(25, 35, 1, TypedValue.COMPLEX_UNIT_SP);
