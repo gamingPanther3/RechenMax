@@ -91,13 +91,6 @@ public class SettingsActivity extends AppCompatActivity {
         dataManager.createJSON(getApplicationContext());
         //resetReleaseNoteConfig(getApplicationContext());
 
-        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        try {
-            switchDisplayMode(currentNightMode);
-        } catch (NullPointerException e) {
-            Log.e("SettingsActivity", "ShowPatchNotes");
-        }
-
         @SuppressLint("CutPasteId") Button button = findViewById(R.id.settings_return_button);
         button.setOnClickListener(v -> returnToCalculator());
 
@@ -105,9 +98,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         Switch settingsReleaseNotesSwitch = findViewById(R.id.settings_release_notes);
         Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
+        Switch settingPI = findViewById(R.id.settings_pi);
 
         updateSwitchState(settingsReleaseNotesSwitch, "settingReleaseNotesSwitch");
         updateSwitchState(settingsTrueDarkMode, "settingsTrueDarkMode");
+        updateSwitchState(settingPI, "refactorPI");
 
         appendSpaceToSwitches(findViewById(R.id.settingsUI));
 
@@ -122,6 +117,10 @@ public class SettingsActivity extends AppCompatActivity {
             Log.i("Settings", "settingsTrueDarkMode=" + dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext()));
 
             switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+        });
+        settingPI.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            dataManager.saveToJSON("refactorPI", isChecked, getMainActivityContext());
+            Log.i("Settings", "refactorPI=" + dataManager.readFromJSON("refactorPI", getMainActivityContext()));
         });
 
         customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings));
@@ -1209,6 +1208,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
         TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
+        Switch settingPI = findViewById(R.id.settings_pi);
+        TextView settingPIText = findViewById(R.id.settings_pi_text);
 
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
@@ -1238,6 +1239,10 @@ public class SettingsActivity extends AppCompatActivity {
         settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsFunctionModeTitle.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsFunctionModeText.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingPI.setTextColor(ContextCompat.getColor(this, textColor));
+        settingPI.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingPIText.setTextColor(ContextCompat.getColor(this, textColor));
+        settingPIText.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
     }
 
     /**

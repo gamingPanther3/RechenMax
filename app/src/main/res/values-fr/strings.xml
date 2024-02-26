@@ -223,4 +223,6 @@
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
     <string name="delete">Supprimer</string>
+    <string name="settingsPI">Avec cette fonction, vous pouvez définir que chaque fois que vous saisissez le nombre \'3,1415\', il sera automatiquement remplacé par le symbole de Pi. Cela simplifie l\'entrée de Pi dans vos calculs, vous permettant de vous concentrer sur la tâche à accomplir sans avoir à rechercher constamment le symbole.</string>
+    <string name="settingsPITitle">Insérer PI</string>
 </resources>
