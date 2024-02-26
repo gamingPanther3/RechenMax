@@ -240,6 +240,34 @@
                 android:text="" />
 
             <Switch
+                android:id="@+id/settings_pi"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/settingsPITitle"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:id="@+id/settings_pi_text"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:text="@string/settingsPI"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <Switch
                 android:id="@+id/settings_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
