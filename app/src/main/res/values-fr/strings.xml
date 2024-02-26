@@ -223,7 +223,7 @@
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
     <string name="delete">Supprimer</string>
-    <string name="settingsPI">Avec cette fonction, vous pouvez définir que chaque fois que vous saisissez le nombre \'3,1415\', il sera automatiquement remplacé par le symbole de Pi. Cela simplifie l\'entrée de Pi dans vos calculs, vous permettant de vous concentrer sur la tâche à accomplir sans avoir à rechercher constamment le symbole.</string>
+    <string name="settingsPI">Avec cette fonction, vous pouvez définir que chaque fois que vous saisissez le nombre \'3,14\', il sera automatiquement remplacé par le symbole de Pi. Cela simplifie l\'entrée de Pi dans vos calculs, vous permettant de vous concentrer sur la tâche à accomplir sans avoir à rechercher constamment le symbole.</string>
     <string name="settingsPITitle">Insérer PI</string>
 
     <string name="settingsHistoryMode">Ce paramètre vous permet de déterminer si le texte de votre historique est affiché sous forme de barre de défilement, ce qui signifie que vous pouvez faire défiler le texte de gauche à droite et qu\'il sera affiché sur une seule ligne, ou si le texte est affiché sur plusieurs lignes les unes en dessous des autres.</string>

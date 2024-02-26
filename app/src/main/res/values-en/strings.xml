@@ -243,7 +243,7 @@
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
     <string name="delete">Delete</string>
-    <string name="settingsPI">With this function, you can set it up so that whenever you enter the number \'3.1415\', it will automatically be replaced by the symbol for Pi. This simplifies entering Pi in your calculations, allowing you to focus on the task at hand without having to constantly search for the symbol.</string>
+    <string name="settingsPI">With this function, you can set it up so that whenever you enter the number \'3.14\', it will automatically be replaced by the symbol for Pi. This simplifies entering Pi in your calculations, allowing you to focus on the task at hand without having to constantly search for the symbol.</string>
     <string name="settingsPITitle">Insert PI</string>
 
     <string name="settingsHistoryMode">This setting allows you to determine whether the text in your history is displayed as a scrollbar, meaning you can scroll the text from left to right and it will be displayed on a single line, or if the text is displayed on multiple lines below each other.</string>
