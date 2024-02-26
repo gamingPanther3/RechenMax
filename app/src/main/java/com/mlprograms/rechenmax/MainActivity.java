@@ -5,6 +5,7 @@ import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
+import static com.mlprograms.rechenmax.CalculatorActivity.fixExpression;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -332,6 +333,10 @@ public class MainActivity extends AppCompatActivity {
             case "Rad":
                 dataManager.saveToJSON("functionMode", "Deg", getApplicationContext());
                 break;
+        }
+
+        if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+            setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
         }
 
         // Update the displayed text with the new function mode
@@ -2815,7 +2820,7 @@ public class MainActivity extends AppCompatActivity {
                             setLastNumber(getResultText());
                             setCalculateText(calcText + " =");
                             setCalculateText(balanceParentheses(getCalculateText()));
-                            setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
+                            setResultText(CalculatorActivity.calculate(getCalculateText()));
                         } else {
                             // Handle calculation when equals sign is present
                             if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
@@ -2825,7 +2830,7 @@ public class MainActivity extends AppCompatActivity {
                                     setCalculateText(getResultText() + " =");
                                 }
                                 setCalculateText(balanceParentheses(getCalculateText()));
-                                setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
+                                setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp() + " " + getLastNumber()));
                             } else {
                                 setCalculateText(balanceParentheses(getCalculateText()));
                                 setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
@@ -2837,7 +2842,7 @@ public class MainActivity extends AppCompatActivity {
                             setLastNumber(getResultText());
                             setCalculateText(calcText + " " + getResultText() + " =");
                             setCalculateText(balanceParentheses(getCalculateText()));
-                            setResultText(CalculatorActivity.calculate(getCalculateText().replace("×", "*").replace("÷", "/")));
+                            setResultText(CalculatorActivity.calculate(getCalculateText()));
                         } else {
                             // Handle calculation when equals sign is present
                             if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
@@ -2847,7 +2852,7 @@ public class MainActivity extends AppCompatActivity {
                                     setCalculateText(getResultText() + " =");
                                 }
                                 setCalculateText(balanceParentheses(getCalculateText()));
-                                setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp().replace("×", "*").replace("÷", "/") + " " + getLastNumber()));
+                                setResultText(CalculatorActivity.calculate(getResultText() + " " + getLastOp() + " " + getLastNumber()));
                             } else {
                                 setCalculateText(balanceParentheses(getCalculateText()));
                                 setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
@@ -2878,7 +2883,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(!isNumber(getCalculateText()) &&
                 !getCalculateText().replace("=", "").replace(" ", "").equals("π")) {
-            addToHistoryAfterCalculate(getCalculateText());
+            addToHistoryAfterCalculate(fixExpression(balanceParentheses(getCalculateText())));
         }
 
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht") &&
@@ -2897,38 +2902,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String replacePiWithSymbolInString(String text) {
-        boolean isPI = false;
-        int start, end;
-        int l, m, n;
+        if(dataManager.readFromJSON("refactorPI", getApplicationContext()).equals("true")) {
+            boolean isPI = false;
+            int start, end;
+            int l, m, n;
 
-        for(l = 0; l < text.length(); l++) {
-            if(!(l + 5 < text.length())) {
-                break;
-            }
+            for(l = 0; l < text.length(); l++) {
+                if(!(l + 5 < text.length())) {
+                    break;
+                }
 
-            isPI = text.startsWith("3,1415", l);
-            if(isPI) {
-                start = l;
-                for(m = 0; m < PI.length(); m++) {
-                    if(l + m >= text.length() || !String.valueOf(PI.charAt(m)).equals(String.valueOf(text.charAt(l + m)))) {
-                        for(n = l + m; n < text.length(); n++) {
-                            if(!Character.isDigit(text.charAt(n))) {
-                                break;
+                isPI = text.startsWith("3,1415", l);
+                if(isPI) {
+                    start = l;
+                    for(m = 0; m < PI.length(); m++) {
+                        if(l + m >= text.length() || !String.valueOf(PI.charAt(m)).equals(String.valueOf(text.charAt(l + m)))) {
+                            for(n = l + m; n < text.length(); n++) {
+                                if(!Character.isDigit(text.charAt(n))) {
+                                    break;
+                                }
                             }
+                            end = n;
+                            String partBefore = text.substring(0, start);
+                            String partAfter = text.substring(end);
+                            text = partBefore + "π" + partAfter;
+                            isPI = false;
+                            break;
                         }
-                        end = n;
-                        String partBefore = text.substring(0, start);
-                        String partAfter = text.substring(end);
-                        text = partBefore + "π" + partAfter;
-                        isPI = false;
-                        break;
                     }
                 }
             }
         }
         return text;
     }
-
 
     public static boolean isNumber(String input) {
         String numberPattern = "^-?\\d+(\\,|\\.)?\\d*(\\.|\\,)?\\d*$";
