@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -28,7 +29,9 @@ import java.util.ArrayList;
 public class ConvertActivity extends AppCompatActivity {
     DataManager dataManager;
     private static MainActivity mainActivity;
+
     private Spinner customSpinner;
+    private CustomAdapter customAdapter;
 
     /**
      * Called when the activity is starting.
@@ -44,24 +47,48 @@ public class ConvertActivity extends AppCompatActivity {
         stopBackgroundService();
         dataManager = new DataManager();
         setContentView(R.layout.convert);
-
         setUpButtonListeners();
-        switchDisplayMode();
 
         customSpinner = findViewById(R.id.convertCustomSpinner);
-        ArrayList<CustomItems> customList = new ArrayList<>();
+
+        customSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                CustomItems items = (CustomItems) adapterView.getSelectedItem();
+                String spinnerText = items.getSpinnerText();
+
+                if (spinnerText.equals(getString(R.string.defaultCalculationMode))) {
+                    dataManager.saveToJSON("calculationMode", "Standard", getMainActivityContext());
+                } else {
+                    dataManager.saveToJSON("calculationMode", "Vereinfacht", getMainActivityContext());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+
+
+            ArrayList<CustomItems> customList = new ArrayList<>();
         customList.add(new CustomItems("Winkel", R.drawable.angle));
         customList.add(new CustomItems("Fläche", R.drawable.area));
         customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard));
         customList.add(new CustomItems("Entfernung", R.drawable.triangle));
         customList.add(new CustomItems("Volumen", R.drawable.cylinder));
 
-        CustomAdapter customAdapter = new CustomAdapter(this, customList);
+        customAdapter = new CustomAdapter(this, customList);
 
         if(customSpinner != null) {
             customSpinner.setAdapter(customAdapter);
             customSpinner.setSelection(3);
         }
+        switchDisplayMode();
+    }
+
+    private void switchModes() {
+
     }
 
     /**
@@ -176,6 +203,11 @@ public class ConvertActivity extends AppCompatActivity {
 
         Button backbutton = findViewById(R.id.convert_return_button);
 
+        int index = 0;
+        if(customSpinner != null) {
+            index = customSpinner.getSelectedItemPosition();
+        }
+
         if(getSelectedSetting() != null) {
             if(getSelectedSetting().equals("Systemstandard")) {
                 switch (currentNightMode) {
@@ -186,17 +218,41 @@ public class ConvertActivity extends AppCompatActivity {
 
                         if (trueDarkMode != null) {
                             if (trueDarkMode.equals("false")) {
-                                updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
-
                                 if(backbutton != null) {
                                     backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                                 }
-                            } else {
-                                updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
 
+                                updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
+
+                                customSpinner = findViewById(R.id.convertCustomSpinner);
+                                ArrayList<CustomItems> customList = new ArrayList<>();
+                                customList.add(new CustomItems("Winkel", R.drawable.angle_light));
+                                customList.add(new CustomItems("Fläche", R.drawable.area_light));
+                                customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_light));
+                                customList.add(new CustomItems("Entfernung", R.drawable.triangle_light));
+                                customList.add(new CustomItems("Volumen", R.drawable.cylinder_light));
+
+                                customAdapter = new CustomAdapter(this, customList);
+                                customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
+                                customAdapter.setBackgroundColor(Color.parseColor("#151515"));
+                            } else {
                                 if(backbutton != null) {
                                     backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                                 }
+
+                                updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
+
+                                customSpinner = findViewById(R.id.convertCustomSpinner);
+                                ArrayList<CustomItems> customList = new ArrayList<>();
+                                customList.add(new CustomItems("Winkel", R.drawable.angle_true_darkmode));
+                                customList.add(new CustomItems("Fläche", R.drawable.area_true_darkmode));
+                                customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_true_darkmode));
+                                customList.add(new CustomItems("Entfernung", R.drawable.triangle_true_darkmode));
+                                customList.add(new CustomItems("Volumen", R.drawable.cylinder_true_darkmode));
+
+                                customAdapter = new CustomAdapter(this, customList);
+                                customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
+                                customAdapter.setBackgroundColor(Color.parseColor("#000000"));
                             }
                         } else {
                             if(backbutton != null) {
@@ -204,6 +260,18 @@ public class ConvertActivity extends AppCompatActivity {
                             }
 
                             updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
+
+                            customSpinner = findViewById(R.id.convertCustomSpinner);
+                            ArrayList<CustomItems> customList = new ArrayList<>();
+                            customList.add(new CustomItems("Winkel", R.drawable.angle_light));
+                            customList.add(new CustomItems("Fläche", R.drawable.area_light));
+                            customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_light));
+                            customList.add(new CustomItems("Entfernung", R.drawable.triangle_light));
+                            customList.add(new CustomItems("Volumen", R.drawable.cylinder_light));
+
+                            customAdapter = new CustomAdapter(this, customList);
+                            customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
+                            customAdapter.setBackgroundColor(Color.parseColor("#151515"));
                         }
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
@@ -213,6 +281,18 @@ public class ConvertActivity extends AppCompatActivity {
                         }
 
                         updateUI(Color.parseColor("#FFFFFF"), Color.parseColor("#151515"));
+
+                        customSpinner = findViewById(R.id.convertCustomSpinner);
+                        ArrayList<CustomItems> customList = new ArrayList<>();
+                        customList.add(new CustomItems("Winkel", R.drawable.angle));
+                        customList.add(new CustomItems("Fläche", R.drawable.area));
+                        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard));
+                        customList.add(new CustomItems("Entfernung", R.drawable.triangle));
+                        customList.add(new CustomItems("Volumen", R.drawable.cylinder));
+
+                        customAdapter = new CustomAdapter(this, customList);
+                        customAdapter.setTextColor(Color.parseColor("#151515"));
+                        customAdapter.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
@@ -221,23 +301,65 @@ public class ConvertActivity extends AppCompatActivity {
                 }
 
                 updateUI(Color.parseColor("#FFFFFF"), Color.parseColor("#151515"));
+
+                customSpinner = findViewById(R.id.convertCustomSpinner);
+                ArrayList<CustomItems> customList = new ArrayList<>();
+                customList.add(new CustomItems("Winkel", R.drawable.angle));
+                customList.add(new CustomItems("Fläche", R.drawable.area));
+                customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard));
+                customList.add(new CustomItems("Entfernung", R.drawable.triangle));
+                customList.add(new CustomItems("Volumen", R.drawable.cylinder));
+
+                customAdapter = new CustomAdapter(this, customList);
+                customAdapter.setTextColor(Color.parseColor("#151515"));
+                customAdapter.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+                customSpinner.setAdapter(customAdapter);
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
                 String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
 
                 if (trueDarkMode != null) {
                     if (trueDarkMode.equals("false")) {
-                        updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
-
                         if(backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                         }
-                    } else {
-                        updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
 
+                        updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
+
+                        customSpinner = findViewById(R.id.convertCustomSpinner);
+                        ArrayList<CustomItems> customList = new ArrayList<>();
+                        customList.add(new CustomItems("Winkel", R.drawable.angle_light));
+                        customList.add(new CustomItems("Fläche", R.drawable.area_light));
+                        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_light));
+                        customList.add(new CustomItems("Entfernung", R.drawable.triangle_light));
+                        customList.add(new CustomItems("Volumen", R.drawable.cylinder_light));
+
+                        customAdapter = new CustomAdapter(this, customList);
+                        customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
+                        customAdapter.setBackgroundColor(Color.parseColor("#151515"));
+
+                        customSpinner.setAdapter(customAdapter);
+                    } else {
                         if(backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                         }
+
+                        updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
+
+                        customSpinner = findViewById(R.id.convertCustomSpinner);
+                        ArrayList<CustomItems> customList = new ArrayList<>();
+                        customList.add(new CustomItems("Winkel", R.drawable.angle_true_darkmode));
+                        customList.add(new CustomItems("Fläche", R.drawable.area_true_darkmode));
+                        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_true_darkmode));
+                        customList.add(new CustomItems("Entfernung", R.drawable.triangle_true_darkmode));
+                        customList.add(new CustomItems("Volumen", R.drawable.cylinder_true_darkmode));
+
+                        customAdapter = new CustomAdapter(this, customList);
+                        customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
+                        customAdapter.setBackgroundColor(Color.parseColor("#000000"));
+
+                        customSpinner.setAdapter(customAdapter);
                     }
                 } else {
                     if(backbutton != null) {
@@ -245,8 +367,25 @@ public class ConvertActivity extends AppCompatActivity {
                     }
 
                     updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
+
+                    customSpinner = findViewById(R.id.convertCustomSpinner);
+                    ArrayList<CustomItems> customList = new ArrayList<>();
+                    customList.add(new CustomItems("Winkel", R.drawable.angle_light));
+                    customList.add(new CustomItems("Fläche", R.drawable.area_light));
+                    customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_light));
+                    customList.add(new CustomItems("Entfernung", R.drawable.triangle_light));
+                    customList.add(new CustomItems("Volumen", R.drawable.cylinder_light));
+
+                    customAdapter = new CustomAdapter(this, customList);
+                    customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
+                    customAdapter.setBackgroundColor(Color.parseColor("#151515"));
+
+                    customSpinner.setAdapter(customAdapter);
                 }
             }
+        }
+        if(customSpinner != null) {
+            customSpinner.setSelection(index);
         }
     }
 
@@ -267,18 +406,21 @@ public class ConvertActivity extends AppCompatActivity {
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     private void updateUI(int backgroundColor, int textColor) {
-
         Button convertReturnButton = findViewById(R.id.convert_return_button);
         TextView convertTitle = findViewById(R.id.convert_title);
         LinearLayout convertLayout = findViewById(R.id.convertlayout);
         ScrollView convertScrollLayout = findViewById(R.id.convertScrollLayout);
+        LinearLayout convertUI = findViewById(R.id.convertUI);
+        Spinner customSpinner = findViewById(R.id.convertCustomSpinner);
 
         convertReturnButton.setBackgroundColor(backgroundColor);
         convertTitle.setTextColor(textColor);
         convertLayout.setBackgroundColor(backgroundColor);
         convertScrollLayout.setBackgroundColor(backgroundColor);
+        convertUI.setBackgroundColor(backgroundColor);
+        customSpinner.setBackgroundColor(backgroundColor);
 
-        setTextViewColors((View) findViewById(R.id.convertUI), textColor, backgroundColor);
+        setTextViewColors(findViewById(R.id.convertUI), textColor, backgroundColor);
     }
 
     private void setTextViewColors(View view, int textColor, int backgroundColor) {
