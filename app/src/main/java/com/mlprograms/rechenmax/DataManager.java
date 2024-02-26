@@ -26,39 +26,42 @@ import java.nio.file.Files;
  * @date 18.02.2024
  */
 
-//  | Names                            | Values                   | Context                              |
-//  |----------------------------------|--------------------------|--------------------------------------|
-//  | selectedSpinnerSetting           | System / Dark / Light    | MainActivity                         |
-//  | functionMode                     | Deg / Rad                | MainActivity                         |
-//  | settingReleaseNotesSwitch        | true / false             | SettingsActivity                     |
-//  | removeValue                      | true / false             | MainActivity                         |
-//  | settingsTrueDarkMode             | true / false             | MainActivity -> SettingsActivity     |
-//  | showPatchNotes                   | true / false             | MainActivity -> SettingsActivity     |
-//  | disablePatchNotesTemporary       | true / false             | MainActivity -> SettingsActivity     |
-//  | showReleaseNotesOnVeryFirstStart | true / false             | MainActivity                         |
-//  | showScienceRow                   | true / false             | MainActivity                         |
-//  | rotate_op                        | true / false             | MainActivity                         |
-//  | lastnumber                       | Integer                  | MainActivity                         |
-//  | historyTextViewNumber            | Integer                  | MainActivity                         |
-//  | result_text                      | String                   | MainActivity                         |
-//  | calculate_text                   | String                   | MainActivity                         |
-//  | lastop                           | String                   | MainActivity                         |
-//  | isNotation                       | true / false             | MainActivity                         |
-//  | eNotation                        | true / false             | MainActivity                         |
-//  | showShiftRow                     | true / false             | MainActivity                         |
-//  | shiftRow                         | true / false             | MainActivity                         |
-//  | logX                             | true / false             | MainActivity                         |
-//  | calculationMode                  | Standard / Vereinfacht   | MainActivity                         |
-//  | currentVersion                   | String                   | MainActivity                         |
-//  | old_version                      | String                   | MainActivity                         |
-//  | returnToCalculator               | true / false             | MainActivity                         |
-//  | notificationSent                 | true / false             | BackgroundService                    |
-//  | pressedCalculate                 | true / false             | MainActivity                         |
-//  | allowNotification                | true / false             | SettingsActivity                     |
-//  | allowRememberNotifications       | true / false             | SettingsActivity                     |
-//  | allowDailyNotifications          | true / false             | SettingsActivity                     |
-//  | allowRememberNotificationsActive | true / false             | SettingsActivity                     |
-//  | allowDailyNotificationsActive    | true / false             | SettingsActivity                     |
+//  | Names                            | Values                           | Context                              |
+//  |----------------------------------|----------------------------------|--------------------------------------|
+//  | selectedSpinnerSetting           | System / Dark / Light            | MainActivity                         |
+//  | functionMode                     | Deg / Rad                        | MainActivity                         |
+//  | settingReleaseNotesSwitch        | true / false                     | SettingsActivity                     |
+//  | removeValue                      | true / false                     | MainActivity                         |
+//  | settingsTrueDarkMode             | true / false                     | MainActivity -> SettingsActivity     |
+//  | showPatchNotes                   | true / false                     | MainActivity -> SettingsActivity     |
+//  | disablePatchNotesTemporary       | true / false                     | MainActivity -> SettingsActivity     |
+//  | showReleaseNotesOnVeryFirstStart | true / false                     | MainActivity                         |
+//  | showScienceRow                   | true / false                     | MainActivity                         |
+//  | rotate_op                        | true / false                     | MainActivity                         |
+//  | lastnumber                       | Integer                          | MainActivity                         |
+//  | historyTextViewNumber            | Integer                          | MainActivity                         |
+//  | result_text                      | String                           | MainActivity                         |
+//  | calculate_text                   | String                           | MainActivity                         |
+//  | lastop                           | String                           | MainActivity                         |
+//  | isNotation                       | true / false                     | MainActivity                         |
+//  | eNotation                        | true / false                     | MainActivity                         |
+//  | showShiftRow                     | true / false                     | MainActivity                         |
+//  | shiftRow                         | true / false                     | MainActivity                         |
+//  | logX                             | true / false                     | MainActivity                         |
+//  | calculationMode                  | Standard / Vereinfacht           | MainActivity                         |
+//  | currentVersion                   | String                           | MainActivity                         |
+//  | old_version                      | String                           | MainActivity                         |
+//  | returnToCalculator               | true / false                     | MainActivity                         |
+//  | notificationSent                 | true / false                     | BackgroundService                    |
+//  | pressedCalculate                 | true / false                     | MainActivity                         |
+//  | allowNotification                | true / false                     | SettingsActivity                     |
+//  | allowRememberNotifications       | true / false                     | SettingsActivity                     |
+//  | allowDailyNotifications          | true / false                     | SettingsActivity                     |
+//  | allowRememberNotificationsActive | true / false                     | SettingsActivity                     |
+//  | allowDailyNotificationsActive    | true / false                     | SettingsActivity                     |
+//  | refactorPI                       | true / false                     | MainActivity                         |
+//  | convertMode                      | W / F / S / E / V            (*) | SettingsActivity                     |
+// * = Winkel / Fläche / Speicher / Entfernung / Volumen
 
 public class DataManager {
 
@@ -315,6 +318,9 @@ public class DataManager {
         }
         if(readFromJSON("pressedCalculate", applicationContext) == null) {
             saveToJSON("pressedCalculate", "false", applicationContext);
+        }
+        if(readFromJSON("refactorPI", applicationContext) == null) {
+            saveToJSON("refactorPI", "true", applicationContext);
         }
     }
 
