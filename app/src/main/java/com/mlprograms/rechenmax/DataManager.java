@@ -324,7 +324,7 @@ public class DataManager {
             saveToJSON("refactorPI", "true", applicationContext);
         }
         if(readFromJSON("historyMode", applicationContext) == null) {
-            saveToJSON("historyMode", "multiple", applicationContext);
+            saveToJSON("historyMode", "single", applicationContext);
         }
     }
 
