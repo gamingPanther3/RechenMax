@@ -1,6 +1,9 @@
 package com.mlprograms.rechenmax;
 
 import android.annotation.SuppressLint;
+import android.net.wifi.WifiManager;
+import android.util.Log;
+
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.NumberHelper.e;
 
@@ -8,8 +11,11 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,11 +65,12 @@ public class CalculatorActivity {
      * @throws ArithmeticException If there is an arithmetic error in the calculation.
      * @throws IllegalArgumentException If there is an illegal argument in the calculation.
      */
-    public static String calculate(final String calc) {
+    public static String calculate(String calc) {
         try {
             // Replace all the special characters in the expression with their corresponding mathematical symbols
             // important: "е" (German: 'Eulersche-Zahl') and "e" (used for notation) are different characters
             String trim;
+            calc = fixExpression(calc);
             String commonReplacements = calc.replace('×', '*')
                     .replace('÷', '/')
                     .replace("=", "")
@@ -137,22 +144,166 @@ public class CalculatorActivity {
         }
     }
 
+    private static boolean isSymbol(final char character) {
+        return (String.valueOf(character).equals("¼") || String.valueOf(character).equals("⅓") || String.valueOf(character).equals("½") ||
+                String.valueOf(character).equals("е") || String.valueOf(character).equals("e") || String.valueOf(character).equals("π"));
+    }
+
+    public static String fixExpression(String input) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < input.length(); i++) {
+            char currentChar = input.charAt(i);
+            sb.append(currentChar);
+
+            if (i + 1 < input.length()) {
+                char nextChar = input.charAt(i + 1);
+
+                if(isOperator(String.valueOf(currentChar)) && isSymbol(nextChar)) {
+                    continue;
+                }
+
+                if(Character.isDigit(currentChar) && isOperator(String.valueOf(nextChar))) {
+                    continue;
+                }
+
+                if(String.valueOf(currentChar).equals("(") && String.valueOf(nextChar).equals("³")) {
+                    continue;
+                }
+
+                if(Character.isDigit(currentChar) && String.valueOf(nextChar).equals("(") && !isOperator(String.valueOf(nextChar))) {
+                    sb.append('×');
+                    continue;
+                }
+
+                if (shouldInsertMultiplication(currentChar, nextChar) && (!Character.isDigit(currentChar) && !Character.isDigit(nextChar)) && !isOperator(String.valueOf(nextChar))) {
+                    sb.append('×');
+                    continue;
+                }
+
+                if(Character.isDigit(currentChar) && String.valueOf(currentChar).equals("(") && !isOperator(String.valueOf(nextChar))) {
+                    sb.append('×');
+                    continue;
+                }
+
+                if(Character.isDigit(currentChar) && Character.isLetter(nextChar) && !isOperator(String.valueOf(nextChar))) {
+                    sb.append('×');
+                    continue;
+                }
+
+                if ((currentChar == 'π' && Character.isDigit(nextChar)) ||
+                        (nextChar == 'π' && Character.isDigit(currentChar)) && !isOperator(String.valueOf(nextChar))) {
+                    sb.append('×'); // Insert '×' between 'π' and digit
+                    continue;
+                }
+
+                if ((Character.isDigit(nextChar) && String.valueOf(nextChar).equals("(") && !isOperator(String.valueOf(nextChar))) ||
+                        (nextChar == '³')) {
+                    sb.append('×');
+                    continue;
+                }
+
+                if (String.valueOf(currentChar).equals("!") && Character.isDigit(nextChar) && !isOperator(String.valueOf(nextChar))) {
+                    sb.append('×');
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public static boolean shouldInsertMultiplication(char currentChar, char nextChar) {
+        Set<Character> validChars = createValidCharsSet();
+        List<String> places = Arrays.asList("s", "i", "n", "c", "o", "t", "a", "l", "h", "g", "⁻", "¹", "³", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉");
+
+        if (places.contains(String.valueOf(currentChar)) && places.contains(String.valueOf(nextChar))) {
+            return false; // Don't insert '*' between 'sin' and next character
+        }
+
+        return (!validChars.contains(currentChar) && !validChars.contains(nextChar)) ||
+                (Character.isDigit(currentChar) && (Character.isLetter(nextChar) || nextChar == '√')) ||
+                (currentChar == ')' && (Character.isDigit(nextChar) || nextChar == '(' || nextChar == '√')) ||
+                (currentChar == ')' && isMathFunction("", 0)) ||
+                (isMathFunction("", 0) && (Character.isDigit(nextChar) || nextChar == '(' || nextChar == '√')) ||
+                (isMathFunction("", 0) && isMathFunction("", 1));
+    }
+
+    public static Set<Character> createValidCharsSet() {
+        Set<Character> validChars = new HashSet<>();
+        validChars.add('+');
+        validChars.add('-');
+        validChars.add('*');
+        validChars.add('/');
+        validChars.add('.');
+        validChars.add(',');
+        validChars.add('(');
+        validChars.add(')');
+        validChars.add('√');
+        // Add more valid characters here if needed
+        return validChars;
+    }
+
+    public static boolean isMathFunction(String input, int startIndex) {
+        Set<String> mathFunctions = createMathFunctionsSet();
+        for (String mathFunction : mathFunctions) {
+            if (input.regionMatches(startIndex, mathFunction, 0, mathFunction.length())) {
+                // Check if the entire function is present
+                if (startIndex + mathFunction.length() >= input.length() || !Character.isLetter(input.charAt(startIndex + mathFunction.length()))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static Set<String> createMathFunctionsSet() {
+        Set<String> mathFunctions = new HashSet<>();
+        mathFunctions.add("√");
+        mathFunctions.add("³√");
+        mathFunctions.add("ln");
+        mathFunctions.add("sin");
+        mathFunctions.add("cos");
+        mathFunctions.add("tan");
+        mathFunctions.add("log");
+        mathFunctions.add("sinh");
+        mathFunctions.add("cosh");
+        mathFunctions.add("tanh");
+        mathFunctions.add("log₂");
+        mathFunctions.add("log₃");
+        mathFunctions.add("log₄");
+        mathFunctions.add("log₅");
+        mathFunctions.add("log₆");
+        mathFunctions.add("log₇");
+        mathFunctions.add("log₈");
+        mathFunctions.add("log₉");
+        mathFunctions.add("sin⁻¹");
+        mathFunctions.add("cos⁻¹");
+        mathFunctions.add("tan⁻¹");
+        mathFunctions.add("sinh⁻¹");
+        mathFunctions.add("cosh⁻¹");
+        mathFunctions.add("tanh⁻¹");
+        // Add more math functions here if needed
+        return mathFunctions;
+    }
+
     public static String addParentheses(String input) {
         StringBuilder modifiedString = new StringBuilder();
         boolean checkIsNumber = false;
 
         for (int i = input.length() - 1; i >= 0; i--) {
             char currentChar = input.charAt(i);
-            if (currentChar == '!') {
-                checkIsNumber = true;
-                modifiedString.insert(0, currentChar + ")");
-                continue;
-            }
-            if(i - 1 >= 0 && Boolean.parseBoolean(String.valueOf(!Character.isDigit(input.charAt(i - 1))))) {
-                if (checkIsNumber && Character.isDigit(currentChar)) {
-                    modifiedString.insert(0, "(" + currentChar);
-                    checkIsNumber = false;
+
+            if (!String.valueOf(currentChar).equals(".")) {
+                if (currentChar == '!') {
+                    checkIsNumber = true;
+                    modifiedString.insert(0, currentChar + ")");
                     continue;
+                }
+                if(i - 1 >= 0 && Boolean.parseBoolean(String.valueOf(!Character.isDigit(input.charAt(i))))) {
+                    if (checkIsNumber && Character.isDigit(currentChar)) {
+                        modifiedString.insert(0, "(" + currentChar);
+                        checkIsNumber = false;
+                        continue;
+                    }
                 }
             }
 
@@ -1060,6 +1211,7 @@ public class CalculatorActivity {
     public static boolean isOperator(final String token) {
         // Check if the token is one of the recognized non-functional operators
         return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") ||
+                token.equals("×") || token.equals("÷") ||
                 token.equals("^") || token.equals("√") || token.equals("!") || token.startsWith("³√");
     }
 
