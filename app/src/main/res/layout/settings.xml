@@ -175,17 +175,12 @@
             <TextView
                 android:id="@+id/settings_calculation_mode_text"
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="130dp"
                 android:text="@string/calculationModeText"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="" />
 
             <Spinner
                 android:id="@+id/settings_calculation_mode_spinner"
@@ -195,6 +190,43 @@
                 android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/settings_history_mode"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/historyModeTitle"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:id="@+id/settings_history_mode_text"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:text="@string/settingsHistoryMode"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform" />
+
+            <Spinner
+                android:id="@+id/settings_history_mode_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -219,11 +251,6 @@
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="" />
 
             <Spinner
                 android:id="@+id/settings_function_spinner"

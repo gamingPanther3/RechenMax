@@ -29,9 +29,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * HistoryActivity - Displays calculation history.
@@ -97,15 +100,19 @@ public class HistoryActivity extends AppCompatActivity {
                     deleteEmptyHistoryTextView();
                     for (int i = 1; i < Integer.parseInt(Objects.requireNonNull(value)) + 1; i++) {
                         if(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()) != null) {
-                            // Create a new TextView
-                            TextView textView = createHistoryTextView(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
-                            textView.setId(i);
-
-                            // Create a thin line
-                            View line = createLine();
-
                             // Add TextView and line to the inner LinearLayout
-                            innerLinearLayout.addView(textView, 0);
+                            if(dataManager.readFromJSON("historyMode", getMainActivityContext()).equals("multiple")) {
+                                HorizontalScrollView scrollView = createHistoryTextViewMultiple(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
+                                scrollView.setId(i);
+
+                                innerLinearLayout.addView(scrollView, 0);
+                            } else {
+                                TextView textView = createHistoryTextViewSingle(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
+                                textView.setId(i);
+
+                                innerLinearLayout.addView(textView, 0);
+                            }
+                            View line = createLine();
                             innerLinearLayout.addView(line, 1);
                         }
                     }
@@ -122,10 +129,155 @@ public class HistoryActivity extends AppCompatActivity {
      * @param text The text content of the TextView.
      * @return The created TextView.
      */
-    private TextView createHistoryTextView(String text) {
+    private HorizontalScrollView createHistoryTextViewMultiple(String text) {
         TextView textView = new TextView(this);
 
-        // Create layout parameters for the TextView
+        LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+
+        textLayoutParams.setMargins(
+                getResources().getDimensionPixelSize(R.dimen.history_margin_left),
+                getResources().getDimensionPixelSize(R.dimen.history_margin_top),
+                getResources().getDimensionPixelSize(R.dimen.history_margin_right),
+                getResources().getDimensionPixelSize(R.dimen.history_margin_bottom)
+        );
+
+        textView.setLayoutParams(textLayoutParams);
+        textView.setText(text);
+        textView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
+        textView.setGravity(Gravity.END);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.history_result_size));
+
+        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
+        horizontalScrollView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        ));
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayout.setGravity(Gravity.END);
+
+        linearLayout.addView(textView);
+        horizontalScrollView.addView(linearLayout);
+
+        AtomicBoolean clickListener = new AtomicBoolean(true);
+
+        TextView emptyTextView = findViewById(R.id.history_empty_textview);
+        if(emptyTextView != null) {
+            emptyTextView.setVisibility(View.GONE);
+        }
+
+        textView.setOnLongClickListener(v -> {
+            try {
+                TextView clickedTextView = (TextView) v;
+                String clickedText = clickedTextView.getText().toString();
+
+                // Get the system clipboard manager
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+                // Create a ClipData with plain text representing the result text
+                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " ") );
+
+                // Set the created ClipData as the primary clip on the clipboard
+                clipboardManager.setPrimaryClip(clipData);
+
+                // Display a toast indicating that the data has been saved
+                if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                    showToastShort("Invoice has been copied ...", getApplicationContext());
+                } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                    showToastShort("La facture a été copiée ...", getApplicationContext());
+                } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                    showToastShort("La factura ha sido copiada ...", getApplicationContext());
+                } else {
+                    showToastShort("Rechnung wurde kopiert ...", getApplicationContext());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            clickListener.set(false);
+            return false;
+        });
+
+        textView.setOnClickListener(new ClickListener() {
+            @Override
+            public void onDoubleClick(View v) {
+                dataManager.saveToJSON(String.valueOf(textView.getId()), null, getApplicationContext());
+
+                LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
+                int indexOfTextView = linearLayout.indexOfChild(textView);
+                linearLayout.removeView(textView);
+
+                if (indexOfTextView < linearLayout.getChildCount()) {
+                    View nextView = linearLayout.getChildAt(indexOfTextView);
+                    linearLayout.removeView(nextView);
+                }
+
+                if(innerLinearLayout.getChildCount() <= 2) {
+                    resetNamesAndValues();
+                } else {
+                    recreate();
+                }
+            }
+
+            @Override
+            public void onSingleClick(View v) {
+                if(clickListener.get()) {
+                    // Output the text of the clicked TextView to the console
+                    dataManager.saveToJSON("pressedCalculate", false, getMainActivityContext());
+                    TextView clickedTextView = (TextView) v;
+                    String clickedText = clickedTextView.getText().toString();
+
+                    // Split at "=" character
+                    String[] parts = clickedText.split("=");
+
+                    // Check and remove leading and trailing spaces
+                    if (parts.length == 2) {
+                        String key = parts[0].trim();
+                        String value = parts[1].trim();
+                        try {
+                            if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
+                                dataManager.saveToJSON("calculate_text", key.replace(" ", ""), getMainActivityContext());
+                                dataManager.saveToJSON("result_text", value.replace(" ", ""), getMainActivityContext());
+                            } else {
+                                dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
+                                dataManager.saveToJSON("result_text", value, getMainActivityContext());
+                            }
+                            dataManager.saveToJSON("removeValue", false, getMainActivityContext());
+                            dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
+
+                            if(Locale.getDefault().getDisplayLanguage().equals("English")) {
+                                showToastShort("Invoice has been accepted ...", getApplicationContext());
+                            } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
+                                showToastShort("La facture a été acceptée ...", getApplicationContext());
+                            } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
+                                showToastShort("La factura ha sido aceptada ...", getApplicationContext());;
+                            } else {
+                                showToastShort("Rechnung wurde übernommen ...", getApplicationContext());
+                            }
+                        } catch (Exception e) {
+                            Log.i("createHistoryTextView", String.valueOf(e));
+                        }
+                    }
+                }
+                clickListener.set(true);
+            }
+        });
+
+        return horizontalScrollView;
+    }
+
+    private TextView createHistoryTextViewSingle(String text) {
+        TextView textView = new TextView(this);
+
         LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -145,6 +297,7 @@ public class HistoryActivity extends AppCompatActivity {
         textView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
         textView.setGravity(Gravity.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.history_result_size));
+
         AtomicBoolean clickListener = new AtomicBoolean(true);
 
         TextView emptyTextView = findViewById(R.id.history_empty_textview);
@@ -350,7 +503,7 @@ public class HistoryActivity extends AppCompatActivity {
      * Diese Methode entfernt die leere TextView aus dem Layout, falls vorhanden.
      */
     private void deleteEmptyHistoryTextView() {
-        TextView emptyTextView = createHistoryTextView("\n\n\n\n\n\n\nDein Verlauf ist leer.");
+        TextView emptyTextView = createHistoryTextViewSingle("\n\n\n\n\n\n\nDein Verlauf ist leer.");
         emptyTextView.setVisibility(View.GONE);
     }
 
@@ -429,10 +582,13 @@ public class HistoryActivity extends AppCompatActivity {
         if (value != null && !value.equals("0")) {
             for (int i = 1; i < Integer.parseInt(value) + 1; i++) {
                 // Create a new TextView
-                TextView textView = createHistoryTextView(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
-
-                // Add the TextView to the inner LinearLayout
-                innerLinearLayout.addView(textView);
+                if(dataManager.readFromJSON("historyMode", getMainActivityContext()).equals("multiple")) {
+                    HorizontalScrollView scrollView = createHistoryTextViewMultiple(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
+                    innerLinearLayout.addView(scrollView);
+                } else {
+                    TextView textView = createHistoryTextViewSingle(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()));
+                    innerLinearLayout.addView(textView);
+                }
 
                 // Create a thin line and add it to the inner LinearLayout
                 innerLinearLayout.addView(createLine());

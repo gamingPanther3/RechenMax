@@ -60,6 +60,7 @@ import java.nio.file.Files;
 //  | allowRememberNotificationsActive | true / false                     | SettingsActivity                     |
 //  | allowDailyNotificationsActive    | true / false                     | SettingsActivity                     |
 //  | refactorPI                       | true / false                     | MainActivity                         |
+//  | historyMode                      | single / multiple                | MainActivity                         |
 //  | convertMode                      | W / F / S / E / V            (*) | SettingsActivity                     |
 // * = Winkel / Fläche / Speicher / Entfernung / Volumen
 
@@ -321,6 +322,9 @@ public class DataManager {
         }
         if(readFromJSON("refactorPI", applicationContext) == null) {
             saveToJSON("refactorPI", "true", applicationContext);
+        }
+        if(readFromJSON("historyMode", applicationContext) == null) {
+            saveToJSON("historyMode", "multiple", applicationContext);
         }
     }
 

@@ -1,7 +1,6 @@
 package com.mlprograms.rechenmax;
 
 import android.annotation.SuppressLint;
-import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import static com.mlprograms.rechenmax.NumberHelper.PI;
@@ -91,7 +90,7 @@ public class CalculatorActivity {
             trim = commonReplacements.replace(".", "").replace(",", ".").trim();;
             trim = addParentheses(trim);
 
-            //Log.e("debug", "trim:" + trim);
+            Log.e("debug", "trim:" + trim);
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
@@ -139,14 +138,15 @@ public class CalculatorActivity {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            //Log.e("Exception", e.toString());
+            Log.e("Exception", e.toString());
             return "Syntax Fehler";
         }
     }
 
-    private static boolean isSymbol(final char character) {
+    public static boolean isSymbol(final String character) {
         return (String.valueOf(character).equals("¼") || String.valueOf(character).equals("⅓") || String.valueOf(character).equals("½") ||
-                String.valueOf(character).equals("е") || String.valueOf(character).equals("e") || String.valueOf(character).equals("π"));
+                String.valueOf(character).equals("е") || String.valueOf(character).equals("e") || String.valueOf(character).equals("π") ||
+                String.valueOf(character).equals(".") || String.valueOf(character).equals(","));
     }
 
     public static String fixExpression(String input) {
@@ -159,7 +159,7 @@ public class CalculatorActivity {
             if (i + 1 < input.length()) {
                 char nextChar = input.charAt(i + 1);
 
-                if(isOperator(String.valueOf(currentChar)) && isSymbol(nextChar)) {
+                if(isOperator(String.valueOf(currentChar)) && isSymbol(String.valueOf(nextChar))) {
                     continue;
                 }
 
@@ -208,6 +208,9 @@ public class CalculatorActivity {
                 }
             }
         }
+        if (sb.length() > 0 && sb.substring(sb.length() - 2, sb.length()).equals("×=")) {
+            sb.delete(sb.length() - 2, sb.length());
+        }
         return sb.toString();
     }
 
@@ -232,7 +235,9 @@ public class CalculatorActivity {
         validChars.add('+');
         validChars.add('-');
         validChars.add('*');
+        validChars.add('×');
         validChars.add('/');
+        validChars.add('÷');
         validChars.add('.');
         validChars.add(',');
         validChars.add('(');
@@ -402,7 +407,7 @@ public class CalculatorActivity {
         }
 
         // Return the final result as a string
-        //Log.i("convertScientificToDecimal", "sb:" + sb);
+        Log.i("convertScientificToDecimal", "sb:" + sb);
         return sb.toString();
     }
 
@@ -426,7 +431,7 @@ public class CalculatorActivity {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        //Log.i("tokenize","Input Expression: " + expression);
+        Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -514,7 +519,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print tokens
-        //Log.i("tokenize","Tokens: " + tokens);
+        Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -529,7 +534,7 @@ public class CalculatorActivity {
     public static BigDecimal evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
         final List<String> postfixTokens = infixToPostfix(tokens);
-        //Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
+        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -768,7 +773,7 @@ public class CalculatorActivity {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            //Log.i("evaluatePostfix","Token: " + token);
+            Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -781,17 +786,17 @@ public class CalculatorActivity {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException("Syntax Fehler");
             }
 
             // Debugging: Print current stack
-            //Log.i("evaluatePostfix","Stack: " + stack);
+            Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            //Log.i("evaluatePostfix","Stacksize != 1");
+            Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException("Syntax Fehler");
         }
 
@@ -1089,8 +1094,8 @@ public class CalculatorActivity {
 
         for (final String token : infixTokens) {
             // Debugging: Print current token and stack
-            //Log.i("infixToPostfix", "Current Token: " + token);
-            //Log.i("infixToPostfix", "Stack: " + stack);
+            Log.i("infixToPostfix", "Current Token: " + token);
+            Log.i("infixToPostfix", "Stack: " + stack);
 
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -1121,8 +1126,8 @@ public class CalculatorActivity {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            //Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
-            //Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
+            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
         while (!stack.isEmpty()) {
@@ -1130,7 +1135,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print final postfixTokens
-        //Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
+        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
         return postfixTokens;
     }

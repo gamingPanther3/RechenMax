@@ -1,6 +1,7 @@
 package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.CalculatorActivity.isOperator;
+import static com.mlprograms.rechenmax.CalculatorActivity.isSymbol;
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
@@ -2363,8 +2364,22 @@ public class MainActivity extends AppCompatActivity {
      */
     private void handleMRAction(ClipboardManager clipboardManager) {
         ClipData clipData = clipboardManager.getPrimaryClip();
+        StringBuilder stringBuilder = new StringBuilder();
 
-        if (clipData == null || clipData.getItemCount() == 0) {
+        assert clipData != null;
+        ClipData.Item item = clipData.getItemAt(0);
+        String clipText = (String) item.getText();
+
+        for (int i = 0; i < clipText.length(); i++) {
+            final String currentChar = String.valueOf(clipText.charAt(i));
+            if (isNumber(currentChar) || isOperator(currentChar) || isSymbol(currentChar)) {
+                stringBuilder.append(currentChar);
+            }
+        }
+
+        String text = stringBuilder.toString();
+
+        if (clipData.getItemCount() == 0) {
             // Handle the case where clipboard data is null or empty
             if(Locale.getDefault().getDisplayLanguage().equals("English")) {
                 showToastShort("Clipboard does not contain any data ...", getApplicationContext());
@@ -2378,9 +2393,6 @@ public class MainActivity extends AppCompatActivity {
 
             return;
         }
-
-        ClipData.Item item = clipData.getItemAt(0);
-        String text = (String) item.getText();
 
         String scientificNotationPattern = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
         String mathTaskPattern = "[-+*/%^()0-9.eE\\s]+";
@@ -2908,11 +2920,11 @@ public class MainActivity extends AppCompatActivity {
             int l, m, n;
 
             for(l = 0; l < text.length(); l++) {
-                if(!(l + 5 < text.length())) {
+                if(!(l + 3 < text.length())) {
                     break;
                 }
 
-                isPI = text.startsWith("3,1415", l);
+                isPI = text.startsWith("3,14", l);
                 if(isPI) {
                     start = l;
                     for(m = 0; m < PI.length(); m++) {
@@ -3152,6 +3164,8 @@ public class MainActivity extends AppCompatActivity {
      * - R.id.result_label: TextView whose text size needs adjustment within the second ScrollView
      */
     public void adjustTextSize() {
+        // ignore this function (too many bugs in the TextViews)
+        // i wrote 'if(true)' because if i don't do it, it would throw an error message
         if(true) {
             return;
         }

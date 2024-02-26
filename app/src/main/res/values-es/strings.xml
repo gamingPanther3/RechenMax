@@ -245,4 +245,9 @@
     <string name="delete">Borrar</string>
     <string name="settingsPI">Con esta función, puedes configurar que cada vez que ingreses el número \'3,1415\', se reemplace automáticamente por el símbolo de Pi. Esto simplifica la introducción de Pi en tus cálculos, permitiéndote concentrarte en la tarea sin tener que buscar constantemente el símbolo.</string>
     <string name="settingsPITitle">Insertar PI</string>
+
+    <string name="settingsHistoryMode">Esta configuración te permite determinar si el texto en tu historial se muestra como una barra de desplazamiento, lo que significa que puedes desplazar el texto de izquierda a derecha y se mostrará en una sola línea, o si el texto se muestra en varias líneas una debajo de la otra.</string>
+    <string name="settingsHistoryModeSingle">De una sola línea</string>
+    <string name="settingsHistoryModeMultiple">De múltiples líneas</string>
+    <string name="historyModeTitle">Modo de historial</string>
 </resources>

@@ -37,6 +37,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -56,12 +58,15 @@ public class SettingsActivity extends AppCompatActivity {
     private ArrayList<CustomItems> customListDisplayMode = new ArrayList<>();
     private ArrayList<CustomItems> customListCalculationMode = new ArrayList<>();
     private ArrayList<CustomItems> customListFunctionMode = new ArrayList<>();
+    private ArrayList<CustomItems> customListHistoryMode = new ArrayList<>();
     private CustomAdapter customAdapter1;
     private CustomAdapter customAdapter2;
     private CustomAdapter customAdapter3;
+    private CustomAdapter customAdapter4;
     private Spinner customSpinner1;
     private Spinner customSpinner2;
     private Spinner customSpinner3;
+    private Spinner customSpinner4;
     // Declare a static MainActivity object
     @SuppressLint("StaticFieldLeak")
     private static MainActivity mainActivity;
@@ -241,6 +246,42 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 //updateSpinner2(adapterView);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+
+        // Declare a Spinner object
+        customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline));
+        customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline));
+        customAdapter4 = new CustomAdapter(this, customListHistoryMode);
+
+        customSpinner4 = findViewById(R.id.settings_history_mode_spinner);
+        if(customSpinner4 != null) {
+            customSpinner4.setAdapter(customAdapter4);
+
+            final String mode = dataManager.readFromJSON("historyMode", getMainActivityContext());
+            if(mode.equals("single")) {
+                customSpinner4.setSelection(0);
+            } else {
+                customSpinner4.setSelection(1);
+            }
+        }
+
+        assert customSpinner4 != null;
+        customSpinner4.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                CustomItems items = (CustomItems) adapterView.getSelectedItem();
+                String spinnerText = items.getSpinnerText();
+
+                if (spinnerText.equals(getString(R.string.settingsHistoryModeSingle))) {
+                    dataManager.saveToJSON("historyMode", "single", getMainActivityContext());
+                } else {
+                    dataManager.saveToJSON("historyMode", "multiple", getMainActivityContext());
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -841,14 +882,19 @@ public class SettingsActivity extends AppCompatActivity {
                                 customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
                                 customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
 
+                                customListHistoryMode = new ArrayList<>();
+                                customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline_light));
+                                customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline_light));
+
                                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                                 customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+                                customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
                                 String color = "#FFFFFF";
                                 String backgroundColor = "#151515";
 
-                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4};
 
                                 for (CustomAdapter adapter : adapters) {
                                     adapter.setTextColor(Color.parseColor(color));
@@ -878,14 +924,19 @@ public class SettingsActivity extends AppCompatActivity {
                                 customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_true_darkmode));
                                 customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_true_darkmode));
 
+                                customListHistoryMode = new ArrayList<>();
+                                customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline_true_darkmode));
+                                customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline_true_darkmode));
+
                                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                                 customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+                                customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
                                 String color = "#D5D5D5";
                                 String backgroundColor = "#000000";
 
-                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4};
 
                                 for (CustomAdapter adapter : adapters) {
                                     adapter.setTextColor(Color.parseColor(color));
@@ -895,6 +946,7 @@ public class SettingsActivity extends AppCompatActivity {
                             customSpinner1.setAdapter(customAdapter1);
                             customSpinner2.setAdapter(customAdapter2);
                             customSpinner3.setAdapter(customAdapter3);
+                            customSpinner4.setAdapter(customAdapter4);
 
                             isProgrammaticChange = true;
                             customSpinner1.setSelection(0);
@@ -919,14 +971,19 @@ public class SettingsActivity extends AppCompatActivity {
                             customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
                             customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
 
+                            customListHistoryMode = new ArrayList<>();
+                            customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline_light));
+                            customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline_light));
+
                             customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                             customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                             customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+                            customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
                             String color = "#FFFFFF";
                             String backgroundColor = "#151515";
 
-                            CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+                            CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4};
 
                             for (CustomAdapter adapter : adapters) {
                                 adapter.setTextColor(Color.parseColor(color));
@@ -936,6 +993,7 @@ public class SettingsActivity extends AppCompatActivity {
                             customSpinner1.setAdapter(customAdapter1);
                             customSpinner2.setAdapter(customAdapter2);
                             customSpinner3.setAdapter(customAdapter3);
+                            customSpinner4.setAdapter(customAdapter4);
 
                             isProgrammaticChange = true;
                             customSpinner1.setSelection(0);
@@ -965,14 +1023,19 @@ public class SettingsActivity extends AppCompatActivity {
                         customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree));
                         customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian));
 
+                        customListHistoryMode = new ArrayList<>();
+                        customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline));
+                        customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline));
+
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                         customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+                        customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
                         String color = "#000000";
                         String backgroundColor = "#FFFFFF";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -982,6 +1045,7 @@ public class SettingsActivity extends AppCompatActivity {
                         customSpinner1.setAdapter(customAdapter1);
                         customSpinner2.setAdapter(customAdapter2);
                         customSpinner3.setAdapter(customAdapter3);
+                        customSpinner4.setAdapter(customAdapter4);
 
                         isProgrammaticChange = true;
                         customSpinner1.setSelection(0);
@@ -1010,14 +1074,19 @@ public class SettingsActivity extends AppCompatActivity {
                 customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree));
                 customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian));
 
+                customListHistoryMode = new ArrayList<>();
+                customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline));
+                customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline));
+
                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                 customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+                customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
                 String color = "#000000";
                 String backgroundColor = "#FFFFFF";
 
-                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4};
 
                 for (CustomAdapter adapter : adapters) {
                     adapter.setTextColor(Color.parseColor(color));
@@ -1027,6 +1096,7 @@ public class SettingsActivity extends AppCompatActivity {
                 customSpinner1.setAdapter(customAdapter1);
                 customSpinner2.setAdapter(customAdapter2);
                 customSpinner3.setAdapter(customAdapter3);
+                customSpinner4.setAdapter(customAdapter4);
 
                 isProgrammaticChange = true;
                 customSpinner1.setSelection(1);
@@ -1061,14 +1131,19 @@ public class SettingsActivity extends AppCompatActivity {
                         customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
                         customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
 
+                        customListHistoryMode = new ArrayList<>();
+                        customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline_light));
+                        customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline_light));
+
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                         customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+                        customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
                         String color = "#FFFFFF";
                         String backgroundColor = "#151515";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -1099,14 +1174,19 @@ public class SettingsActivity extends AppCompatActivity {
                         customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_true_darkmode));
                         customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_true_darkmode));
 
+                        customListHistoryMode = new ArrayList<>();
+                        customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline_true_darkmode));
+                        customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline_true_darkmode));
+
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                         customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+                        customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
                         String color = "#D5D5D5";
                         String backgroundColor = "#000000";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -1117,6 +1197,7 @@ public class SettingsActivity extends AppCompatActivity {
                     customSpinner1.setAdapter(customAdapter1);
                     customSpinner2.setAdapter(customAdapter2);
                     customSpinner3.setAdapter(customAdapter3);
+                    customSpinner4.setAdapter(customAdapter4);
 
                     isProgrammaticChange = true;
                     customSpinner1.setSelection(2);
@@ -1141,14 +1222,19 @@ public class SettingsActivity extends AppCompatActivity {
                     customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
                     customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
 
+                    customListHistoryMode = new ArrayList<>();
+                    customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeSingle), R.drawable.historymodesingleline_light));
+                    customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline_light));
+
                     customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                     customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                     customAdapter3 = new CustomAdapter(this, customListFunctionMode);
+                    customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
                     String color = "#FFFFFF";
                     String backgroundColor = "#151515";
 
-                    CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3};
+                    CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4};
 
                     for (CustomAdapter adapter : adapters) {
                         adapter.setTextColor(Color.parseColor(color));
@@ -1157,6 +1243,9 @@ public class SettingsActivity extends AppCompatActivity {
 
                     customSpinner1.setAdapter(customAdapter1);
                     customSpinner2.setAdapter(customAdapter2);
+                    customSpinner3.setAdapter(customAdapter3);
+                    customSpinner3.setAdapter(customAdapter4);
+
                     isProgrammaticChange = true;
                     customSpinner1.setSelection(2);
 
@@ -1164,13 +1253,17 @@ public class SettingsActivity extends AppCompatActivity {
                     updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
                 }
             }
-            String calculationMode = dataManager.readFromJSON("calculationMode", getMainActivityContext());
-            int selection = calculationMode.equals("Standard") ? 0 : 1;
+            String mode = dataManager.readFromJSON("calculationMode", getMainActivityContext());
+            int selection = mode.equals("Standard") ? 0 : 1;
             customSpinner2.setSelection(selection);
 
-            calculationMode = dataManager.readFromJSON("functionMode", getMainActivityContext());
-            selection = calculationMode.equals("Deg") ? 0 : 1;
+            mode = dataManager.readFromJSON("functionMode", getMainActivityContext());
+            selection = mode.equals("Deg") ? 0 : 1;
             customSpinner3.setSelection(selection);
+
+            mode = dataManager.readFromJSON("historyMode", getMainActivityContext());
+            selection = mode.equals("single") ? 0 : 1;
+            customSpinner4.setSelection(selection);
 
         }
     }
@@ -1211,6 +1304,9 @@ public class SettingsActivity extends AppCompatActivity {
         Switch settingPI = findViewById(R.id.settings_pi);
         TextView settingPIText = findViewById(R.id.settings_pi_text);
 
+        TextView settingsHistoryMode = findViewById(R.id.settings_history_mode);
+        TextView settingsHistoryModeText = findViewById(R.id.settings_history_mode_text);
+
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsHelpButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
@@ -1243,6 +1339,10 @@ public class SettingsActivity extends AppCompatActivity {
         settingPI.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingPIText.setTextColor(ContextCompat.getColor(this, textColor));
         settingPIText.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingsHistoryMode.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsHistoryMode.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingsHistoryModeText.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsHistoryModeText.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
     }
 
     /**
