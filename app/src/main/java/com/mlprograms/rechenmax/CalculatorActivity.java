@@ -88,10 +88,6 @@ public class CalculatorActivity {
             trim = commonReplacements.replace(".", "").replace(",", ".").trim();;
             trim = mainActivity.balanceParentheses(addParentheses(trim));
 
-            if (!trim.isEmpty() && isOperator(String.valueOf(trim.charAt(trim.length() - 1)))) {
-                trim = trim.substring(0, trim.length() - 1);
-            }
-
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
                 try {
@@ -309,34 +305,43 @@ public class CalculatorActivity {
     public static String addParentheses(String input) {
         StringBuffer modifiedString = new StringBuffer();
         boolean checkIsNumber = false;
+        boolean foundOpenBracket = false;
 
         for (int i = input.length() - 1; i >= 0; i--) {
             char currentChar = input.charAt(i);
 
-            if (!String.valueOf(currentChar).equals(".")) {
-                if (currentChar == '!') {
-                    checkIsNumber = true;
-                    modifiedString.insert(0, currentChar + ")");
-                    continue;
+            if (currentChar == '(') {
+                foundOpenBracket = true;
+            }
+
+            if (currentChar == '!') {
+                checkIsNumber = true;
+                if (i - 1 >= 0 && (input.charAt(i - 1) != '.' && input.charAt(i - 1) != ',')) {
+                    modifiedString.insert(0, ")");
                 }
-                if(i - 1 >= 0 && Boolean.parseBoolean(String.valueOf(!Character.isDigit(input.charAt(i))))) {
-                    if (checkIsNumber && !Character.isDigit(currentChar) &&
-                            (!String.valueOf(currentChar).equals(".") || !String.valueOf(currentChar).equals(","))) {
-                        modifiedString.insert(0, currentChar + "(");
-                        checkIsNumber = false;
-                        continue;
-                    }
+                modifiedString.insert(0, currentChar);
+                continue;
+            }
+
+            if (!String.valueOf(currentChar).equals(".") && !String.valueOf(currentChar).equals(",")) {
+                if (foundOpenBracket && !Character.isDigit(currentChar)) {
+                    modifiedString.insert(0, currentChar + "(");
+                    foundOpenBracket = false;
+                    checkIsNumber = false;
+                    continue;
                 }
             }
 
             modifiedString.insert(0, currentChar);
         }
-        if(checkIsNumber) {
+
+        if (checkIsNumber) {
             modifiedString.insert(0, "(");
         }
 
-        //Log.e("DEBUG", mainActivity.balanceParentheses(modifiedString.toString()));
-        return mainActivity.balanceParentheses(modifiedString.toString());
+        Log.e("DEBUG", mainActivity.balanceParentheses(modifiedString.toString()));
+        Log.e("DEBUG", modifiedString.toString());
+        return modifiedString.toString();
     }
 
     /**
@@ -463,7 +468,9 @@ public class CalculatorActivity {
 
             // If the character is a digit, period, or minus sign (if it's at the beginning, after an opening parenthesis, or after an operator),
             // add it to the current token
-            if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || expressionWithoutSpaces.charAt(i - 1) == '(' || isOperator(String.valueOf(expressionWithoutSpaces.charAt(i - 1)))))) {
+            if (Character.isDigit(c) || c == '.' || (c == '-' && (i == 0 || expressionWithoutSpaces.charAt(i - 1) == '('
+                    || isOperator(String.valueOf(expressionWithoutSpaces.charAt(i - 1)))
+                    || expressionWithoutSpaces.charAt(i - 1) == ','))) {
                 currentToken.append(c);
             } else if (i + 3 < expressionWithoutSpaces.length() && expressionWithoutSpaces.startsWith("³√", i)) {
                 // If "³√(" is found, handle the cubic root operation

@@ -2887,9 +2887,9 @@ public class MainActivity extends AppCompatActivity {
 
         input = inputBuilder.toString();
 
-        if(String.valueOf(input.charAt(0)).equals("(") && String.valueOf(input.charAt(input.length() - 1)).equals(")")) {
-            input = input.substring(1, input.length() - 1);
-        }
+        //if(String.valueOf(input.charAt(0)).equals("(") && String.valueOf(input.charAt(input.length() - 1)).equals(")")) {
+        //    input = input.substring(1, input.length() - 1);
+        //}
 
         if(oldInput.contains("=")) {
             return input + " =";
