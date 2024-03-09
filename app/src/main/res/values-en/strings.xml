@@ -250,4 +250,23 @@
     <string name="settingsHistoryModeSingle">Single-line</string>
     <string name="settingsHistoryModeMultiple">Multiple-line</string>
     <string name="historyModeTitle">History Mode</string>
+
+    <string name="errorMessage1">Value too large</string>
+    <string name="errorMessage2">Syntax error</string>
+    <string name="errorMessage3">Division by zero</string>
+    <string name="errorMessage4">Real numbers only</string>
+    <string name="errorMessage5">Unknown operator</string>
+    <string name="errorMessage6">Domain error</string>
+    <string name="errorMessage7">Invalid number format</string>
+    <string name="errorMessage8">Undefined</string>
+    <string name="errorMessage9">Invalid value</string>
+    <string name="errorMessage10">Invalid input</string>
+    <string name="errorMessage11">Infinite</string>
+    <string name="errorMessage12">For input string</string>
+    <string name="errorMessage13">No division</string>
+    <string name="errorMessage14">Unknown function</string>
+    <string name="errorMessage15">Invalid argument</string>
+    <string name="errorMessage16">Invalid base</string>
+    <string name="errorMessage17">Invalid base or argument</string>
+
 </resources>

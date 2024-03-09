@@ -234,4 +234,22 @@
     <string name="settingsHistoryModeSingle">Einzeilig</string>
     <string name="settingsHistoryModeMultiple">Mehrzeilig</string>
     <string name="historyModeTitle">Verlaufmodus</string>
+
+    <string name="errorMessage1">Wert zu groß</string>
+    <string name="errorMessage2">Syntax Fehler</string>
+    <string name="errorMessage3">Kein Teilen durch 0</string>
+    <string name="errorMessage4">Nur reelle Zahlen</string>
+    <string name="errorMessage5">Unbekannter Operator</string>
+    <string name="errorMessage6">Domainfehler</string>
+    <string name="errorMessage7">Ungültiges Zahlenformat</string>
+    <string name="errorMessage8">Nicht definiert</string>
+    <string name="errorMessage9">Ungültiger Wert</string>
+    <string name="errorMessage10">Ungültige Eingabe</string>
+    <string name="errorMessage11">Unendlich</string>
+    <string name="errorMessage12">For input string</string>
+    <string name="errorMessage13">Kein Teilen</string>
+    <string name="errorMessage14">Unbekannte Funktion</string>
+    <string name="errorMessage15">Ungültiges Argument</string>
+    <string name="errorMessage16">Ungültige Basis</string>
+    <string name="errorMessage17">Ungültige Basis oder Argument</string>
 </resources>

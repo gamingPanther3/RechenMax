@@ -66,12 +66,15 @@ public class CalculatorActivity {
      */
     public static String calculate(String calc) {
         try {
-            // Replace all the special characters in the expression with their corresponding mathematical symbols
-            // important: "е" (German: 'Eulersche-Zahl') and "e" (used for notation) are different characters
             String trim;
             if(String.valueOf(calc.charAt(0)).equals("+")) {
                 calc = calc.substring(1);
+            } else if(String.valueOf(calc.charAt(0)).equals("-")) {
+                calc = "0" + calc;
             }
+
+            // Replace all the special characters in the expression with their corresponding mathematical symbols
+            // important: "е" (German: 'Eulersche-Zahl') and "e" (used for notation) are different characters
 
             calc = fixExpression(calc);
             String commonReplacements = calc.replace('×', '*')
@@ -120,14 +123,14 @@ public class CalculatorActivity {
             double resultDouble = result.doubleValue();
             // If the result is too large, return "Wert zu groß"
             if (Double.isInfinite(resultDouble)) {
-                return "Wert zu groß";
+                return mainActivity.getString(R.string.errorMessage1);
             }
             // return the result in decimal notation
             return result.stripTrailingZeros().toPlainString().replace('.', ',');
         } catch (ArithmeticException e) {
             // Handle exceptions related to arithmetic errors
-            if (Objects.equals(e.getMessage(), "Wert zu groß")) {
-                return "Wert zu groß";
+            if (Objects.equals(e.getMessage(), mainActivity.getString(R.string.errorMessage1))) {
+                return mainActivity.getString(R.string.errorMessage1);
             } else {
                 return e.getMessage();
             }
@@ -136,7 +139,7 @@ public class CalculatorActivity {
             return e.getMessage();
         } catch (Exception e) {
             Log.e("Exception", e.toString());
-            return "Syntax Fehler";
+            return mainActivity.getString(R.string.errorMessage2);
         }
     }
 
@@ -339,9 +342,7 @@ public class CalculatorActivity {
             modifiedString.insert(0, "(");
         }
 
-        Log.e("DEBUG", mainActivity.balanceParentheses(modifiedString.toString()));
-        Log.e("DEBUG", modifiedString.toString());
-        return modifiedString.toString();
+        return mainActivity.balanceParentheses(modifiedString.toString());
     }
 
     /**
@@ -589,13 +590,13 @@ public class CalculatorActivity {
                 return operand1.multiply(operand2, MC);
             case "/":
                 if (operand2.compareTo(BigDecimal.ZERO) == 0) {
-                    throw new ArithmeticException("Kein Teilen durch 0");
+                    throw new ArithmeticException(mainActivity.getString(R.string.errorMessage3));
                 } else {
                     return operand1.divide(operand2, MC);
                 }
             case ROOT:
                 if (operand2.compareTo(BigDecimal.ZERO) < 0) {
-                    throw new IllegalArgumentException("Nur reelle Zahlen");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage4));
                 } else {
                     return BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
                 }
@@ -686,7 +687,7 @@ public class CalculatorActivity {
             case "tanh⁻¹(":
                 return atanh(operand2);
             default:
-                throw new IllegalArgumentException("Unbekannter Operator: '" + operator + "'");
+                throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage5));
         }
     }
 
@@ -713,7 +714,7 @@ public class CalculatorActivity {
     public static BigDecimal factorial(BigDecimal number) {
         // Check if the number is greater than 170
         if (number.compareTo(new BigDecimal("170")) > 0) {
-            throw new IllegalArgumentException("Wert zu groß");
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage1));
         }
 
         // Check if the number is negative
@@ -725,7 +726,7 @@ public class CalculatorActivity {
 
         // Check if the number is an integer. If not, throw an exception
         if (number.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) != 0) {
-            throw new IllegalArgumentException("Domainfehler");
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage6));
         }
 
         // Initialize the result as 1
@@ -760,7 +761,7 @@ public class CalculatorActivity {
 
         // Check if the base is zero and the exponent is negative
         if (baseDouble == 0 && exponentDouble < 0) {
-            throw new ArithmeticException("Kein Teilen durch 0");
+            throw new ArithmeticException(mainActivity.getString(R.string.errorMessage3));
         }
 
         // Check if the base is negative and the exponent is an integer
@@ -774,14 +775,14 @@ public class CalculatorActivity {
 
         // If the result is too large to be represented as a double, throw an exception
         if (Double.isInfinite(resultDouble)) {
-            throw new ArithmeticException("Wert zu groß");
+            throw new ArithmeticException(mainActivity.getString(R.string.errorMessage1));
         }
 
         // Convert the result back to a BigDecimal and return it
         try {
             return new BigDecimal(resultDouble, MC).stripTrailingZeros();
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("Ungültiges Zahlenformat");
+            throw new NumberFormatException(mainActivity.getString(R.string.errorMessage7));
         }
     }
 
@@ -813,7 +814,7 @@ public class CalculatorActivity {
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
                 Log.i("evaluatePostfix","Token is neither a number nor an operator");
-                throw new IllegalArgumentException("Syntax Fehler");
+                throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
             }
 
             // Debugging: Print current stack
@@ -823,7 +824,7 @@ public class CalculatorActivity {
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
             Log.i("evaluatePostfix","Stacksize != 1");
-            throw new IllegalArgumentException("Syntax Fehler");
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
         }
 
         // Return the result
@@ -859,7 +860,7 @@ public class CalculatorActivity {
                     case ROOT:
                         if (operand2.compareTo(BigDecimal.ZERO) < 0) {
                             // If the operand is negative, throw an exception or handle it as needed
-                            throw new IllegalArgumentException("Nur reelle Zahlen");
+                            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage4));
                         } else {
                             result = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
                         }
@@ -869,7 +870,7 @@ public class CalculatorActivity {
                         break;
                     default:
                         // Handle other operators if needed
-                        throw new IllegalArgumentException("Unbekannter Operator");
+                        throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
                 }
                 stack.add(result);
             }
@@ -894,7 +895,7 @@ public class CalculatorActivity {
             case "log(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log10(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -902,7 +903,7 @@ public class CalculatorActivity {
             case "log₂(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(2)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -910,7 +911,7 @@ public class CalculatorActivity {
             case "log₃(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(3)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -918,7 +919,7 @@ public class CalculatorActivity {
             case "log₄(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(4)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -926,7 +927,7 @@ public class CalculatorActivity {
             case "log₅(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(5)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -934,7 +935,7 @@ public class CalculatorActivity {
             case "log₆(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(6)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -942,7 +943,7 @@ public class CalculatorActivity {
             case "log₇(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(7)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -950,7 +951,7 @@ public class CalculatorActivity {
             case "log₈(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(8)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -958,7 +959,7 @@ public class CalculatorActivity {
             case "log₉(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(9)).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -966,7 +967,7 @@ public class CalculatorActivity {
             case "ln(": {
                 operand = stack.remove(stack.size() - 1);
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException("Nicht definiert");
+                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
                 stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
@@ -997,7 +998,7 @@ public class CalculatorActivity {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
-                    throw new ArithmeticException("Ungültiger Wert");
+                    throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
                 }
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.asin(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -1037,7 +1038,7 @@ public class CalculatorActivity {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
                 if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
-                    throw new ArithmeticException("Ungültiger Wert");
+                    throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
                 }
                 if (mode != null && mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.acos(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -1060,7 +1061,7 @@ public class CalculatorActivity {
                     double degrees = operand.doubleValue();
                     if (isMultipleOf90(degrees)) {
                         // Check if the tangent of multiples of 90 degrees is being calculated
-                        throw new ArithmeticException("Nicht definiert");
+                        throw new ArithmeticException(mainActivity.getString(R.string.errorMessage8));
                     }
                     result = BigDecimal.valueOf(Math.tan(Math.toRadians(degrees))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
@@ -1118,7 +1119,8 @@ public class CalculatorActivity {
         final List<String> postfixTokens = new ArrayList<>();
         final Stack<String> stack = new Stack<>();
 
-        for (final String token : infixTokens) {
+        for (int i = 0; i < infixTokens.size(); i++) {
+            final String token = infixTokens.get(i);
             // Debugging: Print current token and stack
             Log.i("infixToPostfix", "Current Token: " + token);
             Log.i("infixToPostfix", "Stack: " + stack);
@@ -1206,7 +1208,7 @@ public class CalculatorActivity {
         BigDecimal term2 = BigDecimal.ONE.subtract(x, MathContext.DECIMAL128);
 
         if (x.compareTo(BigDecimal.valueOf(-1)) <= 0 || x.compareTo(BigDecimal.valueOf(1)) >= 0) {
-            throw new ArithmeticException("Ungültiger Wert");
+            throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
         }
 
         BigDecimal quotient = term1.divide(term2, MathContext.DECIMAL128);
@@ -1241,9 +1243,15 @@ public class CalculatorActivity {
      */
     public static boolean isOperator(final String token) {
         // Check if the token is one of the recognized non-functional operators
-        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") ||
-                token.equals("×") || token.equals("÷") ||
-                token.equals("^") || token.equals("√") || token.equals("!") || token.startsWith("³√");
+        return token.contains("+") || token.contains("-") || token.contains("*") || token.contains("/") ||
+                token.contains("×") || token.contains("÷") ||
+                token.contains("^") || token.contains("√") || token.contains("!") || token.contains("³√");
+    }
+
+    public static boolean isStandardOperator(final String token) {
+        // Check if the token is one of the recognized non-functional operators
+        return token.contains("+") || token.contains("-") || token.contains("*") || token.contains("/")
+                || token.contains("×") || token.contains("÷");
     }
 
     /**
@@ -1310,7 +1318,7 @@ public class CalculatorActivity {
 
             // If the operator is not recognized, throw an exception
             default:
-                throw new IllegalArgumentException("Unbekannter Operator: " + operator);
+                throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
         }
     }
 }

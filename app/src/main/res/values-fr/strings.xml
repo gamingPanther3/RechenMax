@@ -231,4 +231,22 @@
     <string name="settingsHistoryModeMultiple">Multiligne</string>
     <string name="historyModeTitle">Mode historique</string>
 
+    <string name="errorMessage1">Valeur trop grande</string>
+    <string name="errorMessage2">Erreur de syntaxe</string>
+    <string name="errorMessage3">Division par zéro</string>
+    <string name="errorMessage4">Nombres réels uniquement</string>
+    <string name="errorMessage5">Opérateur inconnu</string>
+    <string name="errorMessage6">Erreur de domaine</string>
+    <string name="errorMessage7">Format de nombre invalide</string>
+    <string name="errorMessage8">Non défini</string>
+    <string name="errorMessage9">Valeur invalide</string>
+    <string name="errorMessage10">Entrée invalide</string>
+    <string name="errorMessage11">Infini</string>
+    <string name="errorMessage12">Pour la chaîne d\'entrée</string>
+    <string name="errorMessage13">Pas de division</string>
+    <string name="errorMessage14">Fonction inconnue</string>
+    <string name="errorMessage15">Argument invalide</string>
+    <string name="errorMessage16">Base invalide</string>
+    <string name="errorMessage17">Base ou argument invalide</string>
+
 </resources>

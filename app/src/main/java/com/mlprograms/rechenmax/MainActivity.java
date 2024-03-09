@@ -2,6 +2,7 @@ package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.CalculatorActivity.fixExpression;
 import static com.mlprograms.rechenmax.CalculatorActivity.isOperator;
+import static com.mlprograms.rechenmax.CalculatorActivity.isStandardOperator;
 import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
@@ -2687,6 +2688,22 @@ public class MainActivity extends AppCompatActivity {
         //}
     }
 
+    public static String removeOperatorsFromRight(String input) {
+        for (int i = input.length() - 1; i >= 0; i--) {
+            char currentChar = input.charAt(i);
+            String currentToken = String.valueOf(currentChar);
+
+            if (isStandardOperator(currentToken)) {
+                input = input.substring(0, input.length() - 1);
+            } else {
+                break;
+            }
+        }
+
+        return input;
+    }
+
+
     /**
      * This method is called when the backspace button is clicked.
      * It removes the last character from the result text.
@@ -2698,18 +2715,16 @@ public class MainActivity extends AppCompatActivity {
         dataManager.saveToJSON("pressedCalculate", false, getApplicationContext());
         if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
             if(!getCalculateText().isEmpty()) {
-                String calculate_text = getCalculateText();
-
-                if(String.valueOf(calculate_text.charAt(getCalculateText().length() - 1)).equals("(")) {
-                    setCalculateText(removeOperators(calculate_text.substring(0, getCalculateText().length() - 1)));
+                if(String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).equals("(")) {
+                    setCalculateText(removeOperators(getCalculateText().substring(0, getCalculateText().length() - 1)));
                 } else {
                     setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
                 }
-                if(!getCalculateText().isEmpty() && String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).matches("\\d")) {
-                    final String oldText = getResultText();
+
+                if(Character.isDigit(getCalculateText().charAt(getCalculateText().length() - 1))) {
                     setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
                     if(isInvalidInput(getResultText())) {
-                       setResultText(oldText);
+                       setResultText(CalculatorActivity.calculate(balanceParentheses(removeOperatorsFromRight(getCalculateText()))));
                     }
                 }
             }
@@ -2717,7 +2732,7 @@ public class MainActivity extends AppCompatActivity {
                 setResultText("0");
             } else {
                 final String oldText = getResultText();
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorActivity.calculate(balanceParentheses(removeOperatorsFromRight(getCalculateText()))));
                 if(isInvalidInput(getResultText())) {
                     setResultText(oldText);
                 }
@@ -2748,8 +2763,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        //formatResultTextAfterType();
-        //adjustTextSize();
+        formatResultTextAfterType();
+        adjustTextSize();
     }
 
     /**
@@ -3172,21 +3187,23 @@ public class MainActivity extends AppCompatActivity {
      * @return Returns true if the text is invalid (contains "Ungültige Eingabe", "Unendlich", "Syntax Fehler", or "Domainfehler"), and false otherwise.
      */
     private boolean isInvalidInput(String text) {
-        return  text.contains("Ungültige Eingabe") ||
-                text.contains("Unendlich") ||
-                text.contains("Syntax Fehler") ||
-                text.contains("Domainfehler") ||
-                text.contains("For input string") ||
-                text.contains("Wert zu groß") ||
-                text.contains("Kein Teilen") ||
-                text.contains("Ungültiges Zahlenformat") ||
-                text.contains("Nicht definiert") ||
-                text.contains("Unbekannte Funktion") ||
-                text.contains("Ungültiges Argument") ||
-                text.contains("Ungültige Basis") ||
-                text.contains("Ungültiger Wert") ||
-                text.contains("Unbekannter Operator") ||
-                text.contains("Ungültige Basis oder Argument");
+        return  text.contains(String.valueOf(R.string.errorMessage1))  ||
+                text.contains(String.valueOf(R.string.errorMessage2))  ||
+                text.contains(String.valueOf(R.string.errorMessage3))  ||
+                text.contains(String.valueOf(R.string.errorMessage4))  ||
+                text.contains(String.valueOf(R.string.errorMessage5))  ||
+                text.contains(String.valueOf(R.string.errorMessage6))  ||
+                text.contains(String.valueOf(R.string.errorMessage7))  ||
+                text.contains(String.valueOf(R.string.errorMessage8))  ||
+                text.contains(String.valueOf(R.string.errorMessage9))  ||
+                text.contains(String.valueOf(R.string.errorMessage10)) ||
+                text.contains(String.valueOf(R.string.errorMessage11)) ||
+                text.contains(String.valueOf(R.string.errorMessage12)) ||
+                text.contains(String.valueOf(R.string.errorMessage13)) ||
+                text.contains(String.valueOf(R.string.errorMessage14)) ||
+                text.contains(String.valueOf(R.string.errorMessage15)) ||
+                text.contains(String.valueOf(R.string.errorMessage16)) ||
+                text.contains(String.valueOf(R.string.errorMessage17));
     }
 
     /**

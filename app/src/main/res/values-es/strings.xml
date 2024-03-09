@@ -250,4 +250,23 @@
     <string name="settingsHistoryModeSingle">De una sola línea</string>
     <string name="settingsHistoryModeMultiple">De múltiples líneas</string>
     <string name="historyModeTitle">Modo de historial</string>
+
+    <string name="errorMessage1">Valor demasiado grande</string>
+    <string name="errorMessage2">Error de sintaxis</string>
+    <string name="errorMessage3">División por cero</string>
+    <string name="errorMessage4">Solo números reales</string>
+    <string name="errorMessage5">Operador desconocido</string>
+    <string name="errorMessage6">Error de dominio</string>
+    <string name="errorMessage7">Formato de número no válido</string>
+    <string name="errorMessage8">No definido</string>
+    <string name="errorMessage9">Valor no válido</string>
+    <string name="errorMessage10">Entrada no válida</string>
+    <string name="errorMessage11">Infinito</string>
+    <string name="errorMessage12">Para cadena de entrada</string>
+    <string name="errorMessage13">Sin división</string>
+    <string name="errorMessage14">Función desconocida</string>
+    <string name="errorMessage15">Argumento no válido</string>
+    <string name="errorMessage16">Base no válida</string>
+    <string name="errorMessage17">Base o argumento no válido</string>
+
 </resources>
