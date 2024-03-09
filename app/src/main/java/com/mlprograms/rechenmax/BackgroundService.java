@@ -52,9 +52,11 @@ public class BackgroundService extends Service {
     // Name for shared preferences file and key for last background time
     private static final String PREFS_NAME = "BackgroundServicePrefs";
     private static final String LAST_BACKGROUND_TIME_KEY = "lastBackgroundTime";
+    private static final String LAST_USE_TIME_KEY = "lastUsedTime";
 
     // Interval for reminders (4 days)
     private static final long NOTIFICATION_INTERVAL = 1000 * 60 * 60 * 24 * 4; // 1000 * 60 * 60 * 24 * 4 = 4 days
+    private static int currentTime;
 
     // Handler for scheduling reminders, and other variables
     private SharedPreferences sharedPreferences;
@@ -63,7 +65,7 @@ public class BackgroundService extends Service {
     private final Random random = new Random();
     private boolean isServiceRunning = true;
     private static final int min = 12;
-    private static final int max = 15;
+    private static final int max = 18;
 
     /**
      * Runnable for sending reminders at intervals
@@ -73,12 +75,15 @@ public class BackgroundService extends Service {
         public void run() {
             if (isServiceRunning) {
                 handler.postDelayed(this, 600000); // 600000 = 10min
+                currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
+
                 String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
                 String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
 
                 //Log.e("DEBUG", allowRememberNotifications);
                 //Log.e("DEBUG", allowDailyNotifications);
 
+                resetValuesAfterDay();
                 checkBackgroundServiceNotification();
 
                 if(allowRememberNotifications.equals("true")) {
@@ -113,6 +118,9 @@ public class BackgroundService extends Service {
         String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
         String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
 
+        // dataManager.saveToJSON("notificationSent", false, this);
+        // dataManager.saveToJSON("dayPassed", true, this);
+
         if ("true".equals(allowNotification) &&
                 (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
             //dataManager.saveToJSON("notificationSent", false, this);
@@ -142,12 +150,20 @@ public class BackgroundService extends Service {
 
             if(!startedByBootReceiver) {
                 setLastBackgroundTime(System.currentTimeMillis());
+                setLastUsedTime(System.currentTimeMillis());
             }
 
             handler.post(notificationRunnable);
         }
 
         return START_STICKY;
+    }
+
+    private void resetValuesAfterDay() {
+        if(currentTime >= 0 && currentTime <= 2) {
+            dataManager.saveToJSON("notificationSent", false, this);
+            dataManager.saveToJSON("dayPassed", true, this);
+        }
     }
 
     private void checkBackgroundServiceNotification() {
@@ -165,35 +181,56 @@ public class BackgroundService extends Service {
         final int currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
         final String language = Locale.getDefault().getDisplayLanguage();
 
-        if ((System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_INTERVAL) || (System.currentTimeMillis() - getLastBackgroundTime() <= 0)) {
-            String title_remember = getRandomElement(mainNotificationTitleGerman);
-            String content_remember = getRandomElement(mainNotificationContentGerman);
+        String title_remember = getRandomElement(mainNotificationTitleGerman);
+        String content_remember = getRandomElement(mainNotificationContentGerman);
+        String content_remember_msg_start = "Es wird mal wieder Zeit. Du hast den RechenMax schon mehr als ";
+        String content_remember_msg_end = " Tage nicht mehr benutzt!";
 
-            switch (language) {
-                case "English":
-                    title_remember = getRandomElement(mainNotificationTitleEnglish);
-                    content_remember = getRandomElement(mainNotificationContentEnglish);
-                    break;
-                case "français":
-                    title_remember = getRandomElement(mainNotificationTitleFrench);
-                    content_remember = getRandomElement(mainNotificationContentFrench);
-                    break;
-                case "español":
-                    title_remember = getRandomElement(mainNotificationTitleSpanish);
-                    content_remember = getRandomElement(mainNotificationContentSpanish);
-                    break;
-            }
+        switch (language) {
+            case "English":
+                title_remember = getRandomElement(mainNotificationTitleEnglish);
+                content_remember = getRandomElement(mainNotificationContentEnglish);
+                content_remember_msg_start = "It's time to remember. You haven't used RechenMax for more than ";
+                content_remember_msg_end = " days!";
+                break;
+            case "français":
+                title_remember = getRandomElement(mainNotificationTitleFrench);
+                content_remember = getRandomElement(mainNotificationContentFrench);
+                content_remember_msg_start = "Il est temps de se rappeler. Vous n'avez pas utilisé RechenMax depuis plus de ";
+                content_remember_msg_end = " jours!";
+                break;
+            case "español":
+                title_remember = getRandomElement(mainNotificationTitleSpanish);
+                content_remember = getRandomElement(mainNotificationContentSpanish);
+                content_remember_msg_start = "Es hora de recordar. ¡Ya has pasado más de ";
+                content_remember_msg_end = " días sin usar RechenMax!";
+                break;
+        }
 
-            if (currentTime >= 14 && currentTime <= 18) {
-                sendNotification(this, NOTIFICATION_ID_REMEMBER, title_remember, content_remember, CHANNEL_ID_REMEMBER, true);
-                setLastBackgroundTime(System.currentTimeMillis());
-            }
+        //Log.e("DEBUG", String.valueOf(System.currentTimeMillis()));
+        //Log.e("DEBUG", String.valueOf(System.currentTimeMillis() - getLastUsedTime()));
+        //Log.e("DEBUG", String.valueOf(NOTIFICATION_INTERVAL + 1000 * 60 * 60 * 24));
+        //Log.e("DEBUG", String.valueOf(System.currentTimeMillis() - getLastUsedTime() > (NOTIFICATION_INTERVAL + 1000 * 60 * 60 * 24)));
+        //Log.e("DEBUG", String.valueOf(dataManager.readFromJSON("dayPassed", this)));
+
+        if ((System.currentTimeMillis() - getLastUsedTime() > (NOTIFICATION_INTERVAL + 1000 * 60 * 60 * 24))  && (currentTime >= 14 && currentTime <= 18) &&
+                Boolean.parseBoolean(dataManager.readFromJSON("dayPassed", this))) {
+            long timeDifference = System.currentTimeMillis() - getLastUsedTime();
+            int timeDifferenceInSeconds = (int) (timeDifference / 1000 / 60 / 60 / 24);
+
+            dataManager.saveToJSON("dayPassed", false, this);
+            sendNotification(this,NOTIFICATION_ID_REMEMBER, title_remember,
+                    content_remember_msg_start + timeDifferenceInSeconds + content_remember_msg_end, CHANNEL_ID_REMEMBER, true);
+        } else if ((System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_INTERVAL) || (System.currentTimeMillis() - getLastBackgroundTime() <= 0) && (currentTime >= 14 && currentTime <= 18)) {
+            sendNotification(this, NOTIFICATION_ID_REMEMBER,
+                    title_remember, content_remember, CHANNEL_ID_REMEMBER, true);
+            setLastBackgroundTime(System.currentTimeMillis());
         }
     }
 
     private void checkHintNotification() {
-        final int currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
         final String language = Locale.getDefault().getDisplayLanguage();
+        final int randomNumber = random.nextInt(20);
 
         String title_hints = "Wusstest du schon?";
         String content_hints = getRandomElement(notificationHintsListGerman);
@@ -214,15 +251,13 @@ public class BackgroundService extends Service {
         }
 
         if (currentTime >= min && currentTime <= max) {
-            if(!Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this)) && random.nextInt(20) == 1) {
+            if(!Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this)) && randomNumber == 1) {
                 dataManager.saveToJSON("notificationSent", true, this);
                 sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, true);
             }
         } else if (currentTime >= max && !Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this))) {
             dataManager.saveToJSON("notificationSent", true, this);
             sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, true);
-        } else if (currentTime >= 0 && currentTime <= 1 && Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this))) {
-            dataManager.saveToJSON("notificationSent", false, this);
         }
     }
 
@@ -230,20 +265,6 @@ public class BackgroundService extends Service {
         Random rand = new Random();
         int randomIndex = rand.nextInt(list.size());
         return list.get(randomIndex);
-    }
-
-    /**
-     * getLastBackgroundTime method retrieves the last background time from shared preferences.
-     */
-    private long getLastBackgroundTime() {
-        return sharedPreferences.getLong(LAST_BACKGROUND_TIME_KEY, System.currentTimeMillis());
-    }
-
-    /**
-     * setLastBackgroundTime method sets the last background time in shared preferences.
-     */
-    private void setLastBackgroundTime(long time) {
-        sharedPreferences.edit().putLong(LAST_BACKGROUND_TIME_KEY, time).apply();
     }
 
     /**
@@ -308,7 +329,7 @@ public class BackgroundService extends Service {
         NotificationChannel backgroundChannel = new NotificationChannel(
                 CHANNEL_ID_BACKGROUND,
                 CHANNEL_NAME_BACKGROUND,
-                NotificationManager.IMPORTANCE_MIN
+                NotificationManager.IMPORTANCE_LOW
         );
 
         NotificationChannel rememberChannel = new NotificationChannel(
@@ -326,5 +347,27 @@ public class BackgroundService extends Service {
         manager.createNotificationChannel(backgroundChannel);
         manager.createNotificationChannel(rememberChannel);
         manager.createNotificationChannel(hintsChannel);
+    }
+
+    /**
+     * getLastBackgroundTime method retrieves the last background time from shared preferences.
+     */
+    private long getLastBackgroundTime() {
+        return sharedPreferences.getLong(LAST_BACKGROUND_TIME_KEY, System.currentTimeMillis());
+    }
+
+    /**
+     * setLastBackgroundTime method sets the last background time in shared preferences.
+     */
+    private void setLastBackgroundTime(long time) {
+        sharedPreferences.edit().putLong(LAST_BACKGROUND_TIME_KEY, time).apply();
+    }
+
+    private long getLastUsedTime() {
+        return sharedPreferences.getLong(LAST_USE_TIME_KEY, System.currentTimeMillis());
+    }
+
+    private void setLastUsedTime(long time) {
+        sharedPreferences.edit().putLong(LAST_USE_TIME_KEY, time).apply();
     }
 }

@@ -37,8 +37,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -282,6 +280,7 @@ public class SettingsActivity extends AppCompatActivity {
                 } else {
                     dataManager.saveToJSON("historyMode", "multiple", getMainActivityContext());
                 }
+                //Log.e("DEBUG", dataManager.readFromJSON("historyMode", getMainActivityContext()));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

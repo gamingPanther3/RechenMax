@@ -30,6 +30,10 @@ public class ClickListener implements View.OnClickListener, View.OnLongClickList
                 onDoubleClick(v);
                 clickCount = 0;
             }
+            if (clickCount == 3) {
+                onTripleClick(v);
+                clickCount = 0;
+            }
         } else {
             // Single click
             clickCount = 1;
@@ -57,6 +61,8 @@ public class ClickListener implements View.OnClickListener, View.OnLongClickList
         lastDownTime = currentDownTime;
         return true;
     }
+
+    public void onTripleClick(View v) {}
 
     /**
      * onLongClickEvent method is called when a long click event occurs.

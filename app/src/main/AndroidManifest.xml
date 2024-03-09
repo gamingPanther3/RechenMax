@@ -24,7 +24,7 @@
         <service
             android:name=".BackgroundService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"/>
 
         <receiver
             android:name=".BootReceiver"

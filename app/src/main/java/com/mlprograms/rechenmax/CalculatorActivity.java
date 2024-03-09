@@ -37,8 +37,8 @@ public class CalculatorActivity {
         mainActivity = activity;
     }
 
-    // Declaration of a constant of type MathContext with a precision of 10. This is used for division to ensure a precision of 10 decimal places.
-    private static final MathContext MC = new MathContext(24, RoundingMode.HALF_UP);
+    // Declaration of a constant of type MathContext with a precision of 35. This is used for division to ensure a precision of 10 decimal places.
+    private static final MathContext MC = new MathContext(35, RoundingMode.HALF_UP);
 
 
     // Declaration of a constant for the root operation.
@@ -69,6 +69,10 @@ public class CalculatorActivity {
             // Replace all the special characters in the expression with their corresponding mathematical symbols
             // important: "е" (German: 'Eulersche-Zahl') and "e" (used for notation) are different characters
             String trim;
+            if(String.valueOf(calc.charAt(0)).equals("+")) {
+                calc = calc.substring(1);
+            }
+
             calc = fixExpression(calc);
             String commonReplacements = calc.replace('×', '*')
                     .replace('÷', '/')
@@ -81,20 +85,17 @@ public class CalculatorActivity {
                     .replace("⅓", "0,33333333333")
                     .replace("¼", "0,25");
 
-            //if (Locale.getDefault().getLanguage().equals("en")) {
-            //    trim = commonReplacements.trim();
-            //} else {
-            //    trim = commonReplacements.replace(".", "").replace(",", ".").trim();
-            //}
-
             trim = commonReplacements.replace(".", "").replace(",", ".").trim();;
-            trim = addParentheses(trim);
+            trim = mainActivity.balanceParentheses(addParentheses(trim));
 
-            //Log.e("debug", "trim:" + trim);
+            if (!trim.isEmpty() && isOperator(String.valueOf(trim.charAt(trim.length() - 1)))) {
+                trim = trim.substring(0, trim.length() - 1);
+            }
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
-                try {DataManager dataManager = new DataManager(mainActivity);
+                try {
+                    DataManager dataManager = new DataManager(mainActivity);
                     dataManager.saveToJSON("isNotation", true, mainActivity.getApplicationContext());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -138,15 +139,14 @@ public class CalculatorActivity {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            //Log.e("Exception", e.toString());
+            Log.e("Exception", e.toString());
             return "Syntax Fehler";
         }
     }
 
     public static boolean isSymbol(final String character) {
         return (String.valueOf(character).equals("¼") || String.valueOf(character).equals("⅓") || String.valueOf(character).equals("½") ||
-                String.valueOf(character).equals("е") || String.valueOf(character).equals("e") || String.valueOf(character).equals("π") ||
-                String.valueOf(character).equals(".") || String.valueOf(character).equals(","));
+                String.valueOf(character).equals("е") || String.valueOf(character).equals("e") || String.valueOf(character).equals("π"));
     }
 
     public static String fixExpression(String input) {
@@ -172,7 +172,17 @@ public class CalculatorActivity {
                         continue;
                     }
 
-                    if(Character.isDigit(currentChar) && String.valueOf(nextChar).equals("(") && !isOperator(String.valueOf(nextChar))) {
+                    if(Character.isDigit(currentChar) && String.valueOf(nextChar).equals("(")) {
+                        sb.append('×');
+                        continue;
+                    }
+
+                    if((Character.isDigit(currentChar) && isSymbol(String.valueOf(nextChar))) || (isSymbol(String.valueOf(currentChar)) && Character.isDigit(nextChar))) {
+                        sb.append('×');
+                        continue;
+                    }
+
+                    if((isSymbol(String.valueOf(currentChar)) && String.valueOf(nextChar).equals("(")) || (String.valueOf(currentChar).equals(")") && isSymbol(String.valueOf(nextChar))) ) {
                         sb.append('×');
                         continue;
                     }
@@ -246,6 +256,8 @@ public class CalculatorActivity {
         validChars.add('(');
         validChars.add(')');
         validChars.add('√');
+        validChars.add('^');
+        validChars.add('!');
         // Add more valid characters here if needed
         return validChars;
     }
@@ -265,6 +277,7 @@ public class CalculatorActivity {
 
     public static Set<String> createMathFunctionsSet() {
         Set<String> mathFunctions = new HashSet<>();
+        mathFunctions.add("^");
         mathFunctions.add("√");
         mathFunctions.add("³√");
         mathFunctions.add("ln");
@@ -294,7 +307,7 @@ public class CalculatorActivity {
     }
 
     public static String addParentheses(String input) {
-        StringBuilder modifiedString = new StringBuilder();
+        StringBuffer modifiedString = new StringBuffer();
         boolean checkIsNumber = false;
 
         for (int i = input.length() - 1; i >= 0; i--) {
@@ -307,8 +320,9 @@ public class CalculatorActivity {
                     continue;
                 }
                 if(i - 1 >= 0 && Boolean.parseBoolean(String.valueOf(!Character.isDigit(input.charAt(i))))) {
-                    if (checkIsNumber && Character.isDigit(currentChar)) {
-                        modifiedString.insert(0, "(" + currentChar);
+                    if (checkIsNumber && !Character.isDigit(currentChar) &&
+                            (!String.valueOf(currentChar).equals(".") || !String.valueOf(currentChar).equals(","))) {
+                        modifiedString.insert(0, currentChar + "(");
                         checkIsNumber = false;
                         continue;
                     }
@@ -320,6 +334,8 @@ public class CalculatorActivity {
         if(checkIsNumber) {
             modifiedString.insert(0, "(");
         }
+
+        //Log.e("DEBUG", mainActivity.balanceParentheses(modifiedString.toString()));
         return mainActivity.balanceParentheses(modifiedString.toString());
     }
 
@@ -410,7 +426,7 @@ public class CalculatorActivity {
         }
 
         // Return the final result as a string
-        //Log.i("convertScientificToDecimal", "sb:" + sb);
+        Log.i("convertScientificToDecimal", "sb:" + sb);
         return sb.toString();
     }
 
@@ -434,7 +450,7 @@ public class CalculatorActivity {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        //Log.i("tokenize","Input Expression: " + expression);
+        Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -522,7 +538,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print tokens
-        //Log.i("tokenize","Tokens: " + tokens);
+        Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -537,7 +553,7 @@ public class CalculatorActivity {
     public static BigDecimal evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
         final List<String> postfixTokens = infixToPostfix(tokens);
-        //Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
+        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -776,7 +792,7 @@ public class CalculatorActivity {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            //Log.i("evaluatePostfix","Token: " + token);
+            Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -789,17 +805,17 @@ public class CalculatorActivity {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException("Syntax Fehler");
             }
 
             // Debugging: Print current stack
-            //Log.i("evaluatePostfix","Stack: " + stack);
+            Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            //Log.i("evaluatePostfix","Stacksize != 1");
+            Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException("Syntax Fehler");
         }
 
@@ -1097,8 +1113,8 @@ public class CalculatorActivity {
 
         for (final String token : infixTokens) {
             // Debugging: Print current token and stack
-            //Log.i("infixToPostfix", "Current Token: " + token);
-            //Log.i("infixToPostfix", "Stack: " + stack);
+            Log.i("infixToPostfix", "Current Token: " + token);
+            Log.i("infixToPostfix", "Stack: " + stack);
 
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -1129,8 +1145,8 @@ public class CalculatorActivity {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            //Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
-            //Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
+            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
         while (!stack.isEmpty()) {
@@ -1138,7 +1154,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print final postfixTokens
-        //Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
+        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
         return postfixTokens;
     }

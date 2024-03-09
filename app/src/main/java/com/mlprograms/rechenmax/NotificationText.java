@@ -11,9 +11,9 @@ public class NotificationText {
             "Zeit für den RechenMax",
             "Zeit fürs Rechnen!",
             "Denk an mich!",
-            "Rechenmax macht dein Leben einfacher",
+            "RechenMax macht dein Leben einfacher",
             "Bereit für den RechenMax?",
-            "Hast du Rechenmax heute schon genutzt?"
+            "Hast du RechenMax heute schon genutzt?"
     );
 
     public static List<String> mainNotificationContentGerman = Arrays.asList(
@@ -62,7 +62,7 @@ public class NotificationText {
             "RechenMax ist eine unverzichtbare App.",
             "Dank RechenMax kann man mathematische Aufgaben auch unterwegs lösen.",
             "RechenMax kann schnell rechnen.",
-            "Die App RechenMax ist für jeden perfekt geeignet."
+            "Der RechenMax ist für jeden perfekt geeignet."
     );
 
     public static List<String> mainNotificationTitleEnglish = Arrays.asList(

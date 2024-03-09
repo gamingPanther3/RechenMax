@@ -149,14 +149,14 @@
                     android:id="@+id/calculate_label"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:ellipsize="none"
                     android:gravity="end|top"
                     android:paddingStart="80sp"
                     android:paddingEnd="10sp"
+                    android:singleLine="true"
                     android:text="@string/calculate_label"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:singleLine="true"
-                    android:ellipsize="none" />
+                    android:textSize="30sp" />
 
             </LinearLayout>
         </HorizontalScrollView>
