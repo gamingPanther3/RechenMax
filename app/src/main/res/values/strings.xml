@@ -233,7 +233,11 @@
     <string name="notifications">Benachrichtigungen</string>
     <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist. Zusätzlich müssen die Erinnerungen oder täglichen Tipps aktiviert sein, damit eine Benachrichtigung gesendet wird.</string>
 
-
+    <string name="convertAngle">Winkel</string>
+    <string name="convertArea">Fläche</string>
+    <string name="convertStorage">Digitaler Speicher</string>
+    <string name="convertDistance">Entfernung</string>
+    <string name="convertVolume">Volumen</string>
 
     <string name="convert">Umrechnen</string>
     <string name="convertTitle">Umrechner</string>
@@ -288,6 +292,31 @@
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
+    <!-- Volumen -->
+    <string name="convertMikroliter">Mikroliter (µl)</string>
+    <string name="convertMilliliter">Milliliter (ml)</string>
+    <string name="convertDeziliter">Deziliter (dl)</string>
+    <string name="convertLiter">Liter (l)</string>
+    <string name="convertZentiliter">Zentiliter (cl)</string>
+    <string name="convertMetrischeTasse">Metrische Tasse</string>
+    <string name="convertKubikmillimeter">Kubikmillimeter (mm³)</string>
+    <string name="convertKubikzentimeter">Kubikzentimeter (cm³)</string>
+    <string name="convertKubikmeter">Kubikmeter (m³)</string>
+    <string name="convertKubikInch">Kubik-Inch (in³)</string>
+    <string name="convertKubikFeet">Kubik-Feet (ft³)</string>
+    <string name="convertKubikYard">Kubik-Yard (yd³)</string>
+    <string name="convertGillsUS">Gills - US</string>
+    <string name="convertGillsUK">Gills - UK</string>
+    <string name="convertTeaspoonsUS">Teaspoons - US (tsp)</string>
+    <string name="convertTeaspoonsUK">Teespoons - UK (tsp)</string>
+    <string name="convertTablespoonsUS">Tablespoons - US (Tbls)</string>
+    <string name="convertTablespoonsUK">Tablespoons - UK (Tbls)</string>
+    <string name="convertCupsUS">Cups - US</string>
+    <string name="convertCupsUK">Cups - UK</string>
+    <string name="convertGallonUS">Gallon - US (Gal)</string>
+    <string name="convertGallonUK">Gallon - UK (Gal)</string>
+    <string name="convertBarrels">Barrels - US</string>
+
     <string name="delete">Löschen</string>
     <string name="settingsPI">Mit dieser Funktion kannst du festlegen, dass immer wenn du die Zahl \'3,14\' eingibst, sie automatisch durch das Symbol für Pi ersetzt wird. Dadurch wird die Eingabe von Pi in deinen Berechnungen vereinfacht und du kannst dich auf die Aufgabe konzentrieren, ohne ständig nach dem Symbol suchen zu müssen.</string>
     <string name="settingsPITitle">PI einfügen</string>
@@ -296,6 +325,8 @@
     <string name="settingsHistoryModeSingle">Einzeilig</string>
     <string name="settingsHistoryModeMultiple">Mehrzeilig</string>
     <string name="historyModeTitle">Verlaufmodus</string>
+
+    <string name="converterPlaceHolder">Gib hier einen Wert ein</string>
 
     <string name="errorMessage1">Wert zu groß</string>
     <string name="errorMessage2">Syntax Fehler</string>

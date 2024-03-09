@@ -57,7 +57,8 @@
             android:name=".ConvertActivity"
             android:exported="false"
             android:configChanges="uiMode"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
             android:name=".MainActivity"

@@ -14,7 +14,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -48,7 +48,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -82,7 +82,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -116,7 +116,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -150,7 +150,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -183,7 +183,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -217,7 +217,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -251,7 +251,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -285,7 +285,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -319,7 +319,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -353,7 +353,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
@@ -386,7 +386,7 @@
         android:paddingStart="10dp">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="210dp"
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"

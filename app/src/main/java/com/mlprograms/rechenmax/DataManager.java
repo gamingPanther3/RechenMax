@@ -323,6 +323,9 @@ public class DataManager {
         if(readFromJSON("dayPassed", applicationContext) == null) {
             saveToJSON("dayPassed", "true", applicationContext);
         }
+        if(readFromJSON("convertMode", applicationContext) == null) {
+            saveToJSON("convertMode", "E", applicationContext);
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,7 +30,8 @@ public class ConvertActivity extends AppCompatActivity {
     DataManager dataManager;
     private static MainActivity mainActivity;
 
-    private Spinner customSpinner;
+    private Spinner customSpinnerMode;
+    private Spinner customSpinnerMessurement;
     private CustomAdapter customAdapter;
 
     /**
@@ -48,19 +50,61 @@ public class ConvertActivity extends AppCompatActivity {
         setContentView(R.layout.convert);
         setUpButtonListeners();
 
-        customSpinner = findViewById(R.id.convertCustomSpinner);
+        // convert mode spinner
+        customSpinnerMode = findViewById(R.id.convertCustomSpinner);
+        customSpinnerMessurement = findViewById(R.id.convertSpinnerMessurement);
 
-        customSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ArrayList<CustomItems> customList = new ArrayList<>();
+        customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle));
+        customList.add(new CustomItems(getString(R.string.convertArea), R.drawable.area));
+        customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard));
+        customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
+        customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
+
+        customAdapter = new CustomAdapter(this, customList);
+
+        if(customSpinnerMode != null) {
+            customSpinnerMode.setAdapter(customAdapter);
+        }
+
+        switch (dataManager.readFromJSON("convertMode", getMainActivityContext())) {
+            case "W":
+                customSpinnerMode.setSelection(0);
+                break;
+            case "F":
+                customSpinnerMode.setSelection(1);
+                break;
+            case "S":
+                customSpinnerMode.setSelection(2);
+                break;
+            case "E":
+                customSpinnerMode.setSelection(3);
+                break;
+            case "V":
+                customSpinnerMode.setSelection(4);
+                break;
+        }
+
+        assert customSpinnerMode != null;
+        customSpinnerMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 CustomItems items = (CustomItems) adapterView.getSelectedItem();
                 String spinnerText = items.getSpinnerText();
 
-                if (spinnerText.equals(getString(R.string.defaultCalculationMode))) {
-                    dataManager.saveToJSON("calculationMode", "Standard", getMainActivityContext());
-                } else {
-                    dataManager.saveToJSON("calculationMode", "Vereinfacht", getMainActivityContext());
+                if(spinnerText.equals(getString(R.string.convertAngle))) {
+                    dataManager.saveToJSON("convertMode", "W", getMainActivityContext());
+                } else if(spinnerText.equals(getString(R.string.convertArea))) {
+                    dataManager.saveToJSON("convertMode", "F", getMainActivityContext());
+                } else if(spinnerText.equals(getString(R.string.convertStorage))) {
+                    dataManager.saveToJSON("convertMode", "S", getMainActivityContext());
+                } else if(spinnerText.equals(getString(R.string.convertDistance))) {
+                    dataManager.saveToJSON("convertMode", "E", getMainActivityContext());
+                } else if(spinnerText.equals(getString(R.string.convertVolume))) {
+                    dataManager.saveToJSON("convertMode", "V", getMainActivityContext());
                 }
+                changeConvertModes(spinnerText);
+                switchDisplayMode();
             }
 
             @Override
@@ -69,25 +113,31 @@ public class ConvertActivity extends AppCompatActivity {
             }
         });
 
-
-            ArrayList<CustomItems> customList = new ArrayList<>();
-        customList.add(new CustomItems("Winkel", R.drawable.angle));
-        customList.add(new CustomItems("Fläche", R.drawable.area));
-        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard));
-        customList.add(new CustomItems("Entfernung", R.drawable.triangle));
-        customList.add(new CustomItems("Volumen", R.drawable.cylinder));
-
-        customAdapter = new CustomAdapter(this, customList);
-
-        if(customSpinner != null) {
-            customSpinner.setAdapter(customAdapter);
-            customSpinner.setSelection(3);
-        }
         switchDisplayMode();
     }
 
-    private void switchModes() {
+    @SuppressLint("InflateParams")
+    private void changeConvertModes(final String spinnerText) {
+        LayoutInflater inflater = getLayoutInflater();
+        LinearLayout otherLinearLayout = null;
 
+        if(spinnerText.equals(getString(R.string.convertAngle))) {
+            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.angle, null);
+        } else if(spinnerText.equals(getString(R.string.convertArea))) {
+            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.area, null);
+        } else if(spinnerText.equals(getString(R.string.convertStorage))) {
+            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.digital_storage, null);
+        } else if(spinnerText.equals(getString(R.string.convertDistance))) {
+            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.distance, null);
+        } else if(spinnerText.equals(getString(R.string.convertVolume))) {
+            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.volume, null);
+        }
+
+        if (otherLinearLayout != null) {
+            ScrollView scrollView = findViewById(R.id.convertScrollLayout);
+            scrollView.removeAllViews();
+            scrollView.addView(otherLinearLayout);
+        }
     }
 
     /**
@@ -203,8 +253,8 @@ public class ConvertActivity extends AppCompatActivity {
         Button backbutton = findViewById(R.id.convert_return_button);
 
         int index = 0;
-        if(customSpinner != null) {
-            index = customSpinner.getSelectedItemPosition();
+        if(customSpinnerMode != null) {
+            index = customSpinnerMode.getSelectedItemPosition();
         }
 
         if(getSelectedSetting() != null) {
@@ -223,7 +273,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                                 updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
 
-                                customSpinner = findViewById(R.id.convertCustomSpinner);
+                                customSpinnerMode = findViewById(R.id.convertCustomSpinner);
                                 ArrayList<CustomItems> customList = new ArrayList<>();
                                 customList.add(new CustomItems("Winkel", R.drawable.angle_light));
                                 customList.add(new CustomItems("Fläche", R.drawable.area_light));
@@ -241,7 +291,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                                 updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
 
-                                customSpinner = findViewById(R.id.convertCustomSpinner);
+                                customSpinnerMode = findViewById(R.id.convertCustomSpinner);
                                 ArrayList<CustomItems> customList = new ArrayList<>();
                                 customList.add(new CustomItems("Winkel", R.drawable.angle_true_darkmode));
                                 customList.add(new CustomItems("Fläche", R.drawable.area_true_darkmode));
@@ -260,7 +310,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                             updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
 
-                            customSpinner = findViewById(R.id.convertCustomSpinner);
+                            customSpinnerMode = findViewById(R.id.convertCustomSpinner);
                             ArrayList<CustomItems> customList = new ArrayList<>();
                             customList.add(new CustomItems("Winkel", R.drawable.angle_light));
                             customList.add(new CustomItems("Fläche", R.drawable.area_light));
@@ -281,7 +331,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                         updateUI(Color.parseColor("#FFFFFF"), Color.parseColor("#151515"));
 
-                        customSpinner = findViewById(R.id.convertCustomSpinner);
+                        customSpinnerMode = findViewById(R.id.convertCustomSpinner);
                         ArrayList<CustomItems> customList = new ArrayList<>();
                         customList.add(new CustomItems("Winkel", R.drawable.angle));
                         customList.add(new CustomItems("Fläche", R.drawable.area));
@@ -301,7 +351,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                 updateUI(Color.parseColor("#FFFFFF"), Color.parseColor("#151515"));
 
-                customSpinner = findViewById(R.id.convertCustomSpinner);
+                customSpinnerMode = findViewById(R.id.convertCustomSpinner);
                 ArrayList<CustomItems> customList = new ArrayList<>();
                 customList.add(new CustomItems("Winkel", R.drawable.angle));
                 customList.add(new CustomItems("Fläche", R.drawable.area));
@@ -313,7 +363,7 @@ public class ConvertActivity extends AppCompatActivity {
                 customAdapter.setTextColor(Color.parseColor("#151515"));
                 customAdapter.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
-                customSpinner.setAdapter(customAdapter);
+                customSpinnerMode.setAdapter(customAdapter);
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
                 String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
@@ -326,7 +376,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                         updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
 
-                        customSpinner = findViewById(R.id.convertCustomSpinner);
+                        customSpinnerMode = findViewById(R.id.convertCustomSpinner);
                         ArrayList<CustomItems> customList = new ArrayList<>();
                         customList.add(new CustomItems("Winkel", R.drawable.angle_light));
                         customList.add(new CustomItems("Fläche", R.drawable.area_light));
@@ -338,7 +388,7 @@ public class ConvertActivity extends AppCompatActivity {
                         customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                         customAdapter.setBackgroundColor(Color.parseColor("#151515"));
 
-                        customSpinner.setAdapter(customAdapter);
+                        customSpinnerMode.setAdapter(customAdapter);
                     } else {
                         if(backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
@@ -346,7 +396,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                         updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
 
-                        customSpinner = findViewById(R.id.convertCustomSpinner);
+                        customSpinnerMode = findViewById(R.id.convertCustomSpinner);
                         ArrayList<CustomItems> customList = new ArrayList<>();
                         customList.add(new CustomItems("Winkel", R.drawable.angle_true_darkmode));
                         customList.add(new CustomItems("Fläche", R.drawable.area_true_darkmode));
@@ -358,7 +408,7 @@ public class ConvertActivity extends AppCompatActivity {
                         customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
                         customAdapter.setBackgroundColor(Color.parseColor("#000000"));
 
-                        customSpinner.setAdapter(customAdapter);
+                        customSpinnerMode.setAdapter(customAdapter);
                     }
                 } else {
                     if(backbutton != null) {
@@ -367,7 +417,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                     updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
 
-                    customSpinner = findViewById(R.id.convertCustomSpinner);
+                    customSpinnerMode = findViewById(R.id.convertCustomSpinner);
                     ArrayList<CustomItems> customList = new ArrayList<>();
                     customList.add(new CustomItems("Winkel", R.drawable.angle_light));
                     customList.add(new CustomItems("Fläche", R.drawable.area_light));
@@ -379,12 +429,12 @@ public class ConvertActivity extends AppCompatActivity {
                     customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                     customAdapter.setBackgroundColor(Color.parseColor("#151515"));
 
-                    customSpinner.setAdapter(customAdapter);
+                    customSpinnerMode.setAdapter(customAdapter);
                 }
             }
         }
-        if(customSpinner != null) {
-            customSpinner.setSelection(index);
+        if(customSpinnerMode != null) {
+            customSpinnerMode.setSelection(index);
         }
     }
 
