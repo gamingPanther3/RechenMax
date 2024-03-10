@@ -3,12 +3,14 @@ package com.mlprograms.rechenmax;
 import static com.mlprograms.rechenmax.ToastHelper.*;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
@@ -33,6 +35,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -41,11 +44,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 /**
  * HistoryActivity - Displays calculation history.
@@ -100,6 +105,8 @@ public class HistoryActivity extends AppCompatActivity {
 
         // Use a separate thread to create TextViews in the background
         // Using ExecutorService instead of AsyncTask
+
+        createLoadingHistoryTextView();
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
@@ -117,10 +124,15 @@ public class HistoryActivity extends AppCompatActivity {
                 }
 
                 if (value != null && value.equals("0")) {
+                    TextView loadTextView = findViewById(R.id.history_load_textview);
+                    if(loadTextView != null) {
+                        loadTextView.setVisibility(View.GONE);
+                    }
                     createEmptyHistoryTextView();
                     switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
                 } else {
                     deleteEmptyHistoryTextView();
+
                     assert value != null;
                     int intValue = Integer.parseInt(value);
                     for (int i = 1; i <= intValue; i++) {
@@ -149,6 +161,11 @@ public class HistoryActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
+                    }
+
+                    TextView loadTextView = findViewById(R.id.history_load_textview);
+                    if(loadTextView != null) {
+                        loadTextView.setVisibility(View.GONE);
                     }
                     switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
                 }
@@ -493,7 +510,7 @@ public class HistoryActivity extends AppCompatActivity {
                         String key = parts[0].trim();
                         String value = parts[1].trim();
                         try {
-                            if (dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).equals("Vereinfacht")) {
+                            if (dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).getString("value").equals("Vereinfacht")) {
                                 dataManager.saveToJSONSettings("calculate_text", key.replace(" ", ""), getMainActivityContext());
                                 dataManager.saveToJSONSettings("result_text", value.replace(" ", ""), getMainActivityContext());
                             } else {
@@ -675,6 +692,29 @@ public class HistoryActivity extends AppCompatActivity {
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
     }
 
+    private void createLoadingHistoryTextView() {
+        if(findViewById(R.id.history_load_textview) == null) {
+            TextView loadTextView = new TextView(this);
+            loadTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            loadTextView.setId(R.id.history_load_textview);
+            loadTextView.setText(getString(R.string.historyLoadText));
+            loadTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+            loadTextView.setTextSize(35f);
+            loadTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+
+            LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
+            linearLayout.addView(loadTextView);
+        }
+
+        TextView loadTextView = findViewById(R.id.history_load_textview);
+        loadTextView.setVisibility(View.VISIBLE);
+
+        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+    }
+
     /**
      * Diese Methode entfernt die leere TextView aus dem Layout, falls vorhanden.
      */
@@ -740,17 +780,36 @@ public class HistoryActivity extends AppCompatActivity {
      * Resets the names and values in the UI and performs background actions.
      */
     private void resetNamesAndValues() {
-        // Update the UI
-        dataManager.clearHistory(getMainActivityContext());
-        dataManager.saveToJSONSettings("historyTextViewNumber", "0", getMainActivityContext());
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.confirm_delete, null);
 
-        //runOnUiThread(this::updateUI);
-        LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
-        innerLinearLayout.removeAllViews();
-        createEmptyHistoryTextView();
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
 
-        // Perform background actions here
+        popupWindow.showAtLocation(findViewById(R.id.historyUI), Gravity.CENTER, 0, 0);
+
+        TextView delete = popupView.findViewById(R.id.deleteConfirmButton);
+        TextView cancel = popupView.findViewById(R.id.cancelConfirmButton);
+
+        if(delete != null && cancel != null) {
+            delete.setOnClickListener(v -> {
+                dataManager.clearHistory(getMainActivityContext());
+                dataManager.saveToJSONSettings("historyTextViewNumber", "0", getMainActivityContext());
+
+                LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                innerLinearLayout.removeAllViews();
+                createEmptyHistoryTextView();
+                popupWindow.dismiss();
+            });
+
+            cancel.setOnClickListener(v -> {
+                popupWindow.dismiss();
+            });
+        }
     }
+
 
 
     /**
@@ -993,9 +1052,14 @@ public class HistoryActivity extends AppCompatActivity {
         if (historyTextView != null) {
             historyTextView.setTextColor(newColorBTNForegroundAccent);
         }
-        if ((TextView) findViewById(R.id.history_empty_textview) != null) {
-            TextView emptyTextView =  findViewById(R.id.history_empty_textview);
+        if (findViewById(R.id.history_empty_textview) != null) {
+            TextView emptyTextView = findViewById(R.id.history_empty_textview);
             emptyTextView.setTextColor(newColorBTNForegroundAccent);
+        }
+
+        if (findViewById(R.id.history_load_textview) != null) {
+            TextView loadTextView = findViewById(R.id.history_load_textview);
+            loadTextView.setTextColor(newColorBTNForegroundAccent);
         }
 
         // Change the foreground and background colors of all buttons in your layout

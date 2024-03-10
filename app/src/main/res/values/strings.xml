@@ -360,4 +360,10 @@
 
     <string name="historyDescription">Notiz:</string>
     <string name="historyDescriptionHint">Klicke, um eine Beschreibung hinzuzufügen</string>
+    <string name="historyLoadText">\n\n\n\n\n\n\nWird geladen ...</string>
+    <string name="historyConfirmTitle">Bist du dir sicher?</string>
+    <string name="historyConfirmDeleteText">Endgültig löschen</string>
+    <string name="historyConfirmCancelText">Abbrechen</string>
+
+
 </resources>

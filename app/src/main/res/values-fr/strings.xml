@@ -296,4 +296,8 @@
 
     <string name="historyDescription">Remarque :</string>
     <string name="historyDescriptionHint">Cliquez pour ajouter une description</string>
+    <string name="historyLoadText">\n\n\n\n\n\n\nChargement ...</string>
+    <string name="historyConfirmTitle">Êtes-vous sûr(e) ?</string>
+    <string name="historyConfirmDeleteText">Supprimer définitivement</string>
+    <string name="historyConfirmCancelText">Annuler</string>
 </resources>

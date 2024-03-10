@@ -316,5 +316,9 @@
 
     <string name="historyDescription">Note:</string>
     <string name="historyDescriptionHint">Click to add a description</string>
+    <string name="historyLoadText">\n\n\n\n\n\n\nLoading  ...</string>
+    <string name="historyConfirmTitle">Are you sure?</string>
+    <string name="historyConfirmDeleteText">Delete permanently</string>
+    <string name="historyConfirmCancelText">Cancel</string>
 
 </resources>

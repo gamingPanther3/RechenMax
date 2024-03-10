@@ -8,4 +8,5 @@
     <item name="releaseNotesTitle" type="id" />
     <item name="releaseNotesFeaturesTitle" type="id" />
     <item name="history_empty_textview" type="id" />
+    <item name="history_load_textview" type="id" />
 </resources>
