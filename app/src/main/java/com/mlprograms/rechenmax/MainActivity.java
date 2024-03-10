@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create JSON file and check for its existence
         dataManager.initializeSettings(this);
-        Log.i("DEBUG", dataManager.getAllDataFromJSONSettings(this).toString());
+        //Log.i("DEBUG", dataManager.getAllDataFromJSONSettings(this).toString());
 
         //dataManager.saveToJSONSettings("old_version", "0", getApplicationContext());
 
@@ -134,13 +134,6 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
         formatResultTextAfterType();
-
-        if(findViewById(R.id.calculate_label) != null && findViewById(R.id.result_label) != null && !getCalculateText().isEmpty()) {
-            final String calculation = CalculatorActivity.calculate(balanceParentheses(getCalculateText()));
-            if(!isInvalidInput(calculation)) {
-                setResultText(calculation);
-            }
-        }
 
         // Scroll down in the calculate label
         scrollToStart(findViewById(R.id.calculate_scrollview));

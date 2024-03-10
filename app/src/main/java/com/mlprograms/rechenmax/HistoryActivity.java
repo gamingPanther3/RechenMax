@@ -154,6 +154,7 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             }
         }.execute();
+        //Log.e("DEBUG", String.valueOf(dataManager.getAllData(getMainActivityContext())));
     }
 
     /**
@@ -465,8 +466,7 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onDoubleClick(View v) {
                 dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
-                Log.e("DEBUG", String.valueOf(i));
-                Log.e("DEBUG", String.valueOf(dataManager.getAllData(getMainActivityContext())));
+                //Log.e("DEBUG", String.valueOf(dataManager.getAllData(getMainActivityContext())));
 
                 if (innerLinearLayout.getChildCount() == 1) {
                     resetNamesAndValues();

@@ -315,12 +315,6 @@ public class DataManager {
         }
     }
 
-
-
-
-
-
-
     /**
      * This method initializes the settings by saving default values to the JSON file.
      *
@@ -534,10 +528,10 @@ public class DataManager {
                 if (jsonObj.has(name)) {
                     return jsonObj.getJSONObject(name);
                 } else {
-                    Log.e("getDataForName", "Data with name " + name + " not found.");
+                    //Log.e("getDataForName", "Data with name " + name + " not found.");
                 }
             } else {
-                Log.e("getDataForName", "JSON file not found.");
+                //Log.e("getDataForName", "JSON file not found.");
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -560,7 +554,7 @@ public class DataManager {
                     allData.put(name, dataObj);
                 }
             } else {
-                Log.e("getAllData", "JSON file not found.");
+                //Log.e("getAllData", "JSON file not found.");
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -594,12 +588,12 @@ public class DataManager {
                     fileWriter.write(jsonObj.toString());
                     fileWriter.flush();
                     fileWriter.close();
-                    Log.d("deleteNameFromHistory", "Name " + name + " deleted successfully.");
+                    //Log.d("deleteNameFromHistory", "Name " + name + " deleted successfully.");
                 } else {
-                    Log.e("deleteNameFromHistory", "Data with name " + name + " not found.");
+                    //Log.e("deleteNameFromHistory", "Data with name " + name + " not found.");
                 }
             } else {
-                Log.e("deleteNameFromHistory", "JSON file not found.");
+                //Log.e("deleteNameFromHistory", "JSON file not found.");
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
@@ -623,12 +617,12 @@ public class DataManager {
                     fileWriter.flush();
                     fileWriter.close();
 
-                    Log.d("updateDetailsInHistoryData", "Details for " + name + " updated successfully.");
+                    //Log.d("updateDetailsInHistoryData", "Details for " + name + " updated successfully.");
                 } else {
-                    Log.e("updateDetailsInHistoryData", "Data with name " + name + " not found.");
+                    //Log.e("updateDetailsInHistoryData", "Data with name " + name + " not found.");
                 }
             } else {
-                Log.e("updateDetailsInHistoryData", "JSON file not found.");
+                //Log.e("updateDetailsInHistoryData", "JSON file not found.");
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
