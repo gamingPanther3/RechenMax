@@ -345,4 +345,19 @@
     <string name="errorMessage15">Ungültiges Argument</string>
     <string name="errorMessage16">Ungültige Basis</string>
     <string name="errorMessage17">Ungültige Basis oder Argument</string>
+
+    <string name="historyCalculationSave">Rechnung wurde übernommen ...</string>
+    <string name="historyCalculationCopied">Rechnung wurde kopiert ...</string>
+    <string name="buttonIsDisabled">Diese Taste ist im aktuellen Modus deaktiviert.</string>
+    <string name="clipboardCleared">Zwischenablage geleert ...</string>
+    <string name="savedvalue">Wert gespeichert ...</string>
+    <string name="clipboardIsEmpty">Zwischenablage enthält keine Daten ...</string>
+    <string name="pastedClipboard">Zwischenablage wurde eingefügt ...</string>
+    <string name="invalidInput">Keine gültige Eingabe ...</string>
+    <string name="activateChannel">Bitte aktiviere den Kanal zuvor in den Einstellungen deines Handys.</string>
+    <string name="activateNotifications">Schalte vorher die Benachrichtigungen in den Einstellungen deines Handys ein.</string>
+    <string name="enableNotifications">Schalte vorher die Benachrichtigungen ein.</string>
+
+    <string name="historyDescription">Notiz:</string>
+    <string name="historyDescriptionHint">Klicke, um eine Beschreibung hinzuzufügen</string>
 </resources>

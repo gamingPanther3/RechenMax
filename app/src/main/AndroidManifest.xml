@@ -21,10 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RechenMax"
         tools:targetApi="34">
+        <profileable android:shell="true" />
+
         <service
             android:name=".BackgroundService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <receiver
             android:name=".BootReceiver"
@@ -32,34 +34,32 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".SettingsActivity"
-            android:exported="false"
             android:configChanges="uiMode"
-            android:screenOrientation="portrait">
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".HistoryActivity"
-            android:exported="false"
             android:configChanges="uiMode"
-            android:screenOrientation="portrait">
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".HelpActivity"
-            android:exported="false"
             android:configChanges="uiMode"
-            android:screenOrientation="portrait">
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ConvertActivity"
-            android:exported="false"
             android:configChanges="uiMode"
+            android:exported="false"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="uiMode"
@@ -72,4 +72,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

@@ -37,6 +37,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONException;
+
+import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -110,20 +113,32 @@ public class SettingsActivity extends AppCompatActivity {
         appendSpaceToSwitches(findViewById(R.id.settingsUI));
 
         settingsReleaseNotesSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataManager.saveToJSON("settingReleaseNotesSwitch", isChecked, getApplicationContext());
-            dataManager.saveToJSON("showPatchNotes", isChecked, getMainActivityContext());
-            dataManager.saveToJSON("disablePatchNotesTemporary", isChecked, getMainActivityContext());
-            Log.i("Settings", "settingReleaseNotesSwitch=" + dataManager.readFromJSON("settingReleaseNotesSwitch", getMainActivityContext()));
+            dataManager.saveToJSONSettings("settingReleaseNotesSwitch", isChecked, getApplicationContext());
+            dataManager.saveToJSONSettings("showPatchNotes", isChecked, getMainActivityContext());
+            dataManager.saveToJSONSettings("disablePatchNotesTemporary", isChecked, getMainActivityContext());
+            try {
+                Log.i("Settings", "settingReleaseNotesSwitch=" + dataManager.getJSONSettingsData("settingReleaseNotesSwitch", getMainActivityContext()).getString("value"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         });
         settingsTrueDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataManager.saveToJSON("settingsTrueDarkMode", isChecked, getMainActivityContext());
-            Log.i("Settings", "settingsTrueDarkMode=" + dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext()));
+            dataManager.saveToJSONSettings("settingsTrueDarkMode", isChecked, getMainActivityContext());
+            try {
+                Log.i("Settings", "settingsTrueDarkMode=" + dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
 
             switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         });
         settingPI.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            dataManager.saveToJSON("refactorPI", isChecked, getMainActivityContext());
-            Log.i("Settings", "refactorPI=" + dataManager.readFromJSON("refactorPI", getMainActivityContext()));
+            dataManager.saveToJSONSettings("refactorPI", isChecked, getMainActivityContext());
+            try {
+                Log.i("Settings", "refactorPI=" + dataManager.getJSONSettingsData("refactorPI", getMainActivityContext()).getString("value"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings));
@@ -135,7 +150,12 @@ public class SettingsActivity extends AppCompatActivity {
         if(customSpinner1 != null) {
             customSpinner1.setAdapter(customAdapter1);
 
-            final String mode = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
+            final String mode;
+            try {
+                mode = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             if(mode.equals("System")) {
                 customSpinner1.setSelection(0);
             } else if (mode.equals("Light")) {
@@ -158,11 +178,11 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 if (spinnerText.equals(getString(R.string.systemDefault))) {
-                    dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "System", getMainActivityContext());
                 } else if (spinnerText.equals(getString(R.string.lightMode))) {
-                    dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "Light", getMainActivityContext());
                 } else {
-                    dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "Dark", getMainActivityContext());
                 }
                 updateSpinner(adapterView);
                 switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
@@ -181,7 +201,12 @@ public class SettingsActivity extends AppCompatActivity {
         if(customSpinner2 != null) {
             customSpinner2.setAdapter(customAdapter2);
 
-            final String mode = dataManager.readFromJSON("calculationMode", getMainActivityContext());
+            final String mode;
+            try {
+                mode = dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).getString("value");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             if(mode.equals("Standard")) {
                 customSpinner2.setSelection(0);
             } else {
@@ -202,9 +227,9 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 if(spinnerText.equals(getString(R.string.defaultCalculationMode))) {
-                    dataManager.saveToJSON("calculationMode", "Standard", getMainActivityContext());
+                    dataManager.saveToJSONSettings("calculationMode", "Standard", getMainActivityContext());
                 } else {
-                    dataManager.saveToJSON("calculationMode", "Vereinfacht", getMainActivityContext());
+                    dataManager.saveToJSONSettings("calculationMode", "Vereinfacht", getMainActivityContext());
                 }
             }
             @Override
@@ -222,7 +247,12 @@ public class SettingsActivity extends AppCompatActivity {
         if(customSpinner3 != null) {
             customSpinner3.setAdapter(customAdapter3);
 
-            final String mode = dataManager.readFromJSON("functionMode", getMainActivityContext());
+            final String mode;
+            try {
+                mode = dataManager.getJSONSettingsData("functionMode", getMainActivityContext()).getString("value");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             if(mode.equals(getString(R.string.degree))) {
                 customSpinner3.setSelection(0);
             } else {
@@ -238,9 +268,9 @@ public class SettingsActivity extends AppCompatActivity {
                 String spinnerText = items.getSpinnerText();
 
                 if (spinnerText.equals(getString(R.string.degree))) {
-                    dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
+                    dataManager.saveToJSONSettings("functionMode", "Deg", getMainActivityContext());
                 } else {
-                    dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
+                    dataManager.saveToJSONSettings("functionMode", "Rad", getMainActivityContext());
                 }
 
                 //updateSpinner2(adapterView);
@@ -260,7 +290,12 @@ public class SettingsActivity extends AppCompatActivity {
         if(customSpinner4 != null) {
             customSpinner4.setAdapter(customAdapter4);
 
-            final String mode = dataManager.readFromJSON("historyMode", getMainActivityContext());
+            final String mode;
+            try {
+                mode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
             if(mode.equals("single")) {
                 customSpinner4.setSelection(0);
             } else {
@@ -276,11 +311,11 @@ public class SettingsActivity extends AppCompatActivity {
                 String spinnerText = items.getSpinnerText();
 
                 if (spinnerText.equals(getString(R.string.settingsHistoryModeSingle))) {
-                    dataManager.saveToJSON("historyMode", "single", getMainActivityContext());
+                    dataManager.saveToJSONSettings("historyMode", "single", getMainActivityContext());
                 } else {
-                    dataManager.saveToJSON("historyMode", "multiple", getMainActivityContext());
+                    dataManager.saveToJSONSettings("historyMode", "multiple", getMainActivityContext());
                 }
-                //Log.e("DEBUG", dataManager.readFromJSON("historyMode", getMainActivityContext()));
+                //Log.e("DEBUG", dataManager.getJSONSettingsData("historyMode", getMainActivityContext()));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -328,35 +363,47 @@ public class SettingsActivity extends AppCompatActivity {
 
             if(!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND) ||
                     (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)) {
-                dataManager.saveToJSON("allowNotifications", false, getMainActivityContext());
-                dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
-                dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                dataManager.saveToJSONSettings("allowNotifications", false, getMainActivityContext());
+                dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
+                dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                 allowNotifications.setChecked(false);
                 allowRememberNotification.setChecked(false);
                 allowDailyNotifications.setChecked(false);
             } else {
-                allowNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
-                        dataManager.readFromJSON("allowNotification", getMainActivityContext()).equals("true"));
+                try {
+                    allowNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                            dataManager.getJSONSettingsData("allowNotification", getMainActivityContext()).getString("value").equals("true"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             if(!isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
-                dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
                 allowRememberNotification.setChecked(false);
             } else {
-                allowRememberNotification.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
-                        isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER) &&
-                        dataManager.readFromJSON("allowNotification", getMainActivityContext()).equals("true") &&
-                        dataManager.readFromJSON("allowRememberNotificationsActive", getApplicationContext()).equals("true"));
+                try {
+                    allowRememberNotification.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                            isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER) &&
+                            dataManager.getJSONSettingsData("allowNotification", getMainActivityContext()).getString("value").equals("true") &&
+                            dataManager.getJSONSettingsData("allowRememberNotificationsActive", getApplicationContext()).getString("value").equals("true"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             if(!isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
-                dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                 allowDailyNotifications.setChecked(false);
             } else {
-                allowDailyNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
-                        isChannelPermissionGranted(this, CHANNEL_ID_HINTS) &&
-                        dataManager.readFromJSON("allowNotification", getMainActivityContext()).equals("true") &&
-                        dataManager.readFromJSON("allowDailyNotificationsActive", getApplicationContext()).equals("true"));
+                try {
+                    allowDailyNotifications.setChecked((ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) &&
+                            isChannelPermissionGranted(this, CHANNEL_ID_HINTS) &&
+                            dataManager.getJSONSettingsData("allowNotification", getMainActivityContext()).getString("value").equals("true") &&
+                            dataManager.getJSONSettingsData("allowDailyNotificationsActive", getApplicationContext()).getString("value").equals("true"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             allowNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -366,7 +413,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 if(!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
-                    dataManager.saveToJSON("allowNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowNotifications", false, getMainActivityContext());
                     activateNotificationMessage();
                     allowNotifications.setChecked(false);
                     return;
@@ -385,43 +432,51 @@ public class SettingsActivity extends AppCompatActivity {
                 if(isChecked) {
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED &&
                             isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
-                        dataManager.saveToJSON("allowNotification", true, getMainActivityContext());
+                        dataManager.saveToJSONSettings("allowNotification", true, getMainActivityContext());
                         allowNotifications.setChecked(true);
 
-                        if(dataManager.readFromJSON("allowRememberNotificationsActive", getApplicationContext()).equals("true")) {
-                            dataManager.saveToJSON("allowRememberNotifications", true, getMainActivityContext());
-                            allowRememberNotification.setChecked(true);
-                        }
-                        if(dataManager.readFromJSON("allowDailyNotificationsActive", getApplicationContext()).equals("true")) {
-                            dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
-                            allowDailyNotifications.setChecked(true);
+                        try {
+                            if(dataManager.getJSONSettingsData("allowRememberNotificationsActive", getApplicationContext()).getString("value").equals("true")) {
+                                dataManager.saveToJSONSettings("allowRememberNotifications", true, getMainActivityContext());
+                                allowRememberNotification.setChecked(true);
+                            }
+                            if(dataManager.getJSONSettingsData("allowDailyNotificationsActive", getApplicationContext()).getString("value").equals("true")) {
+                                dataManager.saveToJSONSettings("allowDailyNotifications", true, getMainActivityContext());
+                                allowDailyNotifications.setChecked(true);
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
                         }
                     } else {
                         activateChannelMessage();
-                        dataManager.saveToJSON("allowNotification", false, getMainActivityContext());
-                        dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
-                        dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                        dataManager.saveToJSONSettings("allowNotification", false, getMainActivityContext());
+                        dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
+                        dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                         allowNotifications.setChecked(false);
                         allowDailyNotifications.setChecked(false);
                         allowRememberNotification.setChecked(false);
                     }
                 } else {
-                    dataManager.saveToJSON("allowNotification", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowNotification", false, getMainActivityContext());
                     allowNotifications.setChecked(false);
                     allowDailyNotifications.setChecked(false);
                     allowRememberNotification.setChecked(false);
                 }
-                Log.i("Settings", "allowNotification=" + dataManager.readFromJSON("allowNotification", getMainActivityContext()));
+                try {
+                    Log.i("Settings", "allowNotification=" + dataManager.getJSONSettingsData("allowNotification", getMainActivityContext()).getString("value"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             });
             allowRememberNotification.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if(isChecked && !allowNotifications.isChecked()) {
-                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
                     turnOnNotificationsMessage();
                     allowRememberNotification.setChecked(false);
                     return;
                 }
                 if(!isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
-                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
                     allowRememberNotification.setChecked(false);
                     return;
                 }
@@ -431,28 +486,32 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 if(isChecked) {
-                    dataManager.saveToJSON("allowRememberNotifications", true, getMainActivityContext());
-                    dataManager.saveToJSON("allowRememberNotificationsActive", true, getApplicationContext());
+                    dataManager.saveToJSONSettings("allowRememberNotifications", true, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowRememberNotificationsActive", true, getApplicationContext());
                     allowRememberNotification.setChecked(true);
                 } else {
                     allowRememberNotification.setChecked(false);
-                    dataManager.saveToJSON("allowRememberNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
                     if(allowNotifications.isChecked()) {
-                        dataManager.saveToJSON("allowRememberNotificationsActive", false, getApplicationContext());
+                        dataManager.saveToJSONSettings("allowRememberNotificationsActive", false, getApplicationContext());
                     }
 
                 }
-                Log.i("Settings", "allowRememberNotifications=" + dataManager.readFromJSON("allowRememberNotifications", getMainActivityContext()));
+                try {
+                    Log.i("Settings", "allowRememberNotifications=" + dataManager.getJSONSettingsData("allowRememberNotifications", getMainActivityContext()).getString("value"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             });
             allowDailyNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if(isChecked && !allowNotifications.isChecked()) {
-                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                     turnOnNotificationsMessage();
                     allowDailyNotifications.setChecked(false);
                     return;
                 }
                 if(!isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
-                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                     allowDailyNotifications.setChecked(false);
                     return;
                 }
@@ -462,17 +521,21 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 if(isChecked) {
-                    dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
-                    dataManager.saveToJSON("allowDailyNotificationsActive", true, getApplicationContext());
+                    dataManager.saveToJSONSettings("allowDailyNotifications", true, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowDailyNotificationsActive", true, getApplicationContext());
                     allowDailyNotifications.setChecked(true);
                 } else {
                     allowDailyNotifications.setChecked(false);
-                    dataManager.saveToJSON("allowDailyNotifications", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                     if(allowNotifications.isChecked()) {
-                        dataManager.saveToJSON("allowDailyNotificationsActive", false, getApplicationContext());
+                        dataManager.saveToJSONSettings("allowDailyNotificationsActive", false, getApplicationContext());
                     }
                 }
-                Log.i("Settings", "allowDailyNotifications=" + dataManager.readFromJSON("allowDailyNotifications", getMainActivityContext()));
+                try {
+                    Log.i("Settings", "allowDailyNotifications=" + dataManager.getJSONSettingsData("allowDailyNotifications", getMainActivityContext()).getString("value"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             });
         }
     }
@@ -502,9 +565,9 @@ public class SettingsActivity extends AppCompatActivity {
                 Switch allowRememberNotification = findViewById(R.id.settings_remember);
                 Switch allowDailyNotifications = findViewById(R.id.settings_daily_hints);
 
-                dataManager.saveToJSON("allowNotification", true, getMainActivityContext());
-                dataManager.saveToJSON("allowRememberNotifications", true, getMainActivityContext());
-                dataManager.saveToJSON("allowDailyNotifications", true, getMainActivityContext());
+                dataManager.saveToJSONSettings("allowNotification", true, getMainActivityContext());
+                dataManager.saveToJSONSettings("allowRememberNotifications", true, getMainActivityContext());
+                dataManager.saveToJSONSettings("allowDailyNotifications", true, getMainActivityContext());
                 allowNotifications.setChecked(true);
                 allowDailyNotifications.setChecked(true);
                 allowRememberNotification.setChecked(true);
@@ -527,39 +590,15 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void turnOnNotificationsMessage() {
-        if(Locale.getDefault().getDisplayLanguage().equals("English")) {
-            showToastShort("Turn on notifications first.", this);
-        } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
-            showToastShort("Activez d'abord les notifications.", this);
-        } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
-            showToastShort("Activa primero las notificaciones.", this);
-        } else {
-            showToastShort("Schalte vorher die Benachrichtigungen ein.", this);
-        }
+        showToastLong(getString(R.string.enableNotifications), this);
     }
 
     private void activateChannelMessage() {
-        if(Locale.getDefault().getDisplayLanguage().equals("English")) {
-            showToastLong("Please enable the channel in your phone's settings beforehand.", this);
-        } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
-            showToastLong("Veuillez activer le canal dans les paramètres de votre téléphone au préalable.", this);
-        } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
-            showToastLong("Por favor, activa el canal en la configuración de tu teléfono antes.", this);
-        } else {
-            showToastLong("Bitte aktiviere den Kanal zuvor in den Einstellungen deines Handys.", this);
-        }
+        showToastLong(getString(R.string.activateChannel), this);
     }
 
     private void activateNotificationMessage() {
-        if(Locale.getDefault().getDisplayLanguage().equals("Englisch")) {
-            showToastLong("Please enable notifications in your phone's settings beforehand.", this);
-        } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
-            showToastLong("Veuillez activer les notifications dans les paramètres de votre téléphone au préalable.", this);
-        } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
-            showToastLong("Por favor, activa las notificaciones en la configuración de tu teléfono antes.", this);
-        } else {
-            showToastLong("Schalte vorher die Benachrichtigungen in den Einstellungen deines Handys ein.", this);
-        }
+        showToastLong(getString(R.string.activateNotifications), this);
     }
 
     private boolean isChannelPermissionGranted(Context context, String channelId) {
@@ -584,8 +623,12 @@ public class SettingsActivity extends AppCompatActivity {
      */
     protected void onDestroy() {
         super.onDestroy();
-        if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
-            dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
+        try {
+            if (dataManager.getJSONSettingsData("disablePatchNotesTemporary", getApplicationContext()).getString("value").equals("true")) {
+                dataManager.saveToJSONSettings("disablePatchNotesTemporary", false, getApplicationContext());
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -670,26 +713,34 @@ public class SettingsActivity extends AppCompatActivity {
             textView.setTextSize(20);
             switch (readselectedSetting) {
                 case 2:
-                    dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     switchDisplayMode(currentNightMode);
-                    if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
-                        textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
-                    } else {
-                        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                    try {
+                        if(dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
+                            textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
+                        } else {
+                            textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
                     break;
                 case 1:
-                    dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "Light", getMainActivityContext());
                     textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     switchDisplayMode(currentNightMode);
                     break;
                 case 0:
-                    dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "System", getMainActivityContext());
                     if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                        if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
-                            textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
-                        } else {
-                            textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                        try {
+                            if(dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
+                                textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
+                            } else {
+                                textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
                         }
                     } else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -706,7 +757,12 @@ public class SettingsActivity extends AppCompatActivity {
      */
     public void updateSpinner2(AdapterView<?> parent) {
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        final String readselectedSetting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
+        final String readselectedSetting;
+        try {
+            readselectedSetting = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
         // Check if the TextView object is null before calling methods on it
         TextView textView = null;
@@ -718,24 +774,32 @@ public class SettingsActivity extends AppCompatActivity {
             textView.setTextSize(20);
             switch (readselectedSetting) {
                 case "Dark":
-                    dataManager.saveToJSON("selectedSpinnerSetting", "Dark", getMainActivityContext());
-                    if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
-                        textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
-                    } else {
-                        textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-                    }
-                    break;
-                case "Light":
-                    dataManager.saveToJSON("selectedSpinnerSetting", "Light", getMainActivityContext());
-                    textView.setTextColor(ContextCompat.getColor(this, R.color.black));
-                    break;
-                case "System":
-                    dataManager.saveToJSON("selectedSpinnerSetting", "System", getMainActivityContext());
-                    if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                        if(dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext()).equals("true")) {
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "Dark", getMainActivityContext());
+                    try {
+                        if(dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
                             textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
                         } else {
                             textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case "Light":
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "Light", getMainActivityContext());
+                    textView.setTextColor(ContextCompat.getColor(this, R.color.black));
+                    break;
+                case "System":
+                    dataManager.saveToJSONSettings("selectedSpinnerSetting", "System", getMainActivityContext());
+                    if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                        try {
+                            if(dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
+                                textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
+                            } else {
+                                textView.setTextColor(ContextCompat.getColor(this, R.color.white));
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
                         }
                     } else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.black));
@@ -758,13 +822,17 @@ public class SettingsActivity extends AppCompatActivity {
 
         if(textView != null) {
             textView.setTextSize(20);
-            switch (dataManager.readFromJSON("functionMode", getMainActivityContext())) {
-                case "Rad":
-                    dataManager.saveToJSON("functionMode", "Rad", getMainActivityContext());
-                    break;
-                case "Deg":
-                    dataManager.saveToJSON("functionMode", "Deg", getMainActivityContext());
-                    break;
+            try {
+                switch (dataManager.getJSONSettingsData("functionMode", getMainActivityContext()).getString("value")) {
+                    case "Rad":
+                        dataManager.saveToJSONSettings("functionMode", "Rad", getMainActivityContext());
+                        break;
+                    case "Deg":
+                        dataManager.saveToJSONSettings("functionMode", "Deg", getMainActivityContext());
+                        break;
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -774,19 +842,21 @@ public class SettingsActivity extends AppCompatActivity {
      * @return The selected setting.
      */
     public String getSelectedSetting() {
-        final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
-
-        if(setting != null) {
-            switch (setting) {
-                case "Dark":
-                    return "Dunkelmodus";
-                case "Light":
-                    return "Tageslichtmodus";
-                default:
-                    return "Systemstandard";
-            }
+        final String setting;
+        try {
+            setting = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
-        return "Systemstandard";
+
+        switch (setting) {
+            case "Dark":
+                return "Dunkelmodus";
+            case "Light":
+                return "Tageslichtmodus";
+            default:
+                return "Systemstandard";
+        }
     }
 
     /**
@@ -795,11 +865,11 @@ public class SettingsActivity extends AppCompatActivity {
      * @param key The key to use to get the value.
      */
     private void updateSwitchState(@SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchView, String key) {
-        String value = dataManager.readFromJSON(key, this);
-        if (value != null) {
+        try {
+            String value = dataManager.getJSONSettingsData(key, this).getString("value");
             switchView.setChecked(Boolean.parseBoolean(value));
-        } else {
-            Log.e("Settings", "Failed to read value for key: " + key);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -855,7 +925,12 @@ public class SettingsActivity extends AppCompatActivity {
                     case Configuration.UI_MODE_NIGHT_YES:
                         // Nightmode is activated
                         dataManager = new DataManager();
-                        String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
+                        String trueDarkMode = null;
+                        try {
+                            trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
 
                         if (trueDarkMode != null) {
                             if (trueDarkMode.equals("false")) {
@@ -1103,7 +1178,12 @@ public class SettingsActivity extends AppCompatActivity {
                 updateUI(R.color.white, R.color.black);
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
-                String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
+                String trueDarkMode = null;
+                try {
+                    trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
 
                 if (trueDarkMode != null) {
                     if (trueDarkMode.equals("false")) {
@@ -1252,17 +1332,22 @@ public class SettingsActivity extends AppCompatActivity {
                     updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
                 }
             }
-            String mode = dataManager.readFromJSON("calculationMode", getMainActivityContext());
-            int selection = mode.equals("Standard") ? 0 : 1;
-            customSpinner2.setSelection(selection);
+            try {
+                String mode;
+                mode = dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).getString("value");
+                int selection = mode.equals("Standard") ? 0 : 1;
+                customSpinner2.setSelection(selection);
 
-            mode = dataManager.readFromJSON("functionMode", getMainActivityContext());
-            selection = mode.equals("Deg") ? 0 : 1;
-            customSpinner3.setSelection(selection);
+                mode = dataManager.getJSONSettingsData("functionMode", getMainActivityContext()).getString("value");
+                selection = mode.equals("Deg") ? 0 : 1;
+                customSpinner3.setSelection(selection);
 
-            mode = dataManager.readFromJSON("historyMode", getMainActivityContext());
-            selection = mode.equals("single") ? 0 : 1;
-            customSpinner4.setSelection(selection);
+                mode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
+                selection = mode.equals("single") ? 0 : 1;
+                customSpinner4.setSelection(selection);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }

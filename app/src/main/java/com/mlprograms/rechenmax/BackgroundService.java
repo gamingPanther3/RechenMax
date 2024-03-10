@@ -28,6 +28,8 @@ import android.os.Looper;
 import android.text.format.DateFormat;
 import android.util.Log;
 
+import org.json.JSONException;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -77,8 +79,14 @@ public class BackgroundService extends Service {
                 handler.postDelayed(this, 600000); // 600000 = 10min
                 currentTime = Integer.parseInt((String) DateFormat.format("HH", new Date()));
 
-                String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
-                String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
+                String allowRememberNotifications;
+                String allowDailyNotifications;
+                try {
+                    allowRememberNotifications = dataManager.getJSONSettingsData("allowRememberNotifications", getApplicationContext()).getString("value");
+                    allowDailyNotifications = dataManager.getJSONSettingsData("allowDailyNotifications", getApplicationContext()).getString("value");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
 
                 //Log.e("DEBUG", allowRememberNotifications);
                 //Log.e("DEBUG", allowDailyNotifications);
@@ -114,16 +122,23 @@ public class BackgroundService extends Service {
     public void onCreate() {
         super.onCreate();
         sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String allowNotification = dataManager.readFromJSON("allowNotification", getApplicationContext());
-        String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
-        String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
+        String allowNotification;
+        String allowRememberNotifications;
+        String allowDailyNotifications;
+        try {
+            allowNotification = dataManager.getJSONSettingsData("allowNotification", getApplicationContext()).getString("value");
+            allowRememberNotifications = dataManager.getJSONSettingsData("allowRememberNotifications", getApplicationContext()).getString("value");
+            allowDailyNotifications = dataManager.getJSONSettingsData("allowDailyNotifications", getApplicationContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
-        // dataManager.saveToJSON("notificationSent", false, this);
-        // dataManager.saveToJSON("dayPassed", true, this);
+        // dataManager.saveToJSONSettings("notificationSent", false, this);
+        // dataManager.saveToJSONSettings("dayPassed", true, this);
 
         if ("true".equals(allowNotification) &&
                 (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
-            //dataManager.saveToJSON("notificationSent", false, this);
+            //dataManager.saveToJSONSettings("notificationSent", false, this);
 
             createNotificationChannel(this);
             NotificationHelper.cancelNotification(this, NOTIFICATION_ID_BACKGROUND);
@@ -139,9 +154,16 @@ public class BackgroundService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String allowNotification = dataManager.readFromJSON("allowNotification", getApplicationContext());
-        String allowRememberNotifications = dataManager.readFromJSON("allowRememberNotifications", getApplicationContext());
-        String allowDailyNotifications = dataManager.readFromJSON("allowDailyNotifications", getApplicationContext());
+        String allowNotification;
+        String allowRememberNotifications;
+        String allowDailyNotifications;
+        try {
+            allowNotification = dataManager.getJSONSettingsData("allowNotification", getApplicationContext()).getString("value");
+            allowRememberNotifications = dataManager.getJSONSettingsData("allowRememberNotifications", getApplicationContext()).getString("value");
+            allowDailyNotifications = dataManager.getJSONSettingsData("allowDailyNotifications", getApplicationContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
         if ("true".equals(allowNotification) && (("true".equals(allowRememberNotifications) || "true".equals(allowDailyNotifications)))) {
             Log.d(CHANNEL_NAME_BACKGROUND, "Service started");
@@ -161,8 +183,8 @@ public class BackgroundService extends Service {
 
     private void resetValuesAfterDay() {
         if(currentTime >= 0 && currentTime <= 2) {
-            dataManager.saveToJSON("notificationSent", false, this);
-            dataManager.saveToJSON("dayPassed", true, this);
+            dataManager.saveToJSONSettings("notificationSent", false, this);
+            dataManager.saveToJSONSettings("dayPassed", true, this);
         }
     }
 
@@ -211,20 +233,24 @@ public class BackgroundService extends Service {
         //Log.e("DEBUG", String.valueOf(System.currentTimeMillis() - getLastUsedTime()));
         //Log.e("DEBUG", String.valueOf(NOTIFICATION_INTERVAL + 1000 * 60 * 60 * 24));
         //Log.e("DEBUG", String.valueOf(System.currentTimeMillis() - getLastUsedTime() > (NOTIFICATION_INTERVAL + 1000 * 60 * 60 * 24)));
-        //Log.e("DEBUG", String.valueOf(dataManager.readFromJSON("dayPassed", this)));
+        //Log.e("DEBUG", String.valueOf(dataManager.getJSONSettingsData("dayPassed", this)));
 
-        if ((System.currentTimeMillis() - getLastUsedTime() > (NOTIFICATION_INTERVAL + 1000 * 60 * 60 * 24))  && (currentTime >= 14 && currentTime <= 18) &&
-                Boolean.parseBoolean(dataManager.readFromJSON("dayPassed", this))) {
-            long timeDifference = System.currentTimeMillis() - getLastUsedTime();
-            int timeDifferenceInSeconds = (int) (timeDifference / 1000 / 60 / 60 / 24);
+        try {
+            if ((System.currentTimeMillis() - getLastUsedTime() > (NOTIFICATION_INTERVAL + 1000 * 60 * 60 * 24))  && (currentTime >= 14 && currentTime <= 18) &&
+                    Boolean.parseBoolean(dataManager.getJSONSettingsData("dayPassed", this).getString("value"))) {
+                long timeDifference = System.currentTimeMillis() - getLastUsedTime();
+                int timeDifferenceInSeconds = (int) (timeDifference / 1000 / 60 / 60 / 24);
 
-            dataManager.saveToJSON("dayPassed", false, this);
-            sendNotification(this,NOTIFICATION_ID_REMEMBER, title_remember,
-                    content_remember_msg_start + timeDifferenceInSeconds + content_remember_msg_end, CHANNEL_ID_REMEMBER, true);
-        } else if ((System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_INTERVAL) || (System.currentTimeMillis() - getLastBackgroundTime() <= 0) && (currentTime >= 14 && currentTime <= 18)) {
-            sendNotification(this, NOTIFICATION_ID_REMEMBER,
-                    title_remember, content_remember, CHANNEL_ID_REMEMBER, true);
-            setLastBackgroundTime(System.currentTimeMillis());
+                dataManager.saveToJSONSettings("dayPassed", false, this);
+                sendNotification(this,NOTIFICATION_ID_REMEMBER, title_remember,
+                        content_remember_msg_start + timeDifferenceInSeconds + content_remember_msg_end, CHANNEL_ID_REMEMBER, true);
+            } else if ((System.currentTimeMillis() - getLastBackgroundTime() > NOTIFICATION_INTERVAL) || (System.currentTimeMillis() - getLastBackgroundTime() <= 0) && (currentTime >= 14 && currentTime <= 18)) {
+                sendNotification(this, NOTIFICATION_ID_REMEMBER,
+                        title_remember, content_remember, CHANNEL_ID_REMEMBER, true);
+                setLastBackgroundTime(System.currentTimeMillis());
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -251,13 +277,23 @@ public class BackgroundService extends Service {
         }
 
         if (currentTime >= min && currentTime <= max) {
-            if(!Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this)) && randomNumber == 1) {
-                dataManager.saveToJSON("notificationSent", true, this);
-                sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, true);
+            try {
+                if(!Boolean.parseBoolean(dataManager.getJSONSettingsData("notificationSent", this).getString("value")) && randomNumber == 1) {
+                    dataManager.saveToJSONSettings("notificationSent", true, this);
+                    sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, true);
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
-        } else if (currentTime >= max && !Boolean.parseBoolean(dataManager.readFromJSON("notificationSent", this))) {
-            dataManager.saveToJSON("notificationSent", true, this);
-            sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, true);
+        } else {
+            try {
+                if (currentTime >= max && !Boolean.parseBoolean(dataManager.getJSONSettingsData("notificationSent", this).getString("value"))) {
+                    dataManager.saveToJSONSettings("notificationSent", true, this);
+                    sendNotification(this, NOTIFICATION_ID_HINTS, title_hints, content_hints, CHANNEL_ID_HINTS, true);
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

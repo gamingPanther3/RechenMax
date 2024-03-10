@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * DataManager
@@ -108,23 +111,13 @@ public class DataManager {
         }
     }
 
-    /**
-     * This method is used to save a boolean value to a JSON file.
-     * It first checks if the file exists, and if not, it creates a new file.
-     * It then reads the content of the file and converts it to a JSONObject.
-     * It puts the given name and value into the JSONObject and writes it back to the file.
-     *
-     * @param name The name to be saved in the JSON file. This should be a string.
-     * @param value The boolean value to be saved in the JSON file.
-     * @param applicationContext The application context, which is used to get the application's file directory.
-     */
-    public void saveToJSON(String name, boolean value, Context applicationContext) {
+    public void saveToJSONSettings(String name, String value, Context applicationContext) {
         JSONObject jsonObj = new JSONObject();
         try {
             File file = new File(applicationContext.getFilesDir(), JSON_FILE);
             if (!file.exists()) {
                 if (!file.createNewFile()) {
-                    Log.e("saveToJSON", "Failed to create new file");
+                    Log.e("saveToHistory", "Failed to create new file");
                     return;
                 }
             }
@@ -132,7 +125,12 @@ public class DataManager {
             if (!content.isEmpty()) {
                 jsonObj = new JSONObject(new JSONTokener(content));
             }
-            jsonObj.put(name, value);
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("value", value);
+
+            jsonObj.put(name, dataObj);
+
             try (FileWriter fileWriter = new FileWriter(file)) {
                 fileWriter.write(jsonObj.toString());
                 fileWriter.flush();
@@ -142,23 +140,13 @@ public class DataManager {
         }
     }
 
-    /**
-     * This method is used to save a string value to a JSON file.
-     * It first checks if the file exists, and if not, it creates a new file.
-     * It then reads the content of the file and converts it to a JSONObject.
-     * It puts the given name and value into the JSONObject and writes it back to the file.
-     *
-     * @param name The name to be saved in the JSON file. This should be a string.
-     * @param value The string value to be saved in the JSON file.
-     * @param applicationContext The application context, which is used to get the application's file directory.
-     */
-    public void saveToJSON(String name, String value, Context applicationContext) {
+    public void saveToJSONSettings(String name, boolean value, Context applicationContext) {
         JSONObject jsonObj = new JSONObject();
         try {
             File file = new File(applicationContext.getFilesDir(), JSON_FILE);
             if (!file.exists()) {
                 if (!file.createNewFile()) {
-                    Log.e("saveToJSON", "Failed to create new file");
+                    Log.e("saveToHistory", "Failed to create new file");
                     return;
                 }
             }
@@ -166,7 +154,12 @@ public class DataManager {
             if (!content.isEmpty()) {
                 jsonObj = new JSONObject(new JSONTokener(content));
             }
-            jsonObj.put(name, value);
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("value", String.valueOf(value));
+
+            jsonObj.put(name, dataObj);
+
             try (FileWriter fileWriter = new FileWriter(file)) {
                 fileWriter.write(jsonObj.toString());
                 fileWriter.flush();
@@ -176,44 +169,157 @@ public class DataManager {
         }
     }
 
-    /**
-     * This method reads a value from a JSON file.
-     * If the file does not exist or is empty, it initializes the settings and creates a new file.
-     * If the requested name does not exist in the JSON file, it initializes the settings.
-     *
-     * @param name The name of the value to be read from the JSON file.
-     * @param applicationContext The application context, which is used to get the application's file directory.
-     * @return Returns the value associated with the given name in the JSON file, or null if the file does not exist, is empty, or does not contain the name.
-     */
-    public String readFromJSON(final String name, Context applicationContext) {
-        String setting = null;
+    public JSONObject getJSONSettingsData(String name, Context applicationContext) throws JSONException {
         try {
             File file = new File(applicationContext.getFilesDir(), JSON_FILE);
-            if (!file.exists()) {
-                Log.e("readFromJSON", "File does not exist");
-                createJSON(mainActivity.getApplicationContext());
-                if (!file.createNewFile()) {
-                    Log.e("saveToJSON", "Failed to create new file");
-                    createJSON(mainActivity.getApplicationContext());
-                    return null;
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                if (jsonObj.has(name)) {
+                    return jsonObj.getJSONObject(name);
+                } else {
+                    Log.e("getDataForName", "Data with name " + name + " not found.");
                 }
             } else {
-                String content = new String(Files.readAllBytes(file.toPath()));
-                if (content.isEmpty()) {
-                    Log.e("readFromJSON", "File is empty (" + name + ")");
-                }
-                JSONObject jsonRead = new JSONObject(new JSONTokener(content));
-                if (jsonRead.has(name)) {
-                    setting = jsonRead.getString(name);
-                } else {
-                    // Log.e("readFromJSON", "Key: " + name + " does not exist in JSON");
-                }
+                Log.e("getDataForName", "JSON file not found.");
             }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        return setting;
+        return null;
     }
+
+    public Map<String, JSONObject> getAllDataFromJSONSettings(Context applicationContext) {
+        Map<String, JSONObject> allData = new HashMap<>();
+        try {
+            File file = new File(applicationContext.getFilesDir(), JSON_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                Iterator<String> keys = jsonObj.keys();
+                while (keys.hasNext()) {
+                    String name = keys.next();
+                    JSONObject dataObj = jsonObj.getJSONObject(name);
+                    allData.put(name, dataObj);
+                }
+            } else {
+                Log.e("getAllData", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return allData;
+    }
+
+    public void clearJSONSettings(Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), JSON_FILE);
+            if (file.exists()) {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write("");
+                fileWriter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteNameFromJSONSettings(String name, Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), JSON_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                if (jsonObj.has(name)) {
+                    jsonObj.remove(name); // Entferne den Namen aus dem JSON-Objekt
+                    FileWriter fileWriter = new FileWriter(file);
+                    fileWriter.write(jsonObj.toString());
+                    fileWriter.flush();
+                    fileWriter.close();
+                    Log.d("deleteNameFromHistory", "Name " + name + " deleted successfully.");
+                } else {
+                    Log.e("deleteNameFromHistory", "Data with name " + name + " not found.");
+                }
+            } else {
+                Log.e("deleteNameFromHistory", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateValuesInJSONSettingsData(String name, String valueName, String newValue, Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), JSON_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                if (jsonObj.has(name)) {
+                    JSONObject dataObj = jsonObj.getJSONObject(name);
+                    dataObj.put(valueName, newValue);
+                    jsonObj.put(name, dataObj);
+
+                    FileWriter fileWriter = new FileWriter(file);
+                    fileWriter.write(jsonObj.toString());
+                    fileWriter.flush();
+                    fileWriter.close();
+
+                    Log.d("updateDetailsInHistoryData", "Details for " + name + " updated successfully.");
+                } else {
+                    Log.e("updateDetailsInHistoryData", "Data with name " + name + " not found.");
+                }
+            } else {
+                Log.e("updateDetailsInHistoryData", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addValueWithCustomNameToJSONSettings(String name, String valueName, String value, Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), JSON_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                JSONObject dataObj;
+                if (jsonObj.has(name)) {
+                    dataObj = jsonObj.getJSONObject(name);
+                } else {
+                    dataObj = new JSONObject();
+                }
+
+                if (!dataObj.has(valueName)) {
+                    dataObj.put(valueName, value);
+                    jsonObj.put(name, dataObj);
+
+                    FileWriter fileWriter = new FileWriter(file);
+                    fileWriter.write(jsonObj.toString());
+                    fileWriter.flush();
+                    fileWriter.close();
+
+                    Log.d("addValueWithCustomName", "Value " + value + " with name " + valueName + " added successfully to " + name + ".");
+                } else {
+                    Log.d("addValueWithCustomName", "Value with name " + valueName + " already exists for " + name + ".");
+                }
+            } else {
+                Log.e("addValueWithCustomName", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
 
     /**
      * This method initializes the settings by saving default values to the JSON file.
@@ -221,110 +327,114 @@ public class DataManager {
      * @param applicationContext The application context, which is used to get the application's file directory.
      */
     public void initializeSettings(Context applicationContext) {
-        if(readFromJSON("selectedSpinnerSetting", applicationContext) == null) {
-            saveToJSON("selectedSpinnerSetting", "System", applicationContext);
-        }
-        if(readFromJSON("functionMode", applicationContext) == null) {
-            saveToJSON("functionMode", "Deg", applicationContext);
-        }
-        if(readFromJSON("settingReleaseNotesSwitch", applicationContext) == null) {
-            saveToJSON("settingReleaseNotesSwitch", "true", applicationContext);
-        }
-        if(readFromJSON("removeValue", applicationContext) == null) {
-            saveToJSON("removeValue", "false", applicationContext);
-        }
-        if(readFromJSON("settingsTrueDarkMode", applicationContext) == null) {
-            saveToJSON("settingsTrueDarkMode", "false", applicationContext);
-        }
-        if(readFromJSON("showPatchNotes", applicationContext) == null) {
-            saveToJSON("showPatchNotes", "true", applicationContext);
-        }
-        if(readFromJSON("disablePatchNotesTemporary", applicationContext) == null) {
-            saveToJSON("disablePatchNotesTemporary", "false", applicationContext);
-        }
-        if(readFromJSON("showReleaseNotesOnVeryFirstStart", applicationContext) == null) {
-            saveToJSON("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
-        }
-        if(readFromJSON("showScienceRow", applicationContext) == null) {
-            saveToJSON("showScienceRow", "false", applicationContext);
-        }
-        if(readFromJSON("rotate_op", applicationContext) == null) {
-            saveToJSON("rotate_op", "false", applicationContext);
-        }
-        if(readFromJSON("lastnumber", applicationContext) == null) {
-            saveToJSON("lastnumber", "0", applicationContext);
-        }
-        if(readFromJSON("historyTextViewNumber", applicationContext) == null) {
-            saveToJSON("historyTextViewNumber", "0", applicationContext);
-        }
-        if(readFromJSON("result_text", applicationContext) == null) {
-            saveToJSON("result_text", "0", applicationContext);
-        }
-        if(readFromJSON("calculate_text", applicationContext) == null) {
-            saveToJSON("calculate_text", "", applicationContext);
-        }
-        if(readFromJSON("lastop", applicationContext) == null) {
-            saveToJSON("lastop", "+", applicationContext);
-        }
-        if(readFromJSON("isNotation", applicationContext) == null) {
-            saveToJSON("isNotation", "false", applicationContext);
-        }
-        if(readFromJSON("eNotation", applicationContext) == null) {
-            saveToJSON("eNotation", "false", applicationContext);
-        }
-        if(readFromJSON("showShiftRow", applicationContext) == null) {
-            saveToJSON("showShiftRow", "false", applicationContext);
-        }
-        if(readFromJSON("shiftRow", applicationContext) == null) {
-            saveToJSON("shiftRow", "1", applicationContext);
-        }
-        if(readFromJSON("logX", applicationContext) == null) {
-            saveToJSON("logX", "false", applicationContext);
-        }
-        if(readFromJSON("calculationMode", applicationContext) == null) {
-            saveToJSON("calculationMode", "Standard", applicationContext);
-        }
-        if(readFromJSON("currentVersion", applicationContext) == null) {
-            saveToJSON("currentVersion", "1.6.3", applicationContext);
-        }
-        if(readFromJSON("old_version", applicationContext) == null) {
-            saveToJSON("old_version", "0", applicationContext);
-        }
-        if(readFromJSON("returnToCalculator", applicationContext) == null) {
-            saveToJSON("returnToCalculator", "false", applicationContext);
-        }
-        if(readFromJSON("allowNotification", applicationContext) == null) {
-            saveToJSON("allowNotification", "false", applicationContext);
-        }
-        if(readFromJSON("allowDailyNotifications", applicationContext) == null) {
-            saveToJSON("allowDailyNotifications", "false", applicationContext);
-        }
-        if(readFromJSON("allowRememberNotifications", applicationContext) == null) {
-            saveToJSON("allowRememberNotifications", "false", applicationContext);
-        }
-        if(readFromJSON("allowDailyNotificationsActive", applicationContext) == null) {
-            saveToJSON("allowDailyNotificationsActive", "true", applicationContext);
-        }
-        if(readFromJSON("allowRememberNotificationsActive", applicationContext) == null) {
-            saveToJSON("allowRememberNotificationsActive", "true", applicationContext);
-        }
-        if(readFromJSON("notificationSent", applicationContext) == null) {
-            saveToJSON("notificationSent", "false", applicationContext);
-        }
-        if(readFromJSON("pressedCalculate", applicationContext) == null) {
-            saveToJSON("pressedCalculate", "false", applicationContext);
-        }
-        if(readFromJSON("refactorPI", applicationContext) == null) {
-            saveToJSON("refactorPI", "true", applicationContext);
-        }
-        if(readFromJSON("historyMode", applicationContext) == null) {
-            saveToJSON("historyMode", "single", applicationContext);
-        }
-        if(readFromJSON("dayPassed", applicationContext) == null) {
-            saveToJSON("dayPassed", "true", applicationContext);
-        }
-        if(readFromJSON("convertMode", applicationContext) == null) {
-            saveToJSON("convertMode", "E", applicationContext);
+        try {
+            if(getJSONSettingsData("selectedSpinnerSetting", applicationContext) == null) {
+                saveToJSONSettings("selectedSpinnerSetting", "System", applicationContext);
+            }
+            if(getJSONSettingsData("functionMode", applicationContext) == null) {
+                saveToJSONSettings("functionMode", "Deg", applicationContext);
+            }
+            if(getJSONSettingsData("settingReleaseNotesSwitch", applicationContext) == null) {
+                saveToJSONSettings("settingReleaseNotesSwitch", "true", applicationContext);
+            }
+            if(getJSONSettingsData("removeValue", applicationContext) == null) {
+                saveToJSONSettings("removeValue", "false", applicationContext);
+            }
+            if(getJSONSettingsData("settingsTrueDarkMode", applicationContext) == null) {
+                saveToJSONSettings("settingsTrueDarkMode", "false", applicationContext);
+            }
+            if(getJSONSettingsData("showPatchNotes", applicationContext) == null) {
+                saveToJSONSettings("showPatchNotes", "true", applicationContext);
+            }
+            if(getJSONSettingsData("disablePatchNotesTemporary", applicationContext) == null) {
+                saveToJSONSettings("disablePatchNotesTemporary", "false", applicationContext);
+            }
+            if(getJSONSettingsData("showReleaseNotesOnVeryFirstStart", applicationContext) == null) {
+                saveToJSONSettings("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
+            }
+            if(getJSONSettingsData("showScienceRow", applicationContext) == null) {
+                saveToJSONSettings("showScienceRow", "false", applicationContext);
+            }
+            if(getJSONSettingsData("rotate_op", applicationContext) == null) {
+                saveToJSONSettings("rotate_op", "false", applicationContext);
+            }
+            if(getJSONSettingsData("lastnumber", applicationContext) == null) {
+                saveToJSONSettings("lastnumber", "0", applicationContext);
+            }
+            if(getJSONSettingsData("historyTextViewNumber", applicationContext) == null) {
+                saveToJSONSettings("historyTextViewNumber", "0", applicationContext);
+            }
+            if(getJSONSettingsData("result_text", applicationContext) == null) {
+                saveToJSONSettings("result_text", "0", applicationContext);
+            }
+            if(getJSONSettingsData("calculate_text", applicationContext) == null) {
+                saveToJSONSettings("calculate_text", "", applicationContext);
+            }
+            if(getJSONSettingsData("lastop", applicationContext) == null) {
+                saveToJSONSettings("lastop", "+", applicationContext);
+            }
+            if(getJSONSettingsData("isNotation", applicationContext) == null) {
+                saveToJSONSettings("isNotation", "false", applicationContext);
+            }
+            if(getJSONSettingsData("eNotation", applicationContext) == null) {
+                saveToJSONSettings("eNotation", "false", applicationContext);
+            }
+            if(getJSONSettingsData("showShiftRow", applicationContext) == null) {
+                saveToJSONSettings("showShiftRow", "false", applicationContext);
+            }
+            if(getJSONSettingsData("shiftRow", applicationContext) == null) {
+                saveToJSONSettings("shiftRow", "1", applicationContext);
+            }
+            if(getJSONSettingsData("logX", applicationContext) == null) {
+                saveToJSONSettings("logX", "false", applicationContext);
+            }
+            if(getJSONSettingsData("calculationMode", applicationContext) == null) {
+                saveToJSONSettings("calculationMode", "Standard", applicationContext);
+            }
+            if(getJSONSettingsData("currentVersion", applicationContext) == null) {
+                saveToJSONSettings("currentVersion", "1.6.3", applicationContext);
+            }
+            if(getJSONSettingsData("old_version", applicationContext) == null) {
+                saveToJSONSettings("old_version", "0", applicationContext);
+            }
+            if(getJSONSettingsData("returnToCalculator", applicationContext) == null) {
+                saveToJSONSettings("returnToCalculator", "false", applicationContext);
+            }
+            if(getJSONSettingsData("allowNotification", applicationContext) == null) {
+                saveToJSONSettings("allowNotification", "false", applicationContext);
+            }
+            if(getJSONSettingsData("allowDailyNotifications", applicationContext) == null) {
+                saveToJSONSettings("allowDailyNotifications", "false", applicationContext);
+            }
+            if(getJSONSettingsData("allowRememberNotifications", applicationContext) == null) {
+                saveToJSONSettings("allowRememberNotifications", "false", applicationContext);
+            }
+            if(getJSONSettingsData("allowDailyNotificationsActive", applicationContext) == null) {
+                saveToJSONSettings("allowDailyNotificationsActive", "true", applicationContext);
+            }
+            if(getJSONSettingsData("allowRememberNotificationsActive", applicationContext) == null) {
+                saveToJSONSettings("allowRememberNotificationsActive", "true", applicationContext);
+            }
+            if(getJSONSettingsData("notificationSent", applicationContext) == null) {
+                saveToJSONSettings("notificationSent", "false", applicationContext);
+            }
+            if(getJSONSettingsData("pressedCalculate", applicationContext) == null) {
+                saveToJSONSettings("pressedCalculate", "false", applicationContext);
+            }
+            if(getJSONSettingsData("refactorPI", applicationContext) == null) {
+                saveToJSONSettings("refactorPI", "true", applicationContext);
+            }
+            if(getJSONSettingsData("historyMode", applicationContext) == null) {
+                saveToJSONSettings("historyMode", "single", applicationContext);
+            }
+            if(getJSONSettingsData("dayPassed", applicationContext) == null) {
+                saveToJSONSettings("dayPassed", "true", applicationContext);
+            }
+            if(getJSONSettingsData("convertMode", applicationContext) == null) {
+                saveToJSONSettings("convertMode", "E", applicationContext);
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -336,14 +446,11 @@ public class DataManager {
     public void saveNumbers(Context applicationContext) {
         if (mainActivity != null) {
             try {
-                String calculateText = mainActivity.getCalculateText();
-                String resultText = mainActivity.getResultText();
-
                 // Save calculate_text using dataManager
-                saveToJSON("calculate_text", calculateText, applicationContext);
+                saveToJSONSettings("calculate_text", mainActivity.getCalculateText(), applicationContext);
 
                 // Save result_text using dataManager
-                saveToJSON("result_text", resultText, applicationContext);
+                saveToJSONSettings("result_text", mainActivity.getResultText(), applicationContext);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -353,25 +460,178 @@ public class DataManager {
     /**
      * This method loads numbers from two files and sets the text of two TextViews.
      */
-    public void loadNumbers() {
+    public void loadNumbers() throws JSONException {
         if (mainActivity != null) {
-            // Load calculate_text using dataManager
-            String calculateText = readFromJSON("calculate_text", mainActivity.getApplicationContext());
-
-            // Load result_text using dataManager
-            String resultText = readFromJSON("result_text", mainActivity.getApplicationContext());
+            JSONObject calculateText = getJSONSettingsData("calculate_text", mainActivity.getApplicationContext());
+            JSONObject resultText = getJSONSettingsData("result_text", mainActivity.getApplicationContext());
 
             TextView calculatelabel = mainActivity.findViewById(R.id.calculate_label);
             TextView resultlabel = mainActivity.findViewById(R.id.result_label);
 
             if (calculatelabel != null && resultlabel != null) {
-                calculatelabel.setText(calculateText);
-                if (resultText != null && !resultText.isEmpty()) {
-                    resultlabel.setText(resultText);
-                } else {
-                    resultlabel.setText("0");
+                try {
+                    calculatelabel.setText(calculateText.getString("value"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                try {
+                    final String value = String.valueOf(resultText.getString("value").isEmpty());
+                    if (!value.isEmpty()) {
+                        try {
+                            resultlabel.setText(resultText.getString("value"));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        resultlabel.setText("0");
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
             }
+        }
+    }
+
+    public void saveToHistory(String name, String date, String details, String calculation, Context applicationContext) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
+            if (!file.exists()) {
+                if (!file.createNewFile()) {
+                    Log.e("saveToHistory", "Failed to create new file");
+                    return;
+                }
+            }
+            String content = new String(Files.readAllBytes(file.toPath()));
+            if (!content.isEmpty()) {
+                jsonObj = new JSONObject(new JSONTokener(content));
+            }
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("date", date);
+            dataObj.put("details", details);
+            dataObj.put("calculation", calculation);
+
+            jsonObj.put(name, dataObj);
+
+            try (FileWriter fileWriter = new FileWriter(file)) {
+                fileWriter.write(jsonObj.toString());
+                fileWriter.flush();
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject getHistoryData(String name, Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                if (jsonObj.has(name)) {
+                    return jsonObj.getJSONObject(name);
+                } else {
+                    Log.e("getDataForName", "Data with name " + name + " not found.");
+                }
+            } else {
+                Log.e("getDataForName", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Map<String, JSONObject> getAllData(Context applicationContext) {
+        Map<String, JSONObject> allData = new HashMap<>();
+        try {
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                Iterator<String> keys = jsonObj.keys();
+                while (keys.hasNext()) {
+                    String name = keys.next();
+                    JSONObject dataObj = jsonObj.getJSONObject(name);
+                    allData.put(name, dataObj);
+                }
+            } else {
+                Log.e("getAllData", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return allData;
+    }
+
+    public void clearHistory(Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
+            if (file.exists()) {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write("");
+                fileWriter.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteNameFromHistory(String name, Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                if (jsonObj.has(name)) {
+                    jsonObj.remove(name); // Entferne den Namen aus dem JSON-Objekt
+                    FileWriter fileWriter = new FileWriter(file);
+                    fileWriter.write(jsonObj.toString());
+                    fileWriter.flush();
+                    fileWriter.close();
+                    Log.d("deleteNameFromHistory", "Name " + name + " deleted successfully.");
+                } else {
+                    Log.e("deleteNameFromHistory", "Data with name " + name + " not found.");
+                }
+            } else {
+                Log.e("deleteNameFromHistory", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateDetailsInHistoryData(String name, String newDetails, Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                if (jsonObj.has(name)) {
+                    JSONObject dataObj = jsonObj.getJSONObject(name);
+                    dataObj.put("details", newDetails);
+                    jsonObj.put(name, dataObj);
+
+                    FileWriter fileWriter = new FileWriter(file);
+                    fileWriter.write(jsonObj.toString());
+                    fileWriter.flush();
+                    fileWriter.close();
+
+                    Log.d("updateDetailsInHistoryData", "Details for " + name + " updated successfully.");
+                } else {
+                    Log.e("updateDetailsInHistoryData", "Data with name " + name + " not found.");
+                }
+            } else {
+                Log.e("updateDetailsInHistoryData", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
         }
     }
 }

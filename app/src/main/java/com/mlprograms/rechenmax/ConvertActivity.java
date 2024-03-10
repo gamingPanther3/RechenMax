@@ -24,15 +24,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 public class ConvertActivity extends AppCompatActivity {
     DataManager dataManager;
     private static MainActivity mainActivity;
-
     private Spinner customSpinnerMode;
     private Spinner customSpinnerMessurement;
     private CustomAdapter customAdapter;
+    private boolean firstStart = true;
 
     /**
      * Called when the activity is starting.
@@ -67,23 +69,28 @@ public class ConvertActivity extends AppCompatActivity {
             customSpinnerMode.setAdapter(customAdapter);
         }
 
-        switch (dataManager.readFromJSON("convertMode", getMainActivityContext())) {
-            case "W":
-                customSpinnerMode.setSelection(0);
-                break;
-            case "F":
-                customSpinnerMode.setSelection(1);
-                break;
-            case "S":
-                customSpinnerMode.setSelection(2);
-                break;
-            case "E":
-                customSpinnerMode.setSelection(3);
-                break;
-            case "V":
-                customSpinnerMode.setSelection(4);
-                break;
+        try {
+            switch (dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value")) {
+                case "W":
+                    customSpinnerMode.setSelection(0);
+                    break;
+                case "F":
+                    customSpinnerMode.setSelection(1);
+                    break;
+                case "S":
+                    customSpinnerMode.setSelection(2);
+                    break;
+                case "E":
+                    customSpinnerMode.setSelection(3);
+                    break;
+                case "V":
+                    customSpinnerMode.setSelection(4);
+                    break;
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
+
 
         assert customSpinnerMode != null;
         customSpinnerMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -92,19 +99,28 @@ public class ConvertActivity extends AppCompatActivity {
                 CustomItems items = (CustomItems) adapterView.getSelectedItem();
                 String spinnerText = items.getSpinnerText();
 
+                String new_value = "";
                 if(spinnerText.equals(getString(R.string.convertAngle))) {
-                    dataManager.saveToJSON("convertMode", "W", getMainActivityContext());
+                    new_value = "W";
                 } else if(spinnerText.equals(getString(R.string.convertArea))) {
-                    dataManager.saveToJSON("convertMode", "F", getMainActivityContext());
+                    new_value = "F";
                 } else if(spinnerText.equals(getString(R.string.convertStorage))) {
-                    dataManager.saveToJSON("convertMode", "S", getMainActivityContext());
+                    new_value = "S";
                 } else if(spinnerText.equals(getString(R.string.convertDistance))) {
-                    dataManager.saveToJSON("convertMode", "E", getMainActivityContext());
+                    new_value = "E";
                 } else if(spinnerText.equals(getString(R.string.convertVolume))) {
-                    dataManager.saveToJSON("convertMode", "V", getMainActivityContext());
+                    new_value = "V";
                 }
-                changeConvertModes(spinnerText);
-                switchDisplayMode();
+
+                try {
+                    if(!dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value").equals(new_value) || firstStart) {
+                        firstStart = false;
+                        changeConvertModes(spinnerText);
+                        switchDisplayMode();
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             @Override
@@ -120,6 +136,18 @@ public class ConvertActivity extends AppCompatActivity {
     private void changeConvertModes(final String spinnerText) {
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout otherLinearLayout = null;
+
+        if(spinnerText.equals(getString(R.string.convertAngle))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","W", getMainActivityContext());
+        } else if(spinnerText.equals(getString(R.string.convertArea))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","F", getMainActivityContext());
+        } else if(spinnerText.equals(getString(R.string.convertStorage))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","S", getMainActivityContext());
+        } else if(spinnerText.equals(getString(R.string.convertDistance))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","E", getMainActivityContext());
+        } else if(spinnerText.equals(getString(R.string.convertVolume))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","V", getMainActivityContext());
+        }
 
         if(spinnerText.equals(getString(R.string.convertAngle))) {
             otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.angle, null);
@@ -147,8 +175,12 @@ public class ConvertActivity extends AppCompatActivity {
      */
     protected void onDestroy() {
         super.onDestroy();
-        if (dataManager.readFromJSON("disablePatchNotesTemporary", getMainActivityContext()).equals("true")) {
-            dataManager.saveToJSON("disablePatchNotesTemporary", false, getMainActivityContext());
+        try {
+            if (dataManager.getJSONSettingsData("disablePatchNotesTemporary", getMainActivityContext()).getString("value").equals("true")) {
+                dataManager.saveToJSONSettings("disablePatchNotesTemporary", false, getMainActivityContext());
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -263,7 +295,12 @@ public class ConvertActivity extends AppCompatActivity {
                     case Configuration.UI_MODE_NIGHT_YES:
                         // Nightmode is activated
                         dataManager = new DataManager();
-                        String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
+                        String trueDarkMode;
+                        try {
+                            trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
 
                         if (trueDarkMode != null) {
                             if (trueDarkMode.equals("false")) {
@@ -366,7 +403,12 @@ public class ConvertActivity extends AppCompatActivity {
                 customSpinnerMode.setAdapter(customAdapter);
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
-                String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
+                String trueDarkMode;
+                try {
+                    trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
 
                 if (trueDarkMode != null) {
                     if (trueDarkMode.equals("false")) {
@@ -446,6 +488,7 @@ public class ConvertActivity extends AppCompatActivity {
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         switchDisplayMode();
+        firstStart = false;
     }
 
     /**
@@ -490,19 +533,21 @@ public class ConvertActivity extends AppCompatActivity {
      * @return The selected setting.
      */
     public String getSelectedSetting() {
-        final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
-
-        if(setting != null) {
-            switch (setting) {
-                case "Dark":
-                    return "Dunkelmodus";
-                case "Light":
-                    return "Tageslichtmodus";
-                default:
-                    return "Systemstandard";
-            }
+        final String setting;
+        try {
+            setting = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
-        return "Systemstandard";
+
+        switch (setting) {
+            case "Dark":
+                return "Dunkelmodus";
+            case "Light":
+                return "Tageslichtmodus";
+            default:
+                return "Systemstandard";
+        }
     }
 
     /**

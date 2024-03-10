@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "RechenMax"
 include(":app")
+include(":app:benchmark")

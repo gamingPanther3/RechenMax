@@ -301,4 +301,19 @@
     <string name="errorMessage16">Base no válida</string>
     <string name="errorMessage17">Base o argumento no válido</string>
 
+    <string name="historyCalculationSave">La factura ha sido aceptada ...</string>
+    <string name="historyCalculationCopied">La factura ha sido copiada ...</string>
+    <string name="buttonIsDisabled">Este botón está desactivado en el modo actual.</string>
+    <string name="clipboardCleared">Portapapeles vaciado ...</string>
+    <string name="savedvalue">Valor guardado ...</string>
+    <string name="clipboardIsEmpty">El portapapeles no contiene datos...</string>
+    <string name="pastedClipboard">Portapapeles pegado...</string>
+    <string name="invalidInput">Entrada no válida...</string>
+    <string name="activateChannel">Por favor, activa el canal en la configuración de tu teléfono primero.</string>
+    <string name="activateNotifications">Por favor, activa las notificaciones en la configuración de tu teléfono primero.</string>
+    <string name="enableNotifications">Por favor, activa las notificaciones primero.</string>
+
+
+    <string name="historyDescription">Nota:</string>
+    <string name="historyDescriptionHint">Haz clic para añadir una descripción</string>
 </resources>

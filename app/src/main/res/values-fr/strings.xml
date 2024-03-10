@@ -281,4 +281,19 @@
     <string name="errorMessage16">Base invalide</string>
     <string name="errorMessage17">Base ou argument invalide</string>
 
+    <string name="historyCalculationSave">La facture a été acceptée ...</string>
+    <string name="historyCalculationCopied">La facture a été copiée ...</string>
+    <string name="buttonIsDisabled">Ce bouton est désactivé dans le mode actuel.</string>
+    <string name="clipboardCleared">Presse-papiers vidé ...</string>
+    <string name="savedvalue">Valeur sauvegardée ...</string>
+    <string name="clipboardIsEmpty">Le presse-papiers ne contient aucune donnée...</string>
+    <string name="pastedClipboard">Presse-papiers collé...</string>
+    <string name="invalidInput">Entrée non valide...</string>
+    <string name="activateChannel">Veuillez activer le canal dans les paramètres de votre téléphone d\'abord.</string>
+    <string name="activateNotifications">Veuillez activer les notifications dans les paramètres de votre téléphone d\'abord.</string>
+    <string name="enableNotifications">Veuillez activer les notifications d\'abord.</string>
+
+
+    <string name="historyDescription">Remarque :</string>
+    <string name="historyDescriptionHint">Cliquez pour ajouter une description</string>
 </resources>

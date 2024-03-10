@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONException;
+
 public class HelpActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
@@ -45,11 +47,15 @@ public class HelpActivity extends AppCompatActivity {
 
         @SuppressLint("CutPasteId") Button button = findViewById(R.id.help_return_button);
         button.setOnClickListener(v -> {
-            if(dataManager.readFromJSON("returnToCalculator", getMainActivityContext()).equals("true")) {
-                dataManager.saveToJSON("returnToCalculator", "false", getApplicationContext());
-                returnToCalculator();
-            } else {
-                returnToSettings();
+            try {
+                if(dataManager.getJSONSettingsData("returnToCalculator", getMainActivityContext()).getString("value").equals("true")) {
+                    dataManager.saveToJSONSettings("returnToCalculator", "false", getApplicationContext());
+                    returnToCalculator();
+                } else {
+                    returnToSettings();
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         });
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
@@ -73,7 +79,12 @@ public class HelpActivity extends AppCompatActivity {
         // Retrieving theme setting
         String selectedSetting = getSelectedSetting();
         // Updating UI elements
-        final String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getApplicationContext());
+        final String trueDarkMode;
+        try {
+            trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         if (selectedSetting != null) {
             switch (selectedSetting) {
                 case "Systemstandard":
@@ -86,7 +97,7 @@ public class HelpActivity extends AppCompatActivity {
                                 helpButton.setForeground(getDrawable(R.drawable.arrow_back_light));
                             }
 
-                            if (trueDarkMode != null && trueDarkMode.equals("true")) {
+                            if (trueDarkMode.equals("true")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
                                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
                                 if (returnButton != null) {
@@ -96,7 +107,7 @@ public class HelpActivity extends AppCompatActivity {
                                     helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
                                 }
 
-                            } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
+                            } else if (trueDarkMode.equals("false")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
                                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
                             }
@@ -159,7 +170,7 @@ public class HelpActivity extends AppCompatActivity {
             changeTextViewColors(newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
             changeButtonColors(findViewById(R.id.helpUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
         } else {
-            dataManager.saveToJSON("selectedSpinnerSetting", "System", getApplicationContext());
+            dataManager.saveToJSONSettings("selectedSpinnerSetting", "System", getApplicationContext());
             switchDisplayMode(currentNightMode);
         }
     }
@@ -173,16 +184,19 @@ public class HelpActivity extends AppCompatActivity {
      *         If no setting is selected, it returns null.
      */
     public String getSelectedSetting() {
-        final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getApplicationContext());
-        if(setting != null) {
-            switch (setting) {
-                case "System":
-                    return "Systemstandard";
-                case "Dark":
-                    return "Dunkelmodus";
-                case "Light":
-                    return "Tageslichtmodus";
-            }
+        final String setting;
+        try {
+            setting = dataManager.getJSONSettingsData("selectedSpinnerSetting", getApplicationContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        switch (setting) {
+            case "System":
+                return "Systemstandard";
+            case "Dark":
+                return "Dunkelmodus";
+            case "Light":
+                return "Tageslichtmodus";
         }
         return "Systemstandard";
     }
@@ -216,7 +230,12 @@ public class HelpActivity extends AppCompatActivity {
         int textColor;
         int nightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
-        String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
+        String trueDarkMode = null;
+        try {
+            trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
         if (getSelectedSetting().equals("Systemstandard")) {
             if (nightMode == Configuration.UI_MODE_NIGHT_YES) {
@@ -244,11 +263,15 @@ public class HelpActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        if(dataManager.readFromJSON("returnToCalculator", getMainActivityContext()).equals("true")) {
-            dataManager.saveToJSON("returnToCalculator", "false", getApplicationContext());
-            returnToCalculator();
-        } else {
-            returnToSettings();
+        try {
+            if(dataManager.getJSONSettingsData("returnToCalculator", getMainActivityContext()).getString("value").equals("true")) {
+                dataManager.saveToJSONSettings("returnToCalculator", "false", getApplicationContext());
+                returnToCalculator();
+            } else {
+                returnToSettings();
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -259,8 +282,12 @@ public class HelpActivity extends AppCompatActivity {
      */
     protected void onDestroy() {
         super.onDestroy();
-        if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
-            dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
+        try {
+            if (dataManager.getJSONSettingsData("disablePatchNotesTemporary", getApplicationContext()).getString("value").equals("true")) {
+                dataManager.saveToJSONSettings("disablePatchNotesTemporary", false, getApplicationContext());
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 

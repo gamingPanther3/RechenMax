@@ -6,6 +6,8 @@ import android.util.Log;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.NumberHelper.e;
 
+import org.json.JSONException;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -95,7 +97,7 @@ public class CalculatorActivity {
             if (isScientificNotation(trim)) {
                 try {
                     DataManager dataManager = new DataManager(mainActivity);
-                    dataManager.saveToJSON("isNotation", true, mainActivity.getApplicationContext());
+                    dataManager.saveToJSONSettings("isNotation", true, mainActivity.getApplicationContext());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -138,7 +140,7 @@ public class CalculatorActivity {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            Log.e("Exception", e.toString());
+            //Log.e("Exception", e.toString());
             return mainActivity.getString(R.string.errorMessage2);
         }
     }
@@ -158,6 +160,11 @@ public class CalculatorActivity {
 
                 if (i + 1 < input.length()) {
                     char nextChar = input.charAt(i + 1);
+
+                    boolean charFound = checkForChar(currentChar);
+                    if (charFound) {
+                        continue;
+                    }
 
                     if(isOperator(String.valueOf(currentChar)) && isSymbol(String.valueOf(nextChar))) {
                         continue;
@@ -226,9 +233,38 @@ public class CalculatorActivity {
         return input;
     }
 
+    public static boolean checkForChar(char currentChar) {
+        String[] errorMessages = {
+                mainActivity.getString(R.string.errorMessage1),
+                mainActivity.getString(R.string.errorMessage2),
+                mainActivity.getString(R.string.errorMessage3),
+                mainActivity.getString(R.string.errorMessage4),
+                mainActivity.getString(R.string.errorMessage5),
+                mainActivity.getString(R.string.errorMessage6),
+                mainActivity.getString(R.string.errorMessage7),
+                mainActivity.getString(R.string.errorMessage8),
+                mainActivity.getString(R.string.errorMessage9),
+                mainActivity.getString(R.string.errorMessage10),
+                mainActivity.getString(R.string.errorMessage11),
+                mainActivity.getString(R.string.errorMessage12),
+                mainActivity.getString(R.string.errorMessage13),
+                mainActivity.getString(R.string.errorMessage14),
+                mainActivity.getString(R.string.errorMessage15),
+                mainActivity.getString(R.string.errorMessage16),
+                mainActivity.getString(R.string.errorMessage17)
+        };
+
+        for (String errorMessage : errorMessages) {
+            if (errorMessage.indexOf(currentChar) != -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean shouldInsertMultiplication(char currentChar, char nextChar) {
         Set<Character> validChars = createValidCharsSet();
-        List<String> places = Arrays.asList("s", "i", "n", "c", "o", "t", "a", "l", "h", "g", "⁻", "¹", "³", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉");
+        List<String> places = Arrays.asList("s", "i", "n", "c", "o", "t", "a", "l", "h", "g", "⁻", "¹", "³", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉", "");
 
         if (places.contains(String.valueOf(currentChar)) && places.contains(String.valueOf(nextChar))) {
             return false; // Don't insert '*' between 'sin' and next character
@@ -432,7 +468,7 @@ public class CalculatorActivity {
         }
 
         // Return the final result as a string
-        Log.i("convertScientificToDecimal", "sb:" + sb);
+        //Log.i("convertScientificToDecimal", "sb:" + sb);
         return sb.toString();
     }
 
@@ -456,7 +492,7 @@ public class CalculatorActivity {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        Log.i("tokenize","Input Expression: " + expression);
+        //Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -546,7 +582,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print tokens
-        Log.i("tokenize","Tokens: " + tokens);
+        //Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -561,7 +597,7 @@ public class CalculatorActivity {
     public static BigDecimal evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
         final List<String> postfixTokens = infixToPostfix(tokens);
-        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
+        //Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -578,8 +614,13 @@ public class CalculatorActivity {
      * @throws IllegalArgumentException If the operator is not recognized or if the second operand for the square root operation is negative.
      */
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
-        DataManager dataManager1 = new DataManager(mainActivity);
-        final String mode = dataManager1.readFromJSON("functionMode", mainActivity.getApplicationContext());
+        DataManager dataManager = new DataManager(mainActivity);
+        final String mode;
+        try {
+            mode = dataManager.getJSONSettingsData("functionMode", mainActivity.getApplicationContext()).getString("value");
+        } catch (JSONException ex) {
+            throw new RuntimeException(ex);
+        }
 
         switch (operator) {
             case "+":
@@ -627,19 +668,19 @@ public class CalculatorActivity {
             case "ln(":
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "sin(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.sin(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "sinh(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.sinh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.sinh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "sin⁻¹(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.asin(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.toDegrees(Math.asin(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -647,19 +688,19 @@ public class CalculatorActivity {
             case "sinh⁻¹(":
                 return asinh(operand2);
             case "cos(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "cosh(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.cosh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.cosh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "cos⁻¹(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.acos(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.toDegrees(Math.acos(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -667,19 +708,19 @@ public class CalculatorActivity {
             case "cosh⁻¹(":
                 return acosh(operand2);
             case "tan(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "tanh(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.tanh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.tanh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
             case "tan⁻¹(":
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.atan(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     return BigDecimal.valueOf(Math.toDegrees(Math.atan(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -800,7 +841,7 @@ public class CalculatorActivity {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            Log.i("evaluatePostfix","Token: " + token);
+            //Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -813,17 +854,17 @@ public class CalculatorActivity {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
             }
 
             // Debugging: Print current stack
-            Log.i("evaluatePostfix","Stack: " + stack);
+            //Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            Log.i("evaluatePostfix","Stacksize != 1");
+            //Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
         }
 
@@ -887,8 +928,13 @@ public class CalculatorActivity {
         // Implement the evaluation of functions like sin, cos, tan.
         // You can use BigDecimalMath library or Java Math class for standard functions
         // Add the result of the function evaluation to the stack
-        DataManager dataManager1 = new DataManager(mainActivity);
-        final String mode = dataManager1.readFromJSON("functionMode", mainActivity.getApplicationContext());
+        DataManager dataManager = new DataManager(mainActivity);
+        final String mode;
+        try {
+            mode = dataManager.getJSONSettingsData("functionMode", mainActivity.getApplicationContext()).getString("value");
+        } catch (JSONException ex) {
+            throw new RuntimeException(ex);
+        }
         BigDecimal operand;
 
         switch (function) {
@@ -975,7 +1021,7 @@ public class CalculatorActivity {
             case "sin(": {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.sin(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.sin(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -986,7 +1032,7 @@ public class CalculatorActivity {
             case "sinh(": {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.sinh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.sinh(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -1000,7 +1046,7 @@ public class CalculatorActivity {
                 if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
                     throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
                 }
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.asin(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.toDegrees(Math.asin(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -1015,7 +1061,7 @@ public class CalculatorActivity {
             case "cos(": {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.cos(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -1026,7 +1072,7 @@ public class CalculatorActivity {
             case "cosh(": {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.cosh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.cosh(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -1040,7 +1086,7 @@ public class CalculatorActivity {
                 if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
                     throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
                 }
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.acos(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.toDegrees(Math.acos(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -1055,7 +1101,7 @@ public class CalculatorActivity {
             case "tan(": {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.tan(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     double degrees = operand.doubleValue();
@@ -1071,7 +1117,7 @@ public class CalculatorActivity {
             case "tanh(": {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.tanh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     double degrees = operand.doubleValue();
@@ -1083,7 +1129,7 @@ public class CalculatorActivity {
             case "tan⁻¹(": {
                 operand = stack.remove(stack.size() - 1);
                 BigDecimal result;
-                if (mode != null && mode.equals("Rad")) {
+                if (mode.equals("Rad")) {
                     result = BigDecimal.valueOf(Math.atan(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     result = BigDecimal.valueOf(Math.toDegrees(Math.atan(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -1122,8 +1168,8 @@ public class CalculatorActivity {
         for (int i = 0; i < infixTokens.size(); i++) {
             final String token = infixTokens.get(i);
             // Debugging: Print current token and stack
-            Log.i("infixToPostfix", "Current Token: " + token);
-            Log.i("infixToPostfix", "Stack: " + stack);
+            //Log.i("infixToPostfix", "Current Token: " + token);
+            //Log.i("infixToPostfix", "Stack: " + stack);
 
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -1154,8 +1200,8 @@ public class CalculatorActivity {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
-            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
+            //Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            //Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
         while (!stack.isEmpty()) {
@@ -1163,7 +1209,7 @@ public class CalculatorActivity {
         }
 
         // Debugging: Print final postfixTokens
-        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
+        //Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
         return postfixTokens;
     }

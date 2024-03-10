@@ -301,4 +301,20 @@
     <string name="errorMessage16">Invalid base</string>
     <string name="errorMessage17">Invalid base or argument</string>
 
+    <string name="historyCalculationSave">Invoice has been accepted ...</string>
+    <string name="historyCalculationCopied">Invoice has been copied ...</string>
+    <string name="buttonIsDisabled">This button is disabled in the current mode.</string>
+    <string name="clipboardCleared">Clipboard cleared ...</string>
+    <string name="savedvalue">Value saved ...</string>
+    <string name="clipboardIsEmpty">Clipboard contains no data...</string>
+    <string name="pastedClipboard">Clipboard pasted...</string>
+    <string name="invalidInput">Invalid input...</string>
+    <string name="activateChannel">Please activate the channel in your phone\'s settings first.</string>
+    <string name="activateNotifications">Please enable notifications in your phone\'s settings first.</string>
+    <string name="enableNotifications">Please enable notifications first.</string>
+
+
+    <string name="historyDescription">Note:</string>
+    <string name="historyDescriptionHint">Click to add a description</string>
+
 </resources>

@@ -6,13 +6,19 @@ import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.InputType;
 import android.util.Log;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Locale;
-import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
@@ -29,11 +35,17 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * HistoryActivity - Displays calculation history.
@@ -68,7 +80,7 @@ public class HistoryActivity extends AppCompatActivity {
         dataManager = new DataManager();
 
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
-        //Log.e("DEBUG", dataManager.readFromJSON("historyMode", getMainActivityContext()));
+        //Log.e("DEBUG", dataManager.getJSONSettingsData("historyMode", getMainActivityContext()));
 
         Button historyReturnButton = findViewById(R.id.history_return_button);
         Button historyDeleteButton = findViewById(R.id.history_delete_button);
@@ -87,16 +99,21 @@ public class HistoryActivity extends AppCompatActivity {
         outerLinearLayout.addView(innerLinearLayout);
 
         // Use a separate thread to create TextViews in the background
+        // Using ExecutorService instead of AsyncTask
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
-                return dataManager.readFromJSON("historyTextViewNumber", getMainActivityContext());
+                try {
+                    return dataManager.getJSONSettingsData("historyTextViewNumber", getMainActivityContext()).getString("value");
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             @Override
             protected void onPostExecute(String value) {
                 if (value == null) {
-                    dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
+                    dataManager.saveToJSONSettings("historyTextViewNumber", "0", getApplicationContext());
                 }
 
                 if (value != null && value.equals("0")) {
@@ -107,17 +124,30 @@ public class HistoryActivity extends AppCompatActivity {
                     assert value != null;
                     int intValue = Integer.parseInt(value);
                     for (int i = 1; i <= intValue; i++) {
-                        String textValue = dataManager.readFromJSON(String.valueOf(i), getMainActivityContext());
-                        if (textValue != null) {
-                            if (dataManager.readFromJSON("historyMode", getMainActivityContext()).equals("multiple")) {
-                                TextView textView = createHistoryTextViewMultiple(textValue, i);
-                                innerLinearLayout.addView(textView, 0);
+                        try {
+                            if (dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value").equals("multiple")) {
+                                LinearLayout linearLayout;
+                                try {
+                                    linearLayout = createHistoryTextViewMultiple(i);
+                                    if(linearLayout != null) {
+                                        innerLinearLayout.addView(linearLayout, 0);
+                                    }
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
                             } else {
-                                HorizontalScrollView scrollView = createHistoryTextViewSingle(textValue, i);
-                                innerLinearLayout.addView(scrollView, 0);
+                                LinearLayout linearLayout;
+                                try {
+                                    linearLayout = createHistoryTextViewSingle(i);
+                                    if(linearLayout != null) {
+                                        innerLinearLayout.addView(linearLayout, 0);
+                                    }
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
-                            View line = createLine();
-                            innerLinearLayout.addView(line, 1);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
                         }
                     }
                     switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
@@ -129,113 +159,109 @@ public class HistoryActivity extends AppCompatActivity {
     /**
      * Creates a new TextView for displaying calculation history.
      *
-     * @param text The text content of the TextView.
      * @return The created TextView.
      */
-    private HorizontalScrollView createHistoryTextViewSingle(String text, int i) {
-        TextView textView = new TextView(this);
+    private LinearLayout createHistoryTextViewSingle(int i) throws JSONException {
+        JSONObject data = dataManager.getHistoryData(String.valueOf(i), getMainActivityContext());
 
-        LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        );
+        if(data == null) {
+            return null;
+        }
 
-        textLayoutParams.setMargins(
-                getResources().getDimensionPixelSize(R.dimen.history_margin_left),
-                getResources().getDimensionPixelSize(R.dimen.history_margin_top),
-                getResources().getDimensionPixelSize(R.dimen.history_margin_right),
-                getResources().getDimensionPixelSize(R.dimen.history_margin_bottom)
-        );
-
-        textView.setLayoutParams(textLayoutParams);
-        textView.setText(text);
-        textView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-        textView.setGravity(Gravity.END);
-        textView.setId(i);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.history_result_size));
-
-        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
-        horizontalScrollView.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        ));
+        TextView emptyTextView = findViewById(R.id.history_empty_textview);
+        if (emptyTextView != null) {
+            emptyTextView.setVisibility(View.GONE);
+        }
 
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT
-        ));
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayout.setGravity(Gravity.END);
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setId(i);
 
-        linearLayout.addView(textView);
-        horizontalScrollView.addView(linearLayout);
+        View view1 = new View(this);
+        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                getResources().getDimensionPixelSize(R.dimen.history_line_height));
+        viewParams.setMargins(
+                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
+                0,
+                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
+                0);
+        view1.setLayoutParams(viewParams);
+        view1.setBackgroundColor(getResources().getColor(R.color.history_line_color));
+        linearLayout.addView(view1);
+
+        // date
+        TextView textView1 = new TextView(this);
+        LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewParams.setMargins(
+                30,
+                10,
+                30,
+                0);
+        textView1.setLayoutParams(textViewParams);
+
+        textView1.setText(data.getString("date"));
+        textView1.setTextColor(Color.BLACK);
+        textView1.setTypeface(null, Typeface.BOLD);
+        textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        textView1.setGravity(Gravity.START);
+        linearLayout.addView(textView1);
+
+        HorizontalScrollView horizontalScrollView1 = new HorizontalScrollView(this);
+        horizontalScrollView1.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        // calculation
+        TextView textView2 = new TextView(this);
+        textViewParams.setMargins(
+                30,
+                15,
+                30,
+                0);
+        textView2.setLayoutParams(textViewParams);
+        textView2.setPadding(0, 0, 60, 0);
+
+        textView2.setText(data.getString("calculation"));
+        textView2.setTextColor(Color.BLACK);
+        textView2.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.history_result_size));
+        textView2.setGravity(Gravity.END);
 
         AtomicBoolean clickListener = new AtomicBoolean(true);
 
-        TextView emptyTextView = findViewById(R.id.history_empty_textview);
-        if(emptyTextView != null) {
-            emptyTextView.setVisibility(View.GONE);
-        }
-
-        textView.setOnLongClickListener(v -> {
+        textView2.setOnLongClickListener(v -> {
             try {
                 TextView clickedTextView = (TextView) v;
                 String clickedText = clickedTextView.getText().toString();
 
-                // Get the system clipboard manager
-                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
-                // Create a ClipData with plain text representing the result text
-                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " ") );
-
-                // Set the created ClipData as the primary clip on the clipboard
+                ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " "));
                 clipboardManager.setPrimaryClip(clipData);
 
-                // Display a toast indicating that the data has been saved
-                if(Locale.getDefault().getDisplayLanguage().equals("English")) {
-                    showToastShort("Invoice has been copied ...", getApplicationContext());
-                } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
-                    showToastShort("La facture a été copiée ...", getApplicationContext());
-                } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
-                    showToastShort("La factura ha sido copiada ...", getApplicationContext());
-                } else {
-                    showToastShort("Rechnung wurde kopiert ...", getApplicationContext());
-                }
-
+                showToastShort(getString(R.string.historyCalculationCopied), getApplicationContext());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            clickListener.set(false);
             return false;
         });
 
-        textView.setOnClickListener(new ClickListener() {
+        textView2.setOnClickListener(new ClickListener() {
             @Override
             public void onDoubleClick(View v) {
-                dataManager.saveToJSON(String.valueOf(textView.getId()), null, getApplicationContext());
+                dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
+                Log.e("DEBUG", String.valueOf(i));
+                Log.e("DEBUG", String.valueOf(dataManager.getAllData(getMainActivityContext())));
 
-                LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
-                TextView horizontalScrollView = findViewById(i);
-
-                int indexOfTextView = linearLayout.indexOfChild(textView);
-                linearLayout.removeView(textView);
-
-                // Remove the TextView's parent HorizontalScrollView
-                ViewGroup parent = (ViewGroup) horizontalScrollView.getParent();
-                if (parent != null) {
-                    parent.removeView(horizontalScrollView);
-                }
-
-                // Remove the next view if it exists
-                if (indexOfTextView < linearLayout.getChildCount()) {
-                    View nextView = linearLayout.getChildAt(indexOfTextView);
-                    linearLayout.removeView(nextView);
-                }
-
-                if (innerLinearLayout.getChildCount() <= 2) {
+                if (innerLinearLayout.getChildCount() == 1) {
                     resetNamesAndValues();
+                    TextView emptyTextView = findViewById(R.id.history_empty_textview);
+                    emptyTextView.setVisibility(View.VISIBLE);
                 } else {
                     recreate();
                 }
@@ -243,9 +269,9 @@ public class HistoryActivity extends AppCompatActivity {
 
             @Override
             public void onSingleClick(View v) {
-                if(clickListener.get()) {
+                if (clickListener.get()) {
                     // Output the text of the clicked TextView to the console
-                    dataManager.saveToJSON("pressedCalculate", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("pressedCalculate", false, getMainActivityContext());
                     TextView clickedTextView = (TextView) v;
                     String clickedText = clickedTextView.getText().toString();
 
@@ -257,25 +283,17 @@ public class HistoryActivity extends AppCompatActivity {
                         String key = parts[0].trim();
                         String value = parts[1].trim();
                         try {
-                            if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-                                dataManager.saveToJSON("calculate_text", key.replace(" ", ""), getMainActivityContext());
-                                dataManager.saveToJSON("result_text", value.replace(" ", ""), getMainActivityContext());
+                            if (dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).getString("value").equals("Vereinfacht")) {
+                                dataManager.saveToJSONSettings("calculate_text", key.replace(" ", ""), getMainActivityContext());
+                                dataManager.saveToJSONSettings("result_text", value.replace(" ", ""), getMainActivityContext());
                             } else {
-                                dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
-                                dataManager.saveToJSON("result_text", value, getMainActivityContext());
+                                dataManager.saveToJSONSettings("calculate_text", key, getMainActivityContext());
+                                dataManager.saveToJSONSettings("result_text", value, getMainActivityContext());
                             }
-                            dataManager.saveToJSON("removeValue", false, getMainActivityContext());
-                            dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
+                            dataManager.saveToJSONSettings("removeValue", false, getMainActivityContext());
+                            dataManager.saveToJSONSettings("rotate_op", true, getMainActivityContext());
 
-                            if(Locale.getDefault().getDisplayLanguage().equals("English")) {
-                                showToastShort("Invoice has been accepted ...", getApplicationContext());
-                            } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
-                                showToastShort("La facture a été acceptée ...", getApplicationContext());
-                            } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
-                                showToastShort("La factura ha sido aceptada ...", getApplicationContext());;
-                            } else {
-                                showToastShort("Rechnung wurde übernommen ...", getApplicationContext());
-                            }
+                            showToastShort(getString(R.string.historyCalculationSave), getApplicationContext());
                         } catch (Exception e) {
                             Log.i("createHistoryTextView", String.valueOf(e));
                         }
@@ -285,101 +303,187 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
-        return horizontalScrollView;
+        horizontalScrollView1.addView(textView2);
+        linearLayout.addView(horizontalScrollView1);
+
+        HorizontalScrollView horizontalScrollView2 = new HorizontalScrollView(this);
+        horizontalScrollView2.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+
+        // description title
+        TextView textView3 = new TextView(this);
+        textViewParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewParams.setMargins(
+                30,
+                10,
+                30,
+                0);
+
+        textView3.setLayoutParams(textViewParams);
+        textView3.setText(getString(R.string.historyDescription));
+        textView3.setTextColor(Color.BLACK);
+        textView3.setTypeface(null, Typeface.BOLD);
+        textView3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        textView3.setGravity(Gravity.START);
+        linearLayout.addView(textView3);
+
+        // description
+        EditText editText = new EditText(this);
+        LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        editTextParams.setMargins(
+                30,
+                10,
+                30,
+                0);
+        textView3.setPadding(0, 0, 30, 0);
+
+        editText.setLayoutParams(editTextParams);
+        editText.setHint(getString(R.string.historyDescriptionHint));
+        editText.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+        editText.setTextColor(Color.BLACK);
+        editText.setGravity(Gravity.START);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setMaxLines(1);
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        editText.setOnEditorActionListener((textView, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                final String inputText = textView.getText().toString();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                editText.clearFocus();
+
+                dataManager.updateDetailsInHistoryData(String.valueOf(i), inputText, getMainActivityContext());
+
+                return true;
+            }
+            return false;
+        });
+
+        if(!data.getString("details").equals("")) {
+            editText.setText(data.getString("details"));
+        }
+
+        linearLayout.addView(editText);
+        linearLayout.addView(createLine());
+
+        return linearLayout;
     }
 
-    private TextView createHistoryTextViewMultiple(String text, int i) {
-        TextView textView = new TextView(this);
 
-        LinearLayout.LayoutParams textLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        textLayoutParams.setMargins(
-                getResources().getDimensionPixelSize(R.dimen.history_margin_left),
-                getResources().getDimensionPixelSize(R.dimen.history_margin_top),
-                getResources().getDimensionPixelSize(R.dimen.history_margin_right),
-                getResources().getDimensionPixelSize(R.dimen.history_margin_bottom)
-        );
+    private LinearLayout createHistoryTextViewMultiple(int i) throws JSONException {
+        JSONObject data = dataManager.getHistoryData(String.valueOf(i), getMainActivityContext());
 
-        // Apply layout parameters to the TextView
-        textView.setLayoutParams(textLayoutParams);
-
-        // Set additional TextView properties
-        textView.setText(text);
-        textView.setTextColor(ContextCompat.getColor(this, android.R.color.white));
-        textView.setGravity(Gravity.END);
-        textView.setId(i);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.history_result_size));
-
-        AtomicBoolean clickListener = new AtomicBoolean(true);
-
+        if(data == null) {
+            return null;
+        }
         TextView emptyTextView = findViewById(R.id.history_empty_textview);
-        if(emptyTextView != null) {
+        if (emptyTextView != null) {
             emptyTextView.setVisibility(View.GONE);
         }
 
-        textView.setOnLongClickListener(v -> {
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setId(i);
+
+        View view1 = new View(this);
+        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                getResources().getDimensionPixelSize(R.dimen.history_line_height));
+        viewParams.setMargins(
+                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
+                0,
+                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
+                0);
+        view1.setLayoutParams(viewParams);
+        view1.setBackgroundColor(getResources().getColor(R.color.history_line_color));
+        linearLayout.addView(view1);
+
+        // date
+        TextView textView1 = new TextView(this);
+        LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewParams.setMargins(
+                30,
+                10,
+                30,
+                0);
+        textView1.setLayoutParams(textViewParams);
+
+        textView1.setText(data.getString("date"));
+        textView1.setTextColor(Color.BLACK);
+        textView1.setTypeface(null, Typeface.BOLD);
+        textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        textView1.setGravity(Gravity.START);
+        linearLayout.addView(textView1);
+
+        // calculation
+        TextView textView2 = new TextView(this);
+        textViewParams.setMargins(
+                30,
+                15,
+                30,
+                0);
+        textView2.setLayoutParams(textViewParams);
+        textView2.setPadding(0, 0, 60, 0);
+
+        textView2.setText(data.getString("calculation"));
+        textView2.setTextColor(Color.BLACK);
+        textView2.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.history_result_size));
+        textView2.setGravity(Gravity.START);
+
+        AtomicBoolean clickListener = new AtomicBoolean(true);
+
+        textView2.setOnLongClickListener(v -> {
             try {
                 TextView clickedTextView = (TextView) v;
                 String clickedText = clickedTextView.getText().toString();
 
-                // Get the system clipboard manager
-                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
-                // Create a ClipData with plain text representing the result text
-                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " ") );
-
-                // Set the created ClipData as the primary clip on the clipboard
+                ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " "));
                 clipboardManager.setPrimaryClip(clipData);
 
-                // Display a toast indicating that the data has been saved
-                if(Locale.getDefault().getDisplayLanguage().equals("English")) {
-                    showToastShort("Invoice has been copied ...", getApplicationContext());
-                } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
-                    showToastShort("La facture a été copiée ...", getApplicationContext());
-                } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
-                    showToastShort("La factura ha sido copiada ...", getApplicationContext());
-                } else {
-                    showToastShort("Rechnung wurde kopiert ...", getApplicationContext());
-                }
-
+                showToastShort(getString(R.string.historyCalculationCopied), getApplicationContext());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            clickListener.set(false);
             return false;
         });
 
-        textView.setOnClickListener(new ClickListener() {
+        textView2.setOnClickListener(new ClickListener() {
             @Override
             public void onDoubleClick(View v) {
-                dataManager.saveToJSON(String.valueOf(textView.getId()), null, getApplicationContext());
+                dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
+                Log.e("DEBUG", String.valueOf(i));
+                Log.e("DEBUG", String.valueOf(dataManager.getAllData(getMainActivityContext())));
 
-                LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
-                int indexOfTextView = linearLayout.indexOfChild(textView);
-                linearLayout.removeView(textView);
-
-                if (indexOfTextView < linearLayout.getChildCount()) {
-                    linearLayout.removeViewAt(indexOfTextView);
-                }
-
-                if (innerLinearLayout.getChildCount() <= 2) {
+                if (innerLinearLayout.getChildCount() == 1) {
                     resetNamesAndValues();
+                    TextView emptyTextView = findViewById(R.id.history_empty_textview);
+                    emptyTextView.setVisibility(View.VISIBLE);
+                } else {
+                    recreate();
                 }
             }
 
             @Override
             public void onSingleClick(View v) {
-                if(clickListener.get()) {
+                if (clickListener.get()) {
                     // Output the text of the clicked TextView to the console
-                    dataManager.saveToJSON("pressedCalculate", false, getMainActivityContext());
+                    dataManager.saveToJSONSettings("pressedCalculate", false, getMainActivityContext());
                     TextView clickedTextView = (TextView) v;
                     String clickedText = clickedTextView.getText().toString();
-                    if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-                        clickedText = clickedText.replace(" ", "");
-                    }
 
                     // Split at "=" character
                     String[] parts = clickedText.split("=");
@@ -389,26 +493,17 @@ public class HistoryActivity extends AppCompatActivity {
                         String key = parts[0].trim();
                         String value = parts[1].trim();
                         try {
-                            if(dataManager.readFromJSON("calculationMode", getApplicationContext()).equals("Vereinfacht")) {
-                                dataManager.saveToJSON("calculate_text", key.replace(" ", ""), getMainActivityContext());
-                                dataManager.saveToJSON("result_text", value.replace(" ", ""), getMainActivityContext());
+                            if (dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).equals("Vereinfacht")) {
+                                dataManager.saveToJSONSettings("calculate_text", key.replace(" ", ""), getMainActivityContext());
+                                dataManager.saveToJSONSettings("result_text", value.replace(" ", ""), getMainActivityContext());
                             } else {
-                                dataManager.saveToJSON("calculate_text", key, getMainActivityContext());
-                                dataManager.saveToJSON("result_text", value, getMainActivityContext());
+                                dataManager.saveToJSONSettings("calculate_text", key, getMainActivityContext());
+                                dataManager.saveToJSONSettings("result_text", value, getMainActivityContext());
                             }
-                            dataManager.saveToJSON("removeValue", false, getMainActivityContext());
-                            dataManager.saveToJSON("rotate_op", true, getMainActivityContext());
-                            dataManager.saveToJSON("pressedCalculate", true, getMainActivityContext());
+                            dataManager.saveToJSONSettings("removeValue", false, getMainActivityContext());
+                            dataManager.saveToJSONSettings("rotate_op", true, getMainActivityContext());
 
-                            if(Locale.getDefault().getDisplayLanguage().equals("English")) {
-                                showToastShort("Invoice has been accepted ...", getApplicationContext());
-                            } else if(Locale.getDefault().getDisplayLanguage().equals("français")) {
-                                showToastShort("La facture a été acceptée ...", getApplicationContext());
-                            } else if(Locale.getDefault().getDisplayLanguage().equals("español")) {
-                                showToastShort("La factura ha sido aceptada ...", getApplicationContext());;
-                            } else {
-                                showToastShort("Rechnung wurde übernommen ...", getApplicationContext());
-                            }
+                            showToastShort(getString(R.string.historyCalculationSave), getApplicationContext());
                         } catch (Exception e) {
                             Log.i("createHistoryTextView", String.valueOf(e));
                         }
@@ -418,7 +513,71 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
-        return textView;
+        linearLayout.addView(textView2);
+
+        // description title
+        TextView textView3 = new TextView(this);
+        textViewParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewParams.setMargins(
+                30,
+                10,
+                30,
+                0);
+
+        textView3.setLayoutParams(textViewParams);
+        textView3.setText(getString(R.string.historyDescription));
+        textView3.setTextColor(Color.BLACK);
+        textView3.setTypeface(null, Typeface.BOLD);
+        textView3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        textView3.setGravity(Gravity.START);
+        linearLayout.addView(textView3);
+
+        // description
+        EditText editText = new EditText(this);
+        LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        editTextParams.setMargins(
+                30,
+                10,
+                30,
+                0);
+        textView3.setPadding(0, 0, 30, 0);
+
+        editText.setLayoutParams(editTextParams);
+        editText.setHint(getString(R.string.historyDescriptionHint));
+        editText.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+        editText.setTextColor(Color.BLACK);
+        editText.setGravity(Gravity.START);
+        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+        editText.setMaxLines(1);
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        editText.setOnEditorActionListener((textView, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                final String inputText = textView.getText().toString();
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                editText.clearFocus();
+
+                dataManager.updateDetailsInHistoryData(String.valueOf(i), inputText, getMainActivityContext());
+
+                return true;
+            }
+            return false;
+        });
+
+        if(!data.getString("details").equals("")) {
+            editText.setText(data.getString("details"));
+        }
+
+        linearLayout.addView(editText);
+        linearLayout.addView(createLine());
+
+        return linearLayout;
     }
 
     /**
@@ -433,10 +592,7 @@ public class HistoryActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 getResources().getDimensionPixelSize(R.dimen.history_line_height)
         );
-
-        // Set the margin for horizontal spacing on the right and left to 10dp
-        lineLayoutParams.setMarginEnd(getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal));
-        lineLayoutParams.setMarginStart(getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal));
+        lineLayoutParams.setMargins(60, 40, 60, 40);
 
         line.setLayoutParams(lineLayoutParams);
         line.setBackgroundColor(ContextCompat.getColor(this, R.color.history_line_color));
@@ -458,7 +614,12 @@ public class HistoryActivity extends AppCompatActivity {
 
         dataManager = new DataManager();
 
-        String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
+        String trueDarkMode = null;
+        try {
+            trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
         if (getSelectedSetting().equals("Systemstandard")) {
             if (nightMode == Configuration.UI_MODE_NIGHT_YES) {
@@ -518,8 +679,22 @@ public class HistoryActivity extends AppCompatActivity {
      * Diese Methode entfernt die leere TextView aus dem Layout, falls vorhanden.
      */
     private void deleteEmptyHistoryTextView() {
-        TextView emptyTextView = createHistoryTextViewMultiple("\n\n\n\n\n\n\nDein Verlauf ist leer.", 0);
-        emptyTextView.setVisibility(View.GONE);
+        LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
+
+        // Ein neues TextView erstellen und einrichten
+        TextView textView = new TextView(this);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        textView.setText(getString(R.string.historyIsEmpty));
+        textView.setTextColor(getResources().getColor(android.R.color.black));
+        textView.setTextSize(35);
+        textView.setGravity(android.view.Gravity.CENTER_VERTICAL | android.view.Gravity.CENTER_HORIZONTAL);
+
+        // TextView zum LinearLayout hinzufügen
+        linearLayout.addView(textView);
+
+        textView.setVisibility(View.GONE);
     }
 
     /**
@@ -533,7 +708,12 @@ public class HistoryActivity extends AppCompatActivity {
         int textColor;
         int nightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
-        String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
+        String trueDarkMode;
+        try {
+            trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
         if (getSelectedSetting().equals("Systemstandard")) {
             if (nightMode == Configuration.UI_MODE_NIGHT_YES) {
@@ -561,27 +741,15 @@ public class HistoryActivity extends AppCompatActivity {
      */
     private void resetNamesAndValues() {
         // Update the UI
-        runOnUiThread(this::updateUI);
+        dataManager.clearHistory(getMainActivityContext());
+        dataManager.saveToJSONSettings("historyTextViewNumber", "0", getMainActivityContext());
+
+        //runOnUiThread(this::updateUI);
         LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
         innerLinearLayout.removeAllViews();
         createEmptyHistoryTextView();
 
         // Perform background actions here
-        new Thread(() -> {
-            int historyTextViewNumber = Integer.parseInt(dataManager.readFromJSON("historyTextViewNumber", getApplicationContext()));
-
-            // Prepare stack for batch operations
-            List<String> keysToRemove = new ArrayList<>();
-            for (int i = 1; i <= historyTextViewNumber; i++) {
-                keysToRemove.add(String.valueOf(i));
-            }
-
-            // Batch operations for database access
-            for (String key : keysToRemove) {
-                dataManager.saveToJSON(key, null, getApplicationContext());
-            }
-            dataManager.saveToJSON("historyTextViewNumber", "0", getApplicationContext());
-        }).start();
     }
 
 
@@ -593,20 +761,40 @@ public class HistoryActivity extends AppCompatActivity {
         LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
         innerLinearLayout.removeAllViews();
 
-        final String value = dataManager.readFromJSON("historyTextViewNumber", getMainActivityContext());
-        if (value != null && !value.equals("0")) {
+        final String value;
+        try {
+            value = dataManager.getJSONSettingsData("historyTextViewNumber", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        if (!value.equals("0")) {
             for (int i = 1; i < Integer.parseInt(value) + 1; i++) {
                 // Create a new TextView
-                if(dataManager.readFromJSON("historyMode", getMainActivityContext()).equals("multiple")) {
-                    HorizontalScrollView scrollView = createHistoryTextViewSingle(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()), i);
-                    innerLinearLayout.addView(scrollView);
-                } else {
-                    TextView textView = createHistoryTextViewMultiple(dataManager.readFromJSON(String.valueOf(i), getMainActivityContext()), i);
-                    innerLinearLayout.addView(textView);
+                try {
+                    if(dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value").equals("multiple")) {
+                        LinearLayout linearLayout;
+                        try {
+                            linearLayout = createHistoryTextViewSingle(i);
+                            if(linearLayout != null) {
+                                innerLinearLayout.addView(linearLayout);
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        LinearLayout linearLayout;
+                        try {
+                            linearLayout = createHistoryTextViewMultiple(i);
+                            if(linearLayout != null) {
+                                innerLinearLayout.addView(linearLayout);
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
                 }
-
-                // Create a thin line and add it to the inner LinearLayout
-                innerLinearLayout.addView(createLine());
             }
         } else {
             createEmptyHistoryTextView();
@@ -646,8 +834,12 @@ public class HistoryActivity extends AppCompatActivity {
      */
     protected void onDestroy() {
         super.onDestroy();
-        if (dataManager.readFromJSON("disablePatchNotesTemporary", getApplicationContext()).equals("true")) {
-            dataManager.saveToJSON("disablePatchNotesTemporary", false, getApplicationContext());
+        try {
+            if (dataManager.getJSONSettingsData("disablePatchNotesTemporary", getApplicationContext()).getString("value").equals("true")) {
+                dataManager.saveToJSONSettings("disablePatchNotesTemporary", false, getApplicationContext());
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -720,11 +912,16 @@ public class HistoryActivity extends AppCompatActivity {
         int newColorBTNBackgroundAccent;
 
         dataManager = new DataManager();
-        final String trueDarkMode = dataManager.readFromJSON("settingsTrueDarkMode", getMainActivityContext());
+        final String trueDarkMode;
+        try {
+            trueDarkMode = dataManager.getJSONSettingsData("settingsTrueDarkMode", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         if (getSelectedSetting() != null && getSelectedSetting().equals("Systemstandard")) {
             switch (currentNightMode) {
                 case Configuration.UI_MODE_NIGHT_YES:
-                    if(trueDarkMode != null && trueDarkMode.equals("true")) {
+                    if(trueDarkMode.equals("true")) {
                         newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
 
@@ -732,7 +929,7 @@ public class HistoryActivity extends AppCompatActivity {
                         returnButton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
 
                         updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
-                    } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
+                    } else if (trueDarkMode.equals("false")) {
                         newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
 
@@ -760,7 +957,7 @@ public class HistoryActivity extends AppCompatActivity {
             historyReturnButton.setForeground(getDrawable(R.drawable.arrow_back));
             historyDeleteButton.setForeground(getDrawable(R.drawable.trash));
         } else if (getSelectedSetting() != null && getSelectedSetting().equals("Dunkelmodus")) {
-            if(trueDarkMode != null && trueDarkMode.equals("true")) {
+            if(trueDarkMode.equals("true")) {
                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);
 
@@ -768,7 +965,7 @@ public class HistoryActivity extends AppCompatActivity {
                 returnButton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
 
                 updateUIAccordingToNightMode(historyScrollView, historyTitle, newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
-            } else if (trueDarkMode != null && trueDarkMode.equals("false")) {
+            } else if (trueDarkMode.equals("false")) {
                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
 
@@ -917,22 +1114,24 @@ public class HistoryActivity extends AppCompatActivity {
      *         If no setting is selected, it returns null.
      */
     public String getSelectedSetting() {
-        final String setting = dataManager.readFromJSON("selectedSpinnerSetting", getMainActivityContext());
-        if (setting != null) {
-            switch (setting) {
-                case "System":
-                    return "Systemstandard";
-                case "Dark":
-                    return "Dunkelmodus";
-                case "Light":
-                    return "Tageslichtmodus";
-                default:
-                    // Handle unexpected settings or return a default value
-                    return "Systemstandard";
-            }
+        final String setting;
+        try {
+            setting = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        switch (setting) {
+            case "System":
+                return "Systemstandard";
+            case "Dark":
+                return "Dunkelmodus";
+            case "Light":
+                return "Tageslichtmodus";
+            default:
+                // Handle unexpected settings or return a default value
+                return "Systemstandard";
         }
         // Handle the case when the setting is not found in the JSON file
-        return "Systemstandard";
     }
 
     /**
