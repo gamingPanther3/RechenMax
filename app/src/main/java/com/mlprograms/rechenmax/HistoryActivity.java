@@ -780,37 +780,50 @@ public class HistoryActivity extends AppCompatActivity {
      * Resets the names and values in the UI and performs background actions.
      */
     private void resetNamesAndValues() {
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.confirm_delete, null);
+        if(countLinearLayouts(findViewById(R.id.history_scroll_linearlayout)) > 1) {
+            LayoutInflater inflater = (LayoutInflater)
+                    getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.confirm_delete, null);
 
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
 
-        popupWindow.showAtLocation(findViewById(R.id.historyUI), Gravity.CENTER, 0, 0);
+            popupWindow.showAtLocation(findViewById(R.id.historyUI), Gravity.CENTER, 0, 0);
 
-        TextView delete = popupView.findViewById(R.id.deleteConfirmButton);
-        TextView cancel = popupView.findViewById(R.id.cancelConfirmButton);
+            TextView delete = popupView.findViewById(R.id.deleteConfirmButton);
+            TextView cancel = popupView.findViewById(R.id.cancelConfirmButton);
 
-        if(delete != null && cancel != null) {
-            delete.setOnClickListener(v -> {
-                dataManager.clearHistory(getMainActivityContext());
-                dataManager.saveToJSONSettings("historyTextViewNumber", "0", getMainActivityContext());
+            if(delete != null && cancel != null) {
+                delete.setOnClickListener(v -> {
+                    dataManager.clearHistory(getMainActivityContext());
+                    dataManager.saveToJSONSettings("historyTextViewNumber", "0", getMainActivityContext());
 
-                LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
-                innerLinearLayout.removeAllViews();
-                createEmptyHistoryTextView();
-                popupWindow.dismiss();
-            });
+                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    innerLinearLayout.removeAllViews();
+                    createEmptyHistoryTextView();
+                    popupWindow.dismiss();
+                });
 
-            cancel.setOnClickListener(v -> {
-                popupWindow.dismiss();
-            });
+                cancel.setOnClickListener(v -> {
+                    popupWindow.dismiss();
+                });
+            }
         }
     }
 
+    private int countLinearLayouts(LinearLayout layout) {
+        int count = 0;
 
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            if (layout.getChildAt(i) instanceof LinearLayout) {
+                count++;
+                count += countLinearLayouts((LinearLayout) layout.getChildAt(i));
+            }
+        }
+
+        return count;
+    }
 
     /**
      * Updates the UI by creating and adding TextViews for each history entry.
