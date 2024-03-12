@@ -1,7 +1,6 @@
 package com.mlprograms.rechenmax;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.NumberHelper.e;
@@ -28,7 +27,7 @@ import java.util.regex.Pattern;
  * @date 09.03.2023
  */
 
-public class CalculatorActivity {
+public class CalculatorEngine {
 
     // Declaration of a static variable of type MainActivity. This variable is used to access the methods and variables of the MainActivity class.
     @SuppressLint("StaticFieldLeak")
