@@ -600,6 +600,29 @@ public class DataManager {
         }
     }
 
+    public Map<String, JSONObject> getAllDataFromHistory(Context applicationContext) {
+        Map<String, JSONObject> allData = new HashMap<>();
+        try {
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                Iterator<String> keys = jsonObj.keys();
+                while (keys.hasNext()) {
+                    String name = keys.next();
+                    JSONObject dataObj = jsonObj.getJSONObject(name);
+                    allData.put(name, dataObj);
+                }
+            } else {
+                Log.e("getAllData", "History file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return allData;
+    }
+
     public void updateDetailsInHistoryData(String name, String newDetails, Context applicationContext) {
         try {
             File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);

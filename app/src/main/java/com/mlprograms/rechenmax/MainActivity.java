@@ -1,9 +1,9 @@
 package com.mlprograms.rechenmax;
 
-import static com.mlprograms.rechenmax.CalculatorActivity.fixExpression;
-import static com.mlprograms.rechenmax.CalculatorActivity.isOperator;
-import static com.mlprograms.rechenmax.CalculatorActivity.isStandardOperator;
-import static com.mlprograms.rechenmax.CalculatorActivity.setMainActivity;
+import static com.mlprograms.rechenmax.CalculatorEngine.fixExpression;
+import static com.mlprograms.rechenmax.CalculatorEngine.isOperator;
+import static com.mlprograms.rechenmax.CalculatorEngine.isStandardOperator;
+import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
@@ -38,13 +38,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -368,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
-                    setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                    setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -1582,7 +1579,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 addCalculateTextWithoutSpace("е");
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             } else {
                 if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                     // Read the current eNotation mode from the data manager
@@ -1633,7 +1630,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 addCalculateTextWithoutSpace("π");
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             } else {
                 if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                     // Read the current eNotation mode from the data manager
@@ -1814,7 +1811,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 addCalculateTextWithoutSpace("!");
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             } else {
                 if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                     final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
@@ -1988,14 +1985,14 @@ public class MainActivity extends AppCompatActivity {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
                     final String input = getResultText() + "÷2=";
-                    setResultText(CalculatorActivity.calculate(balanceParentheses(getResultText() + "÷2")));
+                    setResultText(CalculatorEngine.calculate(balanceParentheses(getResultText() + "÷2")));
                     formatResultTextAfterType();
                     addToHistory(input);
                     return;
                 }
                 dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
                 addCalculateTextWithoutSpace("½");
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             } else {
                 if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                     checkCalculateText();
@@ -2031,14 +2028,14 @@ public class MainActivity extends AppCompatActivity {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
                     final String input = getResultText() + "÷3=";
-                    setResultText(CalculatorActivity.calculate(balanceParentheses(getResultText() + "÷3")));
+                    setResultText(CalculatorEngine.calculate(balanceParentheses(getResultText() + "÷3")));
                     formatResultTextAfterType();
                     addToHistory(input);
                     return;
                 }
                 dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
                 addCalculateTextWithoutSpace("⅓");
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             } else {
                 if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                     checkCalculateText();
@@ -2074,14 +2071,14 @@ public class MainActivity extends AppCompatActivity {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
                     final String input = getResultText() + "÷4=";
-                    setResultText(CalculatorActivity.calculate(balanceParentheses(getResultText() + "÷4")));
+                    setResultText(CalculatorEngine.calculate(balanceParentheses(getResultText() + "÷4")));
                     formatResultTextAfterType();
                     addToHistory(input);
                     return;
                 }
                 dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
                 addCalculateTextWithoutSpace("¼");
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             } else {
                 if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                     checkCalculateText();
@@ -2527,6 +2524,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void NumberAction(String num) {
         boolean b = Integer.parseInt(num) >= 2 && Integer.parseInt(num) <= 9;
+        setLastNumber(getResultText());
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 if (dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("true") && b) {
@@ -2539,7 +2537,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 final String calculate_text = balanceParentheses(getCalculateText());
                 if(!isInvalidInput(calculate_text)) {
-                    setResultText(CalculatorActivity.calculate(balanceParentheses(calculate_text)));
+                    setResultText(CalculatorEngine.calculate(balanceParentheses(calculate_text)));
                 } else {
                     setResultText("0");
                 }
@@ -2591,7 +2589,7 @@ public class MainActivity extends AppCompatActivity {
         setCalculateText(replacePiWithSymbolInString(getCalculateText()));
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -2700,7 +2698,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
-                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -2724,7 +2722,7 @@ public class MainActivity extends AppCompatActivity {
      * @param text The text containing scientific notation to be processed.
      */
     private void processScientificNotation(String text) {
-        final String resultText = CalculatorActivity.calculate(balanceParentheses(text));
+        final String resultText = CalculatorEngine.calculate(balanceParentheses(text));
         setResultText(text);
         formatResultTextAfterType();
         final String new_text = getResultText();
@@ -2905,9 +2903,9 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if(Character.isDigit(getCalculateText().charAt(getCalculateText().length() - 1))) {
-                        setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                        setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
                         if(isInvalidInput(getResultText())) {
-                           setResultText(CalculatorActivity.calculate(balanceParentheses(removeOperatorsFromRight(getCalculateText()))));
+                           setResultText(CalculatorEngine.calculate(balanceParentheses(removeOperatorsFromRight(getCalculateText()))));
                         }
                     }
                 }
@@ -2915,7 +2913,7 @@ public class MainActivity extends AppCompatActivity {
                     setResultText("0");
                 } else {
                     final String oldText = getResultText();
-                    setResultText(CalculatorActivity.calculate(balanceParentheses(removeOperatorsFromRight(getCalculateText()))));
+                    setResultText(CalculatorEngine.calculate(balanceParentheses(removeOperatorsFromRight(getCalculateText()))));
                     if(isInvalidInput(getResultText())) {
                         setResultText(oldText);
                     }
@@ -3163,7 +3161,7 @@ public class MainActivity extends AppCompatActivity {
                     setResultText("0");
                 } else {
                     setCalculateText(balanceParentheses(getCalculateText()));
-                    setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                    setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
                 }
             } else {
                 if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
@@ -3193,7 +3191,7 @@ public class MainActivity extends AppCompatActivity {
                                 // Handle calculation when equals sign is not present
                                 setLastNumber(getResultText());
                                 setCalculateText(addSpaceToOperators(balanceParentheses(getCalculateText() + "=")));
-                                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
                             } else {
                                 // Handle calculation when equals sign is present
                                 if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
@@ -3203,32 +3201,31 @@ public class MainActivity extends AppCompatActivity {
                                         setCalculateText(addSpaceToOperators(getResultText() + "="));
                                     }
                                     setCalculateText(addSpaceToOperators(balanceParentheses(getCalculateText())));
-                                    setResultText(CalculatorActivity.calculate(balanceParentheses(getResultText() + " " + getLastOp() + " " + getLastNumber())));
+                                    setResultText(CalculatorEngine.calculate(balanceParentheses(getResultText() + " " + getLastOp() + " " + getLastNumber())));
                                 } else {
                                     setCalculateText(balanceParentheses(getCalculateText()));
-                                    setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                                    setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
                                 }
                             }
                         } else {
                             if (!calcText.contains("=")) {
                                 // Handle calculation when equals sign is not present
-                                setLastNumber(getResultText());
-                                setCalculateText(addSpaceToOperators(balanceParentheses(calcText + getResultText() + "=")));
-                                setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
+                                setCalculateText(addSpaceToOperators(balanceParentheses(getCalculateText() + getResultText() + "=")));
+                                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
                             } else {
                                 // Handle calculation when equals sign is present
                                 if (!getCalculateText().replace("=", "").replace(" ", "").matches("^(sin|cos|tan)\\(.*\\)$")) {
-                                    if (!getLastOp().isEmpty()) {
-                                        setCalculateText(addSpaceToOperators(getResultText() + getLastOp() + getLastNumber() + "="));
-                                    } else {
-                                        setCalculateText(addSpaceToOperators(getResultText() + "="));
+                                    int nonNumericIndex = 0;
+                                    while (nonNumericIndex < getCalculateText().length() && Character.isDigit(getCalculateText().charAt(nonNumericIndex))) {
+                                        nonNumericIndex++;
                                     }
-                                    setCalculateText(addSpaceToOperators(balanceParentheses(getCalculateText())));
-                                    setResultText(CalculatorActivity.calculate(balanceParentheses(getResultText() + " " + getLastOp() + " " + getLastNumber())));
+
+                                    setCalculateText(getResultText() + getCalculateText().substring(nonNumericIndex));
                                 } else {
                                     setCalculateText(addSpaceToOperators(balanceParentheses(getCalculateText())));
-                                    setResultText(CalculatorActivity.calculate(balanceParentheses(getCalculateText())));
                                 }
+
+                                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
                             }
                         }
 

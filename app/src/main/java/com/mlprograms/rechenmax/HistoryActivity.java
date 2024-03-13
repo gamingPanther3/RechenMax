@@ -1,26 +1,19 @@
-package com.mlprograms.rechenmax;
+ package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.ToastHelper.*;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.InputType;
 import android.util.Log;
 
-import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
@@ -50,7 +43,6 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 /**
  * HistoryActivity - Displays calculation history.
@@ -69,6 +61,11 @@ public class HistoryActivity extends AppCompatActivity {
     private static MainActivity mainActivity;
     private LinearLayout innerLinearLayout;
 
+    private final int ITEMS_PER_LOAD = 10;
+    private int historyTextViewNumber = 0;
+    private int currentHistoryTextViewNumber;
+    private boolean isEndReached = false;
+
     /**
      * Called when the activity is starting.
      * @param savedInstanceState If the activity is being re-initialized after
@@ -81,10 +78,14 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
 
-        // Initialize DataManager
         dataManager = new DataManager();
+        try {
+            historyTextViewNumber = Integer.parseInt(dataManager.getJSONSettingsData("historyTextViewNumber", getMainActivityContext()).getString("value"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        switchDisplayMode();
 
-        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         //Log.e("DEBUG", dataManager.getJSONSettingsData("historyMode", getMainActivityContext()));
 
         Button historyReturnButton = findViewById(R.id.history_return_button);
@@ -107,42 +108,37 @@ public class HistoryActivity extends AppCompatActivity {
         // Using ExecutorService instead of AsyncTask
 
         createLoadingHistoryTextView();
-        new AsyncTask<Void, Void, String>() {
+        new AsyncTask<Void, Void, Integer>() {
             @Override
-            protected String doInBackground(Void... voids) {
-                try {
-                    return dataManager.getJSONSettingsData("historyTextViewNumber", getMainActivityContext()).getString("value");
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+            protected Integer doInBackground(Void... voids) {
+                return historyTextViewNumber;
             }
 
             @Override
-            protected void onPostExecute(String value) {
+            protected void onPostExecute(Integer value) {
                 if (value == null) {
                     dataManager.saveToJSONSettings("historyTextViewNumber", "0", getApplicationContext());
                 }
 
-                if (value != null && value.equals("0")) {
+                if (value == 0) {
                     TextView loadTextView = findViewById(R.id.history_load_textview);
                     if(loadTextView != null) {
                         loadTextView.setVisibility(View.GONE);
                     }
                     createEmptyHistoryTextView();
-                    switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+                    switchDisplayMode();
                 } else {
-                    deleteEmptyHistoryTextView();
+                    hideEmptyHistoryTextView();
 
-                    assert value != null;
-                    int intValue = Integer.parseInt(value);
-                    for (int i = 1; i <= intValue; i++) {
+                    for (int i = historyTextViewNumber; i >= Math.max(0, historyTextViewNumber - (2 * ITEMS_PER_LOAD)); i--) {
+                        currentHistoryTextViewNumber = i;
                         try {
                             if (dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value").equals("multiple")) {
                                 LinearLayout linearLayout;
                                 try {
                                     linearLayout = createHistoryTextViewMultiple(i);
                                     if(linearLayout != null) {
-                                        innerLinearLayout.addView(linearLayout, 0);
+                                        innerLinearLayout.addView(linearLayout, innerLinearLayout.getChildCount());
                                     }
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
@@ -152,7 +148,7 @@ public class HistoryActivity extends AppCompatActivity {
                                 try {
                                     linearLayout = createHistoryTextViewSingle(i);
                                     if(linearLayout != null) {
-                                        innerLinearLayout.addView(linearLayout, 0);
+                                        innerLinearLayout.addView(linearLayout, innerLinearLayout.getChildCount());
                                     }
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
@@ -167,11 +163,79 @@ public class HistoryActivity extends AppCompatActivity {
                     if(loadTextView != null) {
                         loadTextView.setVisibility(View.GONE);
                     }
-                    switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+                    switchDisplayMode();
                 }
             }
         }.execute();
         //Log.e("DEBUG", String.valueOf(dataManager.getAllData(getMainActivityContext())));
+
+        ScrollView historyScrollView = findViewById(R.id.history_scrollview);
+        historyScrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            if (isEndOfScrollView(historyScrollView) && !isEndReached) {
+                isEndReached = true;
+                updateUI();
+            } else {
+                isEndReached = false;
+            }
+        });
+    }
+
+    /**
+     * Überprüft, ob das Ende des ScrollViews erreicht ist.
+     *
+     * @param scrollView Das ScrollView, das überwacht wird.
+     * @return true, wenn das Ende des Scrolls erreicht ist, sonst false.
+     */
+    private boolean isEndOfScrollView(ScrollView scrollView) {
+        View view = scrollView.getChildAt(scrollView.getChildCount() - 1);
+        int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
+        return diff <= 200;
+    }
+
+    /**
+     * Updates the UI by creating and adding TextViews for each history entry.
+     */
+    private void updateUI() {
+        // Perform UI updates here
+        //innerLinearLayout.removeAllViews();
+
+        if (historyTextViewNumber != 0 && currentHistoryTextViewNumber <= historyTextViewNumber) {
+            int loadedItems = 0;
+            for (int i = currentHistoryTextViewNumber - 1; i >= Math.max(0, currentHistoryTextViewNumber - ITEMS_PER_LOAD); i--) {
+                if (i >= 0 && loadedItems < ITEMS_PER_LOAD) {
+                    currentHistoryTextViewNumber = i;
+                    try {
+                        if (dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value").equals("multiple")) {
+                            try {
+                                LinearLayout linearLayout = createHistoryTextViewSingle(i);
+                                if (linearLayout != null) {
+                                    innerLinearLayout.addView(linearLayout, innerLinearLayout.getChildCount());
+                                    loadedItems++;
+                                }
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            try {
+                                LinearLayout linearLayout = createHistoryTextViewMultiple(i);
+                                if (linearLayout != null) {
+                                    innerLinearLayout.addView(linearLayout, innerLinearLayout.getChildCount());
+                                    loadedItems++;
+                                }
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    break;
+                }
+            }
+            switchDisplayMode();
+            Log.e("DEBUG", "childs:" + innerLinearLayout.getChildCount());
+        }
     }
 
     /**
@@ -197,19 +261,6 @@ public class HistoryActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setId(i);
-
-        View view1 = new View(this);
-        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                getResources().getDimensionPixelSize(R.dimen.history_line_height));
-        viewParams.setMargins(
-                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
-                0,
-                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
-                0);
-        view1.setLayoutParams(viewParams);
-        view1.setBackgroundColor(getResources().getColor(R.color.history_line_color));
-        linearLayout.addView(view1);
 
         // date
         TextView textView1 = new TextView(this);
@@ -273,15 +324,12 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onDoubleClick(View v) {
                 dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
-                Log.e("DEBUG", String.valueOf(i));
-                Log.e("DEBUG", String.valueOf(dataManager.getAllData(getMainActivityContext())));
+                innerLinearLayout.removeView(findViewById(i));
 
                 if (innerLinearLayout.getChildCount() == 1) {
                     resetNamesAndValues();
                     TextView emptyTextView = findViewById(R.id.history_empty_textview);
                     emptyTextView.setVisibility(View.VISIBLE);
-                } else {
-                    recreate();
                 }
             }
 
@@ -394,7 +442,6 @@ public class HistoryActivity extends AppCompatActivity {
         return linearLayout;
     }
 
-
     private LinearLayout createHistoryTextViewMultiple(int i) throws JSONException {
         JSONObject data = dataManager.getHistoryData(String.valueOf(i), getMainActivityContext());
 
@@ -412,19 +459,6 @@ public class HistoryActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         linearLayout.setId(i);
-
-        View view1 = new View(this);
-        LinearLayout.LayoutParams viewParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                getResources().getDimensionPixelSize(R.dimen.history_line_height));
-        viewParams.setMargins(
-                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
-                0,
-                getResources().getDimensionPixelSize(R.dimen.history_line_margin_horizontal),
-                0);
-        view1.setLayoutParams(viewParams);
-        view1.setBackgroundColor(getResources().getColor(R.color.history_line_color));
-        linearLayout.addView(view1);
 
         // date
         TextView textView1 = new TextView(this);
@@ -616,6 +650,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         // Add an OnConfigurationChangedListener to update line color on configuration changes
         line.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> updateLineColor(line));
+        line.setTag("line");
 
         return line;
     }
@@ -689,7 +724,7 @@ public class HistoryActivity extends AppCompatActivity {
         TextView emptyTextView = findViewById(R.id.history_empty_textview);
         emptyTextView.setVisibility(View.VISIBLE);
 
-        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+        switchDisplayMode();
     }
 
     private void createLoadingHistoryTextView() {
@@ -712,13 +747,13 @@ public class HistoryActivity extends AppCompatActivity {
         TextView loadTextView = findViewById(R.id.history_load_textview);
         loadTextView.setVisibility(View.VISIBLE);
 
-        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+        switchDisplayMode();
     }
 
     /**
      * Diese Methode entfernt die leere TextView aus dem Layout, falls vorhanden.
      */
-    private void deleteEmptyHistoryTextView() {
+    private void hideEmptyHistoryTextView() {
         LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
 
         // Ein neues TextView erstellen und einrichten
@@ -826,63 +861,13 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     /**
-     * Updates the UI by creating and adding TextViews for each history entry.
-     */
-    private void updateUI() {
-        // Perform UI updates here
-        LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
-        innerLinearLayout.removeAllViews();
-
-        final String value;
-        try {
-            value = dataManager.getJSONSettingsData("historyTextViewNumber", getMainActivityContext()).getString("value");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        if (!value.equals("0")) {
-            for (int i = 1; i < Integer.parseInt(value) + 1; i++) {
-                // Create a new TextView
-                try {
-                    if(dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value").equals("multiple")) {
-                        LinearLayout linearLayout;
-                        try {
-                            linearLayout = createHistoryTextViewSingle(i);
-                            if(linearLayout != null) {
-                                innerLinearLayout.addView(linearLayout);
-                            }
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else {
-                        LinearLayout linearLayout;
-                        try {
-                            linearLayout = createHistoryTextViewMultiple(i);
-                            if(linearLayout != null) {
-                                innerLinearLayout.addView(linearLayout);
-                            }
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        } else {
-            createEmptyHistoryTextView();
-        }
-    }
-
-    /**
      * This method is called when the configuration of the device changes.
      * @param newConfig The new device configuration.
      */
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        int currentNightMode = newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switchDisplayMode(currentNightMode);
+        switchDisplayMode();
 
         final TextView emptyHistoryTextView = findViewById(R.id.history_empty_textview);
         if (emptyHistoryTextView != null) {
@@ -967,15 +952,14 @@ public class HistoryActivity extends AppCompatActivity {
             Log.e("startBackgoundService", e.toString());
         }
     }
-    /**
-     * This method switches the display mode based on the current night mode.
-     * @param currentNightMode The current night mode.
-     */
+
+    // This method switches the display mode based on the current night mode.
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void switchDisplayMode(int currentNightMode) {
+    private void switchDisplayMode() {
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         @SuppressLint("CutPasteId") Button deleteButton = findViewById(R.id.history_delete_button);
         @SuppressLint("CutPasteId") Button returnButton = findViewById(R.id.history_return_button);
-        ScrollView historyScrollView = findViewById(R.id.history_scroll_textview);
+        ScrollView historyScrollView = findViewById(R.id.history_scrollview);
         TextView historyTitle = findViewById(R.id.history_title);
         @SuppressLint("CutPasteId") TextView historyReturnButton = findViewById(R.id.history_return_button);
         @SuppressLint("CutPasteId") TextView historyDeleteButton = findViewById(R.id.history_delete_button);
@@ -1092,16 +1076,19 @@ public class HistoryActivity extends AppCompatActivity {
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
                 View v = layout.getChildAt(i);
-                v.setBackgroundColor(backgroundColor);
-
-                // If the child is a Button, change the foreground and background colors
-                if (v instanceof Button) {
-                    ((Button) v).setTextColor(foregroundColor);
+                // Skip color change if the view is tagged as history_line
+                if (!"line".equals(v.getTag())) {
                     v.setBackgroundColor(backgroundColor);
-                }
-                // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
-                else if (v instanceof ViewGroup) {
-                    changeButtonColors((ViewGroup) v, foregroundColor, backgroundColor);
+
+                    // If the child is a Button, change the foreground and background colors
+                    if (v instanceof Button) {
+                        ((Button) v).setTextColor(foregroundColor);
+                        v.setBackgroundColor(backgroundColor);
+                    }
+                    // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
+                    else if (v instanceof ViewGroup) {
+                        changeButtonColors((ViewGroup) v, foregroundColor, backgroundColor);
+                    }
                 }
             }
         }
@@ -1119,11 +1106,14 @@ public class HistoryActivity extends AppCompatActivity {
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
                 View v = layout.getChildAt(i);
-                v.setBackgroundColor(backgroundColor);
+                // Skip color change if the view is tagged as history_line
+                if (!"line".equals(v.getTag())) {
+                    v.setBackgroundColor(backgroundColor);
 
-                // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
-                if (v instanceof ViewGroup) {
-                    changeTextViewColorsRecursive((ViewGroup) v, foregroundColor, backgroundColor);
+                    // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
+                    if (v instanceof ViewGroup) {
+                        changeTextViewColorsRecursive((ViewGroup) v, foregroundColor, backgroundColor);
+                    }
                 }
             }
         }
@@ -1151,17 +1141,19 @@ public class HistoryActivity extends AppCompatActivity {
             View v = layout.getChildAt(i);
 
             // Set the background color for the current child View
-            v.setBackgroundColor(backgroundColor);
-
-            // If the child is a TextView, change the foreground and background colors
-            if (v instanceof TextView) {
-                ((TextView) v).setTextColor(foregroundColor);
+            if (!"line".equals(v.getTag())) {
                 v.setBackgroundColor(backgroundColor);
-            }
 
-            // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
-            if (v instanceof ViewGroup) {
-                changeTextViewColorsRecursive((ViewGroup) v, foregroundColor, backgroundColor);
+                // If the child is a TextView, change the foreground and background colors
+                if (v instanceof TextView) {
+                    ((TextView) v).setTextColor(foregroundColor);
+                    v.setBackgroundColor(backgroundColor);
+                }
+
+                // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
+                if (v instanceof ViewGroup) {
+                    changeTextViewColorsRecursive((ViewGroup) v, foregroundColor, backgroundColor);
+                }
             }
         }
     }
@@ -1219,7 +1211,7 @@ public class HistoryActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            //switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+            //switchDisplayMode();
         } catch (Exception e) {
             e.printStackTrace();
         }
