@@ -189,7 +189,7 @@ public class HistoryActivity extends AppCompatActivity {
     private boolean isEndOfScrollView(ScrollView scrollView) {
         View view = scrollView.getChildAt(scrollView.getChildCount() - 1);
         int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
-        return diff <= 200;
+        return diff <= 400;
     }
 
     /**
