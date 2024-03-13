@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -33,7 +32,7 @@ public class ConvertActivity extends AppCompatActivity {
     DataManager dataManager;
     private static MainActivity mainActivity;
     private Spinner customSpinnerMode;
-    private Spinner customSpinnerMessurement;
+    private Spinner customSpinnerMeasurement;
     
     private ArrayList<CustomItems> customList = new ArrayList<>();
     private ArrayList<CustomItems> customItemListAngle = new ArrayList<>();
@@ -43,7 +42,7 @@ public class ConvertActivity extends AppCompatActivity {
     private ArrayList<CustomItems> customItemListVolume = new ArrayList<>();
 
     private CustomAdapter customAdapter;
-    private CustomAdapter customAdapterMessurement;
+    private CustomAdapter customAdapterMeasurement;
     private boolean firstStart = true;
 
     /**
@@ -66,7 +65,7 @@ public class ConvertActivity extends AppCompatActivity {
 
         // convert mode spinner
         customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-        customSpinnerMessurement = findViewById(R.id.convertSpinnerMessurement);
+        customSpinnerMeasurement = findViewById(R.id.convertSpinnerMessurement);
 
         customList = new ArrayList<>();
         customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle));
@@ -85,28 +84,28 @@ public class ConvertActivity extends AppCompatActivity {
             switch (dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value")) {
                 case "W":
                     customSpinnerMode.setSelection(0);
-                    customAdapterMessurement = new CustomAdapter(this, customItemListAngle);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListAngle);
                     break;
                 case "F":
                     customSpinnerMode.setSelection(1);
-                    customAdapterMessurement = new CustomAdapter(this, customItemListArea);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListArea);
                     break;
                 case "S":
                     customSpinnerMode.setSelection(2);
-                    customAdapterMessurement = new CustomAdapter(this, customItemListStorage);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListStorage);
                     break;
                 case "E":
                     customSpinnerMode.setSelection(3);
-                    customAdapterMessurement = new CustomAdapter(this, customItemListDistance);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListDistance);
                     break;
                 case "V":
                     customSpinnerMode.setSelection(4);
-                    customAdapterMessurement = new CustomAdapter(this, customItemListVolume);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListVolume);
                     break;
             }
 
-            if(customSpinnerMessurement != null) {
-                customSpinnerMessurement.setAdapter(customAdapterMessurement);
+            if(customSpinnerMeasurement != null) {
+                customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -123,25 +122,25 @@ public class ConvertActivity extends AppCompatActivity {
                 String new_value = "";
                 if(spinnerText.equals(getString(R.string.convertAngle))) {
                     new_value = "W";
-                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListAngle);
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListAngle);
                 } else if(spinnerText.equals(getString(R.string.convertArea))) {
                     new_value = "F";
-                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListArea);
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListArea);
                 } else if(spinnerText.equals(getString(R.string.convertStorage))) {
                     new_value = "S";
-                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListStorage);
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListStorage);
                 } else if(spinnerText.equals(getString(R.string.convertDistance))) {
                     new_value = "E";
-                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListDistance);
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListDistance);
                 } else if(spinnerText.equals(getString(R.string.convertVolume))) {
                     new_value = "V";
-                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListVolume);
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListVolume);
                 }
 
                 try {
                     if(!dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value").equals(new_value) || firstStart) {
-                        if(customSpinnerMessurement != null) {
-                            customSpinnerMessurement.setAdapter(customAdapterMessurement);
+                        if(customSpinnerMeasurement != null) {
+                            customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
                         }
 
                         firstStart = false;
@@ -427,11 +426,11 @@ public class ConvertActivity extends AppCompatActivity {
                             customAdapter.setBackgroundColor(Color.parseColor("#151515"));
                             customSpinnerMode.setAdapter(customAdapter);
 
-                            customAdapterMessurement = (CustomAdapter) customSpinnerMessurement.getAdapter();
-                            if (customAdapterMessurement != null) {
-                                customAdapterMessurement.setTextColor(Color.parseColor("#FFFFFF"));
-                                customAdapterMessurement.setBackgroundColor(Color.parseColor("#151515"));
-                                customSpinnerMessurement.setAdapter(customAdapterMessurement);
+                            customAdapterMeasurement = (CustomAdapter) customSpinnerMeasurement.getAdapter();
+                            if (customAdapterMeasurement != null) {
+                                customAdapterMeasurement.setTextColor(Color.parseColor("#FFFFFF"));
+                                customAdapterMeasurement.setBackgroundColor(Color.parseColor("#151515"));
+                                customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
                             }
 
                         } else {
@@ -453,10 +452,10 @@ public class ConvertActivity extends AppCompatActivity {
                             customAdapter.setBackgroundColor(Color.parseColor("#000000"));
                             customSpinnerMode.setAdapter(customAdapter);
 
-                            customAdapter = (CustomAdapter) customSpinnerMessurement.getAdapter();
+                            customAdapter = (CustomAdapter) customSpinnerMeasurement.getAdapter();
                             customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                             customAdapter.setBackgroundColor(Color.parseColor("#151515"));
-                            customSpinnerMessurement.setAdapter(customAdapter);
+                            customSpinnerMeasurement.setAdapter(customAdapter);
                         }
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
@@ -479,10 +478,10 @@ public class ConvertActivity extends AppCompatActivity {
                         customAdapter.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         customSpinnerMode.setAdapter(customAdapter);
 
-                        customAdapter = (CustomAdapter) customSpinnerMessurement.getAdapter();
+                        customAdapter = (CustomAdapter) customSpinnerMeasurement.getAdapter();
                         customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                         customAdapter.setBackgroundColor(Color.parseColor("#151515"));
-                        customSpinnerMessurement.setAdapter(customAdapter);
+                        customSpinnerMeasurement.setAdapter(customAdapter);
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
@@ -504,10 +503,10 @@ public class ConvertActivity extends AppCompatActivity {
                 customAdapter.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 customSpinnerMode.setAdapter(customAdapter);
 
-                customAdapter = (CustomAdapter) customSpinnerMessurement.getAdapter();
+                customAdapter = (CustomAdapter) customSpinnerMeasurement.getAdapter();
                 customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                 customAdapter.setBackgroundColor(Color.parseColor("#151515"));
-                customSpinnerMessurement.setAdapter(customAdapter);
+                customSpinnerMeasurement.setAdapter(customAdapter);
             } else if (getSelectedSetting().equals("Dunkelmodus")) {
                 dataManager = new DataManager();
                 String trueDarkMode;
@@ -536,10 +535,10 @@ public class ConvertActivity extends AppCompatActivity {
                     customAdapter.setBackgroundColor(Color.parseColor("#151515"));
                     customSpinnerMode.setAdapter(customAdapter);
 
-                    customAdapter = (CustomAdapter) customSpinnerMessurement.getAdapter();
+                    customAdapter = (CustomAdapter) customSpinnerMeasurement.getAdapter();
                     customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                     customAdapter.setBackgroundColor(Color.parseColor("#151515"));
-                    customSpinnerMessurement.setAdapter(customAdapter);
+                    customSpinnerMeasurement.setAdapter(customAdapter);
                 } else {
                     if (backbutton != null) {
                         backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
@@ -559,10 +558,10 @@ public class ConvertActivity extends AppCompatActivity {
                     customAdapter.setBackgroundColor(Color.parseColor("#000000"));
                     customSpinnerMode.setAdapter(customAdapter);
 
-                    customAdapter = (CustomAdapter) customSpinnerMessurement.getAdapter();
+                    customAdapter = (CustomAdapter) customSpinnerMeasurement.getAdapter();
                     customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                     customAdapter.setBackgroundColor(Color.parseColor("#151515"));
-                    customSpinnerMessurement.setAdapter(customAdapter);
+                    customSpinnerMeasurement.setAdapter(customAdapter);
                 }
             }
         }
