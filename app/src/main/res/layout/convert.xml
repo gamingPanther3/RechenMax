@@ -70,7 +70,10 @@
             android:background="@color/colorBTNBackgroundAccent"
             android:hint="@string/converterPlaceHolder"
             android:textColor="@color/black"
-            android:padding="10dp" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="10dp" />
 
         <Spinner
             android:id="@+id/convertSpinnerMessurement"
