@@ -565,7 +565,6 @@ public class ConvertActivity extends AppCompatActivity {
                 }
             }
         }
-        customSpinnerMeasurement.setSelection(0);
         if(customSpinnerMode != null) {
             customSpinnerMode.setSelection(index);
         }
