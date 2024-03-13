@@ -34,7 +34,16 @@ public class ConvertActivity extends AppCompatActivity {
     private static MainActivity mainActivity;
     private Spinner customSpinnerMode;
     private Spinner customSpinnerMessurement;
+    
+    private ArrayList<CustomItems> customList = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListAngle = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListArea = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListStorage = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListDistance = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListVolume = new ArrayList<>();
+
     private CustomAdapter customAdapter;
+    private CustomAdapter customAdapterMessurement;
     private boolean firstStart = true;
 
     /**
@@ -51,13 +60,15 @@ public class ConvertActivity extends AppCompatActivity {
         stopBackgroundService();
         dataManager = new DataManager();
         setContentView(R.layout.convert);
+
         setUpButtonListeners();
+        setUpCustomItemLists();
 
         // convert mode spinner
         customSpinnerMode = findViewById(R.id.convertCustomSpinner);
         customSpinnerMessurement = findViewById(R.id.convertSpinnerMessurement);
 
-        ArrayList<CustomItems> customList = new ArrayList<>();
+        customList = new ArrayList<>();
         customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle));
         customList.add(new CustomItems(getString(R.string.convertArea), R.drawable.area));
         customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard));
@@ -74,19 +85,28 @@ public class ConvertActivity extends AppCompatActivity {
             switch (dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value")) {
                 case "W":
                     customSpinnerMode.setSelection(0);
+                    customAdapterMessurement = new CustomAdapter(this, customItemListAngle);
                     break;
                 case "F":
                     customSpinnerMode.setSelection(1);
+                    customAdapterMessurement = new CustomAdapter(this, customItemListArea);
                     break;
                 case "S":
                     customSpinnerMode.setSelection(2);
+                    customAdapterMessurement = new CustomAdapter(this, customItemListStorage);
                     break;
                 case "E":
                     customSpinnerMode.setSelection(3);
+                    customAdapterMessurement = new CustomAdapter(this, customItemListDistance);
                     break;
                 case "V":
                     customSpinnerMode.setSelection(4);
+                    customAdapterMessurement = new CustomAdapter(this, customItemListVolume);
                     break;
+            }
+
+            if(customSpinnerMessurement != null) {
+                customSpinnerMessurement.setAdapter(customAdapterMessurement);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -103,14 +123,23 @@ public class ConvertActivity extends AppCompatActivity {
                 String new_value = "";
                 if(spinnerText.equals(getString(R.string.convertAngle))) {
                     new_value = "W";
+                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListAngle);
                 } else if(spinnerText.equals(getString(R.string.convertArea))) {
                     new_value = "F";
+                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListArea);
                 } else if(spinnerText.equals(getString(R.string.convertStorage))) {
                     new_value = "S";
+                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListStorage);
                 } else if(spinnerText.equals(getString(R.string.convertDistance))) {
                     new_value = "E";
+                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListDistance);
                 } else if(spinnerText.equals(getString(R.string.convertVolume))) {
                     new_value = "V";
+                    customAdapterMessurement = new CustomAdapter(getApplicationContext(), customItemListVolume);
+                }
+
+                if(customSpinnerMessurement != null) {
+                    customSpinnerMessurement.setAdapter(customAdapterMessurement);
                 }
 
                 try {
@@ -131,6 +160,82 @@ public class ConvertActivity extends AppCompatActivity {
         });
 
         switchDisplayMode();
+    }
+
+    private void setUpCustomItemLists() {
+        customItemListAngle.add(new CustomItems(getString(R.string.convertDeg)));
+        customItemListAngle.add(new CustomItems(getString(R.string.convertRad)));
+        customItemListAngle.add(new CustomItems(getString(R.string.convertPitch)));
+        customItemListAngle.add(new CustomItems(getString(R.string.convertGon)));
+        customItemListAngle.add(new CustomItems(getString(R.string.convertMrad)));
+        customItemListAngle.add(new CustomItems(getString(R.string.convertMinuteOfTheArc)));
+        customItemListAngle.add(new CustomItems(getString(R.string.convertSecondArc)));
+
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareMillimeter)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareCentimeter)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareMeter)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareKilometer)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertAr)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertDekar)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertHectares)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareInch)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareFeet)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareYard)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertAcre)));
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareMiles)));
+
+        customItemListStorage.add(new CustomItems(getString(R.string.convertBit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertByte)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertKilobit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertKilobyte)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertMegabit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertMegabyte)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertGigabit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertGigabyte)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertTerabit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertTerabyte)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertPetabit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertPetabyte)));
+
+        customItemListDistance.add(new CustomItems(getString(R.string.convertPikometer)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertNanometer)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertMikrometer)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertMillimeter)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertCentimeter)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertDezimeter)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertMeter)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertHektometer)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertKilometer)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertFeet)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertYard)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertMiles)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertSeamiles)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertLightyear)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertAstronomicalUnit)));
+
+        customItemListVolume.add(new CustomItems(getString(R.string.convertMikroliter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertMilliliter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertDeziliter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertLiter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertZentiliter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertMetrischeTasse)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmillimeter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikzentimeter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmeter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikInch)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikFeet)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikYard)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertGillsUS)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertGillsUK)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertTeaspoonsUS)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertTeaspoonsUK)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertTablespoonsUS)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertTablespoonsUK)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertCupsUS)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertCupsUK)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUS)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUK)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertBarrels)));
     }
 
     @SuppressLint("InflateParams")
@@ -303,62 +408,46 @@ public class ConvertActivity extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
 
-                        if (trueDarkMode != null) {
-                            if (trueDarkMode.equals("false")) {
-                                if(backbutton != null) {
-                                    backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
-                                }
-
-                                updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
-
-                                customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-                                ArrayList<CustomItems> customList = new ArrayList<>();
-                                customList.add(new CustomItems("Winkel", R.drawable.angle_light));
-                                customList.add(new CustomItems("Fläche", R.drawable.area_light));
-                                customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_light));
-                                customList.add(new CustomItems("Entfernung", R.drawable.triangle_light));
-                                customList.add(new CustomItems("Volumen", R.drawable.cylinder_light));
-
-                                customAdapter = new CustomAdapter(this, customList);
-                                customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
-                                customAdapter.setBackgroundColor(Color.parseColor("#151515"));
-                            } else {
-                                if(backbutton != null) {
-                                    backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
-                                }
-
-                                updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
-
-                                customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-                                ArrayList<CustomItems> customList = new ArrayList<>();
-                                customList.add(new CustomItems("Winkel", R.drawable.angle_true_darkmode));
-                                customList.add(new CustomItems("Fläche", R.drawable.area_true_darkmode));
-                                customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_true_darkmode));
-                                customList.add(new CustomItems("Entfernung", R.drawable.triangle_true_darkmode));
-                                customList.add(new CustomItems("Volumen", R.drawable.cylinder_true_darkmode));
-
-                                customAdapter = new CustomAdapter(this, customList);
-                                customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
-                                customAdapter.setBackgroundColor(Color.parseColor("#000000"));
-                            }
-                        } else {
-                            if(backbutton != null) {
+                        if (trueDarkMode.equals("false")) {
+                            if (backbutton != null) {
                                 backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                             }
 
                             updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
 
                             customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-                            ArrayList<CustomItems> customList = new ArrayList<>();
-                            customList.add(new CustomItems("Winkel", R.drawable.angle_light));
-                            customList.add(new CustomItems("Fläche", R.drawable.area_light));
-                            customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_light));
-                            customList.add(new CustomItems("Entfernung", R.drawable.triangle_light));
-                            customList.add(new CustomItems("Volumen", R.drawable.cylinder_light));
+                            customList = new ArrayList<>();
+                            customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle_light));
+                            customList.add(new CustomItems(getString(R.string.convertArea), R.drawable.area_light));
+                            customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard_light));
+                            customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_light));
+                            customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_light));
 
                             customAdapter = new CustomAdapter(this, customList);
                             customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                             customAdapter.setBackgroundColor(Color.parseColor("#151515"));
+
+                            customSpinnerMode.setAdapter(customAdapter);
+                        } else {
+                            if (backbutton != null) {
+                                backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
+                            }
+
+                            updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
+
+                            customSpinnerMode = findViewById(R.id.convertCustomSpinner);
+                            customList = new ArrayList<>();
+                            customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertArea), R.drawable.area_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_true_darkmode));
+
+                            customAdapter = new CustomAdapter(this, customList);
+                            customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
+                            customAdapter.setBackgroundColor(Color.parseColor("#000000"));
+
+                            customSpinnerMode.setAdapter(customAdapter);
                         }
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
@@ -370,16 +459,18 @@ public class ConvertActivity extends AppCompatActivity {
                         updateUI(Color.parseColor("#FFFFFF"), Color.parseColor("#151515"));
 
                         customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-                        ArrayList<CustomItems> customList = new ArrayList<>();
-                        customList.add(new CustomItems("Winkel", R.drawable.angle));
-                        customList.add(new CustomItems("Fläche", R.drawable.area));
-                        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard));
-                        customList.add(new CustomItems("Entfernung", R.drawable.triangle));
-                        customList.add(new CustomItems("Volumen", R.drawable.cylinder));
+                        customList = new ArrayList<>();
+                        customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle));
+                        customList.add(new CustomItems(getString(R.string.convertArea), R.drawable.area));
+                        customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard));
+                        customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
+                        customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
 
                         customAdapter = new CustomAdapter(this, customList);
                         customAdapter.setTextColor(Color.parseColor("#151515"));
                         customAdapter.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+                        customSpinnerMode.setAdapter(customAdapter);
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
@@ -390,12 +481,12 @@ public class ConvertActivity extends AppCompatActivity {
                 updateUI(Color.parseColor("#FFFFFF"), Color.parseColor("#151515"));
 
                 customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-                ArrayList<CustomItems> customList = new ArrayList<>();
-                customList.add(new CustomItems("Winkel", R.drawable.angle));
-                customList.add(new CustomItems("Fläche", R.drawable.area));
-                customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard));
-                customList.add(new CustomItems("Entfernung", R.drawable.triangle));
-                customList.add(new CustomItems("Volumen", R.drawable.cylinder));
+                customList = new ArrayList<>();
+                customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle));
+                customList.add(new CustomItems(getString(R.string.convertArea), R.drawable.area));
+                customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard));
+                customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
+                customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
 
                 customAdapter = new CustomAdapter(this, customList);
                 customAdapter.setTextColor(Color.parseColor("#151515"));
@@ -411,66 +502,44 @@ public class ConvertActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                if (trueDarkMode != null) {
-                    if (trueDarkMode.equals("false")) {
-                        if(backbutton != null) {
-                            backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
-                        }
-
-                        updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
-
-                        customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-                        ArrayList<CustomItems> customList = new ArrayList<>();
-                        customList.add(new CustomItems("Winkel", R.drawable.angle_light));
-                        customList.add(new CustomItems("Fläche", R.drawable.area_light));
-                        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_light));
-                        customList.add(new CustomItems("Entfernung", R.drawable.triangle_light));
-                        customList.add(new CustomItems("Volumen", R.drawable.cylinder_light));
-
-                        customAdapter = new CustomAdapter(this, customList);
-                        customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
-                        customAdapter.setBackgroundColor(Color.parseColor("#151515"));
-
-                        customSpinnerMode.setAdapter(customAdapter);
-                    } else {
-                        if(backbutton != null) {
-                            backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
-                        }
-
-                        updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
-
-                        customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-                        ArrayList<CustomItems> customList = new ArrayList<>();
-                        customList.add(new CustomItems("Winkel", R.drawable.angle_true_darkmode));
-                        customList.add(new CustomItems("Fläche", R.drawable.area_true_darkmode));
-                        customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_true_darkmode));
-                        customList.add(new CustomItems("Entfernung", R.drawable.triangle_true_darkmode));
-                        customList.add(new CustomItems("Volumen", R.drawable.cylinder_true_darkmode));
-
-                        customAdapter = new CustomAdapter(this, customList);
-                        customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
-                        customAdapter.setBackgroundColor(Color.parseColor("#000000"));
-
-                        customSpinnerMode.setAdapter(customAdapter);
-                    }
-                } else {
-                    if(backbutton != null) {
+                if (trueDarkMode.equals("false")) {
+                    if (backbutton != null) {
                         backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                     }
 
                     updateUI(Color.parseColor("#151515"), Color.parseColor("#FFFFFF"));
 
                     customSpinnerMode = findViewById(R.id.convertCustomSpinner);
-                    ArrayList<CustomItems> customList = new ArrayList<>();
-                    customList.add(new CustomItems("Winkel", R.drawable.angle_light));
-                    customList.add(new CustomItems("Fläche", R.drawable.area_light));
-                    customList.add(new CustomItems("Digitaler Speicher", R.drawable.sdcard_light));
-                    customList.add(new CustomItems("Entfernung", R.drawable.triangle_light));
-                    customList.add(new CustomItems("Volumen", R.drawable.cylinder_light));
+                    customList = new ArrayList<>();
+                    customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle_light));
+                    customList.add(new CustomItems(getString(R.string.convertArea), R.drawable.area_light));
+                    customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard_light));
+                    customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_light));
+                    customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_light));
 
                     customAdapter = new CustomAdapter(this, customList);
                     customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
                     customAdapter.setBackgroundColor(Color.parseColor("#151515"));
+
+                    customSpinnerMode.setAdapter(customAdapter);
+                } else {
+                    if (backbutton != null) {
+                        backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
+                    }
+
+                    updateUI(Color.parseColor("#000000"), Color.parseColor("#D5D5D5"));
+
+                    customSpinnerMode = findViewById(R.id.convertCustomSpinner);
+                    customList = new ArrayList<>();
+                    customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertArea), R.drawable.area_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_true_darkmode));
+
+                    customAdapter = new CustomAdapter(this, customList);
+                    customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
+                    customAdapter.setBackgroundColor(Color.parseColor("#000000"));
 
                     customSpinnerMode.setAdapter(customAdapter);
                 }

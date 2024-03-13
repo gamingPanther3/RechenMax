@@ -12,6 +12,10 @@ public class CustomItems {
         this.spinnerImage = spinnerImage;
     }
 
+    public CustomItems(String spinnerText) {
+        this.spinnerText = spinnerText;
+    }
+
     public String getSpinnerText() {
         return spinnerText;
     }

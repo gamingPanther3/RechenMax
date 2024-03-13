@@ -364,6 +364,4 @@
     <string name="historyConfirmTitle">Bist du dir sicher?</string>
     <string name="historyConfirmDeleteText">Endgültig löschen</string>
     <string name="historyConfirmCancelText">Abbrechen</string>
-
-
 </resources>

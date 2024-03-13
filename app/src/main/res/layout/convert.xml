@@ -54,13 +54,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
 
         <EditText
             android:id="@+id/convertSpinnerNumber"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:layout_margin="10dp"
@@ -74,10 +74,13 @@
 
         <Spinner
             android:id="@+id/convertSpinnerMessurement"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="5dp"
             android:background="@color/colorBTNBackgroundAccent"
             android:layout_margin="10dp"/>
 
