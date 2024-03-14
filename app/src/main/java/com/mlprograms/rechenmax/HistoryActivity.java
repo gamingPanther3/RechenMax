@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.text.InputType;
@@ -18,6 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -41,6 +44,7 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,11 +57,11 @@ import org.json.JSONObject;
 public class HistoryActivity extends AppCompatActivity {
 
     // Declare a Context object and initialize it to this instance
+    private int newColorBTNForegroundAccent;
+    private int newColorBTNBackgroundAccent;
+
     private final Context context = this;
-    // Declare a DataManager object
     DataManager dataManager;
-    // Declare a static MainActivity object
-    @SuppressLint("StaticFieldLeak")
     private static MainActivity mainActivity;
     private LinearLayout innerLinearLayout;
 
@@ -234,7 +238,6 @@ public class HistoryActivity extends AppCompatActivity {
                 }
             }
             switchDisplayMode();
-            Log.e("DEBUG", "childs:" + innerLinearLayout.getChildCount());
         }
     }
 
@@ -816,13 +819,40 @@ public class HistoryActivity extends AppCompatActivity {
      */
     private void resetNamesAndValues() {
         if(countLinearLayouts(findViewById(R.id.history_scroll_linearlayout)) > 1) {
-            LayoutInflater inflater = (LayoutInflater)
-                    getSystemService(LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             View popupView = inflater.inflate(R.layout.confirm_delete, null);
 
             int width = LinearLayout.LayoutParams.WRAP_CONTENT;
             int height = LinearLayout.LayoutParams.WRAP_CONTENT;
             final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+            // Setzen Sie die Hintergrundfarbe und den Hintergrund des Popup-Fensters
+            popupView.setBackgroundColor(newColorBTNBackgroundAccent);
+
+            // Ändern Sie die Farben im Popup-Fenster
+            TextView textViewTitle = popupView.findViewById(R.id.confirm_delete_layout_title);
+            TextView textViewDelete = popupView.findViewById(R.id.deleteConfirmButton);
+            TextView textViewCancel = popupView.findViewById(R.id.cancelConfirmButton);
+
+            if (popupView.findViewById(R.id.confirmOutline) != null) {
+                LinearLayout confirmOutline = popupView.findViewById(R.id.confirmOutline);
+                Drawable backgroundDrawable = getResources().getDrawable(R.drawable.textview_border_thick);
+
+                if (backgroundDrawable instanceof GradientDrawable) {
+                    GradientDrawable gradientDrawable = (GradientDrawable) backgroundDrawable;
+                    gradientDrawable.setStroke(10, newColorBTNForegroundAccent);
+
+                    confirmOutline.setBackground(backgroundDrawable);
+                }
+            }
+
+            textViewTitle.setTextColor(newColorBTNForegroundAccent);
+            textViewDelete.setTextColor(newColorBTNForegroundAccent);
+            textViewCancel.setTextColor(newColorBTNForegroundAccent);
+
+            textViewTitle.setBackgroundColor(newColorBTNBackgroundAccent);
+            textViewDelete.setBackgroundColor(newColorBTNBackgroundAccent);
+            textViewCancel.setBackgroundColor(newColorBTNBackgroundAccent);
 
             popupWindow.showAtLocation(findViewById(R.id.historyUI), Gravity.CENTER, 0, 0);
 
@@ -846,6 +876,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
         }
     }
+
 
     private int countLinearLayouts(LinearLayout layout) {
         int count = 0;
@@ -964,9 +995,6 @@ public class HistoryActivity extends AppCompatActivity {
         @SuppressLint("CutPasteId") TextView historyReturnButton = findViewById(R.id.history_return_button);
         @SuppressLint("CutPasteId") TextView historyDeleteButton = findViewById(R.id.history_delete_button);
 
-        int newColorBTNForegroundAccent;
-        int newColorBTNBackgroundAccent;
-
         dataManager = new DataManager();
         final String trueDarkMode;
         try {
@@ -1063,6 +1091,7 @@ public class HistoryActivity extends AppCompatActivity {
         if (newColorBTNForegroundAccent != 0 && newColorBTNBackgroundAccent != 0) {
             changeButtonColors(findViewById(R.id.historyUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
             changeTextViewColors(newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            changeTextViewAndEditTextColors(newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
         }
     }
 
@@ -1153,6 +1182,60 @@ public class HistoryActivity extends AppCompatActivity {
                 // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
                 if (v instanceof ViewGroup) {
                     changeTextViewColorsRecursive((ViewGroup) v, foregroundColor, backgroundColor);
+                }
+            }
+        }
+    }
+
+    /**
+     * This method is used to change the colors of the TextViews and EditTexts in a given layout.
+     * @param textColor The color to be set as the text color of the TextViews and EditTexts.
+     *                        This should be a resolved color, not a resource id.
+     * @param backgroundColor The color to be set as the background color of the TextViews and the layout.
+     *                        This should be a resolved color, not a resource id.
+     */
+    private void changeTextViewAndEditTextColors(int textColor, int backgroundColor) {
+        ViewGroup layout = findViewById(R.id.historyUI).findViewById(R.id.history_scroll_linearlayout);
+        if (layout != null) {
+            for (int i = 0; i < layout.getChildCount(); i++) {
+                View v = layout.getChildAt(i);
+                // Check if the view is an EditText and change its text color
+                if (!"line".equals(v.getTag())) {
+                    if (v instanceof EditText) {
+                        ((EditText) v).setHintTextColor(textColor);
+                    }
+                    v.setBackgroundColor(backgroundColor);
+
+                    // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
+                    if (v instanceof ViewGroup) {
+                        changeTextViewAndEditTextColorsRecursive((ViewGroup) v, Color.parseColor("#D5D5D5"), backgroundColor);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Recursive method to change the colors of the TextViews and EditTexts in nested ViewGroups.
+     * @param viewGroup The ViewGroup whose children's text and background colors are to be changed.
+     * @param textColor The color to be set as the text color of the TextViews and EditTexts.
+     *                        This should be a resolved color, not a resource id.
+     * @param backgroundColor The color to be set as the background color of the TextViews and the layout.
+     *                        This should be a resolved color, not a resource id.
+     */
+    private void changeTextViewAndEditTextColorsRecursive(ViewGroup viewGroup, int textColor, int backgroundColor) {
+        for (int i = 0; i < viewGroup.getChildCount(); i++) {
+            View v = viewGroup.getChildAt(i);
+            // Check if the view is an EditText and change its text color
+            if (!"line".equals(v.getTag())) {
+                if (v instanceof EditText) {
+                    ((EditText) v).setHintTextColor(textColor);
+                }
+                v.setBackgroundColor(backgroundColor);
+
+                // If the child itself is a ViewGroup (e.g., a layout), call the function recursively
+                if (v instanceof ViewGroup) {
+                    changeTextViewAndEditTextColorsRecursive((ViewGroup) v, textColor, backgroundColor);
                 }
             }
         }

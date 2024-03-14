@@ -5,23 +5,26 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="22dp"
     android:layout_margin="10dp"
-    app:cardBackgroundColor="@color/white">
+    app:cardBackgroundColor="@color/white"
+    android:id="@+id/confirm_delete_layout">
 
     <LinearLayout
+        android:id="@+id/confirmOutline"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         android:background="@drawable/textview_border_thick"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="20dp">
 
         <TextView
+            android:id="@+id/confirm_delete_layout_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/historyConfirmTitle"
             android:gravity="center_horizontal|center_vertical"
+            android:text="@string/historyConfirmTitle"
+            android:textColor="@color/colorBTNForegroundAccent"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorBTNForegroundAccent"/>
+            android:textStyle="bold" />
 
         <View
             android:layout_width="match_parent"
@@ -37,10 +40,10 @@
                 android:id="@+id/deleteConfirmButton"
                 android:layout_width="160dp"
                 android:layout_height="40dp"
+                android:layout_marginEnd="2.5dp"
                 android:background="@drawable/textview_border"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="@string/historyConfirmDeleteText"
-                android:layout_marginEnd="2.5dp"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="16sp" />
 
@@ -48,9 +51,9 @@
                 android:id="@+id/cancelConfirmButton"
                 android:layout_width="160dp"
                 android:layout_height="40dp"
+                android:layout_marginStart="2.5dp"
                 android:background="@drawable/textview_border"
                 android:gravity="center_horizontal|center_vertical"
-                android:layout_marginStart="2.5dp"
                 android:text="@string/historyConfirmCancelText"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="16sp" />

@@ -59,11 +59,13 @@
         android:paddingEnd="10dp">
 
         <EditText
-            android:id="@+id/convertSpinnerNumber"
+            android:id="@+id/convertEditTextNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:cursorVisible="true"
             android:digits="0123456789.,-"
             android:inputType="numberDecimal"
@@ -72,7 +74,7 @@
             android:textColor="@color/black"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="5dp"
+            android:imeOptions="actionDone"
             android:paddingTop="10dp" />
 
         <Spinner
@@ -80,10 +82,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
             android:paddingTop="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/colorBTNBackgroundAccent"
             android:layout_margin="10dp"/>
 

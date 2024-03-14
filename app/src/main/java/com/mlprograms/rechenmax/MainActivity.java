@@ -2896,19 +2896,24 @@ public class MainActivity extends AppCompatActivity {
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 if(!getCalculateText().isEmpty()) {
-                    if(String.valueOf(getCalculateText().charAt(getCalculateText().length() - 1)).equals("(")) {
+                    if(getCalculateText().endsWith("(")) {
                         setCalculateText(removeOperators(getCalculateText().substring(0, getCalculateText().length() - 1)));
                     } else {
-                        setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
-                    }
+                        if(getCalculateText().length() > 1) {
+                            setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
 
-                    if(Character.isDigit(getCalculateText().charAt(getCalculateText().length() - 1))) {
-                        setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
-                        if(isInvalidInput(getResultText())) {
-                           setResultText(CalculatorEngine.calculate(balanceParentheses(removeOperatorsFromRight(getCalculateText()))));
+                            if(Character.isDigit(getCalculateText().charAt(getCalculateText().length() - 1))) {
+                                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+                                if(isInvalidInput(getResultText())) {
+                                    setResultText(CalculatorEngine.calculate(balanceParentheses(removeOperatorsFromRight(getCalculateText()))));
+                                }
+                            }
+                        } else {
+                            setCalculateText("");
                         }
                     }
                 }
+
                 if(getCalculateText().isEmpty()) {
                     setResultText("0");
                 } else {
