@@ -322,113 +322,49 @@ public class DataManager {
      */
     public void initializeSettings(Context applicationContext) {
         try {
-            if(getJSONSettingsData("selectedSpinnerSetting", applicationContext) == null) {
-                saveToJSONSettings("selectedSpinnerSetting", "System", applicationContext);
-            }
-            if(getJSONSettingsData("functionMode", applicationContext) == null) {
-                saveToJSONSettings("functionMode", "Deg", applicationContext);
-            }
-            if(getJSONSettingsData("settingReleaseNotesSwitch", applicationContext) == null) {
-                saveToJSONSettings("settingReleaseNotesSwitch", "true", applicationContext);
-            }
-            if(getJSONSettingsData("removeValue", applicationContext) == null) {
-                saveToJSONSettings("removeValue", "false", applicationContext);
-            }
-            if(getJSONSettingsData("settingsTrueDarkMode", applicationContext) == null) {
-                saveToJSONSettings("settingsTrueDarkMode", "false", applicationContext);
-            }
-            if(getJSONSettingsData("showPatchNotes", applicationContext) == null) {
-                saveToJSONSettings("showPatchNotes", "true", applicationContext);
-            }
-            if(getJSONSettingsData("disablePatchNotesTemporary", applicationContext) == null) {
-                saveToJSONSettings("disablePatchNotesTemporary", "false", applicationContext);
-            }
-            if(getJSONSettingsData("showReleaseNotesOnVeryFirstStart", applicationContext) == null) {
-                saveToJSONSettings("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
-            }
-            if(getJSONSettingsData("showScienceRow", applicationContext) == null) {
-                saveToJSONSettings("showScienceRow", "false", applicationContext);
-            }
-            if(getJSONSettingsData("rotate_op", applicationContext) == null) {
-                saveToJSONSettings("rotate_op", "false", applicationContext);
-            }
-            if(getJSONSettingsData("lastnumber", applicationContext) == null) {
-                saveToJSONSettings("lastnumber", "0", applicationContext);
-            }
-            if(getJSONSettingsData("historyTextViewNumber", applicationContext) == null) {
-                saveToJSONSettings("historyTextViewNumber", "0", applicationContext);
-            }
-            if(getJSONSettingsData("result_text", applicationContext) == null) {
-                saveToJSONSettings("result_text", "0", applicationContext);
-            }
-            if(getJSONSettingsData("calculate_text", applicationContext) == null) {
-                saveToJSONSettings("calculate_text", "", applicationContext);
-            }
-            if(getJSONSettingsData("lastop", applicationContext) == null) {
-                saveToJSONSettings("lastop", "+", applicationContext);
-            }
-            if(getJSONSettingsData("isNotation", applicationContext) == null) {
-                saveToJSONSettings("isNotation", "false", applicationContext);
-            }
-            if(getJSONSettingsData("eNotation", applicationContext) == null) {
-                saveToJSONSettings("eNotation", "false", applicationContext);
-            }
-            if(getJSONSettingsData("showShiftRow", applicationContext) == null) {
-                saveToJSONSettings("showShiftRow", "false", applicationContext);
-            }
-            if(getJSONSettingsData("shiftRow", applicationContext) == null) {
-                saveToJSONSettings("shiftRow", "1", applicationContext);
-            }
-            if(getJSONSettingsData("logX", applicationContext) == null) {
-                saveToJSONSettings("logX", "false", applicationContext);
-            }
-            if(getJSONSettingsData("calculationMode", applicationContext) == null) {
-                saveToJSONSettings("calculationMode", "Standard", applicationContext);
-            }
-            if(getJSONSettingsData("currentVersion", applicationContext) == null) {
-                saveToJSONSettings("currentVersion", "1.6.3", applicationContext);
-            }
-            if(getJSONSettingsData("old_version", applicationContext) == null) {
-                saveToJSONSettings("old_version", "0", applicationContext);
-            }
-            if(getJSONSettingsData("returnToCalculator", applicationContext) == null) {
-                saveToJSONSettings("returnToCalculator", "false", applicationContext);
-            }
-            if(getJSONSettingsData("allowNotification", applicationContext) == null) {
-                saveToJSONSettings("allowNotification", "false", applicationContext);
-            }
-            if(getJSONSettingsData("allowDailyNotifications", applicationContext) == null) {
-                saveToJSONSettings("allowDailyNotifications", "false", applicationContext);
-            }
-            if(getJSONSettingsData("allowRememberNotifications", applicationContext) == null) {
-                saveToJSONSettings("allowRememberNotifications", "false", applicationContext);
-            }
-            if(getJSONSettingsData("allowDailyNotificationsActive", applicationContext) == null) {
-                saveToJSONSettings("allowDailyNotificationsActive", "true", applicationContext);
-            }
-            if(getJSONSettingsData("allowRememberNotificationsActive", applicationContext) == null) {
-                saveToJSONSettings("allowRememberNotificationsActive", "true", applicationContext);
-            }
-            if(getJSONSettingsData("notificationSent", applicationContext) == null) {
-                saveToJSONSettings("notificationSent", "false", applicationContext);
-            }
-            if(getJSONSettingsData("pressedCalculate", applicationContext) == null) {
-                saveToJSONSettings("pressedCalculate", "false", applicationContext);
-            }
-            if(getJSONSettingsData("refactorPI", applicationContext) == null) {
-                saveToJSONSettings("refactorPI", "true", applicationContext);
-            }
-            if(getJSONSettingsData("historyMode", applicationContext) == null) {
-                saveToJSONSettings("historyMode", "single", applicationContext);
-            }
-            if(getJSONSettingsData("dayPassed", applicationContext) == null) {
-                saveToJSONSettings("dayPassed", "true", applicationContext);
-            }
-            if(getJSONSettingsData("convertMode", applicationContext) == null) {
-                saveToJSONSettings("convertMode", "E", applicationContext);
-            }
+            initializeSetting("selectedSpinnerSetting", "System", applicationContext);
+            initializeSetting("functionMode", "Deg", applicationContext);
+            initializeSetting("settingReleaseNotesSwitch", "true", applicationContext);
+            initializeSetting("removeValue", "false", applicationContext);
+            initializeSetting("settingsTrueDarkMode", "false", applicationContext);
+            initializeSetting("showPatchNotes", "true", applicationContext);
+            initializeSetting("disablePatchNotesTemporary", "false", applicationContext);
+            initializeSetting("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
+            initializeSetting("showScienceRow", "false", applicationContext);
+            initializeSetting("rotate_op", "false", applicationContext);
+            initializeSetting("lastnumber", "0", applicationContext);
+            initializeSetting("historyTextViewNumber", "0", applicationContext);
+            initializeSetting("result_text", "0", applicationContext);
+            initializeSetting("calculate_text", "", applicationContext);
+            initializeSetting("lastop", "+", applicationContext);
+            initializeSetting("isNotation", "false", applicationContext);
+            initializeSetting("eNotation", "false", applicationContext);
+            initializeSetting("showShiftRow", "false", applicationContext);
+            initializeSetting("shiftRow", "1", applicationContext);
+            initializeSetting("logX", "false", applicationContext);
+            initializeSetting("calculationMode", "Standard", applicationContext);
+            initializeSetting("currentVersion", "1.6.3", applicationContext);
+            initializeSetting("old_version", "0", applicationContext);
+            initializeSetting("returnToCalculator", "false", applicationContext);
+            initializeSetting("allowNotification", "false", applicationContext);
+            initializeSetting("allowDailyNotifications", "false", applicationContext);
+            initializeSetting("allowRememberNotifications", "false", applicationContext);
+            initializeSetting("allowDailyNotificationsActive", "true", applicationContext);
+            initializeSetting("allowRememberNotificationsActive", "true", applicationContext);
+            initializeSetting("notificationSent", "false", applicationContext);
+            initializeSetting("pressedCalculate", "false", applicationContext);
+            initializeSetting("refactorPI", "true", applicationContext);
+            initializeSetting("historyMode", "single", applicationContext);
+            initializeSetting("dayPassed", "true", applicationContext);
+            initializeSetting("convertMode", "E", applicationContext);
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void initializeSetting(String key, String defaultValue, Context applicationContext) throws JSONException {
+        if (getJSONSettingsData(key, applicationContext) == null) {
+            saveToJSONSettings(key, defaultValue, applicationContext);
         }
     }
 

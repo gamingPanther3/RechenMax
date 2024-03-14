@@ -38,6 +38,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -98,23 +99,35 @@ public class MainActivity extends AppCompatActivity {
 
         // If it's the first run of the application
         try {
-            if (!Objects.equals(dataManager.getJSONSettingsData("currentVersion", getApplicationContext()).getString("value"), dataManager.getJSONSettingsData("old_version", getApplicationContext()).getString("value"))) {
-                // Set the flag to show patch notes and switch to the patch notes layout
-                dataManager.saveToJSONSettings("showPatchNotes", true, getApplicationContext());
-                dataManager.saveToJSONSettings("old_version", dataManager.getJSONSettingsData("currentVersion", getApplicationContext()).getString("value"), getApplicationContext());
-                dataManager.saveToJSONSettings("returnToCalculator", "true", getApplicationContext());
-                HelpActivity.setMainActivityContext(this);
-                Intent intent = new Intent(this, HelpActivity.class);
-                startActivity(intent);
-            } else {
-                // Read values from DataManager
-                final String showPatNot = dataManager.getJSONSettingsData("showPatchNotes", getApplicationContext()).getString("value");
-                final String disablePatNotTemp = dataManager.getJSONSettingsData("disablePatchNotesTemporary", getApplicationContext()).getString("value");
+            JSONObject currentVersionData = dataManager.getJSONSettingsData("currentVersion", getApplicationContext());
+            JSONObject oldVersionData = dataManager.getJSONSettingsData("old_version", getApplicationContext());
 
-                // If patch notes are set to be shown and not temporarily disabled, switch to patch notes layout
-                if (showPatNot.equals("true") && disablePatNotTemp.equals("false")) {
-                    setContentView(R.layout.patchnotes);
-                    checkDarkmodeSetting();
+            if (currentVersionData.has("value") && oldVersionData.has("value")) {
+                String currentValue = currentVersionData.getString("value");
+                String oldValue = oldVersionData.getString("value");
+
+                if (!Objects.equals(currentValue, oldValue)) {
+                    // Set the flag to show patch notes and switch to the patch notes layout
+                    dataManager.saveToJSONSettings("showPatchNotes", true, getApplicationContext());
+                    dataManager.saveToJSONSettings("old_version", currentValue, getApplicationContext());
+                    dataManager.saveToJSONSettings("returnToCalculator", "true", getApplicationContext());
+                    HelpActivity.setMainActivityContext(this);
+                    startActivity(new Intent(this, HelpActivity.class));
+                } else {
+                    // Read values from DataManager
+                    final JSONObject showPatchNotesData = dataManager.getJSONSettingsData("showPatchNotes", getApplicationContext());
+                    final JSONObject disablePatchNotesTempData = dataManager.getJSONSettingsData("disablePatchNotesTemporary", getApplicationContext());
+
+                    if (showPatchNotesData.has("value") && disablePatchNotesTempData.has("value")) {
+                        String showPatchNotesValue = showPatchNotesData.getString("value");
+                        String disablePatchNotesTempValue = disablePatchNotesTempData.getString("value");
+
+                        // If patch notes are set to be shown and not temporarily disabled, switch to patch notes layout
+                        if ("true".equals(showPatchNotesValue) && "false".equals(disablePatchNotesTempValue)) {
+                            setContentView(R.layout.patchnotes);
+                            checkDarkmodeSetting();
+                        }
+                    }
                 }
             }
         } catch (JSONException e) {

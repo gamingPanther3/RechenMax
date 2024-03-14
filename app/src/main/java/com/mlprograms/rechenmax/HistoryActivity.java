@@ -134,7 +134,7 @@ public class HistoryActivity extends AppCompatActivity {
                 } else {
                     hideEmptyHistoryTextView();
 
-                    for (int i = historyTextViewNumber; i >= Math.max(0, historyTextViewNumber - (2 * ITEMS_PER_LOAD)); i--) {
+                    for (int i = historyTextViewNumber; i >= Math.max(0, historyTextViewNumber - ITEMS_PER_LOAD); i--) {
                         currentHistoryTextViewNumber = i;
                         try {
                             if (dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value").equals("multiple")) {
@@ -193,7 +193,7 @@ public class HistoryActivity extends AppCompatActivity {
     private boolean isEndOfScrollView(ScrollView scrollView) {
         View view = scrollView.getChildAt(scrollView.getChildCount() - 1);
         int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
-        return diff <= 400;
+        return diff <= 800;
     }
 
     /**
