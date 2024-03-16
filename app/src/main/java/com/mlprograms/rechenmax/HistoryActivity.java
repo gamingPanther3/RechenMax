@@ -135,33 +135,24 @@ public class HistoryActivity extends AppCompatActivity {
                 } else {
                     hideEmptyHistoryTextView();
 
-                    for (int i = historyTextViewNumber; i >= Math.max(0, historyTextViewNumber - ITEMS_PER_LOAD); i--) {
-                        currentHistoryTextViewNumber = i;
-                        try {
-                            if (dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value").equals("multiple")) {
-                                LinearLayout linearLayout;
-                                try {
-                                    linearLayout = createHistoryTextViewMultiple(i);
-                                    if(linearLayout != null) {
-                                        innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
-                                    }
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
+                    try {
+                        final String mode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
+
+                        for (int i = historyTextViewNumber; i >= Math.max(0, historyTextViewNumber - ITEMS_PER_LOAD); i--) {
+                            currentHistoryTextViewNumber = i;
+
+                            LinearLayout linearLayout;
+                            if (mode.equals("multiple")) {
+                                linearLayout = createHistoryTextViewMultiple(i);
                             } else {
-                                LinearLayout linearLayout;
-                                try {
-                                    linearLayout = createHistoryTextViewSingle(i);
-                                    if(linearLayout != null) {
-                                        innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
-                                    }
-                                } catch (JSONException e) {
-                                    throw new RuntimeException(e);
-                                }
+                                linearLayout = createHistoryTextViewSingle(i);
                             }
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
+                            if(linearLayout != null) {
+                                innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
+                            }
                         }
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
                     }
 
                     TextView loadTextView = findViewById(R.id.history_load_textview);
@@ -176,9 +167,9 @@ public class HistoryActivity extends AppCompatActivity {
 
         ScrollView historyScrollView = findViewById(R.id.history_scrollview);
         historyScrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
-            if (isEndOfScrollView(historyScrollView) && !isEndReached) {
+            if (!isEndReached && isEndOfScrollView(historyScrollView)) {
                 isEndReached = true;
-                loadLayoutToUI(null);
+                loadLayoutToUI(1);
             } else {
                 isEndReached = false;
             }
@@ -194,7 +185,7 @@ public class HistoryActivity extends AppCompatActivity {
     private boolean isEndOfScrollView(ScrollView scrollView) {
         View view = scrollView.getChildAt(scrollView.getChildCount() - 1);
         int diff = (view.getBottom() - (scrollView.getHeight() + scrollView.getScrollY()));
-        return diff <= 800;
+        return diff <= 1000;
     }
 
     /**
@@ -205,32 +196,28 @@ public class HistoryActivity extends AppCompatActivity {
             ITEMS_PER_LOAD = num;
         }
 
-        if (historyTextViewNumber != 0 && currentHistoryTextViewNumber <= historyTextViewNumber) {
-            int loadedItems = 0;
-            for (int i = currentHistoryTextViewNumber - 1; i >= Math.max(0, currentHistoryTextViewNumber - ITEMS_PER_LOAD); i--) {
-                if (i >= 0 && loadedItems < ITEMS_PER_LOAD) {
-                    currentHistoryTextViewNumber = i;
-                    try {
-                        String historyMode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
-                        LinearLayout linearLayout;
-                        if ("multiple".equals(historyMode)) {
-                            linearLayout = createHistoryTextViewMultiple(i);
-                        } else {
-                            linearLayout = createHistoryTextViewSingle(i);
-                        }
-                        if (linearLayout != null) {
-                            innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
-                            loadedItems++;
-                        }
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    break;
+        if (historyTextViewNumber == 0 || currentHistoryTextViewNumber > historyTextViewNumber) {
+            return;
+        }
+
+        int loadedItems = 0;
+        try {
+            final String historyMode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
+            int startIndex = currentHistoryTextViewNumber - 1;
+            int endIndex = Math.max(0, currentHistoryTextViewNumber - ITEMS_PER_LOAD);
+
+            for (int i = startIndex; i >= endIndex && loadedItems < ITEMS_PER_LOAD; i--) {
+                currentHistoryTextViewNumber = i;
+                LinearLayout linearLayout = "multiple".equals(historyMode) ? createHistoryTextViewMultiple(i) : createHistoryTextViewSingle(i);
+                if (linearLayout != null) {
+                    innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
+                    loadedItems++;
                 }
             }
-            switchDisplayMode();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
         }
+        switchDisplayMode();
         ITEMS_PER_LOAD = 10;
     }
 
