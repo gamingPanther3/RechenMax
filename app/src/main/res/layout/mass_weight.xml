@@ -1,9 +1,739 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="0dp"
+    android:orientation="vertical"
+    android:layout_gravity="bottom">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
 
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertAtomareMasseneinheit"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
 
-</ScrollView>
+        <HorizontalScrollView
+            android:id="@+id/convertAtomareMasseneinheitScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertAtomareMasseneinheitTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertMikrogramm"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertconvertMikrogrammScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertconvertMikrogrammTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertMilligramm"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertMilligrammScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertMilligrammTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertZentigramm"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertZentigrammScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertZentigrammTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertGramm"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertGrammScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertGrammTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertHektogramm"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertHektogrammScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertHektogrammTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertDekagramm"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertDekagrammScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertDekagrammTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKarat"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertKaratScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertKaratTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNewton"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertNewtonScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertNewtonTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKilogramm"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertKubikInchScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertKilogrammTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertTonne"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertTonneScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertTonneTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKilotonne"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertKilotonneScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertKilotonneTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertGrains"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertGrainsScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertGrainsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertDrams"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertDramsScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertDramsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertUnzen"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertUnzenScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertUnzenTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertPfund"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertPfundScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertPfundTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertShortTons"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertShortTonsScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertShortTonsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertLongTons"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertLongTonsScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertLongTonsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+</LinearLayout>

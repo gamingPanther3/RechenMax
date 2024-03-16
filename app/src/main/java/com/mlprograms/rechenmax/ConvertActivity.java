@@ -32,8 +32,10 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class ConvertActivity extends AppCompatActivity {
+
     DataManager dataManager;
     private static MainActivity mainActivity;
+
     private Spinner customSpinnerMode;
     private Spinner customSpinnerMeasurement;
     private EditText customEditText;
@@ -44,9 +46,11 @@ public class ConvertActivity extends AppCompatActivity {
     private ArrayList<CustomItems> customItemListStorage = new ArrayList<>();
     private ArrayList<CustomItems> customItemListDistance = new ArrayList<>();
     private ArrayList<CustomItems> customItemListVolume = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListMass = new ArrayList<>();
 
     private CustomAdapter customAdapter;
     private CustomAdapter customAdapterMeasurement;
+
     private boolean firstStart = true;
 
     /**
@@ -78,6 +82,7 @@ public class ConvertActivity extends AppCompatActivity {
         customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard));
         customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
         customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
+        customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh));
 
         customAdapter = new CustomAdapter(this, customList);
 
@@ -110,6 +115,10 @@ public class ConvertActivity extends AppCompatActivity {
                 case "V":
                     customSpinnerMode.setSelection(4);
                     customAdapterMeasurement = new CustomAdapter(this, customItemListVolume);
+                    break;
+                case "M":
+                    customSpinnerMode.setSelection(5);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListMass);
                     break;
             }
 
@@ -147,6 +156,10 @@ public class ConvertActivity extends AppCompatActivity {
                 } else if(spinnerText.equals(getString(R.string.convertVolume))) {
                     new_value = "V";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListVolume);
+                }
+                else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
+                    new_value = "M";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListMass);
                 }
 
                 final String mode;
@@ -310,6 +323,25 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUS)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUK)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertBarrels)));
+
+        customItemListMass.add(new CustomItems(getString(R.string.convertAtomareMasseneinheit)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertMikrogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertMilligramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertZentigramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertGramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertHektogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertDekagramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertKarat)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertNewton)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertKilogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertTonne)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertKilotonne)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertGrains)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertDrams)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertUnzen)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertPfund)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertShortTons)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertLongTons)));
     }
 
     @SuppressLint("InflateParams")
@@ -327,6 +359,8 @@ public class ConvertActivity extends AppCompatActivity {
             dataManager.updateValuesInJSONSettingsData("convertMode", "value","E", getMainActivityContext());
         } else if(spinnerText.equals(getString(R.string.convertVolume))) {
             dataManager.updateValuesInJSONSettingsData("convertMode", "value","V", getMainActivityContext());
+        } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","M", getMainActivityContext());
         }
 
         if(spinnerText.equals(getString(R.string.convertAngle))) {
@@ -339,6 +373,8 @@ public class ConvertActivity extends AppCompatActivity {
             otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.distance, null);
         } else if(spinnerText.equals(getString(R.string.convertVolume))) {
             otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.volume, null);
+        } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
+            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.mass_weight, null);
         }
 
         if (otherLinearLayout != null) {
@@ -495,6 +531,7 @@ public class ConvertActivity extends AppCompatActivity {
                             customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard_light));
                             customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_light));
                             customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_light));
+                            customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh_light));
 
                             customAdapter = new CustomAdapter(this, customList);
                             customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
@@ -521,6 +558,7 @@ public class ConvertActivity extends AppCompatActivity {
                             customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard_true_darkmode));
                             customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_true_darkmode));
                             customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh_true_darkmode));
 
                             customAdapter = new CustomAdapter(this, customList);
                             customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
@@ -549,6 +587,7 @@ public class ConvertActivity extends AppCompatActivity {
                         customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard));
                         customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
                         customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
+                        customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh));
 
                         customAdapter = new CustomAdapter(this, customList);
                         customAdapter.setTextColor(Color.parseColor("#151515"));
@@ -576,6 +615,7 @@ public class ConvertActivity extends AppCompatActivity {
                 customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard));
                 customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
                 customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
+                customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh));
 
                 customAdapter = new CustomAdapter(this, customList);
                 customAdapter.setTextColor(Color.parseColor("#151515"));
@@ -610,6 +650,7 @@ public class ConvertActivity extends AppCompatActivity {
                     customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard_light));
                     customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_light));
                     customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_light));
+                    customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh_light));
 
                     customAdapter = new CustomAdapter(this, customList);
                     customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
@@ -635,6 +676,7 @@ public class ConvertActivity extends AppCompatActivity {
                     customList.add(new CustomItems(getString(R.string.convertStorage), R.drawable.sdcard_true_darkmode));
                     customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_true_darkmode));
                     customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh_true_darkmode));
 
                     customAdapter = new CustomAdapter(this, customList);
                     customAdapter.setTextColor(Color.parseColor("#D5D5D5"));

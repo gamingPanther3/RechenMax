@@ -178,6 +178,8 @@
     <string name="convertStorage">Stockage numérique</string>
     <string name="convertDistance">Distance</string>
     <string name="convertVolume">Volume</string>
+    <string name="convertMassWeigth">Masse / Poids</string>
+
 
     <string name="convert">Convertir</string>
     <string name="convertTitle">Convertisseur</string>
@@ -251,6 +253,25 @@
     <string name="convertGallonUS">Gallon - US (Gal)</string>
     <string name="convertGallonUK">Gallon - UK (Gal)</string>
     <string name="convertBarrels">Barils - US</string>
+    <string name="convertAtomareMasseneinheit">Unité de masse atomique (u)</string>
+    <string name="convertMikrogramm">Microgramme (μg)</string>
+    <string name="convertMilligramm">Milligramme (mg)</string>
+    <string name="convertZentigramm">Centigramme (cg)</string>
+    <string name="convertGramm">Gramme (g)</string>
+    <string name="convertHektogramm">Hectogramme (hg)</string>
+    <string name="convertDekagramm">Décagramme (dag)</string>
+    <string name="convertKarat">Carat (CD)</string>
+    <string name="convertNewton">Newton (N)</string>
+    <string name="convertKilogramm">Kilogramme (kg)</string>
+    <string name="convertTonne">Tonne (t)</string>
+    <string name="convertKilotonne">Kilotonne (kt)</string>
+    <string name="convertGrains">Grains (gr)</string>
+    <string name="convertDrams">Drams</string>
+    <string name="convertUnzen">Onces (oz)</string>
+    <string name="convertPfund">Livre (lb)</string>
+    <string name="convertShortTons">Tonne courte (US)</string>
+    <string name="convertLongTons">Tonne longue (UK)</string>
+
 
     <string name="delete">Supprimer</string>
     <string name="settingsPI">Avec cette fonction, vous pouvez définir que chaque fois que vous saisissez le nombre \'3,14\', il sera automatiquement remplacé par le symbole de Pi. Cela simplifie l\'entrée de Pi dans vos calculs, vous permettant de vous concentrer sur la tâche à accomplir sans avoir à rechercher constamment le symbole.</string>

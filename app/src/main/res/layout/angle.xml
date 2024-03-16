@@ -22,15 +22,22 @@
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
-        <TextView
+        <HorizontalScrollView
+            android:id="@+id/convertDegScrollView"
             android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertNull"
-            android:textSize="17sp"
-            android:gravity="end|center_vertical"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertDegTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <View
@@ -56,15 +63,22 @@
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
-        <TextView
+        <HorizontalScrollView
+            android:id="@+id/convertRadScrollView"
             android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertNull"
-            android:textSize="17sp"
-            android:gravity="end|center_vertical"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertRadTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <View
@@ -90,15 +104,22 @@
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
-        <TextView
+        <HorizontalScrollView
+            android:id="@+id/convertPitchScrollView"
             android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertNull"
-            android:textSize="17sp"
-            android:gravity="end|center_vertical"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertPitchTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <View
@@ -124,15 +145,22 @@
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
-        <TextView
+        <HorizontalScrollView
+            android:id="@+id/convertGonScrollView"
             android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertNull"
-            android:textSize="17sp"
-            android:gravity="end|center_vertical"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertGonTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <View
@@ -158,15 +186,22 @@
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
-        <TextView
+        <HorizontalScrollView
+            android:id="@+id/convertMradScrollView"
             android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertNull"
-            android:textSize="17sp"
-            android:gravity="end|center_vertical"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertMradTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <View
@@ -192,15 +227,22 @@
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
-        <TextView
+        <HorizontalScrollView
+            android:id="@+id/convertMinuteOfTheArcScrollView"
             android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertNull"
-            android:textSize="17sp"
-            android:gravity="end|center_vertical"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertMinuteOfTheArcTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
     </LinearLayout>
 
     <View
@@ -226,14 +268,21 @@
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
-        <TextView
+        <HorizontalScrollView
+            android:id="@+id/convertSecondArcScrollView"
             android:layout_width="0dp"
-            android:layout_height="35dp"
-            android:layout_weight="1"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertNull"
-            android:textSize="17sp"
-            android:gravity="end|center_vertical"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/convertSecondArcTextView"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end"/>
+        </HorizontalScrollView>
     </LinearLayout>
 </LinearLayout>
