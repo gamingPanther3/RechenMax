@@ -59,6 +59,9 @@ import java.util.Map;
 //  | refactorPI                       | true / false                     | MainActivity                         |
 //  | historyMode                      | single / multiple                | MainActivity                         |
 //  | convertMode                      | W / F / S / E / V            (*) | SettingsActivity                     |
+//  | WMax / FMax / SMax / EMax / VMax | 6 / 11 / 11 / 14 / 22            | ConvertActivity                      |
+//  | W / F / S / E / VCurrent         | 0 - ...Max                       | ConvertActivity                      |
+
 // * = Winkel / Fläche / Speicher / Entfernung / Volumen
 
 public class DataManager {
@@ -179,7 +182,7 @@ public class DataManager {
                 if (jsonObj.has(name)) {
                     return jsonObj.getJSONObject(name);
                 } else {
-                    Log.e("getDataForName", "Data with name " + name + " not found.");
+                    Log.e("getDataForName", "Data with name " + name + " not found. Trying to Create ...");
                 }
             } else {
                 Log.e("getDataForName", "JSON file not found.");
@@ -365,6 +368,19 @@ public class DataManager {
     private void initializeSetting(String key, String defaultValue, Context applicationContext) throws JSONException {
         if (getJSONSettingsData(key, applicationContext) == null) {
             saveToJSONSettings(key, defaultValue, applicationContext);
+
+            if(key.equals("convertMode")) {
+                addValueWithCustomNameToJSONSettings("convertMode", "WCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "FCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "SCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "ECurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "VCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "WNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "FNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "SNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "ENumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "VNumber",  "", applicationContext);
+            }
         }
     }
 

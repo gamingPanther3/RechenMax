@@ -36,6 +36,7 @@ public class ConvertActivity extends AppCompatActivity {
     private static MainActivity mainActivity;
     private Spinner customSpinnerMode;
     private Spinner customSpinnerMeasurement;
+    private EditText customEditText;
     
     private ArrayList<CustomItems> customList = new ArrayList<>();
     private ArrayList<CustomItems> customItemListAngle = new ArrayList<>();
@@ -69,6 +70,7 @@ public class ConvertActivity extends AppCompatActivity {
         // convert mode spinner
         customSpinnerMode = findViewById(R.id.convertCustomSpinner);
         customSpinnerMeasurement = findViewById(R.id.convertSpinnerMessurement);
+        customEditText = findViewById(R.id.convertEditTextNumber);
 
         customList = new ArrayList<>();
         customList.add(new CustomItems(getString(R.string.convertAngle), R.drawable.angle));
@@ -83,12 +85,12 @@ public class ConvertActivity extends AppCompatActivity {
             customSpinnerMode.setAdapter(customAdapter);
         }
 
-        if(customSpinnerMeasurement != null) {
-            customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
-        }
-
         try {
-            switch (dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value")) {
+            final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+            final int pos = Integer.parseInt(dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString(mode + "Current"));
+            final String number = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString(mode + "Number");
+
+            switch (mode) {
                 case "W":
                     customSpinnerMode.setSelection(0);
                     customAdapterMeasurement = new CustomAdapter(this, customItemListAngle);
@@ -114,7 +116,9 @@ public class ConvertActivity extends AppCompatActivity {
             if(customSpinnerMeasurement != null) {
                 customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
                 customAdapterMeasurement.notifyDataSetChanged();
+                customSpinnerMeasurement.setSelection(pos);
             }
+            customEditText.setText(number);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -145,18 +149,28 @@ public class ConvertActivity extends AppCompatActivity {
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListVolume);
                 }
 
+                final String mode;
+                final int pos;
+                final String number;
                 try {
-                    if(!dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value").equals(new_value) || firstStart) {
-                        if(customSpinnerMeasurement != null) {
-                            customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
-                        }
-
-                        firstStart = false;
-                        changeConvertModes(spinnerText);
-                        switchDisplayMode();
-                    }
+                    mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+                    pos = Integer.parseInt(dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString(mode + "Current"));
+                    number = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString(mode + "Number");
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
+                }
+
+                customEditText.setText(number);
+
+                if(!mode.equals(new_value) || firstStart) {
+                    if(customSpinnerMeasurement != null) {
+                        customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
+                        customSpinnerMeasurement.setSelection(pos);
+                    }
+
+                    firstStart = false;
+                    changeConvertModes(spinnerText);
+                    switchDisplayMode();
                 }
             }
 
@@ -168,19 +182,57 @@ public class ConvertActivity extends AppCompatActivity {
 
         switchDisplayMode();
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) EditText editText = findViewById(R.id.convertEditTextNumber);
+        EditText editText = findViewById(R.id.convertEditTextNumber);
         editText.setMaxLines(1);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         editText.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
+                final String inputText = editText.getText().toString();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 editText.clearFocus();
 
+                try {
+                    final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+                    dataManager.updateValuesInJSONSettingsData(
+                            "convertMode",
+                            mode + "Number",
+                            inputText,
+                            getMainActivityContext()
+                    );
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
                 return true;
             }
             return false;
+        });
+
+        customSpinnerMeasurement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                try {
+                    final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+
+                    dataManager.updateValuesInJSONSettingsData(
+                            "convertMode",
+                            mode + "Current",
+                            String.valueOf(position),
+                            getMainActivityContext()
+                    );
+
+                    //Log.e("DEBUG", dataManager.getAllDataFromJSONSettings(getMainActivityContext()).toString());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
         });
     }
 
@@ -600,6 +652,15 @@ public class ConvertActivity extends AppCompatActivity {
         }
         if(customSpinnerMode != null) {
             customSpinnerMode.setSelection(index);
+        }
+        if(customSpinnerMeasurement != null) {
+            try {
+                final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+                final int pos = Integer.parseInt(dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString(mode + "Current"));
+                customSpinnerMeasurement.setSelection(pos);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

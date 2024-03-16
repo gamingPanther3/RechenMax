@@ -176,48 +176,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-    }
 
-
-    /**
-     * Prints and logs various application settings for debugging purposes.
-     */
-    public void showAllSettings() {
-        // Print and log each application setting
-        try {
-            System.out.println("\n");
-            Log.i("all settings", "---       all settings        ---");
-            Log.i("showAllSettings", "selectedSpinnerSetting:          :'" + dataManager.getJSONSettingsData("selectedSpinnerSetting", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "functionMode                     :'" + dataManager.getJSONSettingsData("functionMode", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "settingReleaseNotesSwitch        :'" + dataManager.getJSONSettingsData("settingReleaseNotesSwitch", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "removeValue:                     :'" + dataManager.getJSONSettingsData("removeValue", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "settingsTrueDarkMode             :'" + dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "showPatchNotes                   :'" + dataManager.getJSONSettingsData("showPatchNotes", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "disablePatchNotesTemporary       :'" + dataManager.getJSONSettingsData("disablePatchNotesTemporary", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "showReleaseNotesOnVeryFirstStart :'" + dataManager.getJSONSettingsData("showReleaseNotesOnVeryFirstStart", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "showScienceRow                   :'" + dataManager.getJSONSettingsData("showScienceRow", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "rotate_op                        :'" + dataManager.getJSONSettingsData("rotate_op", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "lastnumber                       :'" + dataManager.getJSONSettingsData("lastnumber", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "historyTextViewNumber            :'" + dataManager.getJSONSettingsData("historyTextViewNumber", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "result_text                      :'" + dataManager.getJSONSettingsData("result_text", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "calculate_text                   :'" + dataManager.getJSONSettingsData("calculate_text", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "lastop                           :'" + dataManager.getJSONSettingsData("lastop", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "isNotation                       :'" + dataManager.getJSONSettingsData("isNotation", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "eNotation                        :'" + dataManager.getJSONSettingsData("eNotation", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "showShiftRow                     :'" + dataManager.getJSONSettingsData("showShiftRow", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "shiftRow                         :'" + dataManager.getJSONSettingsData("shiftRow", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "logX                             :'" + dataManager.getJSONSettingsData("logX", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "calculationMode                  :'" + dataManager.getJSONSettingsData("calculationMode", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "currentVersion                   :'" + dataManager.getJSONSettingsData("currentVersion", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "old_version                      :'" + dataManager.getJSONSettingsData("old_version", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "returnToCalculator               :'" + dataManager.getJSONSettingsData("returnToCalculator", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "allowDailyNotifications          :'" + dataManager.getJSONSettingsData("allowDailyNotifications", getApplicationContext()) + "'");
-            Log.i("showAllSettings", "notificationSent                 :'" + dataManager.getJSONSettingsData("notificationSent", getApplicationContext()) + "'");
-            Log.i("all settings", "---       all settings        ---");
-            System.out.println("\n");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        //Log.e("DEBUG", dataManager.getAllDataFromJSONSettings(getApplicationContext()).toString());
     }
 
     /**
