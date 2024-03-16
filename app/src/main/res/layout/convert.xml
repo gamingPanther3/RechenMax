@@ -58,24 +58,29 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
 
-        <EditText
-            android:id="@+id/convertEditTextNumber"
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:cursorVisible="true"
-            android:digits="0123456789.,-"
-            android:inputType="numberDecimal"
-            android:background="@color/colorBTNBackgroundAccent"
-            android:hint="@string/converterPlaceHolder"
-            android:textColor="@color/black"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:imeOptions="actionDone"
-            android:paddingTop="10dp" />
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/convertEditTextNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:cursorVisible="true"
+                android:digits="0123456789.,-"
+                android:inputType="numberDecimal"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:hint="@string/converterPlaceHolder"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:imeOptions="actionDone"
+                android:paddingTop="10dp"/>
+        </HorizontalScrollView>
 
         <Spinner
             android:id="@+id/convertSpinnerMessurement"

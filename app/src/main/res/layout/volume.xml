@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:orientation="vertical"
-    android:layout_gravity="bottom">
+    android:layout_gravity="bottom"
+    android:id="@+id/volumeLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,19 +25,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertMikroliterScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertMikroliterTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -65,19 +66,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertMilliliterScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertMilliliterTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -106,19 +107,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertDeziliterScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertDeziliterTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -147,19 +148,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertLiterScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertLiterTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -188,19 +189,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertZentiliterScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertZentiliterTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -229,19 +230,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertMetrischeTasseScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertMetrischeTasseTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -270,19 +271,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertKubikmillimeterScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertKubikmillimeterTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -311,19 +312,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertKubikzentimeterScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertKubikzentimeterTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -352,19 +353,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertKubikmeterScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertKubikmeterTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -393,19 +394,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertKubikInchScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertKubikInchTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -434,19 +435,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertKubikFeetScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertKubikFeetTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -475,19 +476,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertKubikYardScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertKubikYardTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -516,19 +517,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertGillsUSScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertGillsUSTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -557,19 +558,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertGillsUKScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertGillsUKTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -598,19 +599,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertTeaspoonsUSScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertTeaspoonsUSTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -639,19 +640,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertTeaspoonsUKScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertTeaspoonsUKTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -680,19 +681,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertTablespoonsUSScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertTablespoonsUSTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -721,19 +722,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertTablespoonsUKScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertTablespoonsUKTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -762,19 +763,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertCupsUSScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertCupsUSTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -803,19 +804,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertCupsUKScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertCupsUKTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -844,19 +845,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertGallonUSScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertGallonUSTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -885,19 +886,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertGallonUKScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertGallonUKTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 
@@ -926,19 +927,19 @@
 
         <HorizontalScrollView
             android:id="@+id/convertBarrelsScrollView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_gravity="end|center_vertical">
 
             <TextView
                 android:id="@+id/convertBarrelsTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:text="@string/convertNull"
                 android:textSize="17sp"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
         </HorizontalScrollView>
     </LinearLayout>
 </LinearLayout>

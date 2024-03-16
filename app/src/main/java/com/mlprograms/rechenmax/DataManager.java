@@ -366,6 +366,9 @@ public class DataManager {
 
     private void initializeSetting(String key, String defaultValue, Context applicationContext) throws JSONException {
         if (getJSONSettingsData(key, applicationContext) == null) {
+            if(key.equals("historyTextViewNumber")) {
+                saveToHistory(key, defaultValue, applicationContext);
+            }
             saveToJSONSettings(key, defaultValue, applicationContext);
 
             if(key.equals("convertMode")) {
@@ -440,6 +443,35 @@ public class DataManager {
         }
     }
 
+    public void updateValuesInHistoryData(String name, String valueName, String newValue, Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), JSON_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                if (jsonObj.has(name)) {
+                    JSONObject dataObj = jsonObj.getJSONObject(name);
+                    dataObj.put(valueName, newValue);
+                    jsonObj.put(name, dataObj);
+
+                    FileWriter fileWriter = new FileWriter(file);
+                    fileWriter.write(jsonObj.toString());
+                    fileWriter.flush();
+                    fileWriter.close();
+
+                    Log.d("updateDetailsInHistoryData", "Details for " + name + " updated successfully.");
+                } else {
+                    Log.e("updateDetailsInHistoryData", "Data with name " + name + " not found.");
+                }
+            } else {
+                Log.e("updateDetailsInHistoryData", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void saveToHistory(String name, String date, String details, String calculation, Context applicationContext) {
         JSONObject jsonObj = new JSONObject();
         try {
@@ -459,6 +491,35 @@ public class DataManager {
             dataObj.put("date", date);
             dataObj.put("details", details);
             dataObj.put("calculation", calculation);
+
+            jsonObj.put(name, dataObj);
+
+            try (FileWriter fileWriter = new FileWriter(file)) {
+                fileWriter.write(jsonObj.toString());
+                fileWriter.flush();
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveToHistory(String name, String value, Context applicationContext) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
+            if (!file.exists()) {
+                if (!file.createNewFile()) {
+                    Log.e("saveToHistory", "Failed to create new file");
+                    return;
+                }
+            }
+            String content = new String(Files.readAllBytes(file.toPath()));
+            if (!content.isEmpty()) {
+                jsonObj = new JSONObject(new JSONTokener(content));
+            }
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("value", value);
 
             jsonObj.put(name, dataObj);
 

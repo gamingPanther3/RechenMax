@@ -13,14 +13,16 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -44,7 +46,6 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,7 +66,7 @@ public class HistoryActivity extends AppCompatActivity {
     private static MainActivity mainActivity;
     private LinearLayout innerLinearLayout;
 
-    private final int ITEMS_PER_LOAD = 10;
+    private int ITEMS_PER_LOAD = 10;
     private int historyTextViewNumber = 0;
     private int currentHistoryTextViewNumber;
     private boolean isEndReached = false;
@@ -84,7 +85,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         dataManager = new DataManager();
         try {
-            historyTextViewNumber = Integer.parseInt(dataManager.getJSONSettingsData("historyTextViewNumber", getMainActivityContext()).getString("value"));
+            historyTextViewNumber = Integer.parseInt(dataManager.getHistoryData("historyTextViewNumber", getMainActivityContext()).getString("value"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -121,7 +122,7 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Integer value) {
                 if (value == null) {
-                    dataManager.saveToJSONSettings("historyTextViewNumber", "0", getApplicationContext());
+                    dataManager.saveToHistory("historyTextViewNumber", "0", getApplicationContext());
                 }
 
                 if (value == 0) {
@@ -142,7 +143,7 @@ public class HistoryActivity extends AppCompatActivity {
                                 try {
                                     linearLayout = createHistoryTextViewMultiple(i);
                                     if(linearLayout != null) {
-                                        innerLinearLayout.addView(linearLayout, innerLinearLayout.getChildCount());
+                                        innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
                                     }
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
@@ -152,7 +153,7 @@ public class HistoryActivity extends AppCompatActivity {
                                 try {
                                     linearLayout = createHistoryTextViewSingle(i);
                                     if(linearLayout != null) {
-                                        innerLinearLayout.addView(linearLayout, innerLinearLayout.getChildCount());
+                                        innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
                                     }
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
@@ -177,7 +178,7 @@ public class HistoryActivity extends AppCompatActivity {
         historyScrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
             if (isEndOfScrollView(historyScrollView) && !isEndReached) {
                 isEndReached = true;
-                updateUI();
+                loadLayoutToUI(null);
             } else {
                 isEndReached = false;
             }
@@ -199,9 +200,10 @@ public class HistoryActivity extends AppCompatActivity {
     /**
      * Updates the UI by creating and adding TextViews for each history entry.
      */
-    private void updateUI() {
-        // Perform UI updates here
-        //innerLinearLayout.removeAllViews();
+    private void loadLayoutToUI(@Nullable Integer num) {
+        if (num != null && num >= 0) {
+            ITEMS_PER_LOAD = num;
+        }
 
         if (historyTextViewNumber != 0 && currentHistoryTextViewNumber <= historyTextViewNumber) {
             int loadedItems = 0;
@@ -209,26 +211,16 @@ public class HistoryActivity extends AppCompatActivity {
                 if (i >= 0 && loadedItems < ITEMS_PER_LOAD) {
                     currentHistoryTextViewNumber = i;
                     try {
-                        if (dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value").equals("multiple")) {
-                            try {
-                                LinearLayout linearLayout = createHistoryTextViewSingle(i);
-                                if (linearLayout != null) {
-                                    innerLinearLayout.addView(linearLayout, innerLinearLayout.getChildCount());
-                                    loadedItems++;
-                                }
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
+                        String historyMode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
+                        LinearLayout linearLayout;
+                        if ("multiple".equals(historyMode)) {
+                            linearLayout = createHistoryTextViewMultiple(i);
                         } else {
-                            try {
-                                LinearLayout linearLayout = createHistoryTextViewMultiple(i);
-                                if (linearLayout != null) {
-                                    innerLinearLayout.addView(linearLayout, innerLinearLayout.getChildCount());
-                                    loadedItems++;
-                                }
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
+                            linearLayout = createHistoryTextViewSingle(i);
+                        }
+                        if (linearLayout != null) {
+                            innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
+                            loadedItems++;
                         }
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
@@ -239,6 +231,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
             switchDisplayMode();
         }
+        ITEMS_PER_LOAD = 10;
     }
 
     /**
@@ -329,10 +322,23 @@ public class HistoryActivity extends AppCompatActivity {
                 dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
                 innerLinearLayout.removeView(findViewById(i));
 
-                if (innerLinearLayout.getChildCount() == 1) {
-                    resetNamesAndValues();
+                Log.e("DEBUG", String.valueOf(countLinearLayouts(innerLinearLayout)));
+                if (countLinearLayouts(innerLinearLayout) == 0) {
+                    dataManager.clearHistory(getMainActivityContext());
+                    dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
+
+                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    innerLinearLayout.removeAllViews();
+
                     TextView emptyTextView = findViewById(R.id.history_empty_textview);
-                    emptyTextView.setVisibility(View.VISIBLE);
+
+                    if(emptyTextView != null) {
+                        emptyTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        createEmptyHistoryTextView();
+                    }
+                } else {
+                    loadLayoutToUI(1);
                 }
             }
 
@@ -420,20 +426,34 @@ public class HistoryActivity extends AppCompatActivity {
         editText.setMaxLines(1);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                final String inputText = editText.getText().toString();
+                dataManager.updateDetailsInHistoryData(String.valueOf(i), inputText, getMainActivityContext());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // do nothing
+            }
+        });
+
         editText.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                final String inputText = textView.getText().toString();
-
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 editText.clearFocus();
-
-                dataManager.updateDetailsInHistoryData(String.valueOf(i), inputText, getMainActivityContext());
-
                 return true;
             }
             return false;
         });
+
 
         if(!data.getString("details").equals("")) {
             editText.setText(data.getString("details"));
@@ -520,14 +540,25 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onDoubleClick(View v) {
                 dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
-                //Log.e("DEBUG", String.valueOf(dataManager.getAllData(getMainActivityContext())));
+                innerLinearLayout.removeView(findViewById(i));
 
-                if (innerLinearLayout.getChildCount() == 1) {
-                    resetNamesAndValues();
+                Log.e("DEBUG", String.valueOf(countLinearLayouts(innerLinearLayout)));
+                if (countLinearLayouts(innerLinearLayout) == 0) {
+                    dataManager.clearHistory(getMainActivityContext());
+                    dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
+
+                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    innerLinearLayout.removeAllViews();
+
                     TextView emptyTextView = findViewById(R.id.history_empty_textview);
-                    emptyTextView.setVisibility(View.VISIBLE);
+
+                    if(emptyTextView != null) {
+                        emptyTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        createEmptyHistoryTextView();
+                    }
                 } else {
-                    recreate();
+                    loadLayoutToUI(1);
                 }
             }
 
@@ -609,16 +640,29 @@ public class HistoryActivity extends AppCompatActivity {
         editText.setMaxLines(1);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                final String inputText = editText.getText().toString();
+                dataManager.updateDetailsInHistoryData(String.valueOf(i), inputText, getMainActivityContext());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // do nothing
+            }
+        });
+
         editText.setOnEditorActionListener((textView, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                final String inputText = textView.getText().toString();
-
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
                 editText.clearFocus();
-
-                dataManager.updateDetailsInHistoryData(String.valueOf(i), inputText, getMainActivityContext());
-
                 return true;
             }
             return false;
@@ -862,7 +906,7 @@ public class HistoryActivity extends AppCompatActivity {
             if(delete != null && cancel != null) {
                 delete.setOnClickListener(v -> {
                     dataManager.clearHistory(getMainActivityContext());
-                    dataManager.saveToJSONSettings("historyTextViewNumber", "0", getMainActivityContext());
+                    dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
 
                     LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
                     innerLinearLayout.removeAllViews();

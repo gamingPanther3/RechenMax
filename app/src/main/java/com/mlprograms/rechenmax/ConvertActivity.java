@@ -9,6 +9,8 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -53,14 +56,10 @@ public class ConvertActivity extends AppCompatActivity {
 
     private boolean firstStart = true;
 
-    /**
-     * Called when the activity is starting.
-     *
-     * @param savedInstanceState If the activity is being re-initialized after
-     *        previously being shut down, then this Bundle contains the data it most
-     *        recently supplied in {@link #onSaveInstanceState}.
-     *        <b><i>Note: Otherwise, it is null.</i></b>
-     */
+    private LayoutInflater inflater;
+    private LinearLayout outherLinearLayout = null;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         // Call the superclass onCreate method
         super.onCreate(savedInstanceState);
@@ -70,6 +69,8 @@ public class ConvertActivity extends AppCompatActivity {
 
         setUpButtonListeners();
         setUpCustomItemLists();
+
+        inflater = getLayoutInflater();
 
         // convert mode spinner
         customSpinnerMode = findViewById(R.id.convertCustomSpinner);
@@ -156,8 +157,7 @@ public class ConvertActivity extends AppCompatActivity {
                 } else if(spinnerText.equals(getString(R.string.convertVolume))) {
                     new_value = "V";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListVolume);
-                }
-                else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
+                } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
                     new_value = "M";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListMass);
                 }
@@ -193,19 +193,28 @@ public class ConvertActivity extends AppCompatActivity {
             }
         });
 
-        switchDisplayMode();
-
         EditText editText = findViewById(R.id.convertEditTextNumber);
         editText.setMaxLines(1);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        editText.setOnEditorActionListener((textView, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                final String inputText = editText.getText().toString();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-                editText.clearFocus();
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.equals("")) {
+                    updateValues(null);
+                } else {
+                    updateValues(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                final String inputText = s.toString();
                 try {
                     final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
                     dataManager.updateValuesInJSONSettingsData(
@@ -217,11 +226,9 @@ public class ConvertActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-
-                return true;
             }
-            return false;
         });
+
 
         customSpinnerMeasurement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -247,6 +254,58 @@ public class ConvertActivity extends AppCompatActivity {
                 // do nothing
             }
         });
+
+        switchDisplayMode();
+    }
+
+    private void updateValues(@Nullable String customValue) {
+        if(outherLinearLayout != null) {
+            try {
+
+                final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+                EditText editText = findViewById(R.id.convertEditTextNumber);
+                String editTextNumber = editText.getText().toString().replace(".", "").replace(" ", "");
+
+                switch (mode) {
+                    case "W" /* Winkel */:
+                        TextView convertDeg = findViewById(R.id.convertDegTextView);
+                        TextView convertRad = findViewById(R.id.convertRadTextView);
+                        TextView convertPitch = findViewById(R.id.convertPitchTextView);
+                        TextView convertGon = findViewById(R.id.convertGonTextView);
+                        TextView convertMrad = findViewById(R.id.convertMradTextView);
+                        TextView convertMinuteOfTheArc = findViewById(R.id.convertMinuteOfTheArcTextView);
+                        TextView convertSecondArc = findViewById(R.id.convertSecondArcTextView);
+
+                        // only for debugging
+                        if(customValue != null) {
+                            editTextNumber = customValue;
+                        } else if (editTextNumber.isEmpty()) {
+                            editTextNumber = "0,00";
+                        }
+                        //
+
+                        convertDeg.setText(editTextNumber);
+                        convertRad.setText(editTextNumber);
+                        convertPitch.setText(editTextNumber);
+                        convertGon.setText(editTextNumber);
+                        convertMrad.setText(editTextNumber);
+                        convertMinuteOfTheArc.setText(editTextNumber);
+                        convertSecondArc.setText(editTextNumber);
+                    case "F" /* Fläche */:
+
+                    case "S" /* Speicher */:
+
+                    case "E" /* Entfernung */:
+
+                    case "V" /* Volumen */:
+
+                    case "M" /* Masse / Gewicht */:
+
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void setUpCustomItemLists() {
@@ -346,9 +405,6 @@ public class ConvertActivity extends AppCompatActivity {
 
     @SuppressLint("InflateParams")
     private void changeConvertModes(final String spinnerText) {
-        LayoutInflater inflater = getLayoutInflater();
-        LinearLayout otherLinearLayout = null;
-
         if(spinnerText.equals(getString(R.string.convertAngle))) {
             dataManager.updateValuesInJSONSettingsData("convertMode", "value","W", getMainActivityContext());
         } else if(spinnerText.equals(getString(R.string.convertArea))) {
@@ -364,23 +420,23 @@ public class ConvertActivity extends AppCompatActivity {
         }
 
         if(spinnerText.equals(getString(R.string.convertAngle))) {
-            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.angle, null);
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.angle, null);
         } else if(spinnerText.equals(getString(R.string.convertArea))) {
-            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.area, null);
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.area, null);
         } else if(spinnerText.equals(getString(R.string.convertStorage))) {
-            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.digital_storage, null);
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.digital_storage, null);
         } else if(spinnerText.equals(getString(R.string.convertDistance))) {
-            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.distance, null);
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.distance, null);
         } else if(spinnerText.equals(getString(R.string.convertVolume))) {
-            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.volume, null);
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.volume, null);
         } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
-            otherLinearLayout = (LinearLayout) inflater.inflate(R.layout.mass_weight, null);
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.mass_weight, null);
         }
 
-        if (otherLinearLayout != null) {
+        if (outherLinearLayout != null) {
             ScrollView scrollView = findViewById(R.id.convertScrollLayout);
             scrollView.removeAllViews();
-            scrollView.addView(otherLinearLayout);
+            scrollView.addView(outherLinearLayout);
         }
     }
 

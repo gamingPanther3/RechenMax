@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         //dataManager.clearJSONSettings(this);
         //dataManager.clearHistory(this);
 
+        //dataManager.saveToHistory("historyTextViewNumber", "44", getApplicationContext());
+
         // Create JSON file and check for its existence
         dataManager.initializeSettings(this);
         //Log.i("DEBUG", dataManager.getAllDataFromJSONSettings(this).toString());
@@ -3319,19 +3321,19 @@ public class MainActivity extends AppCompatActivity {
         new Thread(() -> runOnUiThread(() -> {
             final String value;
             try {
-                value = dataManager.getJSONSettingsData("historyTextViewNumber", context1).getString("value");
+                value = dataManager.getHistoryData("historyTextViewNumber", context1).getString("value");
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
             final int old_value;
             try {
-                old_value = Integer.parseInt(dataManager.getJSONSettingsData("historyTextViewNumber", context1).getString("value"));
+                old_value = Integer.parseInt(dataManager.getHistoryData("historyTextViewNumber", context1).getString("value"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
             final int new_value = old_value + 1;
 
-            dataManager.saveToJSONSettings("historyTextViewNumber", Integer.toString(new_value), context1);
+            dataManager.saveToHistory("historyTextViewNumber", Integer.toString(new_value), context1);
             String calculate_text = finalInput;
 
             if (calculate_text.isEmpty()) {
@@ -3344,10 +3346,10 @@ public class MainActivity extends AppCompatActivity {
             dataManager.saveToHistory(String.valueOf(old_value + 1), formattedDate, "",
                     addSpaceToOperators(balanceParentheses(calculate_text) + getResultText()), context1);
 
-            System.out.println(dataManager.getAllData(getApplicationContext()).toString());
+            //System.out.println(dataManager.getAllData(getApplicationContext()).toString());
 
             try {
-                Log.i("Calculate", "historyTextViewNumber: " + dataManager.getJSONSettingsData("historyTextViewNumber", context1).getString("value"));
+                Log.i("Calculate", "historyTextViewNumber: " + dataManager.getHistoryData("historyTextViewNumber", context1).getString("value"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -3364,11 +3366,11 @@ public class MainActivity extends AppCompatActivity {
             try {
                 final String value;
                 final int old_value;
-                old_value = Integer.parseInt(dataManager.getJSONSettingsData("historyTextViewNumber", getApplicationContext()).getString("value"));
+                old_value = Integer.parseInt(dataManager.getHistoryData("historyTextViewNumber", getApplicationContext()).getString("value"));
                 final int new_value = old_value + 1;
-                value = dataManager.getJSONSettingsData("historyTextViewNumber", getApplicationContext()).getString("value");
+                value = dataManager.getHistoryData("historyTextViewNumber", getApplicationContext()).getString("value");
 
-                dataManager.saveToJSONSettings("historyTextViewNumber", Integer.toString(new_value), getApplicationContext());
+                dataManager.saveToHistory("historyTextViewNumber", Integer.toString(new_value), getApplicationContext());
                 String calculate_text = finalInput;
 
                 if(calculate_text.isEmpty()) {
@@ -3379,7 +3381,7 @@ public class MainActivity extends AppCompatActivity {
                     calculate_text = calculate_text + "=";
                 }
                 dataManager.saveToJSONSettings(String.valueOf(old_value + 1), addSpaceToOperators(balanceParentheses(calculate_text)), getApplicationContext());
-                Log.i("Calculate", "historyTextViewNumber: " + dataManager.getJSONSettingsData("historyTextViewNumber", getApplicationContext()).getString("value"));
+                Log.i("Calculate", "historyTextViewNumber: " + dataManager.getHistoryData("historyTextViewNumber", getApplicationContext()).getString("value"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -3623,7 +3625,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setIsNotation(final boolean val) {
         dataManager.saveToJSONSettings("isNotation", val, getApplicationContext());
-        Log.i("setIsNotation", "isNotation: '" + val + "'");
+        //("setIsNotation", "isNotation: '" + val + "'");
     }
     public boolean getIsNotation() {
         try {
@@ -3634,15 +3636,17 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setRotateOperator(final boolean rotate) {
         dataManager.saveToJSONSettings("rotate_op", rotate, getApplicationContext());
+        /*
         try {
             Log.i("setRotateOperator", "rotate_op: '" + dataManager.getJSONSettingsData("rotate_op", getApplicationContext()).getString("value") + "'");
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+        */
     }
     public boolean getRotateOperator() {
         try {
-            Log.i("setRotateOperator", "rotate_op: '" + dataManager.getJSONSettingsData("rotate_op", getApplicationContext()) + "'");
+            //Log.i("setRotateOperator", "rotate_op: '" + dataManager.getJSONSettingsData("rotate_op", getApplicationContext()) + "'");
             return Boolean.parseBoolean(dataManager.getJSONSettingsData("rotate_op", getApplicationContext()).getString("value"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -3659,11 +3663,13 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setLastOp(final String s) {
         dataManager.saveToJSONSettings("lastop", s, getApplicationContext());
+        /*
         try {
             Log.i("setLastOp", "lastOp: " + dataManager.getJSONSettingsData("lastop", getApplicationContext()).getString("value"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+        */
     }
     public boolean getRemoveValue() {
         final String value;
@@ -3676,12 +3682,14 @@ public class MainActivity extends AppCompatActivity {
         return value.equals("true");
     }
     public void setRemoveValue(final boolean b) {
+        dataManager.saveToJSONSettings("removeValue", b, getApplicationContext());
+        /*
         try {
-            dataManager.saveToJSONSettings("removeValue", b, getApplicationContext());
             Log.i("setRemoveValue", "removeValue: " + dataManager.getJSONSettingsData("removeValue", getApplicationContext()).getString("value"));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+        */
     }
     public void setLastNumber(final String s) {
         try {
