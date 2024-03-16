@@ -1,5 +1,7 @@
 package com.mlprograms.rechenmax;
 
+import static com.mlprograms.rechenmax.MainActivity.formatResultTextAfterType;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -229,6 +231,15 @@ public class ConvertActivity extends AppCompatActivity {
             }
         });
 
+        editText.setOnEditorActionListener((textView, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                editText.clearFocus();
+                return true;
+            }
+            return false;
+        });
 
         customSpinnerMeasurement.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -264,7 +275,13 @@ public class ConvertActivity extends AppCompatActivity {
 
                 final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
                 EditText editText = findViewById(R.id.convertEditTextNumber);
-                String editTextNumber = editText.getText().toString().replace(".", "").replace(" ", "");
+                String editTextNumber = formatResultTextAfterType(editText.getText().toString().replace(".", "").replace(" ", ""));
+
+                if(customValue != null) {
+                    editTextNumber = formatResultTextAfterType(customValue);
+                } else if (editTextNumber.matches("\\s*[,\\.0]*\\s*")) {
+                    editTextNumber = "0,00";
+                }
 
                 switch (mode) {
                     case "W" /* Winkel */:
@@ -276,14 +293,6 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertMinuteOfTheArc = findViewById(R.id.convertMinuteOfTheArcTextView);
                         TextView convertSecondArc = findViewById(R.id.convertSecondArcTextView);
 
-                        // only for debugging
-                        if(customValue != null) {
-                            editTextNumber = customValue;
-                        } else if (editTextNumber.isEmpty()) {
-                            editTextNumber = "0,00";
-                        }
-                        //
-
                         convertDeg.setText(editTextNumber);
                         convertRad.setText(editTextNumber);
                         convertPitch.setText(editTextNumber);
@@ -291,16 +300,182 @@ public class ConvertActivity extends AppCompatActivity {
                         convertMrad.setText(editTextNumber);
                         convertMinuteOfTheArc.setText(editTextNumber);
                         convertSecondArc.setText(editTextNumber);
+                        break;
                     case "F" /* Fläche */:
+                        TextView convertSquareMillimeter = findViewById(R.id.convertSquareMillimeterTextView);
+                        TextView convertSquareCentimeter = findViewById(R.id.convertSquareCentimeterTextView);
+                        TextView convertSquareMeter = findViewById(R.id.convertSquareMeterTextView);
+                        TextView convertSquareKilometer = findViewById(R.id.convertSquareKilometerTextView);
+                        TextView convertAr = findViewById(R.id.convertArTextView);
+                        TextView convertDekar = findViewById(R.id.convertDekarTextView);
+                        TextView convertHectares = findViewById(R.id.convertHectaresTextView);
+                        TextView convertSquareInch = findViewById(R.id.convertSquareInchTextView);
+                        TextView convertSquareFeet = findViewById(R.id.convertSquareFeetTextView);
+                        TextView convertSquareYard = findViewById(R.id.convertSquareYardTextView);
+                        TextView convertAcre = findViewById(R.id.convertAcreTextView);
+                        TextView convertSquareMiles = findViewById(R.id.convertSquareMilesTextView);
 
+                        convertSquareMillimeter.setText(editTextNumber);
+                        convertSquareCentimeter.setText(editTextNumber);
+                        convertSquareMeter.setText(editTextNumber);
+                        convertSquareKilometer.setText(editTextNumber);
+                        convertAr.setText(editTextNumber);
+                        convertDekar.setText(editTextNumber);
+                        convertHectares.setText(editTextNumber);
+                        convertSquareInch.setText(editTextNumber);
+                        convertSquareFeet.setText(editTextNumber);
+                        convertSquareYard.setText(editTextNumber);
+                        convertAcre.setText(editTextNumber);
+                        convertSquareMiles.setText(editTextNumber);
+                        break;
                     case "S" /* Speicher */:
+                        TextView convertBit = findViewById(R.id.convertBitTextView);
+                        TextView convertByte = findViewById(R.id.convertByteTextView);
+                        TextView convertKilobit = findViewById(R.id.convertKilobitTextView);
+                        TextView convertKilobyte = findViewById(R.id.convertKilobyteTextView);
+                        TextView convertMegabit = findViewById(R.id.convertMegabitTextView);
+                        TextView convertMegabyte = findViewById(R.id.convertMegabyteTextView);
+                        TextView convertGigabit = findViewById(R.id.convertGigabitTextView);
+                        TextView convertGigabyte = findViewById(R.id.convertGigabyteTextView);
+                        TextView convertTerabit = findViewById(R.id.convertTerabitTextView);
+                        TextView convertTerabyte = findViewById(R.id.convertTerabyteTextView);
+                        TextView convertPetabit = findViewById(R.id.convertPetabitTextView);
+                        TextView convertPetabyte = findViewById(R.id.convertPetabyteTextView);
 
+                        convertBit.setText(editTextNumber);
+                        convertByte.setText(editTextNumber);
+                        convertKilobit.setText(editTextNumber);
+                        convertKilobyte.setText(editTextNumber);
+                        convertMegabit.setText(editTextNumber);
+                        convertMegabyte.setText(editTextNumber);
+                        convertGigabit.setText(editTextNumber);
+                        convertGigabyte.setText(editTextNumber);
+                        convertTerabit.setText(editTextNumber);
+                        convertTerabyte.setText(editTextNumber);
+                        convertPetabit.setText(editTextNumber);
+                        convertPetabyte.setText(editTextNumber);
+                        break;
                     case "E" /* Entfernung */:
+                        TextView convertPikometer = findViewById(R.id.convertPikometerTextView);
+                        TextView convertNanometer = findViewById(R.id.convertNanometerTextView);
+                        TextView convertMikrometer = findViewById(R.id.convertMikrometerTextView);
+                        TextView convertMillimeter = findViewById(R.id.convertMillimeterTextView);
+                        TextView convertCentimeter = findViewById(R.id.convertCentimeterTextView);
+                        TextView convertDezimeter = findViewById(R.id.convertDezimeterTextView);
+                        TextView convertMeter = findViewById(R.id.convertMeterTextView);
+                        TextView convertHektometer = findViewById(R.id.convertHektometerTextView);
+                        TextView convertKilometer = findViewById(R.id.convertKilometerTextView);
+                        TextView convertFeet = findViewById(R.id.convertFeetTextView);
+                        TextView convertYard = findViewById(R.id.convertYardTextView);
+                        TextView convertMiles = findViewById(R.id.convertMilesTextView);
+                        TextView convertSeamiles = findViewById(R.id.convertSeamilesTextView);
+                        TextView convertLightyear = findViewById(R.id.convertLightyearTextView);
+                        TextView convertAstronomicalUnit= findViewById(R.id.convertAstronomicalUnitTextView);
 
+                        convertPikometer.setText(editTextNumber);
+                        convertNanometer.setText(editTextNumber);
+                        convertMikrometer.setText(editTextNumber);
+                        convertMillimeter.setText(editTextNumber);
+                        convertCentimeter.setText(editTextNumber);
+                        convertDezimeter.setText(editTextNumber);
+                        convertMeter.setText(editTextNumber);
+                        convertHektometer.setText(editTextNumber);
+                        convertKilometer.setText(editTextNumber);
+                        convertFeet.setText(editTextNumber);
+                        convertYard.setText(editTextNumber);
+                        convertMiles.setText(editTextNumber);
+                        convertSeamiles.setText(editTextNumber);
+                        convertLightyear.setText(editTextNumber);
+                        convertAstronomicalUnit.setText(editTextNumber);
+                        break;
                     case "V" /* Volumen */:
+                        TextView convertMikroliter = findViewById(R.id.convertMikroliterTextView);
+                        TextView convertMilliliter = findViewById(R.id.convertMilliliterTextView);
+                        TextView convertDeziliter = findViewById(R.id.convertDeziliterTextView);
+                        TextView convertLiter = findViewById(R.id.convertLiterTextView);
+                        TextView convertZentiliter = findViewById(R.id.convertZentiliterTextView);
+                        TextView convertMetrischeTasse = findViewById(R.id.convertMetrischeTasseTextView);
+                        TextView convertKubikmillimeter = findViewById(R.id.convertKubikmillimeterTextView);
+                        TextView convertKubikzentimeter = findViewById(R.id.convertKubikzentimeterTextView);
+                        TextView convertKubikmeter = findViewById(R.id.convertKubikmeterTextView);
+                        TextView convertKubikInch = findViewById(R.id.convertKubikInchTextView);
+                        TextView convertKubikFeet = findViewById(R.id.convertKubikFeetTextView);
+                        TextView convertKubikYard = findViewById(R.id.convertKubikYardTextView);
+                        TextView convertGillsUS = findViewById(R.id.convertGillsUSTextView);
+                        TextView convertGillsUK = findViewById(R.id.convertGillsUKTextView);
+                        TextView convertTeaspoonsUS= findViewById(R.id.convertTeaspoonsUSTextView);
+                        TextView convertTeaspoonsUK = findViewById(R.id.convertTeaspoonsUKTextView);
+                        TextView convertTablespoonsUS = findViewById(R.id.convertTablespoonsUSTextView);
+                        TextView convertTablespoonsUK = findViewById(R.id.convertTablespoonsUKTextView);
+                        TextView convertCupsUS = findViewById(R.id.convertCupsUSTextView);
+                        TextView convertCupsUK = findViewById(R.id.convertCupsUKTextView);
+                        TextView convertGallonUS = findViewById(R.id.convertGallonUSTextView);
+                        TextView convertGallonUK = findViewById(R.id.convertGallonUKTextView);
+                        TextView convertBarrels = findViewById(R.id.convertBarrelsTextView);
 
+                        convertMikroliter.setText(editTextNumber);
+                        convertMilliliter.setText(editTextNumber);
+                        convertDeziliter.setText(editTextNumber);
+                        convertLiter.setText(editTextNumber);
+                        convertZentiliter.setText(editTextNumber);
+                        convertMetrischeTasse.setText(editTextNumber);
+                        convertKubikmillimeter.setText(editTextNumber);
+                        convertKubikzentimeter.setText(editTextNumber);
+                        convertKubikmeter.setText(editTextNumber);
+                        convertKubikInch.setText(editTextNumber);
+                        convertKubikFeet.setText(editTextNumber);
+                        convertKubikYard.setText(editTextNumber);
+                        convertGillsUS.setText(editTextNumber);
+                        convertGillsUK.setText(editTextNumber);
+                        convertTeaspoonsUS.setText(editTextNumber);
+                        convertTeaspoonsUK.setText(editTextNumber);
+                        convertTablespoonsUS.setText(editTextNumber);
+                        convertTablespoonsUK.setText(editTextNumber);
+                        convertCupsUS.setText(editTextNumber);
+                        convertCupsUK.setText(editTextNumber);
+                        convertGallonUS.setText(editTextNumber);
+                        convertGallonUK.setText(editTextNumber);
+                        convertBarrels.setText(editTextNumber);
+                        break;
                     case "M" /* Masse / Gewicht */:
+                        TextView convertAtomareMasseneinheit = findViewById(R.id.convertAtomareMasseneinheitTextView);
+                        TextView convertMikrogramm = findViewById(R.id.convertMikrogrammTextView);
+                        TextView convertMilligramm = findViewById(R.id.convertMilligrammTextView);
+                        TextView convertZentigramm = findViewById(R.id.convertZentigrammTextView);
+                        TextView convertGramm = findViewById(R.id.convertGrammTextView);
+                        TextView convertHektogramm = findViewById(R.id.convertHektogrammTextView);
+                        TextView convertDekagramm = findViewById(R.id.convertDekagrammTextView);
+                        TextView convertKarat = findViewById(R.id.convertKaratTextView);
+                        TextView convertNewton = findViewById(R.id.convertNewtonTextView);
+                        TextView convertKilogramm = findViewById(R.id.convertKilogrammTextView);
+                        TextView convertTonne = findViewById(R.id.convertTonneTextView);
+                        TextView convertKilotonne = findViewById(R.id.convertKilotonneTextView);
+                        TextView convertGrains = findViewById(R.id.convertGrainsTextView);
+                        TextView convertDrams = findViewById(R.id.convertDramsTextView);
+                        TextView convertUnzen= findViewById(R.id.convertUnzenTextView);
+                        TextView convertPfund= findViewById(R.id.convertPfundTextView);
+                        TextView convertShortTons= findViewById(R.id.convertShortTonsTextView);
+                        TextView convertLongTons= findViewById(R.id.convertLongTonsTextView);
 
+                        convertAtomareMasseneinheit.setText(editTextNumber);
+                        convertMikrogramm.setText(editTextNumber);
+                        convertMilligramm.setText(editTextNumber);
+                        convertZentigramm.setText(editTextNumber);
+                        convertGramm.setText(editTextNumber);
+                        convertHektogramm.setText(editTextNumber);
+                        convertDekagramm.setText(editTextNumber);
+                        convertKarat.setText(editTextNumber);
+                        convertNewton.setText(editTextNumber);
+                        convertKilogramm.setText(editTextNumber);
+                        convertTonne.setText(editTextNumber);
+                        convertKilotonne.setText(editTextNumber);
+                        convertGrains.setText(editTextNumber);
+                        convertDrams.setText(editTextNumber);
+                        convertUnzen.setText(editTextNumber);
+                        convertPfund.setText(editTextNumber);
+                        convertShortTons.setText(editTextNumber);
+                        convertLongTons.setText(editTextNumber);
+                        break;
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);

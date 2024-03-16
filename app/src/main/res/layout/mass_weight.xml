@@ -64,13 +64,13 @@
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertconvertMikrogrammScrollView"
+            android:id="@+id/convertMikrogrammScrollView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/convertconvertMikrogrammTextView"
+                android:id="@+id/convertMikrogrammTextView"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:textStyle="italic"
