@@ -206,8 +206,8 @@ public class ConvertActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.equals("")) {
+            public void onTextChanged(CharSequence chars, int start, int before, int count) {
+                if(!chars.equals("")) {
                     updateValues(null);
                 } else {
                     updateValues(null);
@@ -272,8 +272,9 @@ public class ConvertActivity extends AppCompatActivity {
     private void updateValues(@Nullable String customValue) {
         if(outherLinearLayout != null) {
             try {
-
                 final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+                final String currentSelection =  dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString(mode + "Current");
+
                 EditText editText = findViewById(R.id.convertEditTextNumber);
                 String editTextNumber = formatResultTextAfterType(editText.getText().toString().replace(".", "").replace(" ", ""));
 
@@ -283,6 +284,7 @@ public class ConvertActivity extends AppCompatActivity {
                     editTextNumber = "0,00";
                 }
 
+                Spinner spinner = findViewById(R.id.convertSpinnerMessurement);
                 switch (mode) {
                     case "W" /* Winkel */:
                         TextView convertDeg = findViewById(R.id.convertDegTextView);
@@ -293,13 +295,22 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertMinuteOfTheArc = findViewById(R.id.convertMinuteOfTheArcTextView);
                         TextView convertSecondArc = findViewById(R.id.convertSecondArcTextView);
 
-                        convertDeg.setText(editTextNumber);
-                        convertRad.setText(editTextNumber);
-                        convertPitch.setText(editTextNumber);
-                        convertGon.setText(editTextNumber);
-                        convertMrad.setText(editTextNumber);
-                        convertMinuteOfTheArc.setText(editTextNumber);
-                        convertSecondArc.setText(editTextNumber);
+                        if(spinner.getSelectedItem().toString().equals(getString(R.string.convertDeg))) {
+                            convertDeg.setText(editTextNumber);
+                            convertRad.setText((int) (Integer.parseInt(editTextNumber) * Math.PI / 180));
+                            convertPitch.setText(editTextNumber);
+                            convertGon.setText(editTextNumber);
+                            convertMrad.setText(editTextNumber);
+                            convertMinuteOfTheArc.setText(editTextNumber);
+                            convertSecondArc.setText(editTextNumber);
+                        }
+
+
+
+
+
+                        // example
+
                         break;
                     case "F" /* Fläche */:
                         TextView convertSquareMillimeter = findViewById(R.id.convertSquareMillimeterTextView);
@@ -315,6 +326,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertAcre = findViewById(R.id.convertAcreTextView);
                         TextView convertSquareMiles = findViewById(R.id.convertSquareMilesTextView);
 
+                        // example
                         convertSquareMillimeter.setText(editTextNumber);
                         convertSquareCentimeter.setText(editTextNumber);
                         convertSquareMeter.setText(editTextNumber);
@@ -342,6 +354,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertPetabit = findViewById(R.id.convertPetabitTextView);
                         TextView convertPetabyte = findViewById(R.id.convertPetabyteTextView);
 
+                        // example
                         convertBit.setText(editTextNumber);
                         convertByte.setText(editTextNumber);
                         convertKilobit.setText(editTextNumber);
@@ -372,6 +385,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertLightyear = findViewById(R.id.convertLightyearTextView);
                         TextView convertAstronomicalUnit= findViewById(R.id.convertAstronomicalUnitTextView);
 
+                        // example
                         convertPikometer.setText(editTextNumber);
                         convertNanometer.setText(editTextNumber);
                         convertMikrometer.setText(editTextNumber);
@@ -413,6 +427,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertGallonUK = findViewById(R.id.convertGallonUKTextView);
                         TextView convertBarrels = findViewById(R.id.convertBarrelsTextView);
 
+                        // example
                         convertMikroliter.setText(editTextNumber);
                         convertMilliliter.setText(editTextNumber);
                         convertDeziliter.setText(editTextNumber);
@@ -457,6 +472,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertShortTons= findViewById(R.id.convertShortTonsTextView);
                         TextView convertLongTons= findViewById(R.id.convertLongTonsTextView);
 
+                        // example
                         convertAtomareMasseneinheit.setText(editTextNumber);
                         convertMikrogramm.setText(editTextNumber);
                         convertMilligramm.setText(editTextNumber);
