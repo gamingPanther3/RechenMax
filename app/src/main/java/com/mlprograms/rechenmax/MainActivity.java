@@ -7,6 +7,7 @@ import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
+import static com.mlprograms.rechenmax.ConvertEngine.*;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -180,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Log.e("DEBUG", dataManager.getAllDataFromJSONSettings(getApplicationContext()).toString());
+
+        Log.e("DEBUG", String.valueOf(convert(1, KILOMETER, FEET)));
     }
 
     /**

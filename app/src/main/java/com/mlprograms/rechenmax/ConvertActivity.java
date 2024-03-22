@@ -1,6 +1,7 @@
 package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.MainActivity.formatResultTextAfterType;
+import static com.mlprograms.rechenmax.ConvertEngine.*;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -273,7 +274,6 @@ public class ConvertActivity extends AppCompatActivity {
         if(outherLinearLayout != null) {
             try {
                 final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
-                final String currentSelection =  dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString(mode + "Current");
 
                 EditText editText = findViewById(R.id.convertEditTextNumber);
                 String editTextNumber = formatResultTextAfterType(editText.getText().toString().replace(".", "").replace(" ", ""));
@@ -281,10 +281,11 @@ public class ConvertActivity extends AppCompatActivity {
                 if(customValue != null) {
                     editTextNumber = formatResultTextAfterType(customValue);
                 } else if (editTextNumber.matches("\\s*[,\\.0]*\\s*")) {
-                    editTextNumber = "0,00";
+                    editTextNumber = "0.0";
                 }
 
                 Spinner spinner = findViewById(R.id.convertSpinnerMessurement);
+                final String spinnerMessurementMode = spinner.getSelectedItem().toString();
                 switch (mode) {
                     case "W" /* Winkel */:
                         TextView convertDeg = findViewById(R.id.convertDegTextView);
@@ -386,21 +387,21 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertAstronomicalUnit= findViewById(R.id.convertAstronomicalUnitTextView);
 
                         // example
-                        convertPikometer.setText(editTextNumber);
-                        convertNanometer.setText(editTextNumber);
-                        convertMikrometer.setText(editTextNumber);
-                        convertMillimeter.setText(editTextNumber);
-                        convertCentimeter.setText(editTextNumber);
-                        convertDezimeter.setText(editTextNumber);
-                        convertMeter.setText(editTextNumber);
-                        convertHektometer.setText(editTextNumber);
-                        convertKilometer.setText(editTextNumber);
-                        convertFeet.setText(editTextNumber);
-                        convertYard.setText(editTextNumber);
-                        convertMiles.setText(editTextNumber);
-                        convertSeamiles.setText(editTextNumber);
-                        convertLightyear.setText(editTextNumber);
-                        convertAstronomicalUnit.setText(editTextNumber);
+                        //convertPikometer.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, PIKOMETER));
+                        //convertNanometer.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, NANOMETER));
+                        //convertMikrometer.setText(       convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, MIKROMETER));
+                        //convertMillimeter.setText(       convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, MILLIMETER));
+                        //convertCentimeter.setText(       convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, CENTIMETER));
+                        //convertDezimeter.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, DEZIMETER));
+                        //convertMeter.setText(            convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, METER));
+                        //convertHektometer.setText(       convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, HEKTOMETER));
+                        //convertKilometer.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, KILOMETER));
+                        //convertFeet.setText(             convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, FEET));
+                        //convertYard.setText(             convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, YARD));
+                        //convertMiles.setText(            convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, MILES));
+                        //convertSeamiles.setText(         convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, SEAMILES));
+                        //convertLightyear.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, LIGHTYEAR));
+                        //convertAstronomicalUnit.setText( convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, ASTRONOMICALUNIT));
                         break;
                     case "V" /* Volumen */:
                         TextView convertMikroliter = findViewById(R.id.convertMikroliterTextView);
