@@ -30,20 +30,20 @@ public class ConvertEngine {
 
     // Initialize conversion factors
     static {
-        convertFactorsDistance.put(PIKOMETER, 1e-12);
-        convertFactorsDistance.put(NANOMETER, 1e-9);
-        convertFactorsDistance.put(MIKROMETER, 1e-6);
-        convertFactorsDistance.put(MILLIMETER, 0.001);
-        convertFactorsDistance.put(CENTIMETER, 0.01);
-        convertFactorsDistance.put(DEZIMETER, 0.1);
-        convertFactorsDistance.put(METER, 1.0);
-        convertFactorsDistance.put(HEKTOMETER, 100.0);
-        convertFactorsDistance.put(KILOMETER, 1000.0);
-        convertFactorsDistance.put(FEET, 0.3048);
-        convertFactorsDistance.put(YARD, 0.9144);
-        convertFactorsDistance.put(MILES, 1609.344);
-        convertFactorsDistance.put(SEAMILES, 1852.0);
-        convertFactorsDistance.put(LIGHTYEAR, 9.461e15);
+        convertFactorsDistance.put(PIKOMETER,        1e-12);
+        convertFactorsDistance.put(NANOMETER,        1e-9);
+        convertFactorsDistance.put(MIKROMETER,       1e-6);
+        convertFactorsDistance.put(MILLIMETER,       0.001);
+        convertFactorsDistance.put(CENTIMETER,       0.01);
+        convertFactorsDistance.put(DEZIMETER,        0.1);
+        convertFactorsDistance.put(METER,            1.0);
+        convertFactorsDistance.put(HEKTOMETER,       100.0);
+        convertFactorsDistance.put(KILOMETER,        1000.0);
+        convertFactorsDistance.put(FEET,             0.3048);
+        convertFactorsDistance.put(YARD,             0.9144);
+        convertFactorsDistance.put(MILES,            1609.344);
+        convertFactorsDistance.put(SEAMILES,         1852.0);
+        convertFactorsDistance.put(LIGHTYEAR,        9.461e15);
         convertFactorsDistance.put(ASTRONOMICALUNIT, 1.496e11);
     }
 
