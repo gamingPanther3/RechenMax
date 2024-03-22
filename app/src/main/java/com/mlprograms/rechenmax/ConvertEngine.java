@@ -1,5 +1,7 @@
 package com.mlprograms.rechenmax;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 
 /*
@@ -46,7 +48,7 @@ public class ConvertEngine {
     }
 
     // Method to convert value from one unit to another
-    public static double convert(double value, String fromUnit, String toUnit) {
+    public static String convert(double value, String fromUnit, String toUnit) {
         // Check if both units are valid
         if (!convertFactorsDistance.containsKey(fromUnit) || !convertFactorsDistance.containsKey(toUnit)) {
             throw new IllegalArgumentException("Invalid unit(s) specified.");
@@ -59,15 +61,13 @@ public class ConvertEngine {
         // Calculate the result using conversion factors
         double result = value * (fromFactor / toFactor);
 
-        // Convert result to string to remove trailing zeros
-        String formattedResult = Double.toString(result);
+        // Convert result to BigDecimal to handle precision
+        BigDecimal resultBigDecimal = BigDecimal.valueOf(result);
 
-        // Remove trailing zeros if present
-        if (formattedResult.contains(".") && !formattedResult.contains("E")) {
-            formattedResult = formattedResult.replaceAll("0*$", "").replaceAll("\\.$", "");
-        }
+        // Round the result to remove unnecessary decimal places
+        resultBigDecimal = resultBigDecimal.setScale(10, RoundingMode.HALF_UP).stripTrailingZeros();
 
-        // Parse the formatted result back to double
-        return Double.parseDouble(formattedResult);
+        // Convert the result to a string
+        return resultBigDecimal.toPlainString();
     }
 }

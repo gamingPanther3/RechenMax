@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Log.e("DEBUG", dataManager.getAllDataFromJSONSettings(getApplicationContext()).toString());
 
-        Log.e("DEBUG", String.valueOf(convert(1, KILOMETER, FEET)));
+        Log.e("DEBUG", convert(1, LIGHTYEAR, KILOMETER));
     }
 
     /**
