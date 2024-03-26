@@ -384,10 +384,10 @@
     <string name="convertMegajoule">Megajoule (MJ)</string>
     <string name="convertKalorie">Kalorie (cal)</string>
     <string name="convertKilokalorie">Kilokalorie (kcal)</string>
-    <string name="convertWattsekunde">Wattsekunde (W×s)</string>
-    <string name="convertWattstunde">Wattstunde (W×h)</string>
-    <string name="convertKilowattsekunde">Kilowattsekunde (kW×s)</string>
-    <string name="convertKilowattstunde">Kilowattstunde (kW×h)</string>
+    <string name="convertWattsekunde">Wattsekunde (W/s)</string>
+    <string name="convertWattstunde">Wattstunde (W/h)</string>
+    <string name="convertKilowattsekunde">Kilowattsekunde (kW/s)</string>
+    <string name="convertKilowattstunde">Kilowattstunde (kW/h)</string>
     <!-- Druck -->
     <string name="convertMillipascal">Millipascal (mPa)</string>
     <string name="convertPascal">Pascal (Pa)</string>

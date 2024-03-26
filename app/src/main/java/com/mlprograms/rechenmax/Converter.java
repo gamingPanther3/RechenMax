@@ -281,7 +281,7 @@ public class Converter extends ConvertActivity {
         KILOWATT(new Unit(Category.WORK, "kW", "Kilowatt", new BigDecimal("1.0E3"))),
         MEGAWATT(new Unit(Category.WORK, "MW", "Megawatt", new BigDecimal("1.0E6"))),
         GIGAWATT(new Unit(Category.WORK, "GW", "Gigawatt", new BigDecimal("1.0E9"))),
-        HORSEPOWER(new Unit(Category.WORK, "hp", "Horsepower", new BigDecimal("735.49875"))),
+        HORSEPOWER(new Unit(Category.WORK, "hp", "Horsepower", new BigDecimal("745.699872"))), /* changed number from '735.49875' to '745.699872'; reason: incorrect */
         JOULE_PER_SECOND(new Unit(Category.WORK, "J/s", "Joule per second", new BigDecimal("1.0E0"))),
 
         // Css Units
