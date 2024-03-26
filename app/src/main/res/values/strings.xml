@@ -324,7 +324,6 @@
     <string name="convertMiles">Meilen (mi)</string>
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>
-    <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
     <!-- Volumen -->
     <string name="convertKubikmillimeter">Kubikmillimeter (mm³)</string>
     <string name="convertMilliliter">Milliliter (ml)</string>

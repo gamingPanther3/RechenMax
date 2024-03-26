@@ -3,23 +3,45 @@ package com.mlprograms.rechenmax;
 import static com.mlprograms.rechenmax.Converter.Category.ANGLE;
 import static com.mlprograms.rechenmax.Converter.Category.AREA;
 import static com.mlprograms.rechenmax.Converter.Category.DATA;
+import static com.mlprograms.rechenmax.Converter.Category.LENGTH;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.ACRE;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.ANGSTROM;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.ARES;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.BIT;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.BYTE;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.CENTIMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.DECIMETER;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.DEGREE;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.EM;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.EXABIT_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.EXABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.FEET;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.FEMTOMETER;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.GIGABIT_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.GIGABYTE_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.GRAD;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.HECTARE;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.HECTOMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILO;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILOBIT_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILOBYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILOMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.LIGHT_YEAR;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.MEGABIT_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.MEGABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.METER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.MICROMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.MILES;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.MILLIMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.NANOMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.NAUTICAL_MILES;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.PARSEC;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.PETABIT_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.PETABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.PICA;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.PICOMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.PIXEL;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.POINT;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.RADIAN;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_CENTIMETER;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_FOOT;
@@ -30,6 +52,7 @@ import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_MICROMETE
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_MILLIMETER;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.TERABIT_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.TERABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.YARD;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.YOTABIT_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.YOTABYTE_B1000;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.ZETABIT_B1000;
@@ -719,385 +742,61 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertYotabit = findViewById(R.id.convertYotabitTextView);
                         TextView convertYotabyte = findViewById(R.id.convertYotabyteTextView);
 
-                        Converter storageConverter;
+                        Converter storageConverter = new Converter(DATA, BIT);
                         switch (spinner.getSelectedItemPosition()) {
                             case 0:
                                 storageConverter = new Converter(DATA, BIT);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 1:
                                 storageConverter = new Converter(DATA, BYTE);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 2:
                                 storageConverter = new Converter(DATA, KILOBIT_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 3:
                                 storageConverter = new Converter(DATA, KILOBYTE_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 4:
                                 storageConverter = new Converter(DATA, MEGABIT_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 5:
                                 storageConverter = new Converter(DATA, MEGABYTE_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 6:
                                 storageConverter = new Converter(DATA, GIGABIT_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 7:
                                 storageConverter = new Converter(DATA, GIGABYTE_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 8:
                                 storageConverter = new Converter(DATA, TERABIT_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 9:
                                 storageConverter = new Converter(DATA, TERABYTE_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 10:
                                 storageConverter = new Converter(DATA, PETABIT_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 11:
                                 storageConverter = new Converter(DATA, PETABYTE_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 12:
                                 storageConverter = new Converter(DATA, EXABIT_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 13:
                                 storageConverter = new Converter(DATA, EXABYTE_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 14:
                                 storageConverter = new Converter(DATA, ZETABIT_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 15:
                                 storageConverter = new Converter(DATA, ZETABYTE_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 16:
                                 storageConverter = new Converter(DATA, YOTABIT_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             case 17:
                                 storageConverter = new Converter(DATA, YOTABYTE_B1000);
-                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
-                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
-                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
-                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
-                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
-                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
-                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
-                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
-                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
-                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
-                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
-                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
-                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
-                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
-                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
-                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
-                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
-                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
                                 break;
                             default:
                                 convertBit.setText("0,00");
@@ -1121,24 +820,24 @@ public class ConvertActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        convertBit.setText(formatResultTextAfterType(convertBit.getText().toString()));
-                        convertByte.setText(formatResultTextAfterType(convertByte.getText().toString()));
-                        convertKilobit.setText(formatResultTextAfterType(convertKilobit.getText().toString()));
-                        convertKilobyte.setText(formatResultTextAfterType(convertKilobyte.getText().toString()));
-                        convertMegabit.setText(formatResultTextAfterType(convertMegabit.getText().toString()));
-                        convertMegabyte.setText(formatResultTextAfterType(convertMegabyte.getText().toString()));
-                        convertGigabit.setText(formatResultTextAfterType(convertGigabit.getText().toString()));
-                        convertGigabyte.setText(formatResultTextAfterType(convertGigabyte.getText().toString()));
-                        convertTerabit.setText(formatResultTextAfterType(convertTerabit.getText().toString()));
-                        convertTerabyte.setText(formatResultTextAfterType(convertTerabyte.getText().toString()));
-                        convertPetabit.setText(formatResultTextAfterType(convertPetabit.getText().toString()));
-                        convertPetabyte.setText(formatResultTextAfterType(convertPetabyte.getText().toString()));
-                        convertExabit.setText(formatResultTextAfterType(convertExabit.getText().toString()));
-                        convertExabyte.setText(formatResultTextAfterType(convertExabyte.getText().toString()));
-                        convertZetabit.setText(formatResultTextAfterType(convertZetabit.getText().toString()));
-                        convertZetabyte.setText(formatResultTextAfterType(convertZetabyte.getText().toString()));
-                        convertYotabit.setText(formatResultTextAfterType(convertYotabit.getText().toString()));
-                        convertYotabyte.setText(formatResultTextAfterType(convertYotabyte.getText().toString()));
+                        convertBit.setText(          formatResultTextAfterType(storageConverter.convertToString(editTextNumber, BIT)));
+                        convertByte.setText(         formatResultTextAfterType(storageConverter.convertToString(editTextNumber, BYTE)));
+                        convertKilobit.setText(      formatResultTextAfterType(storageConverter.convertToString(editTextNumber, KILOBIT_B1000)));
+                        convertKilobyte.setText(     formatResultTextAfterType(storageConverter.convertToString(editTextNumber, KILOBYTE_B1000)));
+                        convertMegabit.setText(      formatResultTextAfterType(storageConverter.convertToString(editTextNumber, MEGABIT_B1000)));
+                        convertMegabyte.setText(     formatResultTextAfterType(storageConverter.convertToString(editTextNumber, MEGABYTE_B1000)));
+                        convertGigabit.setText(      formatResultTextAfterType(storageConverter.convertToString(editTextNumber, GIGABIT_B1000)));
+                        convertGigabyte.setText(     formatResultTextAfterType(storageConverter.convertToString(editTextNumber, GIGABYTE_B1000)));
+                        convertTerabit.setText(      formatResultTextAfterType(storageConverter.convertToString(editTextNumber, TERABIT_B1000)));
+                        convertTerabyte.setText(     formatResultTextAfterType(storageConverter.convertToString(editTextNumber, TERABYTE_B1000)));
+                        convertPetabit.setText(      formatResultTextAfterType(storageConverter.convertToString(editTextNumber, PETABIT_B1000)));
+                        convertPetabyte.setText(     formatResultTextAfterType(storageConverter.convertToString(editTextNumber, PETABYTE_B1000)));
+                        convertExabit.setText(       formatResultTextAfterType(storageConverter.convertToString(editTextNumber, EXABIT_B1000)));
+                        convertExabyte.setText(      formatResultTextAfterType(storageConverter.convertToString(editTextNumber, EXABYTE_B1000)));
+                        convertZetabit.setText(      formatResultTextAfterType(storageConverter.convertToString(editTextNumber, ZETABIT_B1000)));
+                        convertZetabyte.setText(     formatResultTextAfterType(storageConverter.convertToString(editTextNumber, ZETABYTE_B1000)));
+                        convertYotabit.setText(      formatResultTextAfterType(storageConverter.convertToString(editTextNumber, YOTABIT_B1000)));
+                        convertYotabyte.setText(     formatResultTextAfterType(storageConverter.convertToString(editTextNumber, YOTABYTE_B1000)));
                         break;
                     case "Entfernung" /* Entfernung */:
                         TextView convertAngstrom = findViewById(R.id.convertAngstromTextView);
@@ -1147,6 +846,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertPixel = findViewById(R.id.convertPixelTextView);
                         TextView convertPoint = findViewById(R.id.convertPointTextView);
                         TextView convertPica = findViewById(R.id.convertPicaTextView);
+                        TextView convertEm = findViewById(R.id.convertEmTextView);
                         TextView convertPikometer = findViewById(R.id.convertPikometerTextView);
                         TextView convertNanometer = findViewById(R.id.convertNanometerTextView);
                         TextView convertMikrometer = findViewById(R.id.convertMikrometerTextView);
@@ -1161,29 +861,117 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertMiles = findViewById(R.id.convertMilesTextView);
                         TextView convertSeamiles = findViewById(R.id.convertSeamilesTextView);
                         TextView convertLightyear = findViewById(R.id.convertLightyearTextView);
-                        TextView convertAstronomicalUnit= findViewById(R.id.convertAstronomicalUnitTextView);
 
-                        //convertAngstrom.setText(formatResultTextAfterType(convertAngstrom.getText().toString()));
-                        //convertFemtometer.setText(formatResultTextAfterType(convertFemtometer.getText().toString()));
-                        //convertParsec.setText(formatResultTextAfterType(convertParsec.getText().toString()));
-                        //convertPixel.setText(formatResultTextAfterType(convertPixel.getText().toString()));
-                        //convertPoint.setText(formatResultTextAfterType(convertPoint.getText().toString()));
-                        //convertPica.setText(formatResultTextAfterType(convertPica.getText().toString()));
-                        //convertPikometer.setText(formatResultTextAfterType(convertPikometer.getText().toString()));
-                        //convertNanometer.setText(formatResultTextAfterType(convertNanometer.getText().toString()));
-                        //convertMikrometer.setText(formatResultTextAfterType(convertMikrometer.getText().toString()));
-                        //convertMillimeter.setText(formatResultTextAfterType(convertMillimeter.getText().toString()));
-                        //convertCentimeter.setText(formatResultTextAfterType(convertCentimeter.getText().toString()));
-                        //convertDezimeter.setText(formatResultTextAfterType(convertDezimeter.getText().toString()));
-                        //convertMeter.setText(formatResultTextAfterType(convertMeter.getText().toString()));
-                        //convertHektometer.setText(formatResultTextAfterType(convertHektometer.getText().toString()));
-                        //convertKilometer.setText(formatResultTextAfterType(convertKilometer.getText().toString()));
-                        //convertFeet.setText(formatResultTextAfterType(convertFeet.getText().toString()));
-                        //convertYard.setText(formatResultTextAfterType(convertYard.getText().toString()));
-                        //convertMiles.setText(formatResultTextAfterType(convertMiles.getText().toString()));
-                        //convertSeamiles.setText(formatResultTextAfterType(convertSeamiles.getText().toString()));
-                        //convertLightyear.setText(formatResultTextAfterType(convertLightyear.getText().toString()));
-                        //convertAstronomicalUnit.setText(formatResultTextAfterType(convertAstronomicalUnit.getText().toString()));
+                        Converter distanceConverter = new Converter(LENGTH, ANGSTROM);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                distanceConverter = new Converter(LENGTH, ANGSTROM);
+                                break;
+                            case 1:
+                                distanceConverter = new Converter(LENGTH, FEMTOMETER);
+                                break;
+                            case 2:
+                                distanceConverter = new Converter(LENGTH, PARSEC);
+                                break;
+                            case 3:
+                                distanceConverter = new Converter(LENGTH, PIXEL);
+                                break;
+                            case 4:
+                                distanceConverter = new Converter(LENGTH, POINT);
+                                break;
+                            case 5:
+                                distanceConverter = new Converter(LENGTH, PICA);
+                                break;
+                            case 6:
+                                distanceConverter = new Converter(LENGTH, EM);
+                                break;
+                            case 7:
+                                distanceConverter = new Converter(LENGTH, PICOMETER);
+                                break;
+                            case 8:
+                                distanceConverter = new Converter(LENGTH, NANOMETER);
+                                break;
+                            case 9:
+                                distanceConverter = new Converter(LENGTH, MICROMETER);
+                                break;
+                            case 10:
+                                distanceConverter = new Converter(LENGTH, MILLIMETER);
+                                break;
+                            case 11:
+                                distanceConverter = new Converter(LENGTH, CENTIMETER);
+                                break;
+                            case 12:
+                                distanceConverter = new Converter(LENGTH, DECIMETER);
+                                break;
+                            case 13:
+                                distanceConverter = new Converter(LENGTH, METER);
+                                break;
+                            case 14:
+                                distanceConverter = new Converter(LENGTH, HECTOMETER);
+                                break;
+                            case 15:
+                                distanceConverter = new Converter(LENGTH, KILOMETER);
+                                break;
+                            case 16:
+                                distanceConverter = new Converter(LENGTH, FEET);
+                                break;
+                            case 17:
+                                distanceConverter = new Converter(LENGTH, YARD);
+                                break;
+                            case 18:
+                                distanceConverter = new Converter(LENGTH, MILES);
+                                break;
+                            case 19:
+                                distanceConverter = new Converter(LENGTH, NAUTICAL_MILES);
+                                break;
+                            case 20:
+                                distanceConverter = new Converter(LENGTH, LIGHT_YEAR);
+                                break;
+                            default:
+                                convertAngstrom.setText("0,00");
+                                convertFemtometer.setText("0,00");
+                                convertParsec.setText("0,00");
+                                convertPixel.setText("0,00");
+                                convertPoint.setText("0,00");
+                                convertPica.setText("0,00");
+                                convertEm.setText("0,00");
+                                convertPikometer.setText("0,00");
+                                convertNanometer.setText("0,00");
+                                convertMikrometer.setText("0,00");
+                                convertMillimeter.setText("0,00");
+                                convertCentimeter.setText("0,00");
+                                convertDezimeter.setText("0,00");
+                                convertMeter.setText("0,00");
+                                convertHektometer.setText("0,00");
+                                convertKilometer.setText("0,00");
+                                convertFeet.setText("0,00");
+                                convertYard.setText("0,00");
+                                convertMiles.setText("0,00");
+                                convertSeamiles.setText("0,00");
+                                convertLightyear.setText("0,00");
+                        }
+
+                        convertAngstrom.setText(            formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, ANGSTROM)));
+                        convertFemtometer.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, FEMTOMETER)));
+                        convertParsec.setText(              formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PARSEC)));
+                        convertPixel.setText(               formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PIXEL)));
+                        convertPoint.setText(               formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, POINT)));
+                        convertPica.setText(                formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PICA)));
+                        convertEm.setText(                  formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, EM)));
+                        convertPikometer.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PICOMETER)));
+                        convertNanometer.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, NANOMETER)));
+                        convertMikrometer.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MICROMETER)));
+                        convertMillimeter.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MILLIMETER)));
+                        convertCentimeter.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, CENTIMETER)));
+                        convertDezimeter.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, DECIMETER)));
+                        convertMeter.setText(               formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, METER)));
+                        convertHektometer.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, HECTOMETER)));
+                        convertKilometer.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, KILOMETER)));
+                        convertFeet.setText(                formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, FEET)));
+                        convertYard.setText(                formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, YARD)));
+                        convertMiles.setText(               formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MILES)));
+                        convertSeamiles.setText(            formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, NAUTICAL_MILES)));
+                        convertLightyear.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, LIGHT_YEAR)));
                         break;
                     case "Volumen" /* Volumen */:
                         TextView convertMilliliter = findViewById(R.id.convertMilliliterTextView);
@@ -1233,6 +1021,12 @@ public class ConvertActivity extends AppCompatActivity {
                     case "Geschwindigkeit":
                         break;
                     case "Energie":
+                        break;
+                    case "Druck":
+                        break;
+                    case "Drehmoment":
+                        break;
+                    case "Arbeit":
                         break;
                 }
             } catch (JSONException e) {
@@ -1296,7 +1090,6 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListDistance.add(new CustomItems(getString(R.string.convertMiles)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertSeamiles)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertLightyear)));
-        customItemListDistance.add(new CustomItems(getString(R.string.convertAstronomicalUnit)));
 
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmillimeter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertMilliliter)));
