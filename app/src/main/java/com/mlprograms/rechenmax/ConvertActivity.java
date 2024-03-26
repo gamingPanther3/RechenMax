@@ -476,7 +476,10 @@ public class ConvertActivity extends AppCompatActivity {
 
                 if (editTextNumber2.matches("\\s*[,\\.0]*\\s*")) {
                     editTextNumber2 = "0.00";
+                } else if (editTextNumber2.equals("-")) {
+                    editTextNumber2 = "-0.00";
                 }
+
                 double editTextNumber = Double.parseDouble(editTextNumber2);
 
                 Spinner spinner = findViewById(R.id.convertSpinnerMessurement);
