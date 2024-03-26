@@ -340,7 +340,7 @@
     <string name="convertKilowatt">Kilovatio (kW)</string>
     <string name="convertMegawatt">Megavatio (MW)</string>
     <string name="convertGigawatt">Gigavatio (GW)</string>
-    <string name="convertPferdestärke">Caballo de fuerza (hp)</string>
+    <string name="convertPferdestaerke">Caballo de fuerza (hp)</string>
     <string name="convertJouleProSekunde">Joule por segundo (J/s)</string>
 
     <string name="delete">Borrar</string>

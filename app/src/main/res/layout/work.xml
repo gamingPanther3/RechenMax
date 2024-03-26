@@ -224,7 +224,7 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertPferdestärke"
+            android:text="@string/convertPferdestaerke"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 

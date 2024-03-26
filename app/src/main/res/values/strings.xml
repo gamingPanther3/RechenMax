@@ -333,7 +333,8 @@
     <string name="convertKubikFeet">Kubik-Inch (ft³)</string>
     <string name="convertKubikInch">Kubik-Inch (in³)</string>
     <!-- Masse / Gewicht -->
-    <string name="convertAtomareMasseneinheit">Atomare Masseneinheit (u)</string>
+    <string name="convertFemtogramm">Femtogramm (fg)</string>
+    <string name="convertPicogramm">Picogramm (pg)</string>
     <string name="convertNanogramm">Nanogramm (ng)</string>
     <string name="convertMikrogramm">Mikrogramm (μg)</string>
     <string name="convertMilligramm">Milligramm (mg)</string>
@@ -370,10 +371,10 @@
     <string name="convertAmpere">Ampere (A)</string>
     <string name="convertKiloAmpere">KiloAmpere (kA)</string>
     <!-- Geschwindigkeit -->
-    <string name="convertMillimeterProSekunde">Millimeter pro Sekunde (mm/s)</string>
-    <string name="convertMeterProSekunde">Meter pro Sekunde (m/s)</string>
-    <string name="convertKilometerProStunde">Kilometer pro Stunde (km/h)</string>
-    <string name="convertMilesProStunde">Miles pro Stunde (mph)</string>
+    <string name="convertMillimeterProSekunde">Millimeter/Sekunde (mm/s)</string>
+    <string name="convertMeterProSekunde">Meter/Sekunde (m/s)</string>
+    <string name="convertKilometerProStunde">Kilometer/Stunde (km/h)</string>
+    <string name="convertMilesProStunde">Miles/Stunde (mph)</string>
     <string name="convertKnoten">Knoten (kt)</string>
     <string name="convertMach">Mach (M)</string>
     <!-- Energie -->
@@ -408,7 +409,7 @@
     <string name="convertKilowatt">Kilowatt (kW)</string>
     <string name="convertMegawatt">Megawatt (MW)</string>
     <string name="convertGigawatt">Gigawatt (GW)</string>
-    <string name="convertPferdestärke">Pferdestärke (hp)</string>
+    <string name="convertPferdestaerke">Pferdestärke (hp)</string>
     <string name="convertJouleProSekunde">Joule pro Sekunde (J/s)</string>
 
     <string name="delete">Löschen</string>

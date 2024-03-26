@@ -320,7 +320,7 @@
     <string name="convertKilowatt">Kilowatt (kW)</string>
     <string name="convertMegawatt">Megawatt (MW)</string>
     <string name="convertGigawatt">Gigawatt (GW)</string>
-    <string name="convertPferdestärke">Cheval-vapeur (hp)</string>
+    <string name="convertPferdestaerke">Cheval-vapeur (hp)</string>
     <string name="convertJouleProSekunde">Joule par seconde (J/s)</string>
 
     <string name="delete">Supprimer</string>

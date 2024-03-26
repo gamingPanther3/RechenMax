@@ -2,61 +2,20 @@ package com.mlprograms.rechenmax;
 
 import static com.mlprograms.rechenmax.Converter.Category.ANGLE;
 import static com.mlprograms.rechenmax.Converter.Category.AREA;
+import static com.mlprograms.rechenmax.Converter.Category.CURRENT;
 import static com.mlprograms.rechenmax.Converter.Category.DATA;
+import static com.mlprograms.rechenmax.Converter.Category.ENERGY;
 import static com.mlprograms.rechenmax.Converter.Category.LENGTH;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.ACRE;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.ANGSTROM;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.ARES;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.BIT;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.BYTE;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.CENTIMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.DECIMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.DEGREE;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.EM;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.EXABIT_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.EXABYTE_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.FEET;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.FEMTOMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.GIGABIT_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.GIGABYTE_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.GRAD;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.HECTARE;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.HECTOMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILO;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILOBIT_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILOBYTE_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILOMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.LIGHT_YEAR;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.MEGABIT_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.MEGABYTE_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.METER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.MICROMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.MILES;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.MILLIMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.NANOMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.NAUTICAL_MILES;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.PARSEC;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.PETABIT_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.PETABYTE_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.PICA;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.PICOMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.PIXEL;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.POINT;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.RADIAN;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_CENTIMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_FOOT;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_INCH;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_KILOMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_METER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_MICROMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_MILLIMETER;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.TERABIT_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.TERABYTE_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.YARD;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.YOTABIT_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.YOTABYTE_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.ZETABIT_B1000;
-import static com.mlprograms.rechenmax.Converter.UnitDefinition.ZETABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.Category.MASS;
+import static com.mlprograms.rechenmax.Converter.Category.PRESSURE;
+import static com.mlprograms.rechenmax.Converter.Category.SPEED;
+import static com.mlprograms.rechenmax.Converter.Category.TEMPERATURE;
+import static com.mlprograms.rechenmax.Converter.Category.TIME;
+import static com.mlprograms.rechenmax.Converter.Category.TORQUE;
+import static com.mlprograms.rechenmax.Converter.Category.VOLTAGE;
+import static com.mlprograms.rechenmax.Converter.Category.VOLUME;
+import static com.mlprograms.rechenmax.Converter.Category.WORK;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.*;
 import static com.mlprograms.rechenmax.MainActivity.isInvalidInput;
 
 import android.Manifest;
@@ -95,7 +54,6 @@ import org.json.JSONException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ConvertActivity extends AppCompatActivity {
 
@@ -527,22 +485,13 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertDeg = findViewById(R.id.convertDegTextView);
                         TextView convertRad = findViewById(R.id.convertRadTextView);
 
-                        Converter angleConverter;
+                        Converter angleConverter = new Converter(ANGLE, DEGREE);
                         switch (spinner.getSelectedItemPosition()) {
                             case 0:
                                 angleConverter = new Converter(ANGLE, DEGREE);
-                                convertDeg.setText(     angleConverter.convertToString(editTextNumber, DEGREE));
-                                convertRad.setText(     angleConverter.convertToString(editTextNumber, RADIAN));
                                 break;
                             case 1:
                                 angleConverter = new Converter(ANGLE, RADIAN);
-                                convertDeg.setText(     angleConverter.convertToString(editTextNumber, DEGREE));
-                                convertRad.setText(     angleConverter.convertToString(editTextNumber, RADIAN));
-                                break;
-                            case 2:
-                                angleConverter = new Converter(ANGLE, GRAD);
-                                convertDeg.setText(     angleConverter.convertToString(editTextNumber, DEGREE));
-                                convertRad.setText(     angleConverter.convertToString(editTextNumber, RADIAN));
                                 break;
                             default:
                                 convertDeg.setText("0,00");
@@ -550,8 +499,8 @@ public class ConvertActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        convertDeg.setText(formatResultTextAfterType(convertDeg.getText().toString()));
-                        convertRad.setText(formatResultTextAfterType(convertRad.getText().toString()));
+                        convertDeg.setText(     formatResultTextAfterType(angleConverter.convertToString(editTextNumber, DEGREE)));
+                        convertRad.setText(     formatResultTextAfterType(angleConverter.convertToString(editTextNumber, RADIAN)));
                         break;
                     case "Fläche" /* Fläche */:
                         TextView convertSquareMicrometer = findViewById(R.id.convertSquareMicrometerTextView);
@@ -565,137 +514,37 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertSquareFeet = findViewById(R.id.convertSquareFeetTextView);
                         TextView convertAcre = findViewById(R.id.convertAcreTextView);
 
-                        Converter areaConverter;
+                        Converter areaConverter = new Converter(AREA, SQUARE_MICROMETER);
                         switch (spinner.getSelectedItemPosition()) {
                             case 0:
                                 areaConverter = new Converter(AREA, SQUARE_MICROMETER);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 1:
                                 areaConverter = new Converter(AREA, SQUARE_MILLIMETER);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 2:
                                 areaConverter = new Converter(AREA, SQUARE_CENTIMETER);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 3:
                                 areaConverter = new Converter(AREA, SQUARE_METER);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 4:
                                 areaConverter = new Converter(AREA, SQUARE_KILOMETER);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 5:
                                 areaConverter = new Converter(AREA, ARES);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 6:
                                 areaConverter = new Converter(AREA, HECTARE);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 7:
                                 areaConverter = new Converter(AREA, SQUARE_INCH);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 8:
                                 areaConverter = new Converter(AREA, SQUARE_FOOT);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             case 9:
                                 areaConverter = new Converter(AREA, ACRE);
-                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
-                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
-                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
-                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
-                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
-                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
-                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
-                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
-                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
-                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
                                 break;
                             default:
                                 convertSquareMicrometer.setText("0,00");
@@ -711,16 +560,16 @@ public class ConvertActivity extends AppCompatActivity {
                                 break;
                         }
 
-                        convertSquareMicrometer.setText(formatResultTextAfterType(convertSquareMicrometer.getText().toString()));
-                        convertSquareMillimeter.setText(formatResultTextAfterType(convertSquareMillimeter.getText().toString()));
-                        convertSquareCentimeter.setText(formatResultTextAfterType(convertSquareCentimeter.getText().toString()));
-                        convertSquareMeter.setText(formatResultTextAfterType(convertSquareMeter.getText().toString()));
-                        convertSquareKilometer.setText(formatResultTextAfterType(convertSquareKilometer.getText().toString()));
-                        convertAr.setText(formatResultTextAfterType(convertAr.getText().toString()));
-                        convertHectares.setText(formatResultTextAfterType(convertHectares.getText().toString()));
-                        convertSquareInch.setText(formatResultTextAfterType(convertSquareInch.getText().toString()));
-                        convertSquareFeet.setText(formatResultTextAfterType(convertSquareFeet.getText().toString()));
-                        convertAcre.setText(formatResultTextAfterType(convertAcre.getText().toString()));
+                        convertSquareMicrometer.setText(   formatResultTextAfterType(areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER)));
+                        convertSquareMillimeter.setText(   formatResultTextAfterType(areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER)));
+                        convertSquareCentimeter.setText(   formatResultTextAfterType(areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER)));
+                        convertSquareMeter.setText(        formatResultTextAfterType(areaConverter.convertToString(editTextNumber, SQUARE_METER)));
+                        convertSquareKilometer.setText(    formatResultTextAfterType(areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER)));
+                        convertAr.setText(                 formatResultTextAfterType(areaConverter.convertToString(editTextNumber, ARES)));
+                        convertHectares.setText(           formatResultTextAfterType(areaConverter.convertToString(editTextNumber, HECTARE)));
+                        convertSquareInch.setText(         formatResultTextAfterType(areaConverter.convertToString(editTextNumber, SQUARE_INCH)));
+                        convertSquareFeet.setText(         formatResultTextAfterType(areaConverter.convertToString(editTextNumber, SQUARE_FOOT)));
+                        convertAcre.setText(               formatResultTextAfterType(areaConverter.convertToString(editTextNumber, ACRE)));
                         break;
                     case "Speicher" /* Speicher */:
                         TextView convertBit = findViewById(R.id.convertBitTextView);
@@ -951,27 +800,27 @@ public class ConvertActivity extends AppCompatActivity {
                                 convertLightyear.setText("0,00");
                         }
 
-                        convertAngstrom.setText(            formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, ANGSTROM)));
-                        convertFemtometer.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, FEMTOMETER)));
-                        convertParsec.setText(              formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PARSEC)));
-                        convertPixel.setText(               formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PIXEL)));
-                        convertPoint.setText(               formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, POINT)));
-                        convertPica.setText(                formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PICA)));
-                        convertEm.setText(                  formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, EM)));
-                        convertPikometer.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PICOMETER)));
-                        convertNanometer.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, NANOMETER)));
-                        convertMikrometer.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MICROMETER)));
-                        convertMillimeter.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MILLIMETER)));
-                        convertCentimeter.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, CENTIMETER)));
-                        convertDezimeter.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, DECIMETER)));
-                        convertMeter.setText(               formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, METER)));
-                        convertHektometer.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, HECTOMETER)));
-                        convertKilometer.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, KILOMETER)));
-                        convertFeet.setText(                formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, FEET)));
-                        convertYard.setText(                formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, YARD)));
-                        convertMiles.setText(               formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MILES)));
-                        convertSeamiles.setText(            formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, NAUTICAL_MILES)));
-                        convertLightyear.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, LIGHT_YEAR)));
+                        convertAngstrom.setText(       formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, ANGSTROM)));
+                        convertFemtometer.setText(     formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, FEMTOMETER)));
+                        convertParsec.setText(         formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PARSEC)));
+                        convertPixel.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PIXEL)));
+                        convertPoint.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, POINT)));
+                        convertPica.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PICA)));
+                        convertEm.setText(             formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, EM)));
+                        convertPikometer.setText(      formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, PICOMETER)));
+                        convertNanometer.setText(      formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, NANOMETER)));
+                        convertMikrometer.setText(     formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MICROMETER)));
+                        convertMillimeter.setText(     formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MILLIMETER)));
+                        convertCentimeter.setText(     formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, CENTIMETER)));
+                        convertDezimeter.setText(      formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, DECIMETER)));
+                        convertMeter.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, METER)));
+                        convertHektometer.setText(     formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, HECTOMETER)));
+                        convertKilometer.setText(      formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, KILOMETER)));
+                        convertFeet.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, FEET)));
+                        convertYard.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, YARD)));
+                        convertMiles.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MILES)));
+                        convertSeamiles.setText(       formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, NAUTICAL_MILES)));
+                        convertLightyear.setText(      formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, LIGHT_YEAR)));
                         break;
                     case "Volumen" /* Volumen */:
                         TextView convertMilliliter = findViewById(R.id.convertMilliliterTextView);
@@ -982,16 +831,58 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertKubikFeet = findViewById(R.id.convertKubikFeetTextView);
                         TextView convertGallonUS = findViewById(R.id.convertGallonUSTextView);
 
-                        //convertMilliliter.setText(String.valueOf(editTextNumber));
-                        //convertLiter.setText(String.valueOf(editTextNumber));
-                        //convertKubikmillimeter.setText(String.valueOf(editTextNumber));
-                        //convertKubikmeter.setText(String.valueOf(editTextNumber));
-                        //convertKubikInch.setText(String.valueOf(editTextNumber));
-                        //convertKubikFeet.setText(String.valueOf(editTextNumber));
-                        //convertGallonUS.setText(String.valueOf(editTextNumber));
+                        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmillimeter)));
+                        customItemListVolume.add(new CustomItems(getString(R.string.convertMilliliter)));
+                        customItemListVolume.add(new CustomItems(getString(R.string.convertLiter)));
+                        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmeter)));
+                        customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUS)));
+                        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikFeet)));
+                        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikInch)));
+
+                        Converter volumeConverter = new Converter(VOLUME, CUBIC_MILLIMETER);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                volumeConverter = new Converter(VOLUME, CUBIC_MILLIMETER);
+                                break;
+                            case 1:
+                                volumeConverter = new Converter(VOLUME, MILLILITER);
+                                break;
+                            case 2:
+                                volumeConverter = new Converter(VOLUME, LITER);
+                                break;
+                            case 3:
+                                volumeConverter = new Converter(VOLUME, CUBIC_METER);
+                                break;
+                            case 4:
+                                volumeConverter = new Converter(VOLUME, GALLON);
+                                break;
+                            case 5:
+                                volumeConverter = new Converter(VOLUME, CUBIC_FEET);
+                                break;
+                            case 6:
+                                volumeConverter = new Converter(VOLUME, CUBIC_INCH);
+                                break;
+                            default:
+                                convertMilliliter.setText("0,00");
+                                convertLiter.setText("0,00");
+                                convertKubikmillimeter.setText("0,00");
+                                convertKubikmeter.setText("0,00");
+                                convertKubikInch.setText("0,00");
+                                convertKubikFeet.setText("0,00");
+                                convertGallonUS.setText("0,00");
+                        }
+
+                        convertMilliliter.setText(       formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, MILLILITER)));
+                        convertLiter.setText(            formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, LITER)));
+                        convertKubikmillimeter.setText(  formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_MILLIMETER)));
+                        convertKubikmeter.setText(       formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_METER)));
+                        convertKubikInch.setText(        formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_INCH)));
+                        convertKubikFeet.setText(        formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_FEET)));
+                        convertGallonUS.setText(         formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, GALLON)));
                         break;
                     case "MasseGewicht":
-                        TextView convertAtomareMasseneinheit = findViewById(R.id.convertAtomareMasseneinheitTextView);
+                        TextView convertFemtogramm = findViewById(R.id.convertFemtogrammTextView);
+                        TextView convertPicogramm = findViewById(R.id.convertPicogrammTextView);
                         TextView convertNanogramm = findViewById(R.id.convertNanogrammTextView);
                         TextView convertMikrogramm = findViewById(R.id.convertMikrogrammTextView);
                         TextView convertMilligramm = findViewById(R.id.convertMilligrammTextView);
@@ -1001,32 +892,487 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertUnzen= findViewById(R.id.convertUnzenTextView);
                         TextView convertPfund= findViewById(R.id.convertPfundTextView);
 
-                        //convertAtomareMasseneinheit.setText(String.valueOf(editTextNumber));
-                        //convertMikrogramm.setText(String.valueOf(editTextNumber));
-                        //convertMilligramm.setText(String.valueOf(editTextNumber));
-                        //convertGramm.setText(String.valueOf(editTextNumber));
-                        //convertKilogramm.setText(String.valueOf(editTextNumber));
-                        //convertTonne.setText(String.valueOf(editTextNumber));
-                        //convertUnzen.setText(String.valueOf(editTextNumber));
-                        //convertPfund.setText(String.valueOf(editTextNumber));
+                        Converter massWeightConverter = new Converter(MASS, MILLILITER);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                massWeightConverter = new Converter(MASS, FEMTOGRAM);
+                                break;
+                            case 1:
+                                massWeightConverter = new Converter(MASS, PICOGRAM);
+                                break;
+                            case 2:
+                                massWeightConverter = new Converter(MASS, NANOGRAM);
+                                break;
+                            case 3:
+                                massWeightConverter = new Converter(MASS, MICROGRAM);
+                                break;
+                            case 4:
+                                massWeightConverter = new Converter(MASS, MILLIGRAM);
+                                break;
+                            case 5:
+                                massWeightConverter = new Converter(MASS, GRAM);
+                                break;
+                            case 6:
+                                massWeightConverter = new Converter(MASS, KILOGRAM);
+                                break;
+                            case 7:
+                                massWeightConverter = new Converter(MASS, TON);
+                                break;
+                            case 8:
+                                massWeightConverter = new Converter(MASS, OUNCE);
+                                break;
+                            case 9:
+                                massWeightConverter = new Converter(MASS, POUND);
+                                break;
+                            default:
+                                convertFemtogramm.setText("0,00");
+                                convertPicogramm.setText("0,00");
+                                convertNanogramm.setText("0,00");
+                                convertMikrogramm.setText("0,00");
+                                convertMilligramm.setText("0,00");
+                                convertGramm.setText("0,00");
+                                convertKilogramm.setText("0,00");
+                                convertTonne.setText("0,00");
+                                convertUnzen.setText("0,00");
+                                convertPfund.setText("0,00");
+                        }
+
+                        convertFemtogramm.setText(    formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, FEMTOGRAM)));
+                        convertPicogramm.setText(     formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, PICOGRAM)));
+                        convertNanogramm.setText(     formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, NANOGRAM)));
+                        convertMikrogramm.setText(    formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, MICROGRAM)));
+                        convertMilligramm.setText(    formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, MILLIGRAM)));
+                        convertGramm.setText(         formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, GRAM)));
+                        convertKilogramm.setText(     formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, KILOGRAM)));
+                        convertTonne.setText(         formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, TON)));
+                        convertUnzen.setText(         formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, OUNCE)));
+                        convertPfund.setText(         formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, POUND)));
                         break;
                     case "Zeit":
+                        TextView convertWoche = findViewById(R.id.convertWocheTextView);
+                        TextView convertTag = findViewById(R.id.convertTagTextView);
+                        TextView convertStunde = findViewById(R.id.convertStundeTextView);
+                        TextView convertMinute = findViewById(R.id.convertMinuteTextView);
+                        TextView convertSekunde = findViewById(R.id.convertSekundeTextView);
+                        TextView convertMillisekunde = findViewById(R.id.convertMillisekundeTextView);
+                        TextView convertMikrosekunde = findViewById(R.id.convertMikrosekundeTextView);
+                        TextView convertNanosekunde= findViewById(R.id.convertNanosekundeTextView);
+                        TextView convertPicosekunde= findViewById(R.id.convertPicosekundeTextView);
+                        TextView convertFemtosekunde= findViewById(R.id.convertFemtosekundeTextView);
+
+                        Converter timeConverter = new Converter(TIME, FEMTOSECOND);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                timeConverter = new Converter(TIME, FEMTOSECOND);
+                                break;
+                            case 1:
+                                timeConverter = new Converter(TIME, PICOSECOND);
+                                break;
+                            case 2:
+                                timeConverter = new Converter(TIME, NANOSECOND);
+                                break;
+                            case 3:
+                                timeConverter = new Converter(TIME, MICROSECOND);
+                                break;
+                            case 4:
+                                timeConverter = new Converter(TIME, MILLISECOND);
+                                break;
+                            case 5:
+                                timeConverter = new Converter(TIME, SECOND);
+                                break;
+                            case 6:
+                                timeConverter = new Converter(TIME, MINUTE);
+                                break;
+                            case 7:
+                                timeConverter = new Converter(TIME, HOUR);
+                                break;
+                            case 8:
+                                timeConverter = new Converter(TIME, DAY);
+                                break;
+                            case 9:
+                                timeConverter = new Converter(TIME, WEEK);
+                                break;
+                            default:
+                                convertWoche.setText("0,00");
+                                convertTag.setText("0,00");
+                                convertStunde.setText("0,00");
+                                convertMinute.setText("0,00");
+                                convertSekunde.setText("0,00");
+                                convertMillisekunde.setText("0,00");
+                                convertMikrosekunde.setText("0,00");
+                                convertNanosekunde.setText("0,00");
+                                convertPicosekunde.setText("0,00");
+                                convertFemtosekunde.setText("0,00");
+                        }
+
+                        convertWoche.setText(           formatResultTextAfterType(timeConverter.convertToString(editTextNumber, WEEK)));
+                        convertTag.setText(             formatResultTextAfterType(timeConverter.convertToString(editTextNumber, DAY)));
+                        convertStunde.setText(          formatResultTextAfterType(timeConverter.convertToString(editTextNumber, HOUR)));
+                        convertMinute.setText(          formatResultTextAfterType(timeConverter.convertToString(editTextNumber, MINUTE)));
+                        convertSekunde.setText(         formatResultTextAfterType(timeConverter.convertToString(editTextNumber, SECOND)));
+                        convertMillisekunde.setText(    formatResultTextAfterType(timeConverter.convertToString(editTextNumber, MILLISECOND)));
+                        convertMikrosekunde.setText(    formatResultTextAfterType(timeConverter.convertToString(editTextNumber, MICROSECOND)));
+                        convertNanosekunde.setText(     formatResultTextAfterType(timeConverter.convertToString(editTextNumber, NANOSECOND)));
+                        convertPicosekunde.setText(     formatResultTextAfterType(timeConverter.convertToString(editTextNumber, PICOSECOND)));
+                        convertFemtosekunde.setText(    formatResultTextAfterType(timeConverter.convertToString(editTextNumber, FEMTOSECOND)));
                         break;
                     case "Temperatur":
+                        TextView convertCelsius = findViewById(R.id.convertCelsiusTextView);
+                        TextView convertKelvin = findViewById(R.id.convertKelvinTextView);
+                        TextView convertFahrenheit = findViewById(R.id.convertFahrenheitTextView);
+
+                        Converter temperatureConverter = new Converter(TEMPERATURE, CELSIUS);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                temperatureConverter = new Converter(TEMPERATURE, CELSIUS);
+                                break;
+                            case 1:
+                                temperatureConverter = new Converter(TEMPERATURE, KELVIN);
+                                break;
+                            case 2:
+                                temperatureConverter = new Converter(TEMPERATURE, FAHRENHEIT);
+                                break;
+                            default:
+                                convertCelsius.setText("0,00");
+                                convertKelvin.setText("0,00");
+                                convertFahrenheit.setText("0,00");
+                        }
+
+                        convertCelsius.setText(         formatResultTextAfterType(temperatureConverter.convertToString(editTextNumber, CELSIUS)));
+                        convertKelvin.setText(          formatResultTextAfterType(temperatureConverter.convertToString(editTextNumber, KELVIN)));
+                        convertFahrenheit.setText(      formatResultTextAfterType(temperatureConverter.convertToString(editTextNumber, FAHRENHEIT)));
                         break;
                     case "StromSpannung":
+                        TextView convertMillivolt = findViewById(R.id.convertMillivoltTextView);
+                        TextView convertVolt = findViewById(R.id.convertVoltTextView);
+                        TextView convertKilovolt = findViewById(R.id.convertKilovoltTextView);
+                        TextView convertMegavolt = findViewById(R.id.convertMegavoltTextView);
+
+                        Converter voltageConverter = new Converter(VOLTAGE, MILLIVOLT);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                voltageConverter = new Converter(VOLTAGE, MILLIVOLT);
+                                break;
+                            case 1:
+                                voltageConverter = new Converter(VOLTAGE, VOLT);
+                                break;
+                            case 2:
+                                voltageConverter = new Converter(VOLTAGE, KILOVOLT);
+                                break;
+                            case 3:
+                                voltageConverter = new Converter(VOLTAGE, MEGAVOLT);
+                                break;
+                            default:
+                                convertMillivolt.setText("0,00");
+                                convertVolt.setText("0,00");
+                                convertKilovolt.setText("0,00");
+                                convertMegavolt.setText("0,00");
+                        }
+
+                        convertMillivolt.setText(     formatResultTextAfterType(voltageConverter.convertToString(editTextNumber, MILLIVOLT)));
+                        convertVolt.setText(          formatResultTextAfterType(voltageConverter.convertToString(editTextNumber, VOLT)));
+                        convertKilovolt.setText(      formatResultTextAfterType(voltageConverter.convertToString(editTextNumber, KILOVOLT)));
+                        convertMegavolt.setText(      formatResultTextAfterType(voltageConverter.convertToString(editTextNumber, MEGAVOLT)));
                         break;
                     case "StromStärke":
+                        TextView convertPicoampere = findViewById(R.id.convertPicoampereTextView);
+                        TextView convertNanoampere = findViewById(R.id.convertNanoampereTextView);
+                        TextView convertMikroampere = findViewById(R.id.convertMikroampereTextView);
+                        TextView convertMilliampere = findViewById(R.id.convertMilliampereTextView);
+                        TextView convertAmpere = findViewById(R.id.convertAmpereTextView);
+                        TextView convertKiloAmpere = findViewById(R.id.convertKiloAmpereTextView);
+
+                        Converter currentConverter = new Converter(CURRENT, PICOAMPERE);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                currentConverter = new Converter(CURRENT, PICOAMPERE);
+                                break;
+                            case 1:
+                                currentConverter = new Converter(CURRENT, NANOAMPERE);
+                                break;
+                            case 2:
+                                currentConverter = new Converter(CURRENT, MICROAMPERE);
+                                break;
+                            case 3:
+                                currentConverter = new Converter(CURRENT, MILLIAMPERE);
+                                break;
+                            case 4:
+                                currentConverter = new Converter(CURRENT, AMPERE);
+                                break;
+                            case 5:
+                                currentConverter = new Converter(CURRENT, KILOAMPERE);
+                                break;
+                            default:
+                                convertPicoampere.setText("0,00");
+                                convertNanoampere.setText("0,00");
+                                convertMikroampere.setText("0,00");
+                                convertMilliampere.setText("0,00");
+                                convertAmpere.setText("0,00");
+                                convertKiloAmpere.setText("0,00");
+                        }
+
+                        convertPicoampere.setText(      formatResultTextAfterType(currentConverter.convertToString(editTextNumber, PICOAMPERE)));
+                        convertNanoampere.setText(      formatResultTextAfterType(currentConverter.convertToString(editTextNumber, NANOAMPERE)));
+                        convertMikroampere.setText(     formatResultTextAfterType(currentConverter.convertToString(editTextNumber, MICROAMPERE)));
+                        convertMilliampere.setText(     formatResultTextAfterType(currentConverter.convertToString(editTextNumber, MILLIAMPERE)));
+                        convertAmpere.setText(          formatResultTextAfterType(currentConverter.convertToString(editTextNumber, AMPERE)));
+                        convertKiloAmpere.setText(      formatResultTextAfterType(currentConverter.convertToString(editTextNumber, KILOAMPERE)));
                         break;
                     case "Geschwindigkeit":
+                        TextView convertMillimeterProSekunde = findViewById(R.id.convertMillimeterProSekundeTextView);
+                        TextView convertMeterProSekunde = findViewById(R.id.convertMeterProSekundeTextView);
+                        TextView convertKilometerProStunde = findViewById(R.id.convertKilometerProStundeTextView);
+                        TextView convertMilesProStunde = findViewById(R.id.convertMilesProStundeTextView);
+                        TextView convertKnoten = findViewById(R.id.convertKnotenTextView);
+                        TextView convertMach = findViewById(R.id.convertMachTextView);
+
+                        Converter speedConverter = new Converter(SPEED, MILLIMETER_PER_SECOND);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                speedConverter = new Converter(SPEED, MILLIMETER_PER_SECOND);
+                                break;
+                            case 1:
+                                speedConverter = new Converter(SPEED, METER_PER_SECOND);
+                                break;
+                            case 2:
+                                speedConverter = new Converter(SPEED, KILOMETER_PER_HOUR);
+                                break;
+                            case 3:
+                                speedConverter = new Converter(SPEED, MILES_PER_HOUR);
+                                break;
+                            case 4:
+                                speedConverter = new Converter(SPEED, KNOT);
+                                break;
+                            case 5:
+                                speedConverter = new Converter(SPEED, MACH);
+                                break;
+                            default:
+                                convertMillimeterProSekunde.setText("0,00");
+                                convertMeterProSekunde.setText("0,00");
+                                convertKilometerProStunde.setText("0,00");
+                                convertMilesProStunde.setText("0,00");
+                                convertKnoten.setText("0,00");
+                                convertMach.setText("0,00");
+                        }
+
+                        convertMillimeterProSekunde.setText(    formatResultTextAfterType(speedConverter.convertToString(editTextNumber, MILLIMETER_PER_SECOND)));
+                        convertMeterProSekunde.setText(         formatResultTextAfterType(speedConverter.convertToString(editTextNumber, METER_PER_SECOND)));
+                        convertKilometerProStunde.setText(      formatResultTextAfterType(speedConverter.convertToString(editTextNumber, KILOMETER_PER_HOUR)));
+                        convertMilesProStunde.setText(          formatResultTextAfterType(speedConverter.convertToString(editTextNumber, MILES_PER_HOUR)));
+                        convertKnoten.setText(                  formatResultTextAfterType(speedConverter.convertToString(editTextNumber, KNOT)));
+                        convertMach.setText(                    formatResultTextAfterType(speedConverter.convertToString(editTextNumber, MACH)));
                         break;
                     case "Energie":
+                        TextView convertMillijoule = findViewById(R.id.convertMillijouleTextView);
+                        TextView convertJoule = findViewById(R.id.convertJouleTextView);
+                        TextView convertKilojoule = findViewById(R.id.convertKilojouleTextView);
+                        TextView convertMegajoule = findViewById(R.id.convertMegajouleTextView);
+                        TextView convertKalorie = findViewById(R.id.convertKalorieTextView);
+                        TextView convertKilokalorie = findViewById(R.id.convertKilokalorieTextView);
+                        TextView convertWattsekunde = findViewById(R.id.convertWattsekundeTextView);
+                        TextView convertWattstunde = findViewById(R.id.convertWattstundeTextView);
+                        TextView convertKilowattsekunde = findViewById(R.id.convertKilowattsekundeTextView);
+                        TextView convertKilowattstunde = findViewById(R.id.convertKilowattstundeTextView);
+
+                        Converter energyConverter = new Converter(ENERGY, MILLIJOULE);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                energyConverter = new Converter(ENERGY, MILLIJOULE);
+                                break;
+                            case 1:
+                                energyConverter = new Converter(ENERGY, JOULE);
+                                break;
+                            case 2:
+                                energyConverter = new Converter(ENERGY, KILOJOULE);
+                                break;
+                            case 3:
+                                energyConverter = new Converter(ENERGY, MEGAJOULE);
+                                break;
+                            case 4:
+                                energyConverter = new Converter(ENERGY, CALORY);
+                                break;
+                            case 5:
+                                energyConverter = new Converter(ENERGY, KILOCALORY);
+                                break;
+                            case 6:
+                                energyConverter = new Converter(ENERGY, WATT_SECOND);
+                                break;
+                            case 7:
+                                energyConverter = new Converter(ENERGY, WATT_HOUR);
+                                break;
+                            case 8:
+                                energyConverter = new Converter(ENERGY, KILOWATT_SECOND);
+                                break;
+                            case 9:
+                                energyConverter = new Converter(ENERGY, KILOWATT_HOUR);
+                                break;
+                            default:
+                                convertMillijoule.setText("0,00");
+                                convertJoule.setText("0,00");
+                                convertKilojoule.setText("0,00");
+                                convertMegajoule.setText("0,00");
+                                convertKalorie.setText("0,00");
+                                convertKilokalorie.setText("0,00");
+                                convertWattsekunde.setText("0,00");
+                                convertWattstunde.setText("0,00");
+                                convertKilowattsekunde.setText("0,00");
+                                convertKilowattstunde.setText("0,00");
+                        }
+
+                        convertMillijoule.setText(              formatResultTextAfterType(energyConverter.convertToString(editTextNumber, MILLIJOULE)));
+                        convertJoule.setText(                   formatResultTextAfterType(energyConverter.convertToString(editTextNumber, JOULE)));
+                        convertKilojoule.setText(               formatResultTextAfterType(energyConverter.convertToString(editTextNumber, KILOJOULE)));
+                        convertMegajoule.setText(               formatResultTextAfterType(energyConverter.convertToString(editTextNumber, MEGAJOULE)));
+                        convertKalorie.setText(                 formatResultTextAfterType(energyConverter.convertToString(editTextNumber, CALORY)));
+                        convertKilokalorie.setText(             formatResultTextAfterType(energyConverter.convertToString(editTextNumber, KILOCALORY)));
+                        convertWattsekunde.setText(             formatResultTextAfterType(energyConverter.convertToString(editTextNumber, WATT_SECOND)));
+                        convertWattstunde.setText(              formatResultTextAfterType(energyConverter.convertToString(editTextNumber, WATT_HOUR)));
+                        convertKilowattsekunde.setText(         formatResultTextAfterType(energyConverter.convertToString(editTextNumber, KILOWATT_SECOND)));
+                        convertKilowattstunde.setText(          formatResultTextAfterType(energyConverter.convertToString(editTextNumber, KILOWATT_HOUR)));
                         break;
                     case "Druck":
+                        TextView convertMillipascal = findViewById(R.id.convertMillipascalTextView);
+                        TextView convertPascal = findViewById(R.id.convertPascalTextView);
+                        TextView convertHectopascal = findViewById(R.id.convertHectopascalTextView);
+                        TextView convertKilopascal = findViewById(R.id.convertKilopascalTextView);
+                        TextView convertBar = findViewById(R.id.convertBarTextView);
+                        TextView convertMillibar = findViewById(R.id.convertMillibarTextView);
+                        TextView convertTorr = findViewById(R.id.convertTorrTextView);
+                        TextView convertPSI = findViewById(R.id.convertPSITextView);
+                        TextView convertPSF = findViewById(R.id.convertPSFTextView);
+
+                        Converter pressureConverter = new Converter(PRESSURE, MILLIPASCAL);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                pressureConverter = new Converter(PRESSURE, MILLIPASCAL);
+                                break;
+                            case 1:
+                                pressureConverter = new Converter(PRESSURE, PASCAL);
+                                break;
+                            case 2:
+                                pressureConverter = new Converter(PRESSURE, HECTOPASCAL);
+                                break;
+                            case 3:
+                                pressureConverter = new Converter(PRESSURE, KILOPASCAL);
+                                break;
+                            case 4:
+                                pressureConverter = new Converter(PRESSURE, BAR);
+                                break;
+                            case 5:
+                                pressureConverter = new Converter(PRESSURE, MILLIBAR);
+                                break;
+                            case 6:
+                                pressureConverter = new Converter(PRESSURE, TORR);
+                                break;
+                            case 7:
+                                pressureConverter = new Converter(PRESSURE, PSI);
+                                break;
+                            case 8:
+                                pressureConverter = new Converter(PRESSURE, PSF);
+                                break;
+                            default:
+                                convertMillipascal.setText("0,00");
+                                convertPascal.setText("0,00");
+                                convertHectopascal.setText("0,00");
+                                convertKilopascal.setText("0,00");
+                                convertBar.setText("0,00");
+                                convertMillibar.setText("0,00");
+                                convertTorr.setText("0,00");
+                                convertPSI.setText("0,00");
+                                convertPSF.setText("0,00");
+                        }
+
+                        convertMillipascal.setText(       formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, MILLIPASCAL)));
+                        convertPascal.setText(            formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, PASCAL)));
+                        convertHectopascal.setText(       formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, HECTOPASCAL)));
+                        convertKilopascal.setText(        formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, KILOPASCAL)));
+                        convertBar.setText(               formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, BAR)));
+                        convertMillibar.setText(          formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, MILLIBAR)));
+                        convertTorr.setText(              formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, TORR)));
+                        convertPSI.setText(               formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, PSI)));
+                        convertPSF.setText(               formatResultTextAfterType(pressureConverter.convertToString(editTextNumber, PSF)));
                         break;
                     case "Drehmoment":
+                        TextView convertNewtonMeter = findViewById(R.id.convertNewtonMeterTextView);
+                        TextView convertMeterKilogramm = findViewById(R.id.convertMeterKilogrammTextView);
+                        TextView convertFootPound = findViewById(R.id.convertFootPoundTextView);
+                        TextView convertInchPound = findViewById(R.id.convertInchPoundTextView);
+
+                        Converter torqueConverter = new Converter(TORQUE, NEWTON_METER);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                torqueConverter = new Converter(TORQUE, NEWTON_METER);
+                                break;
+                            case 1:
+                                torqueConverter = new Converter(TORQUE, METER_KILOGRAM);
+                                break;
+                            case 2:
+                                torqueConverter = new Converter(TORQUE, FOOT_POUND_FORCE);
+                                break;
+                            case 3:
+                                torqueConverter = new Converter(TORQUE, INCH_POUND_FORCE);
+                                break;
+                            default:
+                                convertNewtonMeter.setText("0,00");
+                                convertMeterKilogramm.setText("0,00");
+                                convertFootPound.setText("0,00");
+                                convertInchPound.setText("0,00");
+                        }
+
+                        convertNewtonMeter.setText(     formatResultTextAfterType(torqueConverter.convertToString(editTextNumber, NEWTON_METER)));
+                        convertMeterKilogramm.setText(  formatResultTextAfterType(torqueConverter.convertToString(editTextNumber, METER_KILOGRAM)));
+                        convertFootPound.setText(       formatResultTextAfterType(torqueConverter.convertToString(editTextNumber, FOOT_POUND_FORCE)));
+                        convertInchPound.setText(       formatResultTextAfterType(torqueConverter.convertToString(editTextNumber, INCH_POUND_FORCE)));
                         break;
                     case "Arbeit":
+                        TextView convertMilliwatt = findViewById(R.id.convertMilliwattTextView);
+                        TextView convertWatt = findViewById(R.id.convertWattTextView);
+                        TextView convertKilowatt = findViewById(R.id.convertKilowattTextView);
+                        TextView convertMegawatt = findViewById(R.id.convertMegawattTextView);
+                        TextView convertGigawatt = findViewById(R.id.convertGigawattTextView);
+                        TextView convertPferdestaerke = findViewById(R.id.convertPferdestärkeTextView);
+                        TextView convertJouleProSekunde = findViewById(R.id.convertJouleProSekundeTextView);
+
+                        Converter workConverter = new Converter(WORK, MILLIWATT);
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                workConverter = new Converter(WORK, MILLIWATT);
+                                break;
+                            case 1:
+                                workConverter = new Converter(WORK, WATT);
+                                break;
+                            case 2:
+                                workConverter = new Converter(WORK, KILOWATT);
+                                break;
+                            case 3:
+                                workConverter = new Converter(WORK, MEGAWATT);
+                                break;
+                            case 4:
+                                workConverter = new Converter(WORK, GIGAWATT);
+                                break;
+                            case 5:
+                                workConverter = new Converter(WORK, HORSEPOWER);
+                                break;
+                            case 6:
+                                workConverter = new Converter(WORK, JOULE_PER_SECOND);
+                                break;
+                            default:
+                                convertMilliwatt.setText("0,00");
+                                convertWatt.setText("0,00");
+                                convertKilowatt.setText("0,00");
+                                convertMegawatt.setText("0,00");
+                                convertGigawatt.setText("0,00");
+                                convertPferdestaerke.setText("0,00");
+                                convertJouleProSekunde.setText("0,00");
+                        }
+
+                        convertMilliwatt.setText(           formatResultTextAfterType(workConverter.convertToString(editTextNumber, MILLIWATT)));
+                        convertWatt.setText(                formatResultTextAfterType(workConverter.convertToString(editTextNumber, WATT)));
+                        convertKilowatt.setText(            formatResultTextAfterType(workConverter.convertToString(editTextNumber, KILOWATT)));
+                        convertMegawatt.setText(            formatResultTextAfterType(workConverter.convertToString(editTextNumber, MEGAWATT)));
+                        convertGigawatt.setText(            formatResultTextAfterType(workConverter.convertToString(editTextNumber, GIGAWATT)));
+                        convertPferdestaerke.setText(       formatResultTextAfterType(workConverter.convertToString(editTextNumber, HORSEPOWER)));
+                        convertJouleProSekunde.setText(     formatResultTextAfterType(workConverter.convertToString(editTextNumber, JOULE_PER_SECOND)));
                         break;
                 }
             } catch (JSONException e) {
@@ -1099,25 +1445,27 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikFeet)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikInch)));
 
-        customItemListMass.add(new CustomItems(getString(R.string.convertTonne)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertKilogramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertGramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertMilligramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertMikrogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertFemtogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertPicogramm)));
         customItemListMass.add(new CustomItems(getString(R.string.convertNanogramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convert)));
-        customItemListMass.add(new CustomItems(getString(R.string.convert)));
-        customItemListMass.add(new CustomItems(getString(R.string.convert)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertMikrogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertMilligramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertGramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertKilogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertTonne)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertUnzen)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertPfund)));
 
-        customItemListTime.add(new CustomItems(getString(R.string.convertWoche)));
-        customItemListTime.add(new CustomItems(getString(R.string.convertTag)));
-        customItemListTime.add(new CustomItems(getString(R.string.convertStunde)));
-        customItemListTime.add(new CustomItems(getString(R.string.convertMinute)));
-        customItemListTime.add(new CustomItems(getString(R.string.convertSekunde)));
-        customItemListTime.add(new CustomItems(getString(R.string.convertMillisekunde)));
-        customItemListTime.add(new CustomItems(getString(R.string.convertMikrosekunde)));
-        customItemListTime.add(new CustomItems(getString(R.string.convertNanosekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertFemtosekunde)));
         customItemListTime.add(new CustomItems(getString(R.string.convertPicosekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertNanosekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertMikrosekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertMillisekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertSekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertMinute)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertStunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertTag)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertWoche)));
 
         customItemListTemperature.add(new CustomItems(getString(R.string.convertCelsius)));
         customItemListTemperature.add(new CustomItems(getString(R.string.convertKelvin)));
@@ -1133,6 +1481,7 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListCurrent.add(new CustomItems(getString(R.string.convertMikroampere)));
         customItemListCurrent.add(new CustomItems(getString(R.string.convertMilliampere)));
         customItemListCurrent.add(new CustomItems(getString(R.string.convertAmpere)));
+        customItemListCurrent.add(new CustomItems(getString(R.string.convertKiloAmpere)));
 
         customItemListSpeed.add(new CustomItems(getString(R.string.convertMillimeterProSekunde)));
         customItemListSpeed.add(new CustomItems(getString(R.string.convertMeterProSekunde)));
@@ -1172,7 +1521,7 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListWork.add(new CustomItems(getString(R.string.convertKilowatt)));
         customItemListWork.add(new CustomItems(getString(R.string.convertMegawatt)));
         customItemListWork.add(new CustomItems(getString(R.string.convertGigawatt)));
-        customItemListWork.add(new CustomItems(getString(R.string.convertPferdestärke)));
+        customItemListWork.add(new CustomItems(getString(R.string.convertPferdestaerke)));
         customItemListWork.add(new CustomItems(getString(R.string.convertJouleProSekunde)));
     }
 
