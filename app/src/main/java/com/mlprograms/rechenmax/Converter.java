@@ -121,7 +121,7 @@ public class Converter extends ConvertActivity {
         SQUARE_ANGSTROM(new Unit(Category.AREA, "\u00c5\u00b2", "Square \u00c5ngstrom", new BigDecimal("1.0E-20"))),
         SQUARE_PICOMETER(new Unit(Category.AREA, "pm\u00b2", "Square Picometer", new BigDecimal("1.0E-24"))),
         SQUARE_FEMTOMETER(new Unit(Category.AREA, "fm\u00b2", "Square Femtometer", new BigDecimal("1.0E-30"))),
-        HECTARE(new Unit(Category.AREA, "ha", "Hectare", new BigDecimal("1.0E5"))),
+        HECTARE(new Unit(Category.AREA, "ha", "Hectare", new BigDecimal("1.0E4"))),                             /* changed from 1.0E5 to 1.0E4 */
         ACRE(new Unit(Category.AREA, "ac", "Acre", new BigDecimal("4046.8564224"))),
         ARES(new Unit(Category.AREA, "a", "Ares", new BigDecimal("100"))),
         SQUARE_INCH(new Unit(Category.AREA, "in\u00b2", "Square Inch", new BigDecimal("0.00064516"))),
