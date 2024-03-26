@@ -127,6 +127,23 @@
     <string name="deg_rad">Grad- / Bogenmaß</string>
     <string name="historyIsEmpty">\n\n\n\n\n\n\nDein Verlauf ist leer.</string>
     <string name="helpPictureContentDescription" translatable="false">TODO</string>
+    <string name="settingsDecimalPoints">Nachkommastellen</string>
+    <string name="settingsDecimalPointsText">Mit dieser Einstellung kannst du auswählen, wie viele Nachkommastellen in dem Umrechner angezeigt werden sollen. Beachte jedoch, dass eine höhere Anzahl von Nachkommastellen die Leistung beeinträchtigen kann.</string>
+    <string name="settingsDecimalPoints1" translatable="false">1</string>
+    <string name="settingsDecimalPoints2" translatable="false">2</string>
+    <string name="settingsDecimalPoints3" translatable="false">3</string>
+    <string name="settingsDecimalPoints4" translatable="false">4</string>
+    <string name="settingsDecimalPoints5" translatable="false">5</string>
+    <string name="settingsDecimalPoints6" translatable="false">6</string>
+    <string name="settingsDecimalPoints7" translatable="false">7</string>
+    <string name="settingsDecimalPoints8" translatable="false">8</string>
+    <string name="settingsDecimalPoints9" translatable="false">9</string>
+    <string name="settingsDecimalPoints10" translatable="false">10</string>
+    <string name="settingsDecimalPoints11" translatable="false">11</string>
+    <string name="settingsDecimalPoints12" translatable="false">12</string>
+    <string name="settingsDecimalPoints13" translatable="false">13</string>
+    <string name="settingsDecimalPoints14" translatable="false">14</string>
+    <string name="settingsDecimalPoints15" translatable="false">15</string>
 
     <string name="patchnotes1">\nAutomatisches Scrollen</string>
     <string name="patchnotes2">Falls erforderlich, erfolgt im oberen Berechnungsbereich eine automatische Bildlaufbewegung nach unten.\n</string>
@@ -239,6 +256,15 @@
     <string name="convertDistance">Entfernung</string>
     <string name="convertVolume">Volumen</string>
     <string name="convertMassWeigth">Masse / Gewicht</string>
+    <string name="convertTime">Zeit</string>
+    <string name="convertTemperature">Temperatur</string>
+    <string name="convertVoltage">Stromspannung</string>
+    <string name="convertCurrent">Stromstärke</string>
+    <string name="convertSpeed">Geschwindigkeit</string>
+    <string name="convertEnergy">Energie</string>
+    <string name="convertPressure">Druck</string>
+    <string name="convertTorque">Drehmoment</string>
+    <string name="convertWork">Mechanische Arbeit</string>
 
     <string name="convert">Umrechnen</string>
     <string name="convertTitle">Umrechner</string>
@@ -246,24 +272,17 @@
     <!-- Winkel -->
     <string name="convertDeg">Grad (Deg)</string>
     <string name="convertRad">Radian (Rad)</string>
-    <string name="convertPitch">Steigung Prozentsatz (%)</string>
-    <string name="convertGon">Gradian (Gon)</string>
-    <string name="convertMrad">mrad (mrad)</string>
-    <string name="convertMinuteOfTheArc">Minute des Bogens (arcmin)</string>
-    <string name="convertSecondArc">Zweiter Bogen (arcsec)</string>
     <!-- Flächen -->
+    <string name="convertSquareMicrometer">Quadratmikrometer (µm²)</string>
     <string name="convertSquareMillimeter">Quadratmillimeter (mm²)</string>
     <string name="convertSquareCentimeter">Quadratzentimeter (cm²)</string>
     <string name="convertSquareMeter">Quadratmeter (m²)</string>
     <string name="convertSquareKilometer">Quadratkilometer (km²)</string>
-    <string name="convertAr">Ar</string>
-    <string name="convertDekar">Dekar</string>
-    <string name="convertHectares">Hektar</string>
+    <string name="convertAr">Ar (a)</string>
+    <string name="convertHectares">Hektar (ha)</string>
     <string name="convertSquareInch">Quadrat-Inch (in²)</string>
     <string name="convertSquareFeet">Quadrat-Feet (ft²)</string>
-    <string name="convertSquareYard">Quadrat-Yard (yd²)</string>
-    <string name="convertAcre">Acre</string>
-    <string name="convertSquareMiles">Quadrat-Meilen (mi²)</string>
+    <string name="convertAcre">Acre (ac)</string>
     <!-- Digitaler Speicher -->
     <string name="convertBit">Bit (Bit)</string>
     <string name="convertByte">Byte (Byte)</string>
@@ -277,7 +296,20 @@
     <string name="convertTerabyte">Terabyte (TB)</string>
     <string name="convertPetabit">Petabit (Pbit)</string>
     <string name="convertPetabyte">Petabyte (PB)</string>
+    <string name="convertExabit">Exabit (Ebit)</string>
+    <string name="convertExabyte">Exabyte (EB)</string>
+    <string name="convertZetabit">Zetabit (Zbit)</string>
+    <string name="convertZetabyte">Zetabyte (ZB)</string>
+    <string name="convertYotabit">Yotabit (Ybit)</string>
+    <string name="convertYotabyte">Yotabyte (YB)</string>
     <!-- Entfernung -->
+    <string name="convertAngstrom">Angstrom (Å)</string>
+    <string name="convertFemtometer">Femtometer (fm)</string>
+    <string name="convertParsec">Parsec (pc)</string>
+    <string name="convertPixel">Pixel (px)</string>
+    <string name="convertPoint">Point (pt)</string>
+    <string name="convertPica">Pica (p)</string>
+    <string name="convertEm">Quad (em)</string>
     <string name="convertPikometer">Pikometer (pm)</string>
     <string name="convertNanometer">Nanometer (nm)</string>
     <string name="convertMikrometer">Mikrometer (µm)</string>
@@ -294,48 +326,91 @@
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertAstronomicalUnit">Astonomische Einheit (AE)</string>
     <!-- Volumen -->
-    <string name="convertMikroliter">Mikroliter (µl)</string>
-    <string name="convertMilliliter">Milliliter (ml)</string>
-    <string name="convertDeziliter">Deziliter (dl)</string>
-    <string name="convertLiter">Liter (l)</string>
-    <string name="convertZentiliter">Zentiliter (cl)</string>
-    <string name="convertMetrischeTasse">Metrische Tasse</string>
     <string name="convertKubikmillimeter">Kubikmillimeter (mm³)</string>
-    <string name="convertKubikzentimeter">Kubikzentimeter (cm³)</string>
+    <string name="convertMilliliter">Milliliter (ml)</string>
+    <string name="convertLiter">Liter (l)</string>
     <string name="convertKubikmeter">Kubikmeter (m³)</string>
+    <string name="convertGallonUS">Gallon US (gal)</string>
+    <string name="convertKubikFeet">Kubik-Inch (ft³)</string>
     <string name="convertKubikInch">Kubik-Inch (in³)</string>
-    <string name="convertKubikFeet">Kubik-Feet (ft³)</string>
-    <string name="convertKubikYard">Kubik-Yard (yd³)</string>
-    <string name="convertGillsUS">Gills - US</string>
-    <string name="convertGillsUK">Gills - UK</string>
-    <string name="convertTeaspoonsUS">Teaspoons - US (tsp)</string>
-    <string name="convertTeaspoonsUK">Teespoons - UK (tsp)</string>
-    <string name="convertTablespoonsUS">Tablespoons - US (Tbls)</string>
-    <string name="convertTablespoonsUK">Tablespoons - UK (Tbls)</string>
-    <string name="convertCupsUS">Cups - US</string>
-    <string name="convertCupsUK">Cups - UK</string>
-    <string name="convertGallonUS">Gallon - US (Gal)</string>
-    <string name="convertGallonUK">Gallon - UK (Gal)</string>
-    <string name="convertBarrels">Barrels - US</string>
     <!-- Masse / Gewicht -->
     <string name="convertAtomareMasseneinheit">Atomare Masseneinheit (u)</string>
+    <string name="convertNanogramm">Nanogramm (ng)</string>
     <string name="convertMikrogramm">Mikrogramm (μg)</string>
     <string name="convertMilligramm">Milligramm (mg)</string>
-    <string name="convertZentigramm">Zentigramm (cg)</string>
     <string name="convertGramm">Gramm (g)</string>
-    <string name="convertHektogramm">Hektogramm (hg)</string>
-    <string name="convertDekagramm">Dekagramm (dag)</string>
-    <string name="convertKarat">Karat (CD)</string>
-    <string name="convertNewton">Newton (N)</string>
     <string name="convertKilogramm">Kilogramm (kg)</string>
     <string name="convertTonne">Tonne (t)</string>
-    <string name="convertKilotonne">Kilotonne (kt)</string>
-    <string name="convertGrains">Grains (gr)</string>
-    <string name="convertDrams">Drams</string>
     <string name="convertUnzen">Unzen (oz)</string>
     <string name="convertPfund">Pfund (lb)</string>
-    <string name="convertShortTons">Short Tons (US)</string>
-    <string name="convertLongTons">Long Tons (UK)</string>
+    <!-- Zeit -->
+    <string name="convertWoche">Woche (wk)</string>
+    <string name="convertTag">Tag (d)</string>
+    <string name="convertStunde">Stunde (h)</string>
+    <string name="convertMinute">Minute (m)</string>
+    <string name="convertSekunde">Sekunde (s)</string>
+    <string name="convertMillisekunde">Millisekunde (ms)</string>
+    <string name="convertMikrosekunde">Mikrosekunde (μs)</string>
+    <string name="convertNanosekunde">Nanosekunde (ns)</string>
+    <string name="convertPicosekunde">Picosekunde (ps)</string>
+    <string name="convertFemtosekunde">Femtosekunde (fs)</string>
+    <!-- Temperatur -->
+    <string name="convertCelsius">Celsius (°C)</string>
+    <string name="convertKelvin">Kelvin (K)</string>
+    <string name="convertFahrenheit">Fahrenheit (°F)</string>
+    <!-- Strom-Spannung -->
+    <string name="convertMillivolt">Millivolt (mV)</string>
+    <string name="convertVolt">Volt (V)</string>
+    <string name="convertKilovolt">Kilovolt (kV)</string>
+    <string name="convertMegavolt">Megavolt (MV)</string>
+    <!-- Strom-Stärke -->
+    <string name="convertPicoampere">Picoampere (pA)</string>
+    <string name="convertNanoampere">Nanoampere (nA)</string>
+    <string name="convertMikroampere">Mikroampere (μA)</string>
+    <string name="convertMilliampere">Milliampere (mA)</string>
+    <string name="convertAmpere">Ampere (A)</string>
+    <string name="convertKiloAmpere">KiloAmpere (kA)</string>
+    <!-- Geschwindigkeit -->
+    <string name="convertMillimeterProSekunde">Millimeter pro Sekunde (mm/s)</string>
+    <string name="convertMeterProSekunde">Meter pro Sekunde (m/s)</string>
+    <string name="convertKilometerProStunde">Kilometer pro Stunde (km/h)</string>
+    <string name="convertMilesProStunde">Miles pro Stunde (mph)</string>
+    <string name="convertKnoten">Knoten (kt)</string>
+    <string name="convertMach">Mach (M)</string>
+    <!-- Energie -->
+    <string name="convertMillijoule">Millijoule (mJ)</string>
+    <string name="convertJoule">Joule (J)</string>
+    <string name="convertKilojoule">Kilojoule (kJ)</string>
+    <string name="convertMegajoule">Megajoule (MJ)</string>
+    <string name="convertKalorie">Kalorie (cal)</string>
+    <string name="convertKilokalorie">Kilokalorie (kcal)</string>
+    <string name="convertWattsekunde">Wattsekunde (W×s)</string>
+    <string name="convertWattstunde">Wattstunde (W×h)</string>
+    <string name="convertKilowattsekunde">Kilowattsekunde (kW×s)</string>
+    <string name="convertKilowattstunde">Kilowattstunde (kW×h)</string>
+    <!-- Druck -->
+    <string name="convertMillipascal">Millipascal (mPa)</string>
+    <string name="convertPascal">Pascal (Pa)</string>
+    <string name="convertHectopascal">Hectopascal (hPa)</string>
+    <string name="convertKilopascal">Kilopascal (kPa)</string>
+    <string name="convertBar">Bar (bar)</string>
+    <string name="convertMillibar">Millibar (mbar)</string>
+    <string name="convertTorr">Torr (Torr)</string>
+    <string name="convertPSI">PSI (psi)</string>
+    <string name="convertPSF">PSF (psf)</string>
+    <!-- Drehmoment -->
+    <string name="convertNewtonMeter">Newton Meter (Nm)</string>
+    <string name="convertMeterKilogramm">Meter Kilogram (m kg)</string>
+    <string name="convertFootPound">Foot-Pound (ft lbf)</string>
+    <string name="convertInchPound">Inch-Pound (in lbf)</string>
+    <!-- Mechanische Arbeit -->
+    <string name="convertMilliwatt">Milliwatt (mW)</string>
+    <string name="convertWatt">Watt (W)</string>
+    <string name="convertKilowatt">Kilowatt (kW)</string>
+    <string name="convertMegawatt">Megawatt (MW)</string>
+    <string name="convertGigawatt">Gigawatt (GW)</string>
+    <string name="convertPferdestärke">Pferdestärke (hp)</string>
+    <string name="convertJouleProSekunde">Joule pro Sekunde (J/s)</string>
 
     <string name="delete">Löschen</string>
     <string name="settingsPI">Mit dieser Funktion kannst du festlegen, dass immer wenn du die Zahl \'3,14\' eingibst, sie automatisch durch das Symbol für Pi ersetzt wird. Dadurch wird die Eingabe von Pi in deinen Berechnungen vereinfacht und du kannst dich auf die Aufgabe konzentrieren, ohne ständig nach dem Symbol suchen zu müssen.</string>

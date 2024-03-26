@@ -19,18 +19,18 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertSquareMicrometer"
+            android:text="@string/convertMilliwatt"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertSquareMicrometerScrollView"
+            android:id="@+id/convertMilliwattScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertSquareMicrometerTextView"
+                android:id="@+id/convertMilliwattTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
@@ -60,18 +60,18 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertSquareMillimeter"
+            android:text="@string/convertWatt"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertSquareMillimeterScrollView"
+            android:id="@+id/convertWattScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertSquareMillimeterTextView"
+                android:id="@+id/convertWattTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
@@ -101,18 +101,18 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertSquareCentimeter"
+            android:text="@string/convertKilowatt"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertSquareCentimeterScrollView"
+            android:id="@+id/convertKilowattScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertSquareCentimeterTextView"
+                android:id="@+id/convertKilowattTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
@@ -142,18 +142,18 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertSquareMeter"
+            android:text="@string/convertMegawatt"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertSquareMeterScrollView"
+            android:id="@+id/convertMegawattScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertSquareMeterTextView"
+                android:id="@+id/convertMegawattTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
@@ -183,18 +183,18 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertSquareKilometer"
+            android:text="@string/convertGigawatt"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertSquareKilometerScrollView"
+            android:id="@+id/convertGigawattScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertSquareKilometerTextView"
+                android:id="@+id/convertGigawattTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
@@ -224,18 +224,18 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertAr"
+            android:text="@string/convertPferdestärke"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertArScrollView"
+            android:id="@+id/convertPferdestärkeScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertArTextView"
+                android:id="@+id/convertPferdestärkeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
@@ -265,141 +265,18 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertHectares"
+            android:text="@string/convertJouleProSekunde"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertHectaresScrollView"
+            android:id="@+id/convertJouleProSekundeScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertHectaresTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:textStyle="italic"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/convertNull"
-                android:textSize="17sp"
-                android:layout_gravity="end|center_vertical"/>
-        </HorizontalScrollView>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/history_line_height"
-        android:background="@color/history_line_color"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
-
-        <TextView
-            android:layout_width="210dp"
-            android:layout_height="35dp"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertSquareInch"
-            android:textSize="17sp"
-            android:gravity="start|center_horizontal"/>
-
-        <HorizontalScrollView
-            android:id="@+id/convertSquareInchScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical">
-
-            <TextView
-                android:id="@+id/convertSquareInchTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:textStyle="italic"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/convertNull"
-                android:textSize="17sp"
-                android:layout_gravity="end|center_vertical"/>
-        </HorizontalScrollView>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/history_line_height"
-        android:background="@color/history_line_color"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
-
-        <TextView
-            android:layout_width="210dp"
-            android:layout_height="35dp"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertSquareFeet"
-            android:textSize="17sp"
-            android:gravity="start|center_horizontal"/>
-
-        <HorizontalScrollView
-            android:id="@+id/convertSquareFeetScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical">
-
-            <TextView
-                android:id="@+id/convertSquareFeetTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:textStyle="italic"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/convertNull"
-                android:textSize="17sp"
-                android:layout_gravity="end|center_vertical"/>
-        </HorizontalScrollView>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/history_line_height"
-        android:background="@color/history_line_color"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
-
-        <TextView
-            android:layout_width="210dp"
-            android:layout_height="35dp"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertAcre"
-            android:textSize="17sp"
-            android:gravity="start|center_horizontal"/>
-
-        <HorizontalScrollView
-            android:id="@+id/convertAcreScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical">
-
-            <TextView
-                android:id="@+id/convertAcreTextView"
+                android:id="@+id/convertJouleProSekundeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"

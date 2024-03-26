@@ -7,7 +7,6 @@ import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
-import static com.mlprograms.rechenmax.ConvertEngine.*;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -86,17 +85,17 @@ public class MainActivity extends AppCompatActivity {
         // Initialize DataManager with the current context
         dataManager = new DataManager(this);
 
-        // Show all settings
-        //showAllSettings();
-
         //dataManager.clearJSONSettings(this);
         //dataManager.clearHistory(this);
 
-        //dataManager.saveToHistory("historyTextViewNumber", "44", getApplicationContext());
+        //dataManager.saveToJSONSettings("historyTextViewNumber", "45", getApplicationContext());
+
+        Log.e("Debug", dataManager.getAllDataFromHistory(getApplicationContext()).toString());
+        Log.e("Debug", dataManager.getAllDataFromJSONSettings(getApplicationContext()).toString());
+
 
         // Create JSON file and check for its existence
         dataManager.initializeSettings(this);
-        //Log.i("DEBUG", dataManager.getAllDataFromJSONSettings(this).toString());
 
         //dataManager.saveToJSONSettings("old_version", "0", getApplicationContext());
 
@@ -179,10 +178,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-
-        //Log.e("DEBUG", dataManager.getAllDataFromJSONSettings(getApplicationContext()).toString());
-
-        Log.e("DEBUG", convert(1, LIGHTYEAR, KILOMETER));
     }
 
     /**
@@ -3397,7 +3392,7 @@ public class MainActivity extends AppCompatActivity {
      * @param text The text to be checked. This should be a string containing the text input from the user or the result of a calculation.
      * @return Returns true if the text is invalid (contains "Ungültige Eingabe", "Unendlich", "Syntax Fehler", or "Domainfehler"), and false otherwise.
      */
-    private static boolean isInvalidInput(String text) {
+    static boolean isInvalidInput(String text) {
         return  text.contains(String.valueOf(R.string.errorMessage1))  ||
                 text.contains(String.valueOf(R.string.errorMessage2))  ||
                 text.contains(String.valueOf(R.string.errorMessage3))  ||
@@ -3523,100 +3518,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    public static String formatResultTextAfterType(String text) {
-        // Check if input text is not null and not invalid
-        if (text != null && !isInvalidInput(text)) {
-            // Check if the number is negative
-            boolean isNegative = text.startsWith("-");
-            if (isNegative) {
-                // If negative, remove the negative sign for further processing
-                text = text.substring(1);
-            }
-
-            // Check for scientific notation
-            if (text.toLowerCase().matches(".*[eE].*")) {
-                try {
-                    // Convert scientific notation to BigDecimal with increased precision
-                    BigDecimal bigDecimalResult = new BigDecimal(text.replace(".", "").replace(",", "."), MathContext.DECIMAL128);
-                    String formattedNumber = bigDecimalResult.toPlainString();
-                    formattedNumber = formattedNumber.replace(".", ",");
-
-                    // Extract exponent part and shift decimal point accordingly
-                    String[] parts = formattedNumber.split("[eE]");
-                    if (parts.length == 2) {
-                        int exponent = Integer.parseInt(parts[1]);
-                        String[] numberParts = parts[0].split(",");
-                        if (exponent < 0) {
-                            // Shift decimal point to the left, allowing up to 9 positions
-                            int shiftIndex = Math.min(numberParts[0].length() + exponent, 9);
-                            formattedNumber = numberParts[0].substring(0, shiftIndex) + "," +
-                                    numberParts[0].substring(shiftIndex) + numberParts[1] + "e" + exponent;
-                        } else {
-                            // Shift decimal point to the right
-                            int shiftIndex = Math.min(numberParts[0].length() + exponent, numberParts[0].length());
-                            formattedNumber = numberParts[0].substring(0, shiftIndex) + "," +
-                                    numberParts[0].substring(shiftIndex) + numberParts[1];
-                        }
-                    }
-
-                    // Add negative sign if necessary
-                    if (isNegative) {
-                        formattedNumber = "-" + formattedNumber;
-                    }
-
-                    // Recursively call the method
-                    return formatResultTextAfterType(formattedNumber.replace("E", "e"));
-                } catch (NumberFormatException e) {
-                    // Handle invalid number format in scientific notation
-                    System.out.println("Invalid number format: " + text);
-                    // Return original text
-                    return text;
-                }
-            }
-
-            // Handle non-scientific notation
-            int index = text.indexOf(',');
-            String result;
-            String result2;
-            if (index != -1) {
-                // Split the text into integral and fractional parts
-                result = text.substring(0, index).replace(".", "");
-                result2 = text.substring(index);
-            } else {
-                result = text.replace(".", "");
-                result2 = "";
-            }
-
-            // Check for invalid input
-            if (!isInvalidInput(text)) {
-                // Format the integral part using DecimalFormat
-                DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
-                Locale locale = Locale.getDefault();
-
-                // default: German, French, Spanish
-                symbols.setDecimalSeparator(',');
-                symbols.setGroupingSeparator('.');
-
-                DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
-                try {
-                    BigDecimal bigDecimalResult1 = new BigDecimal(result, MathContext.DECIMAL128);
-                    String formattedNumber1 = decimalFormat.format(bigDecimalResult1);
-
-                    // Return the formatted result
-                    return (isNegative ? "-" : "") + formattedNumber1 + result2;
-                } catch (NumberFormatException e) {
-                    // Handle invalid number format in the integral part
-                    System.out.println("Invalid number format: " + result);
-                    // Return original text
-                    return text;
-                }
-            }
-        }
-        // Return original text if invalid or null
-        return text;
-    }
-
 
     /**
      * Adjusts the text size of two TextViews dynamically.

@@ -1,7 +1,40 @@
 package com.mlprograms.rechenmax;
 
-import static com.mlprograms.rechenmax.MainActivity.formatResultTextAfterType;
-import static com.mlprograms.rechenmax.ConvertEngine.*;
+import static com.mlprograms.rechenmax.Converter.Category.ANGLE;
+import static com.mlprograms.rechenmax.Converter.Category.AREA;
+import static com.mlprograms.rechenmax.Converter.Category.DATA;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.ACRE;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.ARES;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.BIT;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.BYTE;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.DEGREE;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.EXABIT_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.EXABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.GIGABIT_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.GIGABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.GRAD;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.HECTARE;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILOBIT_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.KILOBYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.MEGABIT_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.MEGABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.PETABIT_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.PETABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.RADIAN;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_CENTIMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_FOOT;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_INCH;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_KILOMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_METER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_MICROMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.SQUARE_MILLIMETER;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.TERABIT_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.TERABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.YOTABIT_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.YOTABYTE_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.ZETABIT_B1000;
+import static com.mlprograms.rechenmax.Converter.UnitDefinition.ZETABYTE_B1000;
+import static com.mlprograms.rechenmax.MainActivity.isInvalidInput;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -10,6 +43,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.icu.text.DecimalFormat;
+import android.icu.text.DecimalFormatSymbols;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -29,18 +64,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import org.json.JSONException;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ConvertActivity extends AppCompatActivity {
 
     DataManager dataManager;
-    private static MainActivity mainActivity;
+    public static MainActivity mainActivity;
 
     private Spinner customSpinnerMode;
     private Spinner customSpinnerMeasurement;
@@ -53,6 +90,15 @@ public class ConvertActivity extends AppCompatActivity {
     private ArrayList<CustomItems> customItemListDistance = new ArrayList<>();
     private ArrayList<CustomItems> customItemListVolume = new ArrayList<>();
     private ArrayList<CustomItems> customItemListMass = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListTime = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListTemperature = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListVoltage = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListCurrent = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListSpeed = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListEnergy = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListPressure = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListTorque = new ArrayList<>();
+    private ArrayList<CustomItems> customItemListWork = new ArrayList<>();
 
     private CustomAdapter customAdapter;
     private CustomAdapter customAdapterMeasurement;
@@ -61,7 +107,6 @@ public class ConvertActivity extends AppCompatActivity {
 
     private LayoutInflater inflater;
     private LinearLayout outherLinearLayout = null;
-
 
     protected void onCreate(Bundle savedInstanceState) {
         // Call the superclass onCreate method
@@ -87,6 +132,15 @@ public class ConvertActivity extends AppCompatActivity {
         customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
         customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
         customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh));
+        customList.add(new CustomItems(getString(R.string.convertTime), R.drawable.time));
+        customList.add(new CustomItems(getString(R.string.convertTemperature), R.drawable.angle));
+        customList.add(new CustomItems(getString(R.string.convertVoltage), R.drawable.angle));
+        customList.add(new CustomItems(getString(R.string.convertCurrent), R.drawable.angle));
+        customList.add(new CustomItems(getString(R.string.convertSpeed), R.drawable.angle));
+        customList.add(new CustomItems(getString(R.string.convertEnergy), R.drawable.angle));
+        customList.add(new CustomItems(getString(R.string.convertPressure), R.drawable.angle));
+        customList.add(new CustomItems(getString(R.string.convertTorque), R.drawable.angle));
+        customList.add(new CustomItems(getString(R.string.convertWork), R.drawable.angle));
 
         customAdapter = new CustomAdapter(this, customList);
 
@@ -100,37 +154,71 @@ public class ConvertActivity extends AppCompatActivity {
             final String number = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString(mode + "Number");
 
             switch (mode) {
-                case "W":
+                case "Winkel":
                     customSpinnerMode.setSelection(0);
                     customAdapterMeasurement = new CustomAdapter(this, customItemListAngle);
                     break;
-                case "F":
+                case "Fläche":
                     customSpinnerMode.setSelection(1);
                     customAdapterMeasurement = new CustomAdapter(this, customItemListArea);
                     break;
-                case "S":
+                case "Speicher":
                     customSpinnerMode.setSelection(2);
                     customAdapterMeasurement = new CustomAdapter(this, customItemListStorage);
                     break;
-                case "E":
+                case "Entfernung":
                     customSpinnerMode.setSelection(3);
                     customAdapterMeasurement = new CustomAdapter(this, customItemListDistance);
                     break;
-                case "V":
+                case "Volumen":
                     customSpinnerMode.setSelection(4);
                     customAdapterMeasurement = new CustomAdapter(this, customItemListVolume);
                     break;
-                case "M":
+                case "MasseGewicht":
                     customSpinnerMode.setSelection(5);
                     customAdapterMeasurement = new CustomAdapter(this, customItemListMass);
                     break;
+                case "Zeit":
+                    customSpinnerMode.setSelection(6);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListTime);
+                    break;
+                case "Temperatur":
+                    customSpinnerMode.setSelection(7);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListTemperature);
+                    break;
+                case "StromSpannung":
+                    customSpinnerMode.setSelection(8);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListVoltage);
+                    break;
+                case "StromStärke":
+                    customSpinnerMode.setSelection(9);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListCurrent);
+                    break;
+                case "Geschwindigkeit":
+                    customSpinnerMode.setSelection(10);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListSpeed);
+                    break;
+                case "Energie":
+                    customSpinnerMode.setSelection(11);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListEnergy);
+                    break;
+                case "Druck":
+                    customSpinnerMode.setSelection(12);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListPressure);
+                    break;
+                case "Drehmoment":
+                    customSpinnerMode.setSelection(13);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListTorque);
+                    break;
+                default: /* Arbeit */
+                    customSpinnerMode.setSelection(14);
+                    customAdapterMeasurement = new CustomAdapter(this, customItemListWork);
+                    break;
             }
 
-            if(customSpinnerMeasurement != null) {
-                customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
-                customAdapterMeasurement.notifyDataSetChanged();
-                customSpinnerMeasurement.setSelection(pos);
-            }
+            customSpinnerMeasurement.setAdapter(customAdapterMeasurement);
+            customAdapterMeasurement.notifyDataSetChanged();
+            customSpinnerMeasurement.setSelection(pos);
             customEditText.setText(number);
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -146,23 +234,50 @@ public class ConvertActivity extends AppCompatActivity {
 
                 String new_value = "";
                 if(spinnerText.equals(getString(R.string.convertAngle))) {
-                    new_value = "W";
+                    new_value = "Winkel";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListAngle);
                 } else if(spinnerText.equals(getString(R.string.convertArea))) {
-                    new_value = "F";
+                    new_value = "Fläche";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListArea);
                 } else if(spinnerText.equals(getString(R.string.convertStorage))) {
-                    new_value = "S";
+                    new_value = "Speicher";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListStorage);
                 } else if(spinnerText.equals(getString(R.string.convertDistance))) {
-                    new_value = "E";
+                    new_value = "Entfernung";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListDistance);
                 } else if(spinnerText.equals(getString(R.string.convertVolume))) {
-                    new_value = "V";
+                    new_value = "Volumen";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListVolume);
                 } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
-                    new_value = "M";
+                    new_value = "MasseGewicht";
                     customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListMass);
+                } else if(spinnerText.equals(getString(R.string.convertTime))) {
+                    new_value = "Zeit";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListTime);
+                } else if(spinnerText.equals(getString(R.string.convertTemperature))) {
+                    new_value = "Temperatur";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListTemperature);
+                } else if(spinnerText.equals(getString(R.string.convertVoltage))) {
+                    new_value = "StromSpannung";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListVoltage);
+                } else if(spinnerText.equals(getString(R.string.convertCurrent))) {
+                    new_value = "StromStärke";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListCurrent);
+                } else if(spinnerText.equals(getString(R.string.convertSpeed))) {
+                    new_value = "Geschwindigkeit";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListSpeed);
+                } else if(spinnerText.equals(getString(R.string.convertPressure))) {
+                    new_value = "Druck";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListPressure);
+                } else if(spinnerText.equals(getString(R.string.convertTorque))) {
+                    new_value = "Drehmoment";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListTorque);
+                } else if(spinnerText.equals(getString(R.string.convertWork))) {
+                    new_value = "Arbeit";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListWork);
+                } else if(spinnerText.equals(getString(R.string.convertEnergy))) {
+                    new_value = "Energie";
+                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListEnergy);
                 }
 
                 final String mode;
@@ -209,9 +324,7 @@ public class ConvertActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence chars, int start, int before, int count) {
                 if(!chars.equals("")) {
-                    updateValues(null);
-                } else {
-                    updateValues(null);
+                    calculateAndSetText();
                 }
             }
 
@@ -254,6 +367,7 @@ public class ConvertActivity extends AppCompatActivity {
                             String.valueOf(position),
                             getMainActivityContext()
                     );
+                    calculateAndSetText();
 
                     //Log.e("DEBUG", dataManager.getAllDataFromJSONSettings(getMainActivityContext()).toString());
                 } catch (JSONException e) {
@@ -268,80 +382,324 @@ public class ConvertActivity extends AppCompatActivity {
         });
 
         switchDisplayMode();
+        calculateAndSetText();
     }
 
-    private void updateValues(@Nullable String customValue) {
+    public static String formatResultTextAfterType(String text) {
+        String[] newText2 = text.split(" ");
+        String newText = newText2[0].replace(".", ",");
+
+        if(newText.isEmpty() || newText.matches("\\s*[,\\.0]*\\s*")) {
+            return "0,00" + " " + newText2[1];
+        }
+
+        // Check if input newText is not null and not invalid
+        if (newText != null && !isInvalidInput(newText)) {
+            // Check if the number is negative
+            boolean isNegative = newText.startsWith("-");
+            if (isNegative) {
+                // If negative, remove the negative sign for further processing
+                newText = newText.substring(1);
+            }
+
+            // Check for scientific notation
+            if (newText.toLowerCase().matches(".*[eE].*")) {
+                try {
+                    // Convert scientific notation to BigDecimal with increased precision
+                    BigDecimal bigDecimalResult = new BigDecimal(newText.replace(".", "").replace(",", "."), MathContext.DECIMAL128);
+                    String formattedNumber = bigDecimalResult.toPlainString();
+                    formattedNumber = formattedNumber.replace(".", ",");
+
+                    // Extract exponent part and shift decimal point accordingly
+                    String[] parts = formattedNumber.split("[eE]");
+                    if (parts.length == 2) {
+                        int exponent = Integer.parseInt(parts[1]);
+                        String[] numberParts = parts[0].split(",");
+                        if (exponent < 0) {
+                            // Shift decimal point to the left, allowing up to 9 positions
+                            int shiftIndex = Math.min(numberParts[0].length() + exponent, 9);
+                            formattedNumber = numberParts[0].substring(0, shiftIndex) + "," +
+                                    numberParts[0].substring(shiftIndex) + numberParts[1] + "e" + exponent;
+                        } else {
+                            // Shift decimal point to the right
+                            int shiftIndex = Math.min(numberParts[0].length() + exponent, numberParts[0].length());
+                            formattedNumber = numberParts[0].substring(0, shiftIndex) + "," +
+                                    numberParts[0].substring(shiftIndex) + numberParts[1];
+                        }
+                    }
+
+                    // Add negative sign if necessary
+                    if (isNegative) {
+                        formattedNumber = "-" + formattedNumber;
+                    }
+
+                    // Recursively call the method
+                    return formatResultTextAfterType(formattedNumber.replace("E", "e")) + " " + newText2[1];
+                } catch (NumberFormatException e) {
+                    // Handle invalid number format in scientific notation
+                    System.out.println("Invalid number format: " + newText);
+                    // Return original newText
+                    return newText + " " + newText2[1];
+                }
+            }
+
+            // Handle non-scientific notation
+            int index = newText.indexOf(',');
+            String result;
+            String result2;
+            if (index != -1) {
+                // Split the newText into integral and fractional parts
+                result = newText.substring(0, index).replace(".", "");
+                result2 = newText.substring(index);
+            } else {
+                result = newText.replace(".", "");
+                result2 = "";
+            }
+
+            // Check for invalid input
+            if (!isInvalidInput(newText)) {
+                // Format the integral part using DecimalFormat
+                DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance();
+
+                // default: German, French, Spanish
+                symbols.setDecimalSeparator(',');
+                symbols.setGroupingSeparator('.');
+
+                DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
+                try {
+                    BigDecimal bigDecimalResult1 = new BigDecimal(result, MathContext.DECIMAL128);
+                    String formattedNumber1 = decimalFormat.format(bigDecimalResult1);
+
+                    // Return the formatted result
+                    return (isNegative ? "-" : "") + formattedNumber1 + result2  + " " + newText2[1];
+                } catch (NumberFormatException e) {
+                    // Handle invalid number format in the integral part
+                    System.out.println("Invalid number format: " + result);
+                    // Return original newText
+                    return newText + " " + newText2[1];
+                }
+            }
+        }
+        // Return original newText if invalid or null
+        return newText + " " + newText2[1];
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void calculateAndSetText() {
         if(outherLinearLayout != null) {
             try {
                 final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
 
                 EditText editText = findViewById(R.id.convertEditTextNumber);
-                String editTextNumber = formatResultTextAfterType(editText.getText().toString().replace(".", "").replace(" ", ""));
+                String editTextNumber2 = editText.getText().toString().replace(".", "").replace(",", ".").replace(" ", "");
 
-                if(customValue != null) {
-                    editTextNumber = formatResultTextAfterType(customValue);
-                } else if (editTextNumber.matches("\\s*[,\\.0]*\\s*")) {
-                    editTextNumber = "0.0";
+                if (editTextNumber2.matches("\\s*[,\\.0]*\\s*")) {
+                    editTextNumber2 = "0.00";
                 }
+                double editTextNumber = Double.parseDouble(editTextNumber2);
 
                 Spinner spinner = findViewById(R.id.convertSpinnerMessurement);
-                final String spinnerMessurementMode = spinner.getSelectedItem().toString();
                 switch (mode) {
-                    case "W" /* Winkel */:
+                    case "Winkel":
                         TextView convertDeg = findViewById(R.id.convertDegTextView);
                         TextView convertRad = findViewById(R.id.convertRadTextView);
-                        TextView convertPitch = findViewById(R.id.convertPitchTextView);
-                        TextView convertGon = findViewById(R.id.convertGonTextView);
-                        TextView convertMrad = findViewById(R.id.convertMradTextView);
-                        TextView convertMinuteOfTheArc = findViewById(R.id.convertMinuteOfTheArcTextView);
-                        TextView convertSecondArc = findViewById(R.id.convertSecondArcTextView);
 
-                        if(spinner.getSelectedItem().toString().equals(getString(R.string.convertDeg))) {
-                            convertDeg.setText(editTextNumber);
-                            convertRad.setText((int) (Integer.parseInt(editTextNumber) * Math.PI / 180));
-                            convertPitch.setText(editTextNumber);
-                            convertGon.setText(editTextNumber);
-                            convertMrad.setText(editTextNumber);
-                            convertMinuteOfTheArc.setText(editTextNumber);
-                            convertSecondArc.setText(editTextNumber);
+                        Converter angleConverter;
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                angleConverter = new Converter(ANGLE, DEGREE);
+                                convertDeg.setText(     angleConverter.convertToString(editTextNumber, DEGREE));
+                                convertRad.setText(     angleConverter.convertToString(editTextNumber, RADIAN));
+                                break;
+                            case 1:
+                                angleConverter = new Converter(ANGLE, RADIAN);
+                                convertDeg.setText(     angleConverter.convertToString(editTextNumber, DEGREE));
+                                convertRad.setText(     angleConverter.convertToString(editTextNumber, RADIAN));
+                                break;
+                            case 2:
+                                angleConverter = new Converter(ANGLE, GRAD);
+                                convertDeg.setText(     angleConverter.convertToString(editTextNumber, DEGREE));
+                                convertRad.setText(     angleConverter.convertToString(editTextNumber, RADIAN));
+                                break;
+                            default:
+                                convertDeg.setText("0,00");
+                                convertRad.setText("0,00");
+                                break;
                         }
 
-
-
-
-
-                        // example
-
+                        convertDeg.setText(formatResultTextAfterType(convertDeg.getText().toString()));
+                        convertRad.setText(formatResultTextAfterType(convertRad.getText().toString()));
                         break;
-                    case "F" /* Fläche */:
+                    case "Fläche" /* Fläche */:
+                        TextView convertSquareMicrometer = findViewById(R.id.convertSquareMicrometerTextView);
                         TextView convertSquareMillimeter = findViewById(R.id.convertSquareMillimeterTextView);
                         TextView convertSquareCentimeter = findViewById(R.id.convertSquareCentimeterTextView);
                         TextView convertSquareMeter = findViewById(R.id.convertSquareMeterTextView);
                         TextView convertSquareKilometer = findViewById(R.id.convertSquareKilometerTextView);
                         TextView convertAr = findViewById(R.id.convertArTextView);
-                        TextView convertDekar = findViewById(R.id.convertDekarTextView);
                         TextView convertHectares = findViewById(R.id.convertHectaresTextView);
                         TextView convertSquareInch = findViewById(R.id.convertSquareInchTextView);
                         TextView convertSquareFeet = findViewById(R.id.convertSquareFeetTextView);
-                        TextView convertSquareYard = findViewById(R.id.convertSquareYardTextView);
                         TextView convertAcre = findViewById(R.id.convertAcreTextView);
-                        TextView convertSquareMiles = findViewById(R.id.convertSquareMilesTextView);
 
-                        // example
-                        convertSquareMillimeter.setText(editTextNumber);
-                        convertSquareCentimeter.setText(editTextNumber);
-                        convertSquareMeter.setText(editTextNumber);
-                        convertSquareKilometer.setText(editTextNumber);
-                        convertAr.setText(editTextNumber);
-                        convertDekar.setText(editTextNumber);
-                        convertHectares.setText(editTextNumber);
-                        convertSquareInch.setText(editTextNumber);
-                        convertSquareFeet.setText(editTextNumber);
-                        convertSquareYard.setText(editTextNumber);
-                        convertAcre.setText(editTextNumber);
-                        convertSquareMiles.setText(editTextNumber);
+                        Converter areaConverter;
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                areaConverter = new Converter(AREA, SQUARE_MICROMETER);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 1:
+                                areaConverter = new Converter(AREA, SQUARE_MILLIMETER);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 2:
+                                areaConverter = new Converter(AREA, SQUARE_CENTIMETER);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 3:
+                                areaConverter = new Converter(AREA, SQUARE_METER);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 4:
+                                areaConverter = new Converter(AREA, SQUARE_KILOMETER);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 5:
+                                areaConverter = new Converter(AREA, ARES);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 6:
+                                areaConverter = new Converter(AREA, HECTARE);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 7:
+                                areaConverter = new Converter(AREA, SQUARE_INCH);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 8:
+                                areaConverter = new Converter(AREA, SQUARE_FOOT);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            case 9:
+                                areaConverter = new Converter(AREA, ACRE);
+                                convertSquareMicrometer.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MICROMETER));
+                                convertSquareMillimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_MILLIMETER));
+                                convertSquareCentimeter.setText(   areaConverter.convertToString(editTextNumber, SQUARE_CENTIMETER));
+                                convertSquareMeter.setText(        areaConverter.convertToString(editTextNumber, SQUARE_METER));
+                                convertSquareKilometer.setText(    areaConverter.convertToString(editTextNumber, SQUARE_KILOMETER));
+                                convertAr.setText(                 areaConverter.convertToString(editTextNumber, ARES));
+                                convertHectares.setText(           areaConverter.convertToString(editTextNumber, HECTARE));
+                                convertSquareInch.setText(         areaConverter.convertToString(editTextNumber, SQUARE_INCH));
+                                convertSquareFeet.setText(         areaConverter.convertToString(editTextNumber, SQUARE_FOOT));
+                                convertAcre.setText(               areaConverter.convertToString(editTextNumber, ACRE));
+                                break;
+                            default:
+                                convertSquareMicrometer.setText("0,00");
+                                convertSquareMillimeter.setText("0,00");
+                                convertSquareCentimeter.setText("0,00");
+                                convertSquareMeter.setText("0,00");
+                                convertSquareKilometer.setText("0,00");
+                                convertAr.setText("0,00");
+                                convertHectares.setText("0,00");
+                                convertSquareInch.setText("0,00");
+                                convertSquareFeet.setText("0,00");
+                                convertAcre.setText("0,00");
+                                break;
+                        }
+
+                        convertSquareMicrometer.setText(formatResultTextAfterType(convertSquareMicrometer.getText().toString()));
+                        convertSquareMillimeter.setText(formatResultTextAfterType(convertSquareMillimeter.getText().toString()));
+                        convertSquareCentimeter.setText(formatResultTextAfterType(convertSquareCentimeter.getText().toString()));
+                        convertSquareMeter.setText(formatResultTextAfterType(convertSquareMeter.getText().toString()));
+                        convertSquareKilometer.setText(formatResultTextAfterType(convertSquareKilometer.getText().toString()));
+                        convertAr.setText(formatResultTextAfterType(convertAr.getText().toString()));
+                        convertHectares.setText(formatResultTextAfterType(convertHectares.getText().toString()));
+                        convertSquareInch.setText(formatResultTextAfterType(convertSquareInch.getText().toString()));
+                        convertSquareFeet.setText(formatResultTextAfterType(convertSquareFeet.getText().toString()));
+                        convertAcre.setText(formatResultTextAfterType(convertAcre.getText().toString()));
                         break;
-                    case "S" /* Speicher */:
+                    case "Speicher" /* Speicher */:
                         TextView convertBit = findViewById(R.id.convertBitTextView);
                         TextView convertByte = findViewById(R.id.convertByteTextView);
                         TextView convertKilobit = findViewById(R.id.convertKilobitTextView);
@@ -354,22 +712,441 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertTerabyte = findViewById(R.id.convertTerabyteTextView);
                         TextView convertPetabit = findViewById(R.id.convertPetabitTextView);
                         TextView convertPetabyte = findViewById(R.id.convertPetabyteTextView);
+                        TextView convertExabit = findViewById(R.id.convertExabitTextView);
+                        TextView convertExabyte = findViewById(R.id.convertExabyteTextView);
+                        TextView convertZetabit = findViewById(R.id.convertZetabitTextView);
+                        TextView convertZetabyte = findViewById(R.id.convertZetabyteTextView);
+                        TextView convertYotabit = findViewById(R.id.convertYotabitTextView);
+                        TextView convertYotabyte = findViewById(R.id.convertYotabyteTextView);
 
-                        // example
-                        convertBit.setText(editTextNumber);
-                        convertByte.setText(editTextNumber);
-                        convertKilobit.setText(editTextNumber);
-                        convertKilobyte.setText(editTextNumber);
-                        convertMegabit.setText(editTextNumber);
-                        convertMegabyte.setText(editTextNumber);
-                        convertGigabit.setText(editTextNumber);
-                        convertGigabyte.setText(editTextNumber);
-                        convertTerabit.setText(editTextNumber);
-                        convertTerabyte.setText(editTextNumber);
-                        convertPetabit.setText(editTextNumber);
-                        convertPetabyte.setText(editTextNumber);
+                        Converter storageConverter;
+                        switch (spinner.getSelectedItemPosition()) {
+                            case 0:
+                                storageConverter = new Converter(DATA, BIT);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 1:
+                                storageConverter = new Converter(DATA, BYTE);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 2:
+                                storageConverter = new Converter(DATA, KILOBIT_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 3:
+                                storageConverter = new Converter(DATA, KILOBYTE_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 4:
+                                storageConverter = new Converter(DATA, MEGABIT_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 5:
+                                storageConverter = new Converter(DATA, MEGABYTE_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 6:
+                                storageConverter = new Converter(DATA, GIGABIT_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 7:
+                                storageConverter = new Converter(DATA, GIGABYTE_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 8:
+                                storageConverter = new Converter(DATA, TERABIT_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 9:
+                                storageConverter = new Converter(DATA, TERABYTE_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 10:
+                                storageConverter = new Converter(DATA, PETABIT_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 11:
+                                storageConverter = new Converter(DATA, PETABYTE_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 12:
+                                storageConverter = new Converter(DATA, EXABIT_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 13:
+                                storageConverter = new Converter(DATA, EXABYTE_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 14:
+                                storageConverter = new Converter(DATA, ZETABIT_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 15:
+                                storageConverter = new Converter(DATA, ZETABYTE_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 16:
+                                storageConverter = new Converter(DATA, YOTABIT_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            case 17:
+                                storageConverter = new Converter(DATA, YOTABYTE_B1000);
+                                convertBit.setText(          storageConverter.convertToString(editTextNumber, BIT));
+                                convertByte.setText(         storageConverter.convertToString(editTextNumber, BYTE));
+                                convertKilobit.setText(      storageConverter.convertToString(editTextNumber, KILOBIT_B1000));
+                                convertKilobyte.setText(     storageConverter.convertToString(editTextNumber, KILOBYTE_B1000));
+                                convertMegabit.setText(      storageConverter.convertToString(editTextNumber, MEGABIT_B1000));
+                                convertMegabyte.setText(     storageConverter.convertToString(editTextNumber, MEGABYTE_B1000));
+                                convertGigabit.setText(      storageConverter.convertToString(editTextNumber, GIGABIT_B1000));
+                                convertGigabyte.setText(     storageConverter.convertToString(editTextNumber, GIGABYTE_B1000));
+                                convertTerabit.setText(      storageConverter.convertToString(editTextNumber, TERABIT_B1000));
+                                convertTerabyte.setText(     storageConverter.convertToString(editTextNumber, TERABYTE_B1000));
+                                convertPetabit.setText(      storageConverter.convertToString(editTextNumber, PETABIT_B1000));
+                                convertPetabyte.setText(     storageConverter.convertToString(editTextNumber, PETABYTE_B1000));
+                                convertExabit.setText(       storageConverter.convertToString(editTextNumber, EXABIT_B1000));
+                                convertExabyte.setText(      storageConverter.convertToString(editTextNumber, EXABYTE_B1000));
+                                convertZetabit.setText(      storageConverter.convertToString(editTextNumber, ZETABIT_B1000));
+                                convertZetabyte.setText(     storageConverter.convertToString(editTextNumber, ZETABYTE_B1000));
+                                convertYotabit.setText(      storageConverter.convertToString(editTextNumber, YOTABIT_B1000));
+                                convertYotabyte.setText(     storageConverter.convertToString(editTextNumber, YOTABYTE_B1000));
+                                break;
+                            default:
+                                convertBit.setText("0,00");
+                                convertByte.setText("0,00");
+                                convertKilobit.setText("0,00");
+                                convertKilobyte.setText("0,00");
+                                convertMegabit.setText("0,00");
+                                convertMegabyte.setText("0,00");
+                                convertGigabit.setText("0,00");
+                                convertGigabyte.setText("0,00");
+                                convertTerabit.setText("0,00");
+                                convertTerabyte.setText("0,00");
+                                convertPetabit.setText("0,00");
+                                convertPetabyte.setText("0,00");
+                                convertExabit.setText("0,00");
+                                convertExabyte.setText("0,00");
+                                convertZetabit.setText("0,00");
+                                convertZetabyte.setText("0,00");
+                                convertYotabit.setText("0,00");
+                                convertYotabyte.setText("0,00");
+                                break;
+                        }
+
+                        convertBit.setText(formatResultTextAfterType(convertBit.getText().toString()));
+                        convertByte.setText(formatResultTextAfterType(convertByte.getText().toString()));
+                        convertKilobit.setText(formatResultTextAfterType(convertKilobit.getText().toString()));
+                        convertKilobyte.setText(formatResultTextAfterType(convertKilobyte.getText().toString()));
+                        convertMegabit.setText(formatResultTextAfterType(convertMegabit.getText().toString()));
+                        convertMegabyte.setText(formatResultTextAfterType(convertMegabyte.getText().toString()));
+                        convertGigabit.setText(formatResultTextAfterType(convertGigabit.getText().toString()));
+                        convertGigabyte.setText(formatResultTextAfterType(convertGigabyte.getText().toString()));
+                        convertTerabit.setText(formatResultTextAfterType(convertTerabit.getText().toString()));
+                        convertTerabyte.setText(formatResultTextAfterType(convertTerabyte.getText().toString()));
+                        convertPetabit.setText(formatResultTextAfterType(convertPetabit.getText().toString()));
+                        convertPetabyte.setText(formatResultTextAfterType(convertPetabyte.getText().toString()));
+                        convertExabit.setText(formatResultTextAfterType(convertExabit.getText().toString()));
+                        convertExabyte.setText(formatResultTextAfterType(convertExabyte.getText().toString()));
+                        convertZetabit.setText(formatResultTextAfterType(convertZetabit.getText().toString()));
+                        convertZetabyte.setText(formatResultTextAfterType(convertZetabyte.getText().toString()));
+                        convertYotabit.setText(formatResultTextAfterType(convertYotabit.getText().toString()));
+                        convertYotabyte.setText(formatResultTextAfterType(convertYotabyte.getText().toString()));
                         break;
-                    case "E" /* Entfernung */:
+                    case "Entfernung" /* Entfernung */:
+                        TextView convertAngstrom = findViewById(R.id.convertAngstromTextView);
+                        TextView convertFemtometer = findViewById(R.id.convertFemtometerTextView);
+                        TextView convertParsec = findViewById(R.id.convertParsecTextView);
+                        TextView convertPixel = findViewById(R.id.convertPixelTextView);
+                        TextView convertPoint = findViewById(R.id.convertPointTextView);
+                        TextView convertPica = findViewById(R.id.convertPicaTextView);
                         TextView convertPikometer = findViewById(R.id.convertPikometerTextView);
                         TextView convertNanometer = findViewById(R.id.convertNanometerTextView);
                         TextView convertMikrometer = findViewById(R.id.convertMikrometerTextView);
@@ -386,112 +1163,76 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertLightyear = findViewById(R.id.convertLightyearTextView);
                         TextView convertAstronomicalUnit= findViewById(R.id.convertAstronomicalUnitTextView);
 
-                        // example
-                        //convertPikometer.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, PIKOMETER));
-                        //convertNanometer.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, NANOMETER));
-                        //convertMikrometer.setText(       convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, MIKROMETER));
-                        //convertMillimeter.setText(       convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, MILLIMETER));
-                        //convertCentimeter.setText(       convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, CENTIMETER));
-                        //convertDezimeter.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, DEZIMETER));
-                        //convertMeter.setText(            convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, METER));
-                        //convertHektometer.setText(       convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, HEKTOMETER));
-                        //convertKilometer.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, KILOMETER));
-                        //convertFeet.setText(             convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, FEET));
-                        //convertYard.setText(             convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, YARD));
-                        //convertMiles.setText(            convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, MILES));
-                        //convertSeamiles.setText(         convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, SEAMILES));
-                        //convertLightyear.setText(        convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, LIGHTYEAR));
-                        //convertAstronomicalUnit.setText( convert(Double.parseDouble(editTextNumber), spinnerMessurementMode, ASTRONOMICALUNIT));
+                        //convertAngstrom.setText(formatResultTextAfterType(convertAngstrom.getText().toString()));
+                        //convertFemtometer.setText(formatResultTextAfterType(convertFemtometer.getText().toString()));
+                        //convertParsec.setText(formatResultTextAfterType(convertParsec.getText().toString()));
+                        //convertPixel.setText(formatResultTextAfterType(convertPixel.getText().toString()));
+                        //convertPoint.setText(formatResultTextAfterType(convertPoint.getText().toString()));
+                        //convertPica.setText(formatResultTextAfterType(convertPica.getText().toString()));
+                        //convertPikometer.setText(formatResultTextAfterType(convertPikometer.getText().toString()));
+                        //convertNanometer.setText(formatResultTextAfterType(convertNanometer.getText().toString()));
+                        //convertMikrometer.setText(formatResultTextAfterType(convertMikrometer.getText().toString()));
+                        //convertMillimeter.setText(formatResultTextAfterType(convertMillimeter.getText().toString()));
+                        //convertCentimeter.setText(formatResultTextAfterType(convertCentimeter.getText().toString()));
+                        //convertDezimeter.setText(formatResultTextAfterType(convertDezimeter.getText().toString()));
+                        //convertMeter.setText(formatResultTextAfterType(convertMeter.getText().toString()));
+                        //convertHektometer.setText(formatResultTextAfterType(convertHektometer.getText().toString()));
+                        //convertKilometer.setText(formatResultTextAfterType(convertKilometer.getText().toString()));
+                        //convertFeet.setText(formatResultTextAfterType(convertFeet.getText().toString()));
+                        //convertYard.setText(formatResultTextAfterType(convertYard.getText().toString()));
+                        //convertMiles.setText(formatResultTextAfterType(convertMiles.getText().toString()));
+                        //convertSeamiles.setText(formatResultTextAfterType(convertSeamiles.getText().toString()));
+                        //convertLightyear.setText(formatResultTextAfterType(convertLightyear.getText().toString()));
+                        //convertAstronomicalUnit.setText(formatResultTextAfterType(convertAstronomicalUnit.getText().toString()));
                         break;
-                    case "V" /* Volumen */:
-                        TextView convertMikroliter = findViewById(R.id.convertMikroliterTextView);
+                    case "Volumen" /* Volumen */:
                         TextView convertMilliliter = findViewById(R.id.convertMilliliterTextView);
-                        TextView convertDeziliter = findViewById(R.id.convertDeziliterTextView);
                         TextView convertLiter = findViewById(R.id.convertLiterTextView);
-                        TextView convertZentiliter = findViewById(R.id.convertZentiliterTextView);
-                        TextView convertMetrischeTasse = findViewById(R.id.convertMetrischeTasseTextView);
                         TextView convertKubikmillimeter = findViewById(R.id.convertKubikmillimeterTextView);
-                        TextView convertKubikzentimeter = findViewById(R.id.convertKubikzentimeterTextView);
                         TextView convertKubikmeter = findViewById(R.id.convertKubikmeterTextView);
                         TextView convertKubikInch = findViewById(R.id.convertKubikInchTextView);
                         TextView convertKubikFeet = findViewById(R.id.convertKubikFeetTextView);
-                        TextView convertKubikYard = findViewById(R.id.convertKubikYardTextView);
-                        TextView convertGillsUS = findViewById(R.id.convertGillsUSTextView);
-                        TextView convertGillsUK = findViewById(R.id.convertGillsUKTextView);
-                        TextView convertTeaspoonsUS= findViewById(R.id.convertTeaspoonsUSTextView);
-                        TextView convertTeaspoonsUK = findViewById(R.id.convertTeaspoonsUKTextView);
-                        TextView convertTablespoonsUS = findViewById(R.id.convertTablespoonsUSTextView);
-                        TextView convertTablespoonsUK = findViewById(R.id.convertTablespoonsUKTextView);
-                        TextView convertCupsUS = findViewById(R.id.convertCupsUSTextView);
-                        TextView convertCupsUK = findViewById(R.id.convertCupsUKTextView);
                         TextView convertGallonUS = findViewById(R.id.convertGallonUSTextView);
-                        TextView convertGallonUK = findViewById(R.id.convertGallonUKTextView);
-                        TextView convertBarrels = findViewById(R.id.convertBarrelsTextView);
 
-                        // example
-                        convertMikroliter.setText(editTextNumber);
-                        convertMilliliter.setText(editTextNumber);
-                        convertDeziliter.setText(editTextNumber);
-                        convertLiter.setText(editTextNumber);
-                        convertZentiliter.setText(editTextNumber);
-                        convertMetrischeTasse.setText(editTextNumber);
-                        convertKubikmillimeter.setText(editTextNumber);
-                        convertKubikzentimeter.setText(editTextNumber);
-                        convertKubikmeter.setText(editTextNumber);
-                        convertKubikInch.setText(editTextNumber);
-                        convertKubikFeet.setText(editTextNumber);
-                        convertKubikYard.setText(editTextNumber);
-                        convertGillsUS.setText(editTextNumber);
-                        convertGillsUK.setText(editTextNumber);
-                        convertTeaspoonsUS.setText(editTextNumber);
-                        convertTeaspoonsUK.setText(editTextNumber);
-                        convertTablespoonsUS.setText(editTextNumber);
-                        convertTablespoonsUK.setText(editTextNumber);
-                        convertCupsUS.setText(editTextNumber);
-                        convertCupsUK.setText(editTextNumber);
-                        convertGallonUS.setText(editTextNumber);
-                        convertGallonUK.setText(editTextNumber);
-                        convertBarrels.setText(editTextNumber);
+                        //convertMilliliter.setText(String.valueOf(editTextNumber));
+                        //convertLiter.setText(String.valueOf(editTextNumber));
+                        //convertKubikmillimeter.setText(String.valueOf(editTextNumber));
+                        //convertKubikmeter.setText(String.valueOf(editTextNumber));
+                        //convertKubikInch.setText(String.valueOf(editTextNumber));
+                        //convertKubikFeet.setText(String.valueOf(editTextNumber));
+                        //convertGallonUS.setText(String.valueOf(editTextNumber));
                         break;
-                    case "M" /* Masse / Gewicht */:
+                    case "MasseGewicht":
                         TextView convertAtomareMasseneinheit = findViewById(R.id.convertAtomareMasseneinheitTextView);
+                        TextView convertNanogramm = findViewById(R.id.convertNanogrammTextView);
                         TextView convertMikrogramm = findViewById(R.id.convertMikrogrammTextView);
                         TextView convertMilligramm = findViewById(R.id.convertMilligrammTextView);
-                        TextView convertZentigramm = findViewById(R.id.convertZentigrammTextView);
                         TextView convertGramm = findViewById(R.id.convertGrammTextView);
-                        TextView convertHektogramm = findViewById(R.id.convertHektogrammTextView);
-                        TextView convertDekagramm = findViewById(R.id.convertDekagrammTextView);
-                        TextView convertKarat = findViewById(R.id.convertKaratTextView);
-                        TextView convertNewton = findViewById(R.id.convertNewtonTextView);
                         TextView convertKilogramm = findViewById(R.id.convertKilogrammTextView);
-                        TextView convertTonne = findViewById(R.id.convertTonneTextView);
-                        TextView convertKilotonne = findViewById(R.id.convertKilotonneTextView);
-                        TextView convertGrains = findViewById(R.id.convertGrainsTextView);
-                        TextView convertDrams = findViewById(R.id.convertDramsTextView);
+                        TextView convertTonne= findViewById(R.id.convertTonneTextView);
                         TextView convertUnzen= findViewById(R.id.convertUnzenTextView);
                         TextView convertPfund= findViewById(R.id.convertPfundTextView);
-                        TextView convertShortTons= findViewById(R.id.convertShortTonsTextView);
-                        TextView convertLongTons= findViewById(R.id.convertLongTonsTextView);
 
-                        // example
-                        convertAtomareMasseneinheit.setText(editTextNumber);
-                        convertMikrogramm.setText(editTextNumber);
-                        convertMilligramm.setText(editTextNumber);
-                        convertZentigramm.setText(editTextNumber);
-                        convertGramm.setText(editTextNumber);
-                        convertHektogramm.setText(editTextNumber);
-                        convertDekagramm.setText(editTextNumber);
-                        convertKarat.setText(editTextNumber);
-                        convertNewton.setText(editTextNumber);
-                        convertKilogramm.setText(editTextNumber);
-                        convertTonne.setText(editTextNumber);
-                        convertKilotonne.setText(editTextNumber);
-                        convertGrains.setText(editTextNumber);
-                        convertDrams.setText(editTextNumber);
-                        convertUnzen.setText(editTextNumber);
-                        convertPfund.setText(editTextNumber);
-                        convertShortTons.setText(editTextNumber);
-                        convertLongTons.setText(editTextNumber);
+                        //convertAtomareMasseneinheit.setText(String.valueOf(editTextNumber));
+                        //convertMikrogramm.setText(String.valueOf(editTextNumber));
+                        //convertMilligramm.setText(String.valueOf(editTextNumber));
+                        //convertGramm.setText(String.valueOf(editTextNumber));
+                        //convertKilogramm.setText(String.valueOf(editTextNumber));
+                        //convertTonne.setText(String.valueOf(editTextNumber));
+                        //convertUnzen.setText(String.valueOf(editTextNumber));
+                        //convertPfund.setText(String.valueOf(editTextNumber));
+                        break;
+                    case "Zeit":
+                        break;
+                    case "Temperatur":
+                        break;
+                    case "StromSpannung":
+                        break;
+                    case "StromStärke":
+                        break;
+                    case "Geschwindigkeit":
+                        break;
+                    case "Energie":
                         break;
                 }
             } catch (JSONException e) {
@@ -503,24 +1244,17 @@ public class ConvertActivity extends AppCompatActivity {
     private void setUpCustomItemLists() {
         customItemListAngle.add(new CustomItems(getString(R.string.convertDeg)));
         customItemListAngle.add(new CustomItems(getString(R.string.convertRad)));
-        customItemListAngle.add(new CustomItems(getString(R.string.convertPitch)));
-        customItemListAngle.add(new CustomItems(getString(R.string.convertGon)));
-        customItemListAngle.add(new CustomItems(getString(R.string.convertMrad)));
-        customItemListAngle.add(new CustomItems(getString(R.string.convertMinuteOfTheArc)));
-        customItemListAngle.add(new CustomItems(getString(R.string.convertSecondArc)));
 
+        customItemListArea.add(new CustomItems(getString(R.string.convertSquareMicrometer)));
         customItemListArea.add(new CustomItems(getString(R.string.convertSquareMillimeter)));
         customItemListArea.add(new CustomItems(getString(R.string.convertSquareCentimeter)));
         customItemListArea.add(new CustomItems(getString(R.string.convertSquareMeter)));
         customItemListArea.add(new CustomItems(getString(R.string.convertSquareKilometer)));
         customItemListArea.add(new CustomItems(getString(R.string.convertAr)));
-        customItemListArea.add(new CustomItems(getString(R.string.convertDekar)));
         customItemListArea.add(new CustomItems(getString(R.string.convertHectares)));
         customItemListArea.add(new CustomItems(getString(R.string.convertSquareInch)));
         customItemListArea.add(new CustomItems(getString(R.string.convertSquareFeet)));
-        customItemListArea.add(new CustomItems(getString(R.string.convertSquareYard)));
         customItemListArea.add(new CustomItems(getString(R.string.convertAcre)));
-        customItemListArea.add(new CustomItems(getString(R.string.convertSquareMiles)));
 
         customItemListStorage.add(new CustomItems(getString(R.string.convertBit)));
         customItemListStorage.add(new CustomItems(getString(R.string.convertByte)));
@@ -534,7 +1268,20 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListStorage.add(new CustomItems(getString(R.string.convertTerabyte)));
         customItemListStorage.add(new CustomItems(getString(R.string.convertPetabit)));
         customItemListStorage.add(new CustomItems(getString(R.string.convertPetabyte)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertExabit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertExabyte)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertZetabit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertZetabyte)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertYotabit)));
+        customItemListStorage.add(new CustomItems(getString(R.string.convertYotabyte)));
 
+        customItemListDistance.add(new CustomItems(getString(R.string.convertAngstrom)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertFemtometer)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertParsec)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertPixel)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertPoint)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertPica)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertEm)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertPikometer)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertNanometer)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertMikrometer)));
@@ -551,78 +1298,138 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListDistance.add(new CustomItems(getString(R.string.convertLightyear)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertAstronomicalUnit)));
 
-        customItemListVolume.add(new CustomItems(getString(R.string.convertMikroliter)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertMilliliter)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertDeziliter)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertLiter)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertZentiliter)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertMetrischeTasse)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmillimeter)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikzentimeter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertMilliliter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertLiter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmeter)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikInch)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikFeet)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikYard)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertGillsUS)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertGillsUK)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertTeaspoonsUS)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertTeaspoonsUK)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertTablespoonsUS)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertTablespoonsUK)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertCupsUS)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertCupsUK)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUS)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUK)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertBarrels)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikFeet)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikInch)));
 
-        customItemListMass.add(new CustomItems(getString(R.string.convertAtomareMasseneinheit)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertMikrogramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertMilligramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertZentigramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertGramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertHektogramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertDekagramm)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertKarat)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertNewton)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertKilogramm)));
         customItemListMass.add(new CustomItems(getString(R.string.convertTonne)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertKilotonne)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertGrains)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertDrams)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertUnzen)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertPfund)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertShortTons)));
-        customItemListMass.add(new CustomItems(getString(R.string.convertLongTons)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertKilogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertGramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertMilligramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertMikrogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convertNanogramm)));
+        customItemListMass.add(new CustomItems(getString(R.string.convert)));
+        customItemListMass.add(new CustomItems(getString(R.string.convert)));
+        customItemListMass.add(new CustomItems(getString(R.string.convert)));
+
+        customItemListTime.add(new CustomItems(getString(R.string.convertWoche)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertTag)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertStunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertMinute)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertSekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertMillisekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertMikrosekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertNanosekunde)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertPicosekunde)));
+
+        customItemListTemperature.add(new CustomItems(getString(R.string.convertCelsius)));
+        customItemListTemperature.add(new CustomItems(getString(R.string.convertKelvin)));
+        customItemListTemperature.add(new CustomItems(getString(R.string.convertFahrenheit)));
+
+        customItemListVoltage.add(new CustomItems(getString(R.string.convertMillivolt)));
+        customItemListVoltage.add(new CustomItems(getString(R.string.convertVolt)));
+        customItemListVoltage.add(new CustomItems(getString(R.string.convertKilovolt)));
+        customItemListVoltage.add(new CustomItems(getString(R.string.convertMegavolt)));
+
+        customItemListCurrent.add(new CustomItems(getString(R.string.convertPicoampere)));
+        customItemListCurrent.add(new CustomItems(getString(R.string.convertNanoampere)));
+        customItemListCurrent.add(new CustomItems(getString(R.string.convertMikroampere)));
+        customItemListCurrent.add(new CustomItems(getString(R.string.convertMilliampere)));
+        customItemListCurrent.add(new CustomItems(getString(R.string.convertAmpere)));
+
+        customItemListSpeed.add(new CustomItems(getString(R.string.convertMillimeterProSekunde)));
+        customItemListSpeed.add(new CustomItems(getString(R.string.convertMeterProSekunde)));
+        customItemListSpeed.add(new CustomItems(getString(R.string.convertKilometerProStunde)));
+        customItemListSpeed.add(new CustomItems(getString(R.string.convertMilesProStunde)));
+        customItemListSpeed.add(new CustomItems(getString(R.string.convertKnoten)));
+        customItemListSpeed.add(new CustomItems(getString(R.string.convertMach)));
+
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertMillijoule)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertJoule)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertKilojoule)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertMegajoule)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertKalorie)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertKilokalorie)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertWattsekunde)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertWattstunde)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertKilowattsekunde)));
+        customItemListEnergy.add(new CustomItems(getString(R.string.convertKilowattstunde)));
+
+        customItemListPressure.add(new CustomItems(getString(R.string.convertMillipascal)));
+        customItemListPressure.add(new CustomItems(getString(R.string.convertPascal)));
+        customItemListPressure.add(new CustomItems(getString(R.string.convertHectopascal)));
+        customItemListPressure.add(new CustomItems(getString(R.string.convertKilopascal)));
+        customItemListPressure.add(new CustomItems(getString(R.string.convertBar)));
+        customItemListPressure.add(new CustomItems(getString(R.string.convertMillibar)));
+        customItemListPressure.add(new CustomItems(getString(R.string.convertTorr)));
+        customItemListPressure.add(new CustomItems(getString(R.string.convertPSI)));
+        customItemListPressure.add(new CustomItems(getString(R.string.convertPSF)));
+
+        customItemListTorque.add(new CustomItems(getString(R.string.convertNewtonMeter)));
+        customItemListTorque.add(new CustomItems(getString(R.string.convertMeterKilogramm)));
+        customItemListTorque.add(new CustomItems(getString(R.string.convertFootPound)));
+        customItemListTorque.add(new CustomItems(getString(R.string.convertInchPound)));
+
+        customItemListWork.add(new CustomItems(getString(R.string.convertMilliwatt)));
+        customItemListWork.add(new CustomItems(getString(R.string.convertWatt)));
+        customItemListWork.add(new CustomItems(getString(R.string.convertKilowatt)));
+        customItemListWork.add(new CustomItems(getString(R.string.convertMegawatt)));
+        customItemListWork.add(new CustomItems(getString(R.string.convertGigawatt)));
+        customItemListWork.add(new CustomItems(getString(R.string.convertPferdestärke)));
+        customItemListWork.add(new CustomItems(getString(R.string.convertJouleProSekunde)));
     }
 
     @SuppressLint("InflateParams")
     private void changeConvertModes(final String spinnerText) {
         if(spinnerText.equals(getString(R.string.convertAngle))) {
-            dataManager.updateValuesInJSONSettingsData("convertMode", "value","W", getMainActivityContext());
-        } else if(spinnerText.equals(getString(R.string.convertArea))) {
-            dataManager.updateValuesInJSONSettingsData("convertMode", "value","F", getMainActivityContext());
-        } else if(spinnerText.equals(getString(R.string.convertStorage))) {
-            dataManager.updateValuesInJSONSettingsData("convertMode", "value","S", getMainActivityContext());
-        } else if(spinnerText.equals(getString(R.string.convertDistance))) {
-            dataManager.updateValuesInJSONSettingsData("convertMode", "value","E", getMainActivityContext());
-        } else if(spinnerText.equals(getString(R.string.convertVolume))) {
-            dataManager.updateValuesInJSONSettingsData("convertMode", "value","V", getMainActivityContext());
-        } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
-            dataManager.updateValuesInJSONSettingsData("convertMode", "value","M", getMainActivityContext());
-        }
-
-        if(spinnerText.equals(getString(R.string.convertAngle))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Winkel", getMainActivityContext());
             outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.angle, null);
         } else if(spinnerText.equals(getString(R.string.convertArea))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Fläche", getMainActivityContext());
             outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.area, null);
         } else if(spinnerText.equals(getString(R.string.convertStorage))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Speicher", getMainActivityContext());
             outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.digital_storage, null);
         } else if(spinnerText.equals(getString(R.string.convertDistance))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Entfernung", getMainActivityContext());
             outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.distance, null);
         } else if(spinnerText.equals(getString(R.string.convertVolume))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Volumen", getMainActivityContext());
             outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.volume, null);
         } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","MasseGewicht", getMainActivityContext());
             outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.mass_weight, null);
+        } else if(spinnerText.equals(getString(R.string.convertTime))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Zeit", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.time, null);
+        } else if(spinnerText.equals(getString(R.string.convertTemperature))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Temperatur", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.temperature, null);
+        } else if(spinnerText.equals(getString(R.string.convertVoltage))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","StromSpannung", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.voltage, null);
+        } else if(spinnerText.equals(getString(R.string.convertCurrent))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","StromStärke", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.current, null);
+        } else if(spinnerText.equals(getString(R.string.convertSpeed))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Geschwindigkeit", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.speed, null);
+        } else if(spinnerText.equals(getString(R.string.convertEnergy))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Energie", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.energy, null);
+        } else if(spinnerText.equals(getString(R.string.convertPressure))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Druck", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.pressure, null);
+        } else if(spinnerText.equals(getString(R.string.convertTorque))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Drehmoment", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.torque, null);
+        } else if(spinnerText.equals(getString(R.string.convertWork))) {
+            dataManager.updateValuesInJSONSettingsData("convertMode", "value","Arbeit", getMainActivityContext());
+            outherLinearLayout = (LinearLayout) inflater.inflate(R.layout.work, null);
         }
 
         if (outherLinearLayout != null) {
@@ -713,7 +1520,7 @@ public class ConvertActivity extends AppCompatActivity {
      * This method gets the context of the MainActivity.
      * @return The context of the MainActivity.
      */
-    private Context getMainActivityContext() {
+    public static Context getMainActivityContext() {
         return mainActivity;
     }
 
@@ -780,6 +1587,15 @@ public class ConvertActivity extends AppCompatActivity {
                             customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_light));
                             customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_light));
                             customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh_light));
+                            customList.add(new CustomItems(getString(R.string.convertTime), R.drawable.time_light));
+                            customList.add(new CustomItems(getString(R.string.convertTemperature), R.drawable.angle_light));
+                            customList.add(new CustomItems(getString(R.string.convertVoltage), R.drawable.angle_light));
+                            customList.add(new CustomItems(getString(R.string.convertCurrent), R.drawable.angle_light));
+                            customList.add(new CustomItems(getString(R.string.convertSpeed), R.drawable.angle_light));
+                            customList.add(new CustomItems(getString(R.string.convertEnergy), R.drawable.angle_light));
+                            customList.add(new CustomItems(getString(R.string.convertPressure), R.drawable.angle_light));
+                            customList.add(new CustomItems(getString(R.string.convertTorque), R.drawable.angle_light));
+                            customList.add(new CustomItems(getString(R.string.convertWork), R.drawable.angle_light));
 
                             customAdapter = new CustomAdapter(this, customList);
                             customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
@@ -807,6 +1623,15 @@ public class ConvertActivity extends AppCompatActivity {
                             customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_true_darkmode));
                             customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_true_darkmode));
                             customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertTime), R.drawable.time_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertTemperature), R.drawable.angle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertVoltage), R.drawable.angle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertCurrent), R.drawable.angle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertSpeed), R.drawable.angle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertEnergy), R.drawable.angle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertPressure), R.drawable.angle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertTorque), R.drawable.angle_true_darkmode));
+                            customList.add(new CustomItems(getString(R.string.convertWork), R.drawable.angle_true_darkmode));
 
                             customAdapter = new CustomAdapter(this, customList);
                             customAdapter.setTextColor(Color.parseColor("#D5D5D5"));
@@ -836,6 +1661,15 @@ public class ConvertActivity extends AppCompatActivity {
                         customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
                         customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
                         customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh));
+                        customList.add(new CustomItems(getString(R.string.convertTime), R.drawable.time));
+                        customList.add(new CustomItems(getString(R.string.convertTemperature), R.drawable.angle));
+                        customList.add(new CustomItems(getString(R.string.convertVoltage), R.drawable.angle));
+                        customList.add(new CustomItems(getString(R.string.convertCurrent), R.drawable.angle));
+                        customList.add(new CustomItems(getString(R.string.convertSpeed), R.drawable.angle));
+                        customList.add(new CustomItems(getString(R.string.convertEnergy), R.drawable.angle));
+                        customList.add(new CustomItems(getString(R.string.convertPressure), R.drawable.angle));
+                        customList.add(new CustomItems(getString(R.string.convertTorque), R.drawable.angle));
+                        customList.add(new CustomItems(getString(R.string.convertWork), R.drawable.angle));
 
                         customAdapter = new CustomAdapter(this, customList);
                         customAdapter.setTextColor(Color.parseColor("#151515"));
@@ -864,6 +1698,15 @@ public class ConvertActivity extends AppCompatActivity {
                 customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle));
                 customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder));
                 customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh));
+                customList.add(new CustomItems(getString(R.string.convertTime), R.drawable.time));
+                customList.add(new CustomItems(getString(R.string.convertTemperature), R.drawable.angle));
+                customList.add(new CustomItems(getString(R.string.convertVoltage), R.drawable.angle));
+                customList.add(new CustomItems(getString(R.string.convertCurrent), R.drawable.angle));
+                customList.add(new CustomItems(getString(R.string.convertSpeed), R.drawable.angle));
+                customList.add(new CustomItems(getString(R.string.convertEnergy), R.drawable.angle));
+                customList.add(new CustomItems(getString(R.string.convertPressure), R.drawable.angle));
+                customList.add(new CustomItems(getString(R.string.convertTorque), R.drawable.angle));
+                customList.add(new CustomItems(getString(R.string.convertWork), R.drawable.angle));
 
                 customAdapter = new CustomAdapter(this, customList);
                 customAdapter.setTextColor(Color.parseColor("#151515"));
@@ -899,6 +1742,15 @@ public class ConvertActivity extends AppCompatActivity {
                     customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_light));
                     customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_light));
                     customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh_light));
+                    customList.add(new CustomItems(getString(R.string.convertTime), R.drawable.time_light));
+                    customList.add(new CustomItems(getString(R.string.convertTemperature), R.drawable.angle_light));
+                    customList.add(new CustomItems(getString(R.string.convertVoltage), R.drawable.angle_light));
+                    customList.add(new CustomItems(getString(R.string.convertCurrent), R.drawable.angle_light));
+                    customList.add(new CustomItems(getString(R.string.convertSpeed), R.drawable.angle_light));
+                    customList.add(new CustomItems(getString(R.string.convertEnergy), R.drawable.angle_light));
+                    customList.add(new CustomItems(getString(R.string.convertPressure), R.drawable.angle_light));
+                    customList.add(new CustomItems(getString(R.string.convertTorque), R.drawable.angle_light));
+                    customList.add(new CustomItems(getString(R.string.convertWork), R.drawable.angle_light));
 
                     customAdapter = new CustomAdapter(this, customList);
                     customAdapter.setTextColor(Color.parseColor("#FFFFFF"));
@@ -925,6 +1777,15 @@ public class ConvertActivity extends AppCompatActivity {
                     customList.add(new CustomItems(getString(R.string.convertDistance), R.drawable.triangle_true_darkmode));
                     customList.add(new CustomItems(getString(R.string.convertVolume), R.drawable.cylinder_true_darkmode));
                     customList.add(new CustomItems(getString(R.string.convertMassWeigth), R.drawable.mass_weigh_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertTime), R.drawable.time_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertTemperature), R.drawable.angle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertVoltage), R.drawable.angle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertCurrent), R.drawable.angle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertSpeed), R.drawable.angle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertEnergy), R.drawable.angle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertPressure), R.drawable.angle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertTorque), R.drawable.angle_true_darkmode));
+                    customList.add(new CustomItems(getString(R.string.convertWork), R.drawable.angle_true_darkmode));
 
                     customAdapter = new CustomAdapter(this, customList);
                     customAdapter.setTextColor(Color.parseColor("#D5D5D5"));

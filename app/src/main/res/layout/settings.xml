@@ -294,6 +294,35 @@
                 android:layout_height="wrap_content"
                 android:text="" />
 
+            <TextView
+                android:id="@+id/settings_decimalpoints_title"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/settingsDecimalPoints"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/settings_decimalpoints_text"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:text="@string/settingsDecimalPointsText"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform" />
+
+            <Spinner
+                android:id="@+id/settings_decimalpoints_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal" />
+
+
             <Switch
                 android:id="@+id/settings_notifications"
                 android:layout_width="match_parent"

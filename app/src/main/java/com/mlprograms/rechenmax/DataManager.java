@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * DataManager
@@ -58,10 +59,37 @@ import java.util.Map;
 //  | allowDailyNotificationsActive    | true / false                     | SettingsActivity                     |
 //  | refactorPI                       | true / false                     | MainActivity                         |
 //  | historyMode                      | single / multiple                | MainActivity                         |
-//  | convertMode                      | W / F / S / E / V / M        (*) | SettingsActivity                     |
-//  | W / F / S / E / V / MCurrent     | 0 - ...Max                       | ConvertActivity                      |
-
-// * = Winkel / Fläche / Speicher / Entfernung / Volumen / Masse, Gewicht
+//  | convertMode                      | Winkel
+//                                       Fläche
+//                                       Speicher
+//                                       Entfernung
+//                                       Volumen
+//                                       MasseGewicht
+//                                       Zeit
+//                                       Temperatur
+//                                       StromSpannung
+//                                       StromStärke
+//                                       Geschwindigkeit
+//                                       Druck
+//                                       Drehmoment
+//                                       Arbeit
+//                                       Energie                         | SettingsActivity                     |
+//  | WinkelCurrent
+//    FlächeCurrent
+//    SpeicherCurrent
+//    EntfernungCurrent
+//    VolumenCurrent
+//    MasseGewichtCurrent
+//    ZeitCurrent
+//    TemperaturCurrent
+//    StromSpannungCurrent
+//    StromStärkeCurrent
+//    GeschwindigkeitCurrent
+//    EnergieCurrent
+//    DruckCurrent
+//    DrehmomentCurrent
+//    ArbeitCurrent                    | 0 - ...Max                       | ConvertActivity                      |
+//  | numberOfDecimals                 | 0 - 10                           | Converter                            |
 
 public class DataManager {
 
@@ -90,6 +118,9 @@ public class DataManager {
     }
 
     public DataManager(HelpActivity helpActivity) {
+    }
+
+    public DataManager(Converter converter) {
     }
 
     /**
@@ -358,7 +389,8 @@ public class DataManager {
             initializeSetting("refactorPI", "true", applicationContext);
             initializeSetting("historyMode", "single", applicationContext);
             initializeSetting("dayPassed", "true", applicationContext);
-            initializeSetting("convertMode", "E", applicationContext);
+            initializeSetting("convertMode", "Entfernung", applicationContext);
+            initializeSetting("numberOfDecimals", "2", applicationContext);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -372,18 +404,37 @@ public class DataManager {
             saveToJSONSettings(key, defaultValue, applicationContext);
 
             if(key.equals("convertMode")) {
-                addValueWithCustomNameToJSONSettings("convertMode", "WCurrent", "0", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "FCurrent", "0", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "SCurrent", "0", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "ECurrent", "0", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "VCurrent", "0", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "MCurrent", "0", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "WNumber",  "", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "FNumber",  "", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "SNumber",  "", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "ENumber",  "", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "VNumber",  "", applicationContext);
-                addValueWithCustomNameToJSONSettings("convertMode", "MNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "WinkelCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "FlächeCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "SpeicherCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "EntfernungCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "VolumenCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "MasseGewichtCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "ZeitCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "TemperaturCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "StromSpannungCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "StromStärkeCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "GeschwindigkeitCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "EnergieCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "DruckCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "DrehmomentCurrent", "0", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "ArbeitCurrent", "0", applicationContext);
+
+                addValueWithCustomNameToJSONSettings("convertMode", "WinkelNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "FlächeNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "SpeicherNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "EntfernungNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "VolumenNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "MasseGewichtNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "ZeitNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "TemperaturNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "StromSpannungNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "StromStärkeNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "GeschwindigkeitNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "EnergieNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "DruckNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "DrehmomentNumber",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("convertMode", "ArbeitNumber",  "", applicationContext);
             }
         }
     }

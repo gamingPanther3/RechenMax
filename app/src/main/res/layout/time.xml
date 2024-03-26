@@ -1,9 +1,371 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="0dp"
+    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    android:id="@+id/areaLayout">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
 
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertWoche"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
 
-</ScrollView>
+        <HorizontalScrollView
+            android:id="@+id/convertWocheScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertWocheTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertPicosekunde"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertPicosekundeScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertPicosekundeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertNanosekunde"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertNanosekundeScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertNanosekundeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertMikrosekunde"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertMikrosekundeScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertMikrosekundeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertMillisekunde"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertMillisekundeScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertMillisekundeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertSekunde"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertSekundeScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertSekundeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertMinute"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertMinuteScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertMinuteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertStunde"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertStundeScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertStundeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertTag"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertTagScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertTagTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+</LinearLayout>
