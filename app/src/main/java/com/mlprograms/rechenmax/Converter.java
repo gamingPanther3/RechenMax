@@ -16,10 +16,6 @@
 
 package com.mlprograms.rechenmax;
 
-// added import
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import org.json.JSONException;
 
 import java.math.BigDecimal;
@@ -31,7 +27,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-// added "extends AppCompatActivity" to get the Application Context at line 374
+// added "extends AppCompatActivity" to get the Application Context at line (374)
 public class Converter extends ConvertActivity {
     public enum Category {
         ACCELERATION,
