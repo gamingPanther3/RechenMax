@@ -263,6 +263,7 @@
     <string name="convertKilometer">Kilómetro (km)</string>
     <string name="convertFeet">Pie (ft)</string>
     <string name="convertYard">Yarda (yd)</string>
+    <string name="convertInch">Pulgada (in)</string>
     <string name="convertMiles">Millas (mi)</string>
     <string name="convertSeamiles">Millas náuticas (sm)</string>
     <string name="convertLightyear">Año luz (ly)</string>

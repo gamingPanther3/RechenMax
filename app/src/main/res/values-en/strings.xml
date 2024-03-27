@@ -264,6 +264,7 @@
     <string name="convertKilometer">Kilometer (km)</string>
     <string name="convertFeet">Feet (ft)</string>
     <string name="convertYard">Yard (yd)</string>
+    <string name="convertInch">Inch (in)</string>
     <string name="convertMiles">Miles (mi)</string>
     <string name="convertSeamiles">Seamiles (sm)</string>
     <string name="convertLightyear">Lightyear (ly)</string>

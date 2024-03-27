@@ -243,6 +243,7 @@
     <string name="convertKilometer">Kilomètre (km)</string>
     <string name="convertFeet">Pied (ft)</string>
     <string name="convertYard">Yard (yd)</string>
+    <string name="convertInch">Pouce (po)</string>
     <string name="convertMiles">Miles (mi)</string>
     <string name="convertSeamiles">Miles nautiques (sm)</string>
     <string name="convertLightyear">Année-lumière (ly)</string>

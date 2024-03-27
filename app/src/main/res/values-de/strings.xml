@@ -247,6 +247,7 @@
     <string name="convertKilometer">Kilometer (km)</string>
     <string name="convertFeet">Feet (ft)</string>
     <string name="convertYard">Yard (yd)</string>
+    <string name="convertInch">Inch (in)</string>
     <string name="convertMiles">Meilen (mi)</string>
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>

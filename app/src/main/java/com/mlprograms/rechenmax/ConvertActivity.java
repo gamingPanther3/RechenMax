@@ -710,6 +710,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertKilometer = findViewById(R.id.convertKilometerTextView);
                         TextView convertFeet = findViewById(R.id.convertFeetTextView);
                         TextView convertYard = findViewById(R.id.convertYardTextView);
+                        TextView convertInch = findViewById(R.id.convertInchTextView);
                         TextView convertMiles = findViewById(R.id.convertMilesTextView);
                         TextView convertSeamiles = findViewById(R.id.convertSeamilesTextView);
                         TextView convertLightyear = findViewById(R.id.convertLightyearTextView);
@@ -771,12 +772,15 @@ public class ConvertActivity extends AppCompatActivity {
                                 distanceConverter = new Converter(LENGTH, YARD);
                                 break;
                             case 18:
-                                distanceConverter = new Converter(LENGTH, MILES);
+                                distanceConverter = new Converter(LENGTH, INCHES);
                                 break;
                             case 19:
-                                distanceConverter = new Converter(LENGTH, NAUTICAL_MILES);
+                                distanceConverter = new Converter(LENGTH, MILES);
                                 break;
                             case 20:
+                                distanceConverter = new Converter(LENGTH, NAUTICAL_MILES);
+                                break;
+                            case 21:
                                 distanceConverter = new Converter(LENGTH, LIGHT_YEAR);
                                 break;
                             default:
@@ -798,6 +802,7 @@ public class ConvertActivity extends AppCompatActivity {
                                 convertKilometer.setText("0,00");
                                 convertFeet.setText("0,00");
                                 convertYard.setText("0,00");
+                                convertInch.setText("0,00");
                                 convertMiles.setText("0,00");
                                 convertSeamiles.setText("0,00");
                                 convertLightyear.setText("0,00");
@@ -821,6 +826,7 @@ public class ConvertActivity extends AppCompatActivity {
                         convertKilometer.setText(      formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, KILOMETER)));
                         convertFeet.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, FEET)));
                         convertYard.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, YARD)));
+                        convertInch.setText(           formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, INCHES)));
                         convertMiles.setText(          formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, MILES)));
                         convertSeamiles.setText(       formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, NAUTICAL_MILES)));
                         convertLightyear.setText(      formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, LIGHT_YEAR)));
@@ -1436,6 +1442,7 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListDistance.add(new CustomItems(getString(R.string.convertKilometer)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertFeet)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertYard)));
+        customItemListDistance.add(new CustomItems(getString(R.string.convertInch)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertMiles)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertSeamiles)));
         customItemListDistance.add(new CustomItems(getString(R.string.convertLightyear)));
