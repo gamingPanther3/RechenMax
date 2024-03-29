@@ -266,12 +266,15 @@
     <string name="convertTorque">Drehmoment</string>
     <string name="convertWork">Mechanische Arbeit</string>
 
+    <string name="convertMessage">Bitte beachten Sie, dass der Umrechner sich immer noch in der Entwicklung befindet und möglicherweise falsche Ergebnisse liefern kann.</string>
+
     <string name="convert">Umrechnen</string>
     <string name="convertTitle">Umrechner</string>
     <string name="convertNull">0,00</string>
     <!-- Winkel -->
     <string name="convertDeg">Grad (Deg)</string>
     <string name="convertRad">Radian (Rad)</string>
+    <string name="convertMillirad">Milliradian (mRad)</string>
     <!-- Flächen -->
     <string name="convertSquareMicrometer">Quadratmikrometer (µm²)</string>
     <string name="convertSquareMillimeter">Quadratmillimeter (mm²)</string>

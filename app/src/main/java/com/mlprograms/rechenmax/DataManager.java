@@ -75,6 +75,7 @@ import java.util.ResourceBundle;
 //  | allowDailyNotificationsActive    | true / false                     | SettingsActivity                     |
 //  | refactorPI                       | true / false                     | MainActivity                         |
 //  | historyMode                      | single / multiple                | MainActivity                         |
+//  | showConverterDevelopmentMessage  | true / false                     | ConvertActivity                      |
 //  | convertMode                      | Winkel
 //                                       Fläche
 //                                       Speicher
@@ -407,6 +408,7 @@ public class DataManager {
             initializeSetting("dayPassed", "true", applicationContext);
             initializeSetting("convertMode", "Entfernung", applicationContext);
             initializeSetting("numberOfDecimals", "2", applicationContext);
+            initializeSetting("showConverterDevelopmentMessage", "true", applicationContext);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

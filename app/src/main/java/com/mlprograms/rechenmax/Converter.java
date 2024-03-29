@@ -131,7 +131,7 @@ public class Converter extends ConvertActivity {
         // Angle
         DEGREE(new Unit(Category.ANGLE, "deg", "Degree", (Math.PI / 180.0))),
         RADIAN(new Unit(Category.ANGLE, "rad", "Radian", new BigDecimal("1.0"))),
-        GRAD(new Unit(Category.ANGLE, "grad", "Gradian", new BigDecimal("0.9"))),
+        MILLIRADIAN(new Unit(Category.ANGLE, "mRad", "Milliradian", new BigDecimal("1E-3"))),
 
         // Volume
         CUBIC_MILLIMETER(new Unit(Category.VOLUME, "mm\u00b3", "Cubic Millimeter", new BigDecimal("1.0E-9"))),
@@ -321,7 +321,7 @@ public class Converter extends ConvertActivity {
     }
 
     public static final  String[]                          ABBREVIATIONS      = {"k", "M", "G", "T", "P", "E", "Z", "Y"};
-    public static final  int                               MAX_NO_OF_DECIMALS = 12;
+    public static final  int                               MAX_NO_OF_DECIMALS = 15;
     private static final EnumMap<Category, UnitDefinition> BASE_UNITS         = new EnumMap<Category, UnitDefinition>(Category.class) {
         {
             put(Category.ACCELERATION, UnitDefinition.METER_PER_SQUARE_SECOND);

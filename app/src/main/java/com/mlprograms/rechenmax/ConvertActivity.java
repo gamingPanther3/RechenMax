@@ -36,11 +36,14 @@ import static com.mlprograms.rechenmax.MainActivity.isInvalidInput;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.icu.text.DecimalFormat;
 import android.icu.text.DecimalFormatSymbols;
 import android.os.Build;
@@ -48,6 +51,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +61,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -65,6 +70,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
@@ -75,6 +81,9 @@ public class ConvertActivity extends AppCompatActivity {
 
     DataManager dataManager;
     public static MainActivity mainActivity;
+
+    private int newColorBTNForegroundAccent;
+    private int newColorBTNBackgroundAccent;
 
     private Spinner customSpinnerMode;
     private Spinner customSpinnerMeasurement;
@@ -232,49 +241,49 @@ public class ConvertActivity extends AppCompatActivity {
                 String new_value = "";
                 if(spinnerText.equals(getString(R.string.convertAngle))) {
                     new_value = "Winkel";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListAngle);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListAngle);
                 } else if(spinnerText.equals(getString(R.string.convertArea))) {
                     new_value = "Fläche";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListArea);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListArea);
                 } else if(spinnerText.equals(getString(R.string.convertStorage))) {
                     new_value = "Speicher";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListStorage);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListStorage);
                 } else if(spinnerText.equals(getString(R.string.convertDistance))) {
                     new_value = "Entfernung";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListDistance);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListDistance);
                 } else if(spinnerText.equals(getString(R.string.convertVolume))) {
                     new_value = "Volumen";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListVolume);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListVolume);
                 } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
                     new_value = "MasseGewicht";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListMass);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListMass);
                 } else if(spinnerText.equals(getString(R.string.convertTime))) {
                     new_value = "Zeit";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListTime);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListTime);
                 } else if(spinnerText.equals(getString(R.string.convertTemperature))) {
                     new_value = "Temperatur";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListTemperature);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListTemperature);
                 } else if(spinnerText.equals(getString(R.string.convertVoltage))) {
                     new_value = "StromSpannung";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListVoltage);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListVoltage);
                 } else if(spinnerText.equals(getString(R.string.convertCurrent))) {
                     new_value = "StromStärke";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListCurrent);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListCurrent);
                 } else if(spinnerText.equals(getString(R.string.convertSpeed))) {
                     new_value = "Geschwindigkeit";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListSpeed);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListSpeed);
                 } else if(spinnerText.equals(getString(R.string.convertPressure))) {
                     new_value = "Druck";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListPressure);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListPressure);
                 } else if(spinnerText.equals(getString(R.string.convertTorque))) {
                     new_value = "Drehmoment";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListTorque);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListTorque);
                 } else if(spinnerText.equals(getString(R.string.convertWork))) {
                     new_value = "Arbeit";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListWork);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListWork);
                 } else if(spinnerText.equals(getString(R.string.convertEnergy))) {
                     new_value = "Energie";
-                    customAdapterMeasurement = new CustomAdapter(getApplicationContext(), customItemListEnergy);
+                    customAdapterMeasurement = new CustomAdapter(getMainActivityContext(), customItemListEnergy);
                 }
 
                 final String mode;
@@ -380,6 +389,55 @@ public class ConvertActivity extends AppCompatActivity {
 
         switchDisplayMode();
         calculateAndSetText();
+
+        findViewById(R.id.convertUI).post(() -> {
+            try {
+                final boolean showDevelopmentMessage = dataManager.getJSONSettingsData("showConverterDevelopmentMessage", getMainActivityContext()).getString("value").equals("true");
+                if (showDevelopmentMessage) {
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.convert_development_message, null);
+
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+
+                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+                    popupView.setBackgroundColor(newColorBTNBackgroundAccent);
+
+                    TextView textViewText = popupView.findViewById(R.id.convert_understood_text);
+                    TextView textViewUnderstood = popupView.findViewById(R.id.convertUnderstoodButton);
+
+                    if (popupView.findViewById(R.id.confirmOutline) != null) {
+                        LinearLayout confirmOutline = popupView.findViewById(R.id.confirmOutline);
+                        Drawable backgroundDrawable = getResources().getDrawable(R.drawable.textview_border_thick);
+
+                        if (backgroundDrawable instanceof GradientDrawable) {
+                            GradientDrawable gradientDrawable = (GradientDrawable) backgroundDrawable;
+                            gradientDrawable.setStroke(10, newColorBTNForegroundAccent);
+
+                            confirmOutline.setBackground(backgroundDrawable);
+                        }
+                    }
+
+                    textViewText.setTextColor(newColorBTNForegroundAccent);
+                    textViewUnderstood.setTextColor(newColorBTNForegroundAccent);
+
+                    textViewText.setBackgroundColor(newColorBTNBackgroundAccent);
+                    textViewUnderstood.setBackgroundColor(newColorBTNBackgroundAccent);
+
+                    popupWindow.showAtLocation(findViewById(R.id.convertUI), Gravity.CENTER, 0, 0);
+
+                    if(textViewUnderstood != null) {
+                        textViewUnderstood.setOnClickListener(v -> {
+                            //dataManager.updateValuesInJSONSettingsData("showConverterDevelopmentMessage", "value", "false", getMainActivityContext());
+                            popupWindow.dismiss();
+                        });
+                    }
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public static String formatResultTextAfterType(String text) {
@@ -503,6 +561,7 @@ public class ConvertActivity extends AppCompatActivity {
                     case "Winkel":
                         TextView convertDeg = findViewById(R.id.convertDegTextView);
                         TextView convertRad = findViewById(R.id.convertRadTextView);
+                        TextView convertMillirad = findViewById(R.id.convertMilliradTextView);
 
                         Converter angleConverter = new Converter(ANGLE, DEGREE);
                         switch (spinner.getSelectedItemPosition()) {
@@ -512,14 +571,19 @@ public class ConvertActivity extends AppCompatActivity {
                             case 1:
                                 angleConverter = new Converter(ANGLE, RADIAN);
                                 break;
+                            case 2:
+                                angleConverter = new Converter(ANGLE, MILLIRADIAN);
+                                break;
                             default:
                                 convertDeg.setText("0,00");
                                 convertRad.setText("0,00");
+                                convertMillirad.setText("0,00");
                                 break;
                         }
 
-                        convertDeg.setText(     formatResultTextAfterType(angleConverter.convertToString(editTextNumber, DEGREE)));
-                        convertRad.setText(     formatResultTextAfterType(angleConverter.convertToString(editTextNumber, RADIAN)));
+                        convertDeg.setText(             formatResultTextAfterType(angleConverter.convertToString(editTextNumber, DEGREE)));
+                        convertRad.setText(             formatResultTextAfterType(angleConverter.convertToString(editTextNumber, RADIAN)));
+                        convertMillirad.setText(        formatResultTextAfterType(angleConverter.convertToString(editTextNumber, MILLIRADIAN)));
                         break;
                     case "Fläche" /* Fläche */:
                         TextView convertSquareMicrometer = findViewById(R.id.convertSquareMicrometerTextView);
@@ -1409,6 +1473,7 @@ public class ConvertActivity extends AppCompatActivity {
     private void setUpCustomItemLists() {
         customItemListAngle.add(new CustomItems(getString(R.string.convertDeg)));
         customItemListAngle.add(new CustomItems(getString(R.string.convertRad)));
+        customItemListAngle.add(new CustomItems(getString(R.string.convertMillirad)));
 
         customItemListArea.add(new CustomItems(getString(R.string.convertSquareMicrometer)));
         customItemListArea.add(new CustomItems(getString(R.string.convertSquareMillimeter)));
@@ -2001,6 +2066,9 @@ public class ConvertActivity extends AppCompatActivity {
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     private void updateUI(int backgroundColor, int textColor) {
+        newColorBTNBackgroundAccent = backgroundColor;
+        newColorBTNForegroundAccent = textColor;
+
         Button convertReturnButton = findViewById(R.id.convert_return_button);
         TextView convertTitle = findViewById(R.id.convert_title);
         LinearLayout convertLayout = findViewById(R.id.convertlayout);

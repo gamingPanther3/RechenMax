@@ -215,8 +215,11 @@
     <string name="convertTitle">Conversor</string>
     <string name="convertNull">0,00</string>
 
+    <string name="convertMessage">Por favor, tenga en cuenta que el convertidor aún está en desarrollo y puede producir resultados inexactos.</string>
+
     <string name="convertDeg">Grado (Deg)</string>
     <string name="convertRad">Radian (Rad)</string>
+    <string name="convertMillirad">Milirradián (mRad)</string>
     <string name="convertSquareMicrometer">Micrómetro cuadrado (µm²)</string>
     <string name="convertSquareMillimeter">Milímetro cuadrado (mm²)</string>
     <string name="convertSquareCentimeter">Centímetro cuadrado (cm²)</string>
