@@ -194,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
+        System.out.println(addSpaceToOperators("³√√½2!⅓¼"));
     }
 
     /**
@@ -3111,13 +3113,22 @@ public class MainActivity extends AppCompatActivity {
         final String symbols = "+-*/÷×√^π½⅓¼=";
         StringBuilder stringBuilder = new StringBuilder();
 
-        if(!string.isEmpty()) {
+        if (!string.isEmpty()) {
             string = string.replace(" ", "");
-            for(int i = 0; i < string.length(); i++) {
-                if (symbols.indexOf(string.charAt(i)) != -1) {
-                    stringBuilder.append(" ");
+            for (int i = 0; i < string.length(); i++) {
+                if(String.valueOf(string.charAt(i)).equals("³") && String.valueOf(string.charAt(i + 1)).equals("√")) {
                     stringBuilder.append(string.charAt(i));
-                    stringBuilder.append(" ");
+                    continue;
+                }
+
+                if (symbols.indexOf(string.charAt(i)) != -1) {
+                    if(i != 0 && !String.valueOf(string.charAt(i - 1)).equals("³")) {
+                        stringBuilder.append(" ");
+                    }
+                    stringBuilder.append(string.charAt(i));
+                    if (i + 1 < string.length() && isOperator(String.valueOf(symbols.indexOf(string.charAt(i + 1))))) {
+                        stringBuilder.append(" ");
+                    }
                 } else {
                     stringBuilder.append(string.charAt(i));
                 }
@@ -3128,6 +3139,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        if (String.valueOf(stringBuilder.charAt(0)).equals(" ")) {
+            stringBuilder.deleteCharAt(0);
+        }
         return stringBuilder.toString();
     }
 
