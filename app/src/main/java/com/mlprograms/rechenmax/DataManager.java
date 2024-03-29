@@ -31,13 +31,12 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 /**
  * DataManager
  * @author Max Lemberg
  * @version 1.4.5
- * @date 18.02.2024
+ * @date 30.03.2024
  */
 
 //  | Names                            | Values                           | Context                              |
@@ -116,6 +115,7 @@ public class DataManager {
     // Define the names of the files
     private static final String JSON_FILE = "settings.json";
     private static final String HISTORY_FILE = "history.json";
+    private static final String REPORT_FILE = "report_bugs.json";
 
     /**
      * This constructor is used to create a DataManager object for the MainActivity.
@@ -731,6 +731,98 @@ public class DataManager {
                 //Log.e("updateDetailsInHistoryData", "JSON file not found.");
             }
         } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveToReport(String name, String value, Context applicationContext) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            File file = new File(applicationContext.getFilesDir(), REPORT_FILE);
+            if (!file.exists()) {
+                if (!file.createNewFile()) {
+                    Log.e("saveToReport", "Failed to create new file");
+                    return;
+                }
+            }
+            String content = new String(Files.readAllBytes(file.toPath()));
+            if (!content.isEmpty()) {
+                jsonObj = new JSONObject(new JSONTokener(content));
+            }
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("value", value);
+
+            jsonObj.put(name, dataObj);
+
+            try (FileWriter fileWriter = new FileWriter(file)) {
+                fileWriter.write(jsonObj.toString());
+                fileWriter.flush();
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveToReport(String name, boolean value, Context applicationContext) {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            File file = new File(applicationContext.getFilesDir(), REPORT_FILE);
+            if (!file.exists()) {
+                if (!file.createNewFile()) {
+                    Log.e("saveToReport", "Failed to create new file");
+                    return;
+                }
+            }
+            String content = new String(Files.readAllBytes(file.toPath()));
+            if (!content.isEmpty()) {
+                jsonObj = new JSONObject(new JSONTokener(content));
+            }
+
+            JSONObject dataObj = new JSONObject();
+            dataObj.put("value", String.valueOf(value));
+
+            jsonObj.put(name, dataObj);
+
+            try (FileWriter fileWriter = new FileWriter(file)) {
+                fileWriter.write(jsonObj.toString());
+                fileWriter.flush();
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject getReportData(String name, Context applicationContext) throws JSONException {
+        try {
+            File file = new File(applicationContext.getFilesDir(), REPORT_FILE);
+            if (file.exists()) {
+                String content = new String(Files.readAllBytes(file.toPath()));
+                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
+
+                if (jsonObj.has(name)) {
+                    return jsonObj.getJSONObject(name);
+                } else {
+                    Log.e("getReportData", "Data with name " + name + " not found. Trying to Create ...");
+                }
+            } else {
+                Log.e("getReportData", "JSON file not found.");
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void clearReport(Context applicationContext) {
+        try {
+            File file = new File(applicationContext.getFilesDir(), REPORT_FILE);
+            if (file.exists()) {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write("");
+                fileWriter.close();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
