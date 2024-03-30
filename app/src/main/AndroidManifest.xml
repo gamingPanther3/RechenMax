@@ -41,6 +41,11 @@
         </receiver>
 
         <activity
+            android:name=".ReportActivity"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".SettingsActivity"
             android:configChanges="uiMode"
             android:exported="false"

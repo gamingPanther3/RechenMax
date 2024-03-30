@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
         //dataManager.saveToJSONSettings("historyTextViewNumber", "45", getApplicationContext());
 
-        Log.e("Debug", dataManager.getAllDataFromHistory(getApplicationContext()).toString());
-        Log.e("Debug", dataManager.getAllDataFromJSONSettings(getApplicationContext()).toString());
+        //Log.e("Debug", dataManager.getAllDataFromHistory(getApplicationContext()).toString());
+        //Log.e("Debug", dataManager.getAllDataFromJSONSettings(getApplicationContext()).toString());
 
 
         // Create JSON file and check for its existence
@@ -194,8 +194,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println(addSpaceToOperators("³√√½2!⅓¼"));
     }
 
     /**
@@ -3139,7 +3137,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        if (String.valueOf(stringBuilder.charAt(0)).equals(" ")) {
+        if (!String.valueOf(stringBuilder).isEmpty() && String.valueOf(stringBuilder.charAt(0)).equals(" ")) {
             stringBuilder.deleteCharAt(0);
         }
         return stringBuilder.toString();

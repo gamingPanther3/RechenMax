@@ -245,7 +245,15 @@
     <string name="manualLogarithmFunction">manuelle Logarithmusfunktion</string>
     <string name="naturalLogarithmFunction">natürliche Logarithmusfunktion</string>
 
+    <string name="sendReport">Senden</string>
+    <string name="sendReportThankYou">Vielen Dank. Der Fehler wird so schnell wie möglich behoben.</string>
+    <string name="sendReportChoose">Wähle eine Anwendung zum Senden aus</string>
+    <string name="sendReportFillAllBoxes">Fülle zuerst alle Felder aus!</string>
+    <string name="reportTitleHint">Gib einen geeigneten Titel an</string>
+    <string name="reportDescriptionHint">Beschreibe nun den Fehler ausführlich.\n\nBeachte dabei, dass je ausführlicher der Fehler beschrieben wurde, desto eher er behoben werden kann.</string>
+
     <string name="help">Hife</string>
+    <string name="report">Fehler Melden</string>
     <string name="back">Zurück</string>
     <string name="notifications">Benachrichtigungen</string>
     <string name="notificationsText">Um Benachrichtigungen zu erhalten, aktiviere diese Einstellung. Bitte beachte jedoch, dass du der App erlauben musst, dir Benachrichtigungen zu senden. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist. Zusätzlich müssen die Erinnerungen oder täglichen Tipps aktiviert sein, damit eine Benachrichtigung gesendet wird.</string>

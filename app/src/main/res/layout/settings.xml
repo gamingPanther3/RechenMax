@@ -16,7 +16,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/settings_return_button"
+            android:id="@+id/report_return_button"
             android:layout_width="45dp"
             android:layout_height="50dp"
             android:layout_gravity="left|center_vertical"
@@ -55,6 +55,20 @@
             android:foreground="@drawable/help_light"
             android:tag="help"
             android:tooltipText="@string/help"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/report_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginEnd="10dp"
+            android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:foreground="@drawable/report_light"
+            android:tag="report"
+            android:tooltipText="@string/report"
             tools:ignore="RtlHardcoded" />
 
     </LinearLayout>

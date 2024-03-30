@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reportUI"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mlprograms.rechenmax.ReportActivity">
+
+    <LinearLayout
+        android:id="@+id/report_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorLightBackground">
+
+        <Button
+            android:id="@+id/report_return_button"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="10dp"
+            android:foreground="@drawable/arrow_back_light"
+            android:tag="return"
+            android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:tooltipText="@string/back"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/report_title"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/report"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            style="?android:attr/buttonBarButtonStyle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40sp"
+        android:orientation="vertical">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/sendReportTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/reportTitleHint"
+                android:textSize="25sp"/>
+        </HorizontalScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/sendReportMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="top"
+                android:hint="@string/reportDescriptionHint"
+                android:maxHeight="400dp" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/sendReportButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:textSize="25sp"
+            android:text="@string/sendReport"
+            android:layout_gravity="bottom|center_horizontal"/>
+    </LinearLayout>
+</LinearLayout>

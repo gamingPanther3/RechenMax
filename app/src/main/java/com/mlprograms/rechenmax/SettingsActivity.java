@@ -21,7 +21,6 @@ import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_HINTS;
 import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_REMEMBER;
 import static com.mlprograms.rechenmax.BackgroundService.createNotificationChannel;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
-import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -55,13 +54,11 @@ import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 
-import java.net.Inet4Address;
-import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * SettingsActivity
+ *
  * @author Max Lemberg
  * @version 1.0.3
  * @date 14.02.2023
@@ -104,7 +101,7 @@ public class SettingsActivity extends AppCompatActivity {
      * this Bundle is null.
      *
      * @param savedInstanceState The Bundle containing the saved state, or null if the activity is
-     *                         being created for the first time.
+     *                           being created for the first time.
      */
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @SuppressLint({"UseCompatLoadingForDrawables", "UseSwitchCompatOrMaterialCode", "CutPasteId"})
@@ -120,7 +117,7 @@ public class SettingsActivity extends AppCompatActivity {
         //dataManager.createJSON(getApplicationContext());
         //resetReleaseNoteConfig(getApplicationContext());
 
-        @SuppressLint("CutPasteId") Button button = findViewById(R.id.settings_return_button);
+        @SuppressLint("CutPasteId") Button button = findViewById(R.id.report_return_button);
         button.setOnClickListener(v -> returnToCalculator());
 
         findViewById(R.id.settingsUI);
@@ -170,7 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
 
         customSpinner1 = findViewById(R.id.settings_display_mode_spinner);
-        if(customSpinner1 != null) {
+        if (customSpinner1 != null) {
             customSpinner1.setAdapter(customAdapter1);
 
             final String mode;
@@ -179,7 +176,7 @@ public class SettingsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            if(mode.equals("System")) {
+            if (mode.equals("System")) {
                 customSpinner1.setSelection(0);
             } else if (mode.equals("Light")) {
                 customSpinner1.setSelection(1);
@@ -210,6 +207,7 @@ public class SettingsActivity extends AppCompatActivity {
                 updateSpinner(adapterView);
                 switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // do nothing
@@ -221,7 +219,7 @@ public class SettingsActivity extends AppCompatActivity {
         customAdapter2 = new CustomAdapter(this, customListCalculationMode);
 
         customSpinner2 = findViewById(R.id.settings_calculation_mode_spinner);
-        if(customSpinner2 != null) {
+        if (customSpinner2 != null) {
             customSpinner2.setAdapter(customAdapter2);
 
             final String mode;
@@ -230,7 +228,7 @@ public class SettingsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            if(mode.equals("Standard")) {
+            if (mode.equals("Standard")) {
                 customSpinner2.setSelection(0);
             } else {
                 customSpinner2.setSelection(1);
@@ -249,12 +247,13 @@ public class SettingsActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(spinnerText.equals(getString(R.string.defaultCalculationMode))) {
+                if (spinnerText.equals(getString(R.string.defaultCalculationMode))) {
                     dataManager.saveToJSONSettings("calculationMode", "Standard", getMainActivityContext());
                 } else {
                     dataManager.saveToJSONSettings("calculationMode", "Vereinfacht", getMainActivityContext());
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // do nothing
@@ -267,7 +266,7 @@ public class SettingsActivity extends AppCompatActivity {
         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
 
         customSpinner3 = findViewById(R.id.settings_function_spinner);
-        if(customSpinner3 != null) {
+        if (customSpinner3 != null) {
             customSpinner3.setAdapter(customAdapter3);
 
             final String mode;
@@ -276,7 +275,7 @@ public class SettingsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            if(mode.equals(getString(R.string.degree))) {
+            if (mode.equals(getString(R.string.degree))) {
                 customSpinner3.setSelection(0);
             } else {
                 customSpinner3.setSelection(1);
@@ -298,6 +297,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 //updateSpinner2(adapterView);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // do nothing
@@ -310,7 +310,7 @@ public class SettingsActivity extends AppCompatActivity {
         customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
         customSpinner4 = findViewById(R.id.settings_history_mode_spinner);
-        if(customSpinner4 != null) {
+        if (customSpinner4 != null) {
             customSpinner4.setAdapter(customAdapter4);
 
             final String mode;
@@ -319,7 +319,7 @@ public class SettingsActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
-            if(mode.equals("single")) {
+            if (mode.equals("single")) {
                 customSpinner4.setSelection(0);
             } else {
                 customSpinner4.setSelection(1);
@@ -340,6 +340,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 //Log.e("DEBUG", dataManager.getJSONSettingsData("historyMode", getMainActivityContext()));
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // do nothing
@@ -350,6 +351,13 @@ public class SettingsActivity extends AppCompatActivity {
         helpButton.setOnClickListener(v -> {
             HelpActivity.setMainActivityContext(this);
             Intent intent = new Intent(this, HelpActivity.class);
+            startActivity(intent);
+        });
+
+        Button reportButton = findViewById(R.id.report_button);
+        reportButton.setOnClickListener(v -> {
+            ReportActivity.setMainActivityContext(this);
+            Intent intent = new Intent(this, ReportActivity.class);
             startActivity(intent);
         });
 
@@ -371,7 +379,7 @@ public class SettingsActivity extends AppCompatActivity {
         customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
 
         customSpinner5 = findViewById(R.id.settings_decimalpoints_spinner);
-        if(customSpinner5 != null) {
+        if (customSpinner5 != null) {
             customSpinner5.setAdapter(customAdapter5);
 
             try {
@@ -389,14 +397,15 @@ public class SettingsActivity extends AppCompatActivity {
                 String spinnerText = items.getSpinnerText();
 
                 dataManager.updateValuesInJSONSettingsData("numberOfDecimals", "value", String.valueOf(Integer.parseInt(spinnerText)), getMainActivityContext());
-                Log.e("DEBUG", String.valueOf(dataManager.getAllDataFromJSONSettings(getMainActivityContext())));
+                //Log.e("DEBUG", String.valueOf(dataManager.getAllDataFromJSONSettings(getMainActivityContext())));
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // do nothing
             }
         });
-        
+
         switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
         createNotificationChannel(this);
         createNotificationButtonListeners();
@@ -420,7 +429,7 @@ public class SettingsActivity extends AppCompatActivity {
         allowDailyNotifications.setVisibility(View.GONE);
         allowDailyNotificationText.setVisibility(View.GONE);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             allowNotifications.setVisibility(View.VISIBLE);
             allowNotificationText.setVisibility(View.VISIBLE);
             allowRememberNotification.setVisibility(View.VISIBLE);
@@ -428,7 +437,7 @@ public class SettingsActivity extends AppCompatActivity {
             allowDailyNotifications.setVisibility(View.VISIBLE);
             allowDailyNotificationText.setVisibility(View.VISIBLE);
 
-            if(!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND) ||
+            if (!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND) ||
                     (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)) {
                 dataManager.saveToJSONSettings("allowNotifications", false, getMainActivityContext());
                 dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
@@ -445,7 +454,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
 
-            if(!isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
+            if (!isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
                 dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
                 allowRememberNotification.setChecked(false);
             } else {
@@ -459,7 +468,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
 
-            if(!isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
+            if (!isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
                 dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                 allowDailyNotifications.setChecked(false);
             } else {
@@ -479,13 +488,13 @@ public class SettingsActivity extends AppCompatActivity {
                     requestNotificationPermission();
                 }
 
-                if(!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
+                if (!isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
                     dataManager.saveToJSONSettings("allowNotifications", false, getMainActivityContext());
                     activateNotificationMessage();
                     allowNotifications.setChecked(false);
                     return;
                 }
-                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                     //Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                     //intent.putExtra(Settings.EXTRA_APP_PACKAGE, this.getPackageName());
                     //this.startActivity(intent);
@@ -496,18 +505,18 @@ public class SettingsActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(isChecked) {
+                if (isChecked) {
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED &&
                             isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
                         dataManager.saveToJSONSettings("allowNotification", true, getMainActivityContext());
                         allowNotifications.setChecked(true);
 
                         try {
-                            if(dataManager.getJSONSettingsData("allowRememberNotificationsActive", getApplicationContext()).getString("value").equals("true")) {
+                            if (dataManager.getJSONSettingsData("allowRememberNotificationsActive", getApplicationContext()).getString("value").equals("true")) {
                                 dataManager.saveToJSONSettings("allowRememberNotifications", true, getMainActivityContext());
                                 allowRememberNotification.setChecked(true);
                             }
-                            if(dataManager.getJSONSettingsData("allowDailyNotificationsActive", getApplicationContext()).getString("value").equals("true")) {
+                            if (dataManager.getJSONSettingsData("allowDailyNotificationsActive", getApplicationContext()).getString("value").equals("true")) {
                                 dataManager.saveToJSONSettings("allowDailyNotifications", true, getMainActivityContext());
                                 allowDailyNotifications.setChecked(true);
                             }
@@ -536,30 +545,30 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
             allowRememberNotification.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked && !allowNotifications.isChecked()) {
+                if (isChecked && !allowNotifications.isChecked()) {
                     dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
                     turnOnNotificationsMessage();
                     allowRememberNotification.setChecked(false);
                     return;
                 }
-                if(!isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
+                if (!isChannelPermissionGranted(this, CHANNEL_ID_REMEMBER)) {
                     dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
                     allowRememberNotification.setChecked(false);
                     return;
                 }
-                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                     allowRememberNotification.setChecked(false);
                     return;
                 }
 
-                if(isChecked) {
+                if (isChecked) {
                     dataManager.saveToJSONSettings("allowRememberNotifications", true, getMainActivityContext());
                     dataManager.saveToJSONSettings("allowRememberNotificationsActive", true, getApplicationContext());
                     allowRememberNotification.setChecked(true);
                 } else {
                     allowRememberNotification.setChecked(false);
                     dataManager.saveToJSONSettings("allowRememberNotifications", false, getMainActivityContext());
-                    if(allowNotifications.isChecked()) {
+                    if (allowNotifications.isChecked()) {
                         dataManager.saveToJSONSettings("allowRememberNotificationsActive", false, getApplicationContext());
                     }
 
@@ -571,30 +580,30 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
             allowDailyNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked && !allowNotifications.isChecked()) {
+                if (isChecked && !allowNotifications.isChecked()) {
                     dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                     turnOnNotificationsMessage();
                     allowDailyNotifications.setChecked(false);
                     return;
                 }
-                if(!isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
+                if (!isChannelPermissionGranted(this, CHANNEL_ID_HINTS)) {
                     dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
                     allowDailyNotifications.setChecked(false);
                     return;
                 }
-                if(ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                     allowDailyNotifications.setChecked(false);
                     return;
                 }
 
-                if(isChecked) {
+                if (isChecked) {
                     dataManager.saveToJSONSettings("allowDailyNotifications", true, getMainActivityContext());
                     dataManager.saveToJSONSettings("allowDailyNotificationsActive", true, getApplicationContext());
                     allowDailyNotifications.setChecked(true);
                 } else {
                     allowDailyNotifications.setChecked(false);
                     dataManager.saveToJSONSettings("allowDailyNotifications", false, getMainActivityContext());
-                    if(allowNotifications.isChecked()) {
+                    if (allowNotifications.isChecked()) {
                         dataManager.saveToJSONSettings("allowDailyNotificationsActive", false, getApplicationContext());
                     }
                 }
@@ -614,7 +623,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (!isPermissionGranted) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[] {Manifest.permission.POST_NOTIFICATIONS}, 100);
+                    requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
                 }
             }
         }
@@ -706,7 +715,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             startBackgroundService();
         }
     }
@@ -772,18 +781,18 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Check if the TextView object is null before calling methods on it
         TextView textView = null;
-        if(parent.getChildAt(0) instanceof TextView) {
+        if (parent.getChildAt(0) instanceof TextView) {
             textView = (TextView) parent.getChildAt(0);
         }
 
-        if(textView != null) {
+        if (textView != null) {
             textView.setTextSize(20);
             switch (readselectedSetting) {
                 case 2:
                     dataManager.saveToJSONSettings("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     switchDisplayMode(currentNightMode);
                     try {
-                        if(dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
+                        if (dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
                             textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
                         } else {
                             textView.setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -801,7 +810,7 @@ public class SettingsActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("selectedSpinnerSetting", "System", getMainActivityContext());
                     if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                         try {
-                            if(dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
+                            if (dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
                                 textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
                             } else {
                                 textView.setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -820,6 +829,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method updates the second spinner based on the selected setting.
+     *
      * @param parent The AdapterView where the selection happened.
      */
     public void updateSpinner2(AdapterView<?> parent) {
@@ -833,17 +843,17 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Check if the TextView object is null before calling methods on it
         TextView textView = null;
-        if(parent.getChildAt(0) instanceof TextView) {
+        if (parent.getChildAt(0) instanceof TextView) {
             textView = (TextView) parent.getChildAt(0);
         }
 
-        if(textView != null) {
+        if (textView != null) {
             textView.setTextSize(20);
             switch (readselectedSetting) {
                 case "Dark":
                     dataManager.saveToJSONSettings("selectedSpinnerSetting", "Dark", getMainActivityContext());
                     try {
-                        if(dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
+                        if (dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
                             textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
                         } else {
                             textView.setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -860,7 +870,7 @@ public class SettingsActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("selectedSpinnerSetting", "System", getMainActivityContext());
                     if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
                         try {
-                            if(dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
+                            if (dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
                                 textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
                             } else {
                                 textView.setTextColor(ContextCompat.getColor(this, R.color.white));
@@ -878,16 +888,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method updates the second spinner based on the selected setting.
+     *
      * @param parent The AdapterView where the selection happened.
      */
     public void updateSpinnerFunctionMode(AdapterView<?> parent) {
         // Check if the TextView object is null before calling methods on it
         TextView textView = null;
-        if(parent.getChildAt(0) instanceof TextView) {
+        if (parent.getChildAt(0) instanceof TextView) {
             textView = (TextView) parent.getChildAt(0);
         }
 
-        if(textView != null) {
+        if (textView != null) {
             textView.setTextSize(20);
             try {
                 switch (dataManager.getJSONSettingsData("functionMode", getMainActivityContext()).getString("value")) {
@@ -906,6 +917,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method gets the selected setting.
+     *
      * @return The selected setting.
      */
     public String getSelectedSetting() {
@@ -928,8 +940,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method updates the state of a switch view based on a key.
+     *
      * @param switchView The switch view to update.
-     * @param key The key to use to get the value.
+     * @param key        The key to use to get the value.
      */
     private void updateSwitchState(@SuppressLint("UseSwitchCompatOrMaterialCode") Switch switchView, String key) {
         try {
@@ -942,6 +955,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This static method sets the context of the MainActivity.
+     *
      * @param activity The MainActivity whose context is to be set.
      */
     public static void setMainActivityContext(MainActivity activity) {
@@ -950,6 +964,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method gets the context of the MainActivity.
+     *
      * @return The context of the MainActivity.
      */
     public Context getMainActivityContext() {
@@ -958,6 +973,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method is called when the configuration of the device changes.
+     *
      * @param newConfig The new device configuration.
      */
     @Override
@@ -970,12 +986,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method switches the display mode based on the current night mode.
+     *
      * @param currentNightMode The current night mode.
      */
     @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables", "CutPasteId"})
     private void switchDisplayMode(int currentNightMode) {
         Button helpButton = findViewById(R.id.help_button);
-        Button backbutton = findViewById(R.id.settings_return_button);
+        Button backbutton = findViewById(R.id.report_return_button);
+        Button reportButton = findViewById(R.id.report_button);
 
         Spinner[] spinners = {
                 findViewById(R.id.settings_display_mode_spinner),
@@ -986,8 +1004,8 @@ public class SettingsActivity extends AppCompatActivity {
             updateSpinner2(spinner);
         }
 
-        if(getSelectedSetting() != null) {
-            if(getSelectedSetting().equals("Systemstandard")) {
+        if (getSelectedSetting() != null) {
+            if (getSelectedSetting().equals("Systemstandard")) {
                 switch (currentNightMode) {
                     case Configuration.UI_MODE_NIGHT_YES:
                         // Nightmode is activated
@@ -1003,11 +1021,14 @@ public class SettingsActivity extends AppCompatActivity {
                             if (trueDarkMode.equals("false")) {
                                 updateUI(R.color.black, R.color.white);
 
-                                if(backbutton != null) {
+                                if (backbutton != null) {
                                     backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                                 }
                                 if (helpButton != null) {
                                     helpButton.setForeground(getDrawable(R.drawable.help_light));
+                                }
+                                if (reportButton != null) {
+                                    reportButton.setForeground(getDrawable(R.drawable.report_light));
                                 }
 
                                 customListDisplayMode = new ArrayList<>();
@@ -1063,11 +1084,14 @@ public class SettingsActivity extends AppCompatActivity {
                             } else {
                                 updateUI(R.color.darkmode_black, R.color.darkmode_white);
 
-                                if(backbutton != null) {
+                                if (backbutton != null) {
                                     backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                                 }
                                 if (helpButton != null) {
                                     helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                                }
+                                if (reportButton != null) {
+                                    reportButton.setForeground(getDrawable(R.drawable.report_true_darkmode));
                                 }
 
                                 customListDisplayMode = new ArrayList<>();
@@ -1129,11 +1153,14 @@ public class SettingsActivity extends AppCompatActivity {
                             isProgrammaticChange = true;
                             customSpinner1.setSelection(0);
                         } else {
-                            if(backbutton != null) {
+                            if (backbutton != null) {
                                 backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                             }
                             if (helpButton != null) {
                                 helpButton.setForeground(getDrawable(R.drawable.help_light));
+                            }
+                            if (reportButton != null) {
+                                reportButton.setForeground(getDrawable(R.drawable.report_light));
                             }
 
                             customListDisplayMode = new ArrayList<>();
@@ -1200,11 +1227,14 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                     case Configuration.UI_MODE_NIGHT_NO:
                         // Nightmode is not activated
-                        if(backbutton != null) {
+                        if (backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back));
                         }
                         if (helpButton != null) {
                             helpButton.setForeground(getDrawable(R.drawable.help));
+                        }
+                        if (reportButton != null) {
+                            reportButton.setForeground(getDrawable(R.drawable.report));
                         }
 
                         customListDisplayMode = new ArrayList<>();
@@ -1270,11 +1300,14 @@ public class SettingsActivity extends AppCompatActivity {
                         break;
                 }
             } else if (getSelectedSetting().equals("Tageslichtmodus")) {
-                if(backbutton != null) {
+                if (backbutton != null) {
                     backbutton.setForeground(getDrawable(R.drawable.arrow_back));
                 }
                 if (helpButton != null) {
                     helpButton.setForeground(getDrawable(R.drawable.help));
+                }
+                if (reportButton != null) {
+                    reportButton.setForeground(getDrawable(R.drawable.report));
                 }
 
                 customListDisplayMode = new ArrayList<>();
@@ -1351,11 +1384,14 @@ public class SettingsActivity extends AppCompatActivity {
                         updateUI(R.color.black, R.color.white);
                         updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
 
-                        if(backbutton != null) {
+                        if (backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                         }
                         if (helpButton != null) {
                             helpButton.setForeground(getDrawable(R.drawable.help_light));
+                        }
+                        if (reportButton != null) {
+                            reportButton.setForeground(getDrawable(R.drawable.report_light));
                         }
 
                         customListDisplayMode = new ArrayList<>();
@@ -1412,11 +1448,14 @@ public class SettingsActivity extends AppCompatActivity {
                         updateUI(R.color.darkmode_black, R.color.darkmode_white);
                         updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
 
-                        if(backbutton != null) {
+                        if (backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                         }
                         if (helpButton != null) {
                             helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                        }
+                        if (reportButton != null) {
+                            reportButton.setForeground(getDrawable(R.drawable.report_true_darkmode));
                         }
 
                         customListDisplayMode = new ArrayList<>();
@@ -1479,11 +1518,14 @@ public class SettingsActivity extends AppCompatActivity {
                     isProgrammaticChange = true;
                     customSpinner1.setSelection(2);
                 } else {
-                    if(backbutton != null) {
+                    if (backbutton != null) {
                         backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                     }
                     if (helpButton != null) {
                         helpButton.setForeground(getDrawable(R.drawable.help_light));
+                    }
+                    if (reportButton != null) {
+                        reportButton.setForeground(getDrawable(R.drawable.report_light));
                     }
 
                     customListDisplayMode = new ArrayList<>();
@@ -1574,15 +1616,17 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method updates the UI elements with the given background color and text color.
+     *
      * @param backgroundColor The color to be used for the background.
-     * @param textColor The color to be used for the text.
+     * @param textColor       The color to be used for the text.
      */
     @SuppressLint("UseCompatLoadingForDrawables")
     private void updateUI(int backgroundColor, int textColor) {
         ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
         LinearLayout settingsLayout = findViewById(R.id.settings_layout);
-        Button settingsReturnButton = findViewById(R.id.settings_return_button);
+        Button settingsReturnButton = findViewById(R.id.report_return_button);
         Button settingsHelpButton = findViewById(R.id.help_button);
+        Button settingsReportButton = findViewById(R.id.report_button);
         TextView settingsTitle = findViewById(R.id.settings_title);
         TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
         TextView settingsReleaseNotesText = findViewById(R.id.settings_release_notes_text);
@@ -1617,6 +1661,7 @@ public class SettingsActivity extends AppCompatActivity {
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsHelpButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingsReportButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsTitle.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsScrollView.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
@@ -1666,6 +1711,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * This method appends spaces to the text of all Switch views in a layout.
+     *
      * @param layout The layout containing the Switch views.
      */
     private void appendSpaceToSwitches(ViewGroup layout) {
@@ -1678,8 +1724,7 @@ public class SettingsActivity extends AppCompatActivity {
                     String space = "                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ";
                     switchText = switchText + space;
                     ((Switch) v).setText(switchText);
-                }
-                else if (v instanceof ViewGroup) {
+                } else if (v instanceof ViewGroup) {
                     appendSpaceToSwitches((ViewGroup) v);
                 }
             }

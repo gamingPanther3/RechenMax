@@ -196,6 +196,14 @@
     <string name="notifications">Notifications</string>
     <string name="notificationsText">To receive notifications, enable this setting. However, please note that you must allow the app to send you notifications. Also, keep in mind that this feature is only available starting from API 33 (Android 13). Additionally, reminders or daily tips must be enabled for a notification to be sent.</string>
 
+    <string name="sendReport">Send</string>
+    <string name="sendReportThankYou">Thank you. The error will be fixed as soon as possible.</string>
+    <string name="sendReportChoose">Choose an application to send from</string>
+    <string name="sendReportFillAllBoxes">First, fill in all fields!</string>
+    <string name="reportTitleHint">Provide a suitable title</string>
+    <string name="reportDescriptionHint">Now, describe the error in detail.\n\nNote that the more detailed the error description, the sooner it can be fixed.</string>
+
+
     <string name="convertAngle">Angle</string>
     <string name="convertArea">Area</string>
     <string name="convertStorage">Digital Storage</string>

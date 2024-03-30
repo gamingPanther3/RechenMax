@@ -175,6 +175,13 @@
     <string name="notifications">Notifications</string>
     <string name="notificationsText">Pour recevoir des notifications, activez ce paramètre. Cependant, veuillez noter que vous devez autoriser l\'application à vous envoyer des notifications. De plus, gardez à l\'esprit que cette fonctionnalité n\'est disponible qu\'à partir de l\'API 33 (Android 13). De plus, les rappels ou les conseils quotidiens doivent être activés pour qu\'une notification soit envoyée.</string>
 
+    <string name="sendReport">Envoyer</string>
+    <string name="sendReportThankYou">Merci. L\'erreur sera corrigée dès que possible.</string>
+    <string name="sendReportChoose">Choisissez une application pour envoyer</string>
+    <string name="sendReportFillAllBoxes">Tout d\'abord, remplissez tous les champs !</string>
+    <string name="reportTitleHint">Indiquez un titre approprié</string>
+    <string name="reportDescriptionHint">Maintenant, décrivez l\'erreur en détail.\n\nNotez que plus la description de l\'erreur est détaillée, plus elle peut être corrigée rapidement.</string>
+
     <string name="convertAngle">Angle</string>
     <string name="convertArea">Surface</string>
     <string name="convertStorage">Stockage numérique</string>

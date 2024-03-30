@@ -195,6 +195,13 @@
     <string name="notifications">Notificaciones</string>
     <string name="notificationsText">Para recibir notificaciones, activa esta configuración. Sin embargo, ten en cuenta que debes permitir que la aplicación te envíe notificaciones. Además, ten en cuenta que esta función solo está disponible a partir de API 33 (Android 13). Además, los recordatorios o consejos diarios deben estar activados para que se envíe una notificación.</string>
 
+    <string name="sendReport">Enviar</string>
+    <string name="sendReportThankYou">Gracias. El error se corregirá lo antes posible.</string>
+    <string name="sendReportChoose">Elige una aplicación para enviar</string>
+    <string name="sendReportFillAllBoxes">¡Primero, completa todos los campos!</string>
+    <string name="reportTitleHint">Proporciona un título adecuado</string>
+    <string name="reportDescriptionHint">Ahora, describe el error con detalle.\n\nTen en cuenta que cuanto más detallada sea la descripción del error, más rápido se podrá corregir.</string>
+
     <string name="convertAngle">Ángulo</string>
     <string name="convertArea">Área</string>
     <string name="convertStorage">Almacenamiento digital</string>
