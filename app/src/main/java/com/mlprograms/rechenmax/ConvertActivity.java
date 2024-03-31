@@ -406,6 +406,7 @@ public class ConvertActivity extends AppCompatActivity {
 
                     TextView textViewText = popupView.findViewById(R.id.convert_understood_text);
                     TextView textViewUnderstood = popupView.findViewById(R.id.convertUnderstoodButton);
+                    TextView textViewDontShowAgain = popupView.findViewById(R.id.convertDontShowButton);
 
                     if (popupView.findViewById(R.id.confirmOutline) != null) {
                         LinearLayout confirmOutline = popupView.findViewById(R.id.confirmOutline);
@@ -421,18 +422,21 @@ public class ConvertActivity extends AppCompatActivity {
 
                     textViewText.setTextColor(newColorBTNForegroundAccent);
                     textViewUnderstood.setTextColor(newColorBTNForegroundAccent);
+                    textViewDontShowAgain.setTextColor(newColorBTNForegroundAccent);
 
                     textViewText.setBackgroundColor(newColorBTNBackgroundAccent);
                     textViewUnderstood.setBackgroundColor(newColorBTNBackgroundAccent);
+                    textViewDontShowAgain.setBackgroundColor(newColorBTNBackgroundAccent);
 
                     popupWindow.showAtLocation(findViewById(R.id.convertUI), Gravity.CENTER, 0, 0);
 
-                    if(textViewUnderstood != null) {
-                        textViewUnderstood.setOnClickListener(v -> {
-                            //dataManager.updateValuesInJSONSettingsData("showConverterDevelopmentMessage", "value", "false", getMainActivityContext());
-                            popupWindow.dismiss();
-                        });
-                    }
+                    textViewUnderstood.setOnClickListener(v -> {
+                        popupWindow.dismiss();
+                    });
+                    textViewDontShowAgain.setOnClickListener(v -> {
+                        dataManager.updateValuesInJSONSettingsData("showConverterDevelopmentMessage", "value", "false", getMainActivityContext());
+                        popupWindow.dismiss();
+                    });
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -1762,6 +1766,11 @@ public class ConvertActivity extends AppCompatActivity {
      */
     private void setUpButtonListeners() {
         setButtonListener(R.id.convert_return_button, this::returnToCalculator);
+        setButtonListener(R.id.convertDontShowButton, this::dontShowWarnTextAgain);
+    }
+
+    private void dontShowWarnTextAgain() {
+        dataManager.updateValuesInJSONSettingsData("showConverterDevelopmentMessage", "value", "false", getMainActivityContext());
     }
 
     /**
