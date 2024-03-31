@@ -11,7 +11,7 @@
     <string name="radian">Radianes (Rad)</string>
 
 
-    <string name="releaseDate">Fecha de lanzamiento: 17.02.24 – 18:00</string>
+    <string name="releaseDate">Fecha de lanzamiento: N/A</string>
     <string name="patchnotesOverviewText">La última versión de RechenMax trae emocionantes mejoras y características. El desplazamiento automático facilita la navegación en cálculos grandes, mientras que la precisión de redondeo se ha aumentado a la décima primera posición decimal para números decimales más precisos. El historial se ha optimizado para restaurar sin esfuerzo cálculos anteriores y revisar tareas pasadas. En tareas trigonométricas, están disponibles funciones avanzadas para seno, coseno y tangente en grados y radianes. Ahora también están disponibles funciones trigonométricas inversas (sin⁻¹, cos⁻¹, tan⁻¹), así como funciones hiperbólicas como senh(x), cosh(x) y tanh(x). La entrada manual de notación proporciona flexibilidad adicional al crear y calcular expresiones complejas. RechnenMax ahora admite el uso de la constante matemática PI (π) para cálculos precisos de círculos. Con el soporte flexible de grados y radianes, puedes cambiar entre las dos unidades de medida según sea necesario. El manejo de paréntesis se ha optimizado para garantizar un procesamiento sin errores de expresiones matemáticas o lógicas. El software detecta y agrega automáticamente paréntesis de cierre faltantes, simplificando aún más la entrada de expresiones. En el historial, al mantener presionada una entrada, la factura se copia automáticamente al portapapeles, mientras que al presionar brevemente, la factura se pega directamente en la calculadora. Esta versión también soluciona errores importantes, incluidos problemas de visualización y cálculo factorial, así como la optimización del formato de resultado para una visualización más precisa.</string>
     <string name="overview">Resumen</string>
     <string name="newFunctions">Nuevas funciones</string>
@@ -19,7 +19,7 @@
     <string name="systemRequirement">Requisitos del sistema</string>
     <string name="dontShowThisTextAgain">No mostrar este texto nuevamente</string>
     <string name="understood">Entendido</string>
-    <string name="copyright">Creador: Max Lemberg Derechos de autor: © 2023 Max Lemberg. Todos los derechos reservados. Licencia: Este producto está bajo licencia de Apache 2.0. Versión: 1.6.3</string>
+    <string name="copyright">Creador: Max Lemberg Derechos de autor: © 2024 Max Lemberg. Todos los derechos reservados. Licencia: Este producto está bajo licencia de Apache 2.0. Versión: 1.6.3</string>
 
     <string name="calculationAreas">Áreas de cálculo</string>
     <string name="calculationArea">1: Esta área (área de cálculo) muestra el cálculo que has ingresado. También puedes copiar el contenido del área manteniendo presionada el área. 2: El resultado del cálculo realizado se muestra en esta área (área de resultados). También puedes copiar el contenido del área manteniendo presionada el área.</string>
@@ -200,7 +200,9 @@
     <string name="sendReportChoose">Elige una aplicación para enviar</string>
     <string name="sendReportFillAllBoxes">¡Primero, completa todos los campos!</string>
     <string name="reportTitleHint">Proporciona un título adecuado</string>
-    <string name="reportDescriptionHint">Ahora, describe el error con detalle.\n\nTen en cuenta que cuanto más detallada sea la descripción del error, más rápido se podrá corregir.</string>
+    <string name="reportDescriptionHint">Ahora, describe el error con detalle.\n\nTen en cuenta que cuanto más detallada sea la descripción del error, más rápido se podrá corregir. </string>
+    <string name="report">Informar de un error</string>
+    <string name="reportNoEmailClient">No hay ninguna aplicación de correo electrónico instalada...</string>
 
     <string name="convertAngle">Ángulo</string>
     <string name="convertArea">Área</string>
@@ -222,7 +224,10 @@
     <string name="convertTitle">Conversor</string>
     <string name="convertNull">0,00</string>
 
-    <string name="convertMessage">Por favor, tenga en cuenta que el convertidor aún está en desarrollo y puede producir resultados inexactos.</string>
+    <string name="convertMessage">Por favor, tenga en cuenta que el convertidor aún está en desarrollo y puede producir resultados inexactos. Puedes informar de un error haciendo clic en la bandera en la parte superior derecha en la configuración si has encontrado alguno.</string>
+
+    <string name="settingsConverterDevelopmentMessage">Mensaje de advertencia</string>
+    <string name="settingsConverterDevelopmentMessage_text">Con esto, puedes configurar si deseas ver el mensaje de advertencia cada vez que aparezca al iniciar el conversor, para asegurarte de estar informado sobre los posibles riesgos.</string>
 
     <string name="convertDeg">Grado (Deg)</string>
     <string name="convertRad">Radian (Rad)</string>

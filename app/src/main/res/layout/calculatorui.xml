@@ -133,7 +133,6 @@
             android:id="@+id/calculate_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
             android:layout_weight="1.5"
             android:autoSizeMaxTextSize="@dimen/maxTextViewSize"
             android:autoSizeTextType="uniform">
@@ -141,9 +140,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:layout_gravity="end"
                 android:gravity="end"
-                android:layout_gravity="end">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/calculate_label"
@@ -157,7 +156,6 @@
                     android:text="@string/calculate_label"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
-
             </LinearLayout>
         </HorizontalScrollView>
 

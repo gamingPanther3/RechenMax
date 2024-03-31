@@ -2820,6 +2820,7 @@ public class MainActivity extends AppCompatActivity {
         switch (e) {
             case "⌫":
                 handleBackspaceAction();
+                scrollToEnd(findViewById(R.id.calculate_scrollview));
                 break;
             case "C":
                 setResultText("0");
@@ -3717,13 +3718,13 @@ public class MainActivity extends AppCompatActivity {
         */
     }
     public void setLastNumber(final String s) {
-        try {
+        //try {
             final String last_number = s.replace(".", "");
             dataManager.saveToJSONSettings("lastnumber", last_number, getApplicationContext());
-            Log.i("setLastNumber", "lastNumber: " + dataManager.getJSONSettingsData("lastnumber", getApplicationContext()));
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+            //Log.i("setLastNumber", "lastNumber: " + dataManager.getJSONSettingsData("lastnumber", getApplicationContext()));
+        //} catch (JSONException e) {
+        //    throw new RuntimeException(e);
+        //}
     }
     public String getLastNumber() {
         try {

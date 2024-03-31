@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -60,13 +61,15 @@ public class ReportActivity extends AppCompatActivity {
             if(title.getText().toString().isEmpty() || message.getText().toString().isEmpty()) {
                 showToastLong(getString(R.string.sendReportFillAllBoxes), this);
             } else {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"ml.programs.service@gmail.com"});
-                intent.putExtra(Intent.EXTRA_SUBJECT, title.getText().toString());
-                intent.putExtra(Intent.EXTRA_TEXT, message.getText().toString());
-                intent.setType("message/rfc822");
-                startActivity(Intent.createChooser(intent, getString(R.string.sendReportChoose)));
-                isSendReport = true;
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    Uri data = Uri.parse("mailto:ml.programs.service@gmail.com?subject=" + title.getText().toString() + "&body=" + message.getText().toString());
+                    intent.setData(data);
+                    startActivity(intent);
+                    isSendReport = true;
+                } catch (android.content.ActivityNotFoundException e) {
+                    showToastLong(getString(R.string.reportNoEmailClient), this);
+                }
             }
         });
     }
@@ -85,6 +88,7 @@ public class ReportActivity extends AppCompatActivity {
         if(isSendReport) {
             returnToCalculator();
             showToastLong(getString(R.string.sendReportThankYou), this);
+            isSendReport = false;
         }
     }
 

@@ -125,10 +125,12 @@ public class SettingsActivity extends AppCompatActivity {
         Switch settingsReleaseNotesSwitch = findViewById(R.id.settings_release_notes);
         Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
         Switch settingPI = findViewById(R.id.settings_pi);
+        Switch settingWarningMessage = findViewById(R.id.settingsConverterDevelopmentMessage);
 
         updateSwitchState(settingsReleaseNotesSwitch, "settingReleaseNotesSwitch");
         updateSwitchState(settingsTrueDarkMode, "settingsTrueDarkMode");
         updateSwitchState(settingPI, "refactorPI");
+        updateSwitchState(settingWarningMessage, "showConverterDevelopmentMessage");
 
         appendSpaceToSwitches(findViewById(R.id.settingsUI));
 
@@ -156,6 +158,14 @@ public class SettingsActivity extends AppCompatActivity {
             dataManager.saveToJSONSettings("refactorPI", isChecked, getMainActivityContext());
             try {
                 Log.i("Settings", "refactorPI=" + dataManager.getJSONSettingsData("refactorPI", getMainActivityContext()).getString("value"));
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        settingWarningMessage.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            try {
+                final boolean showMessage = Boolean.parseBoolean(dataManager.getJSONSettingsData("showConverterDevelopmentMessage", getMainActivityContext()).getString("value"));
+                dataManager.updateValuesInJSONSettingsData("showConverterDevelopmentMessage", "value", String.valueOf(!showMessage), getMainActivityContext());
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -1658,6 +1668,9 @@ public class SettingsActivity extends AppCompatActivity {
         TextView settingsDecimalPointsTitle = findViewById(R.id.settings_decimalpoints_title);
         TextView settingsDecimalPointsText = findViewById(R.id.settings_decimalpoints_text);
 
+        TextView settingsConverterDevelopmentMessage = findViewById(R.id.settingsConverterDevelopmentMessage);
+        TextView settingsConverterDevelopmentMessageText = findViewById(R.id.settingsConverterDevelopmentMessageText);
+
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsHelpButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
@@ -1697,6 +1710,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsHistoryModeText.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsDecimalPointsTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDecimalPointsText.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsConverterDevelopmentMessage.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsConverterDevelopmentMessageText.setTextColor(ContextCompat.getColor(this, textColor));
     }
 
     /**

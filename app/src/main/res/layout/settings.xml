@@ -303,10 +303,28 @@
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
-            <TextView
+            <Switch
+                android:id="@+id/settingsConverterDevelopmentMessage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="" />
+                android:layout_height="80dp"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/settingsConverterDevelopmentMessage"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:thumb="@drawable/settings_switch_thumb"
+                android:track="@drawable/settings_switch_track"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <TextView
+                android:id="@+id/settingsConverterDevelopmentMessageText"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui2"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/settingsConverterDevelopmentMessage_text"
+                android:textColor="@color/colorBTNForegroundAccent" />
 
             <TextView
                 android:id="@+id/settings_decimalpoints_title"

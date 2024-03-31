@@ -11,7 +11,7 @@
     <string name="radian">Radians (Rad)</string>
 
 
-    <string name="releaseDate">Release Date: 17.02.24 – 6:00 PM</string>
+    <string name="releaseDate">Release Date: N/A</string>
     <string name="patchnotesOverviewText">The latest RechenMax version brings exciting improvements and features. Automatic scrolling makes it easier to navigate large calculations, while the rounding precision has been increased to the eleventh decimal place for more precise decimal numbers. History has been optimized to effortlessly restore previous calculations and review past tasks. In trigonometric tasks, advanced functions for sine, cosine and tangent in degrees and radians are available. Inverse trigonometric functions (sin⁻¹, cos⁻¹, tan⁻¹) as well as hyperbolic functions such as sinh(x), cosh(x) and tanh(x) are now also available. Manual notation entry provides additional flexibility when creating and calculating complex expressions. The RechnenMax now supports the use of the mathematical constant PI (π) for precise circle calculations. With the flexible support of degrees and radians, you can switch between the two units of measurement as needed. Brackets handling has been optimized to ensure error-free processing of mathematical or logical expressions. The software automatically detects and adds missing closing brackets, further simplifying expression entry. In history, long-pressing on an entry allows the invoice to be automatically copied to the clipboard, while short-pressing pastes the invoice directly into the calculator. This release also fixes important bugs, including display and factorial calculation issues, as well as optimized result formatting for more accurate display.</string>
     <string name="overview">Overview</string>
     <string name="newFunctions">New functions</string>
@@ -19,7 +19,7 @@
     <string name="systemRequirement">System requirements</string>
     <string name="dontShowThisTextAgain">Don\'t show this text again</string>
     <string name="understood">Understood</string>
-    <string name="copyright">Creator: Max Lemberg Copyright: © 2023 Max Lemberg. All rights reserved. License: This product is licensed under the Apache 2.0 License. Version: 1.6.3</string>
+    <string name="copyright">Creator: Max Lemberg Copyright: © 2024 Max Lemberg. All rights reserved. License: This product is licensed under the Apache 2.0 License. Version: 1.6.3</string>
 
     <string name="calculationAreas">Calculation areas</string>
     <string name="calculationArea">1: This area (calculation area) displays the calculation you entered. You can also copy the contents of the area by long-pressing the area. 2: The result of the calculation carried out is displayed in this area (result area). You can also copy the contents of the area by long-pressing the area.</string>
@@ -202,7 +202,8 @@
     <string name="sendReportFillAllBoxes">First, fill in all fields!</string>
     <string name="reportTitleHint">Provide a suitable title</string>
     <string name="reportDescriptionHint">Now, describe the error in detail.\n\nNote that the more detailed the error description, the sooner it can be fixed.</string>
-
+    <string name="report">Report Error</string>
+    <string name="reportNoEmailClient">No email application is installed...</string>
 
     <string name="convertAngle">Angle</string>
     <string name="convertArea">Area</string>
@@ -224,7 +225,10 @@
     <string name="convertTitle">Converter</string>
     <string name="convertNull">0.00</string>
 
-    <string name="convertMessage">Please note that the converter is still in development and may produce inaccurate results.</string>
+    <string name="convertMessage">Please note that the converter is still in development and may produce inaccurate results. You can report an error by clicking on the flag at the top right in the settings if you have found one.</string>
+
+    <string name="settingsConverterDevelopmentMessage">Warning Message</string>
+    <string name="settingsConverterDevelopmentMessage_text">With this, you can configure whether you want to see the warning message each time it appears when starting the converter, to ensure that you are informed about potential risks.</string>
 
     <string name="convertDeg">Degrees (Deg)</string>
     <string name="convertRad">Radians (Rad)</string>
