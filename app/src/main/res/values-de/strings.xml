@@ -122,8 +122,8 @@
     <string name="patchnotes44">"RechenMax sendet täglich auch einen Tipp, der hilfreiche Hinweise oder Hintergrundinformationen enthält. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist."</string>
     <string name="patchnotes45">"Hilfefunktion"</string>
     <string name="patchnotes46">"Es kam vor, dass nach dem Zurückkehren von der Hilfefunktion ein Fehler angezeigt wurde. "</string>
-    <string name="patchnotes47">Hilfeknopf</string>
-    <string name="patchnotes48">Der Hilfeknopf wurde in den Einstellungen nicht aktualisiert, wenn der Echte Dunkelmodus geändert wurde.\n</string>
+    <!--<string name="patchnotes47">Hilfeknopf</string>-->
+    <!--<string name="patchnotes48">Der Hilfeknopf wurde in den Einstellungen nicht aktualisiert, wenn der Echte Dunkelmodus geändert wurde.\n</string>-->
     <string name="patchnotes49">Anzeigen der Berechnungsbereiche</string>
     <string name="patchnotes50">Es konnte vorkommen, dass die Berechnungsbereiche unter bestimmten Umständen nicht oder nur teilweise angezeigt wurden.\n</string>
     <string name="patchnotes51">Berechnen der Fakultät</string>
@@ -183,9 +183,12 @@
     <string name="sendReportThankYou">Vielen Dank. Der Fehler wird so schnell wie möglich behoben.</string>
     <string name="sendReportChoose">Wähle eine Anwendung zum Senden aus</string>
     <string name="sendReportFillAllBoxes">Fülle zuerst alle Felder aus!</string>
-    <string name="reportTitleHint">Gib einen geeigneten Titel an</string>
-    <string name="reportDescriptionHint">Beschreibe nun den Fehler ausführlich.\n\nBeachte dabei, dass je ausführlicher der Fehler beschrieben wurde, desto eher er behoben werden kann.</string>
-    <string name="report">Fehler Melden</string>
+
+    <string name="reportNameInfo">Gib einen oder deinen Namen an, damit man dich personalisiert ansprechen kann. (Optional)</string>
+    <string name="reportTitleInfo">Gib bitte einen geeigneten Titel für den Fehler an. Dies kann entweder eine kurze Beschreibung oder ein Stichwort sein.</string>
+    <string name="reportHint">Gib hier den Text ein ...</string>
+
+    <string name="reportDescriptionInfo">Beschreibe nun den Fehler ausführlich.\nBeachte dabei, dass je ausführlicher der Fehler beschrieben wurde, desto eher er behoben werden kann.</string>
     <string name="reportNoEmailClient">Es ist keine Email-Anwendung installiert...</string>
 
     <string name="convertAngle">Winkel</string>

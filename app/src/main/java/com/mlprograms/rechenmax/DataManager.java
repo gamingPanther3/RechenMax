@@ -28,9 +28,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * DataManager
@@ -75,6 +79,7 @@ import java.util.Map;
 //  | refactorPI                       | true / false                     | MainActivity                         |
 //  | historyMode                      | single / multiple                | MainActivity                         |
 //  | showConverterDevelopmentMessage  | true / false                     | ConvertActivity                      |
+//  | reportName                       | name of person who reported      | ConvertActivity                      |
 //  | convertMode                      | Winkel
 //                                       Fläche
 //                                       Speicher
@@ -114,7 +119,7 @@ public class DataManager {
 
     // Define the names of the files
     private static final String JSON_FILE = "settings.json";
-    private static final String HISTORY_FILE = "history.json";
+    static final String HISTORY_FILE = "history.json";
     private static final String REPORT_FILE = "report_bugs.json";
 
     /**
@@ -409,6 +414,7 @@ public class DataManager {
             initializeSetting("convertMode", "Entfernung", applicationContext);
             initializeSetting("numberOfDecimals", "2", applicationContext);
             initializeSetting("showConverterDevelopmentMessage", "true", applicationContext);
+            initializeSetting("reportName", "", applicationContext);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

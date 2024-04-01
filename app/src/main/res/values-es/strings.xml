@@ -132,8 +132,8 @@
     <string name="patchnotes44">Puedes iniciar sesión en la aplicación si deseas sincronizar tus cálculos a través de dispositivos. Esto permite el acceso a tu historial en múltiples dispositivos.  Además, ten en cuenta que esta función solo está disponible a partir de API 33 (Android 13).\n</string>
     <string name="patchnotes45">Registro de actividad</string>
     <string name="patchnotes46">La aplicación almacena tus cálculos, incluso si cierras la aplicación. Si quieres borrar tu historial, puedes hacerlo en la configuración.\n</string>
-    <string name="patchnotes47">Modo oscuro</string>
-    <string name="patchnotes48">Se implementó el modo oscuro real. Esto significa que los negros se vuelven aún más intensos y los blancos se atenúan ligeramente.\n</string>
+    <!--<string name="patchnotes47">Modo oscuro</string>-->
+    <!--<string name="patchnotes48">Se implementó el modo oscuro real. Esto significa que los negros se vuelven aún más intensos y los blancos se atenúan ligeramente.\n</string>-->
     <string name="patchnotes49">Notas de lanzamiento</string>
     <string name="patchnotes50">En cada nueva versión de la aplicación, se te informará sobre las novedades.\n</string>
     <string name="patchnotes51">Cálculo del factorial</string>
@@ -199,10 +199,12 @@
     <string name="sendReportThankYou">Gracias. El error se corregirá lo antes posible.</string>
     <string name="sendReportChoose">Elige una aplicación para enviar</string>
     <string name="sendReportFillAllBoxes">¡Primero, completa todos los campos!</string>
-    <string name="reportTitleHint">Proporciona un título adecuado</string>
-    <string name="reportDescriptionHint">Ahora, describe el error con detalle.\n\nTen en cuenta que cuanto más detallada sea la descripción del error, más rápido se podrá corregir. </string>
-    <string name="report">Informar de un error</string>
-    <string name="reportNoEmailClient">No hay ninguna aplicación de correo electrónico instalada...</string>
+
+    <string name="reportNameInfo">Por favor, proporciona tu nombre o un alias preferido para una comunicación personalizada. (Opcional)</string>
+    <string name="reportTitleInfo">Proporciona un título adecuado para el problema. Esto puede ser una breve descripción o una palabra clave.</string>
+    <string name="reportHint">Ingresa el texto aquí...</string>
+    <string name="reportDescriptionInfo">Ahora, describe detalladamente el problema. \nTen en cuenta que cuanto más detallada sea la descripción, más probable será su resolución.</string>
+    <string name="reportNoEmailClient">No hay aplicación de correo electrónico instalada...</string>
 
     <string name="convertAngle">Ángulo</string>
     <string name="convertArea">Área</string>

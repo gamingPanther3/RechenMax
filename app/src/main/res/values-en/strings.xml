@@ -132,8 +132,8 @@
     <string name="patchnotes44">RechenMax also sends a Hint every day that contains helpful hints or background information. Also, keep in mind that this feature is only available starting from API 33 (Android 13).\n</string>
     <string name="patchnotes45">Help function</string>
     <string name="patchnotes46">"It happened that after returning from the help function, an error was displayed.\n</string>
-    <string name="patchnotes47">Help button</string>
-    <string name="patchnotes48">The help button was not updated in Settings when changing True Dark Mode.\n</string>
+    <!--<string name="patchnotes47">Help button</string>-->
+    <!--<string name="patchnotes48">The help button was not updated in Settings when changing True Dark Mode.\n</string>-->
     <string name="patchnotes49">Show the calculation areas</string>
     <string name="patchnotes50">It could happen that under certain circumstances the calculation areas were not displayed or were only partially displayed.\n</string>
     <string name="patchnotes51">Calculate the factorial</string>
@@ -200,10 +200,13 @@
     <string name="sendReportThankYou">Thank you. The error will be fixed as soon as possible.</string>
     <string name="sendReportChoose">Choose an application to send from</string>
     <string name="sendReportFillAllBoxes">First, fill in all fields!</string>
-    <string name="reportTitleHint">Provide a suitable title</string>
-    <string name="reportDescriptionHint">Now, describe the error in detail.\n\nNote that the more detailed the error description, the sooner it can be fixed.</string>
-    <string name="report">Report Error</string>
-    <string name="reportNoEmailClient">No email application is installed...</string>
+
+    <string name="reportNameInfo">Please provide your name or a preferred alias for personalized communication. (Optional)</string>
+    <string name="reportTitleInfo">Please provide a suitable title for the issue. This can be either a brief description or a keyword.</string>
+    <string name="reportHint">Enter text here...</string>
+    <string name="reportDescriptionInfo">Now, describe the issue in detail. \nPlease note that the more detailed the description, the more likely it can be resolved.</string>
+    <string name="reportNoEmailClient">No email application installed...</string>
+
 
     <string name="convertAngle">Angle</string>
     <string name="convertArea">Area</string>

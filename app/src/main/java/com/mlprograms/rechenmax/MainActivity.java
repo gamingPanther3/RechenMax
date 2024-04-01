@@ -20,6 +20,7 @@ import static com.mlprograms.rechenmax.CalculatorEngine.fixExpression;
 import static com.mlprograms.rechenmax.CalculatorEngine.isOperator;
 import static com.mlprograms.rechenmax.CalculatorEngine.isStandardOperator;
 import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
+import static com.mlprograms.rechenmax.DataManager.HISTORY_FILE;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
@@ -55,12 +56,24 @@ import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -3115,9 +3128,14 @@ public class MainActivity extends AppCompatActivity {
         if (!string.isEmpty()) {
             string = string.replace(" ", "");
             for (int i = 0; i < string.length(); i++) {
-                if(String.valueOf(string.charAt(i)).equals("³") && String.valueOf(string.charAt(i + 1)).equals("√")) {
-                    stringBuilder.append(string.charAt(i));
-                    continue;
+                if(i + 1 < string.length()) {
+                    if(String.valueOf(string.charAt(i)).equals("³") && String.valueOf(string.charAt(i + 1)).equals("√")) {
+                        stringBuilder.append(string.charAt(i));
+                        continue;
+                    } else if(String.valueOf(string.charAt(i)).equals("√") && String.valueOf(string.charAt(i + 1)).equals("(")) {
+                        stringBuilder.append(string.charAt(i));
+                        continue;
+                    }
                 }
 
                 if (symbols.indexOf(string.charAt(i)) != -1) {
@@ -3157,6 +3175,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void Calculate() {
         addSpaceToOperators(getCalculateText());
+        final String calculation = getCalculateText();
+        final String result = getResultText();
 
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
@@ -3259,6 +3279,12 @@ public class MainActivity extends AppCompatActivity {
 
         formatResultTextAfterType();
         adjustTextSize();
+
+        if(isInvalidInput(getResultText())) {
+            setCalculateText(calculation);
+            setResultText(result);
+            return;
+        }
 
         if(!isNumber(getCalculateText()) && !getCalculateText().replace("=", "").replace(" ", "").equals("π")
             && !isInvalidInput(getResultText())) {
@@ -3375,27 +3401,27 @@ public class MainActivity extends AppCompatActivity {
 
             //System.out.println(dataManager.getAllData(getApplicationContext()).toString());
 
-            try {
-                Log.i("Calculate", "historyTextViewNumber: " + dataManager.getHistoryData("historyTextViewNumber", context1).getString("value"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+            //try {
+            //    Log.i("Calculate", "historyTextViewNumber: " + dataManager.getHistoryData("historyTextViewNumber", context1).getString("value"));
+            //} catch (JSONException e) {
+            //    throw new RuntimeException(e);
+            //}
         })).start();
     }
 
 
     private void addToHistory(String input) {
-        input = fixExpression(input.replace(" ", "").replace("=", ""));
+        if(!isInvalidInput(input)) {
+            input = fixExpression(input.replace(" ", "").replace("=", ""));
+        }
 
         // Code snippet to save calculation to history
         String finalInput = input;
         new Thread(() -> runOnUiThread(() -> {
             try {
-                final String value;
                 final int old_value;
                 old_value = Integer.parseInt(dataManager.getHistoryData("historyTextViewNumber", getApplicationContext()).getString("value"));
                 final int new_value = old_value + 1;
-                value = dataManager.getHistoryData("historyTextViewNumber", getApplicationContext()).getString("value");
 
                 dataManager.saveToHistory("historyTextViewNumber", Integer.toString(new_value), getApplicationContext());
                 String calculate_text = finalInput;
@@ -3408,7 +3434,7 @@ public class MainActivity extends AppCompatActivity {
                     calculate_text = calculate_text + "=";
                 }
                 dataManager.saveToJSONSettings(String.valueOf(old_value + 1), addSpaceToOperators(balanceParentheses(calculate_text)), getApplicationContext());
-                Log.i("Calculate", "historyTextViewNumber: " + dataManager.getHistoryData("historyTextViewNumber", getApplicationContext()).getString("value"));
+                //Log.i("Calculate", "historyTextViewNumber: " + dataManager.getHistoryData("historyTextViewNumber", getApplicationContext()).getString("value"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -3421,24 +3447,42 @@ public class MainActivity extends AppCompatActivity {
      * @param text The text to be checked. This should be a string containing the text input from the user or the result of a calculation.
      * @return Returns true if the text is invalid (contains "Ungültige Eingabe", "Unendlich", "Syntax Fehler", or "Domainfehler"), and false otherwise.
      */
-    static boolean isInvalidInput(String text) {
-        return  text.contains(String.valueOf(R.string.errorMessage1))  ||
-                text.contains(String.valueOf(R.string.errorMessage2))  ||
-                text.contains(String.valueOf(R.string.errorMessage3))  ||
-                text.contains(String.valueOf(R.string.errorMessage4))  ||
-                text.contains(String.valueOf(R.string.errorMessage5))  ||
-                text.contains(String.valueOf(R.string.errorMessage6))  ||
-                text.contains(String.valueOf(R.string.errorMessage7))  ||
-                text.contains(String.valueOf(R.string.errorMessage8))  ||
-                text.contains(String.valueOf(R.string.errorMessage9))  ||
-                text.contains(String.valueOf(R.string.errorMessage10)) ||
-                text.contains(String.valueOf(R.string.errorMessage11)) ||
-                text.contains(String.valueOf(R.string.errorMessage12)) ||
-                text.contains(String.valueOf(R.string.errorMessage13)) ||
-                text.contains(String.valueOf(R.string.errorMessage14)) ||
-                text.contains(String.valueOf(R.string.errorMessage15)) ||
-                text.contains(String.valueOf(R.string.errorMessage16)) ||
-                text.contains(String.valueOf(R.string.errorMessage17));
+    public boolean isInvalidInput(String text) {
+        return  text.equals(getString(R.string.errorMessage1))  ||
+                text.equals(getString(R.string.errorMessage2))  ||
+                text.equals(getString(R.string.errorMessage3))  ||
+                text.equals(getString(R.string.errorMessage4))  ||
+                text.equals(getString(R.string.errorMessage5))  ||
+                text.equals(getString(R.string.errorMessage6))  ||
+                text.equals(getString(R.string.errorMessage7))  ||
+                text.equals(getString(R.string.errorMessage8))  ||
+                text.equals(getString(R.string.errorMessage9))  ||
+                text.equals(getString(R.string.errorMessage10)) ||
+                text.equals(getString(R.string.errorMessage11)) ||
+                text.equals(getString(R.string.errorMessage12)) ||
+                text.equals(getString(R.string.errorMessage13)) ||
+                text.equals(getString(R.string.errorMessage14)) ||
+                text.equals(getString(R.string.errorMessage15)) ||
+                text.equals(getString(R.string.errorMessage16)) ||
+                text.equals(getString(R.string.errorMessage17)) ||
+
+                text.contains(getString(R.string.errorMessage1))  ||
+                text.contains(getString(R.string.errorMessage2))  ||
+                text.contains(getString(R.string.errorMessage3))  ||
+                text.contains(getString(R.string.errorMessage4))  ||
+                text.contains(getString(R.string.errorMessage5))  ||
+                text.contains(getString(R.string.errorMessage6))  ||
+                text.contains(getString(R.string.errorMessage7))  ||
+                text.contains(getString(R.string.errorMessage8))  ||
+                text.contains(getString(R.string.errorMessage9))  ||
+                text.contains(getString(R.string.errorMessage10)) ||
+                text.contains(getString(R.string.errorMessage11)) ||
+                text.contains(getString(R.string.errorMessage12)) ||
+                text.contains(getString(R.string.errorMessage13)) ||
+                text.contains(getString(R.string.errorMessage14)) ||
+                text.contains(getString(R.string.errorMessage15)) ||
+                text.contains(getString(R.string.errorMessage16)) ||
+                text.contains(getString(R.string.errorMessage17));
     }
 
     /**

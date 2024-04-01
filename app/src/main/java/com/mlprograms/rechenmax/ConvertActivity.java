@@ -32,11 +32,9 @@ import static com.mlprograms.rechenmax.Converter.Category.VOLTAGE;
 import static com.mlprograms.rechenmax.Converter.Category.VOLUME;
 import static com.mlprograms.rechenmax.Converter.Category.WORK;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.*;
-import static com.mlprograms.rechenmax.MainActivity.isInvalidInput;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -444,7 +442,51 @@ public class ConvertActivity extends AppCompatActivity {
         });
     }
 
-    public static String formatResultTextAfterType(String text) {
+    /**
+     * This method checks if the input text is invalid.
+     *
+     * @param text The text to be checked. This should be a string containing the text input from the user or the result of a calculation.
+     * @return Returns true if the text is invalid (contains "Ungültige Eingabe", "Unendlich", "Syntax Fehler", or "Domainfehler"), and false otherwise.
+     */
+    public boolean isInvalidInput(String text) {
+        return  text.equals(getString(R.string.errorMessage1))  ||
+                text.equals(getString(R.string.errorMessage2))  ||
+                text.equals(getString(R.string.errorMessage3))  ||
+                text.equals(getString(R.string.errorMessage4))  ||
+                text.equals(getString(R.string.errorMessage5))  ||
+                text.equals(getString(R.string.errorMessage6))  ||
+                text.equals(getString(R.string.errorMessage7))  ||
+                text.equals(getString(R.string.errorMessage8))  ||
+                text.equals(getString(R.string.errorMessage9))  ||
+                text.equals(getString(R.string.errorMessage10)) ||
+                text.equals(getString(R.string.errorMessage11)) ||
+                text.equals(getString(R.string.errorMessage12)) ||
+                text.equals(getString(R.string.errorMessage13)) ||
+                text.equals(getString(R.string.errorMessage14)) ||
+                text.equals(getString(R.string.errorMessage15)) ||
+                text.equals(getString(R.string.errorMessage16)) ||
+                text.equals(getString(R.string.errorMessage17)) ||
+
+                text.contains(getString(R.string.errorMessage1))  ||
+                text.contains(getString(R.string.errorMessage2))  ||
+                text.contains(getString(R.string.errorMessage3))  ||
+                text.contains(getString(R.string.errorMessage4))  ||
+                text.contains(getString(R.string.errorMessage5))  ||
+                text.contains(getString(R.string.errorMessage6))  ||
+                text.contains(getString(R.string.errorMessage7))  ||
+                text.contains(getString(R.string.errorMessage8))  ||
+                text.contains(getString(R.string.errorMessage9))  ||
+                text.contains(getString(R.string.errorMessage10)) ||
+                text.contains(getString(R.string.errorMessage11)) ||
+                text.contains(getString(R.string.errorMessage12)) ||
+                text.contains(getString(R.string.errorMessage13)) ||
+                text.contains(getString(R.string.errorMessage14)) ||
+                text.contains(getString(R.string.errorMessage15)) ||
+                text.contains(getString(R.string.errorMessage16)) ||
+                text.contains(getString(R.string.errorMessage17));
+    }
+
+    public String formatResultTextAfterType(String text) {
         String[] newText2 = text.split(" ");
         String newText = newText2[0].replace(".", ",");
 

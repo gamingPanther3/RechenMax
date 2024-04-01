@@ -10,4 +10,14 @@
     <item name="history_empty_textview" type="id" />
     <item name="history_load_textview" type="id" />
     <item name="line" type="id" />
+    <item name="okay_button" type="id" />
+    <item name="checkBox" type="id" />
+    <item name="releaseNotesAPIVersion" type="id" />
+    <item name="releaseNotesAPIVersionTitle" type="id" />
+    <item name="releaseNotesFutureFeaturesText" type="id" />
+    <item name="releaseNotesFutureFeaturesSubtitle" type="id" />
+    <item name="releaseNotesFutureFeaturesText_2" type="id" />
+    <item name="releaseNotesFutureFeaturesSubtitle_2" type="id" />
+    <item name="releaseNotesFutureFeaturesText_1" type="id" />
+    <item name="releaseNotesFutureFeaturesSubtitle_1" type="id" />
 </resources>

@@ -114,8 +114,8 @@
     <string name="patchnotes44">RechenMax envoie également chaque jour un conseil contenant des conseils utiles ou des informations générales.  De plus, gardez à l\'esprit que cette fonctionnalité n\'est disponible qu\'à partir de l\'API 33 (Android 13).</string>
     <string name="patchnotes45">Fonction d\'aide</string>
     <string name="patchnotes46">Il est arrivé qu\'après le retour de la fonction d\'aide, une erreur s\'affiche.</string>
-    <string name="patchnotes47">Bouton Aide</string>
-    <string name="patchnotes48">Le bouton d\'aide n\'a pas été mis à jour dans les paramètres lors du changement du mode True Dark.</string>
+    <!--<string name="patchnotes47">Bouton Aide</string>-->
+    <!--<string name="patchnotes48">Le bouton d\'aide n\'a pas été mis à jour dans les paramètres lors du changement du mode True Dark.</string>-->
     <string name="patchnotes49">Visualiser les zones de calcul</string>
     <string name="patchnotes50">Il pouvait arriver que dans certaines circonstances les zones de calcul ne soient pas affichées ou ne le soient que partiellement.</string>
     <string name="patchnotes51">Calculer la factorielle</string>
@@ -179,9 +179,11 @@
     <string name="sendReportThankYou">Merci. L\'erreur sera corrigée dès que possible.</string>
     <string name="sendReportChoose">Choisissez une application pour envoyer</string>
     <string name="sendReportFillAllBoxes">Tout d\'abord, remplissez tous les champs !</string>
-    <string name="reportTitleHint">Indiquez un titre approprié</string>
-    <string name="reportDescriptionHint">Maintenant, décrivez l\'erreur en détail.\n\nNotez que plus la description de l\'erreur est détaillée, plus elle peut être corrigée rapidement.</string>
-    <string name="report">Signaler une erreur</string>
+
+    <string name="reportNameInfo">Veuillez fournir votre nom ou un alias préféré pour une communication personnalisée. (Optionnel)</string>
+    <string name="reportTitleInfo">Veuillez fournir un titre approprié pour le problème. Il peut s\'agir soit d\'une brève description, soit d\'un mot-clé.</string>
+    <string name="reportHint">Entrez le texte ici...</string>
+    <string name="reportDescriptionInfo">Désormais, veuillez décrire le problème en détail. \nVeuillez noter que plus la description est détaillée, plus il est probable qu\'elle puisse être résolue.</string>
     <string name="reportNoEmailClient">Aucune application de messagerie n\'est installée...</string>
 
     <string name="convertAngle">Angle</string>

@@ -50,6 +50,43 @@
         android:layout_marginTop="40sp"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/reportNameInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="17sp"
+            android:layout_margin="10sp"
+            android:backgroundTint="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/reportNameInfo"
+            android:textColor="@color/colorBTNForegroundAccent" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/sendReportName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/reportHint"
+                android:textSize="25sp"/>
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/reportTitleInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="17sp"
+            android:layout_margin="10sp"
+            android:backgroundTint="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/reportTitleInfo"
+            android:textColor="@color/colorBTNForegroundAccent" />
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -59,9 +96,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:hint="@string/reportTitleHint"
+                android:hint="@string/reportHint"
                 android:textSize="25sp"/>
         </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/reportDescriptionInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="17sp"
+            android:layout_margin="10sp"
+            android:backgroundTint="@color/white"
+            android:gravity="center_vertical"
+            android:text="@string/reportDescriptionInfo"
+            android:textColor="@color/colorBTNForegroundAccent" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -73,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="top"
-                android:hint="@string/reportDescriptionHint"
+                android:hint="@string/reportHint"
                 android:maxHeight="400dp" />
         </ScrollView>
 
@@ -81,7 +130,10 @@
             android:id="@+id/sendReportButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
             android:textSize="25sp"
             android:text="@string/sendReport"
             android:layout_gravity="bottom|center_horizontal"/>

@@ -57,13 +57,40 @@ public class ReportActivity extends AppCompatActivity {
         sendReportButton.setOnClickListener(v -> {
             final EditText title = findViewById(R.id.sendReportTitle);
             final EditText message = findViewById(R.id.sendReportMessage);
+            final EditText name = findViewById(R.id.sendReportName);
 
             if(title.getText().toString().isEmpty() || message.getText().toString().isEmpty()) {
                 showToastLong(getString(R.string.sendReportFillAllBoxes), this);
             } else {
                 try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    Uri data = Uri.parse("mailto:ml.programs.service@gmail.com?subject=" + title.getText().toString() + "&body=" + message.getText().toString());
+                    Uri data;
+                    if(name.getText().toString().isEmpty()) {
+                        data = Uri.parse(
+                                "mailto:ml.programs.service@gmail.com?subject=" +
+                                        title.getText().toString() +
+                                        "&body=" +
+                                        message.getText().toString()
+                        );
+                    } else {
+                        dataManager.updateValuesInJSONSettingsData(
+                                "reportName",
+                                "value",
+                                name.getText().toString(),
+                                getMainActivityContext()
+                        );
+
+                        data = Uri.parse(
+                                "mailto:ml.programs.service@gmail.com?subject=" +
+                                title.getText().toString()
+                                + "&body=" +
+                                message.getText().toString() +
+                                "\n\n\n\n" +
+                                getString(R.string.reportSendGreet)
+                                + "\n" +
+                                name.getText().toString()
+                        );
+                    }
                     intent.setData(data);
                     startActivity(intent);
                     isSendReport = true;

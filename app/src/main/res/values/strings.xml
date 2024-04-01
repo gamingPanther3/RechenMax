@@ -191,8 +191,8 @@
     <string name="patchnotes44">RechenMax sendet täglich auch einen Tipp, der hilfreiche Hinweise oder Hintergrundinformationen enthält. Beachte aber, dass diese Funktion nur ab API 33 (Android 13) verfügbar ist.</string>
     <string name="patchnotes45">"Hilfefunktion"</string>
     <string name="patchnotes46">"Es kam vor, dass nach dem Zurückkehren von der Hilfefunktion ein Fehler angezeigt wurde. "</string>
-    <string name="patchnotes47">Hilfeknopf</string>
-    <string name="patchnotes48">Der Hilfeknopf wurde in den Einstellungen nicht aktualisiert, wenn der Echte Dunkelmodus geändert wurde.\n</string>
+    <!--<string name="patchnotes47">Hilfeknopf</string>-->
+    <!--<string name="patchnotes48">Der Hilfeknopf wurde in den Einstellungen nicht aktualisiert, wenn der Echte Dunkelmodus geändert wurde.\n</string>-->
     <string name="patchnotes49">Anzeigen der Berechnungsbereiche</string>
     <string name="patchnotes50">Es konnte vorkommen, dass die Berechnungsbereiche unter bestimmten Umständen nicht oder nur teilweise angezeigt wurden.\n</string>
     <string name="patchnotes51">Berechnen der Fakultät</string>
@@ -203,6 +203,20 @@
     <string name="patchnotes56">Das Problem mit der fehlerhaften Ergebnisformatierung wurde behoben, um eine präzisere und konsistentere Anzeige zu gewährleisten.\n</string>
     <string name="patchnotes57">\nSprachen</string>
     <string name="patchnotes58">Der Taschenrechner ist nun in Deutsch, Englisch, Spanisch und Französisch verfügbar.</string>
+
+    <string name="patchnotes59" translatable="false">\nUmrechner</string>
+    <string name="patchnotes60" translatable="false">Mit dem neuen Umrechner kann man jetzt sehr Effizent eine Einheit in eine andere Umrechnen.</string>
+    <string name="patchnotes61" translatable="false">\nFehler Melden</string>
+    <string name="patchnotes62" translatable="false">Solltest du einen Fehler gefunden haben, kannst du ihn, wenn du in den Einstellungen auf die Flagge oben rechts klickst, melden.</string>
+    <string name="patchnotes63" translatable="false">\nVeresserter Verlauf</string>
+    <string name="patchnotes64" translatable="false">Der Verlauf wurde nun so angepasst, dass jetzt unter jeder Berechnung Notizen hinzugefügt werden können. Die Berechnung und das Ergebnis werden nun separat untereinander angezeigt. Darüber hinaus können durch langes Drücken auf eine Berechnung oder das Ergebnis deren Texte in die Zwischenablage kopiert werden. Durch einen Doppelklick auf einen beliebigen Bereich kann die gesamte Aufgabe gelöscht werden.</string>
+    <string name="patchnotes65" translatable="false">\nNeue Icons</string>
+    <string name="patchnotes66" translatable="false">Alle Icons wurden gegen neue Ausgetauscht.</string>
+    <string name="patchnotes67" translatable="false">\n</string>
+    <string name="patchnotes68" translatable="false"></string>
+
+    <string name="historyResult" translatable="false">Ergebnis:</string>
+    <string name="historyCalculation" translatable="false">Berechnung:</string>
 
     <string name="systemRequirementsText">\nMinimale Android-Version: 10\nEmpfohlene Android-Version: 13 oder höher\nMaximale Android-Version: 14\n</string>
     <string name="dailyHints">Tägliche Tipps</string>
@@ -249,8 +263,13 @@
     <string name="sendReportThankYou">Vielen Dank. Der Fehler wird so schnell wie möglich behoben.</string>
     <string name="sendReportChoose">Wähle eine Anwendung zum Senden aus</string>
     <string name="sendReportFillAllBoxes">Fülle zuerst alle Felder aus!</string>
-    <string name="reportTitleHint">Gib einen geeigneten Titel an</string>
-    <string name="reportDescriptionHint">Beschreibe nun den Fehler ausführlich.\n\nBeachte dabei, dass je ausführlicher der Fehler beschrieben wurde, desto eher er behoben werden kann.</string>
+
+    <string name="reportNameInfo">Gib einen oder deinen Namen an, damit man dich personalisiert ansprechen kann. (Optional)</string>
+    <string name="reportTitleInfo">Gib bitte einen geeigneten Titel für den Fehler an. Dies kann entweder eine kurze Beschreibung oder ein Stichwort sein.</string>
+    <string name="reportHint">Gib hier den Text ein ...</string>
+    <string name="reportSendGreet">Mit freundlichen Grüßen</string>
+
+    <string name="reportDescriptionInfo">Beschreibe nun den Fehler ausführlich.\nBeachte dabei, dass je ausführlicher der Fehler beschrieben wurde, desto eher er behoben werden kann.</string>
     <string name="reportNoEmailClient">Es ist keine Email-Anwendung installiert...</string>
 
     <string name="help">Hife</string>
