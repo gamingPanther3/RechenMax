@@ -357,12 +357,12 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        Button helpButton = findViewById(R.id.help_button);
-        helpButton.setOnClickListener(v -> {
-            HelpActivity.setMainActivityContext(this);
-            Intent intent = new Intent(this, HelpActivity.class);
-            startActivity(intent);
-        });
+        //Button helpButton = findViewById(R.id.help_button);
+        //helpButton.setOnClickListener(v -> {
+        //    HelpActivity.setMainActivityContext(this);
+        //    Intent intent = new Intent(this, HelpActivity.class);
+        //    startActivity(intent);
+        //});
 
         Button reportButton = findViewById(R.id.report_button);
         reportButton.setOnClickListener(v -> {
@@ -1001,7 +1001,7 @@ public class SettingsActivity extends AppCompatActivity {
      */
     @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables", "CutPasteId"})
     private void switchDisplayMode(int currentNightMode) {
-        Button helpButton = findViewById(R.id.help_button);
+        //Button helpButton = findViewById(R.id.help_button);
         Button backbutton = findViewById(R.id.report_return_button);
         Button reportButton = findViewById(R.id.report_button);
 
@@ -1034,9 +1034,9 @@ public class SettingsActivity extends AppCompatActivity {
                                 if (backbutton != null) {
                                     backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                                 }
-                                if (helpButton != null) {
-                                    helpButton.setForeground(getDrawable(R.drawable.help_light));
-                                }
+                                //if (helpButton != null) {
+                                //    helpButton.setForeground(getDrawable(R.drawable.help_light));
+                                //}
                                 if (reportButton != null) {
                                     reportButton.setForeground(getDrawable(R.drawable.report_light));
                                 }
@@ -1097,9 +1097,9 @@ public class SettingsActivity extends AppCompatActivity {
                                 if (backbutton != null) {
                                     backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                                 }
-                                if (helpButton != null) {
-                                    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
-                                }
+                                //if (helpButton != null) {
+                                //    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                                //}
                                 if (reportButton != null) {
                                     reportButton.setForeground(getDrawable(R.drawable.report_true_darkmode));
                                 }
@@ -1166,9 +1166,9 @@ public class SettingsActivity extends AppCompatActivity {
                             if (backbutton != null) {
                                 backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                             }
-                            if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.help_light));
-                            }
+                            //if (helpButton != null) {
+                            //    helpButton.setForeground(getDrawable(R.drawable.help_light));
+                            //}
                             if (reportButton != null) {
                                 reportButton.setForeground(getDrawable(R.drawable.report_light));
                             }
@@ -1240,9 +1240,9 @@ public class SettingsActivity extends AppCompatActivity {
                         if (backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back));
                         }
-                        if (helpButton != null) {
-                            helpButton.setForeground(getDrawable(R.drawable.help));
-                        }
+                        //if (helpButton != null) {
+                        //    helpButton.setForeground(getDrawable(R.drawable.help));
+                        //}
                         if (reportButton != null) {
                             reportButton.setForeground(getDrawable(R.drawable.report));
                         }
@@ -1313,9 +1313,9 @@ public class SettingsActivity extends AppCompatActivity {
                 if (backbutton != null) {
                     backbutton.setForeground(getDrawable(R.drawable.arrow_back));
                 }
-                if (helpButton != null) {
-                    helpButton.setForeground(getDrawable(R.drawable.help));
-                }
+                //if (helpButton != null) {
+                //    helpButton.setForeground(getDrawable(R.drawable.help));
+                //}
                 if (reportButton != null) {
                     reportButton.setForeground(getDrawable(R.drawable.report));
                 }
@@ -1397,9 +1397,9 @@ public class SettingsActivity extends AppCompatActivity {
                         if (backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                         }
-                        if (helpButton != null) {
-                            helpButton.setForeground(getDrawable(R.drawable.help_light));
-                        }
+                        //if (helpButton != null) {
+                        //    helpButton.setForeground(getDrawable(R.drawable.help_light));
+                        //}
                         if (reportButton != null) {
                             reportButton.setForeground(getDrawable(R.drawable.report_light));
                         }
@@ -1461,9 +1461,9 @@ public class SettingsActivity extends AppCompatActivity {
                         if (backbutton != null) {
                             backbutton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                         }
-                        if (helpButton != null) {
-                            helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
-                        }
+                        //if (helpButton != null) {
+                        //    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                        //}
                         if (reportButton != null) {
                             reportButton.setForeground(getDrawable(R.drawable.report_true_darkmode));
                         }
@@ -1531,9 +1531,9 @@ public class SettingsActivity extends AppCompatActivity {
                     if (backbutton != null) {
                         backbutton.setForeground(getDrawable(R.drawable.arrow_back_light));
                     }
-                    if (helpButton != null) {
-                        helpButton.setForeground(getDrawable(R.drawable.help_light));
-                    }
+                    //if (helpButton != null) {
+                    //    helpButton.setForeground(getDrawable(R.drawable.help_light));
+                    //}
                     if (reportButton != null) {
                         reportButton.setForeground(getDrawable(R.drawable.report_light));
                     }
@@ -1635,7 +1635,7 @@ public class SettingsActivity extends AppCompatActivity {
         ScrollView settingsScrollView = findViewById(R.id.settings_sroll_textview);
         LinearLayout settingsLayout = findViewById(R.id.settings_layout);
         Button settingsReturnButton = findViewById(R.id.report_return_button);
-        Button settingsHelpButton = findViewById(R.id.help_button);
+        //Button settingsHelpButton = findViewById(R.id.help_button);
         Button settingsReportButton = findViewById(R.id.report_button);
         TextView settingsTitle = findViewById(R.id.settings_title);
         TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
@@ -1673,7 +1673,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         settingsLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReturnButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
-        settingsHelpButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        //settingsHelpButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsReportButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsTitle.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));

@@ -129,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("showPatchNotes", true, getApplicationContext());
                     dataManager.saveToJSONSettings("old_version", currentValue, getApplicationContext());
                     dataManager.saveToJSONSettings("returnToCalculator", "true", getApplicationContext());
-                    HelpActivity.setMainActivityContext(this);
-                    startActivity(new Intent(this, HelpActivity.class));
+                    //HelpActivity.setMainActivityContext(this);
+                    //startActivity(new Intent(this, HelpActivity.class));
                 } else {
                     // Read values from DataManager
                     final JSONObject showPatchNotesData = dataManager.getJSONSettingsData("showPatchNotes", getApplicationContext());
@@ -2182,7 +2182,7 @@ public class MainActivity extends AppCompatActivity {
         TextView settingsButton = findViewById(R.id.settings_button);
         TextView convertButton = findViewById(R.id.convert_button);
         TextView scienceButton = findViewById(R.id.scientificButton);
-        TextView helpButton = findViewById(R.id.help_button);
+        //TextView helpButton = findViewById(R.id.help_button);
         Button shiftButton = findViewById(R.id.shift);
         int newColorBTNBackgroundAccent = 0;
         int newColorBTNForegroundAccent = 0;
@@ -2216,9 +2216,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_light));
                             }
-                            if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.help_light));
-                            }
+                            //if (helpButton != null) {
+                            //    helpButton.setForeground(getDrawable(R.drawable.help_light));
+                            //}
 
                             if (trueDarkMode.equals("true")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
@@ -2238,9 +2238,9 @@ public class MainActivity extends AppCompatActivity {
                                 if (shiftButton != null) {
                                     shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_true_darkmode));
                                 }
-                                if (helpButton != null) {
-                                    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
-                                }
+                                //if (helpButton != null) {
+                                //    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                                //}
                             } else if (trueDarkMode.equals("false")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
                                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
@@ -2264,9 +2264,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.compare_arrows));
                             }
-                            if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.help));
-                            }
+                            //if (helpButton != null) {
+                            //    helpButton.setForeground(getDrawable(R.drawable.help));
+                            //}
                             break;
                     }
                     break;
@@ -2288,9 +2288,9 @@ public class MainActivity extends AppCompatActivity {
                     if (shiftButton != null) {
                         shiftButton.setForeground(getDrawable(R.drawable.compare_arrows));
                     }
-                    if (helpButton != null) {
-                        helpButton.setForeground(getDrawable(R.drawable.help));
-                    }
+                    //if (helpButton != null) {
+                    //    helpButton.setForeground(getDrawable(R.drawable.help));
+                    //}
                     break;
                 case "Dunkelmodus":
                     dataManager = new DataManager(this);
@@ -2309,9 +2309,9 @@ public class MainActivity extends AppCompatActivity {
                     if (shiftButton != null) {
                         shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_light));
                     }
-                    if (helpButton != null) {
-                        helpButton.setForeground(getDrawable(R.drawable.help_light));
-                    }
+                    //if (helpButton != null) {
+                    //    helpButton.setForeground(getDrawable(R.drawable.help_light));
+                    //}
 
                     if (trueDarkMode.equals("false")) {
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
@@ -2335,9 +2335,9 @@ public class MainActivity extends AppCompatActivity {
                         if (shiftButton != null) {
                             shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_true_darkmode));
                         }
-                        if (helpButton != null) {
-                            helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
-                        }
+                        //if (helpButton != null) {
+                        //    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                        //}
                     }
                     break;
             }

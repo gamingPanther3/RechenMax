@@ -87,7 +87,7 @@ public class HelpActivity extends AppCompatActivity {
     private void switchDisplayMode(int currentNightMode) {
         // Global variables
         TextView returnButton = findViewById(R.id.help_return_button);
-        Button helpButton = findViewById(R.id.help_button);
+        //Button helpButton = findViewById(R.id.help_button);
 
         int newColorBTNBackgroundAccent = 0;
         int newColorBTNForegroundAccent = 0;
@@ -109,9 +109,9 @@ public class HelpActivity extends AppCompatActivity {
                             if (returnButton != null) {
                                 returnButton.setForeground(getDrawable(R.drawable.arrow_back_light));
                             }
-                            if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.arrow_back_light));
-                            }
+                            //if (helpButton != null) {
+                            //    helpButton.setForeground(getDrawable(R.drawable.arrow_back_light));
+                            //}
 
                             if (trueDarkMode.equals("true")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
@@ -119,9 +119,9 @@ public class HelpActivity extends AppCompatActivity {
                                 if (returnButton != null) {
                                     returnButton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                                 }
-                                if (helpButton != null) {
-                                    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
-                                }
+                                //if (helpButton != null) {
+                                //    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                                //}
 
                             } else if (trueDarkMode.equals("false")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
@@ -134,9 +134,9 @@ public class HelpActivity extends AppCompatActivity {
                             if (returnButton != null) {
                                 returnButton.setForeground(getDrawable(R.drawable.arrow_back));
                             }
-                            if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.help));
-                            }
+                            //if (helpButton != null) {
+                            //    helpButton.setForeground(getDrawable(R.drawable.help));
+                            //}
                             break;
                     }
                     break;
@@ -146,9 +146,9 @@ public class HelpActivity extends AppCompatActivity {
                     if (returnButton != null) {
                         returnButton.setForeground(getDrawable(R.drawable.arrow_back));
                     }
-                    if (helpButton != null) {
-                        helpButton.setForeground(getDrawable(R.drawable.help));
-                    }
+                    //if (helpButton != null) {
+                    //    helpButton.setForeground(getDrawable(R.drawable.help));
+                    //}
 
                     break;
                 case "Dunkelmodus":
@@ -156,9 +156,9 @@ public class HelpActivity extends AppCompatActivity {
                     if (returnButton != null) {
                         returnButton.setForeground(getDrawable(R.drawable.arrow_back_light));
                     }
-                    if (helpButton != null) {
-                        helpButton.setForeground(getDrawable(R.drawable.help_light));
-                    }
+                    //if (helpButton != null) {
+                    //    helpButton.setForeground(getDrawable(R.drawable.help_light));
+                    //}
 
                     if (trueDarkMode != null) {
                         if (trueDarkMode.equals("false")) {
@@ -171,9 +171,9 @@ public class HelpActivity extends AppCompatActivity {
                             if (returnButton != null) {
                                 returnButton.setForeground(getDrawable(R.drawable.arrow_back_true_darkmode));
                             }
-                            if (helpButton != null) {
-                                helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
-                            }
+                            //if (helpButton != null) {
+                            //    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
+                            //}
                         }
                     } else {
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.darkmode_black);

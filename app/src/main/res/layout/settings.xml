@@ -43,6 +43,7 @@
             android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform" />
 
+        <!--
         <Button
             android:id="@+id/help_button"
             android:layout_width="40dp"
@@ -56,6 +57,7 @@
             android:tag="help"
             android:tooltipText="@string/help"
             tools:ignore="RtlHardcoded" />
+        -->
 
         <Button
             android:id="@+id/report_button"
