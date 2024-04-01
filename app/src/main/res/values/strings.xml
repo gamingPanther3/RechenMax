@@ -215,8 +215,8 @@
     <string name="patchnotes67" translatable="false">\n</string>
     <string name="patchnotes68" translatable="false"></string>
 
-    <string name="historyResult" translatable="false">Ergebnis:</string>
-    <string name="historyCalculation" translatable="false">Berechnung:</string>
+    <string name="historyResult">Ergebnis:</string>
+    <string name="historyCalculation">Berechnung:</string>
 
     <string name="systemRequirementsText">\nMinimale Android-Version: 10\nEmpfohlene Android-Version: 13 oder höher\nMaximale Android-Version: 14\n</string>
     <string name="dailyHints">Tägliche Tipps</string>
@@ -267,12 +267,12 @@
     <string name="reportNameInfo">Gib einen oder deinen Namen an, damit man dich personalisiert ansprechen kann. (Optional)</string>
     <string name="reportTitleInfo">Gib bitte einen geeigneten Titel für den Fehler an. Dies kann entweder eine kurze Beschreibung oder ein Stichwort sein.</string>
     <string name="reportHint">Gib hier den Text ein ...</string>
-    <string name="reportSendGreet">Mit freundlichen Grüßen</string>
 
     <string name="reportDescriptionInfo">Beschreibe nun den Fehler ausführlich.\nBeachte dabei, dass je ausführlicher der Fehler beschrieben wurde, desto eher er behoben werden kann.</string>
     <string name="reportNoEmailClient">Es ist keine Email-Anwendung installiert...</string>
 
     <string name="help">Hife</string>
+    <string name="reportSendGreet">Mit freundlichen Grüßen</string>
     <string name="report">Fehler Melden</string>
     <string name="back">Zurück</string>
     <string name="notifications">Benachrichtigungen</string>

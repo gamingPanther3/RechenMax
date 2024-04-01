@@ -137,6 +137,9 @@
     <string name="settingsDecimalPoints">Nachkommastellen</string>
     <string name="settingsDecimalPointsText">Mit dieser Einstellung kannst du auswählen, wie viele Nachkommastellen in dem Umrechner angezeigt werden sollen. Beachte jedoch, dass eine höhere Anzahl von Nachkommastellen die Leistung beeinträchtigen kann.</string>
 
+    <string name="historyResult">Ergebnis:</string>
+    <string name="historyCalculation">Berechnung:</string>
+
     <string name="systemRequirementsText">\nMinimale Android-Version: 10\nEmpfohlene Android-Version: 13 oder höher\nMaximale Android-Version: 14\n</string>
     <string name="scientificMode">Wissenschaftlicher Modus</string>
     <string name="changeMode">Modus wechseln</string>
@@ -183,7 +186,8 @@
     <string name="sendReportThankYou">Vielen Dank. Der Fehler wird so schnell wie möglich behoben.</string>
     <string name="sendReportChoose">Wähle eine Anwendung zum Senden aus</string>
     <string name="sendReportFillAllBoxes">Fülle zuerst alle Felder aus!</string>
-
+    <string name="reportSendGreet">Mit freundlichen Grüßen</string>
+    <string name="report">Fehler Melden</string>
     <string name="reportNameInfo">Gib einen oder deinen Namen an, damit man dich personalisiert ansprechen kann. (Optional)</string>
     <string name="reportTitleInfo">Gib bitte einen geeigneten Titel für den Fehler an. Dies kann entweder eine kurze Beschreibung oder ein Stichwort sein.</string>
     <string name="reportHint">Gib hier den Text ein ...</string>

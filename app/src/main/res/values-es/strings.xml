@@ -147,6 +147,9 @@
     <string name="settingsDecimalPoints">Puntos Decimales</string>
     <string name="settingsDecimalPointsText">Con esta configuración, puedes elegir cuántos puntos decimales se mostrarán en el convertidor. Sin embargo, ten en cuenta que un mayor número de puntos decimales puede afectar el rendimiento.</string>
 
+    <string name="historyResult">Resultado:</string>
+    <string name="historyCalculation">Cálculo:</string>
+
     <string name="systemRequirementsText">\nVersión mínima de Android: 10\nVersión recomendada de Android: 13 o superior\nVersión máxima de Android: 14\n</string>
 
     <string name="dailyHints">Consejos diarios</string>
@@ -199,7 +202,8 @@
     <string name="sendReportThankYou">Gracias. El error se corregirá lo antes posible.</string>
     <string name="sendReportChoose">Elige una aplicación para enviar</string>
     <string name="sendReportFillAllBoxes">¡Primero, completa todos los campos!</string>
-
+    <string name="report">Informar error</string>
+    <string name="reportSendGreet">Atentamente</string>
     <string name="reportNameInfo">Por favor, proporciona tu nombre o un alias preferido para una comunicación personalizada. (Opcional)</string>
     <string name="reportTitleInfo">Proporciona un título adecuado para el problema. Esto puede ser una breve descripción o una palabra clave.</string>
     <string name="reportHint">Ingresa el texto aquí...</string>

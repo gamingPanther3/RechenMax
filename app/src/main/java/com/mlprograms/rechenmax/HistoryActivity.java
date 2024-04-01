@@ -547,56 +547,77 @@ public class HistoryActivity extends AppCompatActivity {
         if(data == null) {
             return null;
         }
+        final String[] parts = data.getString("calculation").split("=");
+        AtomicBoolean clickListener = new AtomicBoolean(true);
+
         TextView emptyTextView = findViewById(R.id.history_empty_textview);
         if (emptyTextView != null) {
             emptyTextView.setVisibility(View.GONE);
         }
 
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+        LinearLayout mainLinearLayout = new LinearLayout(this);
+        mainLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setId(i);
+        mainLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        mainLinearLayout.setId(i);
 
-        // date
-        TextView textView1 = new TextView(this);
-        LinearLayout.LayoutParams textViewParams = new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams textViewLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        textViewParams.setMargins(
+        textViewLayoutParams.setMargins(
                 30,
                 10,
                 30,
                 0);
-        textView1.setLayoutParams(textViewParams);
 
-        textView1.setText(data.getString("date"));
-        textView1.setTextColor(Color.BLACK);
-        textView1.setTypeface(null, Typeface.BOLD);
-        textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        textView1.setGravity(Gravity.START);
-        linearLayout.addView(textView1);
+        // date
+        TextView timeDateTextView = new TextView(this);
+        timeDateTextView.setLayoutParams(textViewLayoutParams);
 
-        // calculation
-        TextView textView2 = new TextView(this);
-        textViewParams.setMargins(
+        timeDateTextView.setText(data.getString("date"));
+        timeDateTextView.setTextColor(Color.BLACK);
+        timeDateTextView.setTypeface(null, Typeface.BOLD);
+        timeDateTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        timeDateTextView.setGravity(Gravity.START);
+        mainLinearLayout.addView(timeDateTextView);
+
+        // result title
+        TextView resultTextViewTitle = new TextView(this);
+        textViewLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewLayoutParams.setMargins(
+                30,
+                10,
+                30,
+                0);
+
+        resultTextViewTitle.setLayoutParams(textViewLayoutParams);
+        resultTextViewTitle.setText(getString(R.string.historyResult));
+        resultTextViewTitle.setTextColor(Color.BLACK);
+        resultTextViewTitle.setTypeface(null, Typeface.BOLD);
+        resultTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        resultTextViewTitle.setGravity(Gravity.START);
+        mainLinearLayout.addView(resultTextViewTitle);
+
+        // result
+        TextView resultTextView = new TextView(this);
+        textViewLayoutParams.setMargins(
                 30,
                 15,
                 30,
                 0);
-        textView2.setLayoutParams(textViewParams);
-        textView2.setPadding(0, 0, 60, 0);
+        resultTextView.setLayoutParams(textViewLayoutParams);
+        resultTextView.setPadding(0, 0, 60, 0);
 
-        textView2.setText(data.getString("calculation"));
-        textView2.setTextColor(Color.BLACK);
-        textView2.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+        resultTextView.setText(parts[1].replace(" ", ""));
+        resultTextView.setTextColor(Color.BLACK);
+        resultTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
                 getResources().getDimension(R.dimen.history_result_size));
-        textView2.setGravity(Gravity.START);
+        resultTextView.setGravity(Gravity.START);
 
-        AtomicBoolean clickListener = new AtomicBoolean(true);
-
-        textView2.setOnLongClickListener(v -> {
+        resultTextView.setOnLongClickListener(v -> {
             try {
                 TextView clickedTextView = (TextView) v;
                 String clickedText = clickedTextView.getText().toString();
@@ -612,7 +633,7 @@ public class HistoryActivity extends AppCompatActivity {
             return false;
         });
 
-        textView2.setOnClickListener(new ClickListener() {
+        resultTextView.setOnClickListener(new ClickListener() {
             @Override
             public void onDoubleClick(View v) {
                 dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
@@ -637,63 +658,113 @@ public class HistoryActivity extends AppCompatActivity {
                     loadLayoutToUI(1);
                 }
             }
-
-            @Override
-            public void onSingleClick(View v) {
-                if (clickListener.get()) {
-                    // Output the text of the clicked TextView to the console
-                    dataManager.saveToJSONSettings("pressedCalculate", false, getMainActivityContext());
-                    TextView clickedTextView = (TextView) v;
-                    String clickedText = clickedTextView.getText().toString();
-
-                    // Split at "=" character
-                    String[] parts = clickedText.split("=");
-
-                    // Check and remove leading and trailing spaces
-                    if (parts.length == 2) {
-                        String key = parts[0].trim();
-                        String value = parts[1].trim();
-                        try {
-                            if (dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).getString("value").equals("Vereinfacht")) {
-                                dataManager.saveToJSONSettings("calculate_text", key.replace(" ", ""), getMainActivityContext());
-                                dataManager.saveToJSONSettings("result_text", value.replace(" ", ""), getMainActivityContext());
-                            } else {
-                                dataManager.saveToJSONSettings("calculate_text", key, getMainActivityContext());
-                                dataManager.saveToJSONSettings("result_text", value, getMainActivityContext());
-                            }
-                            dataManager.saveToJSONSettings("removeValue", false, getMainActivityContext());
-                            dataManager.saveToJSONSettings("rotate_op", true, getMainActivityContext());
-
-                            showToastShort(getString(R.string.historyCalculationSave), getApplicationContext());
-                        } catch (Exception e) {
-                            Log.i("createHistoryTextView", String.valueOf(e));
-                        }
-                    }
-                }
-                clickListener.set(true);
-            }
         });
 
-        linearLayout.addView(textView2);
+        mainLinearLayout.addView(resultTextView);
 
-        // description title
-        TextView textView3 = new TextView(this);
-        textViewParams = new LinearLayout.LayoutParams(
+        // calculation title
+        TextView calculationTextViewTitle = new TextView(this);
+        textViewLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        textViewParams.setMargins(
+        textViewLayoutParams.setMargins(
                 30,
                 10,
                 30,
                 0);
 
-        textView3.setLayoutParams(textViewParams);
+        calculationTextViewTitle.setLayoutParams(textViewLayoutParams);
+        calculationTextViewTitle.setText(getString(R.string.historyCalculation));
+        calculationTextViewTitle.setTextColor(Color.BLACK);
+        calculationTextViewTitle.setTypeface(null, Typeface.BOLD);
+        calculationTextViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        calculationTextViewTitle.setGravity(Gravity.START);
+        mainLinearLayout.addView(calculationTextViewTitle);
+
+        // calculation
+        TextView calculationTextView = new TextView(this);
+        textViewLayoutParams.setMargins(
+                30,
+                15,
+                30,
+                0);
+        calculationTextView.setLayoutParams(textViewLayoutParams);
+        calculationTextView.setPadding(0, 0, 60, 0);
+
+        calculationTextView.setText(parts[0]);
+        calculationTextView.setTextColor(Color.BLACK);
+        calculationTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.history_result_size));
+        calculationTextView.setGravity(Gravity.START);
+
+        calculationTextView.setOnLongClickListener(v -> {
+            try {
+                TextView clickedTextView = (TextView) v;
+                String clickedText = clickedTextView.getText().toString();
+
+                ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " "));
+                clipboardManager.setPrimaryClip(clipData);
+
+                showToastShort(getString(R.string.historyCalculationCopied), getApplicationContext());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+
+        calculationTextView.setOnClickListener(new ClickListener() {
+            @Override
+            public void onDoubleClick(View v) {
+                dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
+                innerLinearLayout.removeView(findViewById(i));
+
+                Log.e("DEBUG", String.valueOf(countLinearLayouts(innerLinearLayout)));
+                if (countLinearLayouts(innerLinearLayout) == 0) {
+                    dataManager.clearHistory(getMainActivityContext());
+                    dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
+
+                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    innerLinearLayout.removeAllViews();
+
+                    TextView emptyTextView = findViewById(R.id.history_empty_textview);
+
+                    if(emptyTextView != null) {
+                        emptyTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        createEmptyHistoryTextView();
+                    }
+                } else {
+                    loadLayoutToUI(1);
+                }
+            }
+        });
+
+        mainLinearLayout.addView(calculationTextView);
+
+        HorizontalScrollView horizontalScrollView2 = new HorizontalScrollView(this);
+        horizontalScrollView2.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+
+        // description title
+        TextView textView3 = new TextView(this);
+        textViewLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        textViewLayoutParams.setMargins(
+                30,
+                10,
+                30,
+                0);
+
+        textView3.setLayoutParams(textViewLayoutParams);
         textView3.setText(getString(R.string.historyDescription));
         textView3.setTextColor(Color.BLACK);
         textView3.setTypeface(null, Typeface.BOLD);
         textView3.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         textView3.setGravity(Gravity.START);
-        linearLayout.addView(textView3);
+        mainLinearLayout.addView(textView3);
 
         // description
         EditText editText = new EditText(this);
@@ -744,14 +815,15 @@ public class HistoryActivity extends AppCompatActivity {
             return false;
         });
 
+
         if(!data.getString("details").equals("")) {
             editText.setText(data.getString("details"));
         }
 
-        linearLayout.addView(editText);
-        linearLayout.addView(createLine());
+        mainLinearLayout.addView(editText);
+        mainLinearLayout.addView(createLine());
 
-        return linearLayout;
+        return mainLinearLayout;
     }
 
     /**

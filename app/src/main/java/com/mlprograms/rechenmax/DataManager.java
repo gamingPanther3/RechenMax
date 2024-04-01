@@ -79,7 +79,9 @@ import java.util.Set;
 //  | refactorPI                       | true / false                     | MainActivity                         |
 //  | historyMode                      | single / multiple                | MainActivity                         |
 //  | showConverterDevelopmentMessage  | true / false                     | ConvertActivity                      |
-//  | reportName                       | name of person who reported      | ConvertActivity                      |
+//  | report                           | 'name' of person
+//                                       'title' of bug
+//                                       'text' (description) of bug               | ConvertActivity                      |
 //  | convertMode                      | Winkel
 //                                       Fläche
 //                                       Speicher
@@ -414,7 +416,7 @@ public class DataManager {
             initializeSetting("convertMode", "Entfernung", applicationContext);
             initializeSetting("numberOfDecimals", "2", applicationContext);
             initializeSetting("showConverterDevelopmentMessage", "true", applicationContext);
-            initializeSetting("reportName", "", applicationContext);
+            initializeSetting("report", "", applicationContext);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -459,6 +461,10 @@ public class DataManager {
                 addValueWithCustomNameToJSONSettings("convertMode", "DruckNumber",  "", applicationContext);
                 addValueWithCustomNameToJSONSettings("convertMode", "DrehmomentNumber",  "", applicationContext);
                 addValueWithCustomNameToJSONSettings("convertMode", "ArbeitNumber",  "", applicationContext);
+            } else if(key.equals("report")) {
+                addValueWithCustomNameToJSONSettings("report", "name",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("report", "title",  "", applicationContext);
+                addValueWithCustomNameToJSONSettings("report", "text",  "", applicationContext);
             }
         }
     }

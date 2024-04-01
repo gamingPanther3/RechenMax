@@ -147,6 +147,8 @@
     <string name="settingsDecimalPoints">Decimal Points</string>
     <string name="settingsDecimalPointsText">With this setting, you can choose how many decimal points should be displayed in the converter. However, note that a higher number of decimal points may affect performance.</string>
 
+    <string name="historyResult">Result:</string>
+    <string name="historyCalculation">Calculation:</string>
 
     <string name="systemRequirementsText">Minimum Android version: 10\nRecommended Android version: 13 or higher\nMaximum Android version: 14</string>
 
@@ -200,7 +202,8 @@
     <string name="sendReportThankYou">Thank you. The error will be fixed as soon as possible.</string>
     <string name="sendReportChoose">Choose an application to send from</string>
     <string name="sendReportFillAllBoxes">First, fill in all fields!</string>
-
+    <string name="report">Report Error</string>
+    <string name="reportSendGreet">Best regards</string>
     <string name="reportNameInfo">Please provide your name or a preferred alias for personalized communication. (Optional)</string>
     <string name="reportTitleInfo">Please provide a suitable title for the issue. This can be either a brief description or a keyword.</string>
     <string name="reportHint">Enter text here...</string>

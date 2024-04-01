@@ -129,6 +129,9 @@
     <string name="settingsDecimalPoints">Chiffres Après la Virgule</string>
     <string name="settingsDecimalPointsText">Avec ce paramètre, vous pouvez choisir combien de chiffres après la virgule doivent être affichés dans le convertisseur. Cependant, notez qu\'un plus grand nombre de chiffres après la virgule peut affecter les performances.</string>
 
+    <string name="historyResult">Résultat:</string>
+    <string name="historyCalculation">Calcul:</string>
+
     <string name="dailyHints">Conseils quotidiens</string>
     <string name="dailyHintsText">Avec ce paramètre, vous pouvez choisir de recevoir quotidiennement un conseil ou des informations sur la calculatrice.</string>
     <string name="remember">Rappel</string>
@@ -179,7 +182,8 @@
     <string name="sendReportThankYou">Merci. L\'erreur sera corrigée dès que possible.</string>
     <string name="sendReportChoose">Choisissez une application pour envoyer</string>
     <string name="sendReportFillAllBoxes">Tout d\'abord, remplissez tous les champs !</string>
-
+    <string name="report">Signaler une erreur</string>
+    <string name="reportSendGreet">Cordialement</string>
     <string name="reportNameInfo">Veuillez fournir votre nom ou un alias préféré pour une communication personnalisée. (Optionnel)</string>
     <string name="reportTitleInfo">Veuillez fournir un titre approprié pour le problème. Il peut s\'agir soit d\'une brève description, soit d\'un mot-clé.</string>
     <string name="reportHint">Entrez le texte ici...</string>

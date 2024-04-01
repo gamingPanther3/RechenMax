@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/reportUI"
@@ -9,133 +9,139 @@
     tools:context="com.mlprograms.rechenmax.ReportActivity">
 
     <LinearLayout
-        android:id="@+id/report_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/colorLightBackground">
-
-        <Button
-            android:id="@+id/report_return_button"
-            android:layout_width="45dp"
-            android:layout_height="50dp"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginStart="10dp"
-            android:foreground="@drawable/arrow_back_light"
-            android:tag="return"
-            android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
-            android:autoSizeStepGranularity="1sp"
-            android:autoSizeTextType="uniform"
-            android:tooltipText="@string/back"
-            tools:ignore="RtlHardcoded" />
-
-        <TextView
-            android:id="@+id/report_title"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
-            android:gravity="center_vertical"
-            android:text="@string/report"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
-            android:autoSizeStepGranularity="1sp"
-            android:autoSizeTextType="uniform"
-            style="?android:attr/buttonBarButtonStyle" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40sp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/reportNameInfo"
+        <LinearLayout
+            android:id="@+id/report_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="17sp"
-            android:layout_margin="10sp"
-            android:backgroundTint="@color/white"
-            android:gravity="center_vertical"
-            android:text="@string/reportNameInfo"
-            android:textColor="@color/colorBTNForegroundAccent" />
+            android:orientation="horizontal"
+            android:background="@color/colorLightBackground">
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/report_return_button"
+                android:layout_width="45dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="10dp"
+                android:foreground="@drawable/arrow_back_light"
+                android:tag="return"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:tooltipText="@string/back"
+                tools:ignore="RtlHardcoded" />
 
-            <EditText
-                android:id="@+id/sendReportName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/reportHint"
-                android:textSize="25sp"/>
-        </HorizontalScrollView>
+            <TextView
+                android:id="@+id/report_title"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                android:gravity="center_vertical"
+                android:text="@string/report"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:autoSizePresetSizes="@array/auto_text_sizes_settingsui1"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/reportTitleInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="17sp"
-            android:layout_margin="10sp"
-            android:backgroundTint="@color/white"
-            android:gravity="center_vertical"
-            android:text="@string/reportTitleInfo"
-            android:textColor="@color/colorBTNForegroundAccent" />
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/sendReportTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="@string/reportHint"
-                android:textSize="25sp"/>
-        </HorizontalScrollView>
-
-        <TextView
-            android:id="@+id/reportDescriptionInfo"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="17sp"
-            android:layout_margin="10sp"
-            android:backgroundTint="@color/white"
-            android:gravity="center_vertical"
-            android:text="@string/reportDescriptionInfo"
-            android:textColor="@color/colorBTNForegroundAccent" />
+            android:layout_marginTop="40sp"
+            android:orientation="vertical">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/sendReportMessage"
+            <TextView
+                android:id="@+id/reportNameInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="top"
-                android:hint="@string/reportHint"
-                android:maxHeight="400dp" />
-        </ScrollView>
+                android:layout_weight="1"
+                android:textSize="17sp"
+                android:layout_margin="10sp"
+                android:backgroundTint="@color/white"
+                android:gravity="center_vertical"
+                android:text="@string/reportNameInfo"
+                android:textColor="@color/colorBTNForegroundAccent" />
 
-        <Button
-            android:id="@+id/sendReportButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="40dp"
-            android:textSize="25sp"
-            android:text="@string/sendReport"
-            android:layout_gravity="bottom|center_horizontal"/>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/sendReportName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:hint="@string/reportHint"
+                    android:textSize="25sp"/>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/reportTitleInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="17sp"
+                android:layout_margin="10sp"
+                android:backgroundTint="@color/white"
+                android:gravity="center_vertical"
+                android:text="@string/reportTitleInfo"
+                android:textColor="@color/colorBTNForegroundAccent" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/sendReportTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:hint="@string/reportHint"
+                    android:textSize="25sp"/>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/reportDescriptionInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="17sp"
+                android:layout_margin="10sp"
+                android:backgroundTint="@color/white"
+                android:gravity="center_vertical"
+                android:text="@string/reportDescriptionInfo"
+                android:textColor="@color/colorBTNForegroundAccent" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/sendReportMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="top"
+                    android:hint="@string/reportHint"
+                    android:maxHeight="400dp" />
+            </ScrollView>
+
+            <Button
+                android:id="@+id/sendReportButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="40dp"
+                android:textSize="25sp"
+                android:text="@string/sendReport"
+                android:layout_gravity="bottom|center_horizontal"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

@@ -8,10 +8,13 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -43,15 +46,95 @@ public class ReportActivity extends AppCompatActivity {
 
         setUpButtonListeners();
         switchDisplayMode();
+
+        try {
+            final EditText nameEditText = findViewById(R.id.sendReportName);
+            final EditText sendReportTitle = findViewById(R.id.sendReportTitle);
+            final EditText sendReportMessage = findViewById(R.id.sendReportMessage);
+
+            final String name = dataManager.getJSONSettingsData("report", getMainActivityContext()).getString("name");
+            final String title = dataManager.getJSONSettingsData("report", getMainActivityContext()).getString("title");
+            final String text = dataManager.getJSONSettingsData("report", getMainActivityContext()).getString("text");
+
+            if(!name.isEmpty()) {
+                nameEditText.setText(name);
+            }
+            if(!title.isEmpty()) {
+                sendReportTitle.setText(title);
+            }
+            if(!text.isEmpty()) {
+                sendReportMessage.setText(text);
+            }
+        } catch (JSONException e) {
+                throw new RuntimeException(e);
+        }
     }
 
     private void setUpButtonListeners() {
         final Button backButton = findViewById(R.id.report_return_button);
         final Button sendReportButton = findViewById(R.id.sendReportButton);
 
+        final EditText sendReportName = findViewById(R.id.sendReportName);
+        final EditText sendReportTitle = findViewById(R.id.sendReportTitle);
+        final EditText sendReportMessage = findViewById(R.id.sendReportMessage);
+
         backButton.setOnClickListener(v -> {
             isReturn = true;
             returnToSettings();
+        });
+
+        sendReportName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                final String inputText = sendReportName.getText().toString();
+                dataManager.updateValuesInJSONSettingsData("report","name", inputText, getMainActivityContext());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // do nothing
+            }
+        });
+
+        sendReportTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                final String inputText = sendReportTitle.getText().toString();
+                dataManager.updateValuesInJSONSettingsData("report","title", inputText, getMainActivityContext());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // do nothing
+            }
+        });
+
+        sendReportMessage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                final String inputText = sendReportMessage.getText().toString();
+                dataManager.updateValuesInJSONSettingsData("report","text", inputText, getMainActivityContext());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // do nothing
+            }
         });
 
         sendReportButton.setOnClickListener(v -> {
@@ -74,9 +157,15 @@ public class ReportActivity extends AppCompatActivity {
                         );
                     } else {
                         dataManager.updateValuesInJSONSettingsData(
-                                "reportName",
-                                "value",
-                                name.getText().toString(),
+                                "report",
+                                "title",
+                                "",
+                                getMainActivityContext()
+                        );
+                        dataManager.updateValuesInJSONSettingsData(
+                                "report",
+                                "text",
+                                "",
                                 getMainActivityContext()
                         );
 
@@ -85,7 +174,7 @@ public class ReportActivity extends AppCompatActivity {
                                 title.getText().toString()
                                 + "&body=" +
                                 message.getText().toString() +
-                                "\n\n\n\n" +
+                                "\n\n" +
                                 getString(R.string.reportSendGreet)
                                 + "\n" +
                                 name.getText().toString()
@@ -242,11 +331,14 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void updateUI(int backgroundColor, int textColor) {
-        LinearLayout reportUI = findViewById(R.id.reportUI);
+        ScrollView reportUI = findViewById(R.id.reportUI);
         LinearLayout reportLayout = findViewById(R.id.report_layout);
         TextView textView = findViewById(R.id.report_title);
         Button sendButton = findViewById(R.id.sendReportButton);
         Button returnButton = findViewById(R.id.report_return_button);
+        TextView reportNameInfo = findViewById(R.id.reportNameInfo);
+        TextView reportTitleInfo = findViewById(R.id.reportTitleInfo);
+        TextView reportDescriptionInfo = findViewById(R.id.reportDescriptionInfo);
 
         reportUI.setBackgroundColor(backgroundColor);
         reportLayout.setBackgroundColor(backgroundColor);
@@ -254,6 +346,9 @@ public class ReportActivity extends AppCompatActivity {
         sendButton.setTextColor(textColor);
         sendButton.setBackgroundColor(backgroundColor);
         returnButton.setBackgroundColor(backgroundColor);
+        reportNameInfo.setTextColor(textColor);
+        reportTitleInfo.setTextColor(textColor);
+        reportDescriptionInfo.setTextColor(textColor);
     }
 
     /**
