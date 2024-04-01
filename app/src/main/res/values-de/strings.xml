@@ -14,7 +14,7 @@
     <string name="releasenotes">Release-Notes</string>
     <string name="releasenotesText">Wenn diese Option aktiviert ist, werden die Versionshinweise bei jedem Start des Taschenrechners angezeigt. Unabhängig von dieser Einstellung, werden die Versionshinweise nach jeder Installation der neuesten Version automatisch präsentiert.</string>
 
-    <string name="releaseDate">Veröffentlichungsdatum: N/A</string>
+    <string name="releaseDate">Veröffentlichungsdatum: 01.04.24 - 20Uhr</string>
     <string name="overview">Übersicht</string>
     <string name="newFunctions">Neue Funktionen</string>
     <string name="fixedBugs">Behobene Fehler</string>
