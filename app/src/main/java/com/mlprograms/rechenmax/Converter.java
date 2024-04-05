@@ -96,6 +96,8 @@ public class Converter extends ConvertActivity {
         POUND(new Unit(Category.MASS, "lb", "Pounds (US)", new BigDecimal("0.45359237"))),
 
         // Time
+        YEAR(new Unit(Category.TIME, "yr", "Year", new BigDecimal("31536000"))), // added
+        MONTH(new Unit(Category.TIME, "mth", "Month", new BigDecimal("259200"))), // added
         WEEK(new Unit(Category.TIME, "wk", "Week", new BigDecimal("604800"))),
         DAY(new Unit(Category.TIME, "d", "Day", new BigDecimal("86400"))),
         HOUR(new Unit(Category.TIME, "h", "Hour", new BigDecimal("3600"))),

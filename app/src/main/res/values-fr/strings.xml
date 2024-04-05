@@ -285,6 +285,8 @@
     <string name="convertTonne">Tonne (t)</string>
     <string name="convertUnzen">Once (oz)</string>
     <string name="convertPfund">Livre (lb)</string>
+    <string name="convertJahr">Année (yr)</string>
+    <string name="convertMonat">Mois (mth)</string>
     <string name="convertWoche">Semaine (wk)</string>
     <string name="convertTag">Jour (d)</string>
     <string name="convertStunde">Heure (h)</string>

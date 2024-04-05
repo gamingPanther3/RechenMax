@@ -305,6 +305,8 @@
     <string name="convertTonne">Tonelada (t)</string>
     <string name="convertUnzen">Onzas (oz)</string>
     <string name="convertPfund">Libra (lb)</string>
+    <string name="convertJahr">Año (yr)</string>
+    <string name="convertMonat">Mes (mth)</string>
     <string name="convertWoche">Semana (wk)</string>
     <string name="convertTag">Día (d)</string>
     <string name="convertStunde">Hora (h)</string>

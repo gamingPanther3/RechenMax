@@ -306,6 +306,8 @@
     <string name="convertTonne">Tonne (t)</string>
     <string name="convertUnzen">Ounces (oz)</string>
     <string name="convertPfund">Pound (lb)</string>
+    <string name="convertJahr">Year (yr)</string>
+    <string name="convertMonat">Month (mth)</string>
     <string name="convertWoche">Week (wk)</string>
     <string name="convertTag">Day (d)</string>
     <string name="convertStunde">Hour (h)</string>

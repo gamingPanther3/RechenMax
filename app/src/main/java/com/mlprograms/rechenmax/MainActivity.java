@@ -2643,7 +2643,7 @@ public class MainActivity extends AppCompatActivity {
                 case "MS": {
                     ClipData clipData = ClipData.newPlainText("", getResultText());
                     clipboardManager.setPrimaryClip(clipData);
-                    showToastLong(getString(R.string.savedvalue), getApplicationContext());
+                    showToastShort(getString(R.string.savedvalue), getApplicationContext());
                     break;
                 }
             }

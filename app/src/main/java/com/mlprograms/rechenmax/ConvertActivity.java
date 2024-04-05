@@ -32,9 +32,12 @@ import static com.mlprograms.rechenmax.Converter.Category.VOLTAGE;
 import static com.mlprograms.rechenmax.Converter.Category.VOLUME;
 import static com.mlprograms.rechenmax.Converter.Category.WORK;
 import static com.mlprograms.rechenmax.Converter.UnitDefinition.*;
+import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -68,7 +71,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
@@ -440,6 +442,34 @@ public class ConvertActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    /**
+     * Sets up the listener for all buttons.
+     *
+     * @param textView The TextView to which the listener is to be set.
+     */
+    private void setLongClickListener(TextView textView) {
+        // Find the TextView with the specified ID
+        // Check if the TextView is not null
+        if (textView != null) {
+            // Set a long click listener for the TextView
+            textView.setOnLongClickListener(v -> {
+                // Execute the specified action when the TextView is long-clicked
+                copyToClipboard(textView);
+                // Return false to indicate that the event is not consumed
+                return false;
+            });
+        }
+    }
+
+    private Runnable copyToClipboard(TextView textView) {
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        ClipData clipData = ClipData.newPlainText("", textView.getText().toString());
+        clipboardManager.setPrimaryClip(clipData);
+        showToastShort(getString(R.string.savedvalue), getApplicationContext());
+        return null;
     }
 
     /**
@@ -1084,6 +1114,8 @@ public class ConvertActivity extends AppCompatActivity {
                         convertPfund.setText(         formatResultTextAfterType(massWeightConverter.convertToString(editTextNumber, POUND)));
                         break;
                     case "Zeit":
+                        TextView convertJahr = findViewById(R.id.convertJahrTextView);
+                        TextView convertMonat = findViewById(R.id.convertMonatTextView);
                         TextView convertWoche = findViewById(R.id.convertWocheTextView);
                         TextView convertTag = findViewById(R.id.convertTagTextView);
                         TextView convertStunde = findViewById(R.id.convertStundeTextView);
@@ -1127,7 +1159,15 @@ public class ConvertActivity extends AppCompatActivity {
                             case 9:
                                 timeConverter = new Converter(TIME, WEEK);
                                 break;
+                            case 10:
+                                timeConverter = new Converter(TIME, MONTH);
+                                break;
+                            case 11:
+                                timeConverter = new Converter(TIME, YEAR);
+                                break;
                             default:
+                                convertJahr.setText("0,00");
+                                convertMonat.setText("0,00");
                                 convertWoche.setText("0,00");
                                 convertTag.setText("0,00");
                                 convertStunde.setText("0,00");
@@ -1139,7 +1179,8 @@ public class ConvertActivity extends AppCompatActivity {
                                 convertPicosekunde.setText("0,00");
                                 convertFemtosekunde.setText("0,00");
                         }
-
+                        convertJahr.setText(            formatResultTextAfterType(timeConverter.convertToString(editTextNumber, YEAR)));
+                        convertMonat.setText(           formatResultTextAfterType(timeConverter.convertToString(editTextNumber, MONTH)));
                         convertWoche.setText(           formatResultTextAfterType(timeConverter.convertToString(editTextNumber, WEEK)));
                         convertTag.setText(             formatResultTextAfterType(timeConverter.convertToString(editTextNumber, DAY)));
                         convertStunde.setText(          formatResultTextAfterType(timeConverter.convertToString(editTextNumber, HOUR)));
@@ -1465,7 +1506,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertKilowatt = findViewById(R.id.convertKilowattTextView);
                         TextView convertMegawatt = findViewById(R.id.convertMegawattTextView);
                         TextView convertGigawatt = findViewById(R.id.convertGigawattTextView);
-                        TextView convertPferdestaerke = findViewById(R.id.convertPferdestärkeTextView);
+                        TextView convertPferdestaerke = findViewById(R.id.convertPferdestaerkeTextView);
                         TextView convertJouleProSekunde = findViewById(R.id.convertJouleProSekundeTextView);
 
                         Converter workConverter = new Converter(WORK, MILLIWATT);
@@ -1603,6 +1644,8 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListTime.add(new CustomItems(getString(R.string.convertStunde)));
         customItemListTime.add(new CustomItems(getString(R.string.convertTag)));
         customItemListTime.add(new CustomItems(getString(R.string.convertWoche)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertMonat)));
+        customItemListTime.add(new CustomItems(getString(R.string.convertJahr)));
 
         customItemListTemperature.add(new CustomItems(getString(R.string.convertCelsius)));
         customItemListTemperature.add(new CustomItems(getString(R.string.convertKelvin)));
@@ -1715,6 +1758,154 @@ public class ConvertActivity extends AppCompatActivity {
             ScrollView scrollView = findViewById(R.id.convertScrollLayout);
             scrollView.removeAllViews();
             scrollView.addView(outherLinearLayout);
+
+            if(spinnerText.equals(getString(R.string.convertAngle))) {
+                setLongClickListener(findViewById(R.id.convertDegTextView));
+                setLongClickListener(findViewById(R.id.convertRadTextView));
+                setLongClickListener(findViewById(R.id.convertMilliradTextView));
+            } else if(spinnerText.equals(getString(R.string.convertArea))) {
+                setLongClickListener(findViewById(R.id.convertSquareMicrometerTextView));
+                setLongClickListener(findViewById(R.id.convertSquareMillimeterTextView));
+                setLongClickListener(findViewById(R.id.convertSquareCentimeterTextView));
+                setLongClickListener(findViewById(R.id.convertSquareMeterTextView));
+                setLongClickListener(findViewById(R.id.convertSquareKilometerTextView));
+                setLongClickListener(findViewById(R.id.convertArTextView));
+                setLongClickListener(findViewById(R.id.convertHectaresTextView));
+                setLongClickListener(findViewById(R.id.convertSquareInchTextView));
+                setLongClickListener(findViewById(R.id.convertSquareFeetTextView));
+                setLongClickListener(findViewById(R.id.convertAcreTextView));
+            } else if(spinnerText.equals(getString(R.string.convertStorage))) {
+                setLongClickListener(findViewById(R.id.convertBitTextView));
+                setLongClickListener(findViewById(R.id.convertByteTextView));
+                setLongClickListener(findViewById(R.id.convertKilobitTextView));
+                setLongClickListener(findViewById(R.id.convertKilobyteTextView));
+                setLongClickListener(findViewById(R.id.convertMegabitTextView));
+                setLongClickListener(findViewById(R.id.convertMegabyteTextView));
+                setLongClickListener(findViewById(R.id.convertGigabitTextView));
+                setLongClickListener(findViewById(R.id.convertGigabyteTextView));
+                setLongClickListener(findViewById(R.id.convertTerabitTextView));
+                setLongClickListener(findViewById(R.id.convertTerabyteTextView));
+                setLongClickListener(findViewById(R.id.convertPetabitTextView));
+                setLongClickListener(findViewById(R.id.convertPetabyteTextView));
+                setLongClickListener(findViewById(R.id.convertExabitTextView));
+                setLongClickListener(findViewById(R.id.convertExabyteTextView));
+                setLongClickListener(findViewById(R.id.convertZetabitTextView));
+                setLongClickListener(findViewById(R.id.convertZetabyteTextView));
+                setLongClickListener(findViewById(R.id.convertYotabitTextView));
+                setLongClickListener(findViewById(R.id.convertYotabyteTextView));
+            } else if(spinnerText.equals(getString(R.string.convertDistance))) {
+                setLongClickListener(findViewById(R.id.convertAngstromTextView));
+                setLongClickListener(findViewById(R.id.convertFemtometerTextView));
+                setLongClickListener(findViewById(R.id.convertParsecTextView));
+                setLongClickListener(findViewById(R.id.convertPixelTextView));
+                setLongClickListener(findViewById(R.id.convertPointTextView));
+                setLongClickListener(findViewById(R.id.convertPicaTextView));
+                setLongClickListener(findViewById(R.id.convertEmTextView));
+                setLongClickListener(findViewById(R.id.convertPikometerTextView));
+                setLongClickListener(findViewById(R.id.convertNanometerTextView));
+                setLongClickListener(findViewById(R.id.convertMikrometerTextView));
+                setLongClickListener(findViewById(R.id.convertMillimeterTextView));
+                setLongClickListener(findViewById(R.id.convertCentimeterTextView));
+                setLongClickListener(findViewById(R.id.convertDezimeterTextView));
+                setLongClickListener(findViewById(R.id.convertMeterTextView));
+                setLongClickListener(findViewById(R.id.convertHektometerTextView));
+                setLongClickListener(findViewById(R.id.convertKilometerTextView));
+                setLongClickListener(findViewById(R.id.convertFeetTextView));
+                setLongClickListener(findViewById(R.id.convertYardTextView));
+                setLongClickListener(findViewById(R.id.convertInchTextView));
+                setLongClickListener(findViewById(R.id.convertMilesTextView));
+                setLongClickListener(findViewById(R.id.convertSeamilesTextView));
+                setLongClickListener(findViewById(R.id.convertLightyearTextView));
+            } else if(spinnerText.equals(getString(R.string.convertVolume))) {
+                setLongClickListener(findViewById(R.id.convertKubikmillimeterTextView));
+                setLongClickListener(findViewById(R.id.convertMilliliterTextView));
+                setLongClickListener(findViewById(R.id.convertLiterTextView));
+                setLongClickListener(findViewById(R.id.convertKubikmeterTextView));
+                setLongClickListener(findViewById(R.id.convertGallonUSTextView));
+                setLongClickListener(findViewById(R.id.convertKubikFeetTextView));
+                setLongClickListener(findViewById(R.id.convertKubikInchTextView));
+            } else if(spinnerText.equals(getString(R.string.convertMassWeigth))) {
+                setLongClickListener(findViewById(R.id.convertFemtogrammTextView));
+                setLongClickListener(findViewById(R.id.convertPicogrammTextView));
+                setLongClickListener(findViewById(R.id.convertNanogrammTextView));
+                setLongClickListener(findViewById(R.id.convertMikrogrammTextView));
+                setLongClickListener(findViewById(R.id.convertMilligrammTextView));
+                setLongClickListener(findViewById(R.id.convertGrammTextView));
+                setLongClickListener(findViewById(R.id.convertKilogrammTextView));
+                setLongClickListener(findViewById(R.id.convertTonneTextView));
+                setLongClickListener(findViewById(R.id.convertUnzenTextView));
+                setLongClickListener(findViewById(R.id.convertPfundTextView));
+            } else if(spinnerText.equals(getString(R.string.convertTime))) {
+                setLongClickListener(findViewById(R.id.convertJahrTextView));
+                setLongClickListener(findViewById(R.id.convertMonatTextView));
+                setLongClickListener(findViewById(R.id.convertWocheTextView));
+                setLongClickListener(findViewById(R.id.convertTagTextView));
+                setLongClickListener(findViewById(R.id.convertStundeTextView));
+                setLongClickListener(findViewById(R.id.convertMinuteTextView));
+                setLongClickListener(findViewById(R.id.convertSekundeTextView));
+                setLongClickListener(findViewById(R.id.convertMillisekundeTextView));
+                setLongClickListener(findViewById(R.id.convertMikrosekundeTextView));
+                setLongClickListener(findViewById(R.id.convertNanosekundeTextView));
+                setLongClickListener(findViewById(R.id.convertPicosekundeTextView));
+                setLongClickListener(findViewById(R.id.convertFemtosekundeTextView));
+            } else if(spinnerText.equals(getString(R.string.convertTemperature))) {
+                setLongClickListener(findViewById(R.id.convertCelsiusTextView));
+                setLongClickListener(findViewById(R.id.convertKelvinTextView));
+                setLongClickListener(findViewById(R.id.convertFahrenheitTextView));
+            } else if(spinnerText.equals(getString(R.string.convertVoltage))) {
+                setLongClickListener(findViewById(R.id.convertMillivoltTextView));
+                setLongClickListener(findViewById(R.id.convertVoltTextView));
+                setLongClickListener(findViewById(R.id.convertKilovoltTextView));
+                setLongClickListener(findViewById(R.id.convertMegavoltTextView));
+            } else if(spinnerText.equals(getString(R.string.convertCurrent))) {
+                setLongClickListener(findViewById(R.id.convertPicoampereTextView));
+                setLongClickListener(findViewById(R.id.convertNanoampereTextView));
+                setLongClickListener(findViewById(R.id.convertMikroampereTextView));
+                setLongClickListener(findViewById(R.id.convertMilliampereTextView));
+                setLongClickListener(findViewById(R.id.convertAmpereTextView));
+                setLongClickListener(findViewById(R.id.convertKiloAmpereTextView));
+            } else if(spinnerText.equals(getString(R.string.convertSpeed))) {
+                setLongClickListener(findViewById(R.id.convertMillimeterProSekundeTextView));
+                setLongClickListener(findViewById(R.id.convertMeterProSekundeTextView));
+                setLongClickListener(findViewById(R.id.convertKilometerProStundeTextView));
+                setLongClickListener(findViewById(R.id.convertMilesProStundeTextView));
+                setLongClickListener(findViewById(R.id.convertKnotenTextView));
+                setLongClickListener(findViewById(R.id.convertMachTextView));
+            } else if(spinnerText.equals(getString(R.string.convertEnergy))) {
+                setLongClickListener(findViewById(R.id.convertMillijouleTextView));
+                setLongClickListener(findViewById(R.id.convertJouleTextView));
+                setLongClickListener(findViewById(R.id.convertKilojouleTextView));
+                setLongClickListener(findViewById(R.id.convertMegajouleTextView));
+                setLongClickListener(findViewById(R.id.convertKalorieTextView));
+                setLongClickListener(findViewById(R.id.convertKilokalorieTextView));
+                setLongClickListener(findViewById(R.id.convertWattsekundeTextView));
+                setLongClickListener(findViewById(R.id.convertWattstundeTextView));
+                setLongClickListener(findViewById(R.id.convertKilowattsekundeTextView));
+                setLongClickListener(findViewById(R.id.convertKilowattstundeTextView));
+            } else if(spinnerText.equals(getString(R.string.convertPressure))) {
+                setLongClickListener(findViewById(R.id.convertMillipascalTextView));
+                setLongClickListener(findViewById(R.id.convertPascalTextView));
+                setLongClickListener(findViewById(R.id.convertHectopascalTextView));
+                setLongClickListener(findViewById(R.id.convertKilopascalTextView));
+                setLongClickListener(findViewById(R.id.convertBarTextView));
+                setLongClickListener(findViewById(R.id.convertMillibarTextView));
+                setLongClickListener(findViewById(R.id.convertTorrTextView));
+                setLongClickListener(findViewById(R.id.convertPSITextView));
+                setLongClickListener(findViewById(R.id.convertPSFTextView));
+            } else if(spinnerText.equals(getString(R.string.convertTorque))) {
+                setLongClickListener(findViewById(R.id.convertNewtonMeterTextView));
+                setLongClickListener(findViewById(R.id.convertMeterKilogrammTextView));
+                setLongClickListener(findViewById(R.id.convertFootPoundTextView));
+                setLongClickListener(findViewById(R.id.convertInchPoundTextView));
+            } else if(spinnerText.equals(getString(R.string.convertWork))) {
+                setLongClickListener(findViewById(R.id.convertMillijouleTextView));
+                setLongClickListener(findViewById(R.id.convertJouleTextView));
+                setLongClickListener(findViewById(R.id.convertKilojouleTextView));
+                setLongClickListener(findViewById(R.id.convertMegajouleTextView));
+                setLongClickListener(findViewById(R.id.convertKalorieTextView));
+                setLongClickListener(findViewById(R.id.convertKilokalorieTextView));
+                setLongClickListener(findViewById(R.id.convertWattsekundeTextView));
+            }
         }
     }
 

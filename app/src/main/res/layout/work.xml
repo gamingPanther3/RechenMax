@@ -229,13 +229,13 @@
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertPferdestärkeScrollView"
+            android:id="@+id/convertPferdestaerkeScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertPferdestärkeTextView"
+                android:id="@+id/convertPferdestaerkeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
