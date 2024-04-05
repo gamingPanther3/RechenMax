@@ -20,7 +20,6 @@ import static com.mlprograms.rechenmax.CalculatorEngine.fixExpression;
 import static com.mlprograms.rechenmax.CalculatorEngine.isOperator;
 import static com.mlprograms.rechenmax.CalculatorEngine.isStandardOperator;
 import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
-import static com.mlprograms.rechenmax.DataManager.HISTORY_FILE;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
@@ -56,24 +55,12 @@ import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -321,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
         setButtonListenerWithoutChangedWeight(R.id.third, this::thirdAction);
         setButtonListenerWithoutChangedWeight(R.id.quarter, this::quarterAction);
 
-        setButtonListener(R.id.three_root, this::thirdRootAction);
+        setButtonListener(R.id.thirdRoot, this::thirdRootAction);
 
         setButtonListenerWithoutChangedWeight(R.id.scientificButton, this::setScienceButtonState);
         setButtonListenerWithoutChangedWeight(R.id.shift, this::setShiftButtonState);
@@ -946,14 +933,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void resetIfPressedCalculate() {
+        try {
+            if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
+                setResultText("0");
+                dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     /**
      * Appends or sets the text "sin(" to the calculation input.
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void sinusAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -987,9 +985,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void sinushAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1021,9 +1019,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aSinusAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1056,9 +1054,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aSinusHAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+            
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1091,9 +1089,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void cosinusAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1126,9 +1124,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void cosinushAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1161,9 +1159,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aCosinusAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1196,9 +1194,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aCosinusHAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1231,9 +1229,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void tangensAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+            
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1266,9 +1264,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void tangenshAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1301,9 +1299,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aTangensAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1336,9 +1334,9 @@ public class MainActivity extends AppCompatActivity {
      * Scrolls to the bottom of the scroll view if it exists.
      */
     private void aTangensHAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1375,9 +1373,9 @@ public class MainActivity extends AppCompatActivity {
      * After adding "log(" to the calculation text, it formats the result text accordingly.
      */
     private void logAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1410,9 +1408,9 @@ public class MainActivity extends AppCompatActivity {
      * It follows a similar procedure to the logAction() method but adds "log₂(" instead of "log(".
      */
     private void log2Action() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1447,9 +1445,9 @@ public class MainActivity extends AppCompatActivity {
      * After adding "log" to the calculation text, it formats the result text accordingly.
      */
     private void logXAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
@@ -1490,9 +1488,9 @@ public class MainActivity extends AppCompatActivity {
      * It follows a similar procedure to the logAction() method but adds "ln(" instead of "log(".
      */
     private void lnAction() {
-        dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        // Check if calculate text is empty and set or add
         try {
+            resetIfPressedCalculate();
+
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
                 final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
                 if (mode.equals("false")) {
