@@ -100,6 +100,8 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.history);
 
         dataManager = new DataManager();
+        dataManager.saveToJSONSettings("lastActivity", "His", getApplicationContext());
+
         try {
             historyTextViewNumber = Integer.parseInt(dataManager.getHistoryData("historyTextViewNumber", getMainActivityContext()).getString("value"));
         } catch (JSONException e) {
@@ -1483,6 +1485,7 @@ public class HistoryActivity extends AppCompatActivity {
      * It also switches the display mode based on the current night mode.
      */
     public void returnToCalculator() {
+        dataManager.saveToJSONSettings("lastActivity", "Main", getApplicationContext());
         try {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

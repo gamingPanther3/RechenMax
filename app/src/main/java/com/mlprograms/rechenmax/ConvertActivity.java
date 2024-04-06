@@ -118,7 +118,10 @@ public class ConvertActivity extends AppCompatActivity {
         // Call the superclass onCreate method
         super.onCreate(savedInstanceState);
         stopBackgroundService();
+
         dataManager = new DataManager();
+        dataManager.saveToJSONSettings("lastActivity", "Con", getApplicationContext());
+
         setContentView(R.layout.convert);
 
         setUpButtonListeners();
@@ -2383,6 +2386,7 @@ public class ConvertActivity extends AppCompatActivity {
      * This method returns to the calculator by starting the MainActivity.
      */
     public void returnToCalculator() {
+        dataManager.saveToJSONSettings("lastActivity", "Main", getApplicationContext());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

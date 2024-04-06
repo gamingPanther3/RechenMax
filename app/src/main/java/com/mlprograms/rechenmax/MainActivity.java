@@ -67,8 +67,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.7.2
- * @date 09.02.2024
+ * @version 1.7.8
+ * @date 06.04.2024
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -100,23 +100,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize DataManager with the current context
         dataManager = new DataManager(this);
-
-        //dataManager.clearJSONSettings(this);
-        //dataManager.clearHistory(this);
-
-        //dataManager.saveToJSONSettings("historyTextViewNumber", "45", getApplicationContext());
-
-        //Log.e("Debug", dataManager.getAllDataFromHistory(getApplicationContext()).toString());
-        //Log.e("Debug", dataManager.getAllDataFromJSONSettings(getApplicationContext()).toString());
-
-
-        // Create JSON file and check for its existence
         dataManager.initializeSettings(this);
-
-        //dataManager.saveToJSONSettings("old_version", "0", getApplicationContext());
 
         // If it's the first run of the application
         try {
+            switch(dataManager.getJSONSettingsData("lastActivity", getApplicationContext()).getString("value")) {
+                case "Set":
+                    switchToSettingsAction();
+                    break;
+                case "Rep":
+                    switchToReportAction();
+                    break;
+                case "Con":
+                    switchToConvertAction();
+                    break;
+                case "Help":
+                    switchToHelpAction();
+                    break;
+                case "His":
+                    switchToHistoryAction();
+                    break;
+                default:
+                    dataManager.saveToJSONSettings("lastActivity", "Main", getApplicationContext());
+            }
+
             JSONObject currentVersionData = dataManager.getJSONSettingsData("currentVersion", getApplicationContext());
             JSONObject oldVersionData = dataManager.getJSONSettingsData("old_version", getApplicationContext());
 
@@ -2137,8 +2144,30 @@ public class MainActivity extends AppCompatActivity {
      * It creates a new SettingsActivity, sets the main activity context, and starts the activity.
      */
     public void switchToSettingsAction() {
+        dataManager.saveToJSONSettings("lastActivity", "Set", getApplicationContext());
         SettingsActivity.setMainActivityContext(this);
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Switches to the settings activity.
+     * It creates a new ReportActivity, sets the main activity context, and starts the activity.
+     */
+    public void switchToReportAction() {
+        dataManager.saveToJSONSettings("lastActivity", "Rep", getApplicationContext());
+        Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Switches to the settings activity.
+     * It creates a new SettingsActivity, sets the main activity context, and starts the activity.
+     */
+    public void switchToHelpAction() {
+        dataManager.saveToJSONSettings("lastActivity", "Hel", getApplicationContext());
+        HelpActivity.setMainActivityContext(this);
+        Intent intent = new Intent(MainActivity.this, HelpActivity.class);
         startActivity(intent);
     }
 
@@ -2147,6 +2176,7 @@ public class MainActivity extends AppCompatActivity {
      * It creates a new ConvertActivity, sets the main activity context, and starts the activity.
      */
     public void switchToConvertAction() {
+        dataManager.saveToJSONSettings("lastActivity", "Con", getApplicationContext());
         ConvertActivity.setMainActivityContext(this);
         Intent intent = new Intent(MainActivity.this, ConvertActivity.class);
         startActivity(intent);
@@ -2157,6 +2187,7 @@ public class MainActivity extends AppCompatActivity {
      * It creates a new HistoryActivity, sets the main activity context, and starts the activity.
      */
     private void switchToHistoryAction() {
+        dataManager.saveToJSONSettings("lastActivity", "His", getApplicationContext());
         HistoryActivity.setMainActivityContext(this);
         Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
         startActivity(intent);

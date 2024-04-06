@@ -60,6 +60,7 @@ public class HelpActivity extends AppCompatActivity {
         stopBackgroundService();
 
         setContentView(R.layout.help);
+        dataManager.saveToJSONSettings("lastActivity", "Hel", getApplicationContext());
 
         @SuppressLint("CutPasteId") Button button = findViewById(R.id.help_return_button);
         button.setOnClickListener(v -> {
@@ -482,6 +483,7 @@ public class HelpActivity extends AppCompatActivity {
      * This method returns to the calculator by starting the MainActivity.
      */
     public void returnToCalculator() {
+        dataManager.saveToJSONSettings("lastActivity", "Main", getApplicationContext());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

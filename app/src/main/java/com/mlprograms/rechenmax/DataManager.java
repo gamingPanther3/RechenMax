@@ -109,6 +109,7 @@ import java.util.Map;
 //    DrehmomentCurrent
 //    ArbeitCurrent                    | 0 - ...Max                       | ConvertActivity                      |
 //  | numberOfDecimals                 | 0 - 10                           | Converter                            |
+//  | lastActivity                     | Main, Set, Rep, Con, Help, His   | MainActivity                         |
 
 public class DataManager {
 
@@ -413,6 +414,7 @@ public class DataManager {
             initializeSetting("numberOfDecimals", "2", applicationContext);
             initializeSetting("showConverterDevelopmentMessage", "true", applicationContext);
             initializeSetting("report", "", applicationContext);
+            initializeSetting("lastActivity", "Main", applicationContext);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

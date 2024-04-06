@@ -113,9 +113,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings);
 
         dataManager = new DataManager();
-        //dataManager.deleteJSON(getApplicationContext());
-        //dataManager.createJSON(getApplicationContext());
-        //resetReleaseNoteConfig(getApplicationContext());
+        dataManager.saveToJSONSettings("lastActivity", "Set", getApplicationContext());
 
         @SuppressLint("CutPasteId") Button button = findViewById(R.id.report_return_button);
         button.setOnClickListener(v -> returnToCalculator());
@@ -1750,6 +1748,7 @@ public class SettingsActivity extends AppCompatActivity {
      * This method returns to the calculator by starting the MainActivity.
      */
     public void returnToCalculator() {
+        dataManager.saveToJSONSettings("lastActivity", "Main", getApplicationContext());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
