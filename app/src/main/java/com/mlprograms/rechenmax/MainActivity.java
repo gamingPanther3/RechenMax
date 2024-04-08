@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("showPatchNotes", true, getApplicationContext());
                     dataManager.saveToJSONSettings("old_version", currentValue, getApplicationContext());
                     dataManager.saveToJSONSettings("returnToCalculator", "true", getApplicationContext());
-                    //HelpActivity.setMainActivityContext(this);
-                    //startActivity(new Intent(this, HelpActivity.class));
+                    HelpActivity.setMainActivityContext(this);
+                    startActivity(new Intent(this, HelpActivity.class));
                 } else {
                     // Read values from DataManager
                     final JSONObject showPatchNotesData = dataManager.getJSONSettingsData("showPatchNotes", getApplicationContext());
