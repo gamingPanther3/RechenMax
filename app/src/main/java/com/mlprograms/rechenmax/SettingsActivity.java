@@ -1652,8 +1652,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
         TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
-        TextView settingsCredits = findViewById(R.id.credits_view);
-        FrameLayout frameLayout = findViewById(R.id.copyrightFrameLayout);
+        //TextView settingsCredits = findViewById(R.id.credits_view);
+        //FrameLayout frameLayout = findViewById(R.id.copyrightFrameLayout);
 
         TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
         TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
@@ -1690,9 +1690,9 @@ public class SettingsActivity extends AppCompatActivity {
         allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
-        settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
-        settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
-        frameLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        //settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
+        //settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        //frameLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
 
         settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, textColor));

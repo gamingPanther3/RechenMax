@@ -35,7 +35,7 @@
     <string name="callUpHistory">Acceder al historial</string>
     <string name="callUpHistoryText">En la barra de acciones encontrarás el botón de historial, que te permite acceder y ver tus cálculos anteriores. Este práctico botón te facilita encontrar rápidamente tus cálculos anteriores y consultarlos cuando sea necesario, ya sea para verificar resultados o repetir cálculos anteriores.</string>
     <string name="editHistoryText">Puedes ver cálculos anteriores en el historial. El botón de eliminar (arriba a la derecha) borra todo el historial, el botón de retroceso (arriba a la izquierda) regresa a la calculadora. Al mantener presionado, se copia un cálculo al portapapeles, al presionar brevemente se pega en la calculadora y al hacer doble clic se elimina un cálculo individual.</string>
-    <string name="historyIsEmpty">\n\n\n\n\n\n\nTu historial está vacío.</string>
+    <string name="historyIsEmpty">Tu historial está vacío.</string>
     <string name="editHistory">Editar historial</string>
 
     <string name="settings">Configuración</string>
@@ -289,9 +289,11 @@
     <string name="convertSeamiles">Millas náuticas (sm)</string>
     <string name="convertLightyear">Año luz (ly)</string>
     <string name="convertKubikmillimeter">Milímetro cúbico (mm³)</string>
+    <string name="convertKubikzentimeter">Centímetros cúbicos (cm³)</string>
+    <string name="convertKubikdezimeter">Decímetros cúbicos (dm³)</string>
+    <string name="convertKubikmeter">Metro cúbico (m³)</string>
     <string name="convertMilliliter">Mililitro (ml)</string>
     <string name="convertLiter">Litro (l)</string>
-    <string name="convertKubikmeter">Metro cúbico (m³)</string>
     <string name="convertGallonUS">Galón estadounidense (gal)</string>
     <string name="convertKubikFeet">Pie cúbico (ft³)</string>
     <string name="convertKubikInch">Pulgada cúbica (in³)</string>
@@ -411,7 +413,7 @@
 
     <string name="historyDescription">Nota:</string>
     <string name="historyDescriptionHint">Haz clic para añadir una descripción</string>
-    <string name="historyLoadText">\n\n\n\n\n\n\nCargando ...</string>
+    <string name="historyLoadText">Cargando ...</string>
     <string name="historyConfirmTitle">¿Estás seguro?</string>
     <string name="historyConfirmDeleteText">Eliminar permanentemente</string>
     <string name="historyConfirmCancelText">Cancelar</string>

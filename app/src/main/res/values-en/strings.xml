@@ -35,7 +35,7 @@
     <string name="callUpHistory">Call up history</string>
     <string name="callUpHistoryText">In the action bar you will find the history button, which allows you to access and view your previous calculations. This handy button makes it easier for you to quickly find your previous calculations and refer back to them when needed, whether to check results or repeat previous calculations.</string>
     <string name="editHistoryText">You can view previous calculations in the history. The delete button (top right) clears the entire history, the back button (top left) returns to the calculator. A long press copies a calculation to the clipboard, a short press pastes it into the calculator, and a double tap deletes a single calculation.</string>
-    <string name="historyIsEmpty">\n\n\n\n\n\n\nYour history is empty.</string>
+    <string name="historyIsEmpty">Your history is empty.</string>
     <string name="editHistory">Edit history</string>
 
     <string name="settings">Settings</string>
@@ -290,9 +290,11 @@
     <string name="convertSeamiles">Seamiles (sm)</string>
     <string name="convertLightyear">Lightyear (ly)</string>
     <string name="convertKubikmillimeter">Cubic Millimeter (mm³)</string>
+    <string name="convertKubikzentimeter">Cubic centimeters (cm³)</string>
+    <string name="convertKubikdezimeter">Cubic decimeters (dm³)</string>
+    <string name="convertKubikmeter">Cubic Meter (m³)</string>
     <string name="convertMilliliter">Milliliter (ml)</string>
     <string name="convertLiter">Liter (l)</string>
-    <string name="convertKubikmeter">Cubic Meter (m³)</string>
     <string name="convertGallonUS">Gallon US (gal)</string>
     <string name="convertKubikFeet">Cubic Feet (ft³)</string>
     <string name="convertKubikInch">Cubic Inch (in³)</string>
@@ -412,7 +414,7 @@
 
     <string name="historyDescription">Note:</string>
     <string name="historyDescriptionHint">Click to add a description</string>
-    <string name="historyLoadText">\n\n\n\n\n\n\nLoading  ...</string>
+    <string name="historyLoadText">Loading  ...</string>
     <string name="historyConfirmTitle">Are you sure?</string>
     <string name="historyConfirmDeleteText">Delete permanently</string>
     <string name="historyConfirmCancelText">Cancel</string>

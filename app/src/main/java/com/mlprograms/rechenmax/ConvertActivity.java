@@ -991,21 +991,15 @@ public class ConvertActivity extends AppCompatActivity {
                         convertLightyear.setText(      formatResultTextAfterType(distanceConverter.convertToString(editTextNumber, LIGHT_YEAR)));
                         break;
                     case "Volumen" /* Volumen */:
+                        TextView convertKubikmillimeter = findViewById(R.id.convertKubikmillimeterTextView);
+                        TextView convertKubikzentimeter = findViewById(R.id.convertKubikzentimeterTextView);
+                        TextView convertKubikdezimeter = findViewById(R.id.convertKubikdezimeterTextView);
+                        TextView convertKubikmeter = findViewById(R.id.convertKubikmeterTextView);
                         TextView convertMilliliter = findViewById(R.id.convertMilliliterTextView);
                         TextView convertLiter = findViewById(R.id.convertLiterTextView);
-                        TextView convertKubikmillimeter = findViewById(R.id.convertKubikmillimeterTextView);
-                        TextView convertKubikmeter = findViewById(R.id.convertKubikmeterTextView);
                         TextView convertKubikInch = findViewById(R.id.convertKubikInchTextView);
                         TextView convertKubikFeet = findViewById(R.id.convertKubikFeetTextView);
                         TextView convertGallonUS = findViewById(R.id.convertGallonUSTextView);
-
-                        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmillimeter)));
-                        customItemListVolume.add(new CustomItems(getString(R.string.convertMilliliter)));
-                        customItemListVolume.add(new CustomItems(getString(R.string.convertLiter)));
-                        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmeter)));
-                        customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUS)));
-                        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikFeet)));
-                        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikInch)));
 
                         Converter volumeConverter = new Converter(VOLUME, CUBIC_MILLIMETER);
                         switch (spinner.getSelectedItemPosition()) {
@@ -1013,37 +1007,47 @@ public class ConvertActivity extends AppCompatActivity {
                                 volumeConverter = new Converter(VOLUME, CUBIC_MILLIMETER);
                                 break;
                             case 1:
-                                volumeConverter = new Converter(VOLUME, MILLILITER);
+                                volumeConverter = new Converter(VOLUME, CUBIC_CENTIMETER);
                                 break;
                             case 2:
-                                volumeConverter = new Converter(VOLUME, LITER);
+                                volumeConverter = new Converter(VOLUME, CUBIC_DECIMETER);
                                 break;
                             case 3:
                                 volumeConverter = new Converter(VOLUME, CUBIC_METER);
                                 break;
                             case 4:
-                                volumeConverter = new Converter(VOLUME, GALLON);
+                                volumeConverter = new Converter(VOLUME, MILLILITER);
                                 break;
                             case 5:
-                                volumeConverter = new Converter(VOLUME, CUBIC_FEET);
+                                volumeConverter = new Converter(VOLUME, LITER);
                                 break;
                             case 6:
+                                volumeConverter = new Converter(VOLUME, GALLON);
+                                break;
+                            case 7:
+                                volumeConverter = new Converter(VOLUME, CUBIC_FEET);
+                                break;
+                            case 8:
                                 volumeConverter = new Converter(VOLUME, CUBIC_INCH);
                                 break;
                             default:
+                                convertKubikmillimeter.setText("0,00");
+                                convertKubikzentimeter.setText("0,00");
+                                convertKubikdezimeter.setText("0,00");
+                                convertKubikmeter.setText("0,00");
                                 convertMilliliter.setText("0,00");
                                 convertLiter.setText("0,00");
-                                convertKubikmillimeter.setText("0,00");
-                                convertKubikmeter.setText("0,00");
                                 convertKubikInch.setText("0,00");
                                 convertKubikFeet.setText("0,00");
                                 convertGallonUS.setText("0,00");
                         }
 
+                        convertKubikmillimeter.setText(  formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_MILLIMETER)));
+                        convertKubikzentimeter.setText(  formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_CENTIMETER)));
+                        convertKubikdezimeter.setText(   formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_DECIMETER)));
+                        convertKubikmeter.setText(       formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_METER)));
                         convertMilliliter.setText(       formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, MILLILITER)));
                         convertLiter.setText(            formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, LITER)));
-                        convertKubikmillimeter.setText(  formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_MILLIMETER)));
-                        convertKubikmeter.setText(       formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_METER)));
                         convertKubikInch.setText(        formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_INCH)));
                         convertKubikFeet.setText(        formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_FEET)));
                         convertGallonUS.setText(         formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, GALLON)));
@@ -1619,9 +1623,11 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListDistance.add(new CustomItems(getString(R.string.convertLightyear)));
 
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmillimeter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikzentimeter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikdezimeter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmeter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertMilliliter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertLiter)));
-        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmeter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUS)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikFeet)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikInch)));

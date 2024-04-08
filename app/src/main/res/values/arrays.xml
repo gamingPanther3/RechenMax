@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="auto_text_sizes_calculatorui">
-        <item>19dp</item>
-        <item>21dp</item>
-        <item>40dp</item>
-    </array>
-
     <array name="auto_text_sizes_calculatorui_3">
         <item>40sp</item>
         <item>45sp</item>

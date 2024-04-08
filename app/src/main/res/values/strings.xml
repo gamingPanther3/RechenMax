@@ -125,7 +125,7 @@
     <string name="calculationModeText">Mit dieser Einstellung kannst du festlegen, ob die Eingaben zuerst im Ergebnisbereich angezeigt und dann mit einem Operator in den Berechnungsbereich eingefügt (Standard), oder ob sie direkt im Berechnungsbereich geschrieben werden (Vereinfacht).</string>
     <string name="calculationMode">Berechungsmodus</string>
     <string name="deg_rad">Grad- / Bogenmaß</string>
-    <string name="historyIsEmpty">\n\n\n\n\n\n\nDein Verlauf ist leer.</string>
+    <string name="historyIsEmpty">Dein Verlauf ist leer.</string>
     <string name="helpPictureContentDescription" translatable="false">TODO</string>
     <string name="settingsDecimalPoints">Nachkommastellen</string>
     <string name="settingsDecimalPointsText">Mit dieser Einstellung kannst du auswählen, wie viele Nachkommastellen in dem Umrechner angezeigt werden sollen. Beachte jedoch, dass eine höhere Anzahl von Nachkommastellen die Leistung beeinträchtigen kann.</string>
@@ -361,11 +361,13 @@
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <!-- Volumen -->
     <string name="convertKubikmillimeter">Kubikmillimeter (mm³)</string>
+    <string name="convertKubikzentimeter">Kubikzentimeter (cm³)</string>
+    <string name="convertKubikdezimeter">Kubikdezimeter (dm³)</string>
+    <string name="convertKubikmeter">Kubikmeter (m³)</string>
     <string name="convertMilliliter">Milliliter (ml)</string>
     <string name="convertLiter">Liter (l)</string>
-    <string name="convertKubikmeter">Kubikmeter (m³)</string>
     <string name="convertGallonUS">Gallon US (gal)</string>
-    <string name="convertKubikFeet">Kubik-Inch (ft³)</string>
+    <string name="convertKubikFeet">Kubik-Feet (ft³)</string>
     <string name="convertKubikInch">Kubik-Inch (in³)</string>
     <!-- Masse / Gewicht -->
     <string name="convertFemtogramm">Femtogramm (fg)</string>
@@ -492,7 +494,7 @@
 
     <string name="historyDescription">Notiz:</string>
     <string name="historyDescriptionHint">Klicke, um eine Beschreibung hinzuzufügen</string>
-    <string name="historyLoadText">\n\n\n\n\n\n\nWird geladen ...</string>
+    <string name="historyLoadText">Wird geladen ...</string>
     <string name="historyConfirmTitle">Bist du dir sicher?</string>
     <string name="historyConfirmDeleteText">Endgültig löschen</string>
     <string name="historyConfirmCancelText">Abbrechen</string>

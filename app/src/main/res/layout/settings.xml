@@ -439,6 +439,7 @@
         </LinearLayout>
     </ScrollView>
 
+    <!--
     <FrameLayout
         android:id="@+id/copyrightFrameLayout"
         android:layout_width="match_parent"
@@ -464,4 +465,5 @@
             android:textColor="@color/colorBTNForegroundAccent" />
 
     </FrameLayout>
+    -->
 </LinearLayout>

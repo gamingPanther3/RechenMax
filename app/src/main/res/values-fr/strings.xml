@@ -32,7 +32,7 @@
     <string name="callUpHistory">Appeler l\'historique</string>
     <string name="callUpHistoryText">Dans la barre d\'action, vous trouverez le bouton historique, qui vous permet d\'accéder et de visualiser vos calculs précédents. Ce bouton pratique vous permet de retrouver plus facilement et rapidement vos calculs précédents et d\'y revenir en cas de besoin, que ce soit pour vérifier les résultats ou répéter les calculs précédents.</string>
     <string name="editHistoryText">Vous pouvez afficher les calculs précédents dans l\'historique. Le bouton Supprimer (en haut à droite) efface tout l\'historique, le bouton Précédent (en haut à gauche) renvoie à la calculatrice. Un appui long copie un calcul dans le presse-papiers, un appui court le colle dans la calculatrice et un double appui supprime un seul calcul.</string>
-    <string name="historyIsEmpty">\n\n\n\n\n\n\nVotre historique est vide.</string>
+    <string name="historyIsEmpty">Votre historique est vide.</string>
     <string name="editHistory">Modifier l\'historique</string>
     <string name="settings">Paramètres</string>
     <string name="callUpSettings">Appeler les paramètres</string>
@@ -269,9 +269,11 @@
     <string name="convertSeamiles">Miles nautiques (sm)</string>
     <string name="convertLightyear">Année-lumière (ly)</string>
     <string name="convertKubikmillimeter">Millimètre cube (mm³)</string>
+    <string name="convertKubikzentimeter">Centimètres cubes (cm³)</string>
+    <string name="convertKubikdezimeter">Décimètres cubes (dm³)</string>
+    <string name="convertKubikmeter">Mètre cube (m³)</string>
     <string name="convertMilliliter">Millilitre (ml)</string>
     <string name="convertLiter">Litre (l)</string>
-    <string name="convertKubikmeter">Mètre cube (m³)</string>
     <string name="convertGallonUS">Gallon US (gal)</string>
     <string name="convertKubikFeet">Pied cube (ft³)</string>
     <string name="convertKubikInch">Pouce cube (in³)</string>
@@ -391,7 +393,7 @@
 
     <string name="historyDescription">Remarque :</string>
     <string name="historyDescriptionHint">Cliquez pour ajouter une description</string>
-    <string name="historyLoadText">\n\n\n\n\n\n\nChargement ...</string>
+    <string name="historyLoadText">Chargement ...</string>
     <string name="historyConfirmTitle">Êtes-vous sûr(e) ?</string>
     <string name="historyConfirmDeleteText">Supprimer définitivement</string>
     <string name="historyConfirmCancelText">Annuler</string>

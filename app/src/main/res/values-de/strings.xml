@@ -23,7 +23,7 @@
     <string name="understood">Verstanden</string>
     <string name="functionText">Einstellung ‘Grad- / Bogenmaß’ ermöglicht die Auswahl zwischen zwei gängigen Maßeinheiten für Winkel: Grad und Bogenmaß. Ein Grad teilt den Winkel in 360 Teile, die einen vollen Kreis bilden. Im Bogenmaß wird der Winkel basierend auf dem Radius eines Kreises gemessen. Ein voller Kreis entspricht 2π Radian, wobei π etwa 3.14159 ist. Ein rechter Winkel beträgt π/2 Radian. Das Bogenmaß ermöglicht präzise Verhältnisse zwischen Winkel und Kreisradius und wird in fortgeschrittenen mathematischen Berechnungen verwendet.</string>
     <string name="patchnotesOverviewText">"Die neueste RechenMax-Version bringt aufregende Verbesserungen und Funktionen mit sich. Automatisches Scrollen erleichtert die Navigation bei umfangreichen Berechnungen, während die Rundungsgenauigkeit für präzisere Dezimalzahlen auf die elfte Nachkommastelle erhöht wurde. Der Verlauf wurde optimiert, um vorherige Berechnungen mühelos wiederherzustellen und vergangene Aufgaben zu überprüfen. In trigonometrischen Aufgaben stehen erweiterte Funktionen für Sinus, Cosinus und Tangens im Grad- und Bogenmaß zur Verfügung. Inverse trigonometrische Funktionen (sin⁻¹, cos⁻¹, tan⁻¹) sowie hyperbolische Funktionen wie sinh(x), cosh(x) und tanh(x) sind nun ebenfalls verfügbar. Die manuelle Eingabe von Notationen bietet zusätzliche Flexibilität bei der Erstellung und Berechnung komplexer Ausdrücke. Der RechenMax unterstützt jetzt die Verwendung der mathematischen Konstanten PI (π) für präzise Kreisberechnungen. Mit der flexiblen Unterstützung von Gradmaß und Bogenmaß kann je nach Bedarf zwischen den beiden Maßeinheiten gewechselt werden. Die Klammernbehandlung wurde optimiert, um die fehlerfreie Verarbeitung von mathematischen oder logischen Ausdrücken sicherzustellen. Die Software erkennt automatisch fehlende schließende Klammern und fügt sie hinzu, was die Eingabe von Ausdrücken weiter vereinfacht. Im Verlauf ermöglicht langes Drücken auf einen Eintrag das automatische Kopieren der Rechnung in die Zwischenablage, während kurzes Drücken die Rechnung direkt in den Taschenrechner einfügt. Diese Version behebt zudem wichtige Fehler, darunter Anzeige- und Faktoriellenberechnungsprobleme, sowie optimierte Ergebnisformatierung für eine präzisere Anzeige. "</string>
-    <string name="historyIsEmpty">\n\n\n\n\n\n\nDein Verlauf ist leer.</string>
+    <string name="historyIsEmpty">Dein Verlauf ist leer.</string>
     <string name="deg_rad">Grad- / Bogenmaß</string>
     <string name="calculationMode">Berechungsmodus</string>
     <string name="trueDarkmode">Echter Dunkelmodus</string>
@@ -274,11 +274,13 @@
     <string name="convertSeamiles">Seemeilen (sm)</string>
     <string name="convertLightyear">Lichtjahr (ly)</string>
     <string name="convertKubikmillimeter">Kubikmillimeter (mm³)</string>
+    <string name="convertKubikzentimeter">Kubikzentimeter (cm³)</string>
+    <string name="convertKubikdezimeter">Kubikdezimeter (dm³)</string>
+    <string name="convertKubikmeter">Kubikmeter (m³)</string>
     <string name="convertMilliliter">Milliliter (ml)</string>
     <string name="convertLiter">Liter (l)</string>
-    <string name="convertKubikmeter">Kubikmeter (m³)</string>
     <string name="convertGallonUS">Gallon US (gal)</string>
-    <string name="convertKubikFeet">Kubik-Inch (ft³)</string>
+    <string name="convertKubikFeet">Kubik-Feet (ft³)</string>
     <string name="convertKubikInch">Kubik-Inch (in³)</string>
     <string name="convertFemtogramm">Femtogramm (fg)</string>
     <string name="convertPicogramm">Picogramm (pg)</string>
@@ -395,7 +397,7 @@
 
     <string name="historyDescription">Notiz:</string>
     <string name="historyDescriptionHint">Klicke, um eine Beschreibung hinzuzufügen</string>
-    <string name="historyLoadText">\n\n\n\n\n\n\nWird geladen ...</string>
+    <string name="historyLoadText">Wird geladen ...</string>
     <string name="historyConfirmTitle">Bist du dir sicher?</string>
     <string name="historyConfirmDeleteText">Endgültig löschen</string>
     <string name="historyConfirmCancelText">Abbrechen</string>

@@ -137,9 +137,11 @@ public class Converter extends ConvertActivity {
 
         // Volume
         CUBIC_MILLIMETER(new Unit(Category.VOLUME, "mm\u00b3", "Cubic Millimeter", new BigDecimal("1.0E-9"))),
+        CUBIC_CENTIMETER(new Unit(Category.VOLUME, "cm\u00b3", "Cubic Centimeter", new BigDecimal("1.0E-6"))),
+        CUBIC_DECIMETER(new Unit(Category.VOLUME, "dm\u00b3", "Cubic Decimeter", new BigDecimal("1.0E-3"))),
+        CUBIC_METER(new Unit(Category.VOLUME, "m\u00b3", "Cubic Meter", new BigDecimal("1.0E0"))),
         MILLILITER(new Unit(Category.VOLUME, "ml", "Milliliter", new BigDecimal("1.0E-6"))),
         LITER(new Unit(Category.VOLUME, "l", "Liter", new BigDecimal("1.0E-3"))),
-        CUBIC_METER(new Unit(Category.VOLUME, "m\u00b3", "Cubic Meter", new BigDecimal("1.0E0"))),
         GALLON(new Unit(Category.VOLUME, "gal", "US Gallon", new BigDecimal("0.0037854118"))),
         CUBIC_FEET(new Unit(Category.VOLUME, "ft\u00b3", "Cubic Foot", new BigDecimal("0.0283168466"))),
         CUBIC_INCH(new Unit(Category.VOLUME, "in\u00b3", "Cubic Inch", new BigDecimal("0.0000163871"))),

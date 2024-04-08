@@ -909,7 +909,7 @@ public class HistoryActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT
             ));
             emptyTextView.setId(R.id.history_empty_textview);
-            emptyTextView.setText(getString(R.string.historyIsEmpty));
+            emptyTextView.setText("\n\n\n" + getString(R.string.historyIsEmpty));
             emptyTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
             emptyTextView.setTextSize(35f);
             emptyTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
@@ -958,7 +958,7 @@ public class HistoryActivity extends AppCompatActivity {
         textView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView.setText(getString(R.string.historyIsEmpty));
+        textView.setText("\n\n\n" + getString(R.string.historyIsEmpty));
         textView.setTextColor(getResources().getColor(android.R.color.black));
         textView.setTextSize(35);
         textView.setGravity(android.view.Gravity.CENTER_VERTICAL | android.view.Gravity.CENTER_HORIZONTAL);

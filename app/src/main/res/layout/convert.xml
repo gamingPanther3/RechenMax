@@ -49,7 +49,10 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:background="@color/colorBTNBackgroundAccent"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,7 +77,9 @@
                 android:background="@color/colorBTNBackgroundAccent"
                 android:hint="@string/converterPlaceHolder"
                 android:textColor="@color/black"
-                android:textSize="25sp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:imeOptions="actionDone"
@@ -90,7 +95,10 @@
             android:paddingTop="5dp"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="10dp"
-            android:background="@color/colorBTNBackgroundAccent" />
+            android:background="@color/colorBTNBackgroundAccent"
+            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"/>
 
     </LinearLayout>
 

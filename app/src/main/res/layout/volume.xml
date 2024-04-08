@@ -19,6 +19,170 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKubikmillimeter"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertKubikmillimeterScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertKubikmillimeterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKubikzentimeter"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertKubikzentimeterScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertKubikzentimeterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKubikdezimeter"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertKubikdezimeterScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertKubikdezimeterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
+            android:text="@string/convertKubikmeter"
+            android:textSize="17sp"
+            android:gravity="start|center_horizontal"/>
+
+        <HorizontalScrollView
+            android:id="@+id/convertKubikmeterScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical">
+
+            <TextView
+                android:id="@+id/convertKubikmeterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="italic"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:text="@string/convertNull"
+                android:textSize="17sp"
+                android:layout_gravity="end|center_vertical"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/history_line_height"
+        android:background="@color/history_line_color"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+        <TextView
+            android:layout_width="210dp"
+            android:layout_height="35dp"
+            android:textStyle="italic"
+            android:textColor="@color/colorBTNForegroundAccent"
             android:text="@string/convertMilliliter"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
@@ -101,59 +265,18 @@
             android:layout_height="35dp"
             android:textStyle="italic"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertKubikmillimeter"
+            android:text="@string/convertKubikFeet"
             android:textSize="17sp"
             android:gravity="start|center_horizontal"/>
 
         <HorizontalScrollView
-            android:id="@+id/convertKubikmillimeterScrollView"
+            android:id="@+id/convertKubikFeetScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical">
 
             <TextView
-                android:id="@+id/convertKubikmillimeterTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:textStyle="italic"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/convertNull"
-                android:textSize="17sp"
-                android:layout_gravity="end|center_vertical"/>
-        </HorizontalScrollView>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/history_line_height"
-        android:background="@color/history_line_color"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
-
-        <TextView
-            android:layout_width="210dp"
-            android:layout_height="35dp"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertKubikmeter"
-            android:textSize="17sp"
-            android:gravity="start|center_horizontal"/>
-
-        <HorizontalScrollView
-            android:id="@+id/convertKubikmeterScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical">
-
-            <TextView
-                android:id="@+id/convertKubikmeterTextView"
+                android:id="@+id/convertKubikFeetTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"
@@ -195,47 +318,6 @@
 
             <TextView
                 android:id="@+id/convertKubikInchTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:textStyle="italic"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:text="@string/convertNull"
-                android:textSize="17sp"
-                android:layout_gravity="end|center_vertical"/>
-        </HorizontalScrollView>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/history_line_height"
-        android:background="@color/history_line_color"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
-
-        <TextView
-            android:layout_width="210dp"
-            android:layout_height="35dp"
-            android:textStyle="italic"
-            android:textColor="@color/colorBTNForegroundAccent"
-            android:text="@string/convertKubikFeet"
-            android:textSize="17sp"
-            android:gravity="start|center_horizontal"/>
-
-        <HorizontalScrollView
-            android:id="@+id/convertKubikFeetScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical">
-
-            <TextView
-                android:id="@+id/convertKubikFeetTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="italic"

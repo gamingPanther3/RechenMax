@@ -20,4 +20,7 @@
     <item name="releaseNotesFutureFeaturesSubtitle_2" type="id" />
     <item name="releaseNotesFutureFeaturesText_1" type="id" />
     <item name="releaseNotesFutureFeaturesSubtitle_1" type="id" />
+    <item name="emptyHistoryTextView" type="id" />
+    <item name="emptyHistoryLayout" type="id" />
+    <item name="history_scroll_constraintlayout" type="id" />
 </resources>

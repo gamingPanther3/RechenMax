@@ -104,25 +104,26 @@ public class MainActivity extends AppCompatActivity {
 
         // If it's the first run of the application
         try {
-            switch(dataManager.getJSONSettingsData("lastActivity", getApplicationContext()).getString("value")) {
-                case "Set":
-                    switchToSettingsAction();
-                    break;
-                case "Rep":
-                    switchToReportAction();
-                    break;
-                case "Con":
-                    switchToConvertAction();
-                    break;
-                case "Help":
-                    switchToHelpAction();
-                    break;
-                case "His":
-                    switchToHistoryAction();
-                    break;
-                default:
-                    dataManager.saveToJSONSettings("lastActivity", "Main", getApplicationContext());
-            }
+            //switch(dataManager.getJSONSettingsData("lastActivity", getApplicationContext()).getString("value")) {
+            //    case "Set":
+            //        switchToSettingsAction();
+            //        break;
+            //    case "Rep":
+            //        switchToReportAction();
+            //        break;
+            //    case "Con":
+            //        switchToConvertAction();
+            //        break;
+            //    case "Help":
+            //        switchToHelpAction();
+            //        break;
+            //    case "His":
+            //        switchToHistoryAction();
+            //        break;
+            //    default:
+            //        dataManager.saveToJSONSettings("lastActivity", "Main", getApplicationContext());
+            //        break;
+            //}
 
             JSONObject currentVersionData = dataManager.getJSONSettingsData("currentVersion", getApplicationContext());
             JSONObject oldVersionData = dataManager.getJSONSettingsData("old_version", getApplicationContext());
@@ -183,10 +184,9 @@ public class MainActivity extends AppCompatActivity {
                 dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 setCalculateText("");
 
-                HorizontalScrollView scrollView = findViewById(R.id.result_scrollview);
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
-                layoutParams.weight = 1;
-                scrollView.setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1.5F;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -410,10 +410,9 @@ public class MainActivity extends AppCompatActivity {
                     dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 setCalculateText("");
 
-                HorizontalScrollView scrollView = findViewById(R.id.result_scrollview);
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
-                layoutParams.weight = 1;
-                scrollView.setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1.5F;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -530,8 +529,6 @@ public class MainActivity extends AppCompatActivity {
         Button shiftButton = findViewById(R.id.shift);
 
         LinearLayout buttonLayout = findViewById(R.id.button_layout);
-        TextView resultLabel = findViewById(R.id.result_label);
-        TextView calculateLabel = findViewById(R.id.calculate_label);
 
         if (function_mode_text != null) {
             try {
@@ -542,13 +539,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(buttonLayout != null) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
             try {
+                LinearLayout.LayoutParams layoutParams;
                 if (dataManager.getJSONSettingsData("showScienceRow", getApplicationContext()).getString("value").equals("false")) {
+
+                    layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
                     layoutParams.weight = 4;
                     buttonLayout.setLayoutParams(layoutParams);
-                    resultLabel.setPadding(10, 100, 10, 0);
-                    calculateLabel.setPadding(10, 100, 10, 0);
 
                     buttonRow1.setVisibility(View.GONE);
                     buttonRow2.setVisibility(View.GONE);
@@ -564,10 +561,9 @@ public class MainActivity extends AppCompatActivity {
                     function_mode_text.setVisibility(View.GONE);
                     shiftModeText.setVisibility(View.GONE);
                 } else {
+                    layoutParams = (LinearLayout.LayoutParams) buttonLayout.getLayoutParams();
                     layoutParams.weight = 7;
                     buttonLayout.setLayoutParams(layoutParams);
-                    resultLabel.setPadding(10, 20, 10, 0);
-                    calculateLabel.setPadding(10, 10, 10, 0);
 
                     buttonRow1.setVisibility(View.VISIBLE);
                     buttonRow2.setVisibility(View.VISIBLE);
@@ -583,6 +579,10 @@ public class MainActivity extends AppCompatActivity {
                     function_mode_text.setVisibility(View.VISIBLE);
                     shiftModeText.setVisibility(View.VISIBLE);
                 }
+
+                layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -614,9 +614,9 @@ public class MainActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.result_scrollview).getLayoutParams();
-                layoutParams.weight = 2;
-                findViewById(R.id.result_scrollview).setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             });
         }
     }
@@ -666,9 +666,9 @@ public class MainActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.result_scrollview).getLayoutParams();
-                layoutParams.weight = 2;
-                findViewById(R.id.result_scrollview).setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             });
         }
     }
@@ -700,9 +700,9 @@ public class MainActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.result_scrollview).getLayoutParams();
-                layoutParams.weight = 2;
-                findViewById(R.id.result_scrollview).setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             });
         }
     }
@@ -721,10 +721,9 @@ public class MainActivity extends AppCompatActivity {
                 dataManager.saveNumbers(getApplicationContext());
                 dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
 
-                HorizontalScrollView scrollView = findViewById(R.id.result_scrollview);
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
-                layoutParams.weight = 2;
-                scrollView.setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
 
                 scrollToStart(findViewById(R.id.calculate_scrollview));
                 scrollToStart(findViewById(R.id.result_scrollview));
@@ -757,9 +756,9 @@ public class MainActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.result_scrollview).getLayoutParams();
-                layoutParams.weight = 2;
-                findViewById(R.id.result_scrollview).setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             });
         }
     }
@@ -904,9 +903,9 @@ public class MainActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.result_scrollview).getLayoutParams();
-                layoutParams.weight = 2;
-                findViewById(R.id.result_scrollview).setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             });
         }
     }
@@ -2735,10 +2734,9 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        HorizontalScrollView scrollView = findViewById(R.id.result_scrollview);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) scrollView.getLayoutParams();
-        layoutParams.weight = 2;
-        scrollView.setLayoutParams(layoutParams);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+        layoutParams.weight = 1;
+        findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
 
         scrollToStart(findViewById(R.id.calculate_scrollview));
         scrollToStart(findViewById(R.id.result_scrollview));
@@ -2859,6 +2857,8 @@ public class MainActivity extends AppCompatActivity {
      * @param e The action to be performed. This can be "⌫" for the backspace button, "C" for the C button, or "CE" for the CE button.
      */
     public void EmptyAction(final String e) {
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+
         switch (e) {
             case "⌫":
                 handleBackspaceAction();
@@ -2870,32 +2870,14 @@ public class MainActivity extends AppCompatActivity {
                 setRotateOperator(false);
                 dataManager.saveToJSONSettings("logX", "false", getApplicationContext());
 
-                TextView label1 = findViewById(R.id.calculate_label);
-                TextView label2 = findViewById(R.id.result_label);
-                try {
-                    if(dataManager.getJSONSettingsData("showScienceRow", getApplicationContext()).getString("value").equals("true")) {
-                        label1.setTextSize(45f);
-                        label2.setTextSize(45f);
-                    } else {
-                        label1.setTextSize(60f);
-                        label2.setTextSize(75f);
-                    }
-                } catch (JSONException ex) {
-                    throw new RuntimeException(ex);
-                }
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
                 break;
             case "CE":
                 setResultText("0");
-                TextView label = findViewById(R.id.calculate_label);
-                try {
-                    if(dataManager.getJSONSettingsData("showScienceRow", getApplicationContext()).getString("value").equals("false")) {
-                        label.setTextSize(60f);
-                    } else {
-                        label.setTextSize(45f);
-                    }
-                } catch (JSONException ex) {
-                    throw new RuntimeException(ex);
-                }
+
+                layoutParams.weight = 1;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
                 break;
         }
     }
@@ -3204,8 +3186,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void Calculate() {
         addSpaceToOperators(getCalculateText());
-        final String calculation = getCalculateText();
-        final String result = getResultText();
 
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
@@ -3309,12 +3289,6 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
         adjustTextSize();
 
-        if(isInvalidInput(getResultText())) {
-            setCalculateText(calculation);
-            setResultText(result);
-            return;
-        }
-
         if(!isNumber(getCalculateText()) && !getCalculateText().replace("=", "").replace(" ", "").equals("π")
             && !isInvalidInput(getResultText())) {
             addToHistoryAfterCalculate(balanceParentheses(getCalculateText()));
@@ -3334,9 +3308,9 @@ public class MainActivity extends AppCompatActivity {
                     scrollToBottom(findViewById(R.id.result_scrollview));
                 }
 
-                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.result_scrollview).getLayoutParams();
-                layoutParams.weight = 1;
-                findViewById(R.id.result_scrollview).setLayoutParams(layoutParams);
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+                layoutParams.weight = 1.5F;
+                findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -3427,14 +3401,6 @@ public class MainActivity extends AppCompatActivity {
 
             dataManager.saveToHistory(String.valueOf(old_value + 1), formattedDate, "",
                     addSpaceToOperators(balanceParentheses(calculate_text) + getResultText()), context1);
-
-            //System.out.println(dataManager.getAllData(getApplicationContext()).toString());
-
-            //try {
-            //    Log.i("Calculate", "historyTextViewNumber: " + dataManager.getHistoryData("historyTextViewNumber", context1).getString("value"));
-            //} catch (JSONException e) {
-            //    throw new RuntimeException(e);
-            //}
         })).start();
     }
 
@@ -3684,9 +3650,9 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
 
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) result_scrollview.getLayoutParams();
-            layoutParams.weight = 2;
-            result_scrollview.setLayoutParams(layoutParams);
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) findViewById(R.id.calculate_scrollview).getLayoutParams();
+            layoutParams.weight = 1.5F;
+            findViewById(R.id.calculate_scrollview).setLayoutParams(layoutParams);
 
             try {
                 if (!dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")){
