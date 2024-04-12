@@ -65,8 +65,32 @@
     <string name="quarter" translatable="false">¼</string>
 
     <!-- Patch-Notes -->
-    <string name="appVersion" translatable="false">RechenMax 1.6.3</string>
-    <string name="releaseDate">Veröffentlichungsdatum: 01.04.24 - 20Uhr</string>
+    <string name="appVersion" translatable="false">RechenMax 1.6.4</string>
+    <string name="releaseDate">Veröffentlichungsdatum: 29.04.2024 - 20Uhr</string>
+    <string name="releaseNotesText">
+        Neue Funktionen: \n\n
+            - Ein Einheiten-Umrechner wurde hinzugefügt \n
+            - Verlauf wurde überarbeitet \n
+            - Einführung wurde verbessert \n
+            - Es werden, falls aktiv, Benachrichtigungen gesendet \n
+            - Verschiedene Sprachen wie Deutsch, Englisch, Spanisch und Französisch \n
+            - Es können Fehler, oben rechts in den Eistellungen, gemeldet werden \n
+            - Release-Notes wurde verbessert \n
+
+        \nBehobene Fehler: \n\n
+            - Zurücktaste war Fehlerhaft \n
+            - Fehlende Einheit im Umrechner \n
+            - Layout Fehler im Taschenrechner \n
+
+        \nEntfernte Funktionen: \n\n
+            - Release-Notes in den Einstellungen aktivieren und deaktivieren \n
+
+        \nSystemanforderungen: \n\n
+            - Minimale Android-Version: 10 \n
+            - Empfohlene Android-Version: 13 oder höher \n
+            - Maximale Android-Version: 14 \n
+    </string>
+
     <string name="overview">Übersicht</string>
     <string name="newFunctions">Neue Funktionen</string>
     <string name="fixedBugs">Behobene Fehler</string>
@@ -79,6 +103,7 @@
     <string name="shiftMode" translatable="false">1</string>
     <string name="deg" translatable="false">Deg</string>
     <string name="x" translatable="false">x!</string>
+
     <string name="introductionText">"Brauchst du Hilfe oder bist du neu hier? Diese umfassende Anleitung führt dich detailliert durch sämtliche Knöpfe und Funktionen des RechenMax. Der RechenMax bietet eine Vielzahl von leistungsstarken Werkzeugen und Möglichkeiten, um deine Rechenanforderungen effizient zu bewältigen. "</string>
     <string name="introduction">Einführung</string>
     <string name="basics">Grundlagen</string>
@@ -87,15 +112,15 @@
     <string name="numberField">"Nummernfeld"</string>
     <string name="numberFieldText">"In diesem Bereich kannst du durch Klicken auf Zahlen diese schrittweise zum aktuellen Ergebnis im Ergebnisbereich hinzufügen. Dies ermöglicht eine einfache Zusammenstellung deiner gewünschten Zahlenkombination und zeigt dir transparent, wie sich das Ergebnis mit jeder Auswahl ändert."</string>
     <string name="removeBack">"Entfernen / Zurück"</string>
-    <string name="removeBackText">"Für eine präzise Bearbeitung stehen dir verschiedene Löschfunktionen zur Verfügung: '⌫' entfernt die zuletzt hinzugefügte Zahl oder das zuletzt eingegebene Zeichen aus dem Ergebnisbereich, 'CE' löscht den gesamten Ergebnisbereich und 'C' leert sowohl den Ergebnis- als auch den Berechnungsbereich."</string>
+    <string name="removeBackText">"Für eine präzise Bearbeitung stehen dir verschiedene Löschfunktionen zur Verfügung: \'⌫\' entfernt die zuletzt hinzugefügte Zahl oder das zuletzt eingegebene Zeichen aus dem Ergebnisbereich, \'CE\' löscht den gesamten Ergebnisbereich und \'C\' leert sowohl den Ergebnis- als auch den Berechnungsbereich."</string>
     <string name="comma">"Komma"</string>
-    <string name="commaText">"Durch das Betätigen des 'Komma-Knopfes' hast du die Möglichkeit, ein Komma zum Ergebnisbereich hinzuzufügen. Es ist dabei zu beachten, dass, falls bereits ein Komma vorhanden ist, kein weiteres hinzugefügt wird. Diese Funktion ermöglicht eine präzise Eingabe von Dezimalstellen."</string>
+    <string name="commaText">"Durch das Betätigen des \'Komma-Knopfes\' hast du die Möglichkeit, ein Komma zum Ergebnisbereich hinzuzufügen. Es ist dabei zu beachten, dass, falls bereits ein Komma vorhanden ist, kein weiteres hinzugefügt wird. Diese Funktion ermöglicht eine präzise Eingabe von Dezimalstellen."</string>
     <string name="negate">"Negieren"</string>
     <string name="negateText">Wenn du möchtest, dass eine Zahl negativ wird, betätige den \'±\'-Knopf. Drücke ihn erneut, wenn die Zahl wieder positiv sein soll. Diese Funktion ermöglicht eine einfache Änderung des Vorzeichens und sorgt dafür, dass du deine Zahlen nach Bedarf schnell und unkompliziert anpassen kannst.</string>
     <string name="addSubMulDiv">"Addition, Subtraktion, Multiplikation und Division"</string>
-    <string name="addSubMulDivText">"Für Rechenoperationen nutze einfach eines der hervorgehobenen Zeichen. Wenn du beispielsweise '×' auswählst, wird der Operator sofort im Ergebnisbereich eingefügt. Füge dann eine Zahl (z.B., '3') hinzu und setze nach Bedarf weitere Operatoren ein. So gestaltest du deine Rechenabläufe einfach und schrittweise."</string>
+    <string name="addSubMulDivText">"Für Rechenoperationen nutze einfach eines der hervorgehobenen Zeichen. Wenn du beispielsweise \'×\' auswählst, wird der Operator sofort im Ergebnisbereich eingefügt. Füge dann eine Zahl (z.B., \'3\') hinzu und setze nach Bedarf weitere Operatoren ein. So gestaltest du deine Rechenabläufe einfach und schrittweise."</string>
     <string name="introductionInstructions">Einführung</string>
-    <string name="calculateText">"Nachdem du deine Berechnung abgeschlossen hast, betätige die '='-Taste, um das Ergebnis zu berechnen. Anschließend wird das Resultat im Ergebnisbereich für dich angezeigt. Diese einfache Vorgehensweise ermöglicht es dir, schnell und unkompliziert die Ergebnisse deiner Rechenoperationen zu erhalten."</string>
+    <string name="calculateText">"Nachdem du deine Berechnung abgeschlossen hast, betätige die \'=\'-Taste, um das Ergebnis zu berechnen. Anschließend wird das Resultat im Ergebnisbereich für dich angezeigt. Diese einfache Vorgehensweise ermöglicht es dir, schnell und unkompliziert die Ergebnisse deiner Rechenoperationen zu erhalten."</string>
     <string name="calculate">Berechnen</string>
     <string name="actionbar">Aktionsleiste</string>
     <string name="actionbarText">Zusätzlich gibt es eine Aktionsleiste, über die du zwischen verschiedenen Tabs (Verlauf und Einstellungen) sowie dem Wissenschaftsmodus wechseln kannst. Diese Funktion eröffnet dir die Möglichkeit, flexibel zwischen deinem Berechnungsverlauf, individuellen Einstellungen und dem erweiterten Wissenschaftsmodus zu navigieren.</string>
@@ -109,7 +134,7 @@
     <string name="settings">"Einstellungen"</string>
     <string name="settingsText">"An dieser Stelle stehen dir verschiedene Einstellungen mit ausführlichen Beschreibungen zur Verfügung. Wenn du zurück zur Startseite möchtest, verwende einfach den Knopf oben links. Zusätzlich findest du oben rechts den Knopf, der dich zur Einführung des Taschenrechners weiterleitet. So kannst du mühelos auf die gewünschten Funktionen und Informationen zugreifen."</string>
     <string name="advancedFeatures">Erweiterte Funktionen</string>
-    <string name="enableScientificMode">Wissenschaftlichen Modus aktivieren</string>
+    <string name="enableScientificMode">Wissenschaftlichen Modus</string>
     <string name="enableScientificModeText">Um den wissenschaftlichen Modus zu aktivieren, drücke einfach oben links auf den entsprechenden Knopf. Dadurch werden zusätzliche Funktionen angezeigt.</string>
     <string name="moreFunctionText">Wenn der wissenschaftliche Modus aktiviert ist, werden zusätzliche Funktionen angezeigt. Oben links siehst du zwei Pfeile, daneben eine Zahl (1, 2 oder 3) und den Modus \'Deg\' oder \'Rad\'. Mit den Pfeilen und dem ausgewählten Modus, den die Zahl angibt, kannst du zwischen den Modi des wissenschaftlichen Modus wechseln, die verschiedene Funktionen beinhalten. Zusätzlich kannst du mit \'Deg\' das Gradmaß und mit \'Rad\' das Bogenmaß einstellen.  \'(\': Setzt eine geöffnete Klammer in den Berechnungsbereich.  \')\': Setzt eine geschlossene Klammer in den Berechnungsbereich.  \'x!\': Nimmt die eingegebene Zahl aus dem Ergebnisbereich und fügt sie mit dem Faktoriell-Zeichen ein.  \'√x\': Die Wurzel aus der Zahl, die aus dem Ergebnisbereich stammt.  \'e\': Eulersche Zahl (ca. 2,7182)</string>
     <string name="moreFunctions">Weitere Funktionen</string>
@@ -203,7 +228,6 @@
     <string name="patchnotes56">Das Problem mit der fehlerhaften Ergebnisformatierung wurde behoben, um eine präzisere und konsistentere Anzeige zu gewährleisten.\n</string>
     <string name="patchnotes57">\nSprachen</string>
     <string name="patchnotes58">Der Taschenrechner ist nun in Deutsch, Englisch, Spanisch und Französisch verfügbar.</string>
-
     <string name="patchnotes59" translatable="false">\nUmrechner</string>
     <string name="patchnotes60" translatable="false">Mit dem neuen Umrechner kann man jetzt sehr Effizent eine Einheit in eine andere Umrechnen.</string>
     <string name="patchnotes61" translatable="false">\nFehler Melden</string>
@@ -214,6 +238,36 @@
     <string name="patchnotes66" translatable="false">Alle Icons wurden gegen neue Ausgetauscht.</string>
     <string name="patchnotes67" translatable="false">\n</string>
     <string name="patchnotes68" translatable="false"></string>
+
+    <string name="converter">"Umrechner"</string>
+    <string name="changeUnit">"Messgröße ändern"</string>
+    <string name="changeUnitText">"Wenn du auf das oben markierte Feld klickst, kannst du zwischen verschiedenen Messgrößen wählen. Um eine neue Messgröße auszuwählen, klicke einfach darauf."</string>
+    <string name="changeMeasurement">"Einheit ändern"</string>
+    <string name="changeMeasurementText">"Wenn du auf das oben markierte Feld klickst, kannst du zwischen verschiedenen Einheiten wählen. Um eine neue Einheit auszuwählen, klicke einfach darauf. Außerdem kannst du in den Einstellungen unter dem Punkt \'Nachkommastellen\' die Anzahl der Dezimalstellen festlegen, die im Ergebnis angezeigt werden sollen. Wenn du das Ergebnis einer Umrechnung kopieren möchtest, halte lange auf die Zahl neben der entsprechenden Einheit gedrückt."</string>
+    <string name="arrowbackText">"Wenn du nun auf den oben markierten Pfeil klickst, kehrst du wieder zum Taschenrechner zurück."</string>
+    <string name="openConverter">"Umrechner öffnen"</string>
+    <string name="openHistory">"Verlauf öffnen"</string>
+    <string name="openConverterText">"Du kannst zum Umrechner wechseln, indem du oben auf den markierten Knopf klickst."</string>
+    <string name="openHistoryText">"Du kannst zum Verlauf wechseln, indem du oben auf den markierten Knopf klickst."</string>
+    <string name="closeActivityText">"Du kannst zum Hauptmenü, also dem Taschenrechner, zurückkehren, indem du den \'Zurück-Knopf\' oben links drückst."</string>
+    <string name="closeConverter">"Umrechner schließen"</string>
+    <string name="closeHistory">"Verlauf schließen"</string>
+    <string name="deleteHistory">"Verlauf löschen"</string>
+    <string name="deleteHistoryText">"Du kannst deinen Verlauf löschen, indem du oben rechts auf den Papierkorb klickst und anschließend deine Entscheidung bestätigst. Beachte dabei, dass der Verlauf dann vollständig und dauerhaft gelöscht wird."</string>
+    <string name="oldCalculations">"Alte Berechnungen"</string>
+    <string name="oldCalculationsText">"Jede Berechnung zeigt das Datum und die Uhrzeit an, zu der sie durchgeführt wurde. Darunter findest du das Ergebnis sowie ein Notizfeld, in das du Anmerkungen zur Berechnung eintragen kannst. Zusätzlich wird der Text in deine Zwischenablage kopiert, wenn du lange auf das Ergebnis oder die Berechnung drückst. Ein Doppelklick auf die Berechnung oder das Ergebnis löscht die gesamte Aufgabe."</string>
+    <string name="openSettings">"Du kannst die Einstellungen des Taschenrechners aufrufen, indem du oben rechts auf das Zahnrad klickst."</string>
+    <string name="changeSettings">"Einstellungen anpassen"</string>
+    <string name="changeSettingsText">"Nun kannst du verschiedene Einstellungen vornehmen und ändern."</string>
+    <string name="closeSettings">"Einstellungen schließen"</string>
+    <string name="helpHelp">Hilfe / Einführung</string>
+    <string name="openHelp">Einführung aufrufen</string>
+    <string name="openHelpText">"Du kannst die Hilfe bzw. Einführung später erneut aufrufen indem du oben rechts auf den markierten Knopf klickst."</string>
+    <string name="closeHelp">Einführung schließen</string>
+    <string name="closeHelpText">"Du kannst wieder zu den Einstellung wechseln, indem du oben auf den markierten Knopf klickst."</string>
+    <string name="openReport">"Fehler melden aufrufen"</string>
+    <string name="openReportText">"Wenn du einen Fehler gefunden hast, kannst du diesen Melden, indem du auf den markierten Knopf oben klickst."</string>
+    <string name="closeReportText">"Du kannst wieder zu den Einstellung wechseln, indem du oben auf den markierten Knopf klickst."</string>
 
     <string name="historyResult">Ergebnis:</string>
     <string name="historyCalculation">Berechnung:</string>
@@ -364,6 +418,7 @@
     <string name="convertKubikzentimeter">Kubikzentimeter (cm³)</string>
     <string name="convertKubikdezimeter">Kubikdezimeter (dm³)</string>
     <string name="convertKubikmeter">Kubikmeter (m³)</string>
+    <string name="convertKubikkilometer">Kubikkilometer (km³)</string>
     <string name="convertMilliliter">Milliliter (ml)</string>
     <string name="convertLiter">Liter (l)</string>
     <string name="convertGallonUS">Gallon US (gal)</string>

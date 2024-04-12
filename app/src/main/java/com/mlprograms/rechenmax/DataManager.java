@@ -47,8 +47,6 @@ import java.util.Map;
 //  | removeValue                      | true / false                     | MainActivity                         |
 //  | settingsTrueDarkMode             | true / false                     | MainActivity -> SettingsActivity     |
 //  | showPatchNotes                   | true / false                     | MainActivity -> SettingsActivity     |
-//  | disablePatchNotesTemporary       | true / false                     | MainActivity -> SettingsActivity     |
-//  | showReleaseNotesOnVeryFirstStart | true / false                     | MainActivity                         |
 //  | showScienceRow                   | true / false                     | MainActivity                         |
 //  | rotate_op                        | true / false                     | MainActivity                         |
 //  | lastnumber                       | Integer                          | MainActivity                         |
@@ -381,9 +379,6 @@ public class DataManager {
             initializeSetting("settingReleaseNotesSwitch", "true", applicationContext);
             initializeSetting("removeValue", "false", applicationContext);
             initializeSetting("settingsTrueDarkMode", "false", applicationContext);
-            initializeSetting("showPatchNotes", "true", applicationContext);
-            initializeSetting("disablePatchNotesTemporary", "false", applicationContext);
-            initializeSetting("showReleaseNotesOnVeryFirstStart", "true", applicationContext);
             initializeSetting("showScienceRow", "false", applicationContext);
             initializeSetting("rotate_op", "false", applicationContext);
             initializeSetting("lastnumber", "0", applicationContext);
@@ -394,10 +389,11 @@ public class DataManager {
             initializeSetting("isNotation", "false", applicationContext);
             initializeSetting("eNotation", "false", applicationContext);
             initializeSetting("showShiftRow", "false", applicationContext);
+            initializeSetting("showPatchNotes", "false", applicationContext);
             initializeSetting("shiftRow", "1", applicationContext);
             initializeSetting("logX", "false", applicationContext);
-            initializeSetting("calculationMode", "Standard", applicationContext);
-            initializeSetting("currentVersion", "1.6.3", applicationContext);
+            initializeSetting("calculationMode", "Vereinfacht", applicationContext);
+            initializeSetting("currentVersion", "1.6.4", applicationContext);
             initializeSetting("old_version", "0", applicationContext);
             initializeSetting("returnToCalculator", "false", applicationContext);
             initializeSetting("allowNotification", "false", applicationContext);

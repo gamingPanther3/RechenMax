@@ -62,795 +62,1911 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginTop="20sp"
-                android:autoSizeTextType="uniform"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
                 android:text="@string/introduction"
                 android:textColor="#000000"
-                android:textSize="@dimen/calcButtonTextSize"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/introductionText"
-                android:textColor="#000000"
-                android:textSize="@dimen/calcButtonTextSize" />
+                android:textColor="#000000"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
+                android:layout_marginTop="30sp"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
+                android:maxLines="1"
                 android:text="@string/basics"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
                 android:textStyle="bold"
+                android:gravity="center"
                 android:text="@string/calculationAreas"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                 android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
                 android:textColor="#000000" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="420dp"
+                android:layout_height="500dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/calculationArea"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        android:textColor="#000000"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_calculatelabel"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
                     android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_calculatelabel"
-                    android:contentDescription="@string/helpPictureContentDescription" />
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_calculationareas" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/calculationArea"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
                 android:textStyle="bold"
+                android:gravity="center"
                 android:text="@string/numberField"
-                android:textColor="#000000"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1.7"
-                        android:text="@string/numberFieldText"
-                        android:textColor="#000000"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_numpad"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_numpad"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:textStyle="bold"
-                android:text="@string/removeBack"
-                android:textColor="#000000"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        android:text="@string/removeBackText"                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_delete"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_delete"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/comma"
-                android:textColor="#000000"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/commaText"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        android:textColor="#000000"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_comma"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_comma"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:textStyle="bold"
-                android:text="@string/negate"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/negateText"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_negative"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_negative"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:textStyle="bold"
-                android:text="@string/addSubMulDiv"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/addSubMulDivText"
-                        android:textColor="#000000"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_operand"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_operands"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:textStyle="bold"
-                android:text="@string/calculate"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        android:text="@string/calculateText"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_calculate"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_calculate"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/actionbar"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/actionbarText"
-                        android:textColor="#000000"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_actionbar"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_actionbar"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="20sp"
-                android:text="@string/history"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/callUpHistory"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/callUpHistoryText"
-                        android:textColor="#000000"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_history_button"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_historybutton"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/editHistory"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/editHistoryText"
-                        android:textColor="#000000"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_history"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_history"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/callUpSettings"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/callUpSettingsText"
-                        android:textColor="#000000"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_actionbar2"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_settingbutton"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/settings"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="@string/settingsText"
-                        android:textColor="#000000"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_settings"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_settings"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="20sp"
-                android:text="@string/advancedFeatures"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/enableScientificMode"
-                android:textColor="#000000"
-                android:autoSizeTextType="uniform"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1.7"
-                        android:text="@string/enableScientificModeText"
-                        android:textColor="#000000"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        tools:ignore="NestedWeights" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/pic_science"
-                    android:layout_width="0dp"
-                    android:layout_height="400sp"
-                    android:layout_weight="1"
-                    android:src="@drawable/rm_tdm_sciencebutton"
-                    android:contentDescription="@string/helpPictureContentDescription" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:text="@string/moreFunctions"
-                android:textColor="#000000"
-                android:textStyle="bold" />
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                    android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                    android:autoSizeStepGranularity="1sp"
-                    android:autoSizeTextType="uniform"
-                    android:text="@string/moreFunctionText"
-                    android:textColor="#000000"
-                    tools:ignore="NestedWeights,TooManyViews" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/pic_science_actionbar1"
-                        android:layout_width="match_parent"
-                        android:layout_height="400sp"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="5sp"
-                        android:src="@drawable/rm_tdm_scieceactionbar1"
-                        tools:ignore="NestedWeights"
-                        android:contentDescription="@string/helpPictureContentDescription"/>
-
-                    <ImageView
-                        android:id="@+id/pic_science_actionbar2"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="5sp"
-                        android:layout_height="400sp"
-                        android:layout_weight="1"
-                        android:src="@drawable/rm_tdm_scieceactionbar2"
-                        android:contentDescription="@string/helpPictureContentDescription" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/moreTabs"
-                android:textColor="#000000"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
-                android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="500dp"
                 android:orientation="horizontal"
                 android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:gravity="center_vertical">
+                    android:layout_gravity="center_horizontal">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="1150dp"
-                        android:layout_weight="1"
-                        android:autoSizePresetSizes="@array/auto_text_sizes_helpui"
-                        android:autoSizeStepGranularity="1sp"
-                        android:autoSizeTextType="uniform"
-                        android:text="@string/moreTabsText"
-                        android:textColor="#000000"
-                        tools:ignore="InefficientWeight,NestedWeights" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
 
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/rm_numberfield"
+                            android:contentDescription="@string/helpPictureContentDescription" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/numberFieldText"
+                            android:textColor="#000000"
+                            android:gravity="center"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/removeBack"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
 
-                    <ImageView
-                        android:id="@+id/pic_science_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="400dp"
-                        android:layout_marginBottom="50sp"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/rm_deleteandback"
+                            android:contentDescription="@string/helpPictureContentDescription" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/removeBackText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/comma"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_comma" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/commaText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/negate"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/rm_negate"
+                            android:contentDescription="@string/helpPictureContentDescription" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.7"
+                            android:text="@string/negateText"
+                            android:textColor="#000000"
+                            android:gravity="center"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/addSubMulDiv"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="2"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/rm_addsubdivmul"
+                            android:contentDescription="@string/helpPictureContentDescription" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/addSubMulDivText"
+                            android:textColor="#000000"
+                            android:gravity="center"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/calculate"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_calculate" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/calculateText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/actionbar"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_actionbar" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/actionbarText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/enableScientificMode"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_enablesciencetific" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/enableScientificModeText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/moreFunctions"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1800dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/rm_tdm_science1"
-                        android:contentDescription="@string/helpPictureContentDescription"
-                        tools:ignore="NestedWeights" />
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/pic_science_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="400dp"
-                        android:layout_marginBottom="50sp"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_enabledsciencetificmode" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="10dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_enabledsciencetificmode2" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="10dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_enabledsciencetificmode3" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/moreFunctionText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30sp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="@string/converter"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/openConverter"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/rm_tdm_science2"
-                        android:contentDescription="@string/helpPictureContentDescription"/>
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/pic_science_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="400dp"
-                        android:layout_marginTop="5sp"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_openconverter" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/openConverterText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/changeUnit"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1000dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/rm_tdm_science3"
-                        android:contentDescription="@string/helpPictureContentDescription"/>
+                        android:orientation="vertical">
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_changeunit" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="10dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_afterchangedunit" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/changeUnitText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/changeMeasurement"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1100dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_changemessurement" />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="10dp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_afterchangedmessurement" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/changeMeasurementText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/closeConverter"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_arrowback" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/closeActivityText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30sp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="@string/history"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/openHistory"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_openhistory" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/openHistoryText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/oldCalculations"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_history" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/oldCalculationsText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/deleteHistory"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_deletehistory" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/deleteHistoryText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/closeHistory"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_closehistory" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/closeActivityText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30sp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="@string/settings"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/callUpSettings"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_opensettings" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/openSettings"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/changeSettings"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="460dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_settings" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/changeSettingsText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/closeSettings"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_closesettings" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/closeActivityText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30sp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="@string/helpHelp"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/openHelp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="530dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_help" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/openHelpText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/closeHelp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="530dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_closehelp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/closeHelpText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="30sp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="@string/report"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/openReport"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_report" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/openReportText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="@string/changeSettings"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="460dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:contentDescription="@string/helpPictureContentDescription"
+                            android:src="@drawable/rm_closereport" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.001">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                            android:autoSizeStepGranularity="1sp"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:text="@string/closeReportText"
+                            android:textColor="#000000"
+                            tools:ignore="NestedWeights" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

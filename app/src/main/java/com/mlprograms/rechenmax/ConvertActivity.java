@@ -110,6 +110,9 @@ public class ConvertActivity extends AppCompatActivity {
     private CustomAdapter customAdapterMeasurement;
 
     private boolean firstStart = true;
+    private boolean firstStartEditText = true;
+    private boolean checkAndSetEditText = false;
+    private boolean secondCheckAndSetEditText = true;
 
     private LayoutInflater inflater;
     private LinearLayout outherLinearLayout = null;
@@ -326,30 +329,44 @@ public class ConvertActivity extends AppCompatActivity {
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence chars, int start, int count, int after) {
                 // do nothing
             }
 
             @Override
             public void onTextChanged(CharSequence chars, int start, int before, int count) {
-                if(!chars.equals("")) {
-                    calculateAndSetText();
+                if(checkAndSetEditText) {
+                    checkAndSetEditText = false;
+                } else {
+                    if(!chars.equals("")) {
+                        calculateAndSetText();
+                    }
+                    if(firstStartEditText || secondCheckAndSetEditText) {
+                        firstStartEditText = false;
+                        secondCheckAndSetEditText = false;
+                        return;
+                    }
+                    checkAndSetEditTextText();
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                final String inputText = s.toString();
-                try {
-                    final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
-                    dataManager.updateValuesInJSONSettingsData(
-                            "convertMode",
-                            mode + "Number",
-                            inputText,
-                            getMainActivityContext()
-                    );
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                if(checkAndSetEditText) {
+                    checkAndSetEditText = false;
+                } else {
+                    final String inputText = s.toString();
+                    try {
+                        final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+                        dataManager.updateValuesInJSONSettingsData(
+                                "convertMode",
+                                mode + "Number",
+                                inputText,
+                                getMainActivityContext()
+                        );
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -435,16 +452,67 @@ public class ConvertActivity extends AppCompatActivity {
 
                     textViewUnderstood.setOnClickListener(v -> {
                         popupWindow.dismiss();
+
+                        editText.requestFocus();
+                        editText.selectAll();
                     });
                     textViewDontShowAgain.setOnClickListener(v -> {
                         dataManager.updateValuesInJSONSettingsData("showConverterDevelopmentMessage", "value", "false", getMainActivityContext());
                         popupWindow.dismiss();
+
+                        editText.requestFocus();
+                        editText.selectAll();
                     });
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
         });
+
+        checkAndSetEditTextText();
+    }
+
+    private void checkAndSetEditTextText() {
+        checkAndSetEditText = true;
+
+        EditText editText = findViewById(R.id.convertEditTextNumber);
+        int countChar = 0;
+        StringBuilder newText = new StringBuilder();
+
+        for (int i = 0; i < editText.getText().toString().length(); i++) {
+            char currentChar = editText.getText().toString().charAt(i);
+            if (currentChar == ',') {
+                countChar++;
+                if (countChar <= 1) {
+                    newText.append(currentChar);
+                }
+            } else {
+                newText.append(currentChar);
+            }
+        }
+
+        final int selection = editText.getSelectionStart();
+        editText.setText(newText.toString());
+        editText.setSelection(selection);
+
+        try {
+            final String mode;
+            mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+
+            dataManager.updateValuesInJSONSettingsData(
+                    "convertMode",
+                    mode + "Number",
+                    editText.getText().toString(),
+                    getMainActivityContext()
+            );
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        if(secondCheckAndSetEditText) {
+            editText.requestFocus();
+            editText.selectAll();
+        }
     }
 
     /**
@@ -995,6 +1063,7 @@ public class ConvertActivity extends AppCompatActivity {
                         TextView convertKubikzentimeter = findViewById(R.id.convertKubikzentimeterTextView);
                         TextView convertKubikdezimeter = findViewById(R.id.convertKubikdezimeterTextView);
                         TextView convertKubikmeter = findViewById(R.id.convertKubikmeterTextView);
+                        TextView convertKubikkilometer = findViewById(R.id.convertKubikkilometerTextView);
                         TextView convertMilliliter = findViewById(R.id.convertMilliliterTextView);
                         TextView convertLiter = findViewById(R.id.convertLiterTextView);
                         TextView convertKubikInch = findViewById(R.id.convertKubikInchTextView);
@@ -1016,18 +1085,21 @@ public class ConvertActivity extends AppCompatActivity {
                                 volumeConverter = new Converter(VOLUME, CUBIC_METER);
                                 break;
                             case 4:
-                                volumeConverter = new Converter(VOLUME, MILLILITER);
+                                volumeConverter = new Converter(VOLUME, CUBIC_KILOMETER);
                                 break;
                             case 5:
-                                volumeConverter = new Converter(VOLUME, LITER);
+                                volumeConverter = new Converter(VOLUME, MILLILITER);
                                 break;
                             case 6:
-                                volumeConverter = new Converter(VOLUME, GALLON);
+                                volumeConverter = new Converter(VOLUME, LITER);
                                 break;
                             case 7:
-                                volumeConverter = new Converter(VOLUME, CUBIC_FEET);
+                                volumeConverter = new Converter(VOLUME, GALLON);
                                 break;
                             case 8:
+                                volumeConverter = new Converter(VOLUME, CUBIC_FEET);
+                                break;
+                            case 9:
                                 volumeConverter = new Converter(VOLUME, CUBIC_INCH);
                                 break;
                             default:
@@ -1035,6 +1107,7 @@ public class ConvertActivity extends AppCompatActivity {
                                 convertKubikzentimeter.setText("0,00");
                                 convertKubikdezimeter.setText("0,00");
                                 convertKubikmeter.setText("0,00");
+                                convertKubikkilometer.setText("0,00");
                                 convertMilliliter.setText("0,00");
                                 convertLiter.setText("0,00");
                                 convertKubikInch.setText("0,00");
@@ -1046,6 +1119,7 @@ public class ConvertActivity extends AppCompatActivity {
                         convertKubikzentimeter.setText(  formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_CENTIMETER)));
                         convertKubikdezimeter.setText(   formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_DECIMETER)));
                         convertKubikmeter.setText(       formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_METER)));
+                        convertKubikkilometer.setText(   formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_KILOMETER)));
                         convertMilliliter.setText(       formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, MILLILITER)));
                         convertLiter.setText(            formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, LITER)));
                         convertKubikInch.setText(        formatResultTextAfterType(volumeConverter.convertToString(editTextNumber, CUBIC_INCH)));
@@ -1626,6 +1700,7 @@ public class ConvertActivity extends AppCompatActivity {
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikzentimeter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikdezimeter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertKubikmeter)));
+        customItemListVolume.add(new CustomItems(getString(R.string.convertKubikkilometer)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertMilliliter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertLiter)));
         customItemListVolume.add(new CustomItems(getString(R.string.convertGallonUS)));

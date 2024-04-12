@@ -32,6 +32,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.icu.text.DecimalFormat;
 import android.icu.text.DecimalFormatSymbols;
 import android.icu.util.Calendar;
@@ -39,12 +41,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -75,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
     private Context context = this;
     private DataManager dataManager;
 
+    private int newColorBTNForegroundAccent;
+    private int newColorBTNBackgroundAccent;
+
     /**
      * Called when the activity is starting.
      *
@@ -102,58 +109,45 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DataManager(this);
         dataManager.initializeSettings(this);
 
-        // If it's the first run of the application
+        switchDisplayMode();
         try {
-            //switch(dataManager.getJSONSettingsData("lastActivity", getApplicationContext()).getString("value")) {
-            //    case "Set":
-            //        switchToSettingsAction();
-            //        break;
-            //    case "Rep":
-            //        switchToReportAction();
-            //        break;
-            //    case "Con":
-            //        switchToConvertAction();
-            //        break;
-            //    case "Help":
-            //        switchToHelpAction();
-            //        break;
-            //    case "His":
-            //        switchToHistoryAction();
-            //        break;
-            //    default:
-            //        dataManager.saveToJSONSettings("lastActivity", "Main", getApplicationContext());
-            //        break;
-            //}
 
             JSONObject currentVersionData = dataManager.getJSONSettingsData("currentVersion", getApplicationContext());
             JSONObject oldVersionData = dataManager.getJSONSettingsData("old_version", getApplicationContext());
+            JSONObject showPatchNotesData = dataManager.getJSONSettingsData("showPatchNotes", getApplicationContext());
 
-            if (currentVersionData.has("value") && oldVersionData.has("value")) {
-                String currentValue = currentVersionData.getString("value");
-                String oldValue = oldVersionData.getString("value");
+            String currentValue = currentVersionData.getString("value");
+            String oldValue = oldVersionData.getString("value");
+            String showPatchNotes = showPatchNotesData.getString("value");
 
+            if(showPatchNotes.equals("true")) {
+                showPatchNotes();
+            } else if (currentVersionData.has("value") && oldVersionData.has("value")) {
                 if (!Objects.equals(currentValue, oldValue)) {
                     // Set the flag to show patch notes and switch to the patch notes layout
-                    dataManager.saveToJSONSettings("showPatchNotes", true, getApplicationContext());
-                    dataManager.saveToJSONSettings("old_version", currentValue, getApplicationContext());
-                    dataManager.saveToJSONSettings("returnToCalculator", "true", getApplicationContext());
+                    dataManager.updateValuesInJSONSettingsData(
+                            "old_version",
+                            "value",
+                            currentValue,
+                            getApplicationContext()
+                    );
+
+                    dataManager.updateValuesInJSONSettingsData(
+                            "returnToCalculator",
+                            "value",
+                            "true",
+                            getApplicationContext()
+                    );
+
+                    dataManager.updateValuesInJSONSettingsData(
+                            "showPatchNotes",
+                            "value",
+                            "true",
+                            getApplicationContext()
+                    );
+
                     HelpActivity.setMainActivityContext(this);
                     startActivity(new Intent(this, HelpActivity.class));
-                } else {
-                    // Read values from DataManager
-                    final JSONObject showPatchNotesData = dataManager.getJSONSettingsData("showPatchNotes", getApplicationContext());
-                    final JSONObject disablePatchNotesTempData = dataManager.getJSONSettingsData("disablePatchNotesTemporary", getApplicationContext());
-
-                    if (showPatchNotesData.has("value") && disablePatchNotesTempData.has("value")) {
-                        String showPatchNotesValue = showPatchNotesData.getString("value");
-                        String disablePatchNotesTempValue = disablePatchNotesTempData.getString("value");
-
-                        // If patch notes are set to be shown and not temporarily disabled, switch to patch notes layout
-                        if ("true".equals(showPatchNotesValue) && "false".equals(disablePatchNotesTempValue)) {
-                            setContentView(R.layout.patchnotes);
-                            checkDarkmodeSetting();
-                        }
-                    }
                 }
             }
         } catch (JSONException e) {
@@ -163,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
         setUpListeners();
         showOrHideScienceButtonState();
-        checkDarkmodeSetting();
+        switchDisplayMode();
         try {
             dataManager.loadNumbers();
         } catch (JSONException e) {
@@ -201,6 +195,59 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void showPatchNotes() {
+        switchDisplayMode();
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.patchnotes, null);
+
+        final PopupWindow popupWindow = new PopupWindow(
+                popupView, LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                true
+        );
+
+        LinearLayout patchnotesLayout = popupView.findViewById(R.id.patchnotesLayout);
+
+        if (patchnotesLayout != null) {
+            Drawable backgroundDrawable = getResources().getDrawable(R.drawable.textview_border_thick);
+            if (backgroundDrawable instanceof GradientDrawable) {
+                GradientDrawable gradientDrawable = (GradientDrawable) backgroundDrawable;
+                gradientDrawable.setStroke(10, newColorBTNForegroundAccent);
+                patchnotesLayout.setBackground(backgroundDrawable);
+            }
+        }
+
+        TextView releasenotesTitle = popupView.findViewById(R.id.releasenotes_title);
+        TextView releasenotesDate = popupView.findViewById(R.id.releasenotes_date);
+        TextView releasenotesText = popupView.findViewById(R.id.releasenotes_text);
+        TextView understoodButton = popupView.findViewById(R.id.understoodButton);
+
+        releasenotesTitle.setTextColor(newColorBTNForegroundAccent);
+        releasenotesDate.setTextColor(newColorBTNForegroundAccent);
+        releasenotesText.setTextColor(newColorBTNForegroundAccent);
+        understoodButton.setTextColor(newColorBTNForegroundAccent);
+
+        understoodButton.setBackgroundColor(newColorBTNBackgroundAccent);
+
+        popupView.setPadding(20, 20, 20, 20);
+        popupView.setBackgroundColor(newColorBTNBackgroundAccent);
+
+        findViewById(R.id.calculatorUI).post(() ->
+                popupWindow.showAtLocation(findViewById(R.id.calculatorUI),
+                Gravity.CENTER, 0, 0
+        ));
+
+        understoodButton.setOnClickListener(v -> popupWindow.dismiss());
+
+        dataManager.updateValuesInJSONSettingsData(
+                "showPatchNotes",
+                "value",
+                "false",
+                getApplicationContext()
+        );
     }
 
     /**
@@ -248,8 +295,6 @@ public class MainActivity extends AppCompatActivity {
         setActionButtonListener(R.id.history_button, this::switchToHistoryAction);
         setActionButtonListener(R.id.settings_button, this::switchToSettingsAction);
         setActionButtonListener(R.id.convert_button, this::switchToConvertAction);
-
-        setActionButtonListener(R.id.okay_button, this::patchNotesOkayButtonAction);
 
         setClipboardButtonListener(R.id.emptyclipboard, "MC");
         setClipboardButtonListener(R.id.pastefromclipboard, "MR");
@@ -360,20 +405,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             try {
-                if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
-                    setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
-                }
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+                function_mode_text.setText(dataManager.getJSONSettingsData("functionMode", getApplicationContext()).getString("value"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
-            }
-
-            // Update the displayed text with the new function mode
-            if (function_mode_text != null) {
-                try {
-                    function_mode_text.setText(dataManager.getJSONSettingsData("functionMode", getApplicationContext()).getString("value"));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -2112,33 +2147,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Handles the action when the okay button in the patch notes is clicked.
-     * Depending on whether the checkbox is checked or not, it saves different values to JSON.
-     * Then it sets the content view, loads numbers, checks dark mode setting, checks science button state, and sets up listeners.
-     */
-    public void patchNotesOkayButtonAction() {
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) CheckBox checkBox = findViewById(R.id.checkBox);
-        if (checkBox.isChecked()) {
-            dataManager.saveToJSONSettings("showPatchNotes", false, getApplicationContext());
-            dataManager.saveToJSONSettings("disablePatchNotesTemporary", true, getApplicationContext());
-            dataManager.saveToJSONSettings("settingReleaseNotesSwitch", false, getApplicationContext());
-        } else {
-            dataManager.saveToJSONSettings("showPatchNotes", true, getApplicationContext());
-            dataManager.saveToJSONSettings("disablePatchNotesTemporary", true, getApplicationContext());
-            dataManager.saveToJSONSettings("settingReleaseNotesSwitch", true, getApplicationContext());
-        }
-        setContentView(R.layout.calculatorui);
-        try {
-            dataManager.loadNumbers();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        checkDarkmodeSetting();
-        showOrHideScienceButtonState();
-        setUpListeners();
-    }
-
-    /**
      * Switches to the settings activity.
      * It creates a new SettingsActivity, sets the main activity context, and starts the activity.
      */
@@ -2199,15 +2207,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
-    }
-
-    /**
-     * Checks the dark mode setting.
-     * It switches the display mode based on the current night mode.
-     */
-    public void checkDarkmodeSetting() {
-        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+        switchDisplayMode();
     }
 
     /**
@@ -2217,7 +2217,8 @@ public class MainActivity extends AppCompatActivity {
      * If no setting is selected, it saves "System" as the selected setting and calls itself again.
      */
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void switchDisplayMode(int currentNightMode) {
+    private void switchDisplayMode() {
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         // Global variables
         TextView historyButton = findViewById(R.id.history_button);
         TextView settingsButton = findViewById(R.id.settings_button);
@@ -2225,8 +2226,6 @@ public class MainActivity extends AppCompatActivity {
         TextView scienceButton = findViewById(R.id.scientificButton);
         //TextView helpButton = findViewById(R.id.help_button);
         Button shiftButton = findViewById(R.id.shift);
-        int newColorBTNBackgroundAccent = 0;
-        int newColorBTNForegroundAccent = 0;
 
         // Retrieving theme setting
         String selectedSetting = getSelectedSetting();
@@ -2384,13 +2383,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             // Updating UI elements
-            changeTextViewColors(findViewById(R.id.patchnotesUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
-            changeButtonColors(findViewById(R.id.patchnotesUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            //changeTextViewColors(findViewById(R.id.patchnotesUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
+            //changeButtonColors(findViewById(R.id.patchnotesUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
             changeTextViewColors(findViewById(R.id.calculatorUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
             changeButtonColors(findViewById(R.id.calculatorUI), newColorBTNForegroundAccent, newColorBTNBackgroundAccent);
         } else {
             dataManager.saveToJSONSettings("selectedSpinnerSetting", "System", getApplicationContext());
-            switchDisplayMode(currentNightMode);
+            switchDisplayMode();
         }
     }
 
@@ -3673,7 +3672,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        moveTaskToBack(true);
+        finishActivity(1);
     }
 
     /**

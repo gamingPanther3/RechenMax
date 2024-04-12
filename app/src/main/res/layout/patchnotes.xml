@@ -1,764 +1,88 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/patchnotesUI"
-    android:background="@color/colorBTNBackgroundAccent"
-    tools:context="com.mlprograms.rechenmax.MainActivity" >
+    android:layout_margin="10dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="22dp"
+    android:id="@+id/patchnotes">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp">
 
         <LinearLayout
+            android:id="@+id/patchnotesLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/textview_border_thick"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="5dp">
 
-            <TextView
-                android:id="@+id/releaseNotesTitle"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/releasenotes_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/appVersion"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/releasenotes_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="@string/releaseDate"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/releasenotes_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:text="@string/releaseNotesText"
+                        android:paddingHorizontal="15dp"
+                        android:paddingTop="15dp"
+                        android:textColor="@color/colorBTNForegroundAccent" />
+                </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/appVersion"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="15dp">
 
-            <TextView
-                android:id="@+id/releaseNotesReleaseDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/releaseDate"
-                android:gravity="center_horizontal"
-                android:textSize="15sp"
-                android:textColor="#000000"
-                android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/understoodButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:background="@drawable/textview_border"
+                    android:gravity="center"
+                    android:text="@string/understood"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+            </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/releaseNotesOverviewTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/overview"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesOverview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotesOverviewText"
-            android:textColor="#000000"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFeaturesTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/newFunctions"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes1"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes2"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes3"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes4"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes5"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes6"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes7"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes8"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes9"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes10"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes11"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes12"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes13"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes14"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes15"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes16"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes17"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes18"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes19"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes20"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes21"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes22"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes23"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes24"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes25"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes26"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes27"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes28"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle17"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes29"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures17"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes30"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes31"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures18"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes32"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle19"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes33"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures19"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes34"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes35"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes36"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle21"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes37"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures21"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes38"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle22"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes39"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures22"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes40"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle23"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes41"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures23"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes42"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle24"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes43"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures24"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes44"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle25"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes57"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures25"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes58"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle26"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes59"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures26"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes60"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle27"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes61"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures27"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes62"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle28"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes63"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures28"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes64"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle29"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes65"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures29"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes66"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle30"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes67"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeatures30"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/patchnotes68"
-            android:textColor="#000000"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesBugsTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/fixedBugs"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes45"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesText_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes46"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <!--
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes47"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesText_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes48"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-        -->
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesSubtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes49"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesFutureFeaturesText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes50"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes51"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes52"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes53"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes54"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/patchnotes55"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/patchnotes56"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText"/>
-
-        <TextView
-            android:id="@+id/releaseNotesAPIVersionTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:text="@string/systemRequirement"/>
-
-        <TextView
-            android:id="@+id/releaseNotesAPIVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:text="@string/systemRequirementsText"
-            tools:ignore="HardcodedText"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="bottom|end"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="#000000"
-                android:checked="false"
-                android:text="@string/dontShowThisTextAgain"/>
-
-            <Button
-                android:id="@+id/okay_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/understood"
-                android:textColor="@color/white" />
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</androidx.cardview.widget.CardView>

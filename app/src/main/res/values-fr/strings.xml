@@ -11,7 +11,31 @@
     <string name="radian">Radians (Rad)</string>
 
 
-    <string name="releaseDate">Date de sortie: 01.04.24 - 20h</string>
+    <string name="releaseDate">Date de sortie : 29/04/2024 - 20h00</string>
+    <string name="releaseNotesText">"
+        Nouvelles fonctionnalités : \n\n
+            - Ajout d'un convertisseur d\'unités \n
+            - Historique révisé \n
+            - Introduction améliorée \n
+            - Les notifications sont envoyées si elles sont activées \n
+            - Plusieurs langues telles que l'allemand, l'anglais, l'espagnol et le français \n
+            - Les bogues peuvent être signalés dans le coin supérieur droit des paramètres \n
+            - Notes de version améliorées \n
+
+        \nProblèmes résolus : \n\n
+            - Le bouton de retour était défectueux \n
+            - Unité manquante dans le convertisseur \n
+            - Erreur de mise en page dans la calculatrice \n
+
+        \nFonctionnalités supprimées : \n\n
+            - Activer et désactiver les notes de version dans les paramètres \n
+
+        \nConfiguration requise : \n\n
+            - Version Android minimale : 10 \n
+            - Version Android recommandée : 13 ou supérieure \n
+            - Version Android maximale : 14 \n
+    "</string>
+
     <string name="patchnotesOverviewText">La dernière version de RechnerMax apporte des améliorations et des fonctionnalités intéressantes. Le défilement automatique facilite la navigation dans les calculs volumineux, tandis que la précision de l\'arrondi a été augmentée jusqu\'à la onzième décimale pour des nombres décimaux plus précis. L\'historique a été optimisé pour restaurer sans effort les calculs précédents et revoir les tâches passées. Dans les tâches trigonométriques, des fonctions avancées pour le sinus, le cosinus et la tangente en degrés et en radians sont disponibles. Les fonctions trigonométriques inverses (sin⁻¹, cos⁻¹, tan⁻¹) ainsi que les fonctions hyperboliques telles que sinh(x), cosh(x) et tanh(x) sont désormais également disponibles. La saisie manuelle des notations offre une flexibilité supplémentaire lors de la création et du calcul d\'expressions complexes. TherechnerMax prend désormais en charge l\'utilisation de la constante mathématique PI (π) pour des calculs de cercle précis. Grâce à la prise en charge flexible des degrés et des radians, vous pouvez basculer entre les deux unités de mesure selon vos besoins. La gestion des parenthèses a été optimisée pour garantir un traitement sans erreur des expressions mathématiques ou logiques. Le logiciel détecte et ajoute automatiquement les crochets fermants manquants, simplifiant ainsi davantage la saisie des expressions. Dans l\'histoire, un appui long sur une entrée permet de copier automatiquement la facture dans le presse-papier, tandis qu\'un appui court colle la facture directement dans la calculatrice. Cette version corrige également des bugs importants, notamment des problèmes d\'affichage et de calcul factoriel, ainsi qu\'un formatage optimisé des résultats pour un affichage plus précis.</string>
     <string name="overview">Aperçu</string>
     <string name="newFunctions">Nouvelle fonction</string>
@@ -40,7 +64,7 @@
     <string name="callUpSettingsText">Si vous revenez à la page d\'accueil, vous trouverez le bouton Paramètres. Si vous appuyez dessus, vous serez redirigé vers les paramètres de la calculatrice.</string>
     <string name="removeBack">Supprimer/Retour</string>
     <string name="removeBackText">Pour une édition précise, diverses fonctions de suppression sont disponibles : « ⌫ » supprime le dernier chiffre ou caractère saisi de la zone de résultat, « CE » supprime toute la zone de résultat et « C » vide à la fois la zone de résultat et la zone de calcul.</string>
-    <string name="enableScientificMode">Activer le mode scientifique</string>
+    <string name="enableScientificMode">le mode scientifique</string>
     <string name="enableScientificModeText">Pour activer le mode scientifique, appuyez simplement sur le bouton correspondant en haut à gauche. Cela révélera des fonctionnalités supplémentaires.</string>
     <string name="advancedFeatures">Fonctionnalités avancées</string>
     <string name="moreFunctionText">Lorsque le mode scientifique est activé, des fonctionnalités supplémentaires apparaissent. En haut à gauche vous voyez deux flèches, à côté d\'elles un chiffre (1, 2 ou 3) et le mode \'Deg\' ou \'Rad\'. À l\'aide des flèches et du mode sélectionné indiqué par le numéro, vous pouvez basculer entre les modes du mode scientifique, qui contiennent différentes fonctions. De plus, vous pouvez régler le degré avec « Deg » et le radian avec « Rad ». \'(\' : Place une parenthèse ouverte dans la zone de calcul. \')\' : Place une parenthèse fermée dans la zone de calcul. \'x!\' : Prend le nombre saisi dans la zone de résultats et l\'insère avec le caractère factoriel. \'√x\' : La racine du nombre provenant de la plage de résultats. \'e\' : nombre d\'Euler (environ 2,7182)</string>
@@ -128,6 +152,28 @@
     <string name="patchnotes58">La calculatrice est désormais disponible en allemand, en anglais, en espagnol et en français.</string>
     <string name="settingsDecimalPoints">Chiffres Après la Virgule</string>
     <string name="settingsDecimalPointsText">Avec ce paramètre, vous pouvez choisir combien de chiffres après la virgule doivent être affichés dans le convertisseur. Cependant, notez qu\'un plus grand nombre de chiffres après la virgule peut affecter les performances.</string>
+
+    <string name="converter">Convertisseur</string>
+    <string name="changeUnit">Changer de Mesure</string>
+    <string name="changeUnitText">En cliquant sur le champ marqué ci-dessus, vous pouvez choisir entre différentes mesures. Pour sélectionner une nouvelle mesure, cliquez simplement dessus.</string>
+    <string name="changeMeasurement">Changer d\'Unité</string>
+    <string name="changeMeasurementText">En cliquant sur le champ marqué ci-dessus, vous pouvez choisir entre différentes unités. Pour sélectionner une nouvelle unité, cliquez simplement dessus. De plus, vous pouvez définir le nombre de décimales à afficher dans le résultat dans les paramètres sous la section \'Décimales\'. Si vous souhaitez copier le résultat d\'une conversion, maintenez longuement le nombre à côté de l\'unité correspondante.</string>
+    <string name="arrowbackText">Si vous cliquez maintenant sur la flèche marquée ci-dessus, vous retournerez à la calculatrice.</string>
+    <string name="openConverter">Ouvrir le Convertisseur</string>
+    <string name="openHistory">Ouvrir l\'Histoire</string>
+    <string name="openConverterText">Vous pouvez passer au convertisseur en cliquant sur le bouton en surbrillance ci-dessus.</string>
+    <string name="openHistoryText">Vous pouvez passer à l\'historique en cliquant sur le bouton en surbrillance ci-dessus.</string>
+    <string name="closeActivityText">Vous pouvez revenir au menu principal, c\'est-à-dire à la calculatrice, en appuyant sur le bouton \'Retour\' en haut à gauche.</string>
+    <string name="closeConverter">Fermer le Convertisseur</string>
+    <string name="closeHistory">Fermer l\'Histoire</string>
+    <string name="deleteHistory">Supprimer l\'Histoire</string>
+    <string name="deleteHistoryText">Vous pouvez supprimer votre historique en cliquant sur l\'icône de la corbeille en haut à droite, puis en confirmant votre décision. Notez que l\'historique sera complètement et définitivement supprimé.</string>
+    <string name="oldCalculations">Anciens Calculs</string>
+    <string name="oldCalculationsText">Chaque calcul indique la date et l\'heure auxquelles il a été effectué. Ci-dessous, vous trouverez le résultat et un champ de notes où vous pouvez ajouter des annotations sur le calcul. De plus, le texte sera copié dans votre presse-papiers si vous appuyez longuement sur le résultat ou le calcul. Un double-clic sur le calcul ou le résultat supprimera la tâche entière.</string>
+    <string name="openSettings">Vous pouvez accéder aux paramètres de la calculatrice en cliquant sur l\'icône de roue dentée en haut à droite.</string>
+    <string name="changeSettings">Ajuster les Paramètres</string>
+    <string name="changeSettingsText">Maintenant, vous pouvez effectuer et modifier différents paramètres.</string>
+    <string name="closeSettings">Fermer les Paramètres</string>
 
     <string name="historyResult">Résultat:</string>
     <string name="historyCalculation">Calcul:</string>
@@ -272,6 +318,7 @@
     <string name="convertKubikzentimeter">Centimètres cubes (cm³)</string>
     <string name="convertKubikdezimeter">Décimètres cubes (dm³)</string>
     <string name="convertKubikmeter">Mètre cube (m³)</string>
+    <string name="convertKubikkilometer">Kilómetros cúbicos (km³)</string>
     <string name="convertMilliliter">Millilitre (ml)</string>
     <string name="convertLiter">Litre (l)</string>
     <string name="convertGallonUS">Gallon US (gal)</string>

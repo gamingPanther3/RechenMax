@@ -168,6 +168,8 @@ public class HistoryActivity extends AppCompatActivity {
                             }
                             if(linearLayout != null) {
                                 innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
+                            } else {
+                                ITEMS_PER_LOAD++;
                             }
                         }
                     } catch (JSONException e) {

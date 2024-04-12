@@ -140,6 +140,7 @@ public class Converter extends ConvertActivity {
         CUBIC_CENTIMETER(new Unit(Category.VOLUME, "cm\u00b3", "Cubic Centimeter", new BigDecimal("1.0E-6"))),
         CUBIC_DECIMETER(new Unit(Category.VOLUME, "dm\u00b3", "Cubic Decimeter", new BigDecimal("1.0E-3"))),
         CUBIC_METER(new Unit(Category.VOLUME, "m\u00b3", "Cubic Meter", new BigDecimal("1.0E0"))),
+        CUBIC_KILOMETER(new Unit(Category.VOLUME, "km\u00b3", "Cubic Kilometer", new BigDecimal("1.0E7"))), // 0.000000007
         MILLILITER(new Unit(Category.VOLUME, "ml", "Milliliter", new BigDecimal("1.0E-6"))),
         LITER(new Unit(Category.VOLUME, "l", "Liter", new BigDecimal("1.0E-3"))),
         GALLON(new Unit(Category.VOLUME, "gal", "US Gallon", new BigDecimal("0.0037854118"))),

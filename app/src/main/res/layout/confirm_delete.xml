@@ -6,7 +6,7 @@
     app:cardCornerRadius="22dp"
     android:layout_margin="10dp"
     app:cardBackgroundColor="@color/white"
-    android:id="@+id/confirm_delete_layout">
+    android:id="@+id/rechenmax_releasenotes_layout">
 
     <LinearLayout
         android:id="@+id/confirmOutline"

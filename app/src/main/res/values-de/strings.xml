@@ -14,7 +14,31 @@
     <string name="releasenotes">Release-Notes</string>
     <string name="releasenotesText">Wenn diese Option aktiviert ist, werden die Versionshinweise bei jedem Start des Taschenrechners angezeigt. Unabhängig von dieser Einstellung, werden die Versionshinweise nach jeder Installation der neuesten Version automatisch präsentiert.</string>
 
-    <string name="releaseDate">Veröffentlichungsdatum: 01.04.24 - 20Uhr</string>
+    <string name="releaseDate">Veröffentlichungsdatum: 29.04.2024 - 20Uhr</string>
+    <string name="releaseNotesText">
+        Neue Funktionen: \n\n
+            - Ein Einheiten-Umrechner wurde hinzugefügt \n
+            - Verlauf wurde überarbeitet \n
+            - Einführung wurde verbessert \n
+            - Es werden, falls aktiv, Benachrichtigungen gesendet \n
+            - Verschiedene Sprachen wie Deutsch, Englisch, Spanisch und Französisch \n
+            - Es können Fehler, oben rechts in den Eistellungen, gemeldet werden \n
+            - Release-Notes wurde verbessert \n
+
+        \nBehobene Fehler: \n\n
+            - Zurücktaste war Fehlerhaft \n
+            - Fehlende Einheit im Umrechner \n
+            - Layout Fehler im Taschenrechner \n
+
+        \nEntfernte Funktionen: \n\n
+            - Release-Notes in den Einstellungen aktivieren und deaktivieren \n
+
+        \nSystemanforderungen: \n\n
+            - Minimale Android-Version: 10 \n
+            - Empfohlene Android-Version: 13 oder höher \n
+            - Maximale Android-Version: 14 \n
+    </string>
+
     <string name="overview">Übersicht</string>
     <string name="newFunctions">Neue Funktionen</string>
     <string name="fixedBugs">Behobene Fehler</string>
@@ -36,9 +60,9 @@
     <string name="moreTabs">Weitere Tabs</string>
     <string name="moreTabsText">"Es gibt drei verschiedene Tabs mit unterschiedlichen Funktionen, die du durch Drücken des entsprechenden Knopfes wechseln kannst.   Tab 1:  'sin(x)': Sinusfunktion 'cos(x)': Cosinusfunktion 'tan(x)': Tangensfunktion 'e±': 'π': Kreiszahl PI 'sin⁻¹(x)': Inverse Sinusfunktion 'cos⁻¹(x)': Inverse Cosinusfunktion 'tan⁻¹(x)': Inverse Tangensfunktion  Tab 2:  'sinh(x)': Hyperbolische Sinusfunktion 'cosh(x)': Hyperbolische Cosinusfunktion 'tanh(x)': Hyperbolische Tangensfunktion 'sinh⁻¹(x)': Inverse Hyperbolische Sinusfunktion 'cosh⁻¹(x)': Inverse Hyperbolische Cosinusfunktion 'tanh⁻¹(x)': Inverse Hyperbolische Tangesfunktion  Tab 3:  'log(x)': Logarithmus zur Basis 10 'log₂(x)': Logarithmus zur Basis 2 'logₓ(x)': Logarithmus zur Basis x 'ln(x)': Natürlicher Logarithmus zur Basis e (ungefähr 2,71828) '³√x': Kubikwurzel '½': Hälfte (0,5) '⅓': Drittel (0,3333…) '¼':Viertel (0,25)"</string>
     <string name="moreFunctions">Weitere Funktionen</string>
-    <string name="moreFunctionText">Wenn der wissenschaftliche Modus aktiviert ist, werden zusätzliche Funktionen angezeigt. Oben links siehst du zwei Pfeile, daneben eine Zahl (1, 2 oder 3) und den Modus \'Deg\' oder \'Rad\'. Mit den Pfeilen und dem ausgewählten Modus, den die Zahl angibt, kannst du zwischen den Modi des wissenschaftlichen Modus wechseln, die verschiedene Funktionen beinhalten. Zusätzlich kannst du mit \'Deg\' das Gradmaß und mit \'Rad\' das Bogenmaß einstellen.  \'(\': Setzt eine geöffnete Klammer in den Berechnungsbereich.  \')\': Setzt eine geschlossene Klammer in den Berechnungsbereich.  \'x!\': Nimmt die eingegebene Zahl aus dem Ergebnisbereich und fügt sie mit dem Faktoriell-Zeichen ein.  \'√x\': Die Wurzel aus der Zahl, die aus dem Ergebnisbereich stammt.  \'e\': Eulersche Zahl (ca. 2,7182)</string>
+    <string name="moreFunctionText">Wenn der wissenschaftliche Modus aktiviert ist, werden zusätzliche Funktionen angezeigt. \n\nOben links siehst du zwei Pfeile, daneben eine Zahl (1, 2 oder 3) und den Modus \'Deg\' oder \'Rad\'. \n Mit den Pfeilen und dem ausgewählten Modus, den die Zahl angibt, kannst du zwischen den Modi des wissenschaftlichen Modus wechseln, die verschiedene Funktionen beinhalten. \nZusätzlich kannst du mit \'Deg\' das Gradmaß und mit \'Rad\' das Bogenmaß einstellen. \n\n \'(\': Setzt eine geöffnete Klammer in den Berechnungsbereich. \n\n \')\': Setzt eine geschlossene Klammer in den Berechnungsbereich. \n\n \'x!\': Nimmt die eingegebene Zahl aus dem Ergebnisbereich und fügt sie mit dem Faktoriell-Zeichen ein. \n\n \'√x\': Die Wurzel aus der Zahl, die aus dem Ergebnisbereich stammt. \n\n \'³√x\': Die Kubik-Wurzel aus der Zahl, die aus dem Ergebnisbereich stammt. \n\n \'e\': Eulersche Zahl (ca. 2,7182) \n\n \'e\': PI (ca. 3,14159)</string>
     <string name="enableScientificModeText">Um den wissenschaftlichen Modus zu aktivieren, drücke einfach oben links auf den entsprechenden Knopf. Dadurch werden zusätzliche Funktionen angezeigt.</string>
-    <string name="enableScientificMode">Wissenschaftlichen Modus aktivieren</string>
+    <string name="enableScientificMode">Wissenschaftlichen Modus</string>
     <string name="actionbarText">Zusätzlich gibt es eine Aktionsleiste, über die du zwischen verschiedenen Tabs (Verlauf und Einstellungen) sowie dem Wissenschaftsmodus wechseln kannst. Diese Funktion eröffnet dir die Möglichkeit, flexibel zwischen deinem Berechnungsverlauf, individuellen Einstellungen und dem erweiterten Wissenschaftsmodus zu navigieren.</string>
     <string name="callUpSettingsText">Wenn du wieder zurück zur Startseite gehst, findest du den Eintellungen-Knopf. Wenn du ihn drückst wirst du zu den Einstellungen von dem Taschenrechner weitergeleitet.</string>
     <string name="negateText">Wenn du möchtest, dass eine Zahl negativ wird, betätige den \'±\'-Knopf. Drücke ihn erneut, wenn die Zahl wieder positiv sein soll. Diese Funktion ermöglicht eine einfache Änderung des Vorzeichens und sorgt dafür, dass du deine Zahlen nach Bedarf schnell und unkompliziert anpassen kannst.</string>
@@ -63,13 +87,36 @@
     <string name="introduction">Einführung</string>
     <string name="commaText">"Durch das Betätigen des 'Komma-Knopfes' hast du die Möglichkeit, ein Komma zum Ergebnisbereich hinzuzufügen. Es ist dabei zu beachten, dass, falls bereits ein Komma vorhanden ist, kein weiteres hinzugefügt wird. Diese Funktion ermöglicht eine präzise Eingabe von Dezimalstellen."</string>
     <string name="introductionText">"Brauchst du Hilfe oder bist du neu hier? Diese umfassende Anleitung führt dich detailliert durch sämtliche Knöpfe und Funktionen des RechenMax. Der RechenMax bietet eine Vielzahl von leistungsstarken Werkzeugen und Möglichkeiten, um deine Rechenanforderungen effizient zu bewältigen. "</string>
-    <string name="calculationAreas">"Berechnungsbereiche"</string>
+    <string name="calculationAreas">Berechnungsbereiche</string>
     <string name="calculate">"Berechnen"</string>
-    <string name="calculationArea">"1: In diesem Bereich (Berechnungsbereich) wird die von dir eingegebene Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren. 2: In diesem Bereich (Ergebnisbereich) wird das Ergebnis der durchgeführten Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren."</string>
+    <string name="calculationArea">1: In diesem Bereich (Berechnungsbereich) wird die von dir eingegebene Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren. \n\n2: In diesem Bereich (Ergebnisbereich) wird das Ergebnis der durchgeführten Berechnung angezeigt. Zudem kannst du, indem du den Bereich lange drückst, den Inhalt dessen Bereichs kopieren.</string>
     <string name="addSubMulDiv">"Addition, Subtraktion, Multiplikation und Division"</string>
     <string name="actionbar">"Aktionsleiste"</string>
     <string name="settingsText">"An dieser Stelle stehen dir verschiedene Einstellungen mit ausführlichen Beschreibungen zur Verfügung. Wenn du zurück zur Startseite möchtest, verwende einfach den Knopf oben links. Zusätzlich findest du oben rechts den Knopf, der dich zur Einführung des Taschenrechners weiterleitet. So kannst du mühelos auf die gewünschten Funktionen und Informationen zugreifen."</string>
     <string name="numberField">"Nummernfeld"</string>
+
+    <string name="converter">Umrechner</string>
+    <string name="changeUnit">Messgröße ändern</string>
+    <string name="changeUnitText">Wenn du auf das oben markierte Feld klickst, kannst du zwischen verschiedenen Messgrößen wählen. Um eine neue Messgröße auszuwählen, klicke einfach darauf.</string>
+    <string name="changeMeasurement">Einheit ändern</string>
+    <string name="changeMeasurementText">Wenn du auf das oben markierte Feld klickst, kannst du zwischen verschiedenen Einheiten wählen. Um eine neue Einheit auszuwählen, klicke einfach darauf. Außerdem kannst du in den Einstellungen unter dem Punkt \'Nachkommastellen\' die Anzahl der Dezimalstellen festlegen, die im Ergebnis angezeigt werden sollen. Wenn du das Ergebnis einer Umrechnung kopieren möchtest, halte lange auf die Zahl neben der entsprechenden Einheit gedrückt.</string>
+    <string name="arrowbackText">Wenn du nun auf den oben markierten Pfeil klickst, kehrst du wieder zum Taschenrechner zurück.</string>
+    <string name="openConverter">Umrechner öffnen</string>
+    <string name="openHistory">Verlauf öffnen</string>
+    <string name="openConverterText">Du kannst zum Umrechner wechseln, indem du oben auf den markierten Knopf klickst.</string>
+    <string name="openHistoryText">Du kannst zum Verlauf wechseln, indem du oben auf den markierten Knopf klickst.</string>
+    <string name="closeActivityText">Du kannst zum Hauptmenü, also dem Taschenrechner, zurückkehren, indem du den \'Zurück-Knopf\' oben links drückst.</string>
+    <string name="closeConverter">Umrechner schließen</string>
+    <string name="closeHistory">Verlauf schließen</string>
+    <string name="deleteHistory">Verlauf löschen</string>
+    <string name="deleteHistoryText">Du kannst deinen Verlauf löschen, indem du oben rechts auf den Papierkorb klickst und anschließend deine Entscheidung bestätigst. Beachte dabei, dass der Verlauf dann vollständig und dauerhaft gelöscht wird.</string>
+    <string name="oldCalculations">Alte Berechnungen</string>
+    <string name="oldCalculationsText">Jede Berechnung zeigt das Datum und die Uhrzeit an, zu der sie durchgeführt wurde. Darunter findest du das Ergebnis sowie ein Notizfeld, in das du Anmerkungen zur Berechnung eintragen kannst. Zusätzlich wird der Text in deine Zwischenablage kopiert, wenn du lange auf das Ergebnis oder die Berechnung drückst. Ein Doppelklick auf die Berechnung oder das Ergebnis löscht die gesamte Aufgabe.</string>
+    <string name="openSettings">Du kannst die Einstellungen des Taschenrechners aufrufen, indem du oben rechts auf das Zahnrad klickst.</string>
+    <string name="changeSettings">Einstellungen anpassen</string>
+    <string name="changeSettingsText">Nun kannst du verschiedene Einstellungen vornehmen und ändern.</string>
+    <string name="closeSettings">Einstellungen schließen</string>
+    <string name="helpHelp">Hilfe / Einführung</string>
 
     <string name="dailyHints">Tägliche Tipps</string>
     <string name="dailyHintsText">Mit dieser Einstellung kannst du einstellen, ob dir Täglich ein Tipp oder eine Information über den Taschenrechner geschickt wird.</string>
@@ -277,6 +324,7 @@
     <string name="convertKubikzentimeter">Kubikzentimeter (cm³)</string>
     <string name="convertKubikdezimeter">Kubikdezimeter (dm³)</string>
     <string name="convertKubikmeter">Kubikmeter (m³)</string>
+    <string name="convertKubikkilometer">Kubikkilometer (km³)</string>
     <string name="convertMilliliter">Milliliter (ml)</string>
     <string name="convertLiter">Liter (l)</string>
     <string name="convertGallonUS">Gallon US (gal)</string>

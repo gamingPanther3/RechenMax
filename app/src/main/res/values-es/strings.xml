@@ -11,7 +11,31 @@
     <string name="radian">Radianes (Rad)</string>
 
 
-    <string name="releaseDate">Fecha de lanzamiento: 01.04.24 - 20:00</string>
+    <string name="releaseDate">Fecha de lanzamiento: 29/04/2024 - 20:00</string>
+    <string name="releaseNotesText">"
+        Nuevas características: \n\n
+            - Se agregó un convertidor de unidades \n
+            - Se revisó el historial \n
+            - Mejora en la introducción \n
+            - Se envían notificaciones si están activadas \n
+            - Varios idiomas como alemán, inglés, español y francés \n
+            - Se pueden reportar errores en la esquina superior derecha de la configuración \n
+            - Se mejoraron las notas de lanzamiento \n
+
+        \nErrores corregidos: \n\n
+            - El botón de retroceso tenía errores \n
+            - Falta de unidad en el convertidor \n
+            - Error de diseño en la calculadora \n
+
+        \nFunciones eliminadas: \n\n
+            - Habilitar y deshabilitar notas de lanzamiento en la configuración \n
+
+        \nRequisitos del sistema: \n\n
+            - Versión mínima de Android: 10 \n
+            - Versión recomendada de Android: 13 o superior \n
+            - Versión máxima de Android: 14 \n
+    "</string>
+
     <string name="patchnotesOverviewText">La última versión de RechenMax trae emocionantes mejoras y características. El desplazamiento automático facilita la navegación en cálculos grandes, mientras que la precisión de redondeo se ha aumentado a la décima primera posición decimal para números decimales más precisos. El historial se ha optimizado para restaurar sin esfuerzo cálculos anteriores y revisar tareas pasadas. En tareas trigonométricas, están disponibles funciones avanzadas para seno, coseno y tangente en grados y radianes. Ahora también están disponibles funciones trigonométricas inversas (sin⁻¹, cos⁻¹, tan⁻¹), así como funciones hiperbólicas como senh(x), cosh(x) y tanh(x). La entrada manual de notación proporciona flexibilidad adicional al crear y calcular expresiones complejas. RechnenMax ahora admite el uso de la constante matemática PI (π) para cálculos precisos de círculos. Con el soporte flexible de grados y radianes, puedes cambiar entre las dos unidades de medida según sea necesario. El manejo de paréntesis se ha optimizado para garantizar un procesamiento sin errores de expresiones matemáticas o lógicas. El software detecta y agrega automáticamente paréntesis de cierre faltantes, simplificando aún más la entrada de expresiones. En el historial, al mantener presionada una entrada, la factura se copia automáticamente al portapapeles, mientras que al presionar brevemente, la factura se pega directamente en la calculadora. Esta versión también soluciona errores importantes, incluidos problemas de visualización y cálculo factorial, así como la optimización del formato de resultado para una visualización más precisa.</string>
     <string name="overview">Resumen</string>
     <string name="newFunctions">Nuevas funciones</string>
@@ -46,8 +70,30 @@
     <string name="removeBack">Eliminar/Atrás</string>
     <string name="removeBackText">Para ediciones precisas, están disponibles varias funciones de eliminación: \'⌫\' elimina el último número o carácter ingresado del área de resultados, \'CE\' borra todo el área de resultados y \'C\' vacía tanto el área de resultados como el área de cálculo.</string>
 
-    <string name="enableScientificMode">Activar modo científico</string>
+    <string name="enableScientificMode">modo científico</string>
     <string name="enableScientificModeText">Para activar el modo científico, simplemente presiona el botón correspondiente en la parte superior izquierda. Esto revelará características adicionales.</string>
+
+    <string name="converter">Conversor</string>
+    <string name="changeUnit">Cambiar Medida</string>
+    <string name="changeUnitText">Al hacer clic en el campo marcado arriba, puedes elegir entre diferentes medidas. Para seleccionar una nueva medida, simplemente haz clic en ella.</string>
+    <string name="changeMeasurement">Cambiar Unidad</string>
+    <string name="changeMeasurementText">Al hacer clic en el campo marcado arriba, puedes elegir entre diferentes unidades. Para seleccionar una nueva unidad, simplemente haz clic en ella. Además, puedes establecer el número de decimales que se mostrarán en el resultado en la configuración bajo la sección \'Decimales\'. Si quieres copiar el resultado de una conversión, mantén presionado el número junto a la unidad correspondiente.</string>
+    <string name="arrowbackText">Si ahora haces clic en la flecha marcada arriba, volverás a la calculadora.</string>
+    <string name="openConverter">Abrir Conversor</string>
+    <string name="openHistory">Abrir Historial</string>
+    <string name="openConverterText">Puedes cambiar al conversor haciendo clic en el botón resaltado arriba.</string>
+    <string name="openHistoryText">Puedes cambiar al historial haciendo clic en el botón resaltado arriba.</string>
+    <string name="closeActivityText">Puedes regresar al menú principal, es decir, la calculadora, presionando el botón \'Atrás\' en la parte superior izquierda.</string>
+    <string name="closeConverter">Cerrar Conversor</string>
+    <string name="closeHistory">Cerrar Historial</string>
+    <string name="deleteHistory">Eliminar Historial</string>
+    <string name="deleteHistoryText">Puedes eliminar tu historial haciendo clic en el icono de la papelera en la parte superior derecha y luego confirmando tu decisión. Ten en cuenta que el historial se eliminará por completo y de forma permanente.</string>
+    <string name="oldCalculations">Cálculos Antiguos</string>
+    <string name="oldCalculationsText">Cada cálculo muestra la fecha y hora en que se realizó. A continuación, encontrarás el resultado y un campo de notas donde puedes agregar anotaciones sobre el cálculo. Además, el texto se copiará al portapapeles si mantienes presionado el resultado o el cálculo. Hacer doble clic en el cálculo o resultado eliminará la tarea completa.</string>
+    <string name="openSettings">Puedes acceder a la configuración de la calculadora haciendo clic en el icono de engranaje en la parte superior derecha.</string>
+    <string name="changeSettings">Ajustar Configuración</string>
+    <string name="changeSettingsText">Ahora puedes realizar y modificar varios ajustes.</string>
+    <string name="closeSettings">Cerrar Configuración</string>
 
     <string name="advancedFeatures">Funciones avanzadas</string>
     <string name="moreFunctionText">Cuando el modo científico está activado, aparecen características adicionales. En la parte superior izquierda, verás dos flechas, junto a ellas un número (1, 2 o 3) y el modo \'Deg\' o \'Rad\'. Usando las flechas y el modo seleccionado indicado por el número, puedes cambiar entre los modos de modo científico, que contienen diferentes funciones. Además, puedes establecer el grado con \'Deg\' y el radián con \'Rad\'. \'(\': Coloca un paréntesis abierto en el área de cálculo. \')\': Coloca un paréntesis cerrado en el área de cálculo. \'x!\': Toma el número ingresado del área de resultados e inserta el carácter factorial. \'√x\': La raíz del número que proviene del rango de resultados. \'e\': Número de Euler (aprox. 2.7182)</string>
@@ -292,6 +338,7 @@
     <string name="convertKubikzentimeter">Centímetros cúbicos (cm³)</string>
     <string name="convertKubikdezimeter">Decímetros cúbicos (dm³)</string>
     <string name="convertKubikmeter">Metro cúbico (m³)</string>
+    <string name="convertKubikkilometer">Kilómetros cúbicos (km³)</string>
     <string name="convertMilliliter">Mililitro (ml)</string>
     <string name="convertLiter">Litro (l)</string>
     <string name="convertGallonUS">Galón estadounidense (gal)</string>
