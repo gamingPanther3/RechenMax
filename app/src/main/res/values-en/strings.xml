@@ -88,6 +88,14 @@
     <string name="changeSettings">"Adjust Settings"</string>
     <string name="changeSettingsText">"Now you can make and modify various settings."</string>
     <string name="closeSettings">"Close Settings"</string>
+    <string name="helpHelp">Help / Introduction</string>
+    <string name="openHelp">Open Introduction</string>
+    <string name="openHelpText">"You can access the help or introduction again later by clicking on the highlighted button in the top right corner."</string>
+    <string name="closeHelp">Close Introduction</string>
+    <string name="closeHelpText">"You can return to the settings by clicking on the highlighted button at the top."</string>
+    <string name="openReport">"Open Report Bug"</string>
+    <string name="openReportText">"If you have found a bug, you can report it by clicking on the highlighted button at the top."</string>
+    <string name="closeReportText">"You can return to the settings by clicking on the highlighted button at the top."</string>
 
     <string name="removeBack">Remove/Back</string>
     <string name="removeBackText">For precise editing, various delete functions are available: \'⌫\' removes the last number or character entered from the result area, \'CE\' deletes the entire result area and \'C\' empties both the result and calculation areas.</string>

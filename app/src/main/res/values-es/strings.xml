@@ -94,6 +94,14 @@
     <string name="changeSettings">Ajustar Configuración</string>
     <string name="changeSettingsText">Ahora puedes realizar y modificar varios ajustes.</string>
     <string name="closeSettings">Cerrar Configuración</string>
+    <string name="helpHelp">Ayuda / Introducción</string>
+    <string name="openHelp">Abrir Introducción</string>
+    <string name="openHelpText">"Puedes acceder a la ayuda o introducción nuevamente más tarde haciendo clic en el botón resaltado en la esquina superior derecha."</string>
+    <string name="closeHelp">Cerrar Introducción</string>
+    <string name="closeHelpText">"Puedes regresar a la configuración haciendo clic en el botón resaltado en la parte superior."</string>
+    <string name="openReport">"Abrir Reportar Error"</string>
+    <string name="openReportText">"Si has encontrado un error, puedes informarlo haciendo clic en el botón resaltado en la parte superior."</string>
+    <string name="closeReportText">"Puedes regresar a la configuración haciendo clic en el botón resaltado en la parte superior."</string>
 
     <string name="advancedFeatures">Funciones avanzadas</string>
     <string name="moreFunctionText">Cuando el modo científico está activado, aparecen características adicionales. En la parte superior izquierda, verás dos flechas, junto a ellas un número (1, 2 o 3) y el modo \'Deg\' o \'Rad\'. Usando las flechas y el modo seleccionado indicado por el número, puedes cambiar entre los modos de modo científico, que contienen diferentes funciones. Además, puedes establecer el grado con \'Deg\' y el radián con \'Rad\'. \'(\': Coloca un paréntesis abierto en el área de cálculo. \')\': Coloca un paréntesis cerrado en el área de cálculo. \'x!\': Toma el número ingresado del área de resultados e inserta el carácter factorial. \'√x\': La raíz del número que proviene del rango de resultados. \'e\': Número de Euler (aprox. 2.7182)</string>

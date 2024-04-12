@@ -117,6 +117,13 @@
     <string name="changeSettingsText">Nun kannst du verschiedene Einstellungen vornehmen und ändern.</string>
     <string name="closeSettings">Einstellungen schließen</string>
     <string name="helpHelp">Hilfe / Einführung</string>
+    <string name="openHelp">Einführung aufrufen</string>
+    <string name="openHelpText">"Du kannst die Hilfe bzw. Einführung später erneut aufrufen indem du oben rechts auf den markierten Knopf klickst."</string>
+    <string name="closeHelp">Einführung schließen</string>
+    <string name="closeHelpText">"Du kannst wieder zu den Einstellung wechseln, indem du oben auf den markierten Knopf klickst."</string>
+    <string name="openReport">"Fehler melden aufrufen"</string>
+    <string name="openReportText">"Wenn du einen Fehler gefunden hast, kannst du diesen Melden, indem du auf den markierten Knopf oben klickst."</string>
+    <string name="closeReportText">"Du kannst wieder zu den Einstellung wechseln, indem du oben auf den markierten Knopf klickst."</string>
 
     <string name="dailyHints">Tägliche Tipps</string>
     <string name="dailyHintsText">Mit dieser Einstellung kannst du einstellen, ob dir Täglich ein Tipp oder eine Information über den Taschenrechner geschickt wird.</string>
