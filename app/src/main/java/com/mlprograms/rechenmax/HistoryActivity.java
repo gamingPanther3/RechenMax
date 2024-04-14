@@ -82,7 +82,7 @@ public class HistoryActivity extends AppCompatActivity {
     private static MainActivity mainActivity;
     private LinearLayout innerLinearLayout;
 
-    private int ITEMS_PER_LOAD = 10;
+    private int ITEMS_PER_LOAD = 20;
     private int historyTextViewNumber = 0;
     private int currentHistoryTextViewNumber;
     private boolean isEndReached = false;
@@ -254,6 +254,11 @@ public class HistoryActivity extends AppCompatActivity {
             return null;
         }
         final String[] parts = data.getString("calculation").split("=");
+
+        if (parts.length <= 1) {
+            return null;
+        }
+
         AtomicBoolean clickListener = new AtomicBoolean(true);
 
         TextView emptyTextView = findViewById(R.id.history_empty_textview);

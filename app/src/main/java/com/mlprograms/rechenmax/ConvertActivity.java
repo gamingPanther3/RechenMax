@@ -110,9 +110,9 @@ public class ConvertActivity extends AppCompatActivity {
     private CustomAdapter customAdapterMeasurement;
 
     private boolean firstStart = true;
-    private boolean firstStartEditText = true;
     private boolean checkAndSetEditText = false;
-    private boolean secondCheckAndSetEditText = true;
+
+    private boolean isFirstStartEditText = true;
 
     private LayoutInflater inflater;
     private LinearLayout outherLinearLayout = null;
@@ -341,12 +341,13 @@ public class ConvertActivity extends AppCompatActivity {
                     if(!chars.equals("")) {
                         calculateAndSetText();
                     }
-                    if(firstStartEditText || secondCheckAndSetEditText) {
-                        firstStartEditText = false;
-                        secondCheckAndSetEditText = false;
-                        return;
+                    if(isFirstStartEditText) {
+                        editText.requestFocus();
+                        editText.selectAll();
+                        isFirstStartEditText = false;
+                    } else {
+                        checkAndSetEditTextText();
                     }
-                    checkAndSetEditTextText();
                 }
             }
 
@@ -491,27 +492,27 @@ public class ConvertActivity extends AppCompatActivity {
             }
         }
 
-        final int selection = editText.getSelectionStart();
-        editText.setText(newText.toString());
-        editText.setSelection(selection);
+        final boolean changed = editText.getText().toString().equals(newText.toString());
 
-        try {
-            final String mode;
-            mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+        // if text has changed
+        if(!changed) {
+            final int selection = editText.getSelectionStart();
+            editText.setText(newText.toString());
+            editText.setSelection(selection);
 
-            dataManager.updateValuesInJSONSettingsData(
-                    "convertMode",
-                    mode + "Number",
-                    editText.getText().toString(),
-                    getMainActivityContext()
-            );
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+            try {
+                final String mode;
+                mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
 
-        if(secondCheckAndSetEditText) {
-            editText.requestFocus();
-            editText.selectAll();
+                dataManager.updateValuesInJSONSettingsData(
+                        "convertMode",
+                        mode + "Number",
+                        editText.getText().toString(),
+                        getMainActivityContext()
+                );
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

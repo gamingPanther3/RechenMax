@@ -23,6 +23,7 @@ import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
+import static com.mlprograms.rechenmax.ParenthesesBalancer.*;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -324,8 +325,8 @@ public class MainActivity extends AppCompatActivity {
         setCalculateButtonListener(R.id.calculate);
         setCommaButtonListener(R.id.comma);
 
-        setButtonListener(R.id.clipOn, this::parenthesisOnAction);
-        setButtonListener(R.id.clipOff, this::parenthesisOffAction);
+        setButtonListener(R.id.clipOn, this::parenthesesOnAction);
+        setButtonListener(R.id.clipOff, this::parenthesesOffAction);
 
         setButtonListener(R.id.power, this::powerAction);
         setButtonListener(R.id.root, this::rootAction);
@@ -1716,7 +1717,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method adds an opening parenthesis to the calculation text.
      */
-    private void parenthesisOnAction() {
+    private void parenthesesOnAction() {
         // Check if calculate text is empty and set or add opening parenthesis accordingly
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
@@ -1772,7 +1773,7 @@ public class MainActivity extends AppCompatActivity {
      * If the last operation was a square root, it adds a closing parenthesis.
      * Otherwise, it adds the result text and a closing parenthesis.
      */
-    private void parenthesisOffAction() {
+    private void parenthesesOffAction() {
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
@@ -1834,6 +1835,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         formatResultTextAfterType();
+        try {
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -3062,75 +3070,6 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
-    /**
-     * This method takes a mathematical expression as input, checks if parentheses are
-     * balanced, and adds missing parentheses as needed to balance the expression.
-     *
-     * @param input The input mathematical expression.
-     * @return The balanced mathematical expression.
-     */
-    public String balanceParentheses(String input) {
-        // Count the number of opening and closing parentheses
-        int openCount = 0;
-        int closeCount = 0;
-        final String oldInput = input;
-
-        input = input.replace(" ", "").replace("=", "");
-
-        if(input.isEmpty()) {
-            return "0";
-        }
-
-        for (char ch : input.toCharArray()) {
-            if (ch == '(') {
-                openCount++;
-            } else if (ch == ')') {
-                closeCount++;
-            }
-        }
-
-        // Add missing opening parentheses
-        StringBuilder inputBuilder = new StringBuilder(input);
-        while (openCount < closeCount) {
-            try {
-                if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
-                    inputBuilder.insert(0, "(");
-                } else {
-                    inputBuilder.insert(0, "( ");
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            openCount++;
-        }
-
-        // Add missing closing parentheses
-        while (closeCount < openCount) {
-            try {
-                if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
-                    inputBuilder.append(")");
-                } else {
-                    inputBuilder.append(" )");
-                }
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            closeCount++;
-        }
-
-        input = inputBuilder.toString();
-
-        //if(String.valueOf(input.charAt(0)).equals("(") && String.valueOf(input.charAt(input.length() - 1)).equals(")")) {
-        //    input = input.substring(1, input.length() - 1);
-        //}
-
-        if(oldInput.contains("=")) {
-            return input + " =";
-        } else {
-            return input;
-        }
-    }
-
     private String addSpaceToOperators(String string) {
         final String symbols = "+-*/÷×√^π½⅓¼=";
         StringBuilder stringBuilder = new StringBuilder();
@@ -3288,8 +3227,11 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
         adjustTextSize();
 
-        if(!isNumber(getCalculateText()) && !getCalculateText().replace("=", "").replace(" ", "").equals("π")
+        if(!isNumber(getCalculateText()) &&
+                (!getCalculateText().replace("=", "").replace(" ", "").equals("π") ||
+                        !getCalculateText().replace("=", "").replace(" ", "").equals("e"))
             && !isInvalidInput(getResultText())) {
+
             addToHistoryAfterCalculate(balanceParentheses(getCalculateText()));
         }
 
@@ -3375,13 +3317,9 @@ public class MainActivity extends AppCompatActivity {
         String finalInput = input;
         new Thread(() -> runOnUiThread(() -> {
             final String value;
-            try {
-                value = dataManager.getHistoryData("historyTextViewNumber", context1).getString("value");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
             final int old_value;
             try {
+                value = dataManager.getHistoryData("historyTextViewNumber", context1).getString("value");
                 old_value = Integer.parseInt(dataManager.getHistoryData("historyTextViewNumber", context1).getString("value"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
