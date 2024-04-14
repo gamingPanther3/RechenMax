@@ -1758,14 +1758,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
 
-        scrollToStart(findViewById(R.id.calculate_scrollview));
-
-        setRotateOperator(false);
         formatResultTextAfterType();
+
+        scrollToStart(findViewById(R.id.calculate_scrollview));
+        setRotateOperator(false);
     }
 
     /**
@@ -1830,18 +1834,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
 
-        formatResultTextAfterType();
-        try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
+        formatResultTextAfterType();
     }
 
     /**
