@@ -1655,6 +1655,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1705,6 +1709,10 @@ public class MainActivity extends AppCompatActivity {
                         setRotateOperator(true);
                     }
                 }
+            }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1858,9 +1866,8 @@ public class MainActivity extends AppCompatActivity {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
                     addCalculateTextWithoutSpace(getResultText() + "!");
-                    return;
                 }
-                addCalculateTextWithoutSpace("!");
+
                 setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             } else {
                 if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
@@ -1891,6 +1898,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+            }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1939,6 +1950,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -1977,6 +1992,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -2014,6 +2033,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+            }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -2062,6 +2085,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -2105,6 +2132,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
+            }
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -2147,6 +2178,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+            }
+
+            if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
+                setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
