@@ -179,15 +179,16 @@ public class SettingsActivity extends AppCompatActivity {
             customSpinner1.setAdapter(customAdapter1);
 
             try {
-                String mode;
-                mode = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
+                String mode = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
 
-                if (mode.equals("System")) {
-                    customSpinner1.setSelection(0);
-                } else if (mode.equals("Light")) {
-                    customSpinner1.setSelection(1);
-                } else {
-                    customSpinner1.setSelection(2);
+                if(mode != null && !mode.isEmpty()) {
+                    if (mode.equals("System")) {
+                        customSpinner1.setSelection(0);
+                    } else if (mode.equals("Light")) {
+                        customSpinner1.setSelection(1);
+                    } else {
+                        customSpinner1.setSelection(2);
+                    }
                 }
             } catch (JSONException e) {
                 throw new RuntimeException(e);
