@@ -68,27 +68,27 @@
     <string name="appVersion" translatable="false">RechenMax 1.6.4</string>
     <string name="releaseDate">Veröffentlichungsdatum: 14.04.2024 - 20Uhr</string>
     <string name="releaseNotesText">
-        Neue Funktionen: \n\n
-            - Ein Einheiten-Umrechner wurde hinzugefügt \n
-            - Verlauf wurde überarbeitet \n
-            - Einführung wurde verbessert \n
-            - Es werden, falls aktiv, Benachrichtigungen gesendet \n
-            - Verschiedene Sprachen wie Deutsch, Englisch, Spanisch und Französisch \n
-            - Es können Fehler, oben rechts in den Eistellungen, gemeldet werden \n
-            - Release-Notes wurde verbessert \n
+        Neue Funktionen:\n
+            - Ein Einheiten-Umrechner wurde hinzugefügt
+            - Verlauf wurde überarbeitet
+            - Einführung wurde verbessert
+            - Es werden, falls aktiv, Benachrichtigungen gesendet
+            - Verschiedene Sprachen wie Deutsch, Englisch, Spanisch und Französisch
+            - Es können Fehler, oben rechts in den Eistellungen, gemeldet werden
+            - Release-Notes wurde verbessert
 
-        \nBehobene Fehler: \n\n
-            - Zurücktaste war Fehlerhaft \n
-            - Fehlende Einheit im Umrechner \n
-            - Layout Fehler im Taschenrechner \n
+        \nBehobene Fehler: \n
+            - Zurücktaste war Fehlerhaft
+            - Fehlende Einheit im Umrechner
+            - Layout Fehler im Taschenrechner
 
-        \nEntfernte Funktionen: \n\n
-            - Release-Notes in den Einstellungen aktivieren und deaktivieren \n
+        \nEntfernte Funktionen: \n
+            - Release-Notes in den Einstellungen aktivieren und deaktivieren
 
-        \nSystemanforderungen: \n\n
-            - Minimale Android-Version: 10 \n
-            - Empfohlene Android-Version: 13 oder höher \n
-            - Maximale Android-Version: 14 \n
+        \nSystemanforderungen: \n
+            - Minimale Android-Version: 10
+            - Empfohlene Android-Version: 13 oder höher
+            - Maximale Android-Version: 14
     </string>
 
     <string name="overview">Übersicht</string>

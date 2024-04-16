@@ -13,27 +13,27 @@
 
     <string name="releaseDate">Date de sortie : 14/04/2024 - 20h00</string>
     <string name="releaseNotesText">"
-        Nouvelles fonctionnalités : \n\n
-            - Ajout d'un convertisseur d\'unités \n
-            - Historique révisé \n
-            - Introduction améliorée \n
-            - Les notifications sont envoyées si elles sont activées \n
-            - Plusieurs langues telles que l'allemand, l'anglais, l'espagnol et le français \n
-            - Les bogues peuvent être signalés dans le coin supérieur droit des paramètres \n
-            - Notes de version améliorées \n
+        Nouvelles fonctionnalités : \n
+            - Ajout d'un convertisseur d\'unités
+            - Historique révisé
+            - Introduction améliorée
+            - Les notifications sont envoyées si elles sont activées
+            - Plusieurs langues telles que l'allemand, l'anglais, l'espagnol et le français
+            - Les bogues peuvent être signalés dans le coin supérieur droit des paramètres
+            - Notes de version améliorées
 
-        \nProblèmes résolus : \n\n
-            - Le bouton de retour était défectueux \n
-            - Unité manquante dans le convertisseur \n
-            - Erreur de mise en page dans la calculatrice \n
+        \n\nProblèmes résolus :\n
+            - Le bouton de retour était défectueux
+            - Unité manquante dans le convertisseur
+            - Erreur de mise en page dans la calculatrice
 
-        \nFonctionnalités supprimées : \n\n
-            - Activer et désactiver les notes de version dans les paramètres \n
+        \n\nFonctionnalités supprimées : \n
+            - Activer et désactiver les notes de version dans les paramètres
 
-        \nConfiguration requise : \n\n
-            - Version Android minimale : 10 \n
-            - Version Android recommandée : 13 ou supérieure \n
-            - Version Android maximale : 14 \n
+        \n\nConfiguration requise : \n
+            - Version Android minimale : 10
+            - Version Android recommandée : 13 ou supérieure
+            - Version Android maximale : 14
     "</string>
 
     <string name="patchnotesOverviewText">La dernière version de RechnerMax apporte des améliorations et des fonctionnalités intéressantes. Le défilement automatique facilite la navigation dans les calculs volumineux, tandis que la précision de l\'arrondi a été augmentée jusqu\'à la onzième décimale pour des nombres décimaux plus précis. L\'historique a été optimisé pour restaurer sans effort les calculs précédents et revoir les tâches passées. Dans les tâches trigonométriques, des fonctions avancées pour le sinus, le cosinus et la tangente en degrés et en radians sont disponibles. Les fonctions trigonométriques inverses (sin⁻¹, cos⁻¹, tan⁻¹) ainsi que les fonctions hyperboliques telles que sinh(x), cosh(x) et tanh(x) sont désormais également disponibles. La saisie manuelle des notations offre une flexibilité supplémentaire lors de la création et du calcul d\'expressions complexes. TherechnerMax prend désormais en charge l\'utilisation de la constante mathématique PI (π) pour des calculs de cercle précis. Grâce à la prise en charge flexible des degrés et des radians, vous pouvez basculer entre les deux unités de mesure selon vos besoins. La gestion des parenthèses a été optimisée pour garantir un traitement sans erreur des expressions mathématiques ou logiques. Le logiciel détecte et ajoute automatiquement les crochets fermants manquants, simplifiant ainsi davantage la saisie des expressions. Dans l\'histoire, un appui long sur une entrée permet de copier automatiquement la facture dans le presse-papier, tandis qu\'un appui court colle la facture directement dans la calculatrice. Cette version corrige également des bugs importants, notamment des problèmes d\'affichage et de calcul factoriel, ainsi qu\'un formatage optimisé des résultats pour un affichage plus précis.</string>

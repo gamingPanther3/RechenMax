@@ -13,27 +13,27 @@
 
     <string name="releaseDate">Fecha de lanzamiento: 14/04/2024 - 20:00</string>
     <string name="releaseNotesText">"
-        Nuevas características: \n\n
-            - Se agregó un convertidor de unidades \n
-            - Se revisó el historial \n
-            - Mejora en la introducción \n
-            - Se envían notificaciones si están activadas \n
-            - Varios idiomas como alemán, inglés, español y francés \n
-            - Se pueden reportar errores en la esquina superior derecha de la configuración \n
-            - Se mejoraron las notas de lanzamiento \n
+        Nuevas características: \n
+            - Se agregó un convertidor de unidades
+            - Se revisó el historial
+            - Mejora en la introducción
+            - Se envían notificaciones si están activadas
+            - Varios idiomas como alemán, inglés, español y francés
+            - Se pueden reportar errores en la esquina superior derecha de la configuración
+            - Se mejoraron las notas de lanzamiento
 
-        \nErrores corregidos: \n\n
-            - El botón de retroceso tenía errores \n
-            - Falta de unidad en el convertidor \n
-            - Error de diseño en la calculadora \n
+        \n\nErrores corregidos: \n
+            - El botón de retroceso tenía errores
+            - Falta de unidad en el convertidor
+            - Error de diseño en la calculadora
 
-        \nFunciones eliminadas: \n\n
-            - Habilitar y deshabilitar notas de lanzamiento en la configuración \n
+        \n\nFunciones eliminadas: \n
+            - Habilitar y deshabilitar notas de lanzamiento en la configuración
 
-        \nRequisitos del sistema: \n\n
-            - Versión mínima de Android: 10 \n
-            - Versión recomendada de Android: 13 o superior \n
-            - Versión máxima de Android: 14 \n
+        \n\nRequisitos del sistema: \n
+            - Versión mínima de Android: 10
+            - Versión recomendada de Android: 13 o superior
+            - Versión máxima de Android: 14
     "</string>
 
     <string name="patchnotesOverviewText">La última versión de RechenMax trae emocionantes mejoras y características. El desplazamiento automático facilita la navegación en cálculos grandes, mientras que la precisión de redondeo se ha aumentado a la décima primera posición decimal para números decimales más precisos. El historial se ha optimizado para restaurar sin esfuerzo cálculos anteriores y revisar tareas pasadas. En tareas trigonométricas, están disponibles funciones avanzadas para seno, coseno y tangente en grados y radianes. Ahora también están disponibles funciones trigonométricas inversas (sin⁻¹, cos⁻¹, tan⁻¹), así como funciones hiperbólicas como senh(x), cosh(x) y tanh(x). La entrada manual de notación proporciona flexibilidad adicional al crear y calcular expresiones complejas. RechnenMax ahora admite el uso de la constante matemática PI (π) para cálculos precisos de círculos. Con el soporte flexible de grados y radianes, puedes cambiar entre las dos unidades de medida según sea necesario. El manejo de paréntesis se ha optimizado para garantizar un procesamiento sin errores de expresiones matemáticas o lógicas. El software detecta y agrega automáticamente paréntesis de cierre faltantes, simplificando aún más la entrada de expresiones. En el historial, al mantener presionada una entrada, la factura se copia automáticamente al portapapeles, mientras que al presionar brevemente, la factura se pega directamente en la calculadora. Esta versión también soluciona errores importantes, incluidos problemas de visualización y cálculo factorial, así como la optimización del formato de resultado para una visualización más precisa.</string>
