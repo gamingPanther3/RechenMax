@@ -1995,22 +1995,6 @@ public class ConvertActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is called when the activity is destroyed.
-     * It checks if "disablePatchNotesTemporary" is true in the JSON file, and if so, it saves "disablePatchNotesTemporary" as false in the JSON file.
-     * It then calls the finish() method to close the activity.
-     */
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            if (dataManager.getJSONSettingsData("disablePatchNotesTemporary", getMainActivityContext()).getString("value").equals("true")) {
-                dataManager.saveToJSONSettings("disablePatchNotesTemporary", false, getMainActivityContext());
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
      * onPause method is called when the activity is paused.
      * It starts the background service.
      */
