@@ -349,6 +349,19 @@ public class ConvertActivity extends AppCompatActivity {
                         checkAndSetEditTextText();
                     }
                 }
+
+                final String inputText = chars.toString();
+                try {
+                    final String mode = dataManager.getJSONSettingsData("convertMode", getMainActivityContext()).getString("value");
+                    dataManager.updateValuesInJSONSettingsData(
+                            "convertMode",
+                            mode + "Number",
+                            inputText,
+                            getMainActivityContext()
+                    );
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             @Override
