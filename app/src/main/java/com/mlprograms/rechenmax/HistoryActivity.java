@@ -1116,21 +1116,6 @@ public class HistoryActivity extends AppCompatActivity {
         returnToCalculator();
     }
 
-    /**
-     * This method is called when the activity is destroyed.
-     * It checks if "disablePatchNotesTemporary" is true in the JSON file, and if so, it saves "disablePatchNotesTemporary" as false in the JSON file.
-     * It then calls the finish() method to close the activity.
-     */
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            if (dataManager.getJSONSettingsData("disablePatchNotesTemporary", getApplicationContext()).getString("value").equals("true")) {
-                dataManager.saveToJSONSettings("disablePatchNotesTemporary", false, getApplicationContext());
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     /**
      * onPause method is called when the activity is paused.

@@ -110,6 +110,11 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DataManager(this);
         dataManager.initializeSettings(this);
 
+        Log.e("DEBUG", addSpaceToOperators("((-(-423.331÷3123,66712)+√(³√((-4÷2)^2+5))/2)!)))"));
+        if(true) {
+            return;
+        }
+
         switchDisplayMode();
         try {
 
@@ -3107,23 +3112,35 @@ public class MainActivity extends AppCompatActivity {
             string = string.replace(" ", "");
             for (int i = 0; i < string.length(); i++) {
                 if(i + 1 < string.length()) {
-                    if(String.valueOf(string.charAt(i)).equals("³") && String.valueOf(string.charAt(i + 1)).equals("√")) {
+                    final String currentChar = String.valueOf(string.charAt(i));
+                    final String nextChar = String.valueOf(string.charAt(i + 1));
+
+                    if(currentChar.equals("³") && nextChar.equals("√")) {
                         stringBuilder.append(string.charAt(i));
                         continue;
-                    } else if(String.valueOf(string.charAt(i)).equals("√") && String.valueOf(string.charAt(i + 1)).equals("(")) {
+                    } else if(currentChar.equals("√") && nextChar.equals("(")) {
                         stringBuilder.append(string.charAt(i));
+                        continue;
+                    } else if(isNumber(currentChar) && nextChar.equals("√")) {
+                        stringBuilder.append(string.charAt(i));
+                        continue;
+                    } else if(isNumber(currentChar) && nextChar.equals("(")) {
+                        stringBuilder.append(string.charAt(i));
+                        continue;
+                    } else if(currentChar.equals("-") && (isNumber(nextChar) || nextChar.equals("("))) {
+                        stringBuilder.append(string.charAt(i));
+                        continue;
+                    } else if(currentChar.equals("(") && nextChar.equals("³")) {
+                        stringBuilder.append(string.charAt(i));
+                        stringBuilder.append(" ");
                         continue;
                     }
                 }
 
                 if (symbols.indexOf(string.charAt(i)) != -1) {
-                    if(i != 0 && !String.valueOf(string.charAt(i - 1)).equals("³")) {
-                        stringBuilder.append(" ");
-                    }
+                    stringBuilder.append(" ");
                     stringBuilder.append(string.charAt(i));
-                    if (i + 1 < string.length() && isOperator(String.valueOf(symbols.indexOf(string.charAt(i + 1))))) {
-                        stringBuilder.append(" ");
-                    }
+                    stringBuilder.append(" ");
                 } else {
                     stringBuilder.append(string.charAt(i));
                 }
