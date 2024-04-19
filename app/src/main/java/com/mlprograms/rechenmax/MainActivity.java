@@ -3104,6 +3104,17 @@ public class MainActivity extends AppCompatActivity {
         formatResultTextAfterType();
     }
 
+    /**
+     * This method adds spaces around mathematical operators in the given string,
+     * ensuring proper formatting for mathematical expressions.
+     * It iterates through the characters of the input string, adding spaces
+     * before and after each operator from the symbols list. Special cases are handled
+     * to maintain correct spacing, such as handling exponents and square roots.
+     * After processing, leading and trailing spaces are removed from the result.
+     *
+     * @param string The input string representing a mathematical expression.
+     * @return A string with spaces added around mathematical operators.
+     */
     private String addSpaceToOperators(String string) {
         final String symbols = "+-*/÷×√^π½⅓¼=";
         StringBuilder stringBuilder = new StringBuilder();
