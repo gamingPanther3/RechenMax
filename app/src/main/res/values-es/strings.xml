@@ -11,7 +11,7 @@
     <string name="radian">Radianes (Rad)</string>
 
 
-    <string name="releaseDate">Fecha de lanzamiento: 14/04/2024 - 20:00</string>
+    <string name="releaseDate">Fecha de lanzamiento: 19/04/2024 - 22:00</string>
     <string name="releaseNotesText">"
         Nuevas características: \n
             - Se agregó un convertidor de unidades
@@ -40,7 +40,7 @@
     <string name="systemRequirement">Requisitos del sistema</string>
     <string name="dontShowThisTextAgain">No mostrar este texto nuevamente</string>
     <string name="understood">Entendido</string>
-    <string name="copyright">Creador: Max Lemberg Derechos de autor: © 2024 Max Lemberg. Todos los derechos reservados. Licencia: Este producto está bajo licencia de Apache 2.0. Versión: 1.6.4</string>
+    <string name="copyright">Creador: Max Lemberg Derechos de autor: © 2024 Max Lemberg. Todos los derechos reservados. Licencia: Este producto está bajo licencia de Apache 2.0. Versión: 1.6.5</string>
 
     <string name="calculationAreas">Áreas de cálculo</string>
     <string name="calculationArea">1: Esta área (área de cálculo) muestra el cálculo que has ingresado. También puedes copiar el contenido del área manteniendo presionada el área. 2: El resultado del cálculo realizado se muestra en esta área (área de resultados). También puedes copiar el contenido del área manteniendo presionada el área.</string>

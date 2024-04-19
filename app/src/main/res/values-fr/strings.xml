@@ -11,7 +11,7 @@
     <string name="radian">Radians (Rad)</string>
 
 
-    <string name="releaseDate">Date de sortie : 14/04/2024 - 20h00</string>
+    <string name="releaseDate">Date de sortie : 19/04/2024 - 22h00</string>
     <string name="releaseNotesText">"
         Nouvelles fonctionnalités : \n
             - Ajout d'un convertisseur d\'unités
@@ -40,7 +40,7 @@
     <string name="systemRequirement">Configuration requise</string>
     <string name="dontShowThisTextAgain">Ne plus afficher ce texte</string>
     <string name="understood">Compris</string>
-    <string name="copyright">Créateur : Max Lemberg Droits d\'auteur : © 2024 Max Lemberg. Tous droits réservés. Licence : ce produit est sous licence Apache 2.0. Version : 1.6.4</string>
+    <string name="copyright">Créateur : Max Lemberg Droits d\'auteur : © 2024 Max Lemberg. Tous droits réservés. Licence : ce produit est sous licence Apache 2.0. Version : 1.6.5</string>
     <string name="calculationAreas">Zones de calcul</string>
     <string name="calculationArea">1 : Cette zone (zone de calcul) affiche le calcul que vous avez saisi. Vous pouvez également copier le contenu de la zone en appuyant longuement sur la zone. 2 : Le résultat du calcul effectué est affiché dans cette zone (zone de résultat). Vous pouvez également copier le contenu de la zone en appuyant longuement sur la zone.</string>
     <string name="calculateText">Après avoir terminé votre calcul, appuyez sur la touche \'=\' pour calculer le résultat. Le résultat sera ensuite affiché pour vous dans la zone des résultats. Cette procédure simple vous permet d\'obtenir les résultats de vos calculs rapidement et facilement.</string>
