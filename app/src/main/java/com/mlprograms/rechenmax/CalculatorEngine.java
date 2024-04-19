@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 
 /**
  * CalculatorActivity
+ *
  * @author Max Lemberg
  * @version 2.1.4
  * @date 09.03.2023
@@ -80,15 +81,15 @@ public class CalculatorEngine {
      *
      * @param calc The mathematical expression as a string to be calculated.
      * @return The result of the calculation as a string.
-     * @throws ArithmeticException If there is an arithmetic error in the calculation.
+     * @throws ArithmeticException      If there is an arithmetic error in the calculation.
      * @throws IllegalArgumentException If there is an illegal argument in the calculation.
      */
     public static String calculate(String calc) {
         try {
             String trim;
-            if(String.valueOf(calc.charAt(0)).equals("+")) {
+            if (String.valueOf(calc.charAt(0)).equals("+")) {
                 calc = calc.substring(1);
-            } else if(String.valueOf(calc.charAt(0)).equals("-")) {
+            } else if (String.valueOf(calc.charAt(0)).equals("-")) {
                 calc = "0" + calc;
             }
 
@@ -107,7 +108,8 @@ public class CalculatorEngine {
                     .replace("⅓", "0,33333333333")
                     .replace("¼", "0,25");
 
-            trim = commonReplacements.replace(".", "").replace(",", ".").trim();;
+            trim = commonReplacements.replace(".", "").replace(",", ".").trim();
+            ;
             trim = balanceParentheses(trim);
 
             Log.e("TRIM", "Trim:" + trim);
@@ -172,7 +174,7 @@ public class CalculatorEngine {
     public static String fixExpression(String input) {
         StringBuilder sb = new StringBuilder();
 
-        if(input.length() >= 2) {
+        if (input.length() >= 2) {
             for (int i = 0; i < input.length(); i++) {
                 char currentChar = input.charAt(i);
                 sb.append(currentChar);
@@ -185,29 +187,29 @@ public class CalculatorEngine {
                         continue;
                     }
 
-                    if(isOperator(String.valueOf(currentChar)) && isSymbol(String.valueOf(nextChar))) {
+                    if (isOperator(String.valueOf(currentChar)) && isSymbol(String.valueOf(nextChar))) {
                         continue;
                     }
 
-                    if(Character.isDigit(currentChar) && isOperator(String.valueOf(nextChar))) {
+                    if (Character.isDigit(currentChar) && isOperator(String.valueOf(nextChar))) {
                         continue;
                     }
 
-                    if(String.valueOf(currentChar).equals("(") && String.valueOf(nextChar).equals("³")) {
+                    if (String.valueOf(currentChar).equals("(") && String.valueOf(nextChar).equals("³")) {
                         continue;
                     }
 
-                    if(Character.isDigit(currentChar) && String.valueOf(nextChar).equals("(")) {
+                    if (Character.isDigit(currentChar) && String.valueOf(nextChar).equals("(")) {
                         sb.append('×');
                         continue;
                     }
 
-                    if((Character.isDigit(currentChar) && isSymbol(String.valueOf(nextChar))) || (isSymbol(String.valueOf(currentChar)) && Character.isDigit(nextChar))) {
+                    if ((Character.isDigit(currentChar) && isSymbol(String.valueOf(nextChar))) || (isSymbol(String.valueOf(currentChar)) && Character.isDigit(nextChar))) {
                         sb.append('×');
                         continue;
                     }
 
-                    if((isSymbol(String.valueOf(currentChar)) && String.valueOf(nextChar).equals("(")) || (String.valueOf(currentChar).equals(")") && isSymbol(String.valueOf(nextChar))) ) {
+                    if ((isSymbol(String.valueOf(currentChar)) && String.valueOf(nextChar).equals("(")) || (String.valueOf(currentChar).equals(")") && isSymbol(String.valueOf(nextChar)))) {
                         sb.append('×');
                         continue;
                     }
@@ -217,12 +219,12 @@ public class CalculatorEngine {
                         continue;
                     }
 
-                    if(Character.isDigit(currentChar) && String.valueOf(currentChar).equals("(") && !isOperator(String.valueOf(nextChar))) {
+                    if (Character.isDigit(currentChar) && String.valueOf(currentChar).equals("(") && !isOperator(String.valueOf(nextChar))) {
                         sb.append('×');
                         continue;
                     }
 
-                    if(Character.isDigit(currentChar) && Character.isLetter(nextChar) && !isOperator(String.valueOf(nextChar))) {
+                    if (Character.isDigit(currentChar) && Character.isLetter(nextChar) && !isOperator(String.valueOf(nextChar))) {
                         sb.append('×');
                         continue;
                     }
@@ -360,48 +362,9 @@ public class CalculatorEngine {
         return mathFunctions;
     }
 
-    public static String addParentheses(String input) {
-        StringBuffer modifiedString = new StringBuffer();
-        boolean checkIsNumber = false;
-        boolean foundOpenBracket = false;
-
-        for (int i = input.length() - 1; i >= 0; i--) {
-            char currentChar = input.charAt(i);
-
-            if (currentChar == '(') {
-                foundOpenBracket = true;
-            }
-
-            if (currentChar == '!') {
-                checkIsNumber = true;
-                if (i - 1 >= 0 && (input.charAt(i - 1) != '.' && input.charAt(i - 1) != ',')) {
-                    modifiedString.insert(0, ")");
-                }
-                modifiedString.insert(0, currentChar);
-                continue;
-            }
-
-            if (!String.valueOf(currentChar).equals(".") && !String.valueOf(currentChar).equals(",")) {
-                if (foundOpenBracket && !Character.isDigit(currentChar)) {
-                    modifiedString.insert(0, currentChar + "(");
-                    foundOpenBracket = false;
-                    checkIsNumber = false;
-                    continue;
-                }
-            }
-
-            modifiedString.insert(0, currentChar);
-        }
-
-        if (checkIsNumber) {
-            modifiedString.insert(0, "(");
-        }
-
-        return balanceParentheses(modifiedString.toString());
-    }
-
     /**
      * isScientificNotation method checks if a given string is in scientific notation.
+     *
      * @param str The input string to be checked.
      * @return True if the string is in scientific notation, otherwise false.
      */
@@ -427,6 +390,7 @@ public class CalculatorEngine {
 
     /**
      * convertScientificToDecimal method converts a number in scientific notation to decimal representation.
+     *
      * @param str The input string in scientific notation.
      * @return The decimal representation of the input string.
      */
@@ -576,7 +540,7 @@ public class CalculatorEngine {
                 }
                 if (i + 6 <= expressionWithoutSpaces.length()) {
                     String function = expressionWithoutSpaces.substring(i, i + 6);
-                     if (function.equals("sin⁻¹(") || function.equals("cos⁻¹(") || function.equals("tan⁻¹(")) {
+                    if (function.equals("sin⁻¹(") || function.equals("cos⁻¹(") || function.equals("tan⁻¹(")) {
                         tokens.add(function); // Add the full function name
                         i += 5; // Skip the next characters (already processed)
                         continue;
@@ -808,10 +772,10 @@ public class CalculatorEngine {
      * If the result is infinite (which can happen if the base and exponent are too large), it throws an ArithmeticException.
      * If the result is not a valid number format, it throws a NumberFormatException.
      *
-     * @param base The base number.
+     * @param base     The base number.
      * @param exponent The exponent.
      * @return The result of raising the base to the power of the exponent.
-     * @throws ArithmeticException If the result is too large to be represented as a double.
+     * @throws ArithmeticException   If the result is too large to be represented as a double.
      * @throws NumberFormatException If the result is not a valid number format.
      */
     public static BigDecimal pow(BigDecimal base, BigDecimal exponent) {
@@ -895,7 +859,7 @@ public class CalculatorEngine {
      * Applies an operator to numbers in the stack based on the given operator.
      *
      * @param operator The operator to be applied.
-     * @param stack The stack containing numbers.
+     * @param stack    The stack containing numbers.
      */
     private static void applyOperatorToStack(String operator, List<BigDecimal> stack) {
         // If the operator is "!", apply the operator to only one number
@@ -941,7 +905,7 @@ public class CalculatorEngine {
      * Evaluates a mathematical function and adds the result to the stack.
      *
      * @param function The function to be evaluated.
-     * @param stack The stack containing numbers.
+     * @param stack    The stack containing numbers.
      */
     private static void evaluateFunction(String function, List<BigDecimal> stack) {
         // Implement the evaluation of functions like sin, cos, tan.
@@ -1245,7 +1209,7 @@ public class CalculatorEngine {
                 token.equals("sinh(") || token.equals("cosh(") || token.equals("tanh(") ||
                 token.equals("log(") || token.equals("log₂(") || token.equals("log₃(") ||
                 token.equals("log₄(") || token.equals("log₅(") || token.equals("log₆(") ||
-                token.equals("log₇(") || token.equals("log₈(") || token.equals("log₉(")  ||
+                token.equals("log₇(") || token.equals("log₈(") || token.equals("log₉(") ||
                 token.equals("ln(") || token.equals("sin⁻¹(") || token.equals("cos⁻¹(") ||
                 token.equals("tan⁻¹(") || token.equals("sinh⁻¹(") || token.equals("cosh⁻¹(") ||
                 token.equals("tanh⁻¹(");
