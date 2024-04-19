@@ -32,15 +32,20 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -69,6 +74,9 @@ public class SettingsActivity extends AppCompatActivity {
     // Declare a DataManager object
     DataManager dataManager;
     private boolean isProgrammaticChange = false;
+    
+    private int newColorBTNForegroundAccent;
+    private int newColorBTNBackgroundAccent;
 
     private ArrayList<CustomItems> customListDisplayMode = new ArrayList<>();
     private ArrayList<CustomItems> customListCalculationMode = new ArrayList<>();
@@ -150,7 +158,7 @@ public class SettingsActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
 
-            switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+            switchDisplayMode();
         });
         settingPI.setOnCheckedChangeListener((buttonView, isChecked) -> {
             dataManager.saveToJSONSettings("refactorPI", isChecked, getMainActivityContext());
@@ -215,7 +223,7 @@ public class SettingsActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("selectedSpinnerSetting", "Dark", getMainActivityContext());
                 }
                 updateSpinner(adapterView);
-                switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+                switchDisplayMode();
             }
 
             @Override
@@ -370,6 +378,53 @@ public class SettingsActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ReportActivity.class);
             startActivity(intent);
         });
+        
+        Button releaseNotesButton = findViewById(R.id.releasenotes_button);
+        releaseNotesButton.setOnClickListener(view -> {
+            switchDisplayMode();
+
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.patchnotes, null);
+
+            final PopupWindow popupWindow = new PopupWindow(
+                    popupView, LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    true
+            );
+
+            LinearLayout patchnotesLayout = popupView.findViewById(R.id.patchnotesLayout);
+
+            if (patchnotesLayout != null) {
+                Drawable backgroundDrawable = getResources().getDrawable(R.drawable.textview_border_thick);
+                if (backgroundDrawable instanceof GradientDrawable) {
+                    GradientDrawable gradientDrawable = (GradientDrawable) backgroundDrawable;
+                    gradientDrawable.setStroke(10, newColorBTNForegroundAccent);
+                    patchnotesLayout.setBackground(backgroundDrawable);
+                }
+            }
+
+            TextView releasenotesTitle = popupView.findViewById(R.id.releasenotes_title);
+            TextView releasenotesDate = popupView.findViewById(R.id.releasenotes_date);
+            TextView releasenotesText = popupView.findViewById(R.id.releasenotes_text);
+            TextView understoodButton = popupView.findViewById(R.id.understoodButton);
+
+            releasenotesTitle.setTextColor(newColorBTNForegroundAccent);
+            releasenotesDate.setTextColor(newColorBTNForegroundAccent);
+            releasenotesText.setTextColor(newColorBTNForegroundAccent);
+            understoodButton.setTextColor(newColorBTNForegroundAccent);
+
+            understoodButton.setBackgroundColor(newColorBTNBackgroundAccent);
+
+            popupView.setPadding(20, 20, 20, 20);
+            popupView.setBackgroundColor(newColorBTNBackgroundAccent);
+
+            findViewById(R.id.settingsUI).post(() ->
+                    popupWindow.showAtLocation(findViewById(R.id.settingsUI),
+                            Gravity.CENTER, 0, 0
+                    ));
+
+            understoodButton.setOnClickListener(v -> popupWindow.dismiss());
+        });
 
         customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints1)));
         customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints2)));
@@ -416,7 +471,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        switchDisplayMode(getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK);
+        switchDisplayMode();
         createNotificationChannel(this);
         createNotificationButtonListeners();
     }
@@ -784,7 +839,7 @@ public class SettingsActivity extends AppCompatActivity {
             switch (readselectedSetting) {
                 case 2:
                     dataManager.saveToJSONSettings("selectedSpinnerSetting", "Dark", getMainActivityContext());
-                    switchDisplayMode(currentNightMode);
+                    switchDisplayMode();
                     try {
                         if (dataManager.getJSONSettingsData("settingsTrueDarkMode", getApplicationContext()).getString("value").equals("true")) {
                             textView.setTextColor(ContextCompat.getColor(this, R.color.darkmode_white));
@@ -798,7 +853,7 @@ public class SettingsActivity extends AppCompatActivity {
                 case 1:
                     dataManager.saveToJSONSettings("selectedSpinnerSetting", "Light", getMainActivityContext());
                     textView.setTextColor(ContextCompat.getColor(this, R.color.black));
-                    switchDisplayMode(currentNightMode);
+                    switchDisplayMode();
                     break;
                 case 0:
                     dataManager.saveToJSONSettings("selectedSpinnerSetting", "System", getMainActivityContext());
@@ -815,7 +870,7 @@ public class SettingsActivity extends AppCompatActivity {
                     } else if (currentNightMode == Configuration.UI_MODE_NIGHT_NO) {
                         textView.setTextColor(ContextCompat.getColor(this, R.color.black));
                     }
-                    switchDisplayMode(currentNightMode);
+                    switchDisplayMode();
                     break;
             }
         }
@@ -973,18 +1028,14 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        int currentNightMode = newConfig.uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        switchDisplayMode(currentNightMode);
+        switchDisplayMode();
     }
 
     /**
      * This method switches the display mode based on the current night mode.
-     *
-     * @param currentNightMode The current night mode.
      */
     @SuppressLint({"ResourceType", "UseCompatLoadingForDrawables", "CutPasteId"})
-    private void switchDisplayMode(int currentNightMode) {
+    private void switchDisplayMode() {
         Button helpButton = findViewById(R.id.help_button);
         Button backbutton = findViewById(R.id.report_return_button);
         Button reportButton = findViewById(R.id.report_button);
@@ -1000,7 +1051,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (getSelectedSetting() != null) {
             if (getSelectedSetting().equals("Systemstandard")) {
-                switch (currentNightMode) {
+                switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
                     case Configuration.UI_MODE_NIGHT_YES:
                         // Nightmode is activated
                         dataManager = new DataManager();
@@ -1075,6 +1126,8 @@ public class SettingsActivity extends AppCompatActivity {
                                     adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                                 }
 
+                                newColorBTNForegroundAccent = Color.parseColor(color);
+                                newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
                             } else {
                                 updateUI(R.color.darkmode_black, R.color.darkmode_white);
 
@@ -1137,6 +1190,9 @@ public class SettingsActivity extends AppCompatActivity {
                                     adapter.setTextColor(Color.parseColor(color));
                                     adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                                 }
+                                
+                                newColorBTNForegroundAccent = Color.parseColor(color);
+                                newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
                             }
                             customSpinner1.setAdapter(customAdapter1);
                             customSpinner2.setAdapter(customAdapter2);
@@ -1206,6 +1262,9 @@ public class SettingsActivity extends AppCompatActivity {
                                 adapter.setTextColor(Color.parseColor(color));
                                 adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                             }
+
+                            newColorBTNForegroundAccent = Color.parseColor(color);
+                            newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
 
                             customSpinner1.setAdapter(customAdapter1);
                             customSpinner2.setAdapter(customAdapter2);
@@ -1281,6 +1340,9 @@ public class SettingsActivity extends AppCompatActivity {
                             adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                         }
 
+                        newColorBTNForegroundAccent = Color.parseColor(color);
+                        newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
+
                         customSpinner1.setAdapter(customAdapter1);
                         customSpinner2.setAdapter(customAdapter2);
                         customSpinner3.setAdapter(customAdapter3);
@@ -1353,6 +1415,9 @@ public class SettingsActivity extends AppCompatActivity {
                     adapter.setTextColor(Color.parseColor(color));
                     adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                 }
+
+                newColorBTNForegroundAccent = Color.parseColor(color);
+                newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
 
                 customSpinner1.setAdapter(customAdapter1);
                 customSpinner2.setAdapter(customAdapter2);
@@ -1438,6 +1503,9 @@ public class SettingsActivity extends AppCompatActivity {
                             adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                         }
 
+                        newColorBTNForegroundAccent = Color.parseColor(color);
+                        newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
+
                     } else {
                         updateUI(R.color.darkmode_black, R.color.darkmode_white);
                         updateSpinner2(findViewById(R.id.settings_display_mode_spinner));
@@ -1501,6 +1569,9 @@ public class SettingsActivity extends AppCompatActivity {
                             adapter.setTextColor(Color.parseColor(color));
                             adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                         }
+
+                        newColorBTNForegroundAccent = Color.parseColor(color);
+                        newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
                     }
 
                     customSpinner1.setAdapter(customAdapter1);
@@ -1572,6 +1643,9 @@ public class SettingsActivity extends AppCompatActivity {
                         adapter.setBackgroundColor(Color.parseColor(backgroundColor));
                     }
 
+                    newColorBTNForegroundAccent = Color.parseColor(color);
+                    newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
+
                     customSpinner1.setAdapter(customAdapter1);
                     customSpinner2.setAdapter(customAdapter2);
                     customSpinner3.setAdapter(customAdapter3);
@@ -1622,8 +1696,9 @@ public class SettingsActivity extends AppCompatActivity {
         Button settingsHelpButton = findViewById(R.id.help_button);
         Button settingsReportButton = findViewById(R.id.report_button);
         TextView settingsTitle = findViewById(R.id.settings_title);
-        //TextView settingsReleaseNotes = findViewById(R.id.settings_release_notes);
-        //TextView settingsReleaseNotesText = findViewById(R.id.settings_release_notes_text);
+        Button showReleaseNotesButton = findViewById(R.id.releasenotes_button);
+        TextView settingsReleaseNotes = findViewById(R.id.settings_releasenotes_title);
+        TextView settingsReleaseNotesText = findViewById(R.id.settings_releasenotes_text);
 
         @SuppressLint("UseSwitchCompatOrMaterialCode") Switch settingsTrueDarkMode = findViewById(R.id.settings_true_darkmode);
         TextView settingsTrueDarkModeText = findViewById(R.id.settings_true_darkmode_text);
@@ -1638,8 +1713,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
         TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
-        //TextView settingsCredits = findViewById(R.id.credits_view);
-        //FrameLayout frameLayout = findViewById(R.id.copyrightFrameLayout);
+        TextView settingsCredits = findViewById(R.id.credits_view);
 
         TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
         TextView settingsFunctionModeText = findViewById(R.id.settings_function_text);
@@ -1662,8 +1736,10 @@ public class SettingsActivity extends AppCompatActivity {
         settingsTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsTitle.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
         settingsScrollView.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
-        //settingsReleaseNotes.setTextColor(ContextCompat.getColor(this, textColor));
-        //settingsReleaseNotesText.setTextColor(ContextCompat.getColor(this, textColor));
+        showReleaseNotesButton.setTextColor(ContextCompat.getColor(this, textColor));
+        showReleaseNotesButton.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingsReleaseNotes.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsReleaseNotesText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsTrueDarkMode.setTextColor(ContextCompat.getColor(this, textColor));
         settingsTrueDarkModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsDisplayModeText.setTextColor(ContextCompat.getColor(this, textColor));
@@ -1676,9 +1752,8 @@ public class SettingsActivity extends AppCompatActivity {
         allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
-        //settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
-        //settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
-        //frameLayout.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
+        settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
+        settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
 
         settingsFunctionModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsFunctionModeText.setTextColor(ContextCompat.getColor(this, textColor));

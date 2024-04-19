@@ -110,11 +110,6 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DataManager(this);
         dataManager.initializeSettings(this);
 
-        Log.e("DEBUG", addSpaceToOperators("((-(-423.331÷3123,66712)+√(³√((-4÷2)^2+5))/2)!)))"));
-        if(true) {
-            return;
-        }
-
         switchDisplayMode();
         try {
 

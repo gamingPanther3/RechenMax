@@ -27,9 +27,6 @@
             - Missing unit in the converter
             - Layout error in the calculator
 
-        \n\nRemoved Features:\n
-            - Enable and disable release notes in settings
-
         \n\nSystem Requirements:\n
             - Minimum Android version: 10
             - Recommended Android version: 13 or higher
@@ -117,7 +114,8 @@
     <string name="trueDarkmodeText">This setting causes the blacks to become more intense and the whites to dim slightly when activated. Please note that this setting only takes effect when dark mode is enabled.</string>
 
     <string name="releasenotes">Release-Notes</string>
-    <string name="releasenotesText">If this option is enabled, the release notes will be displayed every time you start the calculator. Regardless of this setting, the release notes are automatically presented after each installation of the latest version.</string>
+    <string name="releaseNotesDescription">Click on \'Show Release Notes\' to view the latest release notes for this patch.</string>
+    <string name="showReleaseNotes">Show Release Notes</string>
 
     <string name="displayMode">Display mode</string>
     <string name="displayModeText">This option allows you to select the display mode of the calculator.</string>

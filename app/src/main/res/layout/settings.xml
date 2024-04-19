@@ -76,7 +76,7 @@
     <ScrollView
         android:id="@+id/settings_sroll_textview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
 
         <LinearLayout
@@ -117,6 +117,46 @@
                 android:autoSizeTextType="uniform"/>
 
             -->
+
+            <TextView
+                android:id="@+id/settings_releasenotes_title"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:text="@string/releasenotes"
+                android:textColor="@color/colorBTNForegroundAccent" />
+
+            <TextView
+                android:id="@+id/settings_releasenotes_text"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/releaseNotesDescription"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <Button
+                android:id="@+id/releasenotes_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/showReleaseNotes"
+                android:textColor="@color/white"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
 
             <TextView
                 android:id="@+id/settings_display_mode_title"
@@ -438,34 +478,26 @@
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/credits_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:gravity="center"
+                android:linksClickable="true"
+                android:maxWidth="530dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/copyright"
+                android:textColor="@color/colorBTNForegroundAccent" />
         </LinearLayout>
     </ScrollView>
-
-    <!--
-    <FrameLayout
-        android:id="@+id/copyrightFrameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBTNBackgroundAccent">
-
-        <TextView
-            android:id="@+id/credits_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:autoSizeStepGranularity="1sp"
-            android:autoSizeTextType="uniform"
-            android:background="@color/colorBTNBackgroundAccent"
-            android:gravity="center"
-            android:linksClickable="true"
-            android:maxWidth="530dp"
-            android:paddingLeft="20dp"
-            android:paddingTop="5dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="5dp"
-            android:text="@string/copyright"
-            android:textColor="@color/colorBTNForegroundAccent" />
-
-    </FrameLayout>
-    -->
 </LinearLayout>

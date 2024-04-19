@@ -27,9 +27,6 @@
             - Falta de unidad en el convertidor
             - Error de diseño en la calculadora
 
-        \n\nFunciones eliminadas: \n
-            - Habilitar y deshabilitar notas de lanzamiento en la configuración
-
         \n\nRequisitos del sistema: \n
             - Versión mínima de Android: 10
             - Versión recomendada de Android: 13 o superior
@@ -117,7 +114,8 @@
     <string name="trueDarkmodeText">Esta configuración hace que los negros sean más intensos y los blancos se atenúen ligeramente al activarse. Ten en cuenta que esta configuración solo tiene efecto cuando está activado el modo oscuro.</string>
 
     <string name="releasenotes">Notas de lanzamiento</string>
-    <string name="releasenotesText">Si esta opción está habilitada, las notas de lanzamiento se mostrarán cada vez que inicies la calculadora. Independientemente de esta configuración, las notas de lanzamiento se presentan automáticamente después de cada instalación de la última versión.</string>
+    <string name="releaseNotesDescription">Haz clic en \'Mostrar notas de la versión\' para ver las últimas notas de la versión de este parche.</string>
+    <string name="showReleaseNotes">Mostrar notas de la versión</string>
 
     <string name="displayMode">Modo de visualización</string>
     <string name="displayModeText">Esta opción te permite seleccionar el modo de visualización de la calculadora.</string>

@@ -27,9 +27,6 @@
             - Unité manquante dans le convertisseur
             - Erreur de mise en page dans la calculatrice
 
-        \n\nFonctionnalités supprimées : \n
-            - Activer et désactiver les notes de version dans les paramètres
-
         \n\nConfiguration requise : \n
             - Version Android minimale : 10
             - Version Android recommandée : 13 ou supérieure
@@ -77,7 +74,9 @@
     <string name="trueDarkmode">Véritable mode sombre</string>
     <string name="trueDarkmodeText">Ce réglage rend les noirs plus intenses et les blancs s\'assombrissent légèrement lorsqu\'ils sont activés. Veuillez noter que ce paramètre ne prend effet que lorsque le mode sombre est activé.</string>
     <string name="releasenotes">Notes de version</string>
-    <string name="releasenotesText">Si cette option est activée, les notes de version seront affichées à chaque démarrage de la calculatrice. Quel que soit ce paramètre, les notes de version sont automatiquement présentées après chaque installation de la dernière version.</string>
+    <string name="releaseNotesDescription">Cliquez sur \'Afficher les notes de version\' pour voir les dernières notes de version de ce correctif.</string>
+    <string name="showReleaseNotes">Afficher les notes de version</string>
+
     <string name="displayMode">mode d\'affichage</string>
     <string name="displayModeText">Cette option permet de sélectionner le mode d\'affichage de la calculatrice.</string>
     <string name="basics">Les bases</string>

@@ -82,9 +82,6 @@
             - Fehlende Einheit im Umrechner
             - Layout Fehler im Taschenrechner
 
-        \nEntfernte Funktionen: \n
-            - Release-Notes in den Einstellungen aktivieren und deaktivieren
-
         \nSystemanforderungen: \n
             - Minimale Android-Version: 10
             - Empfohlene Android-Version: 13 oder höher
@@ -143,7 +140,8 @@
     <string name="copyright">"Ersteller: Max Lemberg Copyright: © 2024 Max Lemberg. Alle Rechte vorbehalten. Lizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz. Version: 1.6.4"</string>
     <string name="releasenotes">Release-Notes</string>
     <string name="trueDarkmode">Echter Dunkelmodus</string>
-    <string name="releasenotesText">Wenn diese Option aktiviert ist, werden die Versionshinweise bei jedem Start des Taschenrechners angezeigt. Unabhängig von dieser Einstellung, werden die Versionshinweise nach jeder Installation der neuesten Version automatisch präsentiert.</string>
+    <string name="releaseNotesDescription">Klicke auf \'Release-Notes anzeigen\' um die neusten Release-Notes dieses Patches zu sehen.</string>
+    <string name="showReleaseNotes">Release-Notes anzeigen</string>
     <string name="displayMode">Anzeigemodus</string>
     <string name="displayModeText">Mit dieser Option lässt sich der Anzeigemodus des Taschenrechners auswählen.</string>
     <string name="trueDarkmodeText">Diese Einstellung bewirkt, dass das Schwarz intensiver und das Weiß leicht gedimmt wird, wenn sie aktiviert ist. Bitte beachten Sie, dass diese Einstellung nur wirksam wird, wenn der Dunkelmodus aktiviert ist.</string>
