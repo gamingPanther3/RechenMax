@@ -1866,6 +1866,8 @@ public class MainActivity extends AppCompatActivity {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht")) {
                 if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
                     addCalculateTextWithoutSpace(getResultText() + "!");
+                } else {
+                    addCalculateTextWithoutSpace("!");
                 }
 
                 setResultText(CalculatorEngine.calculate(balanceParentheses(getCalculateText())));
