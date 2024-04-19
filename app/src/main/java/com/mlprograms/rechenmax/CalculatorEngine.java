@@ -629,7 +629,7 @@ public class CalculatorEngine {
             case "!":
                 return factorial(operand1);
             case "^":
-                return pow(operand1, operand2);
+                return operand1.pow(operand2.intValue(), MathContext.DECIMAL128);
             case "log(":
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₂(":
