@@ -14,24 +14,24 @@
     <string name="releaseDate">Release Date: 04/19/2024 - 10:00 PM</string>
     <string name="releaseNotesText">"
         New Features: \n
-            - Added unit converter
-            - Revised history
-            - Improved introduction
-            - Notifications are sent if enabled
-            - Various languages ​​such as German, English, Spanish, and French
-            - Bugs can be reported in the top right of the settings
-            - Improved release notes
-            - Patch notes can be accessed again in the settings
+            - Added unit converter\n
+            - Revised history\n
+            - Improved introduction\n
+            - Notifications are sent if enabled\n
+            - Various languages ​​such as German, English, Spanish, and French\n
+            - Bugs can be reported in the top right of the settings\n
+            - Improved release notes\n
+            - Patch notes can be accessed again in the settings\n
 
         \n\nFixed Issues:\n
-            - Back button was faulty
-            - Missing unit in the converter
-            - Layout error in the calculator
+            - Back button was faulty\n
+            - Missing unit in the converter\n
+            - Layout error in the calculator\n
 
         \n\nSystem Requirements:\n
-            - Minimum Android version: 10
-            - Recommended Android version: 13 or higher
-            - Maximum Android version: 14
+            - Minimum Android version: 10\n
+            - Recommended Android version: 13 or higher\n
+            - Maximum Android version: 14\n
     "</string>
 
     <string name="patchnotesOverviewText">The latest RechenMax version brings exciting improvements and features. Automatic scrolling makes it easier to navigate large calculations, while the rounding precision has been increased to the eleventh decimal place for more precise decimal numbers. History has been optimized to effortlessly restore previous calculations and review past tasks. In trigonometric tasks, advanced functions for sine, cosine and tangent in degrees and radians are available. Inverse trigonometric functions (sin⁻¹, cos⁻¹, tan⁻¹) as well as hyperbolic functions such as sinh(x), cosh(x) and tanh(x) are now also available. Manual notation entry provides additional flexibility when creating and calculating complex expressions. The RechnenMax now supports the use of the mathematical constant PI (π) for precise circle calculations. With the flexible support of degrees and radians, you can switch between the two units of measurement as needed. Brackets handling has been optimized to ensure error-free processing of mathematical or logical expressions. The software automatically detects and adds missing closing brackets, further simplifying expression entry. In history, long-pressing on an entry allows the invoice to be automatically copied to the clipboard, while short-pressing pastes the invoice directly into the calculator. This release also fixes important bugs, including display and factorial calculation issues, as well as optimized result formatting for more accurate display.</string>

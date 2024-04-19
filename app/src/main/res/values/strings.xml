@@ -69,24 +69,24 @@
     <string name="releaseDate">Veröffentlichungsdatum: 19.04.2024 - 22Uhr</string>
     <string name="releaseNotesText">
         Neue Funktionen:\n
-            - Ein Einheiten-Umrechner wurde hinzugefügt
-            - Verlauf wurde überarbeitet
-            - Einführung wurde verbessert
-            - Es werden, falls aktiv, Benachrichtigungen gesendet
-            - Verschiedene Sprachen wie Deutsch, Englisch, Spanisch und Französisch
-            - Es können Fehler, oben rechts in den Eistellungen, gemeldet werden
-            - Release-Notes wurde verbessert
-            - PatchNotes können wieder in den Einstellungen aufgerufen werden
+            - Ein Einheiten-Umrechner wurde hinzugefügt\n
+            - Verlauf wurde überarbeitet\n
+            - Einführung wurde verbessert\n
+            - Es werden, falls aktiv, Benachrichtigungen gesendet\n
+            - Verschiedene Sprachen wie Deutsch, Englisch, Spanisch und Französisch\n
+            - Es können Fehler, oben rechts in den Eistellungen, gemeldet werden\n
+            - Release-Notes wurde verbessert\n
+            - PatchNotes können wieder in den Einstellungen aufgerufen werden\n
 
         \nBehobene Fehler: \n
-            - Zurücktaste war Fehlerhaft
-            - Fehlende Einheit im Umrechner
-            - Layout Fehler im Taschenrechner
+            - Zurücktaste war Fehlerhaft\n
+            - Fehlende Einheit im Umrechner\n
+            - Layout Fehler im Taschenrechner\n
 
         \nSystemanforderungen: \n
-            - Minimale Android-Version: 10
-            - Empfohlene Android-Version: 13 oder höher
-            - Maximale Android-Version: 14
+            - Minimale Android-Version: 10\n
+            - Empfohlene Android-Version: 13 oder höher\n
+            - Maximale Android-Version: 14\n
     </string>
 
     <string name="overview">Übersicht</string>
