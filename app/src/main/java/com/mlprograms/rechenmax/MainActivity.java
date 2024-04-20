@@ -2759,16 +2759,14 @@ public class MainActivity extends AppCompatActivity {
     private void handleMRAction(ClipboardManager clipboardManager) {
         ClipData clipData = clipboardManager.getPrimaryClip();
 
-        assert clipData != null;
-        ClipData.Item item = clipData.getItemAt(0);
-        String clipText = (String) item.getText();
-
-        if (clipData.getItemCount() == 0) {
+        if (clipData == null || clipData.getItemCount() == 0) {
             // Handle the case where clipboard data is null or empty
             showToastShort(getString(R.string.clipboardIsEmpty), getApplicationContext());
-
             return;
         }
+
+        ClipData.Item item = clipData.getItemAt(0);
+        String clipText = (String) item.getText();
 
         String scientificNotationPattern = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
         String mathTaskPattern = "[-+*/%^()0-9.eE\\s]+";
