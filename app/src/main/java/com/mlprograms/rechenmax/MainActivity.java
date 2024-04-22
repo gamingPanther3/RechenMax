@@ -54,6 +54,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -79,6 +80,7 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
     private Context context = this;
     private DataManager dataManager;
+    private InAppUpdate inAppUpdate;
 
     private int newColorBTNForegroundAccent;
     private int newColorBTNBackgroundAccent;
@@ -196,6 +198,9 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
+        inAppUpdate = new InAppUpdate(MainActivity.this);
+        inAppUpdate.checkForAppUpdate();
     }
 
     private void showPatchNotes() {
@@ -2551,6 +2556,7 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void onDestroy() {
         super.onDestroy();
+        inAppUpdate.onDestroy();
         finish();
     }
 
@@ -2573,8 +2579,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        inAppUpdate.onResume();
         stopBackgroundService();
         formatResultTextAfterType();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        inAppUpdate.onActivityResult(requestCode, resultCode);
     }
 
     /**
