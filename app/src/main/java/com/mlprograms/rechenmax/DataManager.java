@@ -417,7 +417,9 @@ public class DataManager {
     }
 
     private void initializeSetting(String key, String defaultValue, Context applicationContext) throws JSONException {
-        if (getJSONSettingsData(key, applicationContext) == null) {
+        if(key.equals("currentVersion")) {
+            saveToJSONSettings("currentVersion", defaultValue, applicationContext);
+        } else if(getJSONSettingsData(key, applicationContext) == null) {
             if(key.equals("historyTextViewNumber")) {
                 saveToHistory(key, defaultValue, applicationContext);
             }

@@ -114,20 +114,22 @@ public class MainActivity extends AppCompatActivity {
 
         switchDisplayMode();
         try {
-
             JSONObject currentVersionData = dataManager.getJSONSettingsData("currentVersion", getApplicationContext());
             JSONObject oldVersionData = dataManager.getJSONSettingsData("old_version", getApplicationContext());
             JSONObject showPatchNotesData = dataManager.getJSONSettingsData("showPatchNotes", getApplicationContext());
 
-            String currentValue = currentVersionData.getString("value");
-            String oldValue = oldVersionData.getString("value");
             String showPatchNotes = showPatchNotesData.getString("value");
 
             if(showPatchNotes.equals("true")) {
                 showPatchNotes();
             } else if (currentVersionData.has("value") && oldVersionData.has("value")) {
+                String currentValue = currentVersionData.getString("value");
+                String oldValue = oldVersionData.getString("value");
+
                 if (!Objects.equals(currentValue, oldValue)) {
                     // Set the flag to show patch notes and switch to the patch notes layout
+
+                    boolean showHelpActivity = Objects.equals(oldValue, "0");
                     dataManager.updateValuesInJSONSettingsData(
                             "old_version",
                             "value",
@@ -149,8 +151,12 @@ public class MainActivity extends AppCompatActivity {
                             getApplicationContext()
                     );
 
-                    HelpActivity.setMainActivityContext(this);
-                    startActivity(new Intent(this, HelpActivity.class));
+                    if(showHelpActivity) {
+                        HelpActivity.setMainActivityContext(this);
+                        startActivity(new Intent(this, HelpActivity.class));
+                    } else {
+                        showPatchNotes();
+                    }
                 }
             }
         } catch (JSONException e) {
