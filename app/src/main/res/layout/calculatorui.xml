@@ -749,10 +749,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/standardButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorLightBackground">
+            android:background="@color/colorLightBackground"
+            android:layout_weight="1">
 
             <Button
                 android:id="@+id/clearresult"
@@ -763,7 +764,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="CE"
                 android:text="@string/ClearResultLabel"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -774,12 +774,10 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
                 android:layout_weight="1"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="C"
                 android:text="@string/ClearAllButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -794,7 +792,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="⌫"
                 android:text="@string/BackspaceButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -809,7 +806,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="÷"
                 android:text="@string/DivideButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -831,7 +827,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="7"
                 android:text="@string/SevenButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -845,7 +840,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="8"
                 android:text="@string/EightButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -859,7 +853,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="9"
                 android:text="@string/NineButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -873,7 +866,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="×"
                 android:text="@string/MultiplyButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -895,7 +887,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="4"
                 android:text="@string/FourButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -909,7 +900,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="5"
                 android:text="@string/FiveButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -923,7 +913,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="6"
                 android:text="@string/SixButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -937,7 +926,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="-"
                 android:text="@string/SubtractButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -959,7 +947,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="1"
                 android:text="@string/OneButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -973,7 +960,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="2"
                 android:text="@string/TwoButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -987,7 +973,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="3"
                 android:text="@string/ThreeButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -1001,7 +986,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="+"
                 android:text="@string/AddButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -1023,11 +1007,11 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="+-"
                 android:text="@string/NegativButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/negate" />
+
 
             <Button
                 android:id="@+id/zero"
@@ -1038,7 +1022,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="0"
                 android:text="@string/ZeroButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -1052,7 +1035,6 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag=","
                 android:text="@string/commaButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -1068,11 +1050,15 @@
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="="
                 android:text="@string/CalculateButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/calculate" />
         </LinearLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/postsFrameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -42,8 +42,8 @@ import java.util.regex.Pattern;
  * CalculatorActivity
  *
  * @author Max Lemberg
- * @version 2.1.4
- * @date 09.03.2023
+ * @version 2.1.7
+ * @date 09.05.2024
  */
 
 public class CalculatorEngine {
@@ -58,12 +58,13 @@ public class CalculatorEngine {
     }
 
     // Declaration of a constant of type MathContext with a precision of 35. This is used for division to ensure a precision of 10 decimal places.
-    private static final MathContext MC = new MathContext(35, RoundingMode.HALF_UP);
+    private static final MathContext MC = new MathContext(45, RoundingMode.HALF_UP);
 
 
     // Declaration of a constant for the root operation.
-    public static final String ROOT = "√";
-    public static final String THIRD_ROOT = "³√";
+    public static final String  ROOT            = "√";
+    public static final String  THIRD_ROOT      = "³√";
+    public static final int     RESULT_LENGTH   = 14;
 
     /**
      * This method calculates the result of a mathematical expression. The expression is passed as a string parameter.
@@ -109,10 +110,9 @@ public class CalculatorEngine {
                     .replace("¼", "0,25");
 
             trim = commonReplacements.replace(".", "").replace(",", ".").trim();
-            ;
             trim = balanceParentheses(trim);
 
-            Log.e("TRIM", "Trim:" + trim);
+            //Log.e("TRIM", "Trim:" + trim);
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
@@ -148,8 +148,9 @@ public class CalculatorEngine {
             if (Double.isInfinite(resultDouble)) {
                 return mainActivity.getString(R.string.errorMessage1);
             }
+
             // return the result in decimal notation
-            return result.stripTrailingZeros().toPlainString().replace('.', ',');
+            return shortedResult(result.stripTrailingZeros().toPlainString().replace('.', ','));
         } catch (ArithmeticException e) {
             // Handle exceptions related to arithmetic errors
             if (Objects.equals(e.getMessage(), mainActivity.getString(R.string.errorMessage1))) {
@@ -161,9 +162,61 @@ public class CalculatorEngine {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            Log.e("Exception", e.toString());
+            //Log.e("Exception", e.toString());
             return mainActivity.getString(R.string.errorMessage2);
         }
+    }
+
+    /**
+     * @param calculation Is the calculation as a String
+     * @return Returns the calculation or the shorted calculation
+     */
+    private static String shortedResult(String calculation) {
+        if(calculation.contains(",") && !mainActivity.isInvalidInput(calculation)) {
+            StringBuilder shortedCalculation = new StringBuilder();
+
+            String[] calculationParts = calculation.split(",");
+            if(calculationParts.length == 2 && calculationParts[1].length() >= 2) {
+                if(calculationParts[0].length() >= RESULT_LENGTH) {
+                    shortedCalculation.append(calculationParts[0]).append(",");
+                    shortedCalculation.append(calculationParts[1].substring(0, 2));
+                } else {
+                    shortedCalculation.append(calculationParts[0]).append(",");
+                    int addableNumbers = RESULT_LENGTH - calculationParts[0].length();
+
+                    if(addableNumbers > calculationParts[1].length()) {
+                        shortedCalculation.append(calculationParts[1]);
+                    } else {
+                        shortedCalculation.append(calculationParts[1].substring(0, addableNumbers));
+                    }
+                }
+                return shortedCalculation.toString();
+            }
+        }
+        return removeUnnecessaryZeros(calculation);
+    }
+
+    private static String removeUnnecessaryZeros(String result) {
+        StringBuilder newResult = new StringBuilder();
+        StringBuilder tempPart = new StringBuilder();
+
+        if (result.contains(",")) {
+            String[] parts = result.split(",");
+            newResult.append(parts[0]).append(",");
+            tempPart.append(parts[1]);
+
+            for(int x = parts[1].length() - 1; x >= 0; x--) {
+                if(String.valueOf(parts[1].charAt(x)).equals("0")) {
+                    tempPart.deleteCharAt(x);
+                } else {
+                    break;
+                }
+            }
+
+            newResult.append(tempPart);
+            return newResult.toString();
+        }
+        return result;
     }
 
     public static boolean isSymbol(final String character) {
@@ -629,7 +682,7 @@ public class CalculatorEngine {
             case "!":
                 return factorial(operand1);
             case "^":
-                return operand1.pow(operand2.intValue(), MathContext.DECIMAL128);
+                return BigDecimal.valueOf(Math.pow(operand1.doubleValue(), operand2.doubleValue()));
             case "log(":
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₂(":
@@ -764,50 +817,6 @@ public class CalculatorEngine {
 
         // If the original number was negative, return the negative of the result. Otherwise, return the result.
         return isNegative ? result.negate() : result;
-    }
-
-    /**
-     * This method calculates the power of a base number to an exponent.
-     * It first converts the base and exponent to double values, then uses the Math.pow method to calculate the power.
-     * If the result is infinite (which can happen if the base and exponent are too large), it throws an ArithmeticException.
-     * If the result is not a valid number format, it throws a NumberFormatException.
-     *
-     * @param base     The base number.
-     * @param exponent The exponent.
-     * @return The result of raising the base to the power of the exponent.
-     * @throws ArithmeticException   If the result is too large to be represented as a double.
-     * @throws NumberFormatException If the result is not a valid number format.
-     */
-    public static BigDecimal pow(BigDecimal base, BigDecimal exponent) {
-        // Convert the base and exponent to double values
-        double baseDouble = base.doubleValue();
-        double exponentDouble = exponent.doubleValue();
-
-        // Check if the base is zero and the exponent is negative
-        if (baseDouble == 0 && exponentDouble < 0) {
-            throw new ArithmeticException(mainActivity.getString(R.string.errorMessage3));
-        }
-
-        // Check if the base is negative and the exponent is an integer
-        double resultDouble;
-        if (baseDouble < 0 && exponentDouble == (int) exponentDouble) {
-            baseDouble = -baseDouble;
-            resultDouble = -Math.pow(baseDouble, exponentDouble);
-        } else {
-            resultDouble = Math.pow(baseDouble, exponentDouble);
-        }
-
-        // If the result is too large to be represented as a double, throw an exception
-        if (Double.isInfinite(resultDouble)) {
-            throw new ArithmeticException(mainActivity.getString(R.string.errorMessage1));
-        }
-
-        // Convert the result back to a BigDecimal and return it
-        try {
-            return new BigDecimal(resultDouble, MC).stripTrailingZeros();
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(mainActivity.getString(R.string.errorMessage7));
-        }
     }
 
     /**

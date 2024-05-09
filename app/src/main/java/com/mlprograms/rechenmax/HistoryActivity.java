@@ -16,37 +16,28 @@ package com.mlprograms.rechenmax;
   * limitations under the License.
   */
 
-import static com.mlprograms.rechenmax.ToastHelper.*;
+import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -62,8 +53,16 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * HistoryActivity - Displays calculation history.
@@ -82,22 +81,15 @@ public class HistoryActivity extends AppCompatActivity {
     private static MainActivity mainActivity;
     private LinearLayout innerLinearLayout;
 
-    private int ITEMS_PER_LOAD = 20;
+    private int ITEMS_PER_LOAD = 10 * 2;
     private int historyTextViewNumber = 0;
     private int currentHistoryTextViewNumber;
     private boolean isEndReached = false;
 
-    /**
-     * Called when the activity is starting.
-     * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in {@link #onSaveInstanceState}.
-     *     Otherwise, it is null.
-     */
     @SuppressLint("StaticFieldLeak")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history);
+        setContentView(R.layout.historytest);
 
         dataManager = new DataManager();
         dataManager.saveToJSONSettings("lastActivity", "His", getApplicationContext());
@@ -118,7 +110,7 @@ public class HistoryActivity extends AppCompatActivity {
         historyDeleteButton.setOnClickListener(v -> resetNamesAndValues());
 
         // Create an instance of the outer LinearLayout
-        LinearLayout outerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+        ScrollView outerLinearLayout = findViewById(R.id.history_scrollview);
 
         // Create an instance of the inner LinearLayout
         innerLinearLayout = new LinearLayout(this);
@@ -132,6 +124,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         createLoadingHistoryTextView();
         Log.e("DEBUG", String.valueOf(dataManager.getAllDataFromHistory(getMainActivityContext())));
+
         new AsyncTask<Void, Void, Integer>() {
             @Override
             protected Integer doInBackground(Void... voids) {
@@ -140,11 +133,11 @@ public class HistoryActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(Integer value) {
-                if (value == null) {
+                if(value == null) {
                     dataManager.saveToHistory("historyTextViewNumber", "0", getApplicationContext());
                 }
 
-                if (value == 0) {
+                if(value == 0) {
                     TextView loadTextView = findViewById(R.id.history_load_textview);
                     if(loadTextView != null) {
                         loadTextView.setVisibility(View.GONE);
@@ -360,7 +353,7 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.clearHistory(getMainActivityContext());
                     dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
 
-                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    ScrollView innerLinearLayout = findViewById(R.id.history_scrollview);
                     innerLinearLayout.removeAllViews();
 
                     TextView emptyTextView = findViewById(R.id.history_empty_textview);
@@ -447,7 +440,7 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.clearHistory(getMainActivityContext());
                     dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
 
-                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    ScrollView innerLinearLayout = findViewById(R.id.history_scrollview);
                     innerLinearLayout.removeAllViews();
 
                     TextView emptyTextView = findViewById(R.id.history_empty_textview);
@@ -653,7 +646,7 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.clearHistory(getMainActivityContext());
                     dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
 
-                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    ScrollView innerLinearLayout = findViewById(R.id.history_scrollview);
                     innerLinearLayout.removeAllViews();
 
                     TextView emptyTextView = findViewById(R.id.history_empty_textview);
@@ -733,7 +726,7 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.clearHistory(getMainActivityContext());
                     dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
 
-                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    ScrollView innerLinearLayout = findViewById(R.id.history_scrollview);
                     innerLinearLayout.removeAllViews();
 
                     TextView emptyTextView = findViewById(R.id.history_empty_textview);
@@ -913,16 +906,16 @@ public class HistoryActivity extends AppCompatActivity {
             TextView emptyTextView = new TextView(this);
             emptyTextView.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
+                    LinearLayout.LayoutParams.MATCH_PARENT
             ));
             emptyTextView.setId(R.id.history_empty_textview);
-            emptyTextView.setText("\n\n\n" + getString(R.string.historyIsEmpty));
+            emptyTextView.setText(getString(R.string.historyIsEmpty));
             emptyTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
-            emptyTextView.setTextSize(35f);
+            emptyTextView.setTextSize(40f);
             emptyTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
 
-            LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
-            linearLayout.addView(emptyTextView);
+            LinearLayout parentLayout = findViewById(R.id.historyUI);
+            parentLayout.addView(emptyTextView, 1);
         }
 
         TextView emptyTextView = findViewById(R.id.history_empty_textview);
@@ -931,49 +924,37 @@ public class HistoryActivity extends AppCompatActivity {
         switchDisplayMode();
     }
 
-    private void createLoadingHistoryTextView() {
-        if(findViewById(R.id.history_load_textview) == null) {
-            TextView loadTextView = new TextView(this);
-            loadTextView.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            ));
-            loadTextView.setId(R.id.history_load_textview);
-            loadTextView.setText(getString(R.string.historyLoadText));
-            loadTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
-            loadTextView.setTextSize(35f);
-            loadTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-
-            LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
-            linearLayout.addView(loadTextView);
-        }
-
-        TextView loadTextView = findViewById(R.id.history_load_textview);
-        loadTextView.setVisibility(View.VISIBLE);
-
-        switchDisplayMode();
-    }
-
     /**
      * Diese Methode entfernt die leere TextView aus dem Layout, falls vorhanden.
      */
     private void hideEmptyHistoryTextView() {
-        LinearLayout linearLayout = findViewById(R.id.history_scroll_linearlayout);
+        createEmptyHistoryTextView();
 
-        // Ein neues TextView erstellen und einrichten
-        TextView textView = new TextView(this);
-        textView.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
-        textView.setText("\n\n\n" + getString(R.string.historyIsEmpty));
-        textView.setTextColor(getResources().getColor(android.R.color.black));
-        textView.setTextSize(35);
-        textView.setGravity(android.view.Gravity.CENTER_VERTICAL | android.view.Gravity.CENTER_HORIZONTAL);
-
-        // TextView zum LinearLayout hinzufügen
-        linearLayout.addView(textView);
-
+        TextView textView = findViewById(R.id.history_empty_textview);
         textView.setVisibility(View.GONE);
+    }
+
+    private void createLoadingHistoryTextView() {
+        if(findViewById(R.id.history_load_textview) == null) {
+            TextView emptyTextView = new TextView(this);
+            emptyTextView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT
+            ));
+            emptyTextView.setId(R.id.history_load_textview);
+            emptyTextView.setText(getString(R.string.historyLoadText));
+            emptyTextView.setTextColor(ContextCompat.getColor(this, android.R.color.black));
+            emptyTextView.setTextSize(40f);
+            emptyTextView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+
+            LinearLayout parentLayout = findViewById(R.id.historyUI);
+            parentLayout.addView(emptyTextView, 1);
+        }
+
+        TextView emptyTextView = findViewById(R.id.history_load_textview);
+        emptyTextView.setVisibility(View.VISIBLE);
+
+        switchDisplayMode();
     }
 
     /**
@@ -1010,7 +991,6 @@ public class HistoryActivity extends AppCompatActivity {
             textColor = ContextCompat.getColor(this, android.R.color.white);
         }
 
-        // Änderung: Führe UI-Änderungen auf dem UI-Thread aus
         final int finalTextColor = textColor;
         runOnUiThread(() -> textView.setTextColor(finalTextColor));
     }
@@ -1019,7 +999,7 @@ public class HistoryActivity extends AppCompatActivity {
      * Resets the names and values in the UI and performs background actions.
      */
     private void resetNamesAndValues() {
-        if(countLinearLayouts(findViewById(R.id.history_scroll_linearlayout)) > 1) {
+        if(findViewById(R.id.history_empty_textview) == null || findViewById(R.id.history_empty_textview).getVisibility() == View.GONE) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
             View popupView = inflater.inflate(R.layout.confirm_delete, null);
 
@@ -1027,10 +1007,8 @@ public class HistoryActivity extends AppCompatActivity {
             int height = LinearLayout.LayoutParams.WRAP_CONTENT;
             final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
 
-            // Setzen Sie die Hintergrundfarbe und den Hintergrund des Popup-Fensters
             popupView.setBackgroundColor(newColorBTNBackgroundAccent);
 
-            // Ändern Sie die Farben im Popup-Fenster
             TextView textViewTitle = popupView.findViewById(R.id.confirm_delete_layout_title);
             TextView textViewDelete = popupView.findViewById(R.id.deleteConfirmButton);
             TextView textViewCancel = popupView.findViewById(R.id.cancelConfirmButton);
@@ -1065,7 +1043,7 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.clearHistory(getMainActivityContext());
                     dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
 
-                    LinearLayout innerLinearLayout = findViewById(R.id.history_scroll_linearlayout);
+                    ScrollView innerLinearLayout = findViewById(R.id.history_scrollview);
                     innerLinearLayout.removeAllViews();
                     createEmptyHistoryTextView();
                     popupWindow.dismiss();
@@ -1086,6 +1064,19 @@ public class HistoryActivity extends AppCompatActivity {
             if (layout.getChildAt(i) instanceof LinearLayout) {
                 count++;
                 count += countLinearLayouts((LinearLayout) layout.getChildAt(i));
+            }
+        }
+
+        return count;
+    }
+
+    private int countScrollViewLayouts(ScrollView layout) {
+        int count = 0;
+
+        for (int i = 0; i < layout.getChildCount(); i++) {
+            if (layout.getChildAt(i) instanceof ScrollView) {
+                count++;
+                count += countScrollViewLayouts((ScrollView) layout.getChildAt(i));
             }
         }
 
@@ -1317,7 +1308,7 @@ public class HistoryActivity extends AppCompatActivity {
      *                        This should be a resolved color, not a resource id.
      */
     private void changeTextViewColors(int foregroundColor, int backgroundColor) {
-        ViewGroup layout = findViewById(R.id.historyUI).findViewById(R.id.history_scroll_linearlayout);
+        ViewGroup layout = findViewById(R.id.historyUI).findViewById(R.id.history_scrollview);
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
                 View v = layout.getChildAt(i);
@@ -1381,7 +1372,7 @@ public class HistoryActivity extends AppCompatActivity {
      *                        This should be a resolved color, not a resource id.
      */
     private void changeTextViewAndEditTextColors(int textColor, int backgroundColor) {
-        ViewGroup layout = findViewById(R.id.historyUI).findViewById(R.id.history_scroll_linearlayout);
+        ViewGroup layout = findViewById(R.id.historyUI).findViewById(R.id.history_scrollview);
         if (layout != null) {
             for (int i = 0; i < layout.getChildCount(); i++) {
                 View v = layout.getChildAt(i);

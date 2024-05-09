@@ -393,7 +393,7 @@ public class DataManager {
             initializeSetting("shiftRow", "1", applicationContext);
             initializeSetting("logX", "false", applicationContext);
             initializeSetting("calculationMode", "Vereinfacht", applicationContext);
-            initializeSetting("currentVersion", "1.6.4", applicationContext);
+            initializeSetting("currentVersion", "1.6.5", applicationContext);
             initializeSetting("old_version", "0", applicationContext);
             initializeSetting("returnToCalculator", "false", applicationContext);
             initializeSetting("allowNotification", "false", applicationContext);
@@ -520,7 +520,7 @@ public class DataManager {
 
     public void updateValuesInHistoryData(String name, String valueName, String newValue, Context applicationContext) {
         try {
-            File file = new File(applicationContext.getFilesDir(), JSON_FILE);
+            File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
             if (file.exists()) {
                 String content = new String(Files.readAllBytes(file.toPath()));
                 JSONObject jsonObj = new JSONObject(new JSONTokener(content));

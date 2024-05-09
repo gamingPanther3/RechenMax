@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/historyUI"
+    tools:context="com.mlprograms.rechenmax.MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBackground"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/history_return_button"
+            android:layout_width="45dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginStart="10dp"
+            android:foreground="@drawable/arrow_back_light"
+            android:tag="return"
+            android:textSize="@dimen/calcButtonTextSize"
+            android:tooltipText="@string/back"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/history_title"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/history"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:tooltipText="Zwischenablage einfügen" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/history_delete_button"
+            android:tag="delete"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginEnd="10dp"
+
+            android:foreground="@drawable/trash_light"
+            android:textSize="@dimen/calcButtonTextSize"
+            android:tooltipText="@string/delete"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/history_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </ScrollView>
+</LinearLayout>
