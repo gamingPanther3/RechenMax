@@ -123,7 +123,7 @@ public class HistoryActivity extends AppCompatActivity {
         // Using ExecutorService instead of AsyncTask
 
         createLoadingHistoryTextView();
-        Log.e("DEBUG", String.valueOf(dataManager.getAllDataFromHistory(getMainActivityContext())));
+        //Log.e("DEBUG", String.valueOf(dataManager.getAllDataFromHistory(getMainActivityContext())));
 
         new AsyncTask<Void, Void, Integer>() {
             @Override

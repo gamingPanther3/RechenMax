@@ -201,9 +201,6 @@ public class MainActivity extends AppCompatActivity {
 
         inAppUpdate = new InAppUpdate(MainActivity.this);
         inAppUpdate.checkForAppUpdate();
-
-        Log.e("DEBUG HISTORY", String.valueOf(dataManager.getAllDataFromHistory(getApplicationContext())));
-        Log.e("DEBUG SETTINGS", String.valueOf(dataManager.getAllDataFromJSONSettings(getApplicationContext())));
     }
 
     private void showPatchNotes() {
