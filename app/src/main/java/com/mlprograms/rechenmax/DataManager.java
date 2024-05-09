@@ -393,7 +393,7 @@ public class DataManager {
             initializeSetting("shiftRow", "1", applicationContext);
             initializeSetting("logX", "false", applicationContext);
             initializeSetting("calculationMode", "Vereinfacht", applicationContext);
-            initializeSetting("currentVersion", "1.6.5", applicationContext);
+            initializeSetting("currentVersion", "1.6.6", applicationContext);
             initializeSetting("old_version", "0", applicationContext);
             initializeSetting("returnToCalculator", "false", applicationContext);
             initializeSetting("allowNotification", "false", applicationContext);
