@@ -3334,12 +3334,13 @@ public class MainActivity extends AppCompatActivity {
                         !getCalculateText().replace("=", "").replace(" ", "").equals("e"))
             && !isInvalidInput(getResultText())) {
 
-            addToHistory(balanceParentheses(getCalculateText()));
+            addToHistory(fixExpression(balanceParentheses(getCalculateText())));
         }
 
         try {
             if(dataManager.getJSONSettingsData("calculationMode", getApplicationContext()).getString("value").equals("Vereinfacht") &&
                 !isInvalidInput(getResultText())) {
+
                 dataManager.saveToJSONSettings("pressedCalculate", true, getApplicationContext());
                 setCalculateText("");
 
@@ -3412,7 +3413,7 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm - dd. MMMM yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(calendar.getTime());
 
-        input = fixExpression(input.replace("=", "").replace(" ", ""));
+        input = input.replace("=", "").replace(" ", "");
 
         // Code snippet to save calculation to history
         final Context context = getApplicationContext();
@@ -3433,10 +3434,10 @@ public class MainActivity extends AppCompatActivity {
                     calculate_text = calculate_text + "=";
                 }
 
-                Log.e("DEBUG IUERBGIBR", dataManager.getHistoryData("historyTextViewNumber", context).getString("value"));
+                //Log.e("DEBUG", dataManager.getHistoryData("historyTextViewNumber", context).getString("value"));
 
                 dataManager.saveToHistory(String.valueOf(old_value + 1), formattedDate, "",
-                        addSpaceToOperators(balanceParentheses(calculate_text) + getResultText()), context);
+                        balanceParentheses(fixExpression(calculate_text)) + getResultText(), context);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
