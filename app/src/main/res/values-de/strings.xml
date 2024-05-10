@@ -23,6 +23,9 @@
         \nBehobene Fehler: \n
             - Performance der Rechen-Engine wurde verbessert\n
             - Berechnungen, die eine Gleitkommazahl als Exponenten in Potenzberechnungen hatten, wurden nur als Ganzzahl berechnet\n
+            - Das Textfeld "Dein Verlauf ist leer." war nicht vertikal zentriert\n
+            - Die PatchNotes wurden beim start einer neueren Version nicht angezeigt\n
+            - Um Platz zu sparen, wurde der Abstand zwischen den einzelnen Operatoren im Verlauf entfernt\n
 
         \nSystemanforderungen: \n
             - Minimale Android-Version: 10\n
