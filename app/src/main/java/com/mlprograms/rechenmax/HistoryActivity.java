@@ -155,9 +155,9 @@ public class HistoryActivity extends AppCompatActivity {
 
                             LinearLayout linearLayout;
                             if (mode.equals("multiple")) {
-                                linearLayout = createHistoryTextViewMultiple(i);
+                                linearLayout = createHistoryTextViewMultipleEasy(i);
                             } else {
-                                linearLayout = createHistoryTextViewSingle(i);
+                                linearLayout = createHistoryTextViewSingleEasy(i);
                             }
                             if(linearLayout != null) {
                                 innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
@@ -222,7 +222,7 @@ public class HistoryActivity extends AppCompatActivity {
 
             for (int i = startIndex; i >= endIndex && loadedItems < ITEMS_PER_LOAD; i--) {
                 currentHistoryTextViewNumber = i;
-                LinearLayout linearLayout = "multiple".equals(historyMode) ? createHistoryTextViewMultiple(i) : createHistoryTextViewSingle(i);
+                LinearLayout linearLayout = "multiple".equals(historyMode) ? createHistoryTextViewMultipleEasy(i) : createHistoryTextViewSingleEasy(i);
                 if (linearLayout != null) {
                     innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
                     loadedItems++;
@@ -290,6 +290,8 @@ public class HistoryActivity extends AppCompatActivity {
         resultHorizontalScrollView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
+        resultHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        resultHorizontalScrollView.setVerticalScrollBarEnabled(false);
 
         // result title
         TextView resultTextViewTitle = new TextView(this);
@@ -377,6 +379,8 @@ public class HistoryActivity extends AppCompatActivity {
         calculationHorizontalScrollView.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
+        calculationHorizontalScrollView.setHorizontalScrollBarEnabled(false);
+        calculationHorizontalScrollView.setVerticalScrollBarEnabled(false);
 
         // calculation title
         TextView calculationTextViewTitle = new TextView(this);
@@ -463,6 +467,8 @@ public class HistoryActivity extends AppCompatActivity {
         horizontalScrollView2.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
+        horizontalScrollView2.setHorizontalScrollBarEnabled(false);
+        horizontalScrollView2.setVerticalScrollBarEnabled(false);
 
         // description title
         TextView textView3 = new TextView(this);
@@ -538,6 +544,87 @@ public class HistoryActivity extends AppCompatActivity {
         }
 
         mainLinearLayout.addView(editText);
+        mainLinearLayout.addView(createLine());
+
+        return mainLinearLayout;
+    }
+
+    private LinearLayout createHistoryTextViewSingleEasy(int i) throws JSONException {
+        LinearLayout mainLinearLayout = new LinearLayout(this);
+        mainLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        mainLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        mainLinearLayout.setId(i);
+
+        JSONObject data = dataManager.getHistoryData(String.valueOf(i), getMainActivityContext());
+
+        if(data == null) {
+            return null;
+        }
+
+        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(this);
+        horizontalScrollView.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        ));
+        horizontalScrollView.setHorizontalScrollBarEnabled(false);
+        horizontalScrollView.setVerticalScrollBarEnabled(false);
+
+        TextView calculationTextView = new TextView(this);
+        calculationTextView.setPadding(80, 20, 80, 20);
+
+        calculationTextView.setText(data.getString("calculation").replace("=", " = "));
+        calculationTextView.setTextColor(Color.BLACK);
+        calculationTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.history_result_size));
+        calculationTextView.setGravity(Gravity.START);
+
+        calculationTextView.setOnLongClickListener(v -> {
+            try {
+                TextView clickedTextView = (TextView) v;
+                String clickedText = clickedTextView.getText().toString();
+
+                ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " "));
+                clipboardManager.setPrimaryClip(clipData);
+
+                showToastShort(getString(R.string.historyCalculationCopied), getApplicationContext());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+
+        calculationTextView.setOnClickListener(new ClickListener() {
+            @Override
+            public void onDoubleClick(View v) {
+                dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
+                innerLinearLayout.removeView(findViewById(i));
+
+                Log.e("DEBUG", String.valueOf(countLinearLayouts(innerLinearLayout)));
+                if (countLinearLayouts(innerLinearLayout) == 0) {
+                    dataManager.clearHistory(getMainActivityContext());
+                    dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
+
+                    ScrollView innerLinearLayout = findViewById(R.id.history_scrollview);
+                    innerLinearLayout.removeAllViews();
+
+                    TextView emptyTextView = findViewById(R.id.history_empty_textview);
+
+                    if(emptyTextView != null) {
+                        emptyTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        createEmptyHistoryTextView();
+                    }
+                } else {
+                    loadLayoutToUI(1);
+                }
+            }
+        });
+
+        horizontalScrollView.addView(calculationTextView);
+        mainLinearLayout.addView(horizontalScrollView);
         mainLinearLayout.addView(createLine());
 
         return mainLinearLayout;
@@ -748,6 +835,8 @@ public class HistoryActivity extends AppCompatActivity {
         horizontalScrollView2.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
+        horizontalScrollView2.setHorizontalScrollBarEnabled(false);
+        horizontalScrollView2.setVerticalScrollBarEnabled(false);
 
         // description title
         TextView textView3 = new TextView(this);
@@ -823,6 +912,78 @@ public class HistoryActivity extends AppCompatActivity {
         }
 
         mainLinearLayout.addView(editText);
+        mainLinearLayout.addView(createLine());
+
+        return mainLinearLayout;
+    }
+
+    private LinearLayout createHistoryTextViewMultipleEasy(int i) throws JSONException {
+        LinearLayout mainLinearLayout = new LinearLayout(this);
+        mainLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+        mainLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        mainLinearLayout.setId(i);
+
+        JSONObject data = dataManager.getHistoryData(String.valueOf(i), getMainActivityContext());
+
+        if(data == null) {
+            return null;
+        }
+
+        TextView calculationTextView = new TextView(this);
+        calculationTextView.setPadding(80, 20, 80, 20);
+
+        calculationTextView.setText(data.getString("calculation").replace("=", " = "));
+        calculationTextView.setTextColor(Color.BLACK);
+        calculationTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                getResources().getDimension(R.dimen.history_result_size));
+        calculationTextView.setGravity(Gravity.START);
+
+        calculationTextView.setOnLongClickListener(v -> {
+            try {
+                TextView clickedTextView = (TextView) v;
+                String clickedText = clickedTextView.getText().toString();
+
+                ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("", clickedText.replace("\n", " "));
+                clipboardManager.setPrimaryClip(clipData);
+
+                showToastShort(getString(R.string.historyCalculationCopied), getApplicationContext());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        });
+
+        calculationTextView.setOnClickListener(new ClickListener() {
+            @Override
+            public void onDoubleClick(View v) {
+                dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
+                innerLinearLayout.removeView(findViewById(i));
+
+                Log.e("DEBUG", String.valueOf(countLinearLayouts(innerLinearLayout)));
+                if (countLinearLayouts(innerLinearLayout) == 0) {
+                    dataManager.clearHistory(getMainActivityContext());
+                    dataManager.saveToHistory("historyTextViewNumber", "0", getMainActivityContext());
+
+                    ScrollView innerLinearLayout = findViewById(R.id.history_scrollview);
+                    innerLinearLayout.removeAllViews();
+
+                    TextView emptyTextView = findViewById(R.id.history_empty_textview);
+
+                    if(emptyTextView != null) {
+                        emptyTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        createEmptyHistoryTextView();
+                    }
+                } else {
+                    loadLayoutToUI(1);
+                }
+            }
+        });
+
+        mainLinearLayout.addView(calculationTextView);
         mainLinearLayout.addView(createLine());
 
         return mainLinearLayout;
