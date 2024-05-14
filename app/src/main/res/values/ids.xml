@@ -23,4 +23,7 @@
     <item name="emptyHistoryTextView" type="id" />
     <item name="emptyHistoryLayout" type="id" />
     <item name="history_scroll_constraintlayout" type="id" />
+
+    <item name="settings_history_mode_spinner1" type="id" />
+    <item name="settings_history_mode_spinner2" type="id" />
 </resources>

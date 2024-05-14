@@ -72,10 +72,11 @@ import java.util.Map;
 //  | allowDailyNotificationsActive    | true / false                     | SettingsActivity                     |
 //  | refactorPI                       | true / false                     | MainActivity                         |
 //  | historyMode                      | single / multiple                | MainActivity                         |
+//  | historyModeAdvanced              | true / false                     | MainActivity                         |
 //  | showConverterDevelopmentMessage  | true / false                     | ConvertActivity                      |
 //  | report                           | 'name' of person
 //                                       'title' of bug
-//                                       'text' (description) of bug               | ConvertActivity                      |
+//                                       'text' (description) of bug      | ConvertActivity                      |
 //  | convertMode                      | Winkel
 //                                       Fläche
 //                                       Speicher
@@ -117,7 +118,6 @@ public class DataManager {
     // Define the names of the files
     private static final String JSON_FILE = "settings.json";
     static final String HISTORY_FILE = "history.json";
-    private static final String REPORT_FILE = "report_bugs.json";
 
     /**
      * This constructor is used to create a DataManager object for the MainActivity.
@@ -405,6 +405,7 @@ public class DataManager {
             initializeSetting("pressedCalculate", "false", applicationContext);
             initializeSetting("refactorPI", "true", applicationContext);
             initializeSetting("historyMode", "single", applicationContext);
+            initializeSetting("historyModeAdvanced", "false", applicationContext);
             initializeSetting("dayPassed", "true", applicationContext);
             initializeSetting("convertMode", "Entfernung", applicationContext);
             initializeSetting("numberOfDecimals", "2", applicationContext);
@@ -739,98 +740,6 @@ public class DataManager {
                 //Log.e("updateDetailsInHistoryData", "JSON file not found.");
             }
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveToReport(String name, String value, Context applicationContext) {
-        JSONObject jsonObj = new JSONObject();
-        try {
-            File file = new File(applicationContext.getFilesDir(), REPORT_FILE);
-            if (!file.exists()) {
-                if (!file.createNewFile()) {
-                    Log.e("saveToReport", "Failed to create new file");
-                    return;
-                }
-            }
-            String content = new String(Files.readAllBytes(file.toPath()));
-            if (!content.isEmpty()) {
-                jsonObj = new JSONObject(new JSONTokener(content));
-            }
-
-            JSONObject dataObj = new JSONObject();
-            dataObj.put("value", value);
-
-            jsonObj.put(name, dataObj);
-
-            try (FileWriter fileWriter = new FileWriter(file)) {
-                fileWriter.write(jsonObj.toString());
-                fileWriter.flush();
-            }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void saveToReport(String name, boolean value, Context applicationContext) {
-        JSONObject jsonObj = new JSONObject();
-        try {
-            File file = new File(applicationContext.getFilesDir(), REPORT_FILE);
-            if (!file.exists()) {
-                if (!file.createNewFile()) {
-                    Log.e("saveToReport", "Failed to create new file");
-                    return;
-                }
-            }
-            String content = new String(Files.readAllBytes(file.toPath()));
-            if (!content.isEmpty()) {
-                jsonObj = new JSONObject(new JSONTokener(content));
-            }
-
-            JSONObject dataObj = new JSONObject();
-            dataObj.put("value", String.valueOf(value));
-
-            jsonObj.put(name, dataObj);
-
-            try (FileWriter fileWriter = new FileWriter(file)) {
-                fileWriter.write(jsonObj.toString());
-                fileWriter.flush();
-            }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public JSONObject getReportData(String name, Context applicationContext) throws JSONException {
-        try {
-            File file = new File(applicationContext.getFilesDir(), REPORT_FILE);
-            if (file.exists()) {
-                String content = new String(Files.readAllBytes(file.toPath()));
-                JSONObject jsonObj = new JSONObject(new JSONTokener(content));
-
-                if (jsonObj.has(name)) {
-                    return jsonObj.getJSONObject(name);
-                } else {
-                    Log.e("getReportData", "Data with name " + name + " not found. Trying to Create ...");
-                }
-            } else {
-                Log.e("getReportData", "JSON file not found.");
-            }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void clearReport(Context applicationContext) {
-        try {
-            File file = new File(applicationContext.getFilesDir(), REPORT_FILE);
-            if (file.exists()) {
-                FileWriter fileWriter = new FileWriter(file);
-                fileWriter.write("");
-                fileWriter.close();
-            }
-        } catch (IOException e) {
             e.printStackTrace();
         }
     }

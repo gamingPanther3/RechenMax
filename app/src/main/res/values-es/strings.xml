@@ -4,35 +4,39 @@
     <string name="lightMode">Modo diurno</string>
     <string name="darkmode">Modo oscuro</string>
 
+    <string name="inAppUpdateCanceledByUser">Actualización cancelada por el usuario</string>
+    <string name="inAppUpdateDownloaded">Se ha descargado una actualización</string>
+    <string name="inAppUpdateRestart">Reiniciar</string>
+
     <string name="defaultCalculationMode">Por defecto</string>
     <string name="easyCalculationMode">Simplificado</string>
+    <string name="advancedHistoryMode">Avanzado</string>
 
     <string name="degree">Medida de grados (Deg)</string>
     <string name="radian">Radianes (Rad)</string>
 
 
-    <string name="releaseDate">Fecha de lanzamiento: XX/XX/XXXX - XX:XX</string>
-    <string name="releaseNotesText">"
-        Nuevas características: \n
-            - Se agregó un convertidor de unidades\n
-            - Se revisó el historial\n
-            - Mejora en la introducción\n
-            - Se envían notificaciones si están activadas\n
-            - Varios idiomas como alemán, inglés, español y francés\n
-            - Se pueden reportar errores en la esquina superior derecha de la configuración\n
-            - Se mejoraron las notas de lanzamiento\n
-            - Las notas de parche pueden ser accedidas nuevamente en la configuración\n
+    <string name="releaseDate">Fecha de lanzamiento: 05/14/2024 – 14:00</string>
+    <string name="releaseNotesText">
+        Nuevas características:\n
+            - Los resultados con un exceso de decimales se reducen a una longitud total de 15 caracteres\n
+            - Ahora se puede mostrar el historial de forma minimalista o con detalles ampliados\n
 
-        \n\nErrores corregidos: \n
-            - El botón de retroceso tenía errores\n
-            - Falta de unidad en el convertidor\n
-            - Error de diseño en la calculadora\n
+        \nErrores corregidos: \n
+            - Se mejoró el rendimiento del motor de cálculo\n
+            - Los cálculos que tenían un número decimal como exponente en operaciones de potencia solo se calculaban como números enteros\n
+            - El campo de texto "Tu historial está vacío." no estaba centrado verticalmente\n
+            - Las notas de parche no se mostraban al iniciar una versión más nueva\n
+            - Para ahorrar espacio, se eliminó la distancia entre los operadores individuales en el historial\n
 
-        \n\nRequisitos del sistema: \n
+        \nRequisitos del sistema: \n
             - Versión mínima de Android: 10\n
-            - Versión recomendada de Android: 13 o superior\n
+            - Versión de Android recomendada: 13 o superior\n
             - Versión máxima de Android: 14\n
-    "</string>
+    </string>
+
+    <string name="historySuccesfullMessageLoad">La carga del cálculo se realizó con éxito</string>
+    <string name="historyErrorMessageLoad">Se produjo un error al cargar, inténtalo de nuevo más tarde</string>
 
     <string name="patchnotesOverviewText">La última versión de RechenMax trae emocionantes mejoras y características. El desplazamiento automático facilita la navegación en cálculos grandes, mientras que la precisión de redondeo se ha aumentado a la décima primera posición decimal para números decimales más precisos. El historial se ha optimizado para restaurar sin esfuerzo cálculos anteriores y revisar tareas pasadas. En tareas trigonométricas, están disponibles funciones avanzadas para seno, coseno y tangente en grados y radianes. Ahora también están disponibles funciones trigonométricas inversas (sin⁻¹, cos⁻¹, tan⁻¹), así como funciones hiperbólicas como senh(x), cosh(x) y tanh(x). La entrada manual de notación proporciona flexibilidad adicional al crear y calcular expresiones complejas. RechnenMax ahora admite el uso de la constante matemática PI (π) para cálculos precisos de círculos. Con el soporte flexible de grados y radianes, puedes cambiar entre las dos unidades de medida según sea necesario. El manejo de paréntesis se ha optimizado para garantizar un procesamiento sin errores de expresiones matemáticas o lógicas. El software detecta y agrega automáticamente paréntesis de cierre faltantes, simplificando aún más la entrada de expresiones. En el historial, al mantener presionada una entrada, la factura se copia automáticamente al portapapeles, mientras que al presionar brevemente, la factura se pega directamente en la calculadora. Esta versión también soluciona errores importantes, incluidos problemas de visualización y cálculo factorial, así como la optimización del formato de resultado para una visualización más precisa.</string>
     <string name="overview">Resumen</string>
@@ -427,7 +431,7 @@
     <string name="settingsPI">Con esta función, puedes configurar que cada vez que ingreses el número \'3,14\', se reemplace automáticamente por el símbolo de Pi. Esto simplifica la introducción de Pi en tus cálculos, permitiéndote concentrarte en la tarea sin tener que buscar constantemente el símbolo.</string>
     <string name="settingsPITitle">Insertar PI</string>
 
-    <string name="settingsHistoryMode">Esta configuración te permite determinar si el texto en tu historial se muestra como una barra de desplazamiento, lo que significa que puedes desplazar el texto de izquierda a derecha y se mostrará en una sola línea, o si el texto se muestra en varias líneas una debajo de la otra.</string>
+    <string name="settingsHistoryMode">A través de la primera configuración, puedes elegir si tu historial debe mostrarse de forma minimalista, solo con información básica, o con numerosos detalles adicionales útiles como la fecha o notas añadidas por ti mismo. Con la segunda configuración, puedes determinar si el texto debe mostrarse en una sola línea con función de desplazamiento o en varias líneas. Sin embargo, ten en cuenta que seleccionar información avanzada puede afectar al rendimiento.</string>
     <string name="settingsHistoryModeSingle">De una sola línea</string>
     <string name="settingsHistoryModeMultiple">De múltiples líneas</string>
     <string name="historyModeTitle">Modo de historial</string>

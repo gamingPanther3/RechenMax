@@ -3,8 +3,13 @@
     <string name="lightMode">Tageslichtmodus</string>
     <string name="darkmode">Dunkelmodus</string>
 
+    <string name="inAppUpdateCanceledByUser">Update vom Benutzer abgebrochen</string>
+    <string name="inAppUpdateDownloaded">Ein Update wurde gerade heruntergeladen</string>
+    <string name="inAppUpdateRestart">Neustarten</string>
+
     <string name="defaultCalculationMode">Standard</string>
     <string name="easyCalculationMode">Vereinfacht</string>
+    <string name="advancedHistoryMode">Erweitert</string>
 
     <string name="degree">Gradmaß (Deg)</string>
     <string name="radian">Bogenmaß (Rad)</string>
@@ -68,10 +73,11 @@
     <string name="appVersion" translatable="false">RechenMax 1.6.6</string>
 
     <!-- !!! Übersetzung nicht vergessen !!! -->
-    <string name="releaseDate">Veröffentlichungsdatum: XX.XX.XXXX - XXUhr</string>
+    <string name="releaseDate">Veröffentlichungsdatum: 14.05.2024 – 14Uhr</string>
     <string name="releaseNotesText">
         Neue Funktionen:\n
-            - Ergebnisse mit einer übermäßigen Anzahl von Nachkommastellen werden auf eine Gesamtlänge von 15 Zeichen reduziert.\n
+            - Ergebnisse mit einer übermäßigen Anzahl von Nachkommastellen werden auf eine Gesamtlänge von 15 Zeichen reduziert\n
+            - Der Verlauf kann nun entweder minimalistisch oder mit erweiterten Details angezeigt werden\n
 
         \nBehobene Fehler: \n
             - Performance der Rechen-Engine wurde verbessert\n
@@ -85,6 +91,9 @@
             - Empfohlene Android-Version: 13 oder höher\n
             - Maximale Android-Version: 14\n
     </string>
+
+    <string name="historySuccesfullMessageLoad">Berechnung wurde erfolgreich geladen</string>
+    <string name="historyErrorMessageLoad">Es ist ein Fehler beim Laden aufgetreten, versuche es später erneut</string>
 
     <string name="overview">Übersicht</string>
     <string name="newFunctions">Neue Funktionen</string>
@@ -506,7 +515,7 @@
     <string name="settingsPI">Mit dieser Funktion kannst du festlegen, dass immer wenn du die Zahl \'3,14\' eingibst, sie automatisch durch das Symbol für Pi ersetzt wird. Dadurch wird die Eingabe von Pi in deinen Berechnungen vereinfacht und du kannst dich auf die Aufgabe konzentrieren, ohne ständig nach dem Symbol suchen zu müssen.</string>
     <string name="settingsPITitle">PI einfügen</string>
 
-    <string name="settingsHistoryMode">Mit dieser Einstellung kannst du festlegen, ob der Text in deinem Verlauf als Scrollbar angezeigt wird, was bedeutet, dass du den Text von links nach rechts verschieben kannst und er auf einer Zeile angezeigt wird, oder ob der Text auf mehreren Zeilen untereinander angezeigt wird.</string>
+    <string name="settingsHistoryMode">Durch die erste Einstellung kannst du wählen, ob dein Verlauf minimalistisch, nur mit grundlegenden Informationen, oder mit zahlreichen nützlichen Zusatzinformationen wie dem Datum oder selbst hinzugefügten Notizen angezeigt werden soll. Mit der zweiten Einstellung kannst du festlegen, ob der Text in einer einzelnen Zeile mit Scrollfunktion oder über mehrere Zeilen angezeigt werden soll. Bitte beachte jedoch, dass die Auswahl der erweiterten Informationen die Leistung beeinträchtigen kann.</string>
     <string name="settingsHistoryModeSingle">Einzeilig</string>
     <string name="settingsHistoryModeMultiple">Mehrzeilig</string>
     <string name="historyModeTitle">Verlaufmodus</string>

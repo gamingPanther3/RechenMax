@@ -82,6 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ArrayList<CustomItems> customListCalculationMode = new ArrayList<>();
     private ArrayList<CustomItems> customListFunctionMode = new ArrayList<>();
     private ArrayList<CustomItems> customListHistoryMode = new ArrayList<>();
+    private ArrayList<CustomItems> customListHistoryModesAdvanced = new ArrayList<>();
     private ArrayList<CustomItems> customListDecimalPoints = new ArrayList<>();
 
     private CustomAdapter customAdapter1;
@@ -89,12 +90,14 @@ public class SettingsActivity extends AppCompatActivity {
     private CustomAdapter customAdapter3;
     private CustomAdapter customAdapter4;
     private CustomAdapter customAdapter5;
+    private CustomAdapter customAdapter6;
 
     private Spinner customSpinner1;
     private Spinner customSpinner2;
     private Spinner customSpinner3;
     private Spinner customSpinner4;
     private Spinner customSpinner5;
+    private Spinner customSpinner6;
 
     // Declare a static MainActivity object
     @SuppressLint("StaticFieldLeak")
@@ -112,7 +115,7 @@ public class SettingsActivity extends AppCompatActivity {
      *                           being created for the first time.
      */
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
-    @SuppressLint({"UseCompatLoadingForDrawables", "UseSwitchCompatOrMaterialCode", "CutPasteId"})
+    @SuppressLint({"UseCompatLoadingForDrawables", "UseSwitchCompatOrMaterialCode", "CutPasteId", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -327,7 +330,7 @@ public class SettingsActivity extends AppCompatActivity {
         customListHistoryMode.add(new CustomItems(getString(R.string.settingsHistoryModeMultiple), R.drawable.historymodemultipleline));
         customAdapter4 = new CustomAdapter(this, customListHistoryMode);
 
-        customSpinner4 = findViewById(R.id.settings_history_mode_spinner);
+        customSpinner4 = findViewById(R.id.settings_history_mode_spinner2);
         if (customSpinner4 != null) {
             customSpinner4.setAdapter(customAdapter4);
 
@@ -357,6 +360,58 @@ public class SettingsActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("historyMode", "multiple", getMainActivityContext());
                 }
                 //Log.e("DEBUG", dataManager.getJSONSettingsData("historyMode", getMainActivityContext()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+
+        try {
+            Log.e("DEBUG", dataManager.getJSONSettingsData("historyModeAdvanced", getMainActivityContext()).getString("value"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings));
+        customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced));
+        customAdapter6 = new CustomAdapter(this, customListHistoryMode);
+
+        customSpinner6 = findViewById(R.id.settings_history_mode_spinner1);
+        if (customSpinner6 != null) {
+            customSpinner6.setAdapter(customAdapter6);
+
+            final String mode;
+            try {
+                mode = dataManager.getJSONSettingsData("historyModeAdvanced", getMainActivityContext()).getString("value");
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+            if (mode.equals("false")) {
+                customSpinner6.setSelection(0);
+            } else {
+                customSpinner6.setSelection(1);
+            }
+        }
+
+        assert customSpinner6 != null;
+        customSpinner6.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                CustomItems items = (CustomItems) adapterView.getSelectedItem();
+                String spinnerText = items.getSpinnerText();
+
+                if (spinnerText.equals(getString(R.string.defaultCalculationMode))) {
+                    dataManager.saveToJSONSettings("historyModeAdvanced", "false", getMainActivityContext());
+                } else {
+                    dataManager.saveToJSONSettings("historyModeAdvanced", "true", getMainActivityContext());
+                }
+                try {
+                    Log.e("DEBUG", dataManager.getJSONSettingsData("historyModeAdvanced", getMainActivityContext()).getString("value"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             @Override
@@ -1110,16 +1165,21 @@ public class SettingsActivity extends AppCompatActivity {
                                 customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints14)));
                                 customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints15)));
 
+                                customListHistoryModesAdvanced = new ArrayList<>();
+                                customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings_light));
+                                customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_light));
+
                                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                                 customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                                 customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                                 customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
+                                customAdapter6 = new CustomAdapter(this, customListHistoryModesAdvanced);
 
                                 String color = "#FFFFFF";
                                 String backgroundColor = "#151515";
 
-                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5};
+                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                                 for (CustomAdapter adapter : adapters) {
                                     adapter.setTextColor(Color.parseColor(color));
@@ -1175,16 +1235,21 @@ public class SettingsActivity extends AppCompatActivity {
                                 customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints14)));
                                 customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints15)));
 
+                                customListHistoryModesAdvanced = new ArrayList<>();
+                                customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings_true_darkmode));
+                                customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_true_darkmode));
+
                                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                                 customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                                 customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                                 customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
+                                customAdapter6 = new CustomAdapter(this, customListHistoryModesAdvanced);
 
                                 String color = "#D5D5D5";
                                 String backgroundColor = "#000000";
 
-                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5};
+                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                                 for (CustomAdapter adapter : adapters) {
                                     adapter.setTextColor(Color.parseColor(color));
@@ -1199,6 +1264,7 @@ public class SettingsActivity extends AppCompatActivity {
                             customSpinner3.setAdapter(customAdapter3);
                             customSpinner4.setAdapter(customAdapter4);
                             customSpinner5.setAdapter(customAdapter5);
+                            customSpinner6.setAdapter(customAdapter6);
 
                             isProgrammaticChange = true;
                             customSpinner1.setSelection(0);
@@ -1247,16 +1313,21 @@ public class SettingsActivity extends AppCompatActivity {
                             customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints14)));
                             customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints15)));
 
+                            customListHistoryModesAdvanced = new ArrayList<>();
+                            customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings_light));
+                            customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_light));
+
                             customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                             customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                             customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                             customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                             customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
+                            customAdapter6 = new CustomAdapter(this, customListHistoryModesAdvanced);
 
                             String color = "#FFFFFF";
                             String backgroundColor = "#151515";
 
-                            CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5};
+                            CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                             for (CustomAdapter adapter : adapters) {
                                 adapter.setTextColor(Color.parseColor(color));
@@ -1271,6 +1342,7 @@ public class SettingsActivity extends AppCompatActivity {
                             customSpinner3.setAdapter(customAdapter3);
                             customSpinner4.setAdapter(customAdapter4);
                             customSpinner5.setAdapter(customAdapter5);
+                            customSpinner6.setAdapter(customAdapter6);
 
                             isProgrammaticChange = true;
                             customSpinner1.setSelection(0);
@@ -1324,16 +1396,21 @@ public class SettingsActivity extends AppCompatActivity {
                         customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints14)));
                         customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints15)));
 
+                        customListHistoryModesAdvanced = new ArrayList<>();
+                        customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings));
+                        customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced));
+
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                         customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                         customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                         customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
+                        customAdapter6 = new CustomAdapter(this, customListHistoryModesAdvanced);
 
                         String color = "#000000";
                         String backgroundColor = "#FFFFFF";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -1348,6 +1425,7 @@ public class SettingsActivity extends AppCompatActivity {
                         customSpinner3.setAdapter(customAdapter3);
                         customSpinner4.setAdapter(customAdapter4);
                         customSpinner5.setAdapter(customAdapter5);
+                        customSpinner6.setAdapter(customAdapter6);
 
                         isProgrammaticChange = true;
                         customSpinner1.setSelection(0);
@@ -1400,16 +1478,21 @@ public class SettingsActivity extends AppCompatActivity {
                 customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints14)));
                 customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints15)));
 
+                customListHistoryModesAdvanced = new ArrayList<>();
+                customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings));
+                customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced));
+
                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                 customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                 customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                 customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
+                customAdapter6 = new CustomAdapter(this, customListHistoryModesAdvanced);
 
                 String color = "#000000";
                 String backgroundColor = "#FFFFFF";
 
-                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5};
+                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                 for (CustomAdapter adapter : adapters) {
                     adapter.setTextColor(Color.parseColor(color));
@@ -1424,6 +1507,7 @@ public class SettingsActivity extends AppCompatActivity {
                 customSpinner3.setAdapter(customAdapter3);
                 customSpinner4.setAdapter(customAdapter4);
                 customSpinner5.setAdapter(customAdapter5);
+                customSpinner6.setAdapter(customAdapter6);
 
                 isProgrammaticChange = true;
                 customSpinner1.setSelection(1);
@@ -1487,16 +1571,21 @@ public class SettingsActivity extends AppCompatActivity {
                         customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints14)));
                         customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints15)));
 
+                        customListHistoryModesAdvanced = new ArrayList<>();
+                        customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings_light));
+                        customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_light));
+
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                         customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                         customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                         customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
+                        customAdapter6 = new CustomAdapter(this, customListHistoryModesAdvanced);
 
                         String color = "#FFFFFF";
                         String backgroundColor = "#151515";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -1554,16 +1643,21 @@ public class SettingsActivity extends AppCompatActivity {
                         customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints14)));
                         customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints15)));
 
+                        customListHistoryModesAdvanced = new ArrayList<>();
+                        customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings_true_darkmode));
+                        customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_true_darkmode));
+
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                         customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                         customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                         customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
+                        customAdapter6 = new CustomAdapter(this, customListHistoryModesAdvanced);
 
                         String color = "#D5D5D5";
                         String backgroundColor = "#000000";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -1579,6 +1673,7 @@ public class SettingsActivity extends AppCompatActivity {
                     customSpinner3.setAdapter(customAdapter3);
                     customSpinner4.setAdapter(customAdapter4);
                     customSpinner5.setAdapter(customAdapter5);
+                    customSpinner6.setAdapter(customAdapter6);
 
                     isProgrammaticChange = true;
                     customSpinner1.setSelection(2);
@@ -1627,16 +1722,21 @@ public class SettingsActivity extends AppCompatActivity {
                     customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints14)));
                     customListDecimalPoints.add(new CustomItems(getString(R.string.settingsDecimalPoints15)));
 
+                    customListHistoryModesAdvanced = new ArrayList<>();
+                    customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings_light));
+                    customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_light));
+
                     customAdapter1 = new CustomAdapter(this, customListDisplayMode);
                     customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                     customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                     customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                     customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
+                    customAdapter6 = new CustomAdapter(this, customListHistoryModesAdvanced);
 
                     String color = "#FFFFFF";
                     String backgroundColor = "#151515";
 
-                    CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5};
+                    CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                     for (CustomAdapter adapter : adapters) {
                         adapter.setTextColor(Color.parseColor(color));
@@ -1651,6 +1751,7 @@ public class SettingsActivity extends AppCompatActivity {
                     customSpinner3.setAdapter(customAdapter3);
                     customSpinner4.setAdapter(customAdapter4);
                     customSpinner5.setAdapter(customAdapter5);
+                    customSpinner6.setAdapter(customAdapter6);
 
                     isProgrammaticChange = true;
                     customSpinner1.setSelection(2);
@@ -1675,6 +1776,10 @@ public class SettingsActivity extends AppCompatActivity {
 
                 mode = dataManager.getJSONSettingsData("numberOfDecimals", getMainActivityContext()).getString("value");
                 customSpinner5.setSelection(Integer.parseInt(mode) - 1);
+
+                mode = dataManager.getJSONSettingsData("historyModeAdvanced", getMainActivityContext()).getString("value");
+                selection = mode.equals("true") ? 1 : 0;
+                customSpinner6.setSelection(selection);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }

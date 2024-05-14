@@ -81,7 +81,7 @@ public class HistoryActivity extends AppCompatActivity {
     private static MainActivity mainActivity;
     private LinearLayout innerLinearLayout;
 
-    private int ITEMS_PER_LOAD = 10 * 2;
+    private int ITEMS_PER_LOAD = 20 * 2;
     private int historyTextViewNumber = 0;
     private int currentHistoryTextViewNumber;
     private boolean isEndReached = false;
@@ -149,16 +149,26 @@ public class HistoryActivity extends AppCompatActivity {
 
                     try {
                         final String mode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
+                        final String advanced = dataManager.getJSONSettingsData("historyModeAdvanced", getMainActivityContext()).getString("value");
 
                         for (int i = historyTextViewNumber; i >= Math.max(0, historyTextViewNumber - ITEMS_PER_LOAD); i--) {
                             currentHistoryTextViewNumber = i;
 
                             LinearLayout linearLayout;
-                            if (mode.equals("multiple")) {
-                                linearLayout = createHistoryTextViewMultipleEasy(i);
-                            } else {
-                                linearLayout = createHistoryTextViewSingleEasy(i);
+                            if (mode.equals("single")) {
+                                if(advanced.equals("false")) {
+                                    linearLayout = createHistoryTextViewSingleEasy(i);
+                                } else {
+                                    linearLayout = createHistoryTextViewSingleAdvanced(i);
+                                }
+                            } else { /* mode.equals("multiple") */
+                                if (advanced.equals("false")) {
+                                    linearLayout = createHistoryTextViewMultipleEasy(i);
+                                } else {
+                                    linearLayout = createHistoryTextViewMultipleAdvanced(i);
+                                }
                             }
+
                             if(linearLayout != null) {
                                 innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
                             } else {
@@ -216,13 +226,29 @@ public class HistoryActivity extends AppCompatActivity {
 
         int loadedItems = 0;
         try {
-            final String historyMode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
+            final String mode = dataManager.getJSONSettingsData("historyMode", getMainActivityContext()).getString("value");
+            final String advanced = dataManager.getJSONSettingsData("historyModeAdvanced", getMainActivityContext()).getString("value");
             int startIndex = currentHistoryTextViewNumber - 1;
             int endIndex = Math.max(0, currentHistoryTextViewNumber - ITEMS_PER_LOAD);
 
             for (int i = startIndex; i >= endIndex && loadedItems < ITEMS_PER_LOAD; i--) {
                 currentHistoryTextViewNumber = i;
-                LinearLayout linearLayout = "multiple".equals(historyMode) ? createHistoryTextViewMultipleEasy(i) : createHistoryTextViewSingleEasy(i);
+
+                LinearLayout linearLayout;
+                if (mode.equals("single")) {
+                    if(advanced.equals("false")) {
+                        linearLayout = createHistoryTextViewSingleEasy(i);
+                    } else {
+                        linearLayout = createHistoryTextViewSingleAdvanced(i);
+                    }
+                } else { /* mode.equals("multiple") */
+                    if (advanced.equals("false")) {
+                        linearLayout = createHistoryTextViewMultipleEasy(i);
+                    } else {
+                        linearLayout = createHistoryTextViewMultipleAdvanced(i);
+                    }
+                }
+
                 if (linearLayout != null) {
                     innerLinearLayout.addView(linearLayout, countLinearLayouts(innerLinearLayout));
                     loadedItems++;
@@ -240,7 +266,7 @@ public class HistoryActivity extends AppCompatActivity {
      *
      * @return The created TextView.
      */
-    private LinearLayout createHistoryTextViewSingle(int i) throws JSONException {
+    private LinearLayout createHistoryTextViewSingleAdvanced(int i) throws JSONException {
         JSONObject data = dataManager.getHistoryData(String.valueOf(i), getMainActivityContext());
 
         if(data == null) {
@@ -460,6 +486,44 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
+        resultTextView.setOnClickListener(new ClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                final String calculationText = calculationTextView.getText().toString();
+                final String resultText = resultTextView.getText().toString();
+
+                try {
+                    dataManager.saveToJSONSettings("calculate_text", calculationText.replace("=", ""), getMainActivityContext());
+                    dataManager.saveToJSONSettings("result_text",  resultText.replace("=", ""), getMainActivityContext());
+
+                    ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
+                    mainActivity.setRotateOperator(true);
+                    mainActivity.resetIfPressedCalculate();
+                } catch (Exception e) {
+                    ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
+                }
+            }
+        });
+
+        calculationTextView.setOnClickListener(new ClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                final String calculationText = calculationTextView.getText().toString();
+                final String resultText = resultTextView.getText().toString();
+
+                try {
+                    dataManager.saveToJSONSettings("calculate_text", calculationText.replace("=", ""), getMainActivityContext());
+                    dataManager.saveToJSONSettings("result_text",  resultText.replace("=", ""), getMainActivityContext());
+
+                    ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
+                    mainActivity.setRotateOperator(true);
+                    mainActivity.resetIfPressedCalculate();
+                } catch (Exception e) {
+                    ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
+                }
+            }
+        });
+
         calculationHorizontalScrollView.addView(calculationTextView);
         mainLinearLayout.addView(calculationHorizontalScrollView);
 
@@ -538,7 +602,6 @@ public class HistoryActivity extends AppCompatActivity {
             return false;
         });
 
-
         if(!data.getString("details").equals("")) {
             editText.setText(data.getString("details"));
         }
@@ -598,6 +661,23 @@ public class HistoryActivity extends AppCompatActivity {
 
         calculationTextView.setOnClickListener(new ClickListener() {
             @Override
+            public void onSingleClick(View v) {
+                final String calculationText = calculationTextView.getText().toString();
+                String[] parts = calculationText.split("=");
+
+                try {
+                    dataManager.saveToJSONSettings("calculate_text", parts[0].replace("=", ""), getMainActivityContext());
+                    dataManager.saveToJSONSettings("result_text",  parts[1].replace("=", ""), getMainActivityContext());
+
+                    ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
+                    mainActivity.setRotateOperator(true);
+                    mainActivity.resetIfPressedCalculate();
+                } catch (Exception e) {
+                    ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
+                }
+            }
+
+            @Override
             public void onDoubleClick(View v) {
                 dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
                 innerLinearLayout.removeView(findViewById(i));
@@ -630,7 +710,7 @@ public class HistoryActivity extends AppCompatActivity {
         return mainLinearLayout;
     }
 
-    private LinearLayout createHistoryTextViewMultiple(int i) throws JSONException {
+    private LinearLayout createHistoryTextViewMultipleAdvanced(int i) throws JSONException {
         JSONObject data = dataManager.getHistoryData(String.valueOf(i), getMainActivityContext());
 
         if(data == null) {
@@ -829,6 +909,44 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
+        resultTextView.setOnClickListener(new ClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                final String calculationText = calculationTextView.getText().toString();
+                final String resultText = resultTextView.getText().toString();
+
+                try {
+                    dataManager.saveToJSONSettings("calculate_text", calculationText.replace("=", ""), getMainActivityContext());
+                    dataManager.saveToJSONSettings("result_text",  resultText.replace("=", ""), getMainActivityContext());
+
+                    ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
+                    mainActivity.setRotateOperator(true);
+                    mainActivity.resetIfPressedCalculate();
+                } catch (Exception e) {
+                    ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
+                }
+            }
+        });
+
+        calculationTextView.setOnClickListener(new ClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                final String calculationText = calculationTextView.getText().toString();
+                final String resultText = resultTextView.getText().toString();
+
+                try {
+                    dataManager.saveToJSONSettings("calculate_text", calculationText.replace("=", ""), getMainActivityContext());
+                    dataManager.saveToJSONSettings("result_text",  resultText.replace("=", ""), getMainActivityContext());
+
+                    ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
+                    mainActivity.setRotateOperator(true);
+                    mainActivity.resetIfPressedCalculate();
+                } catch (Exception e) {
+                    ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
+                }
+            }
+        });
+
         mainLinearLayout.addView(calculationTextView);
 
         HorizontalScrollView horizontalScrollView2 = new HorizontalScrollView(this);
@@ -958,6 +1076,23 @@ public class HistoryActivity extends AppCompatActivity {
 
         calculationTextView.setOnClickListener(new ClickListener() {
             @Override
+            public void onSingleClick(View v) {
+                final String calculationText = calculationTextView.getText().toString();
+                String[] parts = calculationText.split("=");
+
+                try {
+                    dataManager.saveToJSONSettings("calculate_text", parts[0].replace("=", ""), getMainActivityContext());
+                    dataManager.saveToJSONSettings("result_text", parts[1].replace("=", ""), getMainActivityContext());
+
+                    ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
+                    mainActivity.setRotateOperator(true);
+                    mainActivity.resetIfPressedCalculate();
+                } catch (Exception e) {
+                    ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
+                }
+            }
+
+            @Override
             public void onDoubleClick(View v) {
                 dataManager.deleteNameFromHistory(String.valueOf(i), getMainActivityContext());
                 innerLinearLayout.removeView(findViewById(i));
@@ -1085,9 +1220,6 @@ public class HistoryActivity extends AppCompatActivity {
         switchDisplayMode();
     }
 
-    /**
-     * Diese Methode entfernt die leere TextView aus dem Layout, falls vorhanden.
-     */
     private void hideEmptyHistoryTextView() {
         createEmptyHistoryTextView();
 

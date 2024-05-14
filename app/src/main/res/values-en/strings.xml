@@ -4,35 +4,40 @@
     <string name="lightMode">Daylight mode</string>
     <string name="darkmode">Dark mode</string>
 
+    <string name="inAppUpdateCanceledByUser">Update canceled by user</string>
+    <string name="inAppUpdateDownloaded">An update has just been downloaded</string>
+    <string name="inAppUpdateRestart">Restart</string>
+
+
     <string name="defaultCalculationMode">Default</string>
     <string name="easyCalculationMode">Simplified</string>
+    <string name="advancedHistoryMode">Advanced</string>
 
     <string name="degree">Degree measure (Deg)</string>
     <string name="radian">Radians (Rad)</string>
 
 
-    <string name="releaseDate">Release Date: XX/XX/XXXX - XX:XX PM</string>
-    <string name="releaseNotesText">"
-        New Features: \n
-            - Added unit converter\n
-            - Revised history\n
-            - Improved introduction\n
-            - Notifications are sent if enabled\n
-            - Various languages ​​such as German, English, Spanish, and French\n
-            - Bugs can be reported in the top right of the settings\n
-            - Improved release notes\n
-            - Patch notes can be accessed again in the settings\n
+    <string name="releaseDate">Release Date: 05/14/2024 – 2:00 PM</string>
+    <string name="releaseNotesText">
+        New features:\n
+            - Results with an excessive number of decimal places are now reduced to a total length of 15 characters\n
+            - The history can now be displayed either minimally or with extended details\n
 
-        \n\nFixed Issues:\n
-            - Back button was faulty\n
-            - Missing unit in the converter\n
-            - Layout error in the calculator\n
+        \nFixed issues: \n
+            - Performance of the calculation engine has been improved\n
+            - Calculations involving a floating-point number as an exponent in power calculations were only computed as integers\n
+            - The text field "Your history is empty." was not vertically centered\n
+            - The patch notes were not displayed when starting a newer version\n
+            - To save space, the spacing between individual operators in the history has been removed\n
 
-        \n\nSystem Requirements:\n
+        \nSystem requirements: \n
             - Minimum Android version: 10\n
             - Recommended Android version: 13 or higher\n
             - Maximum Android version: 14\n
-    "</string>
+    </string>
+
+    <string name="historySuccesfullMessageLoad">Calculation successfully loaded</string>
+    <string name="historyErrorMessageLoad">An error occurred while loading, please try again later</string>
 
     <string name="patchnotesOverviewText">The latest RechenMax version brings exciting improvements and features. Automatic scrolling makes it easier to navigate large calculations, while the rounding precision has been increased to the eleventh decimal place for more precise decimal numbers. History has been optimized to effortlessly restore previous calculations and review past tasks. In trigonometric tasks, advanced functions for sine, cosine and tangent in degrees and radians are available. Inverse trigonometric functions (sin⁻¹, cos⁻¹, tan⁻¹) as well as hyperbolic functions such as sinh(x), cosh(x) and tanh(x) are now also available. Manual notation entry provides additional flexibility when creating and calculating complex expressions. The RechnenMax now supports the use of the mathematical constant PI (π) for precise circle calculations. With the flexible support of degrees and radians, you can switch between the two units of measurement as needed. Brackets handling has been optimized to ensure error-free processing of mathematical or logical expressions. The software automatically detects and adds missing closing brackets, further simplifying expression entry. In history, long-pressing on an entry allows the invoice to be automatically copied to the clipboard, while short-pressing pastes the invoice directly into the calculator. This release also fixes important bugs, including display and factorial calculation issues, as well as optimized result formatting for more accurate display.</string>
     <string name="overview">Overview</string>
@@ -428,7 +433,7 @@
     <string name="settingsPI">With this function, you can set it up so that whenever you enter the number \'3.14\', it will automatically be replaced by the symbol for Pi. This simplifies entering Pi in your calculations, allowing you to focus on the task at hand without having to constantly search for the symbol.</string>
     <string name="settingsPITitle">Insert PI</string>
 
-    <string name="settingsHistoryMode">This setting allows you to determine whether the text in your history is displayed as a scrollbar, meaning you can scroll the text from left to right and it will be displayed on a single line, or if the text is displayed on multiple lines below each other.</string>
+    <string name="settingsHistoryMode">Through the first setting, you can choose whether your history should be displayed in a minimalist way, with only basic information, or with numerous useful additional details such as the date or self-added notes. With the second setting, you can determine whether the text should be displayed in a single line with scroll function or across multiple lines. However, please note that selecting advanced information may affect performance.</string>
     <string name="settingsHistoryModeSingle">Single-line</string>
     <string name="settingsHistoryModeMultiple">Multiple-line</string>
     <string name="historyModeTitle">History Mode</string>

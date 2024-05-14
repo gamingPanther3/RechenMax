@@ -986,7 +986,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void resetIfPressedCalculate() {
+    void resetIfPressedCalculate() {
         try {
             if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
                 setResultText("0");

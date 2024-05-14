@@ -61,7 +61,7 @@ public class InAppUpdate {
     public void onActivityResult(int requestCode, int resultCode) {
         if (requestCode == MY_REQUEST_CODE) {
             if (resultCode == RESULT_CANCELED) {
-                showToastLong("Update canceled by user", parentActivity.getApplicationContext());
+                showToastLong(parentActivity.getString(R.string.inAppUpdateCanceledByUser), parentActivity.getApplicationContext());
             } else if (resultCode != AppCompatActivity.RESULT_OK) {
                 checkForAppUpdate();
             }
@@ -71,10 +71,10 @@ public class InAppUpdate {
     private void popupSnackBarForCompleteUpdate() {
         Snackbar.make(
                 parentActivity.findViewById(R.id.postsFrameLayout),
-                "An update has just been downloaded.",
+                parentActivity.getString(R.string.inAppUpdateDownloaded),
                 Snackbar.LENGTH_INDEFINITE
         ).setAction(
-                "RESTART", view -> {
+                parentActivity.getString(R.string.inAppUpdateRestart), view -> {
                     if (appUpdateManager != null) {
                         appUpdateManager.completeUpdate();
                     }

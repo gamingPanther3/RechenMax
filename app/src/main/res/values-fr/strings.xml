@@ -4,35 +4,39 @@
     <string name="lightMode">Mode lumière du jour</string>
     <string name="darkmode">Mode sombre</string>
 
+    <string name="inAppUpdateCanceledByUser">Mise à jour annulée par l\'utilisateur</string>
+    <string name="inAppUpdateDownloaded">Une mise à jour vient d\'être téléchargée</string>
+    <string name="inAppUpdateRestart">Redémarrer</string>
+
     <string name="defaultCalculationMode">Défaut</string>
     <string name="easyCalculationMode">Simplifié</string>
+    <string name="advancedHistoryMode">Avancé</string>
 
     <string name="degree">Degré (Deg)</string>
     <string name="radian">Radians (Rad)</string>
 
 
-    <string name="releaseDate">Date de sortie : XX/XX/XXXX - XXhXX</string>
+    <string name="releaseDate">Date de sortie : 05/14/2024 – 14h00</string>
     <string name="releaseNotesText">"
-        Nouvelles fonctionnalités : \n
-            - Ajout d'un convertisseur d\'unités\n
-            - Historique révisé\n
-            - Introduction améliorée\n
-            - Les notifications sont envoyées si elles sont activées\n
-            - Plusieurs langues telles que l'allemand, l'anglais, l'espagnol et le français\n
-            - Les bogues peuvent être signalés dans le coin supérieur droit des paramètres\n
-            - Notes de version améliorées\n
-            - Les notes de mise à jour peuvent à nouveau être consultées dans les paramètres.\n
+        Nouvelles fonctionnalités:\n
+            - Les résultats avec un nombre excessif de décimales sont réduits à une longueur totale de 15 caractères\n
+            - L'historique peut maintenant être affiché de manière minimalist ou avec des détails étendus\n
 
-        \n\nProblèmes résolus :\n
-            - Le bouton de retour était défectueux\n
-            - Unité manquante dans le convertisseur\n
-            - Erreur de mise en page dans la calculatrice\n
+        Erreurs corrigées: \n
+            - Les performances du moteur de calcul ont été améliorées\n
+            - Les calculs impliquant une exponentielle en notation scientifique ont été effectués uniquement en tant qu'entiers\n
+            - Le champ de texte "Votre historique est vide." n'était pas centré verticalement\n
+            - Les notes de mise à jour n'étaient pas affichées au démarrage d'une nouvelle version\n
+            - Pour économiser de l'espace, l'espace entre les opérateurs individuels dans l'historique a été supprimé\n
 
-        \n\nConfiguration requise : \n
-            - Version Android minimale : 10\n
-            - Version Android recommandée : 13 ou supérieure\n
-            - Version Android maximale : 14\n
+        Exigences système: \n
+            - Version minimale d'Android : 10\n
+            - Version d'Android recommandée : 13 ou supérieure\n
+            - Version maximale d'Android : 14\n
     "</string>
+
+    <string name="historySuccesfullMessageLoad">Le chargement du calcul a été effectué avec succès</string>
+    <string name="historyErrorMessageLoad">Une erreur s\'est produite lors du chargement, veuillez réessayer plus tard</string>
 
     <string name="patchnotesOverviewText">La dernière version de RechnerMax apporte des améliorations et des fonctionnalités intéressantes. Le défilement automatique facilite la navigation dans les calculs volumineux, tandis que la précision de l\'arrondi a été augmentée jusqu\'à la onzième décimale pour des nombres décimaux plus précis. L\'historique a été optimisé pour restaurer sans effort les calculs précédents et revoir les tâches passées. Dans les tâches trigonométriques, des fonctions avancées pour le sinus, le cosinus et la tangente en degrés et en radians sont disponibles. Les fonctions trigonométriques inverses (sin⁻¹, cos⁻¹, tan⁻¹) ainsi que les fonctions hyperboliques telles que sinh(x), cosh(x) et tanh(x) sont désormais également disponibles. La saisie manuelle des notations offre une flexibilité supplémentaire lors de la création et du calcul d\'expressions complexes. TherechnerMax prend désormais en charge l\'utilisation de la constante mathématique PI (π) pour des calculs de cercle précis. Grâce à la prise en charge flexible des degrés et des radians, vous pouvez basculer entre les deux unités de mesure selon vos besoins. La gestion des parenthèses a été optimisée pour garantir un traitement sans erreur des expressions mathématiques ou logiques. Le logiciel détecte et ajoute automatiquement les crochets fermants manquants, simplifiant ainsi davantage la saisie des expressions. Dans l\'histoire, un appui long sur une entrée permet de copier automatiquement la facture dans le presse-papier, tandis qu\'un appui court colle la facture directement dans la calculatrice. Cette version corrige également des bugs importants, notamment des problèmes d\'affichage et de calcul factoriel, ainsi qu\'un formatage optimisé des résultats pour un affichage plus précis.</string>
     <string name="overview">Aperçu</string>
@@ -408,7 +412,7 @@
     <string name="settingsPI">Avec cette fonction, vous pouvez définir que chaque fois que vous saisissez le nombre \'3,14\', il sera automatiquement remplacé par le symbole de Pi. Cela simplifie l\'entrée de Pi dans vos calculs, vous permettant de vous concentrer sur la tâche à accomplir sans avoir à rechercher constamment le symbole.</string>
     <string name="settingsPITitle">Insérer PI</string>
 
-    <string name="settingsHistoryMode">Ce paramètre vous permet de déterminer si le texte de votre historique est affiché sous forme de barre de défilement, ce qui signifie que vous pouvez faire défiler le texte de gauche à droite et qu\'il sera affiché sur une seule ligne, ou si le texte est affiché sur plusieurs lignes les unes en dessous des autres.</string>
+    <string name="settingsHistoryMode">Grâce au premier paramètre, vous pouvez choisir si votre historique doit être affiché de manière minimaliste, avec uniquement des informations de base, ou avec de nombreux détails supplémentaires utiles tels que la date ou des notes ajoutées par vous-même. Avec le deuxième paramètre, vous pouvez déterminer si le texte doit être affiché sur une seule ligne avec une fonction de défilement ou sur plusieurs lignes. Cependant, veuillez noter que la sélection d\'informations avancées peut affecter les performances.</string>
     <string name="settingsHistoryModeSingle">Monoligne</string>
     <string name="settingsHistoryModeMultiple">Multiligne</string>
     <string name="historyModeTitle">Mode historique</string>

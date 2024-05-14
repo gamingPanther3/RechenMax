@@ -270,7 +270,7 @@
             <TextView
                 android:id="@+id/settings_history_mode_text"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="280dp"
                 android:text="@string/settingsHistoryMode"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
@@ -278,7 +278,16 @@
                 android:autoSizeTextType="uniform" />
 
             <Spinner
-                android:id="@+id/settings_history_mode_spinner"
+                android:id="@+id/settings_history_mode_spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center_horizontal" />
+
+            <Spinner
+                android:id="@+id/settings_history_mode_spinner2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoSizeMaxTextSize="@dimen/maxButtonSize"
