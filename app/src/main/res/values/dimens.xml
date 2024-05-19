@@ -6,7 +6,11 @@
     <dimen name="historycalculatesize">35sp</dimen>
     <dimen name="historyresultsize">45sp</dimen>
 
-    <dimen name="maxButtonSize">50sp</dimen>
+    <dimen name="maxButtonSize">23sp</dimen>
+
+    <dimen name="maxTitleSize">40sp</dimen>
+    <dimen name="maxTextSize">30sp</dimen>
+
     <dimen name="maxTextViewSize">60sp</dimen>
     <dimen name="stepGranularity">1dp</dimen>
     <dimen name="minTextSize">1dp</dimen>

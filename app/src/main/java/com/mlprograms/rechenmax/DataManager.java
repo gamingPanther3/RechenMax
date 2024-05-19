@@ -35,8 +35,8 @@ import java.util.Map;
 /**
  * DataManager
  * @author Max Lemberg
- * @version 1.4.5
- * @date 05.04.2024
+ * @version 1.4.7
+ * @date 17.05.2024
  */
 
 //  | Names                            | Values                           | Context                              |
@@ -106,9 +106,11 @@ import java.util.Map;
 //    EnergieCurrent
 //    DruckCurrent
 //    DrehmomentCurrent
-//    ArbeitCurrent                    | 0 - ...Max                       | ConvertActivity                      |
+//    ArbeitCurrent                    | 0 - ...                          | ConvertActivity                      |
 //  | numberOfDecimals                 | 0 - 10                           | Converter                            |
 //  | lastActivity                     | Main, Set, Rep, Con, Help, His   | MainActivity                         |
+//  | calculationCount                 | 0 - ...                          | MainActivity                         |
+//  | openedApp                        | 0 - ...                          | MainActivity                         |
 
 public class DataManager {
 
@@ -408,10 +410,11 @@ public class DataManager {
             initializeSetting("historyModeAdvanced", "false", applicationContext);
             initializeSetting("dayPassed", "true", applicationContext);
             initializeSetting("convertMode", "Entfernung", applicationContext);
-            initializeSetting("numberOfDecimals", "2", applicationContext);
+            initializeSetting("numberOfDecimals", "3", applicationContext);
             initializeSetting("showConverterDevelopmentMessage", "true", applicationContext);
             initializeSetting("report", "", applicationContext);
             initializeSetting("lastActivity", "Main", applicationContext);
+            initializeSetting("calculationCount", "1", applicationContext);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

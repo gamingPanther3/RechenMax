@@ -16,6 +16,7 @@ package com.mlprograms.rechenmax;
  * limitations under the License.
  */
 
+import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_BACKGROUND;
 import static com.mlprograms.rechenmax.CalculatorEngine.fixExpression;
 import static com.mlprograms.rechenmax.CalculatorEngine.isOperator;
 import static com.mlprograms.rechenmax.CalculatorEngine.isStandardOperator;
@@ -31,6 +32,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -51,6 +53,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,9 +64,11 @@ import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.nio.BufferUnderflowException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Objects;
@@ -73,8 +78,8 @@ import java.util.regex.Pattern;
 /**
  * MainActivity
  * @author Max Lemberg
- * @version 1.7.8
- * @date 06.04.2024
+ * @version 1.8.2
+ * @date 17.05.2024
  */
 
 public class MainActivity extends AppCompatActivity {
@@ -84,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
 
     private int newColorBTNForegroundAccent;
     private int newColorBTNBackgroundAccent;
+    // InAppReview inAppReview;
+
+    private static final String PREFS_NAME = "NotificationPermissionPrefs";
+    private static final String PERMISSION_GRANTED_KEY = "permission_granted";
 
     /**
      * Called when the activity is starting.
@@ -111,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
         // Initialize DataManager with the current context
         dataManager = new DataManager(this);
         dataManager.initializeSettings(this);
+
+        /*
+        inAppReview = new InAppReview(this);
+        inAppReview.activateReviewInfo();
+        */
 
         switchDisplayMode();
         try {
@@ -207,6 +221,131 @@ public class MainActivity extends AppCompatActivity {
 
         inAppUpdate = new InAppUpdate(MainActivity.this);
         inAppUpdate.checkForAppUpdate();
+
+        HorizontalScrollView calculateScrollView = findViewById(R.id.calculate_scrollview);
+        HorizontalScrollView resultScrollView = findViewById(R.id.result_scrollview);
+
+        calculateScrollView.setHorizontalScrollBarEnabled(false);
+        resultScrollView.setVerticalScrollBarEnabled(false);
+    }
+
+    private void checkForAskNotification() {
+        try {
+            final int calculateCount;
+            calculateCount = Integer.parseInt(dataManager.getJSONSettingsData("calculationCount", getApplicationContext()).getString("value"));
+            dataManager.saveToJSONSettings("calculationCount", String.valueOf(calculateCount + 1), getApplicationContext());
+
+            if(calculateCount >= 1000) {
+                dataManager.saveToJSONSettings("calculationCount", "10", getApplicationContext());
+                return;
+            }
+
+            if(calculateCount == 9) {
+                if(dataManager.getJSONSettingsData("allowNotification", getApplicationContext()).getString("value").equals("false")) {
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = inflater.inflate(R.layout.activate_notifications, null);
+
+                    int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                    final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+                    popupView.setBackgroundColor(newColorBTNBackgroundAccent);
+
+                    TextView textViewTitle = popupView.findViewById(R.id.activate_notification_layout_title);
+                    TextView textViewActivate = popupView.findViewById(R.id.activateNotificationButton);
+                    TextView textViewLater = popupView.findViewById(R.id.laterNotificationButton);
+
+                    LinearLayout notificationOutline = popupView.findViewById(R.id.notificationOutline);
+                    Drawable backgroundDrawable = getResources().getDrawable(R.drawable.textview_border_thick);
+
+                    if (backgroundDrawable instanceof GradientDrawable) {
+                        GradientDrawable gradientDrawable = (GradientDrawable) backgroundDrawable;
+                        gradientDrawable.setStroke(10, newColorBTNForegroundAccent);
+
+                        notificationOutline.setBackground(backgroundDrawable);
+                    }
+
+                    textViewTitle.setTextColor(newColorBTNForegroundAccent);
+                    textViewActivate.setTextColor(newColorBTNForegroundAccent);
+                    textViewLater.setTextColor(newColorBTNForegroundAccent);
+
+                    textViewTitle.setBackgroundColor(newColorBTNBackgroundAccent);
+                    textViewActivate.setBackgroundColor(newColorBTNBackgroundAccent);
+                    textViewLater.setBackgroundColor(newColorBTNBackgroundAccent);
+
+                    popupWindow.showAtLocation(findViewById(R.id.calculatorUI), Gravity.CENTER, 0, 0);
+
+                    textViewActivate.setOnClickListener(v -> {
+                        boolean isPermissionGranted = isNotificationPermissionGranted();
+                        if (!isPermissionGranted) {
+                            requestNotificationPermission();
+                        }
+
+                        if (!SettingsActivity.isChannelPermissionGranted(this, CHANNEL_ID_BACKGROUND)) {
+                            dataManager.saveToJSONSettings("allowNotifications", false, getApplicationContext());
+                        }
+
+                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                            //Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                            //intent.putExtra(Settings.EXTRA_APP_PACKAGE, this.getPackageName());
+                            //this.startActivity(intent);
+
+                            requestNotificationPermission();
+                        }
+
+                        popupWindow.dismiss();
+                    });
+
+                    textViewLater.setOnClickListener(v -> popupWindow.dismiss());
+                }
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 100) {
+            savePermissionStatus(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                dataManager.saveToJSONSettings("allowNotifications", true, getApplicationContext());
+
+                dataManager.saveToJSONSettings("allowNotification", true, getApplicationContext());
+                dataManager.saveToJSONSettings("allowDailyNotifications", true, getApplicationContext());
+                dataManager.saveToJSONSettings("allowRememberNotifications", true, getApplicationContext());
+                dataManager.saveToJSONSettings("allowDailyNotificationsActive", true, getApplicationContext());
+                dataManager.saveToJSONSettings("allowRememberNotificationsActive", true, getApplicationContext());
+            }
+        }
+    }
+
+    public void requestNotificationPermission() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        boolean isPermissionGranted = sharedPreferences.getBoolean(PERMISSION_GRANTED_KEY, false);
+
+        if (!isPermissionGranted) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
+                }
+            }
+        }
+    }
+
+    boolean isNotificationPermissionGranted() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(PERMISSION_GRANTED_KEY, false);
+    }
+
+    private void savePermissionStatus(boolean isGranted) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(PERMISSION_GRANTED_KEY, isGranted);
+        editor.apply();
     }
 
     private void showPatchNotes() {
@@ -680,6 +819,15 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Calculate();
                     dataManager.saveNumbers(getApplicationContext());
+
+                    /*
+                    int oldValue = dataManager.getJSONSettingsData("calculationCount", getApplicationContext()).getInt("value");
+                    dataManager.saveToJSONSettings("calculationCount", String.valueOf((oldValue + 1)),getApplicationContext());
+
+                    if(oldValue == 19) { // which calls if the user calculated 20 times
+                        inAppReview.startReviewFlow();
+                    }
+                    */
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -3331,10 +3479,19 @@ public class MainActivity extends AppCompatActivity {
 
         if(!isNumber(getCalculateText()) &&
                 (!getCalculateText().replace("=", "").replace(" ", "").equals("π") ||
-                        !getCalculateText().replace("=", "").replace(" ", "").equals("e"))
+                    !getCalculateText().replace("=", "").replace(" ", "").equals("e"))
             && !isInvalidInput(getResultText())) {
 
             addToHistory(fixExpression(balanceParentheses(getCalculateText())));
+
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    checkForAskNotification();
+                    System.out.println(dataManager.getJSONSettingsData("calculationCount", getApplicationContext()).getString("value"));
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         try {

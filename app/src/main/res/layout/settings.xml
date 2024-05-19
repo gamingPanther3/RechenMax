@@ -39,7 +39,7 @@
             android:gravity="center_vertical"
             android:text="@string/settings"
             android:textColor="@color/colorBTNForegroundAccent"
-            android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+            android:autoSizeMaxTextSize="@dimen/maxTitleSize"
             android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform" />
         
@@ -99,7 +99,7 @@
                 android:layout_height="70dp"
                 android:text="@string/releasenotes"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:thumb="@drawable/settings_switch_thumb"
@@ -112,7 +112,7 @@
                 android:layout_height="110dp"
                 android:text="@string/releasenotesText"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"/>
 
@@ -122,7 +122,7 @@
                 android:id="@+id/settings_releasenotes_title"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/releasenotes"
@@ -134,7 +134,7 @@
                 android:layout_height="40dp"
                 android:text="@string/releaseNotesDescription"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -149,7 +149,7 @@
                 android:layout_height="40dp"
                 android:text="@string/showReleaseNotes"
                 android:textColor="@color/white"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -164,7 +164,7 @@
                 android:layout_height="70dp"
                 android:text="@string/displayMode"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -174,7 +174,7 @@
                 android:layout_height="40dp"
                 android:text="@string/displayModeText"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -188,7 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -201,7 +201,7 @@
                 android:id="@+id/settings_true_darkmode"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/trueDarkmode"
@@ -214,7 +214,7 @@
                 android:id="@+id/settings_true_darkmode_text"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/trueDarkmodeText"
@@ -226,7 +226,7 @@
                 android:layout_height="70dp"
                 android:text="@string/calculationMode"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -236,7 +236,7 @@
                 android:layout_height="130dp"
                 android:text="@string/calculationModeText"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -245,7 +245,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -258,7 +258,7 @@
                 android:id="@+id/settings_history_mode"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/historyModeTitle"
@@ -273,7 +273,7 @@
                 android:layout_height="280dp"
                 android:text="@string/settingsHistoryMode"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -281,7 +281,7 @@
                 android:id="@+id/settings_history_mode_spinner1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal" />
@@ -290,7 +290,7 @@
                 android:id="@+id/settings_history_mode_spinner2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal" />
@@ -306,7 +306,7 @@
                 android:layout_height="70dp"
                 android:text="@string/deg_rad"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -323,7 +323,7 @@
                 android:id="@+id/settings_function_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal" />
@@ -337,7 +337,7 @@
                 android:id="@+id/settings_pi"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/settingsPITitle"
@@ -352,7 +352,7 @@
                 android:layout_height="130dp"
                 android:text="@string/settingsPI"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -360,7 +360,7 @@
                 android:id="@+id/settingsConverterDevelopmentMessage"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/settingsConverterDevelopmentMessage"
@@ -373,7 +373,7 @@
                 android:id="@+id/settingsConverterDevelopmentMessageText"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/settingsConverterDevelopmentMessage_text"
@@ -385,7 +385,7 @@
                 android:layout_height="70dp"
                 android:text="@string/settingsDecimalPoints"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -402,7 +402,7 @@
                 android:id="@+id/settings_decimalpoints_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="center_horizontal" />
@@ -412,7 +412,7 @@
                 android:id="@+id/settings_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/notifications"
@@ -427,7 +427,7 @@
                 android:layout_height="130dp"
                 android:text="@string/notificationsText"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 
@@ -440,7 +440,7 @@
                 android:id="@+id/settings_remember"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/remember"
@@ -453,7 +453,7 @@
                 android:id="@+id/settings_remember_text"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/rememberText"
@@ -468,7 +468,7 @@
                 android:id="@+id/settings_daily_hints"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:text="@string/dailyHints"
@@ -483,7 +483,7 @@
                 android:layout_height="70dp"
                 android:text="@string/dailyHintsText"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeMaxTextSize="@dimen/maxTextSize"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform" />
 

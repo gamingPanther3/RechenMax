@@ -16,7 +16,7 @@
     <string name="radian">Radians (Rad)</string>
 
 
-    <string name="releaseDate">Date de sortie : 05/14/2024 – 14h00</string>
+    <string name="releaseDate">Date de sortie : 05/18/2024 – 14h00</string>
     <string name="releaseNotesText">"
         Nouvelles fonctionnalités:\n
             - Les résultats avec un nombre excessif de décimales sont réduits à une longueur totale de 15 caractères\n
@@ -35,6 +35,11 @@
             - Version maximale d'Android : 14\n
     "</string>
 
+    <string name="wantToActivateNotifications">Voulez-vous recevoir des notifications ? (Vous pouvez également les désactiver ultérieurement dans les paramètres)</string>
+    <string name="yesActivateNotifications">Oui</string>
+    <string name="dontActivateNotifications">Plus tard</string>
+
+
     <string name="historySuccesfullMessageLoad">Le chargement du calcul a été effectué avec succès</string>
     <string name="historyErrorMessageLoad">Une erreur s\'est produite lors du chargement, veuillez réessayer plus tard</string>
 
@@ -45,7 +50,7 @@
     <string name="systemRequirement">Configuration requise</string>
     <string name="dontShowThisTextAgain">Ne plus afficher ce texte</string>
     <string name="understood">Compris</string>
-    <string name="copyright">Créateur : Max Lemberg Droits d\'auteur : © 2024 Max Lemberg. Tous droits réservés. Licence : ce produit est sous licence Apache 2.0. Version : 1.6.6</string>
+    <string name="copyright">Créateur : Max Lemberg Droits d\'auteur : © 2024 Max Lemberg. Tous droits réservés. Licence : ce produit est sous licence Apache 2.0. Version : 1.6.7</string>
     <string name="calculationAreas">Zones de calcul</string>
     <string name="calculationArea">1 : Cette zone (zone de calcul) affiche le calcul que vous avez saisi. Vous pouvez également copier le contenu de la zone en appuyant longuement sur la zone. 2 : Le résultat du calcul effectué est affiché dans cette zone (zone de résultat). Vous pouvez également copier le contenu de la zone en appuyant longuement sur la zone.</string>
     <string name="calculateText">Après avoir terminé votre calcul, appuyez sur la touche \'=\' pour calculer le résultat. Le résultat sera ensuite affiché pour vous dans la zone des résultats. Cette procédure simple vous permet d\'obtenir les résultats de vos calculs rapidement et facilement.</string>

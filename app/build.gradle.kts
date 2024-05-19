@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace = "com.mlprograms.rechenmax"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.mlprograms.rechenmax"
         minSdk = 29
-        targetSdk = 33
-        versionCode = 16
-        versionName = "1.6.6"
+        targetSdk = 34
+        versionCode = 17
+        versionName = "1.6.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

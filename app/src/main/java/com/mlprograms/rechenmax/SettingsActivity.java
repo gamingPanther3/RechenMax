@@ -43,7 +43,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
@@ -773,7 +772,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isNotificationPermissionGranted() {
+    boolean isNotificationPermissionGranted() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getBoolean(PERMISSION_GRANTED_KEY, false);
     }
@@ -797,7 +796,7 @@ public class SettingsActivity extends AppCompatActivity {
         showToastLong(getString(R.string.activateNotifications), this);
     }
 
-    private boolean isChannelPermissionGranted(Context context, String channelId) {
+    static boolean isChannelPermissionGranted(Context context, String channelId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             if (notificationManager != null) {

@@ -2,14 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="Manifest.permission.SEND_NOTIFICATIONS" />
-    <uses-permission android:name="Manifest.permission.NOTIFICATION_SEND" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="Manifest.permission.SEND_NOTIFICATIONS"/>
+    <uses-permission android:name="Manifest.permission.NOTIFICATION_SEND"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
 
     <application
         android:allowBackup="false"
@@ -27,7 +28,9 @@
         <service
             android:name=".BackgroundService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
+        <!-- dataSync was taken because otherwise the app would close and no longer send notifications  -->
 
         <receiver
             android:name=".BootReceiver"
@@ -45,27 +48,32 @@
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait"></activity>
+
         <activity
             android:name=".SettingsActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait"></activity>
+
         <activity
             android:name=".HistoryActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait"></activity>
+
         <activity
             android:name=".HelpActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait"></activity>
+
         <activity
             android:name=".ConvertActivity"
             android:configChanges="uiMode"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"></activity>
+
         <activity
             android:name=".MainActivity"
             android:configChanges="uiMode"

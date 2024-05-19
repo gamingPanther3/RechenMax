@@ -16,8 +16,8 @@
     <string name="radian">Radianes (Rad)</string>
 
 
-    <string name="releaseDate">Fecha de lanzamiento: 05/14/2024 – 14:00</string>
-    <string name="releaseNotesText">
+    <string name="releaseDate">Fecha de lanzamiento: 05/18/2024 – 14:00</string>
+    <string name="releaseNotesText">"
         Nuevas características:\n
             - Los resultados con un exceso de decimales se reducen a una longitud total de 15 caracteres\n
             - Ahora se puede mostrar el historial de forma minimalista o con detalles ampliados\n
@@ -33,7 +33,11 @@
             - Versión mínima de Android: 10\n
             - Versión de Android recomendada: 13 o superior\n
             - Versión máxima de Android: 14\n
-    </string>
+    "</string>
+
+    <string name="wantToActivateNotifications">¿Quieres recibir notificaciones? (También puedes desactivarlas más tarde en la configuración)</string>
+    <string name="yesActivateNotifications">Sí</string>
+    <string name="dontActivateNotifications">Más tarde</string>
 
     <string name="historySuccesfullMessageLoad">La carga del cálculo se realizó con éxito</string>
     <string name="historyErrorMessageLoad">Se produjo un error al cargar, inténtalo de nuevo más tarde</string>
@@ -45,7 +49,7 @@
     <string name="systemRequirement">Requisitos del sistema</string>
     <string name="dontShowThisTextAgain">No mostrar este texto nuevamente</string>
     <string name="understood">Entendido</string>
-    <string name="copyright">Creador: Max Lemberg Derechos de autor: © 2024 Max Lemberg. Todos los derechos reservados. Licencia: Este producto está bajo licencia de Apache 2.0. Versión: 1.6.6</string>
+    <string name="copyright">Creador: Max Lemberg Derechos de autor: © 2024 Max Lemberg. Todos los derechos reservados. Licencia: Este producto está bajo licencia de Apache 2.0. Versión: 1.6.7</string>
 
     <string name="calculationAreas">Áreas de cálculo</string>
     <string name="calculationArea">1: Esta área (área de cálculo) muestra el cálculo que has ingresado. También puedes copiar el contenido del área manteniendo presionada el área. 2: El resultado del cálculo realizado se muestra en esta área (área de resultados). También puedes copiar el contenido del área manteniendo presionada el área.</string>

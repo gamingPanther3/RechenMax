@@ -7,6 +7,9 @@
     <string name="inAppUpdateDownloaded">Ein Update wurde gerade heruntergeladen</string>
     <string name="inAppUpdateRestart">Neustarten</string>
 
+    <string name="inAppReviewCouldntStart" translatable="false">Die Rezension konnte nicht gestartet werden</string>
+    <string name="inAppReviewFinished" translatable="false">Bewertung abgeschlossen</string>
+
     <string name="defaultCalculationMode">Standard</string>
     <string name="easyCalculationMode">Vereinfacht</string>
     <string name="advancedHistoryMode">Erweitert</string>
@@ -70,27 +73,31 @@
     <string name="quarter" translatable="false">¼</string>
 
     <!-- Patch-Notes -->
-    <string name="appVersion" translatable="false">RechenMax 1.6.6</string>
+    <string name="appVersion" translatable="false">RechenMax 1.6.7</string>
 
     <!-- !!! Übersetzung nicht vergessen !!! -->
-    <string name="releaseDate">Veröffentlichungsdatum: 14.05.2024 – 14Uhr</string>
+    <string name="releaseDate">Veröffentlichungsdatum: 18.05.2024 – 14Uhr</string>
     <string name="releaseNotesText">
         Neue Funktionen:\n
-            - Ergebnisse mit einer übermäßigen Anzahl von Nachkommastellen werden auf eine Gesamtlänge von 15 Zeichen reduziert\n
-            - Der Verlauf kann nun entweder minimalistisch oder mit erweiterten Details angezeigt werden\n
+            - Wenn 10 Berechungen durchgeführt wurden und die Benachrichtigungen nicht aktiviert sind wird gefragt ob welche gesendet werden dürfen (nur mit Android 13 oder höher)\n
+
+        \nÄnderungen:\n
+            - Die Schaltflächen wurden im Layout zentriert\n
+            - Die Textgröße der Schaltflächen im Layout wurde angepasst\n
+            - Die Scrollleisten im Berechnungsbereich und im Ergebnisbereich wurden versteckt\n
 
         \nBehobene Fehler: \n
-            - Performance der Rechen-Engine wurde verbessert\n
-            - Berechnungen, die eine Gleitkommazahl als Exponenten in Potenzberechnungen hatten, wurden nur als Ganzzahl berechnet\n
-            - Das Textfeld "Dein Verlauf ist leer." war nicht vertikal zentriert\n
-            - Die PatchNotes wurden beim start einer neueren Version nicht angezeigt\n
-            - Um Platz zu sparen, wurde der Abstand zwischen den einzelnen Operatoren im Verlauf entfernt\n
+            - Die App hat keine Benachrichtigungen gesendet (Absturz)\n
 
         \nSystemanforderungen: \n
             - Minimale Android-Version: 10\n
             - Empfohlene Android-Version: 13 oder höher\n
             - Maximale Android-Version: 14\n
     </string>
+
+    <string name="wantToActivateNotifications">Möchtest du Benachrichtigungen erhalten? (Diese kannst du später auch in den Einstellungen wieder deaktivieren)</string>
+    <string name="yesActivateNotifications">Ja</string>
+    <string name="dontActivateNotifications">Später</string>
 
     <string name="historySuccesfullMessageLoad">Berechnung wurde erfolgreich geladen</string>
     <string name="historyErrorMessageLoad">Es ist ein Fehler beim Laden aufgetreten, versuche es später erneut</string>
@@ -144,7 +151,7 @@
     <string name="moreFunctions">Weitere Funktionen</string>
     <string name="moreTabsText">"Es gibt drei verschiedene Tabs mit unterschiedlichen Funktionen, die du durch Drücken des entsprechenden Knopfes wechseln kannst.   Tab 1:  'sin(x)': Sinusfunktion 'cos(x)': Cosinusfunktion 'tan(x)': Tangensfunktion 'e±': 'π': Kreiszahl PI 'sin⁻¹(x)': Inverse Sinusfunktion 'cos⁻¹(x)': Inverse Cosinusfunktion 'tan⁻¹(x)': Inverse Tangensfunktion  Tab 2:  'sinh(x)': Hyperbolische Sinusfunktion 'cosh(x)': Hyperbolische Cosinusfunktion 'tanh(x)': Hyperbolische Tangensfunktion 'sinh⁻¹(x)': Inverse Hyperbolische Sinusfunktion 'cosh⁻¹(x)': Inverse Hyperbolische Cosinusfunktion 'tanh⁻¹(x)': Inverse Hyperbolische Tangesfunktion  Tab 3:  'log(x)': Logarithmus zur Basis 10 'log₂(x)': Logarithmus zur Basis 2 'logₓ(x)': Logarithmus zur Basis x 'ln(x)': Natürlicher Logarithmus zur Basis e (ungefähr 2,71828) '³√x': Kubikwurzel '½': Hälfte (0,5) '⅓': Drittel (0,3333…) '¼':Viertel (0,25)"</string>
     <string name="moreTabs">Weitere Tabs</string>
-    <string name="copyright">"Ersteller: Max Lemberg Copyright: © 2024 Max Lemberg. Alle Rechte vorbehalten. Lizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz. Version: 1.6.6"</string>
+    <string name="copyright">"Ersteller: Max Lemberg Copyright: © 2024 Max Lemberg. Alle Rechte vorbehalten. Lizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz. Version: 1.6.7"</string>
     <string name="releasenotes">Release-Notes</string>
     <string name="trueDarkmode">Echter Dunkelmodus</string>
     <string name="releaseNotesDescription">Klicke auf \'Release-Notes anzeigen\' um die neusten Release-Notes dieses Patches zu sehen.</string>

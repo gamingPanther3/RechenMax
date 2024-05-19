@@ -19,7 +19,7 @@
     <string name="releaseNotesDescription">Klicke auf \'Release-Notes anzeigen\' um die neusten Release-Notes dieses Patches zu sehen.</string>
     <string name="showReleaseNotes">Release-Notes anzeigen</string>
 
-    <string name="releaseDate">Veröffentlichungsdatum: 14.05.2024 – 14Uhr</string>
+    <string name="releaseDate">Veröffentlichungsdatum: 18.05.2024 – 14Uhr</string>
     <string name="releaseNotesText">
         Neue Funktionen:\n
             - Ergebnisse mit einer übermäßigen Anzahl von Nachkommastellen werden auf eine Gesamtlänge von 15 Zeichen reduziert\n
@@ -37,6 +37,10 @@
             - Empfohlene Android-Version: 13 oder höher\n
             - Maximale Android-Version: 14\n
     </string>
+
+    <string name="wantToActivateNotifications">Möchtest du Benachrichtigungen erhalten? (Diese kannst du später auch in den Einstellungen wieder deaktivieren)</string>
+    <string name="yesActivateNotifications">Ja</string>
+    <string name="dontActivateNotifications">Später</string>
 
     <string name="historySuccesfullMessageLoad">Berechnung wurde erfolgreich geladen</string>
     <string name="historyErrorMessageLoad">Es ist ein Fehler beim Laden aufgetreten, versuche es später erneut</string>
@@ -58,7 +62,7 @@
     <string name="displayModeText">Mit dieser Option lässt sich der Anzeigemodus des Taschenrechners auswählen.</string>
     <string name="trueDarkmodeText">Diese Einstellung bewirkt, dass das Schwarz intensiver und das Weiß leicht gedimmt wird, wenn sie aktiviert ist. Bitte beachten Sie, dass diese Einstellung nur wirksam wird, wenn der Dunkelmodus aktiviert ist.</string>
     <string name="calculationModeText">Mit dieser Einstellung kannst du festlegen, ob die Eingaben zuerst im Ergebnisbereich angezeigt und dann mit einem Operator in den Berechnungsbereich eingefügt (Standard), oder ob sie direkt im Berechnungsbereich geschrieben werden (Vereinfacht).</string>
-    <string name="copyright">"Ersteller: Max Lemberg Copyright: © 2024 Max Lemberg. Alle Rechte vorbehalten. Lizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz. Version: 1.6.6"</string>
+    <string name="copyright">"Ersteller: Max Lemberg Copyright: © 2024 Max Lemberg. Alle Rechte vorbehalten. Lizenz: Dieses Produkt ist lizenziert unter der Apache-2.0 Lizenz. Version: 1.6.7"</string>
     <string name="moreTabs">Weitere Tabs</string>
     <string name="moreTabsText">"Es gibt drei verschiedene Tabs mit unterschiedlichen Funktionen, die du durch Drücken des entsprechenden Knopfes wechseln kannst.   Tab 1:  'sin(x)': Sinusfunktion 'cos(x)': Cosinusfunktion 'tan(x)': Tangensfunktion 'e±': 'π': Kreiszahl PI 'sin⁻¹(x)': Inverse Sinusfunktion 'cos⁻¹(x)': Inverse Cosinusfunktion 'tan⁻¹(x)': Inverse Tangensfunktion  Tab 2:  'sinh(x)': Hyperbolische Sinusfunktion 'cosh(x)': Hyperbolische Cosinusfunktion 'tanh(x)': Hyperbolische Tangensfunktion 'sinh⁻¹(x)': Inverse Hyperbolische Sinusfunktion 'cosh⁻¹(x)': Inverse Hyperbolische Cosinusfunktion 'tanh⁻¹(x)': Inverse Hyperbolische Tangesfunktion  Tab 3:  'log(x)': Logarithmus zur Basis 10 'log₂(x)': Logarithmus zur Basis 2 'logₓ(x)': Logarithmus zur Basis x 'ln(x)': Natürlicher Logarithmus zur Basis e (ungefähr 2,71828) '³√x': Kubikwurzel '½': Hälfte (0,5) '⅓': Drittel (0,3333…) '¼':Viertel (0,25)"</string>
     <string name="moreFunctions">Weitere Funktionen</string>

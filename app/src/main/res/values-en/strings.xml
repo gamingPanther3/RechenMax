@@ -17,7 +17,7 @@
     <string name="radian">Radians (Rad)</string>
 
 
-    <string name="releaseDate">Release Date: 05/14/2024 – 2:00 PM</string>
+    <string name="releaseDate">Release Date: 05/18/2024 – 02:00 PM</string>
     <string name="releaseNotesText">
         New features:\n
             - Results with an excessive number of decimal places are now reduced to a total length of 15 characters\n
@@ -36,6 +36,10 @@
             - Maximum Android version: 14\n
     </string>
 
+    <string name="wantToActivateNotifications">Do you want to receive notifications? (You can also deactivate them later in the settings)</string>
+    <string name="yesActivateNotifications">Yes</string>
+    <string name="dontActivateNotifications">Later</string>
+
     <string name="historySuccesfullMessageLoad">Calculation successfully loaded</string>
     <string name="historyErrorMessageLoad">An error occurred while loading, please try again later</string>
 
@@ -46,7 +50,7 @@
     <string name="systemRequirement">System requirements</string>
     <string name="dontShowThisTextAgain">Don\'t show this text again</string>
     <string name="understood">Understood</string>
-    <string name="copyright">Creator: Max Lemberg Copyright: © 2024 Max Lemberg. All rights reserved. License: This product is licensed under the Apache 2.0 License. Version: 1.6.6</string>
+    <string name="copyright">Creator: Max Lemberg Copyright: © 2024 Max Lemberg. All rights reserved. License: This product is licensed under the Apache 2.0 License. Version: 1.6.7</string>
 
     <string name="calculationAreas">Calculation areas</string>
     <string name="calculationArea">1: This area (calculation area) displays the calculation you entered. You can also copy the contents of the area by long-pressing the area. 2: The result of the calculation carried out is displayed in this area (result area). You can also copy the contents of the area by long-pressing the area.</string>
