@@ -16,13 +16,14 @@ package com.mlprograms.rechenmax;
  * limitations under the License.
  */
 
-import android.annotation.SuppressLint;
-import android.provider.ContactsContract;
-import android.util.Log;
-
+import ch.obermuhlner.math.big.BigDecimalMath;
+import ch.obermuhlner.math.big.stream.*;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.NumberHelper.e;
-import static com.mlprograms.rechenmax.ParenthesesBalancer.*;
+import static com.mlprograms.rechenmax.ParenthesesBalancer.balanceParentheses;
+
+import android.annotation.SuppressLint;
+import android.util.Log;
 
 import org.json.JSONException;
 
@@ -686,10 +687,7 @@ public class CalculatorEngine {
             case "!":
                 return factorial(operand1);
             case "^":
-                BigDecimal operand1BigDecimal = new BigDecimal(String.valueOf(operand1), MathContext.DECIMAL128);
-                BigDecimal operand2BigDecimal = new BigDecimal(String.valueOf(operand2), MathContext.DECIMAL128);
-
-                return BigDecimal.valueOf(Math.pow(operand1BigDecimal.doubleValue(), operand2BigDecimal.doubleValue()));
+                return BigDecimalMath.pow(operand1, operand2, MC);
             case "log(":
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₂(":
@@ -776,6 +774,18 @@ public class CalculatorEngine {
                 return atanh(operand2);
             default:
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage5));
+        }
+    }
+
+    public static BigDecimal pow(BigDecimal base, BigDecimal exponent) {
+        if (exponent.equals(BigDecimal.ZERO)) {
+            return BigDecimal.ONE;
+        } else if (exponent.equals(BigDecimal.ONE)) {
+            return base;
+        } else if (exponent.signum() == -1) {
+            return BigDecimal.ONE.divide(pow(base, exponent.negate()), MC);
+        } else {
+            return base.multiply(pow(base, exponent.subtract(BigDecimal.ONE)));
         }
     }
 

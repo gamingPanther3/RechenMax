@@ -19,25 +19,29 @@
     <string name="releaseNotesDescription">Klicke auf \'Release-Notes anzeigen\' um die neusten Release-Notes dieses Patches zu sehen.</string>
     <string name="showReleaseNotes">Release-Notes anzeigen</string>
 
-    <string name="releaseDate">Veröffentlichungsdatum: 18.05.2024 – 14Uhr</string>
+    <string name="releaseDate">Veröffentlichungsdatum: 21.05.2024 – 0Uhr</string>
     <string name="releaseNotesText">"
-        Neue Funktionen: \n
-            - Wenn 10 Berechungen durchgeführt wurden und die Benachrichtigungen nicht aktiviert sind wird gefragt ob welche gesendet werden dürfen (ab Android 13 oder höher) \n
+- - - Neue Funktionen - - - \n
+- Wenn 10 Berechungen durchgeführt wurden und die Benachrichtigungen nicht aktiviert sind wird gefragt ob welche gesendet werden dürfen (ab Android 13 oder höher)
 
-        \nÄnderungen: \n
-            - Die Schaltflächen wurden im Layout zentriert \n
-            - Die Textgröße der Schaltflächen im Layout wurde angepasst \n
-            - Die Scrollleisten im Berechnungsbereich und im Ergebnisbereich wurden versteckt \n
-            - Die Anzahl der Zeichen im Ergebnisbereich passt sich dynamisch der Bildschirmbreite an, anstatt auf einen festen Wert beschränkt zu sein \n
+- - - Demnächst kommende Funktionen - - - \n
+- Bild im Bild Modus
 
-        \nBehobene Fehler: \n
-            - Die App hat keine Benachrichtigungen gesendet (Absturz) \n
-            - Leere Berechnungen wurden zu dem Verlauf hinzugefügt \n
+- - - Änderungen - - -
+- Die Schaltflächen wurden im Layout zentriert
+- Die Textgröße der Schaltflächen im Layout wurde angepasst
+- Die Scrollleisten im Berechnungsbereich und im Ergebnisbereich wurden versteckt
+- Die Anzahl der Zeichen im Ergebnisbereich passt sich dynamisch der Bildschirmbreite an, anstatt auf einen festen Wert beschränkt zu sein
+- Das Design von den PatchNotes wurde verbessert
 
-        \nSystemanforderungen: \n
-            - Minimale Android-Version: 10 \n
-            - Empfohlene Android-Version: 13 oder höher \n
-            - Maximale Android-Version: 14 \n
+- - - Behobene Fehler - - - \n
+- Die App hat keine Benachrichtigungen gesendet (Absturz)
+- Leere Berechnungen wurden zu dem Verlauf hinzugefügt
+
+- - - Systemanforderungen - - - \n
+- Minimale Android-Version: 10
+- Empfohlene Android-Version: 13 oder höher
+- Maximale Android-Version: 14
     "</string>
 
     <string name="wantToActivateNotifications">Möchtest du Benachrichtigungen erhalten? (Diese kannst du später auch in den Einstellungen wieder deaktivieren)</string>

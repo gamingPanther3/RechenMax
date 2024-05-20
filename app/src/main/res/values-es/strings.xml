@@ -16,25 +16,29 @@
     <string name="radian">Radianes (Rad)</string>
 
 
-    <string name="releaseDate">Fecha de lanzamiento: 05/18/2024 – 14:00</string>
+    <string name="releaseDate">Fecha de lanzamiento: 05/21/2024 – 00:00</string>
     <string name="releaseNotesText">"
-        Nuevas funciones: \n
-            - Si se han realizado 10 cálculos y las notificaciones no están habilitadas, se solicitará permiso para enviarlas (a partir de Android 13 o superior) \n
+- - - Nuevas Funciones - - - \n
+- Si se han realizado 10 cálculos y las notificaciones no están activadas, se preguntará si se pueden enviar (a partir de Android 13 en adelante)
 
-        \nCambios: \n
-            - Los botones se han centrado en el diseño \n
-            - El tamaño del texto de los botones en el diseño se ha ajustado \n
-            - Las barras de desplazamiento en el área de cálculo y en el área de resultado se han ocultado \n
-            - El número de caracteres en el área de resultado se ajusta dinámicamente al ancho de la pantalla en lugar de estar limitado a un valor fijo \n
+- - - Próximas Funciones - - - \n
+- Modo imagen dentro de imagen
 
-        \nErrores corregidos: \n
-            - La aplicación no envió notificaciones (crash) \n
-            - Se agregaron cálculos vacíos al historial \n
+- - - Cambios - - -
+- Los botones se han centrado en el diseño
+- Se ha ajustado el tamaño del texto de los botones en el diseño
+- Las barras de desplazamiento en el área de cálculo y en el área de resultado se han ocultado
+- El número de caracteres en el área de resultado se ajusta dinámicamente al ancho de la pantalla en lugar de estar limitado a un valor fijo
+- Se ha mejorado el diseño de las notas de parche
 
-        \nRequisitos del sistema: \n
-            - Versión mínima de Android: 10 \n
-            - Versión recomendada de Android: 13 o superior \n
-            - Versión máxima de Android: 14 \n
+- - - Problemas Resueltos - - - \n
+- La aplicación no envió notificaciones (se bloqueó)
+- Los cálculos vacíos se añadieron al historial
+
+- - - Requisitos del Sistema - - - \n
+- Versión mínima de Android: 10
+- Versión recomendada de Android: 13 o superior
+- Versión máxima de Android: 14
     "</string>
 
     <string name="wantToActivateNotifications">¿Quieres recibir notificaciones? (También puedes desactivarlas más tarde en la configuración)</string>

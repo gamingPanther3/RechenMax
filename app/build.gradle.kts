@@ -10,7 +10,7 @@ android {
         applicationId = "com.mlprograms.rechenmax"
         minSdk = 29
         targetSdk = 34
-        versionCode = 17
+        versionCode = 19
         versionName = "1.6.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -55,9 +55,7 @@ dependencies {
     //noinspection GradleDependency
     testImplementation("junit:junit:4.13.1")
 
-    // This dependency is downloaded from the Google’s Maven repository.
     implementation("com.google.android.play:app-update:2.1.0")
-
-    // For Kotlin users also add the Kotlin extensions library for Play In-App Update:
     implementation("com.google.android.play:app-update-ktx:2.1.0")
+    implementation("ch.obermuhlner:big-math:2.3.2")
 }

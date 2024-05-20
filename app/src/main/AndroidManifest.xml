@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="Manifest.permission.SEND_NOTIFICATIONS"/>
     <uses-permission android:name="Manifest.permission.NOTIFICATION_SEND"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
 
     <application
         android:allowBackup="false"
@@ -29,8 +29,8 @@
             android:name=".BackgroundService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="dataSync"/>
-        <!-- dataSync was taken because otherwise the app would close and no longer send notifications  -->
+            android:foregroundServiceType="specialUse"/>
+        <!-- specialUse was taken because otherwise the app would close and no longer send notifications (no special purpose) -->
 
         <receiver
             android:name=".BootReceiver"
@@ -42,13 +42,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name=".FloatingCalculator"
-            android:configChanges="uiMode"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"></activity>
 
         <activity
             android:name=".ReportActivity"

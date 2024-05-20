@@ -17,25 +17,29 @@
     <string name="radian">Radians (Rad)</string>
 
 
-    <string name="releaseDate">Release Date: 05/18/2024 – 02:00 PM</string>
+    <string name="releaseDate">Release Date: 05/21/2024 – 00:00 AM</string>
     <string name="releaseNotesText">"
-        New features: \n
-            - If 10 calculations have been performed and notifications are not enabled, permission will be asked to send them (from Android 13 or higher) \n
+- - - New Features - - - \n
+- If 10 calculations have been performed and notifications are not enabled, permission will be asked to send them (from Android 13 onwards)
 
-        \nChanges: \n
-            - Buttons have been centered in the layout \n
-            - Button text size in the layout has been adjusted \n
-            - Scroll bars in the calculation area and result area have been hidden \n
-            - The number of characters in the result area dynamically adjusts to the screen width instead of being limited to a fixed value \n
+- - - Upcoming Features - - - \n
+- Picture-in-Picture Mode
 
-        \nFixed bugs: \n
-            - The app did not send notifications (crash) \n
-            - Empty calculations were added to the history \n
+- - - Changes - - -
+- Buttons have been centered in the layout
+- Button text size in the layout has been adjusted
+- Scrollbars in the calculation area and result area have been hidden
+- The number of characters in the result area dynamically adjusts to the screen width instead of being limited to a fixed value
+- Design of the patch notes has been improved
 
-        \nSystem requirements: \n
-            - Minimum Android version: 10 \n
-            - Recommended Android version: 13 or higher \n
-            - Maximum Android version: 14 \n
+- - - Fixed Bugs - - - \n
+- The app did not send notifications (crash)
+- Empty calculations were added to the history
+
+- - - System Requirements - - - \n
+- Minimum Android Version: 10
+- Recommended Android Version: 13 or higher
+- Maximum Android Version: 14
     "</string>
 
     <string name="wantToActivateNotifications">Do you want to receive notifications? (You can also deactivate them later in the settings)</string>
