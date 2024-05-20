@@ -111,6 +111,7 @@ import java.util.Map;
 //  | lastActivity                     | Main, Set, Rep, Con, Help, His   | MainActivity                         |
 //  | calculationCount                 | 0 - ...                          | MainActivity                         |
 //  | openedApp                        | 0 - ...                          | MainActivity                         |
+//  | maxNumbersWithoutScrolling       | 1 - ...                          | MainActivity                         |
 
 public class DataManager {
 
@@ -415,6 +416,7 @@ public class DataManager {
             initializeSetting("report", "", applicationContext);
             initializeSetting("lastActivity", "Main", applicationContext);
             initializeSetting("calculationCount", "1", applicationContext);
+            initializeSetting("maxNumbersWithoutScrolling", "6", applicationContext);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

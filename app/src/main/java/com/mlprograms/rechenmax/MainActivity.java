@@ -22,12 +22,15 @@ import static com.mlprograms.rechenmax.CalculatorEngine.isOperator;
 import static com.mlprograms.rechenmax.CalculatorEngine.isStandardOperator;
 import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
+import static com.mlprograms.rechenmax.ParenthesesBalancer.balanceParentheses;
 import static com.mlprograms.rechenmax.ToastHelper.showToastLong;
 import static com.mlprograms.rechenmax.ToastHelper.showToastShort;
-import static com.mlprograms.rechenmax.ParenthesesBalancer.*;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
+import android.app.PictureInPictureParams;
+import android.app.RemoteAction;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -35,15 +38,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.Icon;
 import android.icu.text.DecimalFormat;
 import android.icu.text.DecimalFormatSymbols;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Rational;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,23 +60,22 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.BufferUnderflowException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -93,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String PREFS_NAME = "NotificationPermissionPrefs";
     private static final String PERMISSION_GRANTED_KEY = "permission_granted";
+
+    private HorizontalScrollView horizontalScrollView;
+    private TextView textView;
+    private int characterCount = 0;
+    private StringBuilder textBuilder = new StringBuilder();
 
     /**
      * Called when the activity is starting.
@@ -181,11 +192,6 @@ public class MainActivity extends AppCompatActivity {
         setUpListeners();
         showOrHideScienceButtonState();
         switchDisplayMode();
-        try {
-            dataManager.loadNumbers();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
         formatResultTextAfterType();
 
         // Scroll down in the calculate label
@@ -227,6 +233,46 @@ public class MainActivity extends AppCompatActivity {
 
         calculateScrollView.setHorizontalScrollBarEnabled(false);
         resultScrollView.setVerticalScrollBarEnabled(false);
+
+        findMaxCharactersWithoutScrolling(); // loads numbers after finish
+    }
+
+    private void findMaxCharactersWithoutScrolling() {
+        horizontalScrollView = findViewById(R.id.result_scrollview);
+        textView = findViewById(R.id.result_label);
+
+        horizontalScrollView.post(() -> {
+            int initialScrollX = horizontalScrollView.getScrollX();
+
+            // Loop to find the minimum number of characters needed to scroll
+            while (true) {
+                // Add one character to the TextView
+                textBuilder.append("0");
+                textView.setText(textBuilder.toString());
+
+                // Measure the TextView width
+                textView.measure(0, 0);
+                int textViewWidth = textView.getMeasuredWidth();
+
+                // Check if scrolling is possible
+                if (textViewWidth > horizontalScrollView.getWidth()) {
+                    break;
+                }
+
+                // Increase character count
+                characterCount++;
+            }
+            characterCount -= 2;
+
+            // Print the result
+            //System.out.println("Minimum number of characters needed to scroll: " + characterCount);
+            dataManager.saveToJSONSettings("maxNumbersWithoutScrolling", String.valueOf(characterCount), getApplicationContext());
+            try {
+                dataManager.loadNumbers();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void checkForAskNotification() {
@@ -519,13 +565,54 @@ public class MainActivity extends AppCompatActivity {
         setLongTextViewClickListener(R.id.calculate_label, this::saveCalculateLabelData);
         setLongTextViewClickListener(R.id.result_label, this::saveResultLabelData);
 
-        if (findViewById(R.id.functionMode_text) != null) {
-            findViewById(R.id.functionMode_text).setOnClickListener(view -> changeFunctionMode());
-        }
-        if (findViewById(R.id.shiftMode_text) != null) {
-            findViewById(R.id.shiftMode_text).setOnClickListener(view -> setShiftButtonState());
+        setButtonListener(R.id.functionMode_text, this::changeFunctionMode);
+        setButtonListener(R.id.shiftMode_text, this::setShiftButtonState);
+        //setButtonListener(R.id.picture_in_picture, this::enterPictureInPictureModeIfPossible);
+    }
+
+    /*
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void enterPictureInPictureModeIfPossible() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Rational aspectRatio = new Rational(9, 16);
+            PictureInPictureParams.Builder pipBuilder = new PictureInPictureParams.Builder();
+            pipBuilder.setAspectRatio(aspectRatio);
+            enterPictureInPictureMode(pipBuilder.build());
         }
     }
+
+    @Override
+    public void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        enterPictureInPictureModeIfPossible();
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+        if (isInPictureInPictureMode) {
+            // Verstecke unnötige UI-Komponenten
+        } else {
+            // Zeige UI-Komponenten wieder an
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null && intent.getAction() != null) {
+            switch (intent.getAction()) {
+                case "ACTION_PLAY":
+                    // Handle play action
+                    break;
+                case "ACTION_PAUSE":
+                    // Handle pause action
+                    break;
+            }
+        }
+    }
+     */
+
     /**
      * This method is responsible for toggling between two function modes, namely "Deg" (Degrees)
      * and "Rad" (Radians). It retrieves the current function mode from the application's stored data
@@ -556,7 +643,9 @@ public class MainActivity extends AppCompatActivity {
             }
 
             try {
-                setResultText(CalculatorEngine.calculate(getCalculateText()));
+                if(!getCalculateText().isEmpty()) {
+                    setResultText(CalculatorEngine.calculate(getCalculateText()));
+                }
                 function_mode_text.setText(dataManager.getJSONSettingsData("functionMode", getApplicationContext()).getString("value"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -2460,7 +2549,7 @@ public class MainActivity extends AppCompatActivity {
         TextView settingsButton = findViewById(R.id.settings_button);
         TextView convertButton = findViewById(R.id.convert_button);
         TextView scienceButton = findViewById(R.id.scientificButton);
-        //TextView helpButton = findViewById(R.id.help_button);
+        TextView floatingButton = findViewById(R.id.picture_in_picture);
         Button shiftButton = findViewById(R.id.shift);
 
         // Retrieving theme setting
@@ -2492,9 +2581,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_light));
                             }
-                            //if (helpButton != null) {
-                            //    helpButton.setForeground(getDrawable(R.drawable.help_light));
-                            //}
+                            if (floatingButton != null) {
+                                floatingButton.setForeground(getDrawable(R.drawable.bildimbild_light));
+                            }
 
                             if (trueDarkMode.equals("true")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.darkmode_white);
@@ -2514,9 +2603,9 @@ public class MainActivity extends AppCompatActivity {
                                 if (shiftButton != null) {
                                     shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_true_darkmode));
                                 }
-                                //if (helpButton != null) {
-                                //    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
-                                //}
+                                if (floatingButton != null) {
+                                    floatingButton.setForeground(getDrawable(R.drawable.bildimbild_true_darkmode));
+                                }
                             } else if (trueDarkMode.equals("false")) {
                                 newColorBTNForegroundAccent = ContextCompat.getColor(context, R.color.white);
                                 newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
@@ -2540,9 +2629,9 @@ public class MainActivity extends AppCompatActivity {
                             if (shiftButton != null) {
                                 shiftButton.setForeground(getDrawable(R.drawable.compare_arrows));
                             }
-                            //if (helpButton != null) {
-                            //    helpButton.setForeground(getDrawable(R.drawable.help));
-                            //}
+                            if (floatingButton != null) {
+                                floatingButton.setForeground(getDrawable(R.drawable.bildimbild));
+                            }
                             break;
                     }
                     break;
@@ -2564,9 +2653,9 @@ public class MainActivity extends AppCompatActivity {
                     if (shiftButton != null) {
                         shiftButton.setForeground(getDrawable(R.drawable.compare_arrows));
                     }
-                    //if (helpButton != null) {
-                    //    helpButton.setForeground(getDrawable(R.drawable.help));
-                    //}
+                    if (floatingButton != null) {
+                        floatingButton.setForeground(getDrawable(R.drawable.bildimbild));
+                    }
                     break;
                 case "Dunkelmodus":
                     dataManager = new DataManager(this);
@@ -2585,9 +2674,9 @@ public class MainActivity extends AppCompatActivity {
                     if (shiftButton != null) {
                         shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_light));
                     }
-                    //if (helpButton != null) {
-                    //    helpButton.setForeground(getDrawable(R.drawable.help_light));
-                    //}
+                    if (floatingButton != null) {
+                        floatingButton.setForeground(getDrawable(R.drawable.bildimbild_light));
+                    }
 
                     if (trueDarkMode.equals("false")) {
                         newColorBTNBackgroundAccent = ContextCompat.getColor(context, R.color.black);
@@ -2611,9 +2700,9 @@ public class MainActivity extends AppCompatActivity {
                         if (shiftButton != null) {
                             shiftButton.setForeground(getDrawable(R.drawable.compare_arrows_true_darkmode));
                         }
-                        //if (helpButton != null) {
-                        //    helpButton.setForeground(getDrawable(R.drawable.help_true_darkmode));
-                        //}
+                        if (floatingButton != null) {
+                            floatingButton.setForeground(getDrawable(R.drawable.bildimbild_true_darkmode));
+                        }
                     }
                     break;
             }
@@ -3478,9 +3567,15 @@ public class MainActivity extends AppCompatActivity {
         adjustTextSize();
 
         if(!isNumber(getCalculateText()) &&
-                (!getCalculateText().replace("=", "").replace(" ", "").equals("π") ||
-                    !getCalculateText().replace("=", "").replace(" ", "").equals("e"))
-            && !isInvalidInput(getResultText())) {
+            (!getCalculateText().replace("=", "").replace(" ", "").equals("π") ||
+                !getCalculateText().replace("=", "").replace(" ", "").equals("e"))
+            && !isInvalidInput(getResultText())
+            && !removeNumbers(getCalculateText()
+                .replace(" ", "")
+                .replace("=", "")
+                .replace(".", "")
+                .replace(",", "")
+                ).isEmpty()) {
 
             addToHistory(fixExpression(balanceParentheses(getCalculateText())));
 
@@ -3516,6 +3611,21 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String removeNumbers(String calculation) {
+        if(calculation.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder formattedCalculation = new StringBuilder();
+        for(int x = 0; x < calculation.length(); x++) {
+            if(!Character.isDigit(calculation.charAt(x))) {
+                formattedCalculation.append(calculation.charAt(x));
+            }
+        }
+
+        return formattedCalculation.toString();
     }
 
     private String replacePiWithSymbolInString(String text) {

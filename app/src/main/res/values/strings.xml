@@ -76,24 +76,26 @@
     <string name="appVersion" translatable="false">RechenMax 1.6.7</string>
 
     <!-- !!! Übersetzung nicht vergessen !!! -->
-    <string name="releaseDate">Veröffentlichungsdatum: 18.05.2024 – 14Uhr</string>
-    <string name="releaseNotesText">
-        Neue Funktionen:\n
-            - Wenn 10 Berechungen durchgeführt wurden und die Benachrichtigungen nicht aktiviert sind wird gefragt ob welche gesendet werden dürfen (nur mit Android 13 oder höher)\n
+    <string name="releaseDate">Veröffentlichungsdatum: 18.05.2024 – 18Uhr</string>
+    <string name="releaseNotesText">"
+        Neue Funktionen: \n
+            - Wenn 10 Berechungen durchgeführt wurden und die Benachrichtigungen nicht aktiviert sind wird gefragt ob welche gesendet werden dürfen (ab Android 13 oder höher) \n
 
-        \nÄnderungen:\n
-            - Die Schaltflächen wurden im Layout zentriert\n
-            - Die Textgröße der Schaltflächen im Layout wurde angepasst\n
-            - Die Scrollleisten im Berechnungsbereich und im Ergebnisbereich wurden versteckt\n
+        \nÄnderungen: \n
+            - Die Schaltflächen wurden im Layout zentriert \n
+            - Die Textgröße der Schaltflächen im Layout wurde angepasst \n
+            - Die Scrollleisten im Berechnungsbereich und im Ergebnisbereich wurden versteckt \n
+            - Die Anzahl der Zeichen im Ergebnisbereich passt sich dynamisch der Bildschirmbreite an, anstatt auf einen festen Wert beschränkt zu sein \n
 
         \nBehobene Fehler: \n
-            - Die App hat keine Benachrichtigungen gesendet (Absturz)\n
+            - Die App hat keine Benachrichtigungen gesendet (Absturz) \n
+            - Leere Berechnungen wurden zu dem Verlauf hinzugefügt \n
 
         \nSystemanforderungen: \n
-            - Minimale Android-Version: 10\n
-            - Empfohlene Android-Version: 13 oder höher\n
-            - Maximale Android-Version: 14\n
-    </string>
+            - Minimale Android-Version: 10 \n
+            - Empfohlene Android-Version: 13 oder höher \n
+            - Maximale Android-Version: 14 \n
+    "</string>
 
     <string name="wantToActivateNotifications">Möchtest du Benachrichtigungen erhalten? (Diese kannst du später auch in den Einstellungen wieder deaktivieren)</string>
     <string name="yesActivateNotifications">Ja</string>

@@ -18,21 +18,23 @@
 
     <string name="releaseDate">Date de sortie : 05/18/2024 – 14h00</string>
     <string name="releaseNotesText">"
-        Nouvelles fonctionnalités:\n
-            - Les résultats avec un nombre excessif de décimales sont réduits à une longueur totale de 15 caractères\n
-            - L'historique peut maintenant être affiché de manière minimalist ou avec des détails étendus\n
+        Nouvelles fonctionnalités: \n
+            - Si 10 calculs ont été effectués et que les notifications ne sont pas activées, une autorisation sera demandée pour les envoyer (à partir d'Android 13 ou supérieur) \n
 
-        Erreurs corrigées: \n
-            - Les performances du moteur de calcul ont été améliorées\n
-            - Les calculs impliquant une exponentielle en notation scientifique ont été effectués uniquement en tant qu'entiers\n
-            - Le champ de texte "Votre historique est vide." n'était pas centré verticalement\n
-            - Les notes de mise à jour n'étaient pas affichées au démarrage d'une nouvelle version\n
-            - Pour économiser de l'espace, l'espace entre les opérateurs individuels dans l'historique a été supprimé\n
+        \nModifications: \n
+            - Les boutons ont été centrés dans la mise en page \n
+            - La taille du texte des boutons dans la mise en page a été ajustée \n
+            - Les barres de défilement dans la zone de calcul et dans la zone de résultat ont été masquées \n
+            - Le nombre de caractères dans la zone de résultat s'ajuste dynamiquement à la largeur de l'écran au lieu d'être limité à une valeur fixe \n
 
-        Exigences système: \n
-            - Version minimale d'Android : 10\n
-            - Version d'Android recommandée : 13 ou supérieure\n
-            - Version maximale d'Android : 14\n
+        \nBugs corrigés: \n
+            - L'application n'a pas envoyé de notifications (crash) \n
+            - Des calculs vides ont été ajoutés à l'historique \n
+
+        \nConfiguration requise du système: \n
+            - Version minimale d'Android : 10 \n
+            - Version recommandée d'Android : 13 ou supérieure \n
+            - Version maximale d'Android : 14 \n
     "</string>
 
     <string name="wantToActivateNotifications">Voulez-vous recevoir des notifications ? (Vous pouvez également les désactiver ultérieurement dans les paramètres)</string>

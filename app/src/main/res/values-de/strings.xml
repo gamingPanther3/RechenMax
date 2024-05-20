@@ -20,23 +20,25 @@
     <string name="showReleaseNotes">Release-Notes anzeigen</string>
 
     <string name="releaseDate">Veröffentlichungsdatum: 18.05.2024 – 14Uhr</string>
-    <string name="releaseNotesText">
-        Neue Funktionen:\n
-            - Ergebnisse mit einer übermäßigen Anzahl von Nachkommastellen werden auf eine Gesamtlänge von 15 Zeichen reduziert\n
-            - Der Verlauf kann nun entweder minimalistisch oder mit erweiterten Details angezeigt werden\n
+    <string name="releaseNotesText">"
+        Neue Funktionen: \n
+            - Wenn 10 Berechungen durchgeführt wurden und die Benachrichtigungen nicht aktiviert sind wird gefragt ob welche gesendet werden dürfen (ab Android 13 oder höher) \n
+
+        \nÄnderungen: \n
+            - Die Schaltflächen wurden im Layout zentriert \n
+            - Die Textgröße der Schaltflächen im Layout wurde angepasst \n
+            - Die Scrollleisten im Berechnungsbereich und im Ergebnisbereich wurden versteckt \n
+            - Die Anzahl der Zeichen im Ergebnisbereich passt sich dynamisch der Bildschirmbreite an, anstatt auf einen festen Wert beschränkt zu sein \n
 
         \nBehobene Fehler: \n
-            - Performance der Rechen-Engine wurde verbessert\n
-            - Berechnungen, die eine Gleitkommazahl als Exponenten in Potenzberechnungen hatten, wurden nur als Ganzzahl berechnet\n
-            - Das Textfeld "Dein Verlauf ist leer." war nicht vertikal zentriert\n
-            - Die PatchNotes wurden beim start einer neueren Version nicht angezeigt\n
-            - Um Platz zu sparen, wurde der Abstand zwischen den einzelnen Operatoren im Verlauf entfernt\n
+            - Die App hat keine Benachrichtigungen gesendet (Absturz) \n
+            - Leere Berechnungen wurden zu dem Verlauf hinzugefügt \n
 
         \nSystemanforderungen: \n
-            - Minimale Android-Version: 10\n
-            - Empfohlene Android-Version: 13 oder höher\n
-            - Maximale Android-Version: 14\n
-    </string>
+            - Minimale Android-Version: 10 \n
+            - Empfohlene Android-Version: 13 oder höher \n
+            - Maximale Android-Version: 14 \n
+    "</string>
 
     <string name="wantToActivateNotifications">Möchtest du Benachrichtigungen erhalten? (Diese kannst du später auch in den Einstellungen wieder deaktivieren)</string>
     <string name="yesActivateNotifications">Ja</string>

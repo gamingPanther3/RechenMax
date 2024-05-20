@@ -18,23 +18,25 @@
 
 
     <string name="releaseDate">Release Date: 05/18/2024 – 02:00 PM</string>
-    <string name="releaseNotesText">
-        New features:\n
-            - Results with an excessive number of decimal places are now reduced to a total length of 15 characters\n
-            - The history can now be displayed either minimally or with extended details\n
+    <string name="releaseNotesText">"
+        New features: \n
+            - If 10 calculations have been performed and notifications are not enabled, permission will be asked to send them (from Android 13 or higher) \n
 
-        \nFixed issues: \n
-            - Performance of the calculation engine has been improved\n
-            - Calculations involving a floating-point number as an exponent in power calculations were only computed as integers\n
-            - The text field "Your history is empty." was not vertically centered\n
-            - The patch notes were not displayed when starting a newer version\n
-            - To save space, the spacing between individual operators in the history has been removed\n
+        \nChanges: \n
+            - Buttons have been centered in the layout \n
+            - Button text size in the layout has been adjusted \n
+            - Scroll bars in the calculation area and result area have been hidden \n
+            - The number of characters in the result area dynamically adjusts to the screen width instead of being limited to a fixed value \n
+
+        \nFixed bugs: \n
+            - The app did not send notifications (crash) \n
+            - Empty calculations were added to the history \n
 
         \nSystem requirements: \n
-            - Minimum Android version: 10\n
-            - Recommended Android version: 13 or higher\n
-            - Maximum Android version: 14\n
-    </string>
+            - Minimum Android version: 10 \n
+            - Recommended Android version: 13 or higher \n
+            - Maximum Android version: 14 \n
+    "</string>
 
     <string name="wantToActivateNotifications">Do you want to receive notifications? (You can also deactivate them later in the settings)</string>
     <string name="yesActivateNotifications">Yes</string>

@@ -18,21 +18,23 @@
 
     <string name="releaseDate">Fecha de lanzamiento: 05/18/2024 – 14:00</string>
     <string name="releaseNotesText">"
-        Nuevas características:\n
-            - Los resultados con un exceso de decimales se reducen a una longitud total de 15 caracteres\n
-            - Ahora se puede mostrar el historial de forma minimalista o con detalles ampliados\n
+        Nuevas funciones: \n
+            - Si se han realizado 10 cálculos y las notificaciones no están habilitadas, se solicitará permiso para enviarlas (a partir de Android 13 o superior) \n
+
+        \nCambios: \n
+            - Los botones se han centrado en el diseño \n
+            - El tamaño del texto de los botones en el diseño se ha ajustado \n
+            - Las barras de desplazamiento en el área de cálculo y en el área de resultado se han ocultado \n
+            - El número de caracteres en el área de resultado se ajusta dinámicamente al ancho de la pantalla en lugar de estar limitado a un valor fijo \n
 
         \nErrores corregidos: \n
-            - Se mejoró el rendimiento del motor de cálculo\n
-            - Los cálculos que tenían un número decimal como exponente en operaciones de potencia solo se calculaban como números enteros\n
-            - El campo de texto "Tu historial está vacío." no estaba centrado verticalmente\n
-            - Las notas de parche no se mostraban al iniciar una versión más nueva\n
-            - Para ahorrar espacio, se eliminó la distancia entre los operadores individuales en el historial\n
+            - La aplicación no envió notificaciones (crash) \n
+            - Se agregaron cálculos vacíos al historial \n
 
         \nRequisitos del sistema: \n
-            - Versión mínima de Android: 10\n
-            - Versión de Android recomendada: 13 o superior\n
-            - Versión máxima de Android: 14\n
+            - Versión mínima de Android: 10 \n
+            - Versión recomendada de Android: 13 o superior \n
+            - Versión máxima de Android: 14 \n
     "</string>
 
     <string name="wantToActivateNotifications">¿Quieres recibir notificaciones? (También puedes desactivarlas más tarde en la configuración)</string>

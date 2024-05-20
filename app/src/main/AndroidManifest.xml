@@ -44,6 +44,13 @@
         </receiver>
 
         <activity
+            android:name=".FloatingCalculator"
+            android:configChanges="uiMode"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"></activity>
+
+        <activity
             android:name=".ReportActivity"
             android:configChanges="uiMode"
             android:exported="false"
@@ -76,8 +83,10 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="uiMode"
             android:exported="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:supportsPictureInPicture="true"
+            android:resizeableActivity="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -17,6 +17,7 @@ package com.mlprograms.rechenmax;
  */
 
 import android.annotation.SuppressLint;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import static com.mlprograms.rechenmax.NumberHelper.PI;
@@ -57,14 +58,14 @@ public class CalculatorEngine {
         mainActivity = activity;
     }
 
-    // Declaration of a constant of type MathContext with a precision of 35. This is used for division to ensure a precision of 10 decimal places.
-    private static final MathContext MC = new MathContext(45, RoundingMode.HALF_UP);
-
+    private static MathContext MC;
+    public static int RESULT_LENGTH;
 
     // Declaration of a constant for the root operation.
     public static final String  ROOT            = "√";
     public static final String  THIRD_ROOT      = "³√";
-    public static final int     RESULT_LENGTH   = 14;
+
+    private static final DataManager dataManager = new DataManager();
 
     /**
      * This method calculates the result of a mathematical expression. The expression is passed as a string parameter.
@@ -87,6 +88,9 @@ public class CalculatorEngine {
      */
     public static String calculate(String calc) {
         try {
+            RESULT_LENGTH = Integer.parseInt(dataManager.getJSONSettingsData("maxNumbersWithoutScrolling", mainActivity.getApplicationContext()).getString("value"));
+            MC = new MathContext(RESULT_LENGTH, RoundingMode.HALF_UP);
+
             String trim;
             if (String.valueOf(calc.charAt(0)).equals("+")) {
                 calc = calc.substring(1);
@@ -112,7 +116,7 @@ public class CalculatorEngine {
             trim = commonReplacements.replace(".", "").replace(",", ".").trim();
             trim = balanceParentheses(trim);
 
-            //Log.e("TRIM", "Trim:" + trim);
+            Log.e("TRIM", "Trim:" + trim);
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
@@ -162,7 +166,7 @@ public class CalculatorEngine {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            //Log.e("Exception", e.toString());
+            Log.e("Exception", e.toString());
             return mainActivity.getString(R.string.errorMessage2);
         }
     }
@@ -504,7 +508,7 @@ public class CalculatorEngine {
         }
 
         // Return the final result as a string
-        //Log.i("convertScientificToDecimal", "sb:" + sb);
+        Log.i("convertScientificToDecimal", "sb:" + sb);
         return sb.toString();
     }
 
@@ -528,7 +532,7 @@ public class CalculatorEngine {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        //Log.i("tokenize","Input Expression: " + expression);
+        Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -618,7 +622,7 @@ public class CalculatorEngine {
         }
 
         // Debugging: Print tokens
-        //Log.i("tokenize","Tokens: " + tokens);
+        Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -633,7 +637,7 @@ public class CalculatorEngine {
     public static BigDecimal evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
         final List<String> postfixTokens = infixToPostfix(tokens);
-        //Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
+        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -675,14 +679,17 @@ public class CalculatorEngine {
                 if (operand2.compareTo(BigDecimal.ZERO) < 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage4));
                 } else {
-                    return BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
+                    return squareRoot(operand2);
                 }
             case THIRD_ROOT:
-                return BigDecimal.valueOf(Math.pow(operand2.doubleValue(), 1.0 / 3.0));
+                return thirdRoot(operand2);
             case "!":
                 return factorial(operand1);
             case "^":
-                return BigDecimal.valueOf(Math.pow(operand1.doubleValue(), operand2.doubleValue()));
+                BigDecimal operand1BigDecimal = new BigDecimal(String.valueOf(operand1), MathContext.DECIMAL128);
+                BigDecimal operand2BigDecimal = new BigDecimal(String.valueOf(operand2), MathContext.DECIMAL128);
+
+                return BigDecimal.valueOf(Math.pow(operand1BigDecimal.doubleValue(), operand2BigDecimal.doubleValue()));
             case "log(":
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "log₂(":
@@ -705,10 +712,14 @@ public class CalculatorEngine {
                 return BigDecimal.valueOf(Math.log(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
             case "sin(":
                 if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.sin(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    BigDecimal sinValue = new BigDecimal(Math.sin(operand2.doubleValue()), MathContext.DECIMAL128);
+                    return sinValue.setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.sin(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operand2.doubleValue());
+                    BigDecimal sinValue = new BigDecimal(Math.sin(radians), MathContext.DECIMAL128);
+                    return sinValue.setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
+
             case "sinh(":
                 if (mode.equals("Rad")) {
                     return BigDecimal.valueOf(Math.sinh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
@@ -833,7 +844,7 @@ public class CalculatorEngine {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            //Log.i("evaluatePostfix","Token: " + token);
+            Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -846,17 +857,17 @@ public class CalculatorEngine {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
             }
 
             // Debugging: Print current stack
-            //Log.i("evaluatePostfix","Stack: " + stack);
+            Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            //Log.i("evaluatePostfix","Stacksize != 1");
+            Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
         }
 
@@ -895,11 +906,11 @@ public class CalculatorEngine {
                             // If the operand is negative, throw an exception or handle it as needed
                             throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage4));
                         } else {
-                            result = BigDecimal.valueOf(Math.sqrt(operand2.doubleValue()));
+                            result = squareRoot(operand2);
                         }
                         break;
                     case THIRD_ROOT:
-                        result = BigDecimal.valueOf(Math.pow(operand2.doubleValue(), 1.0 / 3.0));
+                        result = thirdRoot(operand2);
                         break;
                     default:
                         // Handle other operators if needed
@@ -908,6 +919,51 @@ public class CalculatorEngine {
                 stack.add(result);
             }
         }
+    }
+
+    /**
+     * Custom method for calculating the square root with higher precision.
+     *
+     * @param x The BigDecimal value for which the square root is to be calculated.
+     * @return The square root of the input value with higher precision.
+     */
+    public static BigDecimal squareRoot(BigDecimal x) {
+        // Initial guess for the square root
+        BigDecimal initialGuess = x.divide(BigDecimal.valueOf(2), MathContext.DECIMAL128);
+        BigDecimal previousGuess = BigDecimal.ZERO;
+        BigDecimal currentGuess = new BigDecimal(initialGuess.toString());
+
+        // Iterative improvement using Newton's method
+        while (!previousGuess.equals(currentGuess)) {
+            previousGuess = new BigDecimal(currentGuess.toString());
+            BigDecimal f = currentGuess.pow(2).subtract(x, MathContext.DECIMAL128);
+            BigDecimal fPrime = BigDecimal.valueOf(2).multiply(currentGuess, MathContext.DECIMAL128);
+            currentGuess = currentGuess.subtract(f.divide(fPrime, MathContext.DECIMAL128), MathContext.DECIMAL128);
+        }
+
+        return currentGuess;
+    }
+
+
+    /**
+     * Custom method for calculating the cube root with higher precision.
+     *
+     * @param x The BigDecimal value for which the cube root is to be calculated.
+     * @return The cube root of the input value with higher precision.
+     */
+    public static BigDecimal thirdRoot(BigDecimal x) {
+        BigDecimal initialApproximation  = x.divide(BigDecimal.valueOf(3), MathContext.DECIMAL128);
+        BigDecimal previousApproximation  = BigDecimal.ZERO;
+        BigDecimal currentApproximation  = new BigDecimal(initialApproximation .toString());
+
+        while (!previousApproximation .equals(currentApproximation )) {
+            previousApproximation  = new BigDecimal(currentApproximation .toString());
+            BigDecimal f = currentApproximation .pow(3).subtract(x, MathContext.DECIMAL128);
+            BigDecimal fPrime = BigDecimal.valueOf(3).multiply(currentApproximation .pow(2), MathContext.DECIMAL128);
+            currentApproximation  = currentApproximation .subtract(f.divide(fPrime, MathContext.DECIMAL128), MathContext.DECIMAL128);
+        }
+
+        return currentApproximation ;
     }
 
     /**
@@ -935,7 +991,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log10(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log10 = BigDecimal.valueOf(Math.log(10));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log10, MC));
                 break;
             }
             case "log₂(": {
@@ -943,7 +1001,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(2)).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log2 = BigDecimal.valueOf(Math.log(2));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log2, MC));
                 break;
             }
             case "log₃(": {
@@ -951,7 +1011,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(3)).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log3 = BigDecimal.valueOf(Math.log(3));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log3, MC));
                 break;
             }
             case "log₄(": {
@@ -959,7 +1021,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(4)).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log4 = BigDecimal.valueOf(Math.log(4));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log4, MC));
                 break;
             }
             case "log₅(": {
@@ -967,7 +1031,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(5)).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log5 = BigDecimal.valueOf(Math.log(5));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log5, MC));
                 break;
             }
             case "log₆(": {
@@ -975,7 +1041,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(6)).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log6 = BigDecimal.valueOf(Math.log(6));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log6, MC));
                 break;
             }
             case "log₇(": {
@@ -983,7 +1051,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(7)).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log7 = BigDecimal.valueOf(Math.log(7));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log7, MC));
                 break;
             }
             case "log₈(": {
@@ -991,7 +1061,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(8)).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log8 = BigDecimal.valueOf(Math.log(8));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log8, MC));
                 break;
             }
             case "log₉(": {
@@ -999,7 +1071,9 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue()) / Math.log(9)).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal log9 = BigDecimal.valueOf(Math.log(9));
+                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+                stack.add(logValue.divide(log9, MC));
                 break;
             }
             case "ln(": {
@@ -1007,41 +1081,57 @@ public class CalculatorEngine {
                 if (operand.compareTo(BigDecimal.ZERO) <= 0) {
                     throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
                 }
-                stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN));
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
+                BigDecimal result;
+
+                result = new BigDecimal(Math.log(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                        .setScale(MC.getPrecision(), RoundingMode.DOWN);
+                stack.add(result);
+                //stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN));
                 break;
             }
             case "sin(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.sin(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.sin(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.sin(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.sin(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
+
             }
             case "sinh(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.sinh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.sinh(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.sinh(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.sinh(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
             }
             case "sin⁻¹(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
-                if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
-                    throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
-                }
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.asin(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.asin(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.toDegrees(Math.asin(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.asin(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -1052,36 +1142,45 @@ public class CalculatorEngine {
                 break;
             case "cos(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.cos(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.cos(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.cos(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.cos(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
             }
             case "cosh(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.cosh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.cosh(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.cosh(Math.toRadians(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.cosh(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
             }
             case "cos⁻¹(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
-                if (operand.doubleValue() < -1 || operand.doubleValue() > 1) {
-                    throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
-                }
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.acos(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.acos(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.toDegrees(Math.acos(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.acos(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
@@ -1092,47 +1191,60 @@ public class CalculatorEngine {
                 break;
             case "tan(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.tan(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.tan(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
                     double degrees = operand.doubleValue();
                     if (isMultipleOf90(degrees)) {
                         // Check if the tangent of multiples of 90 degrees is being calculated
                         throw new ArithmeticException(mainActivity.getString(R.string.errorMessage8));
                     }
-                    result = BigDecimal.valueOf(Math.tan(Math.toRadians(degrees))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.tan(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
             }
             case "tanh(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.tanh(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.tanh(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    double degrees = operand.doubleValue();
-                    result = BigDecimal.valueOf(Math.tanh(Math.toRadians(degrees))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.tanh(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
             }
             case "tan⁻¹(": {
                 operand = stack.remove(stack.size() - 1);
+                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
                 BigDecimal result;
                 if (mode.equals("Rad")) {
-                    result = BigDecimal.valueOf(Math.atan(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    result = new BigDecimal(Math.atan(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 } else { // if mode equals 'Deg'
-                    result = BigDecimal.valueOf(Math.toDegrees(Math.atan(operand.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
+                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
+                    result = new BigDecimal(Math.atan(radians), MathContext.DECIMAL128)
+                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
                 }
                 stack.add(result);
                 break;
             }
-            case "tanh⁻¹(":
+            case "tanh⁻¹(": {
                 operand = stack.remove(stack.size() - 1);
                 stack.add(atanh(operand));
                 break;
+            }
         }
     }
 
@@ -1160,8 +1272,8 @@ public class CalculatorEngine {
         for (int i = 0; i < infixTokens.size(); i++) {
             final String token = infixTokens.get(i);
             // Debugging: Print current token and stack
-            //Log.i("infixToPostfix", "Current Token: " + token);
-            //Log.i("infixToPostfix", "Stack: " + stack);
+            Log.i("infixToPostfix", "Current Token: " + token);
+            Log.i("infixToPostfix", "Stack: " + stack);
 
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -1192,8 +1304,8 @@ public class CalculatorEngine {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            //Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
-            //Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
+            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
         while (!stack.isEmpty()) {
@@ -1201,7 +1313,7 @@ public class CalculatorEngine {
         }
 
         // Debugging: Print final postfixTokens
-        //Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
+        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
         return postfixTokens;
     }
