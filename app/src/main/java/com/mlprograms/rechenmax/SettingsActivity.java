@@ -189,7 +189,7 @@ public class SettingsActivity extends AppCompatActivity {
             customSpinner1.setAdapter(customAdapter1);
 
             try {
-                String mode = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
+                final String mode = dataManager.getJSONSettingsData("selectedSpinnerSetting", getMainActivityContext()).getString("value");
 
                 if(mode != null && !mode.isEmpty()) {
                     if (mode.equals("System")) {

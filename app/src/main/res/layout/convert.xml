@@ -72,7 +72,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:cursorVisible="true"
-                android:digits="0123456789,-"
+                android:digits="0123456789,"
                 android:inputType="numberDecimal"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:hint="@string/converterPlaceHolder"

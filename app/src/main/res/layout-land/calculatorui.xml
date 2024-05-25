@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/calculatorUI">
+
+    <GridLayout
+        android:id="@+id/calculatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="1"
+        android:rowCount="9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:columnCount="8"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/scientificButton"
+                android:visibility="gone"
+                android:layout_width="38dp"
+                android:layout_height="42dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="5dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/science_light"
+                android:tag="history"
+                android:tooltipText="@string/scientificMode"
+                tools:ignore="RtlHardcoded" />
+
+            <Button
+                android:id="@+id/shift"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginStart="5dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/compare_arrows_light"
+                android:tag="history"
+                android:tooltipText="@string/changeMode"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/shiftMode_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="5sp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="10dp"
+                android:text="@string/shiftMode"
+                android:textSize="@dimen/calcButtonTextSize"
+                android:tooltipText="@string/mode"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/functionMode_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:text="@string/deg"
+                android:textSize="20sp"
+                android:tooltipText="@string/degreeRadians" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_columnWeight="1" />
+
+            <Button
+                android:id="@+id/convert_button"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginEnd="5dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/convertbutton"
+                android:tag="history"
+                android:tooltipText="@string/convert"
+                tools:ignore="RtlHardcoded" />
+
+            <Button
+                android:id="@+id/history_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginEnd="5dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/historyicon_light"
+                android:tag="history"
+                android:tooltipText="@string/history"
+                tools:ignore="RtlHardcoded" />
+
+            <Button
+                android:id="@+id/settings_button"
+                android:layout_width="35dp"
+                android:layout_height="37dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginEnd="5dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/settings_light"
+                android:tag="new_button"
+                android:tooltipText="@string/settings"
+                tools:ignore="RtlHardcoded" />
+
+            <Button
+                android:id="@+id/picture_in_picture"
+                android:visibility="gone"
+                android:layout_width="35dp"
+                android:layout_height="42dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginEnd="5dp"
+                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:foreground="@drawable/bildimbild_light"
+                android:tag="new_button"
+                android:tooltipText="@string/settings"
+                tools:ignore="RtlHardcoded" />
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:rowCount="1">
+
+            <HorizontalScrollView
+                android:id="@+id/calculate_scrollview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fillViewport="true"
+                android:scrollbars="horizontal">
+
+                <TextView
+                    android:id="@+id/calculate_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end|top"
+                    android:paddingEnd="10dp"
+                    android:text="@string/calculate_label"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:id="@+id/result_scrollview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fillViewport="true"
+                android:scrollbars="horizontal">
+
+                <TextView
+                    android:id="@+id/result_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="top|end"
+                    android:minHeight="70dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/result_label"
+                    android:textColor="@color/black"
+                    android:textSize="45sp" />
+            </HorizontalScrollView>
+        </GridLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_rowWeight="2"
+            android:columnCount="2"
+            android:rowCount="1">
+
+            <GridLayout
+                android:layout_columnWeight="2"
+                android:columnCount="1"
+                android:rowCount="2">
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:columnCount="3"
+                    android:rowCount="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/emptyclipboard"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:autoSizePresetSizes="@array/button_text_sizes"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="MC"
+                        android:text="@string/EmptyClipboardButton"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:textSize="@dimen/calcButtonTextSize"
+                        android:tooltipText="@string/emptyClipboard" />
+
+                    <Button
+                        android:id="@+id/pastefromclipboard"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:autoSizePresetSizes="@array/button_text_sizes"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="MR"
+                        android:text="@string/PasteFromClipboardButton"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:textSize="@dimen/calcButtonTextSize"
+                        android:tooltipText="@string/pasteNumber" />
+
+                    <Button
+                        android:id="@+id/copytoclipboard"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:autoSizePresetSizes="@array/button_text_sizes"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="MS"
+                        android:text="@string/CopyToClipBoardButton"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:textSize="@dimen/calcButtonTextSize"
+                        android:tooltipText="@string/copyNumber" />
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/scientificRow3"
+                    android:layout_width="match_parent"
+                    android:columnCount="6"
+                    android:rowCount="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/clipOn"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:layout_columnWeight="1"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:tag="("
+                        android:text="@string/clipOn"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/parenthesisOn" />
+
+                    <Button
+                        android:id="@+id/clipOff"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:layout_columnWeight="1"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:tag=")"
+                        android:text="@string/clipOff"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/parenthesisOff" />
+
+                    <Button
+                        android:id="@+id/faculty"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:layout_columnWeight="1"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:tag="!x"
+                        android:text="@string/x"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/faculty" />
+
+                    <Button
+                        android:id="@+id/power"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:layout_columnWeight="1"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:tag="^"
+                        android:text="@string/power"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/exponential" />
+
+                    <Button
+                        android:id="@+id/root"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:layout_columnWeight="1"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:tag="√"
+                        android:text="@string/root"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/squareroot" />
+
+                    <Button
+                        android:id="@+id/thirdRoot"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:layout_columnWeight="1"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:tag="³√"
+                        android:text="@string/three_root"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/three_root" />
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/scientificRow21"
+                    android:layout_width="match_parent"
+                    android:columnCount="3"
+                    android:rowCount="1"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/asinus"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="sin"
+                        android:text="@string/asin"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/inverseSine" />
+
+                    <Button
+                        android:id="@+id/acosinus"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="cos"
+                        android:text="@string/acos"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/inverseCosine" />
+
+                    <Button
+                        android:id="@+id/atangens"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/atan"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/inverseTangent" />
+
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/scientificRow11"
+                    android:layout_width="match_parent"
+                    android:columnCount="5"
+                    android:rowCount="1"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/sinus"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="0.5"
+                        android:layout_columnWeight="1.3"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="sin"
+                        android:text="@string/sin"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/sine" />
+
+                    <Button
+                        android:id="@+id/cosinus"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1.4"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="cos"
+                        android:text="@string/cos"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/cosine" />
+
+                    <Button
+                        android:id="@+id/tangens"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1.3"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/tan"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/tangent" />
+
+                    <Button
+                        android:id="@+id/е"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="0.1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="eulersnumber"
+                        android:text="@string/е"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/eulersNumber" />
+
+                    <Button
+                        android:id="@+id/pi"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="0.1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="pi"
+                        android:text="@string/pi"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/piWord" />
+
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/scientificRow12"
+                    android:layout_width="match_parent"
+                    android:columnCount="3"
+                    android:rowCount="1"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/sinush"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="sin"
+                        android:text="@string/sinh"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/hyperbolicSine" />
+
+                    <Button
+                        android:id="@+id/cosinush"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="cos"
+                        android:text="@string/cosh"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/hyperbolicCosine" />
+
+                    <Button
+                        android:id="@+id/tangensh"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/tanh"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/hyperbolicTangent" />
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/scientificRow22"
+                    android:layout_width="match_parent"
+                    android:columnCount="5"
+                    android:rowCount="1"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/asinush"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="sin"
+                        android:text="@string/asinh"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/inverseHyperbolicSinefunction" />
+
+                    <Button
+                        android:id="@+id/acosinush"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="cos"
+                        android:text="@string/acosh"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/inverseHyperbolicCosinefunction" />
+
+                    <Button
+                        android:id="@+id/atangensh"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/atanh"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/inverseHyperbolicTangentfunction" />
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/scientificRow13"
+                    android:layout_width="match_parent"
+                    android:columnCount="4"
+                    android:rowCount="1"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/log"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="sin"
+                        android:text="@string/log"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/generalLogarithmFunction" />
+
+                    <Button
+                        android:id="@+id/log2x"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="cos"
+                        android:text="@string/log2x"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/specialLogarithmFunction" />
+
+                    <Button
+                        android:id="@+id/logxx"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/logxx"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/manualLogarithmFunction" />
+
+                    <Button
+                        android:id="@+id/ln"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/ln"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/naturalLogarithmFunction" />
+                </GridLayout>
+
+                <GridLayout
+                    android:id="@+id/scientificRow23"
+                    android:layout_width="match_parent"
+                    android:columnCount="5"
+                    android:rowCount="1"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/e"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="e"
+                        android:text="@string/e"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/manuallyNotation" />
+
+                    <Button
+                        android:id="@+id/half"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/half"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/halfButtonText" />
+
+                    <Button
+                        android:id="@+id/third"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/third"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/thirdButtonText" />
+
+                    <Button
+                        android:id="@+id/quarter"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_gravity="fill"
+                        android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                        android:autoSizeStepGranularity="1sp"
+                        android:autoSizeTextType="uniform"
+                        android:background="@color/colorBTNBackgroundAccent"
+                        android:tag="tan"
+                        android:text="@string/quarter"
+                        android:textColor="@color/colorBTNForegroundAccent"
+                        android:tooltipText="@string/quarterButtonText" />
+                </GridLayout>
+            </GridLayout>
+
+            <GridLayout
+                android:id="@+id/standardButtonsLayout"
+                android:layout_columnWeight="2"
+                android:columnCount="4"
+                android:rowCount="5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/clearresult"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="CE"
+                    android:text="@string/ClearResultLabel"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/clearResult" />
+
+                <Button
+                    android:id="@+id/clearall"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="C"
+                    android:text="@string/ClearAllButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/clearAll" />
+
+                <Button
+                    android:id="@+id/backspace"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="⌫"
+                    android:text="@string/BackspaceButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/backspace" />
+
+                <Button
+                    android:id="@+id/divide"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="÷"
+                    android:text="@string/DivideButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/divide" />
+
+                <Button
+                    android:id="@+id/seven"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="7"
+                    android:text="@string/SevenButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/eight"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="8"
+                    android:text="@string/EightButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/nine"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="9"
+                    android:text="@string/NineButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/multiply"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="×"
+                    android:text="@string/MultiplyButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/multiply" />
+
+                <Button
+                    android:id="@+id/four"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="4"
+                    android:text="@string/FourButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/five"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="5"
+                    android:text="@string/FiveButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/six"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="6"
+                    android:text="@string/SixButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/subtract"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="-"
+                    android:text="@string/SubtractButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/subtract" />
+
+                <Button
+                    android:id="@+id/one"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="1"
+                    android:text="@string/OneButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/two"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="2"
+                    android:text="@string/TwoButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/three"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="3"
+                    android:text="@string/ThreeButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/add"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="+"
+                    android:text="@string/AddButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/add" />
+
+                <Button
+                    android:id="@+id/negative"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="+-"
+                    android:text="@string/NegativButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/negate" />
+
+
+                <Button
+                    android:id="@+id/zero"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="0"
+                    android:text="@string/ZeroButton"
+                    android:textColor="@color/colorBTNForegroundAccent" />
+
+                <Button
+                    android:id="@+id/comma"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag=","
+                    android:text="@string/commaButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/comma"
+                    tools:ignore="TooManyViews" />
+
+                <Button
+                    android:id="@+id/calculate"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:autoSizePresetSizes="@array/button_text_sizes_science"
+                    android:autoSizeStepGranularity="1sp"
+                    android:autoSizeTextType="uniform"
+                    android:tag="="
+                    android:text="@string/CalculateButton"
+                    android:textColor="@color/colorBTNForegroundAccent"
+                    android:tooltipText="@string/calculate" />
+            </GridLayout>
+
+        </GridLayout>
+
+        <FrameLayout
+            android:id="@+id/postsFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

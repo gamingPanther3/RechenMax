@@ -382,6 +382,7 @@ public class DataManager {
             initializeSetting("settingReleaseNotesSwitch", "true", applicationContext);
             initializeSetting("removeValue", "false", applicationContext);
             initializeSetting("settingsTrueDarkMode", "false", applicationContext);
+            initializeSetting("tempShowScienceRow", "false", applicationContext);
             initializeSetting("showScienceRow", "false", applicationContext);
             initializeSetting("rotate_op", "false", applicationContext);
             initializeSetting("lastnumber", "0", applicationContext);
@@ -396,7 +397,7 @@ public class DataManager {
             initializeSetting("shiftRow", "1", applicationContext);
             initializeSetting("logX", "false", applicationContext);
             initializeSetting("calculationMode", "Vereinfacht", applicationContext);
-            initializeSetting("currentVersion", "1.6.7", applicationContext);
+            initializeSetting("currentVersion", "1.7.0", applicationContext);
             initializeSetting("old_version", "0", applicationContext);
             initializeSetting("returnToCalculator", "false", applicationContext);
             initializeSetting("allowNotification", "false", applicationContext);

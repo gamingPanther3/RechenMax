@@ -48,14 +48,13 @@
     <string name="historySuccesfullMessageLoad">La carga del cálculo se realizó con éxito</string>
     <string name="historyErrorMessageLoad">Se produjo un error al cargar, inténtalo de nuevo más tarde</string>
 
-    <string name="patchnotesOverviewText">La última versión de RechenMax trae emocionantes mejoras y características. El desplazamiento automático facilita la navegación en cálculos grandes, mientras que la precisión de redondeo se ha aumentado a la décima primera posición decimal para números decimales más precisos. El historial se ha optimizado para restaurar sin esfuerzo cálculos anteriores y revisar tareas pasadas. En tareas trigonométricas, están disponibles funciones avanzadas para seno, coseno y tangente en grados y radianes. Ahora también están disponibles funciones trigonométricas inversas (sin⁻¹, cos⁻¹, tan⁻¹), así como funciones hiperbólicas como senh(x), cosh(x) y tanh(x). La entrada manual de notación proporciona flexibilidad adicional al crear y calcular expresiones complejas. RechnenMax ahora admite el uso de la constante matemática PI (π) para cálculos precisos de círculos. Con el soporte flexible de grados y radianes, puedes cambiar entre las dos unidades de medida según sea necesario. El manejo de paréntesis se ha optimizado para garantizar un procesamiento sin errores de expresiones matemáticas o lógicas. El software detecta y agrega automáticamente paréntesis de cierre faltantes, simplificando aún más la entrada de expresiones. En el historial, al mantener presionada una entrada, la factura se copia automáticamente al portapapeles, mientras que al presionar brevemente, la factura se pega directamente en la calculadora. Esta versión también soluciona errores importantes, incluidos problemas de visualización y cálculo factorial, así como la optimización del formato de resultado para una visualización más precisa.</string>
     <string name="overview">Resumen</string>
     <string name="newFunctions">Nuevas funciones</string>
     <string name="fixedBugs">Errores corregidos</string>
     <string name="systemRequirement">Requisitos del sistema</string>
     <string name="dontShowThisTextAgain">No mostrar este texto nuevamente</string>
     <string name="understood">Entendido</string>
-    <string name="copyright">Creador: Max Lemberg Derechos de autor: © 2024 Max Lemberg. Todos los derechos reservados. Licencia: Este producto está bajo licencia de Apache 2.0. Versión: 1.6.7</string>
+    <string name="copyright">Creador: Max Lemberg Derechos de autor: © 2024 Max Lemberg. Todos los derechos reservados. Licencia: Este producto está bajo licencia de Apache 2.0. Versión: 1.7.0</string>
 
     <string name="calculationAreas">Áreas de cálculo</string>
     <string name="calculationArea">1: Esta área (área de cálculo) muestra el cálculo que has ingresado. También puedes copiar el contenido del área manteniendo presionada el área. 2: El resultado del cálculo realizado se muestra en esta área (área de resultados). También puedes copiar el contenido del área manteniendo presionada el área.</string>
@@ -152,65 +151,6 @@
     <string name="negateText">Si quieres que un número se vuelva negativo, presiona el botón \'±\'. Presiónalo nuevamente si quieres que el número sea positivo nuevamente. Esta función te permite cambiar fácilmente el signo y garantiza que puedas ajustar tus números rápidamente según sea necesario.</string>
 
     <string name="deg_rad">Grados/radianes</string>
-
-    <string name="patchnotes1">Desplazamiento automático</string>
-    <string name="patchnotes2">Si es necesario, el área de cálculo superior se desplaza automáticamente hacia abajo.\n</string>
-    <string name="patchnotes3">Aumento de la precisión de redondeo</string>
-    <string name="patchnotes4">La precisión de redondeo del número decimal se ha aumentado del décimo al undécimo lugar decimal.\n</string>
-    <string name="patchnotes5">Recuperar cálculos anteriores</string>
-    <string name="patchnotes6">Pulsación larga: Al presionar prolongadamente una entrada en el historial, se copia automáticamente la factura asociada al portapapeles. Pulsación corta: Una pulsación corta en una entrada del historial inserta el cálculo correspondiente directamente en la calculadora.\n</string>
-    <string name="patchnotes7">Seno, coseno y tangente</string>
-    <string name="patchnotes8">Esta nueva función ofrece una funcionalidad ampliada en el área de las funciones trigonométricas. Ahora puedes calcular fácilmente el seno, coseno y tangente en grados, así como en radianes.\n</string>
-    <string name="patchnotes9">Seno hiperbólico, coseno hiperbólico y tangente hiperbólica</string>
-    <string name="patchnotes10">Esta nueva característica proporciona una funcionalidad ampliada en el área de las funciones hiperbólicas. Ahora se puede calcular sinh(x), cosh(x) y tanh(x) para valores reales arbitrarios de x.\n</string>
-    <string name="patchnotes11">Funciones de logaritmo</string>
-    <string name="patchnotes12">Las nuevas funciones de logaritmo (log(x), log₂(x) y ln(x)) hacen posible calcular diferentes logaritmos para cualquier valor real de x:\n</string>
-    <string name="patchnotes13">Funciones trigonométricas inversas</string>
-    <string name="patchnotes14">Además, ahora también puedes usar las funciones trigonométricas inversas seno^-1 (sin⁻¹), coseno^-1 (cos⁻¹) y tangente^-1 (tan⁻¹). Ten en cuenta que estas funciones tienen ciertas limitaciones y solo están definidas para valores en el rango de definición válido.\n</string>
-    <string name="patchnotes15">Entrada de notaciones manual</string>
-    <string name="patchnotes16">Para una mayor flexibilidad, la aplicación ahora permite la entrada manual de notaciones. Solo sigue estos pasos: Ingresa cualquier número, presiona la tecla \'e±\' (para \'×10\'), selecciona más (\'+\') o menos (\'-\') para un exponente positivo o negativo. Luego ingresa tu exponente después del más o menos y el número se convertirá automáticamente.\n</string>
-    <string name="patchnotes17">El número de PI (π)</string>
-    <string name="patchnotes18">CalculationMax ahora admite el uso de PI (π), una constante matemática que representa la relación entre la circunferencia de un círculo y su diámetro.\n</string>
-    <string name="patchnotes19">Grados y radianes</string>
-    <string name="patchnotes20">Ahora se admiten grados y radianes, lo que permite cambiar flexiblemente entre las dos unidades de medida. La medida de grado se usa típicamente en cálculos geométricos y trigonométricos, mientras que la medida de radián es relevante en conceptos matemáticos más avanzados.\n</string>
-    <string name="patchnotes21">Autocompletado de paréntesis</string>
-    <string name="patchnotes22">Los paréntesis faltantes ahora se detectan automáticamente y se completan automáticamente, simplificando aún más la entrada de expresiones.\n</string>
-    <string name="patchnotes23">Mejora del manejo de paréntesis</string>
-    <string name="patchnotes24">El manejo de paréntesis se ha optimizado para garantizar un procesamiento sin errores de expresiones matemáticas o lógicas.\n</string>
-    <string name="patchnotes25">Eliminar cálculos individuales</string>
-    <string name="patchnotes26">Los cálculos individuales se pueden eliminar en el historial con un doble clic.\n</string>
-    <string name="patchnotes27">Número de Euler</string>
-    <string name="patchnotes28">Se implementó el número de Euler para ampliar los cálculos.\n</string>
-    <string name="patchnotes29">Raíz cúbica</string>
-    <string name="patchnotes30">Se integró la función de raíz cúbica \'³√\' para cálculos avanzados.\n</string>
-    <string name="patchnotes31">Fracciones</string>
-    <string name="patchnotes32">En esta versión se han agregado \'½\', \'⅓\' y \'¼\' para diversificar los cálculos y lograr resultados más precisos.\n</string>
-    <string name="patchnotes33">Insertar</string>
-    <string name="patchnotes34">Funcionalidad mejorada para insertar valores.\n</string>
-    <string name="patchnotes35">Función de ayuda</string>
-    <string name="patchnotes36">Ahora hay una función de ayuda, que se puede encontrar en la configuración, que explica todas las funciones de la calculadora.\n</string>
-    <string name="patchnotes37">Diferentes modos de cálculo</string>
-    <string name="patchnotes38">Dentro de la configuración, ahora puedes seleccionar diferentes modos de cálculo para adaptar la funcionalidad de la calculadora a tus necesidades individuales.\n</string>
-    <string name="patchnotes39">Actividad en segundo plano</string>
-    <string name="patchnotes40">La aplicación pasa automáticamente al segundo plano tan pronto como se cierra. Esto se indicará con una notificación.\n</string>
-    <string name="patchnotes41">Notificaciones</string>
-    <string name="patchnotes42">En el menú de configuración, puedes habilitar o deshabilitar las notificaciones. Las notificaciones aparecen cuando la aplicación está en segundo plano y se está utilizando una función que puede notificarte.  Además, ten en cuenta que esta función solo está disponible a partir de API 33 (Android 13).\n</string>
-    <string name="patchnotes43">Inicio de sesión</string>
-    <string name="patchnotes44">Puedes iniciar sesión en la aplicación si deseas sincronizar tus cálculos a través de dispositivos. Esto permite el acceso a tu historial en múltiples dispositivos.  Además, ten en cuenta que esta función solo está disponible a partir de API 33 (Android 13).\n</string>
-    <string name="patchnotes45">Registro de actividad</string>
-    <string name="patchnotes46">La aplicación almacena tus cálculos, incluso si cierras la aplicación. Si quieres borrar tu historial, puedes hacerlo en la configuración.\n</string>
-    <!--<string name="patchnotes47">Modo oscuro</string>-->
-    <!--<string name="patchnotes48">Se implementó el modo oscuro real. Esto significa que los negros se vuelven aún más intensos y los blancos se atenúan ligeramente.\n</string>-->
-    <string name="patchnotes49">Notas de lanzamiento</string>
-    <string name="patchnotes50">En cada nueva versión de la aplicación, se te informará sobre las novedades.\n</string>
-    <string name="patchnotes51">Cálculo del factorial</string>
-    <string name="patchnotes52">Se ha optimizado el cálculo factorial para asegurar que la calculadora no se bloquee debido a números extremadamente grandes.\n</string>
-    <string name="patchnotes53">Conversión de las notaciones</string>
-    <string name="patchnotes54">En ciertas circunstancias, las notaciones científicas no se convertían correctamente. Este problema se ha solucionado para garantizar una funcionalidad más fiable.\n</string>
-    <string name="patchnotes55">Mejora en la formateación de resultados</string>
-    <string name="patchnotes56">Se ha corregido el problema de formateo incorrecto de los resultados para garantizar una visualización más precisa y consistente.\n</string>
-    <string name="patchnotes57">\nIdiomas</string>
-    <string name="patchnotes58">La calculadora ahora está disponible en alemán, inglés, español y francés.</string>
     <string name="settingsDecimalPoints">Puntos Decimales</string>
     <string name="settingsDecimalPointsText">Con esta configuración, puedes elegir cuántos puntos decimales se mostrarán en el convertidor. Sin embargo, ten en cuenta que un mayor número de puntos decimales puede afectar el rendimiento.</string>
 
@@ -241,6 +181,13 @@
     <string name="piWord" translatable="false">PI</string>
     <string name="hyperbolicSine">Función seno hiperbólico</string>
     <string name="hyperbolicCosine">Función coseno hiperbólico</string>
+    <string name="hyperbolicTangent">Función tangente hiperbólica</string>
+    <string name="inverseHyperbolicSinefunction">Función seno hiperbólico inverso</string>
+    <string name="inverseHyperbolicCosinefunction">Función coseno hiperbólico inverso</string>
+    <string name="inverseHyperbolicTangentfunction">Función tangente hiperbólica inversa</string>
+    <string name="halfButtonText">Mitad (0,5)</string>
+    <string name="thirdButtonText">Tercio (0,333)</string>
+    <string name="quarterButtonText">Cuarto (0,25)</string>
 
     <string name="parenthesisOn">Paréntesis abierto</string>
     <string name="parenthesisOff">Paréntesis cerrado</string>

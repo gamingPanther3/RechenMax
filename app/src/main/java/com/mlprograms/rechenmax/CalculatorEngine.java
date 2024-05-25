@@ -16,36 +16,34 @@ package com.mlprograms.rechenmax;
  * limitations under the License.
  */
 
-import ch.obermuhlner.math.big.BigDecimalMath;
-import ch.obermuhlner.math.big.stream.*;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.NumberHelper.e;
 import static com.mlprograms.rechenmax.ParenthesesBalancer.balanceParentheses;
+import static ch.obermuhlner.math.big.DefaultBigDecimalMath.pow;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
-
-import org.json.JSONException;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.Stack;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import ch.obermuhlner.math.big.BigDecimalMath;
 
 /**
  * CalculatorActivity
  *
  * @author Max Lemberg
- * @version 2.1.7
- * @date 09.05.2024
+ * @version 2.4.1
+ * @date 26.05.2024
  */
 
 public class CalculatorEngine {
@@ -61,12 +59,32 @@ public class CalculatorEngine {
 
     private static MathContext MC;
     public static int RESULT_LENGTH;
+    public static String CALCULATION_MODE;
 
     // Declaration of a constant for the root operation.
     public static final String  ROOT            = "√";
     public static final String  THIRD_ROOT      = "³√";
 
     private static final DataManager dataManager = new DataManager();
+
+    /**
+     * A mapping of subscript digits to their corresponding standard numerical digits.
+     * This map is used to replace subscript characters (e.g., '₁', '₂') with their equivalent
+     * regular digits (e.g., '1', '2') in a string.
+     */
+    private static final Map<Character, Character> SUBSCRIPT_MAP = new HashMap<>();
+    static {
+        SUBSCRIPT_MAP.put('₀', '0');
+        SUBSCRIPT_MAP.put('₁', '1');
+        SUBSCRIPT_MAP.put('₂', '2');
+        SUBSCRIPT_MAP.put('₃', '3');
+        SUBSCRIPT_MAP.put('₄', '4');
+        SUBSCRIPT_MAP.put('₅', '5');
+        SUBSCRIPT_MAP.put('₆', '6');
+        SUBSCRIPT_MAP.put('₇', '7');
+        SUBSCRIPT_MAP.put('₈', '8');
+        SUBSCRIPT_MAP.put('₉', '9');
+    }
 
     /**
      * This method calculates the result of a mathematical expression. The expression is passed as a string parameter.
@@ -91,6 +109,7 @@ public class CalculatorEngine {
         try {
             RESULT_LENGTH = Integer.parseInt(dataManager.getJSONSettingsData("maxNumbersWithoutScrolling", mainActivity.getApplicationContext()).getString("value"));
             MC = new MathContext(RESULT_LENGTH, RoundingMode.HALF_UP);
+            CALCULATION_MODE = dataManager.getJSONSettingsData("functionMode", mainActivity.getApplicationContext()).getString("value");
 
             String trim;
             if (String.valueOf(calc.charAt(0)).equals("+")) {
@@ -117,16 +136,13 @@ public class CalculatorEngine {
             trim = commonReplacements.replace(".", "").replace(",", ".").trim();
             trim = balanceParentheses(trim);
 
-            Log.e("TRIM", "Trim:" + trim);
+            //Log.e("TRIM", "Trim:" + trim);
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
-                try {
-                    DataManager dataManager = new DataManager(mainActivity);
-                    dataManager.saveToJSONSettings("isNotation", true, mainActivity.getApplicationContext());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                DataManager dataManager = new DataManager(mainActivity);
+                dataManager.saveToJSONSettings("isNotation", true, mainActivity.getApplicationContext());
+
                 String result = convertScientificToDecimal(trim);
                 return removeNonNumeric(result);
             }
@@ -155,7 +171,12 @@ public class CalculatorEngine {
             }
 
             // return the result in decimal notation
-            return shortedResult(result.stripTrailingZeros().toPlainString().replace('.', ','));
+            String finalResult = result.stripTrailingZeros().toPlainString().replace('.', ',');
+            if(containsOperatorOrFunction(trim)) {
+                return shortedResult(finalResult);
+            } else {
+                return finalResult;
+            }
         } catch (ArithmeticException e) {
             // Handle exceptions related to arithmetic errors
             if (Objects.equals(e.getMessage(), mainActivity.getString(R.string.errorMessage1))) {
@@ -167,362 +188,9 @@ public class CalculatorEngine {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            Log.e("Exception", e.toString());
+            //Log.i("Exception", e.toString());
             return mainActivity.getString(R.string.errorMessage2);
         }
-    }
-
-    /**
-     * @param calculation Is the calculation as a String
-     * @return Returns the calculation or the shorted calculation
-     */
-    private static String shortedResult(String calculation) {
-        if(calculation.contains(",") && !mainActivity.isInvalidInput(calculation)) {
-            StringBuilder shortedCalculation = new StringBuilder();
-
-            String[] calculationParts = calculation.split(",");
-            if(calculationParts.length == 2 && calculationParts[1].length() >= 2) {
-                if(calculationParts[0].length() >= RESULT_LENGTH) {
-                    shortedCalculation.append(calculationParts[0]).append(",");
-                    shortedCalculation.append(calculationParts[1].substring(0, 2));
-                } else {
-                    shortedCalculation.append(calculationParts[0]).append(",");
-                    int addableNumbers = RESULT_LENGTH - calculationParts[0].length();
-
-                    if(addableNumbers > calculationParts[1].length()) {
-                        shortedCalculation.append(calculationParts[1]);
-                    } else {
-                        shortedCalculation.append(calculationParts[1].substring(0, addableNumbers));
-                    }
-                }
-                return shortedCalculation.toString();
-            }
-        }
-        return removeUnnecessaryZeros(calculation);
-    }
-
-    private static String removeUnnecessaryZeros(String result) {
-        StringBuilder newResult = new StringBuilder();
-        StringBuilder tempPart = new StringBuilder();
-
-        if (result.contains(",")) {
-            String[] parts = result.split(",");
-            newResult.append(parts[0]).append(",");
-            tempPart.append(parts[1]);
-
-            for(int x = parts[1].length() - 1; x >= 0; x--) {
-                if(String.valueOf(parts[1].charAt(x)).equals("0")) {
-                    tempPart.deleteCharAt(x);
-                } else {
-                    break;
-                }
-            }
-
-            newResult.append(tempPart);
-            return newResult.toString();
-        }
-        return result;
-    }
-
-    public static boolean isSymbol(final String character) {
-        return (String.valueOf(character).equals("¼") || String.valueOf(character).equals("⅓") || String.valueOf(character).equals("½") ||
-                String.valueOf(character).equals("е") || String.valueOf(character).equals("e") || String.valueOf(character).equals("π"));
-    }
-
-    public static String fixExpression(String input) {
-        StringBuilder sb = new StringBuilder();
-
-        if (input.length() >= 2) {
-            for (int i = 0; i < input.length(); i++) {
-                char currentChar = input.charAt(i);
-                sb.append(currentChar);
-
-                if (i + 1 < input.length()) {
-                    char nextChar = input.charAt(i + 1);
-
-                    boolean charFound = checkForChar(currentChar);
-                    if (charFound) {
-                        continue;
-                    }
-
-                    if (isOperator(String.valueOf(currentChar)) && isSymbol(String.valueOf(nextChar))) {
-                        continue;
-                    }
-
-                    if (Character.isDigit(currentChar) && isOperator(String.valueOf(nextChar))) {
-                        continue;
-                    }
-
-                    if (String.valueOf(currentChar).equals("(") && String.valueOf(nextChar).equals("³")) {
-                        continue;
-                    }
-
-                    if (Character.isDigit(currentChar) && String.valueOf(nextChar).equals("(")) {
-                        sb.append('×');
-                        continue;
-                    }
-
-                    if ((Character.isDigit(currentChar) && isSymbol(String.valueOf(nextChar))) || (isSymbol(String.valueOf(currentChar)) && Character.isDigit(nextChar))) {
-                        sb.append('×');
-                        continue;
-                    }
-
-                    if ((isSymbol(String.valueOf(currentChar)) && String.valueOf(nextChar).equals("(")) || (String.valueOf(currentChar).equals(")") && isSymbol(String.valueOf(nextChar)))) {
-                        sb.append('×');
-                        continue;
-                    }
-
-                    if (shouldInsertMultiplication(currentChar, nextChar) && (!Character.isDigit(currentChar) && !Character.isDigit(nextChar)) && !isOperator(String.valueOf(nextChar))) {
-                        sb.append('×');
-                        continue;
-                    }
-
-                    if (Character.isDigit(currentChar) && String.valueOf(currentChar).equals("(") && !isOperator(String.valueOf(nextChar))) {
-                        sb.append('×');
-                        continue;
-                    }
-
-                    if (Character.isDigit(currentChar) && Character.isLetter(nextChar) && !isOperator(String.valueOf(nextChar))) {
-                        sb.append('×');
-                        continue;
-                    }
-
-                    if ((currentChar == 'π' && Character.isDigit(nextChar)) ||
-                            (nextChar == 'π' && Character.isDigit(currentChar)) && !isOperator(String.valueOf(nextChar))) {
-                        sb.append('×'); // Insert '×' between 'π' and digit
-                        continue;
-                    }
-
-                    if ((Character.isDigit(nextChar) && String.valueOf(nextChar).equals("(") && !isOperator(String.valueOf(nextChar))) ||
-                            (nextChar == '³')) {
-                        sb.append('×');
-                        continue;
-                    }
-
-                    if (String.valueOf(currentChar).equals("!") && Character.isDigit(nextChar) && !isOperator(String.valueOf(nextChar))) {
-                        sb.append('×');
-                    }
-                }
-            }
-            if (sb.length() > 0 && sb.substring(sb.length() - 2, sb.length()).equals("×=")) {
-                sb.delete(sb.length() - 2, sb.length());
-            }
-            return sb.toString();
-        }
-        return input;
-    }
-
-    public static boolean checkForChar(char currentChar) {
-        String[] errorMessages = {
-                mainActivity.getString(R.string.errorMessage1),
-                mainActivity.getString(R.string.errorMessage2),
-                mainActivity.getString(R.string.errorMessage3),
-                mainActivity.getString(R.string.errorMessage4),
-                mainActivity.getString(R.string.errorMessage5),
-                mainActivity.getString(R.string.errorMessage6),
-                mainActivity.getString(R.string.errorMessage7),
-                mainActivity.getString(R.string.errorMessage8),
-                mainActivity.getString(R.string.errorMessage9),
-                mainActivity.getString(R.string.errorMessage10),
-                mainActivity.getString(R.string.errorMessage11),
-                mainActivity.getString(R.string.errorMessage12),
-                mainActivity.getString(R.string.errorMessage13),
-                mainActivity.getString(R.string.errorMessage14),
-                mainActivity.getString(R.string.errorMessage15),
-                mainActivity.getString(R.string.errorMessage16),
-                mainActivity.getString(R.string.errorMessage17)
-        };
-
-        for (String errorMessage : errorMessages) {
-            if (errorMessage.indexOf(currentChar) != -1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean shouldInsertMultiplication(char currentChar, char nextChar) {
-        Set<Character> validChars = createValidCharsSet();
-        List<String> places = Arrays.asList("s", "i", "n", "c", "o", "t", "a", "l", "h", "g", "⁻", "¹", "³", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉", "");
-
-        if (places.contains(String.valueOf(currentChar)) && places.contains(String.valueOf(nextChar))) {
-            return false; // Don't insert '*' between 'sin' and next character
-        }
-
-        return (!validChars.contains(currentChar) && !validChars.contains(nextChar)) ||
-                (Character.isDigit(currentChar) && (Character.isLetter(nextChar) || nextChar == '√')) ||
-                (currentChar == ')' && (Character.isDigit(nextChar) || nextChar == '(' || nextChar == '√')) ||
-                (currentChar == ')' && isMathFunction("", 0)) ||
-                (isMathFunction("", 0) && (Character.isDigit(nextChar) || nextChar == '(' || nextChar == '√')) ||
-                (isMathFunction("", 0) && isMathFunction("", 1));
-    }
-
-    public static Set<Character> createValidCharsSet() {
-        Set<Character> validChars = new HashSet<>();
-        validChars.add('+');
-        validChars.add('-');
-        validChars.add('*');
-        validChars.add('×');
-        validChars.add('/');
-        validChars.add('÷');
-        validChars.add('.');
-        validChars.add(',');
-        validChars.add('(');
-        validChars.add(')');
-        validChars.add('√');
-        validChars.add('^');
-        validChars.add('!');
-        // Add more valid characters here if needed
-        return validChars;
-    }
-
-    public static boolean isMathFunction(String input, int startIndex) {
-        Set<String> mathFunctions = createMathFunctionsSet();
-        for (String mathFunction : mathFunctions) {
-            if (input.regionMatches(startIndex, mathFunction, 0, mathFunction.length())) {
-                // Check if the entire function is present
-                if (startIndex + mathFunction.length() >= input.length() || !Character.isLetter(input.charAt(startIndex + mathFunction.length()))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static Set<String> createMathFunctionsSet() {
-        Set<String> mathFunctions = new HashSet<>();
-        mathFunctions.add("^");
-        mathFunctions.add("√");
-        mathFunctions.add("³√");
-        mathFunctions.add("ln");
-        mathFunctions.add("sin");
-        mathFunctions.add("cos");
-        mathFunctions.add("tan");
-        mathFunctions.add("log");
-        mathFunctions.add("sinh");
-        mathFunctions.add("cosh");
-        mathFunctions.add("tanh");
-        mathFunctions.add("log₂");
-        mathFunctions.add("log₃");
-        mathFunctions.add("log₄");
-        mathFunctions.add("log₅");
-        mathFunctions.add("log₆");
-        mathFunctions.add("log₇");
-        mathFunctions.add("log₈");
-        mathFunctions.add("log₉");
-        mathFunctions.add("sin⁻¹");
-        mathFunctions.add("cos⁻¹");
-        mathFunctions.add("tan⁻¹");
-        mathFunctions.add("sinh⁻¹");
-        mathFunctions.add("cosh⁻¹");
-        mathFunctions.add("tanh⁻¹");
-        // Add more math functions here if needed
-        return mathFunctions;
-    }
-
-    /**
-     * isScientificNotation method checks if a given string is in scientific notation.
-     *
-     * @param str The input string to be checked.
-     * @return True if the string is in scientific notation, otherwise false.
-     */
-    public static boolean isScientificNotation(final String str) {
-        // The input string is formatted by replacing all commas with dots. This is because in some locales, a comma is used as the decimal separator.
-        final String formattedInput = str.replace(",", ".");
-
-        // A regular expression pattern is defined to match the scientific notation. The pattern is as follows:
-        // "^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$"
-        // Explanation of the pattern:
-        // "^" - start of the line
-        // "([-+]?\\d+(\\.\\d+)?)"" - matches a number which may be negative or positive, and may have a decimal part
-        // "([eE][-+]?\\d+)" - matches 'e' or 'E' followed by an optional '+' or '-' sign, followed by one or more digits
-        // "$" - end of the line
-        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$");
-
-        // The pattern is used to create a matcher for the formatted input string
-        final Matcher matcher = pattern.matcher(formattedInput);
-
-        // The method returns true if the matcher finds a match in the input string, indicating that the string is in scientific notation
-        return matcher.matches();
-    }
-
-    /**
-     * convertScientificToDecimal method converts a number in scientific notation to decimal representation.
-     *
-     * @param str The input string in scientific notation.
-     * @return The decimal representation of the input string.
-     */
-    public static String convertScientificToDecimal(final String str) {
-        // Define the pattern for scientific notation
-        final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)");
-        final Matcher matcher = pattern.matcher(str);
-        final StringBuffer sb = new StringBuffer();
-
-        // Process all matches found in the input string
-        while (matcher.find()) {
-            // Extract number and exponent parts from the match
-            final String numberPart = matcher.group(1);
-            String exponentPart = matcher.group(3);
-
-            // Remove the 'e' or 'E' from the exponent part
-            if (exponentPart != null) {
-                exponentPart = exponentPart.substring(1);
-            }
-
-            // Check and handle the case where the exponent is too large
-            if (exponentPart != null) {
-                final int exponent = Integer.parseInt(exponentPart);
-
-                // Determine the sign of the number and create a BigDecimal object
-                assert numberPart != null;
-                final String sign = numberPart.startsWith("-") ? "-" : "";
-                BigDecimal number = new BigDecimal(numberPart);
-
-                // Negate the number if the input starts with a minus sign
-                if (numberPart.startsWith("-")) {
-                    number = number.negate();
-                }
-
-                // Scale the number by the power of ten specified by the exponent
-                BigDecimal scaledNumber;
-                if (exponent >= 0) {
-                    scaledNumber = number.scaleByPowerOfTen(exponent);
-                } else {
-                    scaledNumber = number.divide(BigDecimal.TEN.pow(-exponent), MC);
-                }
-
-                // Remove trailing zeros and append the scaled number to the result buffer
-                String result = sign + scaledNumber.stripTrailingZeros().toPlainString();
-                if (result.startsWith(".")) {
-                    result = "0" + result;
-                }
-                matcher.appendReplacement(sb, result);
-            }
-        }
-
-        // Append the remaining part of the input string to the result buffer
-        matcher.appendTail(sb);
-
-        // Check if the result buffer contains two consecutive minus signs and remove one if necessary
-        if (sb.indexOf("--") != -1) {
-            sb.replace(sb.indexOf("--"), sb.indexOf("--") + 2, "-");
-        }
-
-        // Return the final result as a string
-        Log.i("convertScientificToDecimal", "sb:" + sb);
-        return sb.toString();
-    }
-
-    /**
-     * This method removes all non-numeric characters from a string, except for the decimal point and comma.
-     * It uses a regular expression to match all characters that are not digits, decimal points, or commas, and replaces them with an empty string.
-     *
-     * @param str The string to be processed.
-     * @return The processed string with all non-numeric characters removed.
-     */
-    public static String removeNonNumeric(final String str) {
-        // Replace all non-numeric and non-decimal point characters in the string with an empty string
-        return str.replaceAll("[^0-9.,\\-]", "");
     }
 
     /**
@@ -533,7 +201,7 @@ public class CalculatorEngine {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        Log.i("tokenize","Input Expression: " + expression);
+        //Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -562,7 +230,7 @@ public class CalculatorEngine {
                 }
                 if (i + 3 <= expressionWithoutSpaces.length()) {
                     String function = expressionWithoutSpaces.substring(i, i + 3);
-                    if (function.equals("ln(")) {
+                    if (function.equals("ln(") || (function.startsWith("log") && function.endsWith("("))) {
                         tokens.add(function); // Add the full function name
                         i += 2; // Skip the next characters (already processed)
                         continue;
@@ -570,7 +238,7 @@ public class CalculatorEngine {
                 }
                 if (i + 4 <= expressionWithoutSpaces.length()) {
                     String function = expressionWithoutSpaces.substring(i, i + 4);
-                    if (function.equals("sin(") || function.equals("cos(") || function.equals("tan(")) {
+                    if (function.equals("sin(") || function.equals("cos(") || function.equals("tan(") || (function.startsWith("log") && function.endsWith("("))) {
                         tokens.add(function); // Add the full function name
                         i += 3; // Skip the next characters (already processed)
                         continue;
@@ -583,14 +251,14 @@ public class CalculatorEngine {
                 }
                 if (i + 5 <= expressionWithoutSpaces.length()) {
                     String function = expressionWithoutSpaces.substring(i, i + 5);
-                    if (function.equals("sinh(") || function.equals("cosh(") || function.equals("tanh(")) {
+                    if (function.equals("sinh(") || function.equals("cosh(") || function.equals("tanh(") || (function.startsWith("log") && function.endsWith("("))) {
                         tokens.add(function); // Add the full function name
                         i += 4; // Skip the next characters (already processed)
                         continue;
                     }
                     if (function.equals("log₂(") || function.equals("log₃(") || function.equals("log₄(") ||
                             function.equals("log₅(") || function.equals("log₆(") || function.equals("log₇(") ||
-                            function.equals("log₈(") || function.equals("log₉(")) {
+                            function.equals("log₈(") || function.equals("log₉(") || (function.startsWith("log") && function.endsWith("("))) {
                         tokens.add(function); // Add the full function name
                         i += 4; // Skip the next characters (already processed)
                         continue;
@@ -598,7 +266,7 @@ public class CalculatorEngine {
                 }
                 if (i + 6 <= expressionWithoutSpaces.length()) {
                     String function = expressionWithoutSpaces.substring(i, i + 6);
-                    if (function.equals("sin⁻¹(") || function.equals("cos⁻¹(") || function.equals("tan⁻¹(")) {
+                    if (function.equals("sin⁻¹(") || function.equals("cos⁻¹(") || function.equals("tan⁻¹(") || (function.startsWith("log") && function.endsWith("("))) {
                         tokens.add(function); // Add the full function name
                         i += 5; // Skip the next characters (already processed)
                         continue;
@@ -606,7 +274,7 @@ public class CalculatorEngine {
                 }
                 if (i + 7 <= expressionWithoutSpaces.length()) {
                     String function = expressionWithoutSpaces.substring(i, i + 7);
-                    if (function.equals("sinh⁻¹(") || function.equals("cosh⁻¹(") || function.equals("tanh⁻¹(")) {
+                    if (function.equals("sinh⁻¹(") || function.equals("cosh⁻¹(") || function.equals("tanh⁻¹(") || (function.startsWith("log") && function.endsWith("("))) {
                         tokens.add(function); // Add the full function name
                         i += 6; // Skip the next characters (already processed)
                         continue;
@@ -623,7 +291,7 @@ public class CalculatorEngine {
         }
 
         // Debugging: Print tokens
-        Log.i("tokenize","Tokens: " + tokens);
+        //Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -638,7 +306,7 @@ public class CalculatorEngine {
     public static BigDecimal evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
         final List<String> postfixTokens = infixToPostfix(tokens);
-        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
+        //Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -655,26 +323,25 @@ public class CalculatorEngine {
      * @throws IllegalArgumentException If the operator is not recognized or if the second operand for the square root operation is negative.
      */
     public static BigDecimal applyOperator(final BigDecimal operand1, final BigDecimal operand2, final String operator) {
-        DataManager dataManager = new DataManager(mainActivity);
-        final String mode;
-        try {
-            mode = dataManager.getJSONSettingsData("functionMode", mainActivity.getApplicationContext()).getString("value");
-        } catch (JSONException ex) {
-            throw new RuntimeException(ex);
-        }
+
+        //System.out.println("Operator: " + operator);
+        //System.out.println("Operand1: " + operand1);
+        //System.out.println("Operand2: " + operand2);
+        //System.out.println("Result: " + operand1.divide(operand2, new MathContext(1000)));
 
         switch (operator) {
             case "+":
-                return operand1.add(operand2, MC);
+                // Add the two BigDecimals
+                return operand1.add(operand2);
             case "-":
-                return operand1.subtract(operand2, MC);
+                return operand1.subtract(operand2);
             case "*":
-                return operand1.multiply(operand2, MC);
+                return operand1.multiply(operand2);
             case "/":
                 if (operand2.compareTo(BigDecimal.ZERO) == 0) {
                     throw new ArithmeticException(mainActivity.getString(R.string.errorMessage3));
                 } else {
-                    return operand1.divide(operand2, MC);
+                    return operand1.divide(operand2, new MathContext(1000));
                 }
             case ROOT:
                 if (operand2.compareTo(BigDecimal.ZERO) < 0) {
@@ -687,157 +354,10 @@ public class CalculatorEngine {
             case "!":
                 return factorial(operand1);
             case "^":
-                return BigDecimalMath.pow(operand1, operand2, MC);
-            case "log(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(10)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "log₂(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(2)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "log₃(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(3)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "log₄(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(4)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "log₅(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(5)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "log₆(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(6)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "log₇(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(7)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "log₈(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(8)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "log₉(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue()) / Math.log(9)).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "ln(":
-                return BigDecimal.valueOf(Math.log(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-            case "sin(":
-                if (mode.equals("Rad")) {
-                    BigDecimal sinValue = new BigDecimal(Math.sin(operand2.doubleValue()), MathContext.DECIMAL128);
-                    return sinValue.setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operand2.doubleValue());
-                    BigDecimal sinValue = new BigDecimal(Math.sin(radians), MathContext.DECIMAL128);
-                    return sinValue.setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-
-            case "sinh(":
-                if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.sinh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.sinh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-            case "sin⁻¹(":
-                if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.asin(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.toDegrees(Math.asin(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-            case "sinh⁻¹(":
-                return asinh(operand2);
-            case "cos(":
-                if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.cos(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.cos(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-            case "cosh(":
-                if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.cosh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.cosh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-            case "cos⁻¹(":
-                if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.acos(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.toDegrees(Math.acos(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-            case "cosh⁻¹(":
-                return acosh(operand2);
-            case "tan(":
-                if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.tan(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.tan(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-            case "tanh(":
-                if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.tanh(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.tanh(Math.toRadians(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-            case "tan⁻¹(":
-                if (mode.equals("Rad")) {
-                    return BigDecimal.valueOf(Math.atan(operand2.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    return BigDecimal.valueOf(Math.toDegrees(Math.atan(operand2.doubleValue()))).setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-            case "tanh⁻¹(":
-                return atanh(operand2);
+                return power(operand1, operand2);
             default:
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage5));
         }
-    }
-
-    public static BigDecimal pow(BigDecimal base, BigDecimal exponent) {
-        if (exponent.equals(BigDecimal.ZERO)) {
-            return BigDecimal.ONE;
-        } else if (exponent.equals(BigDecimal.ONE)) {
-            return base;
-        } else if (exponent.signum() == -1) {
-            return BigDecimal.ONE.divide(pow(base, exponent.negate()), MC);
-        } else {
-            return base.multiply(pow(base, exponent.subtract(BigDecimal.ONE)));
-        }
-    }
-
-    /**
-     * Calculates the factorial of a number.
-     * <p>
-     * The factorial of a number is the product of all positive integers less than or equal to the number.
-     * For example, the factorial of 5 (denoted as 5!) is 1*2*3*4*5 = 120.
-     * <p>
-     * The method takes a BigDecimal number as input. It first checks if the number is negative. If it is,
-     * the number is made positive for the calculation. Then it checks if the number is a whole number because
-     * factorial is only defined for whole numbers.
-     * <p>
-     * It initializes the result to 1. This will hold the calculated factorial.
-     * It calculates the factorial by multiplying the number with the result and then decrementing the number,
-     * until the number is greater than 1.
-     * <p>
-     * If the original number was negative, the result is negated. Otherwise, the result is returned as is.
-     *
-     * @param number The number for which the factorial is to be calculated.
-     * @return The factorial of the number.
-     * @throws IllegalArgumentException If the number is not a whole number or if it's greater than 170.
-     */
-    public static BigDecimal factorial(BigDecimal number) {
-        // Check if the number is greater than 170
-        if (number.compareTo(new BigDecimal("170")) > 0) {
-            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage1));
-        }
-
-        // Check if the number is negative
-        boolean isNegative = number.compareTo(BigDecimal.ZERO) < 0;
-        // If the number is negative, convert it to positive
-        if (isNegative) {
-            number = number.negate();
-        }
-
-        // Check if the number is an integer. If not, throw an exception
-        if (number.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) != 0) {
-            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage6));
-        }
-
-        // Initialize the result as 1
-        BigDecimal result = BigDecimal.ONE;
-
-        // Calculate the factorial of the number
-        while (number.compareTo(BigDecimal.ONE) > 0) {
-            result = result.multiply(number);
-            number = number.subtract(BigDecimal.ONE);
-        }
-
-        // If the original number was negative, return the negative of the result. Otherwise, return the result.
-        return isNegative ? result.negate() : result;
     }
 
     /**
@@ -854,7 +374,7 @@ public class CalculatorEngine {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            Log.i("evaluatePostfix","Token: " + token);
+            //Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -867,17 +387,17 @@ public class CalculatorEngine {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
             }
 
             // Debugging: Print current stack
-            Log.i("evaluatePostfix","Stack: " + stack);
+            //Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // If there is more than one number in the stack at the end, throw an exception
         if (stack.size() != 1) {
-            Log.i("evaluatePostfix","Stacksize != 1");
+            //Log.i("evaluatePostfix","Stacksize != 1");
             throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
         }
 
@@ -932,341 +452,49 @@ public class CalculatorEngine {
     }
 
     /**
-     * Custom method for calculating the square root with higher precision.
-     *
-     * @param x The BigDecimal value for which the square root is to be calculated.
-     * @return The square root of the input value with higher precision.
-     */
-    public static BigDecimal squareRoot(BigDecimal x) {
-        // Initial guess for the square root
-        BigDecimal initialGuess = x.divide(BigDecimal.valueOf(2), MathContext.DECIMAL128);
-        BigDecimal previousGuess = BigDecimal.ZERO;
-        BigDecimal currentGuess = new BigDecimal(initialGuess.toString());
-
-        // Iterative improvement using Newton's method
-        while (!previousGuess.equals(currentGuess)) {
-            previousGuess = new BigDecimal(currentGuess.toString());
-            BigDecimal f = currentGuess.pow(2).subtract(x, MathContext.DECIMAL128);
-            BigDecimal fPrime = BigDecimal.valueOf(2).multiply(currentGuess, MathContext.DECIMAL128);
-            currentGuess = currentGuess.subtract(f.divide(fPrime, MathContext.DECIMAL128), MathContext.DECIMAL128);
-        }
-
-        return currentGuess;
-    }
-
-
-    /**
-     * Custom method for calculating the cube root with higher precision.
-     *
-     * @param x The BigDecimal value for which the cube root is to be calculated.
-     * @return The cube root of the input value with higher precision.
-     */
-    public static BigDecimal thirdRoot(BigDecimal x) {
-        BigDecimal initialApproximation  = x.divide(BigDecimal.valueOf(3), MathContext.DECIMAL128);
-        BigDecimal previousApproximation  = BigDecimal.ZERO;
-        BigDecimal currentApproximation  = new BigDecimal(initialApproximation .toString());
-
-        while (!previousApproximation .equals(currentApproximation )) {
-            previousApproximation  = new BigDecimal(currentApproximation .toString());
-            BigDecimal f = currentApproximation .pow(3).subtract(x, MathContext.DECIMAL128);
-            BigDecimal fPrime = BigDecimal.valueOf(3).multiply(currentApproximation .pow(2), MathContext.DECIMAL128);
-            currentApproximation  = currentApproximation .subtract(f.divide(fPrime, MathContext.DECIMAL128), MathContext.DECIMAL128);
-        }
-
-        return currentApproximation ;
-    }
-
-    /**
      * Evaluates a mathematical function and adds the result to the stack.
      *
      * @param function The function to be evaluated.
      * @param stack    The stack containing numbers.
      */
     private static void evaluateFunction(String function, List<BigDecimal> stack) {
-        // Implement the evaluation of functions like sin, cos, tan.
-        // You can use BigDecimalMath library or Java Math class for standard functions
-        // Add the result of the function evaluation to the stack
-        DataManager dataManager = new DataManager(mainActivity);
-        final String mode;
-        try {
-            mode = dataManager.getJSONSettingsData("functionMode", mainActivity.getApplicationContext()).getString("value");
-        } catch (JSONException ex) {
-            throw new RuntimeException(ex);
-        }
-        BigDecimal operand;
+        Map<String, Function<BigDecimal, BigDecimal>> functionsMap = new HashMap<>();
+        functionsMap.put("ln(", CalculatorEngine::ln);
+        functionsMap.put("sin(", CalculatorEngine::sin);
+        functionsMap.put("sinh(", CalculatorEngine::sinh);
+        functionsMap.put("sin⁻¹(", CalculatorEngine::asin);
+        functionsMap.put("sinh⁻¹(", CalculatorEngine::asinh);
+        functionsMap.put("cos(", CalculatorEngine::cos);
+        functionsMap.put("cosh(", CalculatorEngine::cosh);
+        functionsMap.put("cos⁻¹(", CalculatorEngine::acos);
+        functionsMap.put("cosh⁻¹(", CalculatorEngine::acosh);
+        functionsMap.put("tan(", CalculatorEngine::tan);
+        functionsMap.put("tanh(", CalculatorEngine::tanh);
+        functionsMap.put("tan⁻¹(", CalculatorEngine::atan);
+        functionsMap.put("tanh⁻¹(", CalculatorEngine::atanh);
 
-        switch (function) {
-            case "log(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log10 = BigDecimal.valueOf(Math.log(10));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log10, MC));
-                break;
-            }
-            case "log₂(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log2 = BigDecimal.valueOf(Math.log(2));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log2, MC));
-                break;
-            }
-            case "log₃(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log3 = BigDecimal.valueOf(Math.log(3));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log3, MC));
-                break;
-            }
-            case "log₄(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log4 = BigDecimal.valueOf(Math.log(4));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log4, MC));
-                break;
-            }
-            case "log₅(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log5 = BigDecimal.valueOf(Math.log(5));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log5, MC));
-                break;
-            }
-            case "log₆(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log6 = BigDecimal.valueOf(Math.log(6));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log6, MC));
-                break;
-            }
-            case "log₇(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log7 = BigDecimal.valueOf(Math.log(7));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log7, MC));
-                break;
-            }
-            case "log₈(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log8 = BigDecimal.valueOf(Math.log(8));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log8, MC));
-                break;
-            }
-            case "log₉(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal log9 = BigDecimal.valueOf(Math.log(9));
-                BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
-                stack.add(logValue.divide(log9, MC));
-                break;
-            }
-            case "ln(": {
-                operand = stack.remove(stack.size() - 1);
-                if (operand.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage8));
-                }
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
+        if (function.startsWith("log") && function.endsWith("(")) {
+            int baseStartIndex = 3;
+            int baseEndIndex = function.length() - 1;
+            String baseString = function.substring(baseStartIndex, baseEndIndex);
+            baseString = convertSubscripts(baseString);
+            BigDecimal base = new BigDecimal(baseString);
 
-                result = new BigDecimal(Math.log(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                        .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                stack.add(result);
-                //stack.add(BigDecimal.valueOf(Math.log(operand.doubleValue())).setScale(MC.getPrecision(), RoundingMode.DOWN));
-                break;
+            if("1".equals(base.toString())) {
+                throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage16));
             }
-            case "sin(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.sin(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.sin(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
 
-            }
-            case "sinh(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.sinh(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.sinh(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
-            }
-            case "sin⁻¹(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.asin(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.asin(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
-            }
-            case "sinh⁻¹(":
-                operand = stack.remove(stack.size() - 1);
-                stack.add(asinh(operand));
-                break;
-            case "cos(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.cos(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.cos(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
-            }
-            case "cosh(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.cosh(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.cosh(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
-            }
-            case "cos⁻¹(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.acos(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.acos(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
-            }
-            case "cosh⁻¹(":
-                operand = stack.remove(stack.size() - 1);
-                stack.add(acosh(operand));
-                break;
-            case "tan(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.tan(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double degrees = operand.doubleValue();
-                    if (isMultipleOf90(degrees)) {
-                        // Check if the tangent of multiples of 90 degrees is being calculated
-                        throw new ArithmeticException(mainActivity.getString(R.string.errorMessage8));
-                    }
-
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.tan(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
-            }
-            case "tanh(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.tanh(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.tanh(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
-            }
-            case "tan⁻¹(": {
-                operand = stack.remove(stack.size() - 1);
-                BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
-                BigDecimal result;
-                if (mode.equals("Rad")) {
-                    result = new BigDecimal(Math.atan(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                } else { // if mode equals 'Deg'
-                    double radians = Math.toRadians(operandBigDecimal.doubleValue());
-                    result = new BigDecimal(Math.atan(radians), MathContext.DECIMAL128)
-                            .setScale(MC.getPrecision(), RoundingMode.DOWN);
-                }
-                stack.add(result);
-                break;
-            }
-            case "tanh⁻¹(": {
-                operand = stack.remove(stack.size() - 1);
-                stack.add(atanh(operand));
-                break;
+            BigDecimal operand = stack.remove(stack.size() - 1);
+            stack.add(logX(operand, base.doubleValue()));
+        } else {
+            Function<BigDecimal, BigDecimal> func = functionsMap.get(function);
+            if (func != null) {
+                BigDecimal operand = stack.remove(stack.size() - 1);
+                stack.add(func.apply(operand));
+            } else {
+                throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage14));
             }
         }
-    }
-
-    /**
-     * Checks if a given angle in degrees is a multiple of 90.
-     *
-     * @param degrees The angle in degrees to be checked.
-     * @return true if the angle is a multiple of 90, false otherwise.
-     */
-    private static boolean isMultipleOf90(double degrees) {
-        // Check if degrees is a multiple of 90
-        return Math.abs(degrees % 90) == 0;
     }
 
     /**
@@ -1282,8 +510,8 @@ public class CalculatorEngine {
         for (int i = 0; i < infixTokens.size(); i++) {
             final String token = infixTokens.get(i);
             // Debugging: Print current token and stack
-            Log.i("infixToPostfix", "Current Token: " + token);
-            Log.i("infixToPostfix", "Stack: " + stack);
+            //Log.i("infixToPostfix", "Current Token: " + token);
+            //Log.i("infixToPostfix", "Stack: " + stack);
 
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -1314,8 +542,8 @@ public class CalculatorEngine {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
-            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
+            //Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            //Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
         while (!stack.isEmpty()) {
@@ -1323,95 +551,9 @@ public class CalculatorEngine {
         }
 
         // Debugging: Print final postfixTokens
-        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
+        //Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
         return postfixTokens;
-    }
-
-    /**
-     * Checks if the given token represents a recognized trigonometric function.
-     *
-     * @param token The token to be checked.
-     * @return true if the token represents a trigonometric function, false otherwise.
-     */
-    public static boolean isFunction(final String token) {
-        // Check if the token is one of the recognized trigonometric functions
-        return token.equals("sin(") || token.equals("cos(") || token.equals("tan(") ||
-                token.equals("sinh(") || token.equals("cosh(") || token.equals("tanh(") ||
-                token.equals("log(") || token.equals("log₂(") || token.equals("log₃(") ||
-                token.equals("log₄(") || token.equals("log₅(") || token.equals("log₆(") ||
-                token.equals("log₇(") || token.equals("log₈(") || token.equals("log₉(") ||
-                token.equals("ln(") || token.equals("sin⁻¹(") || token.equals("cos⁻¹(") ||
-                token.equals("tan⁻¹(") || token.equals("sinh⁻¹(") || token.equals("cosh⁻¹(") ||
-                token.equals("tanh⁻¹(");
-    }
-
-    // Inverse hyperbolic sine
-    public static BigDecimal asinh(BigDecimal x) {
-        BigDecimal term1 = x.pow(2).add(BigDecimal.ONE, MathContext.DECIMAL128);
-        BigDecimal term2 = x.add(new BigDecimal(Math.sqrt(term1.doubleValue()), MathContext.DECIMAL128));
-
-        return new BigDecimal(Math.log(term2.doubleValue()), MathContext.DECIMAL128);
-    }
-
-    // Inverse hyperbolic cosine
-    public static BigDecimal acosh(BigDecimal x) {
-        BigDecimal term1 = x.pow(2).subtract(BigDecimal.ONE, MathContext.DECIMAL128);
-        BigDecimal term2 = x.add(new BigDecimal(Math.sqrt(term1.doubleValue()), MathContext.DECIMAL128));
-
-        return new BigDecimal(Math.log(term2.doubleValue()), MathContext.DECIMAL128);
-    }
-
-    // Inverse hyperbolic tangent
-    public static BigDecimal atanh(BigDecimal x) {
-        BigDecimal term1 = BigDecimal.ONE.add(x, MathContext.DECIMAL128);
-        BigDecimal term2 = BigDecimal.ONE.subtract(x, MathContext.DECIMAL128);
-
-        if (x.compareTo(BigDecimal.valueOf(-1)) <= 0 || x.compareTo(BigDecimal.valueOf(1)) >= 0) {
-            throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
-        }
-
-        BigDecimal quotient = term1.divide(term2, MathContext.DECIMAL128);
-        return new BigDecimal(0.5 * Math.log(quotient.doubleValue()), MathContext.DECIMAL128);
-    }
-
-    /**
-     * Checks if a token is a number.
-     * It attempts to create a BigDecimal from the token. If successful, the token is considered a number; otherwise, it is not.
-     *
-     * @param token The token to be checked.
-     * @return True if the token is a number, false otherwise.
-     */
-    public static boolean isNumber(final String token) {
-        // Try to create a new BigDecimal from the token
-        try {
-            new BigDecimal(token);
-            // If successful, the token is a number
-            return true;
-        }
-        // If a NumberFormatException is thrown, the token is not a number
-        catch (final NumberFormatException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Checks if the given token represents a recognized non-functional operator.
-     *
-     * @param token The token to be checked.
-     * @return true if the token represents a non-functional operator, false otherwise.
-     */
-    public static boolean isOperator(final String token) {
-        // Check if the token is one of the recognized non-functional operators
-        return token.contains("+") || token.contains("-") || token.contains("*") || token.contains("/") ||
-                token.contains("×") || token.contains("÷") ||
-                token.contains("^") || token.contains("√") || token.contains("!") || token.contains("³√");
-    }
-
-    public static boolean isStandardOperator(final String token) {
-        // Check if the token is one of the recognized non-functional operators
-        return token.contains("+") || token.contains("-") || token.contains("*") || token.contains("/")
-                || token.contains("×") || token.contains("÷");
     }
 
     /**
@@ -1478,7 +620,684 @@ public class CalculatorEngine {
 
             // If the operator is not recognized, throw an exception
             default:
+                if(operator.startsWith("log") && operator.endsWith("(")) {
+                    return 6;
+                }
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
         }
+    }
+
+    /**
+     * @param calculation Is the calculation as a String
+     * @return Returns the calculation or the shorted calculation
+     */
+    private static String shortedResult(String calculation) {
+        if(calculation.contains(",") && !mainActivity.isInvalidInput(calculation)) {
+            StringBuilder shortedCalculation = new StringBuilder();
+
+            String[] calculationParts = calculation.split(",");
+            if(calculationParts.length == 2 && calculationParts[1].length() >= 2) {
+                if(calculationParts[0].length() >= RESULT_LENGTH) {
+                    shortedCalculation.append(calculationParts[0]).append(",");
+                    shortedCalculation.append(calculationParts[1].substring(0, 2));
+                } else {
+                    shortedCalculation.append(calculationParts[0]).append(",");
+                    int addableNumbers = RESULT_LENGTH - calculationParts[0].length();
+
+                    if(addableNumbers > calculationParts[1].length()) {
+                        shortedCalculation.append(calculationParts[1]);
+                    } else {
+                        shortedCalculation.append(calculationParts[1].substring(0, addableNumbers));
+                    }
+                }
+                return shortedCalculation.toString();
+            }
+        }
+        return removeUnnecessaryZeros(calculation);
+    }
+
+    /**
+     * Fixes mathematical expressions by inserting implicit multiplication symbols (×) where appropriate.
+     * This method analyzes an input string representing a mathematical expression and identifies situations
+     * where multiplication is implied but not explicitly written. It then inserts the multiplication symbol ('×')
+     * in those locations to clarify the expression.
+     * Additionally, the method corrects the specific case where "-+" appears in the expression, replacing it with just "-".
+     * Examples:
+     *   - "2(3+4)" becomes "2×(3+4)"
+     *   - "5π" becomes "5×π"
+     *   - "3-2+5" remains unchanged
+     *
+     * @param input The mathematical expression string to be fixed.
+     * @return The fixed expression with explicit multiplication symbols and corrected minus sign.
+     */
+    public static String fixExpression(String input) {
+        //Log.i("fixExpression", "Input fixExpression: " + input);
+
+        // Step 1: Fix the expression using the original logic
+        StringBuilder stringBuilder = new StringBuilder();
+        if (input.length() >= 2) {
+            for (int i = 0; i < input.length(); i++) {
+                String currentChar = String.valueOf(input.charAt(i));
+                String nextChar = "";
+
+                if (i + 1 < input.length()) {
+                    nextChar = String.valueOf(input.charAt(i + 1));
+                }
+
+                stringBuilder.append(currentChar);
+                ////Log.e("fixExpression", "CurrentChar: " + currentChar + " NextChar: " + nextChar);
+                ////Log.e("fixExpression", "stringBuilder: " + stringBuilder);
+
+                if (!nextChar.isEmpty() &&
+                        ((Character.isDigit(input.charAt(i)) || isSymbol(currentChar)) && nextChar.equals("(")) ||
+                        (Character.isDigit(input.charAt(i)) && isSymbol(nextChar)) ||
+                        (isSymbol(currentChar) && i + 1 < input.length() && Character.isDigit(input.charAt(i + 1))) ||
+                        (currentChar.equals(")") && (i + 1 < input.length() && (Character.isDigit(input.charAt(i + 1)) || isSymbol(nextChar)))) ||
+                        (isSymbol(currentChar) && isSymbol(nextChar))) {
+                    stringBuilder.append('×');
+                }
+            }
+        }
+
+        // Step 2: Handle the specific case of "-+"
+        String fixedExpression = stringBuilder.toString();
+        fixedExpression = fixedExpression.replaceAll("-\\+", "-");
+
+        //Log.e("fixExpression", "Fixed Expression: " + fixedExpression);
+        return (stringBuilder.toString().isEmpty() ? input : fixedExpression);
+    }
+
+    /**
+     * Removes trailing zeros from the decimal portion of a number represented as a string.
+     * This method takes a string that may represent a decimal number (using a comma as the decimal separator).
+     * If the string contains a comma, it removes any trailing zeros after the comma. If all digits after the comma are zeros,
+     * the comma itself is also removed.
+     *
+     * @param result The string representing a number potentially with trailing zeros in the decimal portion.
+     * @return The string with unnecessary trailing zeros removed, or the original string if no comma is found.
+     */
+    private static String removeUnnecessaryZeros(String result) {
+        StringBuilder newResult = new StringBuilder();
+        StringBuilder tempPart = new StringBuilder();
+
+        if (result.contains(",")) {
+            String[] parts = result.split(",");
+            newResult.append(parts[0]).append(",");
+            tempPart.append(parts[1]);
+
+            for(int x = parts[1].length() - 1; x >= 0; x--) {
+                if(String.valueOf(parts[1].charAt(x)).equals("0")) {
+                    tempPart.deleteCharAt(x);
+                } else {
+                    break;
+                }
+            }
+
+            newResult.append(tempPart);
+            return newResult.toString();
+        }
+        return result;
+    }
+
+    /**
+     * convertScientificToDecimal method converts a number in scientific notation to decimal representation.
+     *
+     * @param str The input string in scientific notation.
+     * @return The decimal representation of the input string.
+     */
+    public static String convertScientificToDecimal(final String str) {
+        // Define the pattern for scientific notation
+        final Pattern pattern = Pattern.compile("([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)");
+        final Matcher matcher = pattern.matcher(str);
+        final StringBuffer sb = new StringBuffer();
+
+        // Process all matches found in the input string
+        while (matcher.find()) {
+            // Extract number and exponent parts from the match
+            final String numberPart = matcher.group(1);
+            String exponentPart = matcher.group(3);
+
+            // Remove the 'e' or 'E' from the exponent part
+            if (exponentPart != null) {
+                exponentPart = exponentPart.substring(1);
+            }
+
+            // Check and handle the case where the exponent is too large
+            if (exponentPart != null) {
+                final int exponent = Integer.parseInt(exponentPart);
+
+                // Determine the sign of the number and create a BigDecimal object
+                assert numberPart != null;
+                final String sign = numberPart.startsWith("-") ? "-" : "";
+                BigDecimal number = new BigDecimal(numberPart);
+
+                // Negate the number if the input starts with a minus sign
+                if (numberPart.startsWith("-")) {
+                    number = number.negate();
+                }
+
+                // Scale the number by the power of ten specified by the exponent
+                BigDecimal scaledNumber;
+                if (exponent >= 0) {
+                    scaledNumber = number.scaleByPowerOfTen(exponent);
+                } else {
+                    scaledNumber = number.divide(BigDecimal.TEN.pow(-exponent), MC);
+                }
+
+                // Remove trailing zeros and append the scaled number to the result buffer
+                String result = sign + scaledNumber.stripTrailingZeros().toPlainString();
+                if (result.startsWith(".")) {
+                    result = "0" + result;
+                }
+                matcher.appendReplacement(sb, result);
+            }
+        }
+
+        // Append the remaining part of the input string to the result buffer
+        matcher.appendTail(sb);
+
+        // Check if the result buffer contains two consecutive minus signs and remove one if necessary
+        if (sb.indexOf("--") != -1) {
+            sb.replace(sb.indexOf("--"), sb.indexOf("--") + 2, "-");
+        }
+
+        // Return the final result as a string
+        //Log.i("convertScientificToDecimal", "sb:" + sb);
+        return sb.toString();
+    }
+
+    /**
+     * Converts subscript characters to normal characters.
+     *
+     * @param subscript The string containing subscript characters.
+     * @return The string with normal characters.
+     */
+    private static String convertSubscripts(String subscript) {
+        StringBuilder normalString = new StringBuilder();
+        for (char ch : subscript.toCharArray()) {
+            normalString.append(SUBSCRIPT_MAP.getOrDefault(ch, ch));
+        }
+        return normalString.toString();
+    }
+
+    /**
+     * This method removes all non-numeric characters from a string, except for the decimal point and comma.
+     * It uses a regular expression to match all characters that are not digits, decimal points, or commas, and replaces them with an empty string.
+     *
+     * @param str The string to be processed.
+     * @return The processed string with all non-numeric characters removed.
+     */
+    public static String removeNonNumeric(final String str) {
+        // Replace all non-numeric and non-decimal point characters in the string with an empty string
+        return str.replaceAll("[^0-9.,\\-]", "");
+    }
+
+    /**
+     * @param calculation The text to be checked.
+     * @return true if the token represents a non-functional operator, false otherwise.
+     */
+    public static boolean containsOperatorOrFunction(final String calculation) {
+        return calculation.contains("+") || calculation.contains("-") || calculation.contains("*") || calculation.contains("/") ||
+                calculation.contains("×") || calculation.contains("÷") ||
+                calculation.contains("^") || calculation.contains("√") || calculation.contains("!") || calculation.contains("³√") ||
+                calculation.contains("log") || calculation.contains("ln") || calculation.contains("sin") || calculation.contains("cos") ||
+                calculation.contains("tan");
+    }
+
+    /**
+     * Checks if the given token represents a recognized trigonometric function.
+     *
+     * @param token The token to be checked.
+     * @return true if the token represents a trigonometric function, false otherwise.
+     */
+    public static boolean isFunction(final String token) {
+        // Check if the token is one of the recognized trigonometric functions
+        return token.equals("sin(") || token.equals("cos(") || token.equals("tan(") ||
+                token.equals("sinh(") || token.equals("cosh(") || token.equals("tanh(") ||
+                token.equals("log(") || token.equals("log₂(") || token.equals("log₃(") ||
+                token.equals("log₄(") || token.equals("log₅(") || token.equals("log₆(") ||
+                token.equals("log₇(") || token.equals("log₈(") || token.equals("log₉(") ||
+                token.equals("ln(") || token.equals("sin⁻¹(") || token.equals("cos⁻¹(") ||
+                token.equals("tan⁻¹(") || token.equals("sinh⁻¹(") || token.equals("cosh⁻¹(") ||
+                token.equals("tanh⁻¹(")
+                ||
+                (token.startsWith("log") && token.endsWith("("));
+    }
+
+    /**
+     * Checks if a given string represents a recognized mathematical symbol.
+     * Recognized symbols include:
+     *  - ¼ (One quarter)
+     *  - ⅓ (One third)
+     *  - ½ (One half)
+     *  - e (Euler's number)
+     *  - π (Pi)
+     *
+     * @param character The string to check.
+     * @return true if the string is a recognized symbol, false otherwise.
+     */
+    public static boolean isSymbol(final String character) {
+        return (String.valueOf(character).equals("¼") || String.valueOf(character).equals("⅓") || String.valueOf(character).equals("½") ||
+                String.valueOf(character).equals("е") || String.valueOf(character).equals("e") || String.valueOf(character).equals("π"));
+    }
+
+    /**
+     * Checks if the given token represents a recognized non-functional operator.
+     *
+     * @param token The token to be checked.
+     * @return true if the token represents a non-functional operator, false otherwise.
+     */
+    public static boolean isOperator(final String token) {
+        // Check if the token is one of the recognized non-functional operators
+        return token.contains("+") || token.contains("-") || token.contains("*") || token.contains("/") ||
+                token.contains("×") || token.contains("÷") ||
+                token.contains("^") || token.contains("√") || token.contains("!") || token.contains("³√");
+    }
+
+    /**
+     * Checks if a given string token represents a standard mathematical operator.
+     * Standard operators include:
+     *   - Addition (+)
+     *   - Subtraction (-)
+     *   - Multiplication (*) or (×)
+     *   - Division (/) or (÷)
+     *
+     * @param token The string token to check.
+     * @return True if the token is a standard operator, false otherwise.
+     */
+    public static boolean isStandardOperator(final String token) {
+        // Check if the token is one of the recognized non-functional operators
+        return token.contains("+") || token.contains("-") || token.contains("*") || token.contains("/")
+                || token.contains("×") || token.contains("÷");
+    }
+
+    /**
+     * isScientificNotation method checks if a given string is in scientific notation.
+     *
+     * @param str The input string to be checked.
+     * @return True if the string is in scientific notation, otherwise false.
+     */
+    public static boolean isScientificNotation(final String str) {
+        final String formattedInput = str.replace(",", ".");
+        final Pattern pattern = Pattern.compile("^([-+]?\\d+(\\.\\d+)?)([eE][-+]?\\d+)$");
+        final Matcher matcher = pattern.matcher(formattedInput);
+
+        return matcher.matches();
+    }
+
+    /**
+     * Checks if a token is a number.
+     * It attempts to create a BigDecimal from the token. If successful, the token is considered a number; otherwise, it is not.
+     *
+     * @param token The token to be checked.
+     * @return True if the token is a number, false otherwise.
+     */
+    public static boolean isNumber(final String token) {
+        // Try to create a new BigDecimal from the token
+        try {
+            new BigDecimal(token);
+            // If successful, the token is a number
+            return true;
+        }
+        // If a NumberFormatException is thrown, the token is not a number
+        catch (final NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a given angle in degrees is a multiple of 90.
+     *
+     * @param degrees The angle in degrees to be checked.
+     * @return true if the angle is a multiple of 90, false otherwise.
+     */
+    private static boolean isMultipleOf90(double degrees) {
+        // Check if degrees is a multiple of 90
+        return Math.abs(degrees % 90) == 0;
+    }
+
+    /**
+     * Calculates the result of raising a BigDecimal base to a BigDecimal exponent.
+     * This method efficiently handles various exponent cases:
+     *   - Exponent is zero: Returns BigDecimal.ONE (1)
+     *   - Exponent is one: Returns the base
+     *   - Exponent is negative: Inverts the result of raising the base to the positive exponent
+     *   - Exponent has a fractional part: Splits the calculation into integer and fractional parts for efficiency
+     *   - Exponent is a positive integer: Uses a recursive approach for efficient calculation
+     *
+     * @param base     The base of the exponentiation.
+     * @param exponent The exponent to raise the base to.
+     * @return The result of base raised to the power of exponent.
+     * @throws ArithmeticException If the base is zero and the exponent is negative (division by zero).
+     */
+    public static BigDecimal power(BigDecimal base, BigDecimal exponent) {
+        if (exponent.equals(BigDecimal.ZERO)) {
+            return BigDecimal.ONE;
+        } else if (exponent.equals(BigDecimal.ONE)) {
+            return base;
+        } else if (exponent.signum() == -1) {
+            return BigDecimal.ONE.divide(pow(base, exponent.negate()), MC);
+        } else {
+            // Handle the case when the exponent has a fractional part
+            if (exponent.scale() > 0) {
+                BigDecimal integerPart = exponent.setScale(0, RoundingMode.FLOOR);
+                BigDecimal fractionalPart = exponent.subtract(integerPart);
+                return pow(base, integerPart).multiply(pow(base, fractionalPart));
+            } else {
+                return base.multiply(pow(base, exponent.subtract(BigDecimal.ONE)));
+            }
+        }
+    }
+
+    /**
+     * Calculates the factorial of a BigDecimal number.
+     * The factorial of a non-negative integer n, denoted by n!, is the product of all positive integers
+     * less than or equal to n. For example, 5! = 5 * 4 * 3 * 2 * 1 = 120.
+     * This method handles the following cases:
+     *   - Negative input: Calculates the factorial of the absolute value and negates the result.
+     *   - Non-integer input: Throws an IllegalArgumentException with an error message.
+     *   - Input greater than 170: Throws an IllegalArgumentException due to potential overflow.
+     *
+     * @param number The BigDecimal number for which to calculate the factorial.
+     * @return The factorial of the number as a BigDecimal.
+     * @throws IllegalArgumentException If the input number is negative, not an integer, or greater than 170.
+     */
+    public static BigDecimal factorial(BigDecimal number) {
+        // Check if the number is greater than 170
+        if (number.compareTo(new BigDecimal("170")) > 0) {
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage1));
+        }
+
+        // Check if the number is negative
+        boolean isNegative = number.compareTo(BigDecimal.ZERO) < 0;
+        // If the number is negative, convert it to positive
+        if (isNegative) {
+            number = number.negate();
+        }
+
+        // Check if the number is an integer. If not, throw an exception
+        if (number.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) != 0) {
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage6));
+        }
+
+        // Initialize the result as 1
+        BigDecimal result = BigDecimal.ONE;
+
+        // Calculate the factorial of the number
+        while (number.compareTo(BigDecimal.ONE) > 0) {
+            result = result.multiply(number);
+            number = number.subtract(BigDecimal.ONE);
+        }
+
+        // If the original number was negative, return the negative of the result. Otherwise, return the result.
+        return isNegative ? result.negate() : result;
+    }
+
+    /**
+     * Custom method for calculating the square root with higher precision.
+     *
+     * @param x The BigDecimal value for which the square root is to be calculated.
+     * @return The square root of the input value with higher precision.
+     */
+    public static BigDecimal squareRoot(BigDecimal x) {
+        // Initial guess for the square root
+        BigDecimal initialGuess = x.divide(BigDecimal.valueOf(2), MathContext.DECIMAL128);
+        BigDecimal previousGuess = BigDecimal.ZERO;
+        BigDecimal currentGuess = new BigDecimal(initialGuess.toString());
+
+        // Iterative improvement using Newton's method
+        while (!previousGuess.equals(currentGuess)) {
+            previousGuess = new BigDecimal(currentGuess.toString());
+            BigDecimal f = currentGuess.pow(2).subtract(x, MathContext.DECIMAL128);
+            BigDecimal fPrime = BigDecimal.valueOf(2).multiply(currentGuess, MathContext.DECIMAL128);
+            currentGuess = currentGuess.subtract(f.divide(fPrime, MathContext.DECIMAL128), MathContext.DECIMAL128);
+        }
+
+        return currentGuess;
+    }
+
+    /**
+     * Custom method for calculating the cube root with higher precision.
+     *
+     * @param x The BigDecimal value for which the cube root is to be calculated.
+     * @return The cube root of the input value with higher precision.
+     */
+    public static BigDecimal thirdRoot(BigDecimal x) {
+        BigDecimal initialApproximation  = x.divide(BigDecimal.valueOf(3), MathContext.DECIMAL128);
+        BigDecimal previousApproximation  = BigDecimal.ZERO;
+        BigDecimal currentApproximation  = new BigDecimal(initialApproximation .toString());
+
+        while (!previousApproximation .equals(currentApproximation )) {
+            previousApproximation  = new BigDecimal(currentApproximation .toString());
+            BigDecimal f = currentApproximation .pow(3).subtract(x, MathContext.DECIMAL128);
+            BigDecimal fPrime = BigDecimal.valueOf(3).multiply(currentApproximation .pow(2), MathContext.DECIMAL128);
+            currentApproximation  = currentApproximation .subtract(f.divide(fPrime, MathContext.DECIMAL128), MathContext.DECIMAL128);
+        }
+
+        return currentApproximation ;
+    }
+
+    /**
+     * Calculates the sine of an angle.
+     *
+     * @param operand The angle in radians or degrees (depending on CALCULATION_MODE).
+     * @return The sine of the angle as a BigDecimal.
+     */
+    public static BigDecimal sin(BigDecimal operand) {
+        BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
+        BigDecimal result;
+
+        if (CALCULATION_MODE.equals("Rad")) {
+            result = new BigDecimal(Math.sin(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                    .setScale(MC.getPrecision(), RoundingMode.DOWN);
+        } else { // if mode equals 'Deg'
+            double radians = Math.toRadians(operandBigDecimal.doubleValue());
+            result = new BigDecimal(Math.sin(radians), MathContext.DECIMAL128)
+                    .setScale(MC.getPrecision(), RoundingMode.DOWN);
+        }
+        return result;
+    }
+
+    /**
+     * Calculates the arcsine (inverse sine) of a value.
+     *
+     * @param operand The value to calculate the arcsine of.
+     * @return The arcsine in radians or degrees (depending on CALCULATION_MODE).
+     * @throws ArithmeticException If the absolute value of the operand is greater than or equal to 1.
+     */
+    public static BigDecimal asin(BigDecimal operand) {
+        if(CALCULATION_MODE.equals("Rad")) {
+            return BigDecimalMath.asin(operand, MathContext.DECIMAL128);
+        } else {
+            return BigDecimalMath.asin(operand, MathContext.DECIMAL128)
+                    .multiply(BigDecimal.valueOf(180))
+                    .divide(BigDecimalMath.pi(MathContext.DECIMAL128), MathContext.DECIMAL128);
+        }
+    }
+
+    /**
+     * Calculates the hyperbolic sine of a value.
+     *
+     * @param operand The value to calculate the hyperbolic sine of.
+     * @return The hyperbolic sine as a BigDecimal.
+     */
+    public static BigDecimal sinh(BigDecimal operand) {
+        return BigDecimalMath.sinh(operand, MathContext.DECIMAL128);
+    }
+
+    /**
+     * Calculates the inverse hyperbolic sine of a value.
+     *
+     * @param operand The value to calculate the inverse hyperbolic sine of.
+     * @return The inverse hyperbolic sine as a BigDecimal.
+     */
+    public static BigDecimal asinh(BigDecimal operand) {
+        return BigDecimalMath.asinh(operand, MathContext.DECIMAL128);
+    }
+
+    /**
+     * Calculates the cosine of an angle.
+     *
+     * @param operand The angle in radians or degrees (depending on CALCULATION_MODE).
+     * @return The cosine of the angle as a BigDecimal.
+     */
+    public static BigDecimal cos(BigDecimal operand) {
+        BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
+        BigDecimal result;
+
+        if (CALCULATION_MODE.equals("Rad")) {
+            result = new BigDecimal(Math.cos(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                    .setScale(MC.getPrecision(), RoundingMode.DOWN);
+        } else { // if mode equals 'Deg'
+            double radians = Math.toRadians(operandBigDecimal.doubleValue());
+            result = new BigDecimal(Math.cos(radians), MathContext.DECIMAL128)
+                    .setScale(MC.getPrecision(), RoundingMode.DOWN);
+        }
+        return result;
+    }
+
+    /**
+     * Calculates the arccosine (inverse cosine) of a value.
+     *
+     * @param operand The value to calculate the arccosine of.
+     * @return The arccosine in radians or degrees (depending on CALCULATION_MODE).
+     * @throws ArithmeticException If the absolute value of the operand is greater than or equal to 1.
+     */
+    public static BigDecimal acos(BigDecimal operand) {
+        if (operand.compareTo(BigDecimal.valueOf(-1)) <= 0 || operand.compareTo(BigDecimal.valueOf(1)) >= 0) {
+            throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
+        }
+
+        if(CALCULATION_MODE.equals("Rad")) {
+            return BigDecimalMath.acos(operand, MathContext.DECIMAL128);
+        } else {
+            return BigDecimalMath.acos(operand, MathContext.DECIMAL128)
+                    .multiply(BigDecimal.valueOf(180))
+                    .divide(BigDecimalMath.pi(MathContext.DECIMAL128), MathContext.DECIMAL128);
+        }
+    }
+
+    /**
+     * Calculates the hyperbolic cosine of a value.
+     *
+     * @param operand The value to calculate the hyperbolic cosine of.
+     * @return The hyperbolic cosine as a BigDecimal.
+     */
+    public static BigDecimal cosh(BigDecimal operand) {
+        return BigDecimalMath.cosh(operand, MathContext.DECIMAL128);
+    }
+
+    /**
+     * Calculates the inverse hyperbolic cosine of a value.
+     *
+     * @param operand The value to calculate the inverse hyperbolic cosine of.
+     * @return The inverse hyperbolic cosine as a BigDecimal.
+     * @throws ArithmeticException If the operand is less than or equal to 1.
+     */
+    public static BigDecimal acosh(BigDecimal operand) {
+        return BigDecimalMath.acos(operand, MathContext.DECIMAL128);
+    }
+
+    /**
+     * Calculates the tangent of an angle.
+     *
+     * @param operand The angle in radians or degrees (depending on CALCULATION_MODE).
+     * @return The tangent of the angle as a BigDecimal.
+     * @throws ArithmeticException If the angle is a multiple of 90 degrees.
+     */
+    public static BigDecimal tan(BigDecimal operand) {
+        BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
+        BigDecimal result;
+
+        if (CALCULATION_MODE.equals("Rad")) {
+            result = new BigDecimal(Math.tan(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                    .setScale(MC.getPrecision(), RoundingMode.DOWN);
+        } else { // if mode equals 'Deg'
+            double degrees = operand.doubleValue();
+            if (isMultipleOf90(degrees)) {
+                // Check if the tangent of multiples of 90 degrees is being calculated
+                throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
+            }
+
+            double radians = Math.toRadians(operandBigDecimal.doubleValue());
+            result = new BigDecimal(Math.tan(radians), MathContext.DECIMAL128)
+                    .setScale(MC.getPrecision(), RoundingMode.DOWN);
+        }
+        return result;
+    }
+
+    /**
+     * Calculates the arctangent (inverse tangent) of a value.
+     *
+     * @param operand The value to calculate the arctangent of.
+     * @return The arctangent in radians or degrees (depending on CALCULATION_MODE).
+     */
+    public static BigDecimal atan(BigDecimal operand) {
+        if(CALCULATION_MODE.equals("Rad")) {
+            return BigDecimalMath.atan(operand, MathContext.DECIMAL128);
+        } else {
+            return BigDecimalMath.atan(operand, MathContext.DECIMAL128)
+                    .multiply(BigDecimal.valueOf(180))
+                    .divide(BigDecimalMath.pi(MathContext.DECIMAL128), MathContext.DECIMAL128);
+        }
+    }
+
+    /**
+     * Calculates the hyperbolic tangent of a value.
+     *
+     * @param operand The value to calculate the hyperbolic tangent of.
+     * @return The hyperbolic tangent as a BigDecimal.
+     */
+    public static BigDecimal tanh(BigDecimal operand) {
+        return BigDecimalMath.tanh(operand, MathContext.DECIMAL128);
+    }
+
+    /**
+     * Calculates the inverse hyperbolic tangent of a value.
+     *
+     * @param operand The value to calculate the inverse hyperbolic tangent of.
+     * @return The inverse hyperbolic tangent as a BigDecimal.
+     * @throws ArithmeticException If the absolute value of the operand is greater than or equal to 1.
+     */
+    public static BigDecimal atanh(BigDecimal operand) {
+        if (operand.compareTo(BigDecimal.valueOf(-1)) <= 0 || operand.compareTo(BigDecimal.valueOf(1)) >= 0) {
+            throw new ArithmeticException(mainActivity.getString(R.string.errorMessage9));
+        }
+
+        return BigDecimalMath.atanh(operand, MathContext.DECIMAL128);
+    }
+
+    /**
+     * Calculates the logarithm of a value with the specified base.
+     *
+     * @param operand The value to calculate the logarithm of.
+     * @param x       The base of the logarithm.
+     * @return The logarithm as a BigDecimal.
+     * @throws IllegalArgumentException If the operand is less than or equal to 0.
+     */
+    public static BigDecimal logX(BigDecimal operand, double x) {
+        if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage9));
+        }
+        BigDecimal logBase = BigDecimal.valueOf(Math.log(x));
+        BigDecimal logValue = BigDecimal.valueOf(Math.log(operand.doubleValue()));
+        return logValue.divide(logBase, MC);
+    }
+
+    /**
+     * Calculates the natural logarithm (base e) of a value.
+     *
+     * @param operand The value to calculate the natural logarithm of.
+     * @return The natural logarithm as a BigDecimal.
+     * @throws IllegalArgumentException If the operand is less than or equal to 0.
+     */
+    public static BigDecimal ln(BigDecimal operand) {
+        if (operand.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage9));
+        }
+        BigDecimal operandBigDecimal = new BigDecimal(String.valueOf(operand), MathContext.DECIMAL128);
+        BigDecimal result = new BigDecimal(Math.log(operandBigDecimal.doubleValue()), MathContext.DECIMAL128)
+                .setScale(MC.getPrecision(), RoundingMode.DOWN);
+        return result;
     }
 }

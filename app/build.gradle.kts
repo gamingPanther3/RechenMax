@@ -10,8 +10,8 @@ android {
         applicationId = "com.mlprograms.rechenmax"
         minSdk = 29
         targetSdk = 34
-        versionCode = 19
-        versionName = "1.6.7"
+        versionCode = 21
+        versionName = "1.7.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/calculatorUI"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.mlprograms.rechenmax.MainActivity">
+    android:id="@+id/calculatorUI">
 
-    <LinearLayout
+    <GridLayout
+        android:id="@+id/calculatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@color/colorLightBackground"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:columnCount="1"
+        android:rowCount="9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/actionBar"
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorLightBackground"
-            android:orientation="horizontal">
+            android:layout_rowWeight="0.1"
+            android:columnCount="8"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/scientificButton"
@@ -81,7 +88,7 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1" />
+                android:layout_columnWeight="1" />
 
             <Button
                 android:id="@+id/convert_button"
@@ -139,26 +146,26 @@
                 android:tag="new_button"
                 android:tooltipText="@string/settings"
                 tools:ignore="RtlHardcoded" />
+        </GridLayout>
 
-        </LinearLayout>
-
-        <HorizontalScrollView
-            android:id="@+id/calculate_scrollview"
+        <GridLayout
+            android:id="@+id/calculate_gridlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:autoSizeMaxTextSize="@dimen/maxTextViewSize"
-            android:autoSizeTextType="uniform"
-            tools:ignore="NestedWeights">
+            android:layout_rowWeight="1"
+            android:columnCount="1"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <!-- change weight from 1 to 1.5 if calculate btn is pressed-->
-
-            <LinearLayout
+            <HorizontalScrollView
+                android:id="@+id/calculate_scrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:gravity="end"
-                android:orientation="horizontal">
+                android:autoSizeMaxTextSize="@dimen/maxTextViewSize"
+                android:autoSizeTextType="uniform"
+                tools:ignore="NestedWeights">
 
                 <TextView
                     android:id="@+id/calculate_label"
@@ -166,33 +173,39 @@
                     android:layout_height="match_parent"
                     android:ellipsize="none"
                     android:gravity="end|top"
+                    android:layout_gravity="end"
                     android:paddingStart="80sp"
                     android:paddingEnd="10sp"
                     android:singleLine="true"
                     android:text="@string/calculate_label"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
-            </LinearLayout>
-        </HorizontalScrollView>
+            </HorizontalScrollView>
+        </GridLayout>
 
-        <HorizontalScrollView
-            android:id="@+id/result_scrollview"
+        <GridLayout
+            android:id="@+id/result_gridlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="end|top"
-            android:layout_weight="1">
+            android:layout_rowWeight="1"
+            android:columnCount="1"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:id="@+id/result_scrollview"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="end|top">
+                android:layout_gravity="end">
 
                 <TextView
                     android:id="@+id/result_label"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="start|top"
+                    android:gravity="top|end"
+                    android:layout_gravity="end"
                     android:minHeight="70dp"
                     android:paddingStart="10sp"
                     android:paddingEnd="10sp"
@@ -201,32 +214,26 @@
                     android:textSize="45sp"
                     android:singleLine="true"
                     android:ellipsize="none" />
+            </HorizontalScrollView>
+        </GridLayout>
 
-            </LinearLayout>
-        </HorizontalScrollView>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/button_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="7"
-        android:orientation="vertical">
-
-        <LinearLayout
+        <GridLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.02"
-            android:background="@color/colorLightBackground"
-            tools:ignore="NestedWeights">
+            android:layout_rowWeight="0.3"
+            android:columnCount="3"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/emptyclipboard"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/button_text_sizes"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
@@ -239,14 +246,12 @@
             <Button
                 android:id="@+id/pastefromclipboard"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/button_text_sizes"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="MR"
                 android:text="@string/PasteFromClipboardButton"
@@ -257,106 +262,100 @@
             <Button
                 android:id="@+id/copytoclipboard"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:autoSizePresetSizes="@array/button_text_sizes"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="MS"
                 android:text="@string/CopyToClipBoardButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:textSize="@dimen/calcButtonTextSize"
                 android:tooltipText="@string/copyNumber" />
-        </LinearLayout>
+        </GridLayout>
 
-        <LinearLayout
-            android:id="@+id/scientificRow11"
+        <GridLayout
+            android:id="@+id/scientificRow21"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.02"
-            android:background="@color/colorLightBackground"
-            android:orientation="horizontal"
-            android:visibility="visible">
+            android:layout_rowWeight="0.3"
+            android:columnCount="3"
+            android:rowCount="1"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/asinus"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/asin"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="@dimen/calcButtonTextSize2"
                 android:tooltipText="@string/inverseSine" />
 
             <Button
                 android:id="@+id/acosinus"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="cos"
                 android:text="@string/acos"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="@dimen/calcButtonTextSize2"
                 android:tooltipText="@string/inverseCosine" />
 
             <Button
                 android:id="@+id/atangens"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/atan"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:textSize="@dimen/calcButtonTextSize2"
                 android:tooltipText="@string/inverseTangent" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/scientificRow21"
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/scientificRow11"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.02"
-            android:background="@color/colorLightBackground"
-            android:orientation="horizontal"
-            android:visibility="visible">
+            android:layout_rowWeight="0.3"
+            android:columnCount="5"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/sinus"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="0.5"
+                android:layout_columnWeight="1.3"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/sin"
@@ -366,14 +365,12 @@
             <Button
                 android:id="@+id/cosinus"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2.1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1.4"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="cos"
                 android:text="@string/cos"
@@ -383,14 +380,12 @@
             <Button
                 android:id="@+id/tangens"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1.3"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/tan"
@@ -400,14 +395,12 @@
             <Button
                 android:id="@+id/е"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="0.1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="eulersnumber"
                 android:text="@string/е"
@@ -417,42 +410,41 @@
             <Button
                 android:id="@+id/pi"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="0.1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="pi"
                 android:text="@string/pi"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/piWord" />
-        </LinearLayout>
 
-        <LinearLayout
+        </GridLayout>
+
+        <GridLayout
             android:id="@+id/scientificRow12"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.02"
-            android:background="@color/colorLightBackground"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_rowWeight="0.3"
+            android:columnCount="3"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/sinush"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/sinh"
@@ -462,14 +454,12 @@
             <Button
                 android:id="@+id/cosinush"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2.1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="cos"
                 android:text="@string/cosh"
@@ -479,102 +469,98 @@
             <Button
                 android:id="@+id/tangensh"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/tanh"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="hyperbolische Tangensfunktion" />
-        </LinearLayout>
+                android:tooltipText="@string/hyperbolicTangent" />
+        </GridLayout>
 
-        <LinearLayout
+        <GridLayout
             android:id="@+id/scientificRow22"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.02"
-            android:background="@color/colorLightBackground"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_rowWeight="0.3"
+            android:columnCount="5"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/asinush"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/asinh"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="inverse hyperbolische Sinusfunktion" />
+                android:tooltipText="@string/inverseHyperbolicSinefunction" />
 
             <Button
                 android:id="@+id/acosinush"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2.1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="cos"
                 android:text="@string/acosh"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="inverse hyperbolische Cosinusfunktion" />
+                android:tooltipText="@string/inverseHyperbolicCosinefunction" />
 
             <Button
                 android:id="@+id/atangensh"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/atanh"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="inverse hyperbolische Tangensfunktion" />
-        </LinearLayout>
+                android:tooltipText="@string/inverseHyperbolicTangentfunction" />
+        </GridLayout>
 
-        <LinearLayout
+        <GridLayout
             android:id="@+id/scientificRow13"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.02"
-            android:background="@color/colorLightBackground"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_rowWeight="0.3"
+            android:columnCount="4"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/log"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="sin"
                 android:text="@string/log"
@@ -584,14 +570,12 @@
             <Button
                 android:id="@+id/log2x"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="cos"
                 android:text="@string/log2x"
@@ -601,14 +585,12 @@
             <Button
                 android:id="@+id/logxx"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/logxx"
@@ -618,41 +600,40 @@
             <Button
                 android:id="@+id/ln"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/ln"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/naturalLogarithmFunction" />
-        </LinearLayout>
+        </GridLayout>
 
-        <LinearLayout
+        <GridLayout
             android:id="@+id/scientificRow23"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.02"
-            android:background="@color/colorLightBackground"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_rowWeight="0.3"
+            android:columnCount="5"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/e"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="e"
                 android:text="@string/e"
@@ -662,77 +643,70 @@
             <Button
                 android:id="@+id/half"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/half"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="Hälfte (0,5)" />
+                android:tooltipText="@string/halfButtonText" />
 
             <Button
                 android:id="@+id/third"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/third"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="Drittel (0,333)" />
+                android:tooltipText="@string/thirdButtonText" />
 
             <Button
                 android:id="@+id/quarter"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="2"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:background="@color/colorBTNBackgroundAccent"
                 android:tag="tan"
                 android:text="@string/quarter"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="Viertel (0,25)" />
-        </LinearLayout>
+                android:tooltipText="@string/quarterButtonText" />
+        </GridLayout>
 
-        <LinearLayout
+        <GridLayout
             android:id="@+id/scientificRow3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.02"
-            android:background="@color/colorLightBackground"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:columnCount="6"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/clipOn"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="("
                 android:text="@string/clipOn"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -742,14 +716,12 @@
                 android:id="@+id/clipOff"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.8"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag=")"
                 android:text="@string/clipOff"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -759,14 +731,12 @@
                 android:id="@+id/faculty"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="!x"
                 android:text="@string/x"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -776,14 +746,12 @@
                 android:id="@+id/power"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:background="@color/colorBTNBackgroundAccent"
                 android:tag="^"
                 android:text="@string/power"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -793,15 +761,13 @@
                 android:id="@+id/root"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:tag="^"
+                android:tag="√"
                 android:text="@string/root"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/squareroot" />
@@ -810,39 +776,38 @@
                 android:id="@+id/thirdRoot"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_columnWeight="1"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_weight="1.1"
-                android:layout_marginEnd="5dp"
-                android:layout_gravity="center_horizontal|center_vertical"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:tag="thirdroot"
+                android:tag="³√"
                 android:text="@string/three_root"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="Kubik Wurzel" />
-        </LinearLayout>
+                android:tooltipText="@string/three_root" />
+        </GridLayout>
 
-        <LinearLayout
+        <GridLayout
             android:id="@+id/standardButtonsLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorLightBackground"
-            android:layout_weight="1">
+            android:layout_rowWeight="1"
+            android:columnCount="4"
+            android:rowCount="5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
                 android:id="@+id/clearresult"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="CE"
                 android:text="@string/ClearResultLabel"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -851,14 +816,12 @@
             <Button
                 android:id="@+id/clearall"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="C"
                 android:text="@string/ClearAllButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -867,14 +830,12 @@
             <Button
                 android:id="@+id/backspace"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="⌫"
                 android:text="@string/BackspaceButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -883,37 +844,26 @@
             <Button
                 android:id="@+id/divide"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="÷"
                 android:text="@string/DivideButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/divide" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/seven"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="7"
                 android:text="@string/SevenButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -921,14 +871,12 @@
             <Button
                 android:id="@+id/eight"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="8"
                 android:text="@string/EightButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -936,14 +884,12 @@
             <Button
                 android:id="@+id/nine"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="9"
                 android:text="@string/NineButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -951,37 +897,26 @@
             <Button
                 android:id="@+id/multiply"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="×"
                 android:text="@string/MultiplyButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/multiply" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/four"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="4"
                 android:text="@string/FourButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -989,14 +924,12 @@
             <Button
                 android:id="@+id/five"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="5"
                 android:text="@string/FiveButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -1004,14 +937,12 @@
             <Button
                 android:id="@+id/six"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="6"
                 android:text="@string/SixButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -1019,37 +950,26 @@
             <Button
                 android:id="@+id/subtract"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="-"
                 android:text="@string/SubtractButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/subtract" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/one"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="1"
                 android:text="@string/OneButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -1057,14 +977,12 @@
             <Button
                 android:id="@+id/two"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="2"
                 android:text="@string/TwoButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -1072,14 +990,12 @@
             <Button
                 android:id="@+id/three"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="3"
                 android:text="@string/ThreeButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -1087,54 +1003,40 @@
             <Button
                 android:id="@+id/add"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="+"
                 android:text="@string/AddButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/add" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/colorLightBackground">
 
             <Button
                 android:id="@+id/negative"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="+-"
                 android:text="@string/NegativButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/negate" />
-
-
+            
             <Button
                 android:id="@+id/zero"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="0"
                 android:text="@string/ZeroButton"
                 android:textColor="@color/colorBTNForegroundAccent" />
@@ -1142,14 +1044,12 @@
             <Button
                 android:id="@+id/comma"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag=","
                 android:text="@string/commaButton"
                 android:textColor="@color/colorBTNForegroundAccent"
@@ -1159,23 +1059,21 @@
             <Button
                 android:id="@+id/calculate"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="@dimen/maxButtonSize"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal|center_vertical"
                 android:tag="="
                 android:text="@string/CalculateButton"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/calculate" />
-        </LinearLayout>
-    </LinearLayout>
+        </GridLayout>
 
-    <FrameLayout
-        android:id="@+id/postsFrameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/postsFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

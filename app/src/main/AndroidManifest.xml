@@ -78,9 +78,9 @@
             android:name=".MainActivity"
             android:exported="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
-            android:supportsPictureInPicture="true"
-            android:resizeableActivity="true"
-            android:screenOrientation="portrait">
+            android:supportsPictureInPicture="false"
+            android:resizeableActivity="false"
+            android:screenOrientation="fullUser">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

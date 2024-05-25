@@ -489,8 +489,8 @@ public class HistoryActivity extends AppCompatActivity {
         resultTextView.setOnClickListener(new ClickListener() {
             @Override
             public void onSingleClick(View v) {
-                final String calculationText = calculationTextView.getText().toString();
-                final String resultText = resultTextView.getText().toString();
+                final String calculationText = calculationTextView.getText().toString().replace(" ", "");
+                final String resultText = resultTextView.getText().toString().replace(" ", "");
 
                 try {
                     dataManager.saveToJSONSettings("calculate_text", calculationText.replace("=", ""), getMainActivityContext());
@@ -508,8 +508,8 @@ public class HistoryActivity extends AppCompatActivity {
         calculationTextView.setOnClickListener(new ClickListener() {
             @Override
             public void onSingleClick(View v) {
-                final String calculationText = calculationTextView.getText().toString();
-                final String resultText = resultTextView.getText().toString();
+                final String calculationText = calculationTextView.getText().toString().replace(" ", "");
+                final String resultText = resultTextView.getText().toString().replace(" ", "");
 
                 try {
                     dataManager.saveToJSONSettings("calculate_text", calculationText.replace("=", ""), getMainActivityContext());
@@ -662,7 +662,7 @@ public class HistoryActivity extends AppCompatActivity {
         calculationTextView.setOnClickListener(new ClickListener() {
             @Override
             public void onSingleClick(View v) {
-                final String calculationText = calculationTextView.getText().toString();
+                final String calculationText = calculationTextView.getText().toString().replace(" ", "");
                 String[] parts = calculationText.split("=");
 
                 try {
@@ -912,8 +912,8 @@ public class HistoryActivity extends AppCompatActivity {
         resultTextView.setOnClickListener(new ClickListener() {
             @Override
             public void onSingleClick(View v) {
-                final String calculationText = calculationTextView.getText().toString();
-                final String resultText = resultTextView.getText().toString();
+                final String calculationText = calculationTextView.getText().toString().replace(" ", "");
+                final String resultText = resultTextView.getText().toString().replace(" ", "");
 
                 try {
                     dataManager.saveToJSONSettings("calculate_text", calculationText.replace("=", ""), getMainActivityContext());
@@ -931,8 +931,8 @@ public class HistoryActivity extends AppCompatActivity {
         calculationTextView.setOnClickListener(new ClickListener() {
             @Override
             public void onSingleClick(View v) {
-                final String calculationText = calculationTextView.getText().toString();
-                final String resultText = resultTextView.getText().toString();
+                final String calculationText = calculationTextView.getText().toString().replace(" ", "");
+                final String resultText = resultTextView.getText().toString().replace(" ", "");
 
                 try {
                     dataManager.saveToJSONSettings("calculate_text", calculationText.replace("=", ""), getMainActivityContext());
@@ -1077,7 +1077,7 @@ public class HistoryActivity extends AppCompatActivity {
         calculationTextView.setOnClickListener(new ClickListener() {
             @Override
             public void onSingleClick(View v) {
-                final String calculationText = calculationTextView.getText().toString();
+                final String calculationText = calculationTextView.getText().toString().replace(" ", "");
                 String[] parts = calculationText.split("=");
 
                 try {

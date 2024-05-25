@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <array name="button_text_sizes">
+        <item>1sp</item>
+        <item>5sp</item>
+        <item>10sp</item>
+        <item>15sp</item>
+        <item>20sp</item>
+        <item>25sp</item>
+        <item>30sp</item>
+    </array>
+
+    <array name="button_text_sizes_science">
+        <item>1sp</item>
+        <item>5sp</item>
+        <item>10sp</item>
+        <item>15sp</item>
+        <item>20sp</item>
+        <item>25sp</item>
+        <item>27sp</item>
+    </array>
+
+    <array name="button_text_sizes_science2">
+        <item>1sp</item>
+        <item>5sp</item>
+        <item>10sp</item>
+        <item>15sp</item>
+        <item>20sp</item>
+        <item>25sp</item>
+    </array>
+
+    <array name="button_text_sizes_science3">
+        <item>1sp</item>
+        <item>5sp</item>
+        <item>10sp</item>
+        <item>15sp</item>
+        <item>20sp</item>
+    </array>
+
     <array name="auto_text_sizes_calculatorui_3">
         <item>40sp</item>
         <item>45sp</item>
