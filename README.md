@@ -29,12 +29,32 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Um den Winkel zu finden, dessen Cosinus 0,707 ist, geben Sie cos⁻¹(0.707) ein.
   - Beispiel: Um den Winkel zu finden, dessen Tangens 1,732 ist, geben Sie tan⁻¹(1.732) ein.
 
+- **Kombinatorische Funktionen**: Nutzen Sie kombinatorische Funktionen wie Permutationen (nPr) und Kombinationen (nCr).
+  - Beispiel: Um die Anzahl der Permutationen von 5 Objekten, 3 auf einmal, zu berechnen, geben Sie 5 nPr 3 ein.
+  - Beispiel: Um die Anzahl der Kombinationen von 5 Objekten, 3 auf einmal, zu berechnen, geben Sie 5 nCr 3 ein.
+
+- **Prozentrechnung**: Berechnen Sie Prozentsätze (%).
+  - Beispiel: Um 20 % von 50 zu berechnen, geben Sie 50 % 20 ein.
+
+- **Restwertberechnung**: Berechnen Sie den Restwert einer Division (modulo) mit dem Modulo-Operator (;).
+  - Beispiel: Um den Restwert von 7 geteilt durch 3 zu berechnen, geben Sie 7 ; 3 ein.
+
+- **Zufallszahlengenerierung**: Generieren Sie Zufallszahlen mit RanInt (Zufalls-Integer) und Ran# (Zufalls-Gleitkommazahl).
+  - Beispiel: Um eine Zufallszahl zwischen 1 und 10 zu generieren, geben Sie RanInt(1, 10) ein.
+  - Beispiel: Um eine Zufallszahl zwischen 0 und 1 zu generieren, geben Sie Ran#() ein.
+
+- **Polarkoordinatenumrechnung**: Konvertieren Sie zwischen kartesischen und Polarkoordinaten mit Pol.
+  - Beispiel: Um kartesische Koordinaten (3, 4) in Polarkoordinaten zu konvertieren, geben Sie Pol(3, 4) ein.
+
+- **Rechteck-Koordinatenumrechnung**: Konvertieren Sie zwischen kartesischen und rechteckigen Koordinaten mit Rec.
+  - Beispiel: Um Polarkoordinaten (5, 53.13) in kartesische Koordinaten zu konvertieren, geben Sie Rec(5, 53.13) ein.
+
 <div align="center">
-  <img src="pictures/RM1.png" alt="RechenMaxBild1" width="200"/>
-  <img src="pictures/RM2.png" alt="RechenMaxBild2" width="200"/>
-  <img src="pictures/RM3.png" alt="RechenMaxBild3" width="200"/>
-  <img src="pictures/RM4.png" alt="RechenMaxBild4" width="200"/>
-  <img src="pictures/RM5.png" alt="RechenMaxBild5" width="200"/>
+  <img src="pictures/RM1.png" alt="RechenMaxBild1" width="150"/>
+  <img src="pictures/RM2.png" alt="RechenMaxBild2" width="150"/>
+  <img src="pictures/RM3.png" alt="RechenMaxBild3" width="150"/>
+  <img src="pictures/RM4.png" alt="RechenMaxBild4" width="150"/>
+  <img src="pictures/RM5.png" alt="RechenMaxBild5" width="150"/>
 </div>  
 
 - **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen wie Sinus, Cosinus, Tangens oder Pi zu nutzen.
@@ -50,11 +70,11 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
 
 <div align="center">
-  <img src="pictures/RM6.png" alt="RechenMaxBild6" width="200"/>
-  <img src="pictures/RM7.png" alt="RechenMaxBild7" width="200"/>
-  <img src="pictures/RM8.png" alt="RechenMaxBild8" width="200"/>
-  <img src="pictures/RM9.png" alt="RechenMaxBild9" width="200"/>
-  <img src="pictures/RM10.png" alt="RechenMaxBild10" width="200"/>
+  <img src="pictures/RM6.png" alt="RechenMaxBild6" width="150"/>
+  <img src="pictures/RM7.png" alt="RechenMaxBild7" width="150"/>
+  <img src="pictures/RM8.png" alt="RechenMaxBild8" width="150"/>
+  <img src="pictures/RM9.png" alt="RechenMaxBild9" width="150"/>
+  <img src="pictures/RM10.png" alt="RechenMaxBild10" width="150"/>
 </div>
 
 ### Verwendung
