@@ -17,9 +17,7 @@ package com.mlprograms.rechenmax;
  */
 
 import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_BACKGROUND;
-import static com.mlprograms.rechenmax.CalculatorEngine.calculate;
 import static com.mlprograms.rechenmax.CalculatorEngine.fixExpression;
-import static com.mlprograms.rechenmax.CalculatorEngine.isFunction;
 import static com.mlprograms.rechenmax.CalculatorEngine.isOperator;
 import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
@@ -622,16 +620,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(PERMUTATION);
+                addCalculateText(PERMUTATION);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -651,16 +646,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(BINOMIAL_COEFFICIENT);
+                addCalculateText(BINOMIAL_COEFFICIENT);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -680,16 +672,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(POL);
+                addCalculateText(POL);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -709,16 +698,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(REC);
 
-                    addCalculateTextWithoutSpace(REC);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -738,16 +723,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(RAN_INT);
+                addCalculateText(RAN_INT);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -767,16 +749,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(PERCENT);
+                addCalculateText(PERCENT);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -796,16 +775,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(RAN_SHARP);
 
-                    addCalculateTextWithoutSpace(RAN_SHARP);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -825,16 +800,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(SEMICOLON);
+                addCalculateText(SEMICOLON);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1447,16 +1419,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(SINE);
 
-                    addCalculateTextWithoutSpace(SINE);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1481,16 +1449,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(SINE_H);
 
-                    addCalculateTextWithoutSpace(SINE_H);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1514,16 +1478,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(A_SINE);
 
-                    addCalculateTextWithoutSpace(A_SINE);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1547,16 +1507,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(A_SINE_H);
 
-                    addCalculateTextWithoutSpace(A_SINE_H);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1580,16 +1536,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(COSINE);
 
-                    addCalculateTextWithoutSpace(COSINE);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1613,16 +1565,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(COSINE_H);
+                addCalculateText(COSINE_H);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1646,16 +1595,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(A_COSINE);
+                addCalculateText(A_COSINE);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1679,16 +1625,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
 
-                    addCalculateTextWithoutSpace(A_COSINE_H);
+                addCalculateText(A_COSINE_H);
 
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1712,16 +1655,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(TANGENT);
 
-                    addCalculateTextWithoutSpace(TANGENT);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1745,16 +1684,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(TANGENT_H);
 
-                    addCalculateTextWithoutSpace(TANGENT_H);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1778,16 +1713,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(A_TANGENT);
 
-                    addCalculateTextWithoutSpace(A_TANGENT);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1811,16 +1742,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(A_TANGENT_H);
 
-                    addCalculateTextWithoutSpace(A_TANGENT_H);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1838,7 +1765,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * This method performs the action of adding "log(" to the calculation text.
      * It checks if the "logX" flag is false in the JSON file, indicating that the logarithm function is not currently selected.
-     * If the mode is not in "eNotation", it proceeds to add "log(" to the calculation text.
      * The method handles cases where the calculation text is empty or not, and whether to add "log(" with or without spaces depending on the calculation mode.
      * It also scrolls to the bottom of the scroll view if it exists.
      * After adding "log(" to the calculation text, it formats the result text accordingly.
@@ -1848,16 +1774,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(LOG);
 
-                    addCalculateTextWithoutSpace(LOG);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1881,16 +1803,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(LOG2);
 
-                    addCalculateTextWithoutSpace(LOG2);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1916,17 +1834,13 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                dataManager.saveToJSONSettings("logX", "true", getApplicationContext());
+                addCalculateText(LOG_X);
 
-                    dataManager.saveToJSONSettings("logX", "true", getApplicationContext());
-                    addCalculateTextWithoutSpace(LOG_X);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1950,16 +1864,12 @@ public class MainActivity extends AppCompatActivity {
             resetIfPressedCalculate();
 
             if(dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("false")) {
-                final String mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-                if (mode.equals("false")) {
-                    checkCalculateText();
+                checkCalculateText();
+                addCalculateText(LN);
 
-                    addCalculateTextWithoutSpace(LN);
-
-                    // Scroll to the bottom of the scroll view if it exists
-                    if (findViewById(R.id.calculate_scrollview) != null) {
-                        scrollToStart(findViewById(R.id.calculate_scrollview));
-                    }
+                // Scroll to the bottom of the scroll view if it exists
+                if (findViewById(R.id.calculate_scrollview) != null) {
+                    scrollToStart(findViewById(R.id.calculate_scrollview));
                 }
             }
 
@@ -1983,7 +1893,7 @@ public class MainActivity extends AppCompatActivity {
     private void еAction() {
         dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
         // Check if logarithmic mode is disabled
-        addCalculateTextWithoutSpace("е");
+        addCalculateText("е");
         setResultText(CalculatorEngine.calculate(getCalculateText()));
 
         if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2003,7 +1913,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
         // Check if logarithmic mode is disabled
 
-        addCalculateTextWithoutSpace("π");
+        addCalculateText("π");
 
         setResultText(CalculatorEngine.calculate(getCalculateText()));
         if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2031,7 +1941,7 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        addCalculateTextWithoutSpace("(");
+        addCalculateText("(");
 
         if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
             setResultText(CalculatorEngine.calculate(getCalculateText()));
@@ -2058,7 +1968,7 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
 
-        addCalculateTextWithoutSpace(")");
+        addCalculateText(")");
 
         if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
             setResultText(CalculatorEngine.calculate(getCalculateText()));
@@ -2080,9 +1990,9 @@ public class MainActivity extends AppCompatActivity {
     private void factorial() {
         try {
             if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
-                addCalculateTextWithoutSpace(getResultText() + "!");
+                addCalculateText(getResultText() + "!");
             } else {
-                addCalculateTextWithoutSpace("!");
+                addCalculateText("!");
             }
 
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2105,11 +2015,11 @@ public class MainActivity extends AppCompatActivity {
         try {
             if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
                 dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-                addCalculateTextWithoutSpace(getResultText() + "^");
+                addCalculateText(getResultText() + "^");
                 return;
             }
 
-            addCalculateTextWithoutSpace("^");
+            addCalculateText("^");
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
                 setResultText(CalculatorEngine.calculate(getCalculateText()));
             } else {
@@ -2132,7 +2042,7 @@ public class MainActivity extends AppCompatActivity {
                 setResultText("0");
                 dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
             }
-            addCalculateTextWithoutSpace("√(");
+            addCalculateText("√(");
 
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
                 setResultText(CalculatorEngine.calculate(getCalculateText()));
@@ -2157,7 +2067,7 @@ public class MainActivity extends AppCompatActivity {
                 dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
             }
 
-            addCalculateTextWithoutSpace("³√(");
+            addCalculateText("³√(");
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
                 setResultText(CalculatorEngine.calculate(getCalculateText()));
             } else {
@@ -2174,7 +2084,6 @@ public class MainActivity extends AppCompatActivity {
      * This method performs the action of adding "½" (half) to the calculation text.
      * It first checks the calculation mode, and if it's "Vereinfacht" (simplified), it directly adds "½" without spaces and calculates the result.
      * If the calculation mode is not "Vereinfacht", it checks if the logarithm function is not selected ("logX" is false).
-     * Then, it checks if the current mode is not "eNotation" to proceed with adding "½" to the calculation text accordingly.
      * It sets flags for removing the value and rotating the operator and scrolls to the bottom of the scroll view if it exists.
      * After adding "½" to the calculation text, it formats the result text accordingly.
      */
@@ -2190,7 +2099,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-            addCalculateTextWithoutSpace("½");
+            addCalculateText("½");
             setResultText(CalculatorEngine.calculate(getCalculateText()));
 
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2221,7 +2130,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-            addCalculateTextWithoutSpace("⅓");
+            addCalculateText("⅓");
             setResultText(CalculatorEngine.calculate(getCalculateText()));
 
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2252,7 +2161,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-            addCalculateTextWithoutSpace("¼");
+            addCalculateText("¼");
             setResultText(CalculatorEngine.calculate(getCalculateText()));
 
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2283,7 +2192,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-            addCalculateTextWithoutSpace("⅕");
+            addCalculateText("⅕");
             setResultText(CalculatorEngine.calculate(getCalculateText()));
 
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2314,7 +2223,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-            addCalculateTextWithoutSpace("⅒");
+            addCalculateText("⅒");
             setResultText(CalculatorEngine.calculate(getCalculateText()));
 
             if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2764,10 +2673,10 @@ public class MainActivity extends AppCompatActivity {
             if (dataManager.getJSONSettingsData("logX", getApplicationContext()).getString("value").equals("true")) {
                 //dataManager.saveToJSONSettings("logX", "false", getApplicationContext());
                 String small_number = convertToSmallNumber(Integer.parseInt(num));
-                addCalculateTextWithoutSpace(small_number);
+                addCalculateText(small_number);
                 //addCalculateTextWithoutSpace("(");
             } else {
-                addCalculateTextWithoutSpace(num);
+                addCalculateText(num);
             }
 
             final String calculate_text = CalculatorEngine.calculate(balanceParentheses(getCalculateText()));
@@ -2809,32 +2718,25 @@ public class MainActivity extends AppCompatActivity {
      * @param c The operation to be performed. This can be "MC" to clear the clipboard, "MR" to retrieve data from the clipboard, or "MS" to save data to the clipboard.
      */
     public void ClipboardAction(final String c) {
-        final String mode;
-        try {
-            mode = dataManager.getJSONSettingsData("eNotation", getApplicationContext()).getString("value");
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        if (mode.equals("false")) {
-            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            switch (c) {
-                case "MC": {
-                    ClipData clipData = ClipData.newPlainText("", "");
-                    clipboardManager.setPrimaryClip(clipData);
-                    showToastLong(getString(R.string.clipboardCleared), getApplicationContext());
-                    break;
-                }
-                case "MR":
-                    handleMRAction(clipboardManager);
-                    break;
-                case "MS": {
-                    ClipData clipData = ClipData.newPlainText("", getResultText());
-                    clipboardManager.setPrimaryClip(clipData);
-                    showToastShort(getString(R.string.savedvalue), getApplicationContext());
-                    break;
-                }
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        switch (c) {
+            case "MC": {
+                ClipData clipData = ClipData.newPlainText("", "");
+                clipboardManager.setPrimaryClip(clipData);
+                showToastLong(getString(R.string.clipboardCleared), getApplicationContext());
+                break;
+            }
+            case "MR":
+                handleMRAction(clipboardManager);
+                break;
+            case "MS": {
+                ClipData clipData = ClipData.newPlainText("", getResultText());
+                clipboardManager.setPrimaryClip(clipData);
+                showToastShort(getString(R.string.savedvalue), getApplicationContext());
+                break;
             }
         }
+
         formatResultTextAfterTyping();
 
         if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -2866,7 +2768,7 @@ public class MainActivity extends AppCompatActivity {
         String clipText = (String) item.getText();
 
         if(!clipText.isEmpty()) {
-            addCalculateTextWithoutSpace(clipText.replace(" ", ""));
+            addCalculateText(clipText.replace(" ", ""));
             showToastShort(getString(R.string.pastedClipboard), getApplicationContext());
         }
 
@@ -2886,10 +2788,10 @@ public class MainActivity extends AppCompatActivity {
         final String new_op = op.replace("*", "×").replace("/", "÷");
         try {
             if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
-                addCalculateTextWithoutSpace(getResultText() + new_op);
+                addCalculateText(getResultText() + new_op);
                 return;
             }
-            addCalculateTextWithoutSpace(new_op);
+            addCalculateText(new_op);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -3022,7 +2924,7 @@ public class MainActivity extends AppCompatActivity {
     public void NegativAction() {
         dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
 
-        addCalculateTextWithoutSpace("-");
+        addCalculateText("-");
 
         if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
             setResultText(CalculatorEngine.calculate(getCalculateText()));
@@ -3038,7 +2940,7 @@ public class MainActivity extends AppCompatActivity {
      * It adds a comma to the result text if it does not already contain a comma.
      */
     public void CommaAction() {
-        addCalculateTextWithoutSpace(",");
+        addCalculateText(",");
         dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
 
         if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
@@ -3560,11 +3462,6 @@ public class MainActivity extends AppCompatActivity {
     }
     @SuppressLint("SetTextI18n")
     public void addCalculateText(final String s) {
-        TextView calculatetext = findViewById(R.id.calculate_label);
-        calculatetext.setText(getCalculateText() + " " + s);
-    }
-    @SuppressLint("SetTextI18n")
-    public void addCalculateTextWithoutSpace(final String s) {
         TextView calculatetext = findViewById(R.id.calculate_label);
         calculatetext.setText(getCalculateText() + s);
     }

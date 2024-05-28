@@ -390,7 +390,6 @@ public class DataManager {
             initializeSetting("calculate_text", "", applicationContext);
             initializeSetting("lastop", "+", applicationContext);
             initializeSetting("isNotation", "false", applicationContext);
-            initializeSetting("eNotation", "false", applicationContext);
             initializeSetting("showShiftRow", "false", applicationContext);
             initializeSetting("showPatchNotes", "false", applicationContext);
             initializeSetting("shiftRow", "1", applicationContext);
