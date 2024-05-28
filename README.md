@@ -70,11 +70,11 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
 
 <div align="center">
-  <img src="pictures/RM6.png" alt="RechenMaxBild6" width="200"/>
-  <img src="pictures/RM7.png" alt="RechenMaxBild7" width="200"/>
-  <img src="pictures/RM8.png" alt="RechenMaxBild8" width="200"/>
-  <img src="pictures/RM9.png" alt="RechenMaxBild9" width="200"/>
-  <img src="pictures/RM10.png" alt="RechenMaxBild10" width="200"/>
+  <img src="pictures/RM6.png" alt="RechenMaxBild6" width="190"/>
+  <img src="pictures/RM7.png" alt="RechenMaxBild7" width="190"/>
+  <img src="pictures/RM8.png" alt="RechenMaxBild8" width="190"/>
+  <img src="pictures/RM9.png" alt="RechenMaxBild9" width="190"/>
+  <img src="pictures/RM10.png" alt="RechenMaxBild10" width="190"/>
 </div>
 
 ### Verwendung
