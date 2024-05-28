@@ -50,11 +50,11 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Um Polarkoordinaten (5, 53.13) in kartesische Koordinaten zu konvertieren, geben Sie Rec(5, 53.13) ein.
 
 <div align="center">
-  <img src="pictures/RM1.png" alt="RechenMaxBild1" width="170"/>
-  <img src="pictures/RM2.png" alt="RechenMaxBild2" width="170"/>
-  <img src="pictures/RM3.png" alt="RechenMaxBild3" width="170"/>
-  <img src="pictures/RM4.png" alt="RechenMaxBild4" width="170"/>
-  <img src="pictures/RM5.png" alt="RechenMaxBild5" width="170"/>
+  <img src="pictures/RM1.png" alt="RechenMaxBild1" width="150"/>
+  <img src="pictures/RM2.png" alt="RechenMaxBild2" width="150"/>
+  <img src="pictures/RM3.png" alt="RechenMaxBild3" width="150"/>
+  <img src="pictures/RM4.png" alt="RechenMaxBild4" width="150"/>
+  <img src="pictures/RM5.png" alt="RechenMaxBild5" width="150"/>
 </div>  
 
 - **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen wie Sinus, Cosinus, Tangens oder Pi zu nutzen.
@@ -70,11 +70,11 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
 
 <div align="center">
-  <img src="pictures/RM6.png" alt="RechenMaxBild6" width="170"/>
-  <img src="pictures/RM7.png" alt="RechenMaxBild7" width="170"/>
-  <img src="pictures/RM8.png" alt="RechenMaxBild8" width="170"/>
-  <img src="pictures/RM9.png" alt="RechenMaxBild9" width="170"/>
-  <img src="pictures/RM10.png" alt="RechenMaxBild10" width="170"/>
+  <img src="pictures/RM6.png" alt="RechenMaxBild6" width="150"/>
+  <img src="pictures/RM7.png" alt="RechenMaxBild7" width="150"/>
+  <img src="pictures/RM8.png" alt="RechenMaxBild8" width="150"/>
+  <img src="pictures/RM9.png" alt="RechenMaxBild9" width="150"/>
+  <img src="pictures/RM10.png" alt="RechenMaxBild10" width="150"/>
 </div>
 
 ### Verwendung
