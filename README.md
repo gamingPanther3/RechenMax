@@ -50,11 +50,11 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Um Polarkoordinaten (5, 53.13) in kartesische Koordinaten zu konvertieren, geben Sie Rec(5, 53.13) ein.
 
 <div align="center">
-  <img src="pictures/RM1.png" alt="RechenMaxBild1" width="170"/>
-  <img src="pictures/RM2.png" alt="RechenMaxBild2" width="170"/>
-  <img src="pictures/RM3.png" alt="RechenMaxBild3" width="170"/>
-  <img src="pictures/RM4.png" alt="RechenMaxBild4" width="170"/>
-  <img src="pictures/RM5.png" alt="RechenMaxBild5" width="170"/>
+  <img src="pictures/RM1.png" alt="RechenMaxBild1" width="190"/>
+  <img src="pictures/RM2.png" alt="RechenMaxBild2" width="190"/>
+  <img src="pictures/RM3.png" alt="RechenMaxBild3" width="190"/>
+  <img src="pictures/RM4.png" alt="RechenMaxBild4" width="190"/>
+  <img src="pictures/RM5.png" alt="RechenMaxBild5" width="190"/>
 </div>  
 
 - **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen wie Sinus, Cosinus, Tangens oder Pi zu nutzen.
