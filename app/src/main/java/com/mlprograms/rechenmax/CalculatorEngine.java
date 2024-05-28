@@ -990,6 +990,7 @@ public class CalculatorEngine {
      */
     public static boolean isSymbol(final String character) {
         return (String.valueOf(character).equals("¼") || String.valueOf(character).equals("⅓") || String.valueOf(character).equals("½") ||
+                String.valueOf(character).equals("⅕") || String.valueOf(character).equals("⅒") ||
                 String.valueOf(character).equals("е") || String.valueOf(character).equals("e") || String.valueOf(character).equals("π"));
     }
 

@@ -508,8 +508,8 @@ public class DataManager {
                 }
 
                 try {
-                    final String value = String.valueOf(resultText.getString("value").isEmpty());
-                    if (!value.isEmpty()) {
+                    final String value = resultText.getString("value");
+                    if (!value.replace(" ", "").isEmpty()) {
                         try {
                             resultlabel.setText(resultText.getString("value"));
                         } catch (JSONException e) {

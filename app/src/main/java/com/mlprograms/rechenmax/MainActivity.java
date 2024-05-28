@@ -19,6 +19,7 @@ package com.mlprograms.rechenmax;
 import static com.mlprograms.rechenmax.BackgroundService.CHANNEL_ID_BACKGROUND;
 import static com.mlprograms.rechenmax.CalculatorEngine.fixExpression;
 import static com.mlprograms.rechenmax.CalculatorEngine.isOperator;
+import static com.mlprograms.rechenmax.CalculatorEngine.isSymbol;
 import static com.mlprograms.rechenmax.CalculatorEngine.setMainActivity;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.ParenthesesBalancer.balanceParentheses;
@@ -205,14 +206,10 @@ public class MainActivity extends AppCompatActivity {
         setUpListeners();
         showOrHideScienceButtonState();
         switchDisplayMode();
-        formatResultTextAfterTyping();
 
         // Scroll down in the calculate label
         scrollToStart(findViewById(R.id.calculate_scrollview));
         scrollToStart(findViewById(R.id.result_scrollview));
-
-        //showAllSettings();
-        adjustTextSize();
 
         setCalculateText(getCalculateText().replace(" ", "").replace("=", ""));
 
@@ -233,8 +230,6 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.result_label);
 
         horizontalScrollView.post(() -> {
-            int initialScrollX = horizontalScrollView.getScrollX();
-
             // Loop to find the minimum number of characters needed to scroll
             while (true) {
                 // Add one character to the TextView
@@ -259,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
             //System.out.println("Minimum number of characters needed to scroll: " + characterCount);
             dataManager.saveToJSONSettings("maxNumbersWithoutScrolling", String.valueOf(characterCount), getApplicationContext());
             try {
+                setCalculateText("");
+                setResultText("");
                 dataManager.loadNumbers();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -2244,6 +2241,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void switchToSettingsAction() {
         dataManager.saveToJSONSettings("lastActivity", "Set", getApplicationContext());
+
         SettingsActivity.setMainActivityContext(this);
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
@@ -2829,6 +2827,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+        dataManager.saveNumbers(getApplicationContext());
+
         if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
             setResultText(CalculatorEngine.calculate(getCalculateText()));
         }
@@ -2848,10 +2848,10 @@ public class MainActivity extends AppCompatActivity {
     private void handleBackspaceAction() {
         dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
         if(!getCalculateText().isEmpty()) {
-            if(isOperator(getCalculateText().substring(getCalculateText().length() - 1))) {
+            if(!(getCalculateText().charAt(getCalculateText().length() - 1) == '(')) {
                 setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
             } else {
-                setCalculateText(removeOperators(getCalculateText().substring(0, getCalculateText().length() - 1)));
+                setCalculateText(removeOperators(getCalculateText()));
             }
         } else {
             setResultText("0");
