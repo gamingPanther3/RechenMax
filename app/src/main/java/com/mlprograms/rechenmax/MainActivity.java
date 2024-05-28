@@ -921,8 +921,12 @@ public class MainActivity extends AppCompatActivity {
             showOrHideScienceButtonState();
             adjustTextSize();
 
-            if(dataManager.getJSONSettingsData("pressedCalculate", getApplicationContext()).getString("value").equals("true")) {
-                setCalculateText("");
+            if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
+                setResultText(CalculatorEngine.calculate(getCalculateText()));
+            }
+
+            if(getCalculateText().isEmpty()) {
+                setResultText("0");
             }
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -1270,8 +1274,6 @@ public class MainActivity extends AppCompatActivity {
 
                 if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
                     setResultText(CalculatorEngine.calculate(getCalculateText()));
-                } else {
-                    setResultText("");
                 }
 
                 scrollToEnd(findViewById(R.id.calculate_scrollview));
