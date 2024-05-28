@@ -2840,7 +2840,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Handles the action when the backspace key is pressed during a calculation.
-     *
+     * <p>
      * This method performs the following steps:
      * 1. Saves a flag to indicate that the "calculate" button hasn't been pressed.
      * 2. Retrieves the current calculation text.

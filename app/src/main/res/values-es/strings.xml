@@ -16,7 +16,7 @@
     <string name="radian">Radianes (Rad)</string>
 
     <string name="nPrDescription">Permutación</string>
-    <string name="nCrDescription">Coeficiente binomial</string>
+    <string name="nCrDescription">Combinación</string>
     <string name="polDescription">Coordenadas polares</string>
     <string name="recDescription">Coordenadas cartesianas</string>
     <string name="ranintDescription">Entero aleatorio</string>

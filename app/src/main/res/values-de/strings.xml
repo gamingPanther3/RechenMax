@@ -16,7 +16,7 @@
     <string name="radian">Bogenmaß (Rad)</string>
 
     <string name="nPrDescription">Permutation</string>
-    <string name="nCrDescription">Binomialkoeffizient </string>
+    <string name="nCrDescription">Kombination </string>
     <string name="polDescription">Polarkoordinaten</string>
     <string name="recDescription">kartesische Koordinaten </string>
     <string name="ranintDescription">Zufälliger Integer</string>
