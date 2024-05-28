@@ -30,24 +30,21 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Um den Winkel zu finden, dessen Tangens 1,732 ist, geben Sie tan⁻¹(1.732) ein.
 
 - **Kombinatorische Funktionen**: Nutzen Sie kombinatorische Funktionen wie Permutationen (nPr) und Kombinationen (nCr).
-  - Beispiel: Um die Anzahl der Permutationen von 5 Objekten, 3 auf einmal, zu berechnen, geben Sie 5 nPr 3 ein.
-  - Beispiel: Um die Anzahl der Kombinationen von 5 Objekten, 3 auf einmal, zu berechnen, geben Sie 5 nCr 3 ein.
+  - Beispiel: Um die Anzahl der Permutationen von 5 Objekten, 3 auf einmal, zu berechnen, geben Sie 5 nPr 3 also "5P3" ein.
+  - Beispiel: Um die Anzahl der Kombinationen von 5 Objekten, 3 auf einmal, zu berechnen, geben Sie 5 nCr 3 also "5C3" ein.
 
 - **Prozentrechnung**: Berechnen Sie Prozentsätze (%).
-  - Beispiel: Um 20 % von 50 zu berechnen, geben Sie 50 % 20 ein.
-
-- **Restwertberechnung**: Berechnen Sie den Restwert einer Division (modulo) mit dem Modulo-Operator (;).
-  - Beispiel: Um den Restwert von 7 geteilt durch 3 zu berechnen, geben Sie 7 ; 3 ein.
+  - Beispiel: Um 20 % von 50 zu berechnen, geben Sie 50%×20 ein.
 
 - **Zufallszahlengenerierung**: Generieren Sie Zufallszahlen mit RanInt (Zufalls-Integer) und Ran# (Zufalls-Gleitkommazahl).
-  - Beispiel: Um eine Zufallszahl zwischen 1 und 10 zu generieren, geben Sie RanInt(1, 10) ein.
-  - Beispiel: Um eine Zufallszahl zwischen 0 und 1 zu generieren, geben Sie Ran#() ein.
+  - Beispiel: Um eine Zufallszahl zwischen 1 und 10 zu generieren, geben Sie RanInt(1,10) ein.
+  - Beispiel: Um eine Zufallszahl zwischen 0 und 1 zu generieren, geben Sie 1Ran# ein.
 
 - **Polarkoordinatenumrechnung**: Konvertieren Sie zwischen kartesischen und Polarkoordinaten mit Pol.
-  - Beispiel: Um kartesische Koordinaten (3, 4) in Polarkoordinaten zu konvertieren, geben Sie Pol(3, 4) ein.
+  - Beispiel: Um kartesische Koordinaten (3,4) in Polarkoordinaten zu konvertieren, geben Sie Pol(3;4) ein.
 
 - **Rechteck-Koordinatenumrechnung**: Konvertieren Sie zwischen kartesischen und rechteckigen Koordinaten mit Rec.
-  - Beispiel: Um Polarkoordinaten (5, 53.13) in kartesische Koordinaten zu konvertieren, geben Sie Rec(5, 53.13) ein.
+  - Beispiel: Um Polarkoordinaten (5;53,13) in kartesische Koordinaten zu konvertieren, geben Sie Rec(5;53,13) ein.
 
 <div align="center">
   <img src="pictures/RM1.png" alt="RechenMaxBild1" width="150"/>
@@ -58,11 +55,6 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 </div>  
 
 - **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen wie Sinus, Cosinus, Tangens oder Pi zu nutzen.
-
-- **Manuelle Eingabe der Wissenschaftlichen Notationen**: Geben Sie wissenschaftliche Notationen manuell ein.
-  - Beispiel: Um 6,022e+23 einzugeben, drücken Sie die gewünschte Zahl (6), ein optionales Komma, optionale Zahlen, dann auf die "e±" Taste, "+" oder "-" für einen positiven oder negativen Exponent und dann wieder eine gewünschte Zahl (für den Exponenten), dann wird die Notation automatisch in eine Dezimalzahl umgerechnet.
-    
-  - Beispiel: Um 2,718e-5 einzugeben, drücken Sie die gewünschte Zahl (2), drücken Sie auf die Komma-Taste, geben sie "718" ein, drücken Sie dann auf die "e±" Taste, "-" für einen negativen Exponent und dann den gewünschten Exponenten, in dem fall ist es "5", dann wird die Notation automatisch in eine Dezimalzahl umgerechnet.
 
 - **Benutzerfreundliches Design**: Mit seinem sauberen und intuitiven Design ist RechenMax einfach zu bedienen und bietet eine optimale Benutzererfahrung.
 
