@@ -98,23 +98,42 @@
     <!-- !!! Übersetzung nicht vergessen !!! -->
     <string name="releaseDate">Veröffentlichungsdatum: 21.05.2024 – 0Uhr</string>
     <string name="releaseNotesText">"
-- - - Neue Funktionen - - - \n
-- Wenn 10 Berechungen durchgeführt wurden und die Benachrichtigungen nicht aktiviert sind wird gefragt ob welche gesendet werden dürfen (ab Android 13 oder höher)
+- - - Neue Funktionen - - -
+- Taschenrechner ist im Querformat nutzbar
+- Manuelle Notation wurde für den Vereinfachten Modus freigegeben
+- nPr (Permutation) wurde hinzugefügt
+- nCr (Binomialkoeffizient) wurde hinzugefügt
+- % (Prozent) wurde hinzugefügt
+- ; (Semikolon) wurde hinzugefügt
+- Pol (Kartesische Koordinaten zu Polarkoordinaten) wurde hinzugefügt
+- Rec (Polarkoordinaten zu Kartesische Koordinaten) wurde hinzugefügt
+- RanInt (Zufälliger Integer) wurde hinzugefügt
+- Ran# (Zufallszahl) wurde hinzugefügt
+- ⅕ (1/5) wurde hinzugefügt
+- ⅒ (1/10) wurde hinzugefügt
+
+- - - Verbesserungen - - - \n
+- Das behandeln der Aufgaben wurde verbessert
+- RechenEngine wurde verbessert (noch präzisere Berechnungen)
+- Das Layout des Taschenrechners wurde optimiert (bessere Anpassung an verschiedene Display größen)
+- Die automatische Multiplikationszeicheneinfügung wurde verbessert
+
+- - - Änderungen - - - \n
+- Ergebnis wird nur gekürzt wenn eine Berechnung durchgeführt wurde
+- Einführung wurde aktualisiert
+
+- - - Behobene Fehler - - - \n
+- Präzision der Berechnungen wurde beim Formatieren beeinträchtigte
+- Wenn nach einer schließenden Klammer direkt eine Zahl oder ein Symbol steht, wurde kein Multiplikationszeichen ('×') eingefügt
+- Beim Einfügen eines Minuszeichens in die Umrechner stürzte die App ab
+- Tooltip für fehlende Knöpfe hinzugefügt
+
+- - - Entfernte Funktionen - - -
+- Standard RechenModus (nur noch im 'Vereinfachten' Modus nutzbar)
+- Manuelle Notation
 
 - - - Demnächst kommende Funktionen - - - \n
 - Bild im Bild Modus
-
-- - - Änderungen - - -
-- Die Schaltflächen wurden im Layout zentriert
-- Die Textgröße der Schaltflächen im Layout wurde angepasst
-- Die Scrollleisten im Berechnungsbereich und im Ergebnisbereich wurden versteckt
-- Die Anzahl der Zeichen im Ergebnisbereich passt sich dynamisch der Bildschirmbreite an, anstatt auf einen festen Wert beschränkt zu sein
-- Das Design von den PatchNotes wurde verbessert
-
-- - - Behobene Fehler - - - \n
-- Die App hat keine Benachrichtigungen gesendet (Absturz)
-- Leere Berechnungen wurden zu dem Verlauf hinzugefügt
-
 
 - - - Systemanforderungen - - - \n
 - Minimale Android-Version: 10

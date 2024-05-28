@@ -27,26 +27,47 @@
     <string name="releaseDate">Date de sortie : 05/21/2024 – 00h00</string>
     <string name="releaseNotesText">"
 - - - Nouvelles fonctionnalités - - - \n
-- Si 10 calculs ont été effectués et que les notifications ne sont pas activées, l'utilisateur sera invité à autoriser leur envoi (à partir d'Android 13 ou ultérieur)
+- Calculatrice utilisable en mode paysage
+- Notation manuelle activée pour le mode Simplifié
+- nPr (Permutation) ajouté
+- nCr (Coefficient binomial) ajouté
+- % (Pourcentage) ajouté
+- ; (Point-virgule) ajouté
+- Pol (Coordonnées cartésiennes en coordonnées polaires) ajouté
+- Rec (Coordonnées polaires en coordonnées cartésiennes) ajouté
+- RanInt (Entier aléatoire) ajouté
+- Ran# (Nombre aléatoire) ajouté
+- ⅕ (1/5) ajouté
+- ⅒ (1/10) ajouté
 
-- - - Prochaines fonctionnalités - - - \n
+- - - Améliorations - - - \n
+- Gestion des tâches améliorée
+- Moteur de calcul amélioré (calculs plus précis)
+- Disposition de la calculatrice optimisée (meilleure adaptation aux différentes tailles d'écran)
+- Insertion automatique du signe de multiplication améliorée
+
+- - - Modifications - - - \n
+- Le résultat n'est simplifié que lorsqu'un calcul est effectué
+- Introduction mise à jour
+
+- - - Corrections de bugs - - - \n
+- Précision des calculs affectée pendant le formatage corrigée
+- Aucun signe de multiplication ('×') inséré lorsqu'un nombre ou un symbole suivait directement une parenthèse fermante
+- L'application plantait en insérant un signe moins dans les convertisseurs
+- Infobulle pour les boutons manquants ajoutée
+
+- - - Fonctionnalités supprimées - - - \n
+- Mode de calcul standard (disponible uniquement en mode 'Simplifié')
+- Notation manuelle
+
+- - - À venir - - - \n
 - Mode image dans l'image
+- Plus de fonctions scientifiques
 
-- - - Changements - - -
-- Les boutons ont été centrés dans la mise en page
-- La taille du texte des boutons dans la mise en page a été ajustée
-- Les barres de défilement dans la zone de calcul et dans la zone de résultat ont été masquées
-- Le nombre de caractères dans la zone de résultat s'ajuste dynamiquement à la largeur de l'écran au lieu d'être limité à une valeur fixe
-- Le design des notes de patch a été amélioré
-
-- - - Problèmes résolus - - - \n
-- L'application n'a pas envoyé de notifications (plantage)
-- Les calculs vides ont été ajoutés à l'historique
-
-- - - Configuration requise - - - \n
-- Version Android minimale : 10
-- Version Android recommandée : 13 ou supérieure
-- Version Android maximale : 14
+- - - Exigences du système - - - \n
+- Version Android minimale: 10
+- Version Android recommandée: 13 ou supérieure
+- Version Android maximale: 14
     "</string>
 
     <string name="wantToActivateNotifications">Voulez-vous recevoir des notifications ? (Vous pouvez également les désactiver ultérieurement dans les paramètres)</string>

@@ -28,26 +28,46 @@
     <string name="releaseDate">Release Date: 05/21/2024 – 00:00 AM</string>
     <string name="releaseNotesText">"
 - - - New Features - - - \n
-- If 10 calculations have been performed and notifications are not enabled, permission will be asked to send them (from Android 13 onwards)
+- Calculator usable in landscape mode
+- Manual notation enabled for Simplified mode
+- nPr (Permutation) added
+- nCr (Binomial coefficient) added
+- % (Percent) added
+- ; (Semicolon) added
+- Pol (Cartesian coordinates to Polar coordinates) added
+- Rec (Polar coordinates to Cartesian coordinates) added
+- RanInt (Random integer) added
+- Ran# (Random number) added
+- ⅕ (1/5) added
+- ⅒ (1/10) added
 
-- - - Upcoming Features - - - \n
-- Picture-in-Picture Mode
+- - - Improvements - - - \n
+- Task handling improved
+- Calculation engine enhanced (more precise calculations)
+- Calculator layout optimized (better adaptation to different display sizes)
+- Automatic multiplication sign insertion improved
 
-- - - Changes - - -
-- Buttons have been centered in the layout
-- Button text size in the layout has been adjusted
-- Scrollbars in the calculation area and result area have been hidden
-- The number of characters in the result area dynamically adjusts to the screen width instead of being limited to a fixed value
-- Design of the patch notes has been improved
+- - - Changes - - - \n
+- Result is only simplified when a calculation is performed
+- Introduction updated
 
-- - - Fixed Bugs - - - \n
-- The app did not send notifications (crash)
-- Empty calculations were added to the history
+- - - Bug Fixes - - - \n
+- Calculation precision affected during formatting fixed
+- No multiplication sign ('×') inserted when a number or symbol directly followed a closing parenthesis
+- App crashed when inserting a minus sign in the converters
+- Tooltip for missing buttons added
+
+- - - Removed Features - - - \n
+- Standard calculation mode (only available in 'Simplified' mode)
+- Manual notation
+
+- - - Coming Soon - - - \n
+- Picture-in-Picture mode
 
 - - - System Requirements - - - \n
-- Minimum Android Version: 10
-- Recommended Android Version: 13 or higher
-- Maximum Android Version: 14
+- Minimum Android version: 10
+- Recommended Android version: 13 or higher
+- Maximum Android version: 14
     "</string>
 
     <string name="wantToActivateNotifications">Do you want to receive notifications? (You can also deactivate them later in the settings)</string>

@@ -26,24 +26,45 @@
 
     <string name="releaseDate">Fecha de lanzamiento: 05/21/2024 – 00:00</string>
     <string name="releaseNotesText">"
-- - - Nuevas Funciones - - - \n
-- Si se han realizado 10 cálculos y las notificaciones no están activadas, se preguntará si se pueden enviar (a partir de Android 13 en adelante)
+- - - Nuevas funciones - - - \n
+- Calculadora usable en modo horizontal
+- Notación manual habilitada para el modo Simplificado
+- nPr (Permutación) añadido
+- nCr (Coeficiente binomial) añadido
+- % (Porcentaje) añadido
+- ; (Punto y coma) añadido
+- Pol (Coordenadas cartesianas a coordenadas polares) añadido
+- Rec (Coordenadas polares a coordenadas cartesianas) añadido
+- RanInt (Entero aleatorio) añadido
+- Ran# (Número aleatorio) añadido
+- ⅕ (1/5) añadido
+- ⅒ (1/10) añadido
 
-- - - Próximas Funciones - - - \n
-- Modo imagen dentro de imagen
+- - - Mejoras - - - \n
+- Manejo de tareas mejorado
+- Motor de cálculo mejorado (cálculos más precisos)
+- Diseño de la calculadora optimizado (mejor adaptación a diferentes tamaños de pantalla)
+- Inserción automática de signo de multiplicación mejorada
 
-- - - Cambios - - -
-- Los botones se han centrado en el diseño
-- Se ha ajustado el tamaño del texto de los botones en el diseño
-- Las barras de desplazamiento en el área de cálculo y en el área de resultado se han ocultado
-- El número de caracteres en el área de resultado se ajusta dinámicamente al ancho de la pantalla en lugar de estar limitado a un valor fijo
-- Se ha mejorado el diseño de las notas de parche
+- - - Cambios - - - \n
+- El resultado solo se simplifica cuando se realiza un cálculo
+- Introducción actualizada
 
-- - - Problemas Resueltos - - - \n
-- La aplicación no envió notificaciones (se bloqueó)
-- Los cálculos vacíos se añadieron al historial
+- - - Errores corregidos - - - \n
+- Precisión de cálculo afectada durante el formato corregido
+- No se insertó el signo de multiplicación ('×') cuando un número o símbolo seguía directamente a un paréntesis de cierre
+- La aplicación se cerraba al insertar un signo menos en los convertidores
+- Tooltip para botones faltantes añadido
 
-- - - Requisitos del Sistema - - - \n
+- - - Funciones eliminadas - - - \n
+- Modo de cálculo estándar (solo disponible en el modo 'Simplificado')
+- Notación manual
+
+- - - Próximamente - - - \n
+- Modo de imagen en imagen
+- Más funciones científicas
+
+- - - Requisitos del sistema - - - \n
 - Versión mínima de Android: 10
 - Versión recomendada de Android: 13 o superior
 - Versión máxima de Android: 14
