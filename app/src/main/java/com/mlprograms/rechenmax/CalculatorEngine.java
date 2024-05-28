@@ -146,7 +146,7 @@ public class CalculatorEngine {
             trim = commonReplacements.replace(".", "").replace(",", ".").trim();
             trim = balanceParentheses(trim);
 
-            Log.e("TRIM", "Trim:" + trim);
+            //Log.e("TRIM", "Trim:" + trim);
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
@@ -208,7 +208,7 @@ public class CalculatorEngine {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            Log.i("Exception", e.toString());
+            //Log.i("Exception", e.toString());
             return mainActivity.getString(R.string.errorMessage2);
         }
     }
@@ -221,7 +221,7 @@ public class CalculatorEngine {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        Log.i("tokenize","Input Expression: " + expression);
+        //Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -313,7 +313,7 @@ public class CalculatorEngine {
         }
 
         // Debugging: Print tokens
-        Log.i("tokenize","Tokens: " + tokens);
+        //Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -328,7 +328,7 @@ public class CalculatorEngine {
     public static BigDecimal[] evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
         postfixTokens = infixToPostfix(tokens);
-        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
+        //Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -402,7 +402,7 @@ public class CalculatorEngine {
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            Log.i("evaluatePostfix","Token: " + token);
+            //Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -415,19 +415,19 @@ public class CalculatorEngine {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
             }
 
             // Debugging: Print current stack
-            Log.i("evaluatePostfix","Stack: " + stack);
+            //Log.i("evaluatePostfix","Stack: " + stack);
         }
 
         // Check if the function result matches the expected number of values on the stack
         if (!postfixTokens.isEmpty() && (postfixTokens.get(postfixTokens.size() - 1).startsWith("Pol(") || postfixTokens.get(postfixTokens.size() - 1).startsWith("Rec("))) {
             // For functions like "Pol" or "Rec", expect two values on the stack
             if (stack.size() != 2) {
-                Log.i("evaluatePostfix", "Incorrect number of values on the stack");
+                //Log.i("evaluatePostfix", "Incorrect number of values on the stack");
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
             }
 
@@ -436,7 +436,7 @@ public class CalculatorEngine {
         } else {
             // For other functions, expect only one value on the stack
             if (stack.size() != 1) {
-                Log.i("evaluatePostfix", "Stacksize != 1");
+                //Log.i("evaluatePostfix", "Stacksize != 1");
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
             }
 
@@ -573,8 +573,8 @@ public class CalculatorEngine {
         for (int i = 0; i < infixTokens.size(); i++) {
             final String token = infixTokens.get(i);
             // Debugging: Print current token and stack
-            Log.i("infixToPostfix", "Current Token: " + token);
-            Log.i("infixToPostfix", "Stack: " + stack);
+            //Log.i("infixToPostfix", "Current Token: " + token);
+            //Log.i("infixToPostfix", "Stack: " + stack);
 
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -605,8 +605,8 @@ public class CalculatorEngine {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
-            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
+            //Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            //Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
         while (!stack.isEmpty()) {
@@ -614,7 +614,7 @@ public class CalculatorEngine {
         }
 
         // Debugging: Print final postfixTokens
-        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
+        //Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
         return postfixTokens;
     }
@@ -743,7 +743,7 @@ public class CalculatorEngine {
      * @return The fixed expression with explicit multiplication symbols and corrected minus sign.
      */
     public static String fixExpression(String input) {
-        Log.i("fixExpression", "Input fixExpression: " + input);
+        //Log.i("fixExpression", "Input fixExpression: " + input);
 
         // Step 1: Fix the expression using the original logic
         StringBuilder stringBuilder = new StringBuilder();
@@ -757,8 +757,8 @@ public class CalculatorEngine {
                 }
 
                 stringBuilder.append(currentChar);
-                //Log.e("fixExpression", "CurrentChar: " + currentChar + " NextChar: " + nextChar);
-                //Log.e("fixExpression", "stringBuilder: " + stringBuilder);
+                ////Log.e("fixExpression", "CurrentChar: " + currentChar + " NextChar: " + nextChar);
+                ////Log.e("fixExpression", "stringBuilder: " + stringBuilder);
 
                 if (!nextChar.isEmpty() &&
                         ((Character.isDigit(input.charAt(i)) || isSymbol(currentChar)) && nextChar.equals("(")) ||
@@ -775,7 +775,7 @@ public class CalculatorEngine {
         String fixedExpression = stringBuilder.toString();
         fixedExpression = fixedExpression.replaceAll("-\\+", "-");
 
-        Log.e("fixExpression", "Fixed Expression: " + addBracketsAroundBinomialCoefficientAndPermutation(fixedExpression));
+        //Log.e("fixExpression", "Fixed Expression: " + addBracketsAroundBinomialCoefficientAndPermutation(fixedExpression));
         return addBracketsAroundBinomialCoefficientAndPermutation(stringBuilder.toString().isEmpty() ? input : fixedExpression);
     }
 
@@ -912,7 +912,7 @@ public class CalculatorEngine {
         }
 
         // Return the final result as a string
-        Log.i("convertScientificToDecimal", "sb:" + sb);
+        //Log.i("convertScientificToDecimal", "sb:" + sb);
         return sb.toString();
     }
 
