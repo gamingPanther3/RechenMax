@@ -16,6 +16,14 @@
     <string name="degree">Degree measure (Deg)</string>
     <string name="radian">Radians (Rad)</string>
 
+    <string name="nPrDescription">Permutation</string>
+    <string name="nCrDescription">Binomial coefficient</string>
+    <string name="polDescription">Polar coordinates</string>
+    <string name="recDescription">Cartesian coordinates</string>
+    <string name="ranintDescription">Random integer</string>
+    <string name="percentDescription">Percent</string>
+    <string name="ran_hashtagDescription">Random number</string>
+    <string name="semicolonDescription">Semicolon</string>
 
     <string name="releaseDate">Release Date: 05/21/2024 – 00:00 AM</string>
     <string name="releaseNotesText">"
@@ -190,6 +198,8 @@
     <string name="halfButtonText">Half (0.5)</string>
     <string name="thirdButtonText">Third (0.333)</string>
     <string name="quarterButtonText">Quarter (0.25)</string>
+    <string name="fifthButtonText">Fifth (0.2)</string>
+    <string name="tenthButtonText">Tenth (0.1)</string>
 
     <string name="parenthesisOn">Parenthesis open</string>
     <string name="parenthesisOff">Parenthesis close</string>
@@ -415,6 +425,9 @@
     <string name="errorMessage15">Invalid argument</string>
     <string name="errorMessage16">Invalid base</string>
     <string name="errorMessage17">Invalid base or argument</string>
+    <string name="errorMessage18">k cannot be greater than n</string>
+    <string name="errorMessage19">Denominator cannot be 0</string>
+    <string name="errorMessage20">n must be greater than 0</string>
 
     <string name="historyCalculationSave">Invoice has been accepted ...</string>
     <string name="historyCalculationCopied">Invoice has been copied ...</string>

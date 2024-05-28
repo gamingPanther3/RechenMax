@@ -626,21 +626,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/e"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:autoSizePresetSizes="@array/button_text_sizes_science3"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform"
-                android:background="@color/colorBTNBackgroundAccent"
-                android:tag="e"
-                android:text="@string/e"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="@string/manuallyNotation" />
-
-            <Button
                 android:id="@+id/half"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_rowWeight="1"
@@ -680,10 +665,187 @@
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
                 android:background="@color/colorBTNBackgroundAccent"
-                android:tag="tan"
+                android:tag="quarter"
                 android:text="@string/quarter"
                 android:textColor="@color/colorBTNForegroundAccent"
                 android:tooltipText="@string/quarterButtonText" />
+
+            <Button
+                android:id="@+id/fifth"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="fifth"
+                android:text="@string/fifth"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/fifthButtonText" />
+
+            <Button
+                android:id="@+id/tenth"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="tenth"
+                android:text="@string/tenth"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/tenthButtonText" />
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/scientificRow14"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_rowWeight="0.3"
+            android:columnCount="5"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/nPr"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="nPr"
+                android:text="@string/nPr"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/nPrDescription" />
+
+            <Button
+                android:id="@+id/nCr"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="nCr"
+                android:text="@string/nCr"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/nCrDescription" />
+
+            <Button
+                android:id="@+id/percent"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="percent"
+                android:text="@string/percent"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/percentDescription" />
+
+            <Button
+                android:id="@+id/semicolon"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="semicolon"
+                android:text="@string/semicolon"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/semicolonDescription" />
+        </GridLayout>
+
+        <GridLayout
+            android:id="@+id/scientificRow24"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_rowWeight="0.3"
+            android:columnCount="4"
+            android:rowCount="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/ranint"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="ranint"
+                android:text="@string/ranint"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/ranintDescription" />
+
+            <Button
+                android:id="@+id/ran_hashtag"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="ran_hashtag"
+                android:text="@string/ran_hashtag"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/ran_hashtagDescription" />
+
+            <Button
+                android:id="@+id/pol"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_height="match_parent"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="pol"
+                android:text="@string/pol"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/polDescription" />
+
+            <Button
+                android:id="@+id/rec"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:autoSizePresetSizes="@array/button_text_sizes_science3"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
+                android:background="@color/colorBTNBackgroundAccent"
+                android:tag="rec"
+                android:text="@string/rec"
+                android:textColor="@color/colorBTNForegroundAccent"
+                android:tooltipText="@string/recDescription" />
         </GridLayout>
 
         <GridLayout
@@ -703,7 +865,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
-                android:layout_columnWeight="1"
+                android:layout_columnWeight="0.8"
                 android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"
@@ -718,7 +880,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
-                android:layout_columnWeight="1"
+                android:layout_columnWeight="0.8"
                 android:autoSizePresetSizes="@array/button_text_sizes_science3"
                 android:autoSizeStepGranularity="1sp"
                 android:autoSizeTextType="uniform"

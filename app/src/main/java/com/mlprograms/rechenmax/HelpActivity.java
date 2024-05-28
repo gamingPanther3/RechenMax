@@ -59,7 +59,7 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         stopBackgroundService();
 
-        setContentView(R.layout.help);
+        setContentView(R.layout.introduction);
         dataManager.saveToJSONSettings("lastActivity", "Hel", getApplicationContext());
 
         @SuppressLint("CutPasteId") Button button = findViewById(R.id.help_return_button);

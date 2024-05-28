@@ -15,6 +15,15 @@
     <string name="degree">Gradmaß (Deg)</string>
     <string name="radian">Bogenmaß (Rad)</string>
 
+    <string name="nPrDescription">Permutation</string>
+    <string name="nCrDescription">Binomialkoeffizient </string>
+    <string name="polDescription">Polarkoordinaten</string>
+    <string name="recDescription">kartesische Koordinaten </string>
+    <string name="ranintDescription">Zufälliger Integer</string>
+    <string name="percentDescription">Prozent</string>
+    <string name="ran_hashtagDescription">Zufallszahl</string>
+    <string name="semicolonDescription">Semikolon</string>
+
     <string name="releasenotes">Release-Notes</string>
     <string name="releaseNotesDescription">Klicke auf \'Release-Notes anzeigen\' um die neusten Release-Notes dieses Patches zu sehen.</string>
     <string name="showReleaseNotes">Release-Notes anzeigen</string>
@@ -23,6 +32,17 @@
     <string name="releaseNotesText">"
 - - - Neue Funktionen - - -
 - Taschenrechner ist im Querformat nutzbar
+- Manuelle Notation wurde für den Vereinfachten Modus freigegeben
+- nPr (Permutation) wurde hinzugefügt
+- nCr (Binomialkoeffizient) wurde hinzugefügt
+- % (Prozent) wurde hinzugefügt
+- ; (Semikolon) wurde hinzugefügt
+- Pol (Kartesische Koordinaten zu Polarkoordinaten) wurde hinzugefügt
+- Rec (Polarkoordinaten zu Kartesische Koordinaten) wurde hinzugefügt
+- RanInt (Zufälliger Integer) wurde hinzugefügt
+- Ran# (Zufallszahl) wurde hinzugefügt
+- ⅕ (1/5) wurde hinzugefügt
+- ⅒ (1/10) wurde hinzugefügt
 
 - - - Verbesserungen - - - \n
 - Das behandeln der Aufgaben wurde verbessert
@@ -32,12 +52,17 @@
 
 - - - Änderungen - - - \n
 - Ergebnis wird nur gekürzt wenn eine Berechnung durchgeführt wurde
+- Einführung wurde aktualisiert
 
 - - - Behobene Fehler - - - \n
 - Präzision der Berechnungen wurde beim Formatieren beeinträchtigte
 - Wenn nach einer schließenden Klammer direkt eine Zahl oder ein Symbol steht, wurde kein Multiplikationszeichen ('×') eingefügt
 - Beim Einfügen eines Minuszeichens in die Umrechner stürzte die App ab
-- Tooltip für restliche Buttons hinzugefügt
+- Tooltip für fehlende Knöpfe hinzugefügt
+
+- - - Entfernte Funktionen - - -
+- Standard RechenModus (nur noch im 'Vereinfachten' Modus nutzbar)
+- Manuelle Notation
 
 - - - Demnächst kommende Funktionen - - - \n
 - Bild im Bild Modus
@@ -176,6 +201,8 @@
     <string name="halfButtonText">Hälfte (0,5)</string>
     <string name="thirdButtonText">Drittel (0,333)</string>
     <string name="quarterButtonText">Viertel (0,25)</string>
+    <string name="fifthButtonText">Fünftel (0,2)</string>
+    <string name="tenthButtonText">Zehntel (0,1)</string>
 
     <string name="parenthesisOn">Klammer auf</string>
     <string name="parenthesisOff">Klammer zu</string>
@@ -401,6 +428,9 @@
     <string name="errorMessage15">Ungültiges Argument</string>
     <string name="errorMessage16">Ungültige Basis</string>
     <string name="errorMessage17">Ungültige Basis oder Argument</string>
+    <string name="errorMessage18">k darf nicht größer als n sein</string>
+    <string name="errorMessage19">Nenner darf nicht 0 sein</string>
+    <string name="errorMessage20">n muss größer als 0 sein</string>
 
     <string name="historyCalculationSave">Rechnung wurde übernommen ...</string>
     <string name="historyCalculationCopied">Rechnung wurde kopiert ...</string>

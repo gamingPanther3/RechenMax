@@ -19,9 +19,11 @@ package com.mlprograms.rechenmax;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.NumberHelper.e;
 import static com.mlprograms.rechenmax.ParenthesesBalancer.balanceParentheses;
+import static java.lang.Math.sqrt;
 import static ch.obermuhlner.math.big.DefaultBigDecimalMath.pow;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -31,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Stack;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -66,6 +69,8 @@ public class CalculatorEngine {
     public static final String  THIRD_ROOT      = "³√";
 
     private static final DataManager dataManager = new DataManager();
+
+    private static List<String> postfixTokens;
 
     /**
      * A mapping of subscript digits to their corresponding standard numerical digits.
@@ -122,21 +127,26 @@ public class CalculatorEngine {
             // important: "е" (German: 'Eulersche-Zahl') and "e" (used for notation) are different characters
 
             calc = fixExpression(calc);
-            String commonReplacements = calc.replace('×', '*')
-                    .replace('÷', '/')
-                    .replace("=", "")
-                    .replace("E", "e")
-                    .replace("π", PI)
-                    .replaceAll("е", e)
-                    .replaceAll(" ", "")
-                    .replace("½", "0,5")
-                    .replace("⅓", "0,33333333333")
-                    .replace("¼", "0,25");
+            String commonReplacements =
+                    calc.replace('×', '*')
+                        .replace('÷', '/')
+                        .replace("=", "")
+                        .replace("E", "e")
+                        .replace("π", PI)
+                        .replaceAll("е", e)
+                        .replaceAll(" ", "")
+                        .replace("½", "0,5")
+                        .replace("⅓", "0,33333333333")
+                        .replace("¼", "0,25")
+                        .replace("⅕", "0,2")
+                        .replace("⅒", "0,1")
+                        .replace("%×", "⁒")
+                        .replace("%*", "⁒");
 
             trim = commonReplacements.replace(".", "").replace(",", ".").trim();
             trim = balanceParentheses(trim);
 
-            //Log.e("TRIM", "Trim:" + trim);
+            Log.e("TRIM", "Trim:" + trim);
 
             // If the expression is in scientific notation, convert it to decimal notation
             if (isScientificNotation(trim)) {
@@ -162,20 +172,30 @@ public class CalculatorEngine {
             }
 
             // Evaluate the expression and handle exceptions
-            final BigDecimal result = evaluate(tokens);
+            final BigDecimal[] result = evaluate(tokens);
 
-            double resultDouble = result.doubleValue();
-            // If the result is too large, return "Wert zu groß"
-            if (Double.isInfinite(resultDouble)) {
-                return mainActivity.getString(R.string.errorMessage1);
-            }
-
-            // return the result in decimal notation
-            String finalResult = result.stripTrailingZeros().toPlainString().replace('.', ',');
-            if(containsOperatorOrFunction(trim)) {
-                return shortedResult(finalResult);
+            if (!postfixTokens.isEmpty() && (postfixTokens.get(postfixTokens.size() - 1).startsWith("Pol(") || postfixTokens.get(postfixTokens.size() - 1).startsWith("Rec("))) {
+                if (postfixTokens.get(postfixTokens.size() - 1).startsWith("Pol(")) {
+                    return  " r="  + mainActivity.formatResultText(result[1].setScale(10, RoundingMode.HALF_UP).toString().replace(".", ",")) +
+                            "; θ=" + mainActivity.formatResultText(result[0].setScale(10, RoundingMode.HALF_UP).toString().replace(".", ","));
+                } else {
+                    return  " x="  + mainActivity.formatResultText(result[1].setScale(10, RoundingMode.HALF_UP).toString().replace(".", ",")) +
+                            "; y=" + mainActivity.formatResultText(result[0].setScale(10, RoundingMode.HALF_UP).toString().replace(".", ","));
+                }
             } else {
-                return finalResult;
+                double resultDouble = result[0].doubleValue();
+                // If the result is too large, return "Wert zu groß"
+                if (Double.isInfinite(resultDouble)) {
+                    return mainActivity.getString(R.string.errorMessage1);
+                }
+
+                // return the result in decimal notation
+                String finalResult = result[0].stripTrailingZeros().toPlainString().replace('.', ',');
+                if(containsOperatorOrFunction(trim)) {
+                    return mainActivity.formatResultText(shortedResult(finalResult));
+                } else {
+                    return mainActivity.formatResultText(finalResult);
+                }
             }
         } catch (ArithmeticException e) {
             // Handle exceptions related to arithmetic errors
@@ -188,7 +208,7 @@ public class CalculatorEngine {
             // Handle exceptions related to illegal arguments
             return e.getMessage();
         } catch (Exception e) {
-            //Log.i("Exception", e.toString());
+            Log.i("Exception", e.toString());
             return mainActivity.getString(R.string.errorMessage2);
         }
     }
@@ -201,7 +221,7 @@ public class CalculatorEngine {
      */
     public static List<String> tokenize(final String expression) {
         // Debugging: Print input expression
-        //Log.i("tokenize","Input Expression: " + expression);
+        Log.i("tokenize","Input Expression: " + expression);
 
         // Remove all spaces from the expression
         String expressionWithoutSpaces = expression.replaceAll("\\s+", "");
@@ -238,7 +258,8 @@ public class CalculatorEngine {
                 }
                 if (i + 4 <= expressionWithoutSpaces.length()) {
                     String function = expressionWithoutSpaces.substring(i, i + 4);
-                    if (function.equals("sin(") || function.equals("cos(") || function.equals("tan(") || (function.startsWith("log") && function.endsWith("("))) {
+                    if (function.equals("sin(") || function.equals("cos(") || function.equals("tan(")
+                            || function.equals("Pol(") || function.equals("Rec(") || function.equals("Ran#") || (function.startsWith("log") && function.endsWith("("))) {
                         tokens.add(function); // Add the full function name
                         i += 3; // Skip the next characters (already processed)
                         continue;
@@ -274,7 +295,8 @@ public class CalculatorEngine {
                 }
                 if (i + 7 <= expressionWithoutSpaces.length()) {
                     String function = expressionWithoutSpaces.substring(i, i + 7);
-                    if (function.equals("sinh⁻¹(") || function.equals("cosh⁻¹(") || function.equals("tanh⁻¹(") || (function.startsWith("log") && function.endsWith("("))) {
+                    if (function.equals("sinh⁻¹(") || function.equals("cosh⁻¹(") || function.equals("tanh⁻¹(") ||
+                            (function.startsWith("log") && function.endsWith("(")) || function.equals("RanInt(")) {
                         tokens.add(function); // Add the full function name
                         i += 6; // Skip the next characters (already processed)
                         continue;
@@ -291,7 +313,7 @@ public class CalculatorEngine {
         }
 
         // Debugging: Print tokens
-        //Log.i("tokenize","Tokens: " + tokens);
+        Log.i("tokenize","Tokens: " + tokens);
 
         return tokens;
     }
@@ -303,10 +325,10 @@ public class CalculatorEngine {
      * @param tokens The mathematical expression in infix notation.
      * @return The result of the expression.
      */
-    public static BigDecimal evaluate(final List<String> tokens) {
+    public static BigDecimal[] evaluate(final List<String> tokens) {
         // Convert the infix expression to postfix
-        final List<String> postfixTokens = infixToPostfix(tokens);
-        //Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
+        postfixTokens = infixToPostfix(tokens);
+        Log.i("evaluate", "Postfix Tokens: " + postfixTokens);
 
         // Evaluate the postfix expression and return the result
         return evaluatePostfix(postfixTokens);
@@ -355,6 +377,12 @@ public class CalculatorEngine {
                 return factorial(operand1);
             case "^":
                 return power(operand1, operand2);
+            case "С":
+                return binomialCoefficientBigDecimal(operand1, operand2);
+            case "Ƥ":
+                return permutationBigDecimal(operand1, operand2);
+            case "⁒":
+                return nPercentFromM(operand1, operand2);
             default:
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage5));
         }
@@ -367,14 +395,14 @@ public class CalculatorEngine {
      * @return The result of the expression.
      * @throws IllegalArgumentException If there is a syntax error in the expression or the stack size is not 1 at the end.
      */
-    public static BigDecimal evaluatePostfix(final List<String> postfixTokens) {
+    public static BigDecimal[] evaluatePostfix(final List<String> postfixTokens) {
         // Create a stack to store numbers
         final List<BigDecimal> stack = new ArrayList<>();
 
         // Iterate through each token in the postfix list
         for (final String token : postfixTokens) {
             // Debugging: Print current token
-            //Log.i("evaluatePostfix","Token: " + token);
+            Log.i("evaluatePostfix","Token: " + token);
 
             // If the token is a number, add it to the stack
             if (isNumber(token)) {
@@ -387,22 +415,34 @@ public class CalculatorEngine {
                 evaluateFunction(token, stack);
             } else {
                 // If the token is neither a number, operator, nor function, throw an exception
-                //Log.i("evaluatePostfix","Token is neither a number nor an operator");
+                Log.i("evaluatePostfix","Token is neither a number nor an operator");
                 throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
             }
 
             // Debugging: Print current stack
-            //Log.i("evaluatePostfix","Stack: " + stack);
+            Log.i("evaluatePostfix","Stack: " + stack);
         }
 
-        // If there is more than one number in the stack at the end, throw an exception
-        if (stack.size() != 1) {
-            //Log.i("evaluatePostfix","Stacksize != 1");
-            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
-        }
+        // Check if the function result matches the expected number of values on the stack
+        if (!postfixTokens.isEmpty() && (postfixTokens.get(postfixTokens.size() - 1).startsWith("Pol(") || postfixTokens.get(postfixTokens.size() - 1).startsWith("Rec("))) {
+            // For functions like "Pol" or "Rec", expect two values on the stack
+            if (stack.size() != 2) {
+                Log.i("evaluatePostfix", "Incorrect number of values on the stack");
+                throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
+            }
 
-        // Return the result
-        return stack.get(0);
+            BigDecimal[] result = {stack.get(0), stack.get(1)};
+            return result;
+        } else {
+            // For other functions, expect only one value on the stack
+            if (stack.size() != 1) {
+                Log.i("evaluatePostfix", "Stacksize != 1");
+                throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage2));
+            }
+
+            BigDecimal[] result = {stack.get(0)};
+            return result;
+        }
     }
 
     /**
@@ -486,6 +526,29 @@ public class CalculatorEngine {
 
             BigDecimal operand = stack.remove(stack.size() - 1);
             stack.add(logX(operand, base.doubleValue()));
+        } else if (function.startsWith("Pol") && function.endsWith("(")) {
+            // Cartesian to Polar conversion
+            BigDecimal y = stack.remove(stack.size() - 1);
+            BigDecimal x = stack.remove(stack.size() - 1);
+            BigDecimal[] polar = cartesianToPolar(x, y);
+            stack.add(polar[1]); // Push theta
+            stack.add(polar[0]); // Push r
+        } else if (function.startsWith("Rec") && function.endsWith("(")) {
+            // Polar to Cartesian conversion
+            BigDecimal theta = stack.remove(stack.size() - 1);
+            BigDecimal r = stack.remove(stack.size() - 1);
+            BigDecimal[] cartesian = polarToCartesian(r, theta);
+            stack.add(cartesian[1]); // Push y
+            stack.add(cartesian[0]); // Push x
+        } else if (function.startsWith("RanInt") && function.endsWith("(")) {
+            int x = Integer.parseInt(String.valueOf(stack.remove(stack.size() - 1)));
+            int y = Integer.parseInt(String.valueOf(stack.remove(stack.size() - 1)));
+
+            stack.add(new BigDecimal(randomInteger(x, y)));
+        } else if (function.startsWith("Ran") && function.endsWith("#")) {
+            BigDecimal n = stack.remove(stack.size() - 1);
+
+            stack.add(new BigDecimal(String.valueOf(randomToNBigDecimal(n))));
         } else {
             Function<BigDecimal, BigDecimal> func = functionsMap.get(function);
             if (func != null) {
@@ -510,8 +573,8 @@ public class CalculatorEngine {
         for (int i = 0; i < infixTokens.size(); i++) {
             final String token = infixTokens.get(i);
             // Debugging: Print current token and stack
-            //Log.i("infixToPostfix", "Current Token: " + token);
-            //Log.i("infixToPostfix", "Stack: " + stack);
+            Log.i("infixToPostfix", "Current Token: " + token);
+            Log.i("infixToPostfix", "Stack: " + stack);
 
             if (isNumber(token)) {
                 postfixTokens.add(token);
@@ -542,8 +605,8 @@ public class CalculatorEngine {
             }
 
             // Debugging: Print postfixTokens and stack after processing current token
-            //Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
-            //Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
+            Log.i("infixToPostfix", "Postfix Tokens: " + postfixTokens);
+            Log.i("infixToPostfix", "Stack after Token Processing: " + stack);
         }
 
         while (!stack.isEmpty()) {
@@ -551,7 +614,7 @@ public class CalculatorEngine {
         }
 
         // Debugging: Print final postfixTokens
-        //Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
+        Log.i("infixToPostfix", "Final Postfix Tokens: " + postfixTokens);
 
         return postfixTokens;
     }
@@ -616,7 +679,16 @@ public class CalculatorEngine {
             case "sin⁻¹(":
             case "cos⁻¹(":
             case "tan⁻¹(":
+            case "Pol(":
+            case "Rec(":
                 return 6;
+            case "Ran#":
+            case "RanInt(":
+                return 7;
+            case "С":
+            case "Ƥ":
+            case "⁒":
+                return 8;
 
             // If the operator is not recognized, throw an exception
             default:
@@ -671,7 +743,7 @@ public class CalculatorEngine {
      * @return The fixed expression with explicit multiplication symbols and corrected minus sign.
      */
     public static String fixExpression(String input) {
-        //Log.i("fixExpression", "Input fixExpression: " + input);
+        Log.i("fixExpression", "Input fixExpression: " + input);
 
         // Step 1: Fix the expression using the original logic
         StringBuilder stringBuilder = new StringBuilder();
@@ -685,8 +757,8 @@ public class CalculatorEngine {
                 }
 
                 stringBuilder.append(currentChar);
-                ////Log.e("fixExpression", "CurrentChar: " + currentChar + " NextChar: " + nextChar);
-                ////Log.e("fixExpression", "stringBuilder: " + stringBuilder);
+                //Log.e("fixExpression", "CurrentChar: " + currentChar + " NextChar: " + nextChar);
+                //Log.e("fixExpression", "stringBuilder: " + stringBuilder);
 
                 if (!nextChar.isEmpty() &&
                         ((Character.isDigit(input.charAt(i)) || isSymbol(currentChar)) && nextChar.equals("(")) ||
@@ -703,8 +775,46 @@ public class CalculatorEngine {
         String fixedExpression = stringBuilder.toString();
         fixedExpression = fixedExpression.replaceAll("-\\+", "-");
 
-        //Log.e("fixExpression", "Fixed Expression: " + fixedExpression);
-        return (stringBuilder.toString().isEmpty() ? input : fixedExpression);
+        Log.e("fixExpression", "Fixed Expression: " + addBracketsAroundBinomialCoefficientAndPermutation(fixedExpression));
+        return addBracketsAroundBinomialCoefficientAndPermutation(stringBuilder.toString().isEmpty() ? input : fixedExpression);
+    }
+
+    /**
+     * Adds brackets around binomial coefficient and permutation expressions (nCk, nPk) found in a string,
+     * if they are not already enclosed in brackets.
+     * <p>
+     * This method takes a string that may contain binomial coefficient or permutation expressions in the format "nCk" or "nPk"
+     * (e.g., "5C2" or "5P2"). It identifies these expressions using a regular expression and encloses them in parentheses if
+     * they are not already enclosed in parentheses.
+     * <p>
+     * Example:
+     *   - Input:  "The answer is 5C2"
+     *   - Output: "The answer is (5C2)"
+     *
+     * @param input The string to be processed.
+     * @return The string with parentheses added around binomial coefficient or permutation expressions.
+     */
+    public static String addBracketsAroundBinomialCoefficientAndPermutation(String input) {
+        Pattern pattern = Pattern.compile("(\\d+[СƤ⁒]\\d+)");
+        Matcher matcher = pattern.matcher(input);
+
+        StringBuilder result = new StringBuilder();
+
+        int lastIndex = 0;
+        while (matcher.find()) {
+            String match = matcher.group(1);
+            // Check if the match is already enclosed in parentheses
+            if(!(matcher.start() > 0 && input.charAt(matcher.start() - 1) == '(' && matcher.end() < input.length() && input.charAt(matcher.end()) == ')')) {
+                result.append(input, lastIndex, matcher.start());
+                result.append("(").append(match).append(")");
+            } else {
+                result.append(input, lastIndex, matcher.end());
+            }
+            lastIndex = matcher.end();
+        }
+        result.append(input.substring(lastIndex));
+
+        return result.toString();
     }
 
     /**
@@ -802,7 +912,7 @@ public class CalculatorEngine {
         }
 
         // Return the final result as a string
-        //Log.i("convertScientificToDecimal", "sb:" + sb);
+        Log.i("convertScientificToDecimal", "sb:" + sb);
         return sb.toString();
     }
 
@@ -841,7 +951,8 @@ public class CalculatorEngine {
                 calculation.contains("×") || calculation.contains("÷") ||
                 calculation.contains("^") || calculation.contains("√") || calculation.contains("!") || calculation.contains("³√") ||
                 calculation.contains("log") || calculation.contains("ln") || calculation.contains("sin") || calculation.contains("cos") ||
-                calculation.contains("tan");
+                calculation.contains("tan") || calculation.contains("С") || calculation.contains("Ƥ") || calculation.contains("⁒") ||
+                calculation.contains("RanInt(") || calculation.contains("Ran#");
     }
 
     /**
@@ -859,7 +970,8 @@ public class CalculatorEngine {
                 token.equals("log₇(") || token.equals("log₈(") || token.equals("log₉(") ||
                 token.equals("ln(") || token.equals("sin⁻¹(") || token.equals("cos⁻¹(") ||
                 token.equals("tan⁻¹(") || token.equals("sinh⁻¹(") || token.equals("cosh⁻¹(") ||
-                token.equals("tanh⁻¹(")
+                token.equals("tanh⁻¹(") || token.equals("Rec(")  || token.equals("Pol(") || token.equals("RanInt(") ||
+                token.equals("Ran#")
                 ||
                 (token.startsWith("log") && token.endsWith("("));
     }
@@ -891,7 +1003,8 @@ public class CalculatorEngine {
         // Check if the token is one of the recognized non-functional operators
         return token.contains("+") || token.contains("-") || token.contains("*") || token.contains("/") ||
                 token.contains("×") || token.contains("÷") ||
-                token.contains("^") || token.contains("√") || token.contains("!") || token.contains("³√");
+                token.contains("^") || token.contains("√") || token.contains("!") || token.contains("³√") || token.contains("С") ||
+                token.contains("Ƥ") || token.contains("⁒");
     }
 
     /**
@@ -954,6 +1067,64 @@ public class CalculatorEngine {
     private static boolean isMultipleOf90(double degrees) {
         // Check if degrees is a multiple of 90
         return Math.abs(degrees % 90) == 0;
+    }
+
+    /**
+     * Generates a random integer within a specified range (inclusive).
+     *
+     * @param x The lower bound of the range (inclusive).
+     * @param y The upper bound of the range (inclusive).
+     * @return A random integer between x and y (both included).
+     */
+    public static int randomInteger(int x, int y) {
+        if (y < x) {
+            int temp = x;
+            x = y;
+            y = temp;
+        }
+        return new Random().nextInt(y - x + 1) + x;
+    }
+
+    /**
+     * Generates a random BigDecimal value between 0 (exclusive) and the specified `n` value (inclusive), with appropriate scaling.
+     *
+     * @param n The upper limit (inclusive) of the random value to be generated. Must be positive.
+     * @return A random BigDecimal within the range [0, n], rounded to a scale that matches the precision of `n`.
+     * @throws IllegalArgumentException If `n` is less than or equal to zero.
+     */
+    public static BigDecimal randomToNBigDecimal(BigDecimal n) {
+        if (n.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage20));
+        }
+
+        BigDecimal randomBigDecimal = new BigDecimal(new Random().nextDouble(), MathContext.DECIMAL64);
+        BigDecimal result = randomBigDecimal.multiply(n);
+
+        int scale = calculateScale(n);
+        return result.setScale(scale, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * Determines the appropriate scale (number of decimal places) for a BigDecimal value, based on its magnitude.
+     * <p>
+     * This method aims to balance precision and readability by adjusting the number of decimal places dynamically.
+     * Smaller values receive more decimal places, while larger values are rounded to fewer decimal places.
+     *
+     * @param n The BigDecimal value for which to determine the scale.
+     * @return The appropriate scale (number of decimal places) for the given value.
+     */
+    private static int calculateScale(BigDecimal n) {
+        if (n.compareTo(BigDecimal.ONE) < 0) {
+            return 5; // For n < 1, use 5 decimal places
+        } else if (n.compareTo(BigDecimal.TEN) < 0) {
+            return 4; // For 1 <= n < 10, use 4 decimal places
+        } else if (n.compareTo(new BigDecimal("100")) < 0) {
+            return 2; // For 10 <= n < 100, use 2 decimal places
+        } else if (n.compareTo(new BigDecimal("1000")) < 0) {
+            return 1; // For 100 <= n < 1000, use 1 decimal place
+        } else {
+            return 0; // For n >= 1000, use no decimal places
+        }
     }
 
     /**
@@ -1075,6 +1246,165 @@ public class CalculatorEngine {
         }
 
         return currentApproximation ;
+    }
+
+    /**
+     * Calculates n% of the value m.
+     *
+     * @param n The percentage to calculate (e.g., 25 for 25%).
+     * @param m The base value from which to calculate the percentage.
+     * @return The result of n% of m as a BigDecimal.
+     */
+    public static BigDecimal nPercentFromM(BigDecimal n, BigDecimal m) {
+        BigDecimal percent = n.divide(new BigDecimal("100"));
+        return m.multiply(percent);
+    }
+
+    /**
+     * Calculates the number of permutations (k-permutations) of n items taken k at a time.
+     * <p>
+     * A permutation is an arrangement of objects in a specific order. The number of k-permutations of n items,
+     * denoted as nPk or P(n, k), is the number of ways to select and order k items from a set of n items.
+     * <p>
+     * Mathematically, nPk is calculated as:
+     *   nPk = n! / (n-k)!
+     *
+     * @param n The total number of items (n >= 0).
+     * @param k The number of items to choose and order (0 <= k <= n).
+     * @return The number of k-permutations of n items.
+     * @throws IllegalArgumentException If k is greater than n.
+     */
+    public static BigDecimal permutationBigDecimal(BigDecimal n, BigDecimal k) {
+        int nInt = n.intValue();
+        int kInt = k.intValue();
+
+        if (kInt > nInt) {
+            throw new IllegalArgumentException("k darf nicht größer als n sein");
+        }
+        BigDecimal nFactorial = factorial(n);
+        BigDecimal nMinusKFactorial = factorial(n.subtract(k));
+        return nFactorial.divide(nMinusKFactorial, BigDecimal.ROUND_HALF_UP);
+    }
+
+    /**
+     * @param n The total number of items (n >= 0).
+     * @param k The number of items to choose and order (0 <= k <= n).
+     * @return The number of k-permutations of n items.
+     * @throws IllegalArgumentException If k is greater than n.
+     */
+    public static BigDecimal permutationInt(int n, int k) {
+        if (k > n) {
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage18));
+        }
+        BigDecimal nFactorial = factorial(BigDecimal.valueOf(n));
+        BigDecimal nMinusKFactorial = factorial(BigDecimal.valueOf(n - k));
+        return nFactorial.divide(nMinusKFactorial);
+    }
+
+    /**
+     * Calculates the binomial coefficient, also known as "n choose k".
+     * <p>
+     * The binomial coefficient is a mathematical expression that represents the number of ways to choose
+     * k items from a set of n items without regard to order. It's denoted as nCk or (n k) and is calculated as:
+     * <p>
+     *    nCk = n! / (k! * (n-k)!)
+     * <p>
+     * This method uses an optimized approach to avoid calculating factorials directly, which can lead to overflow
+     * for large values of n.
+     *
+     * @param n1 The total number of items (n >= 0).
+     * @param k1 The number of items to choose (0 <= k <= n).
+     * @return The binomial coefficient nCk.
+     * @throws IllegalArgumentException If k is greater than n (invalid input).
+     */
+    public static BigDecimal binomialCoefficientBigDecimal(BigDecimal n1, BigDecimal k1) {
+        int n = n1.intValue();
+        int k = k1.intValue();
+
+        if (k > n) {
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage18));
+        }
+        if (k == 0 || k == n) {
+            return new BigDecimal(1);
+        }
+
+        k = Math.min(k, n - k);
+        long c = 1;
+        for (int i = 0; i < k; i++) {
+            c = c * (n - i) / (i + 1);
+        }
+
+        return BigDecimal.valueOf(c);
+    }
+
+    /**
+     * @param n The total number of items (n >= 0).
+     * @param k The number of items to choose (0 <= k <= n).
+     * @return The binomial coefficient nCk.
+     * @throws IllegalArgumentException If k is greater than n (invalid input).
+     */
+    public static BigDecimal binomialCoefficientInt(int n, int k) {
+        if (k > n) {
+            throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage18));
+        }
+        if (k == 0 || k == n) {
+            return new BigDecimal(1);
+        }
+
+        k = Math.min(k, n - k);
+        long c = 1;
+        for (int i = 0; i < k; i++) {
+            c = c * (n - i) / (i + 1);
+        }
+
+        return BigDecimal.valueOf(c);
+    }
+
+    /**
+     * Converts polar coordinates (r, θ) to Cartesian coordinates (x, y).
+     *
+     * @param r     The radial distance (magnitude) from the origin.
+     * @param theta The angle (in radians) measured counterclockwise from the positive x-axis.
+     * @return An array of two BigDecimals representing the x and y coordinates, respectively.
+     */
+    public static BigDecimal[] polarToCartesian(BigDecimal r, BigDecimal theta) {
+        BigDecimal x = r.multiply(cos(theta));
+        BigDecimal y = r.multiply(sin(theta));
+        return new BigDecimal[]{x, y};
+    }
+    /**
+     * Converts Cartesian coordinates (x, y) to polar coordinates (r, θ).
+     *
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @return An array of two BigDecimals representing the radial distance (r) and the angle (θ) in degrees.
+     */
+    public static BigDecimal[] cartesianToPolar(BigDecimal x, BigDecimal y) {
+        BigDecimal r = sqrt(x.pow(2).add(y.pow(2)), MC);
+        BigDecimal theta = BigDecimal.valueOf(Math.atan2(y.doubleValue(), x.doubleValue()));
+        BigDecimal thetaDeg = BigDecimal.valueOf(Math.toDegrees(theta.doubleValue()));
+
+        return new BigDecimal[]{r, thetaDeg};
+    }
+
+    /**
+     * Calculates the square root of a BigDecimal using the Babylonian method.
+     *
+     * @param value   The BigDecimal value for which to calculate the square root.
+     * @param context The MathContext to use for precision and rounding.
+     * @return The square root of the value as a BigDecimal.
+     * @throws ArithmeticException If the input value is negative.
+     */
+    public static BigDecimal sqrt(BigDecimal value, MathContext context) {
+        BigDecimal x0 = new BigDecimal(0);
+        BigDecimal x1 = new BigDecimal(Math.sqrt(value.doubleValue()));
+        while (!x0.equals(x1)) {
+            x0 = x1;
+            x1 = value.divide(x0, context);
+            x1 = x1.add(x0);
+            x1 = x1.divide(BigDecimal.valueOf(2), context);
+        }
+        return x1;
     }
 
     /**

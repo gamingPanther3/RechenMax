@@ -89,7 +89,7 @@ public class HistoryActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.historytest);
+        setContentView(R.layout.historyui);
 
         dataManager = new DataManager();
         dataManager.saveToJSONSettings("lastActivity", "His", getApplicationContext());
@@ -497,7 +497,6 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("result_text",  resultText.replace("=", ""), getMainActivityContext());
 
                     ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
-                    mainActivity.setRotateOperator(true);
                     mainActivity.resetIfPressedCalculate();
                 } catch (Exception e) {
                     ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
@@ -516,7 +515,6 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("result_text",  resultText.replace("=", ""), getMainActivityContext());
 
                     ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
-                    mainActivity.setRotateOperator(true);
                     mainActivity.resetIfPressedCalculate();
                 } catch (Exception e) {
                     ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
@@ -670,7 +668,6 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("result_text",  parts[1].replace("=", ""), getMainActivityContext());
 
                     ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
-                    mainActivity.setRotateOperator(true);
                     mainActivity.resetIfPressedCalculate();
                 } catch (Exception e) {
                     ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
@@ -920,7 +917,6 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("result_text",  resultText.replace("=", ""), getMainActivityContext());
 
                     ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
-                    mainActivity.setRotateOperator(true);
                     mainActivity.resetIfPressedCalculate();
                 } catch (Exception e) {
                     ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
@@ -939,7 +935,6 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("result_text",  resultText.replace("=", ""), getMainActivityContext());
 
                     ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
-                    mainActivity.setRotateOperator(true);
                     mainActivity.resetIfPressedCalculate();
                 } catch (Exception e) {
                     ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());
@@ -1085,7 +1080,6 @@ public class HistoryActivity extends AppCompatActivity {
                     dataManager.saveToJSONSettings("result_text", parts[1].replace("=", ""), getMainActivityContext());
 
                     ToastHelper.showToastLong(getString(R.string.historySuccesfullMessageLoad), getApplicationContext());
-                    mainActivity.setRotateOperator(true);
                     mainActivity.resetIfPressedCalculate();
                 } catch (Exception e) {
                     ToastHelper.showToastLong(getString(R.string.historyErrorMessageLoad), getApplicationContext());

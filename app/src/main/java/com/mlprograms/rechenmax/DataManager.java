@@ -59,7 +59,6 @@ import java.util.Map;
 //  | showShiftRow                     | true / false                     | MainActivity                         |
 //  | shiftRow                         | true / false                     | MainActivity                         |
 //  | logX                             | true / false                     | MainActivity                         |
-//  | calculationMode                  | Standard / Vereinfacht           | MainActivity                         |
 //  | currentVersion                   | String                           | MainActivity                         |
 //  | old_version                      | String                           | MainActivity                         |
 //  | returnToCalculator               | true / false                     | MainActivity                         |
@@ -396,7 +395,6 @@ public class DataManager {
             initializeSetting("showPatchNotes", "false", applicationContext);
             initializeSetting("shiftRow", "1", applicationContext);
             initializeSetting("logX", "false", applicationContext);
-            initializeSetting("calculationMode", "Vereinfacht", applicationContext);
             initializeSetting("currentVersion", "1.7.0", applicationContext);
             initializeSetting("old_version", "0", applicationContext);
             initializeSetting("returnToCalculator", "false", applicationContext);
@@ -430,6 +428,7 @@ public class DataManager {
             if(key.equals("historyTextViewNumber")) {
                 saveToHistory(key, defaultValue, applicationContext);
             }
+
             saveToJSONSettings(key, defaultValue, applicationContext);
 
             if(key.equals("convertMode")) {

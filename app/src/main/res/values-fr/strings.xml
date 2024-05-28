@@ -15,6 +15,14 @@
     <string name="degree">Degré (Deg)</string>
     <string name="radian">Radians (Rad)</string>
 
+    <string name="nPrDescription">Permutation</string>
+    <string name="nCrDescription">Coefficient binomial</string>
+    <string name="polDescription">Coordonnées polaires</string>
+    <string name="recDescription">Coordonnées cartésiennes</string>
+    <string name="ranintDescription">Entier aléatoire</string>
+    <string name="percentDescription">Pourcentage</string>
+    <string name="ran_hashtagDescription">Nombre aléatoire</string>
+    <string name="semicolonDescription">Point-virgule</string>
 
     <string name="releaseDate">Date de sortie : 05/21/2024 – 00h00</string>
     <string name="releaseNotesText">"
@@ -171,6 +179,8 @@
     <string name="halfButtonText">Moitié (0,5)</string>
     <string name="thirdButtonText">Tiers (0,333)</string>
     <string name="quarterButtonText">Quart (0,25)</string>
+    <string name="fifthButtonText">Cinquième (0,2)</string>
+    <string name="tenthButtonText">Dixième (0,1)</string>
 
     <string name="parenthesisOn">Parenthèse ouverte</string>
     <string name="parenthesisOff">Parenthèse fermée</string>
@@ -395,6 +405,9 @@
     <string name="errorMessage15">Argument invalide</string>
     <string name="errorMessage16">Base invalide</string>
     <string name="errorMessage17">Base ou argument invalide</string>
+    <string name="errorMessage18">k ne peut pas être supérieur à n</string>
+    <string name="errorMessage19">Le dénominateur ne peut pas être 0</string>
+    <string name="errorMessage20">n doit être supérieur à 0</string>
 
     <string name="historyCalculationSave">La facture a été acceptée ...</string>
     <string name="historyCalculationCopied">La facture a été copiée ...</string>

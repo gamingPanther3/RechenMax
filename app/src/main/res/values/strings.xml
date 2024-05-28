@@ -71,6 +71,26 @@
     <string name="half" translatable="false">½</string>
     <string name="third" translatable="false">⅓</string>
     <string name="quarter" translatable="false">¼</string>
+    <string name="fifth" translatable="false">⅕</string>
+    <string name="tenth" translatable="false">⅒</string>
+
+    <string name="nPr" translatable="false">nPr</string>
+    <string name="nCr" translatable="false">nCr</string>
+    <string name="pol" translatable="false">Pol</string>
+    <string name="rec" translatable="false">Rec</string>
+    <string name="ranint" translatable="false">RanInt</string>
+    <string name="percent" translatable="false">%</string>
+    <string name="ran_hashtag" translatable="false">Ran#</string>
+    <string name="semicolon" translatable="false">;</string>
+
+    <string name="nPrDescription">Permutation</string>
+    <string name="nCrDescription">Binomialkoeffizient </string>
+    <string name="polDescription">Polarkoordinaten</string>
+    <string name="recDescription">kartesische Koordinaten </string>
+    <string name="ranintDescription">Zufälliger Integer</string>
+    <string name="percentDescription">Prozent</string>
+    <string name="ran_hashtagDescription">Zufallszahl</string>
+    <string name="semicolonDescription">Semikolon</string>
 
     <!-- Patch-Notes -->
     <string name="appVersion" translatable="false">RechenMax 1.7.0</string>
@@ -94,6 +114,7 @@
 - - - Behobene Fehler - - - \n
 - Die App hat keine Benachrichtigungen gesendet (Absturz)
 - Leere Berechnungen wurden zu dem Verlauf hinzugefügt
+
 
 - - - Systemanforderungen - - - \n
 - Minimale Android-Version: 10
@@ -249,6 +270,8 @@
     <string name="halfButtonText">Hälfte (0,5)</string>
     <string name="thirdButtonText">Drittel (0,333)</string>
     <string name="quarterButtonText">Viertel (0,25)</string>
+    <string name="fifthButtonText">Fünftel (0,2)</string>
+    <string name="tenthButtonText">Zehntel (0,1)</string>
 
     <string name="parenthesisOn">Klammer auf</string>
     <string name="parenthesisOff">Klammer zu</string>
@@ -489,6 +512,9 @@
     <string name="errorMessage15">Ungültiges Argument</string>
     <string name="errorMessage16">Ungültige Basis</string>
     <string name="errorMessage17">Ungültige Basis oder Argument</string>
+    <string name="errorMessage18">k darf nicht größer als n sein</string>
+    <string name="errorMessage19">Nenner darf nicht 0 sein</string>
+    <string name="errorMessage20">n muss größer als 0 sein</string>
 
     <string name="historyCalculationSave">Rechnung wurde übernommen ...</string>
     <string name="historyCalculationCopied">Rechnung wurde kopiert ...</string>

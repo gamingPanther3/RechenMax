@@ -78,21 +78,18 @@ public class SettingsActivity extends AppCompatActivity {
     private int newColorBTNBackgroundAccent;
 
     private ArrayList<CustomItems> customListDisplayMode = new ArrayList<>();
-    private ArrayList<CustomItems> customListCalculationMode = new ArrayList<>();
     private ArrayList<CustomItems> customListFunctionMode = new ArrayList<>();
     private ArrayList<CustomItems> customListHistoryMode = new ArrayList<>();
     private ArrayList<CustomItems> customListHistoryModesAdvanced = new ArrayList<>();
     private ArrayList<CustomItems> customListDecimalPoints = new ArrayList<>();
 
     private CustomAdapter customAdapter1;
-    private CustomAdapter customAdapter2;
     private CustomAdapter customAdapter3;
     private CustomAdapter customAdapter4;
     private CustomAdapter customAdapter5;
     private CustomAdapter customAdapter6;
 
     private Spinner customSpinner1;
-    private Spinner customSpinner2;
     private Spinner customSpinner3;
     private Spinner customSpinner4;
     private Spinner customSpinner5;
@@ -226,52 +223,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 updateSpinner(adapterView);
                 switchDisplayMode();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // do nothing
-            }
-        });
-
-        customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.settings));
-        customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.day));
-        customAdapter2 = new CustomAdapter(this, customListCalculationMode);
-
-        customSpinner2 = findViewById(R.id.settings_calculation_mode_spinner);
-        if (customSpinner2 != null) {
-            customSpinner2.setAdapter(customAdapter2);
-
-            final String mode;
-            try {
-                mode = dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).getString("value");
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-            if (mode.equals("Standard")) {
-                customSpinner2.setSelection(0);
-            } else {
-                customSpinner2.setSelection(1);
-            }
-        }
-
-        assert customSpinner2 != null;
-        customSpinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                CustomItems items = (CustomItems) adapterView.getSelectedItem();
-                String spinnerText = items.getSpinnerText();
-
-                if (isProgrammaticChange) {
-                    isProgrammaticChange = false;
-                    return;
-                }
-
-                if (spinnerText.equals(getString(R.string.defaultCalculationMode))) {
-                    dataManager.saveToJSONSettings("calculationMode", "Standard", getMainActivityContext());
-                } else {
-                    dataManager.saveToJSONSettings("calculationMode", "Vereinfacht", getMainActivityContext());
-                }
             }
 
             @Override
@@ -1097,7 +1048,6 @@ public class SettingsActivity extends AppCompatActivity {
         Spinner[] spinners = {
                 findViewById(R.id.settings_display_mode_spinner),
                 findViewById(R.id.settings_function_spinner),
-                findViewById(R.id.settings_calculation_mode_spinner)
         };
         for (Spinner spinner : spinners) {
             updateSpinner2(spinner);
@@ -1135,10 +1085,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_light));
                                 customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_light));
 
-                                customListCalculationMode = new ArrayList<>();
-                                customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_light));
-                                customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_light));
-
                                 customListFunctionMode = new ArrayList<>();
                                 customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
                                 customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
@@ -1169,7 +1115,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_light));
 
                                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
-                                customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                                 customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                                 customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
@@ -1178,7 +1123,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 String color = "#FFFFFF";
                                 String backgroundColor = "#151515";
 
-                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
+                                CustomAdapter[] adapters = {customAdapter1, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                                 for (CustomAdapter adapter : adapters) {
                                     adapter.setTextColor(Color.parseColor(color));
@@ -1204,10 +1149,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_true_darkmode));
                                 customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_true_darkmode));
                                 customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_true_darkmode));
-
-                                customListCalculationMode = new ArrayList<>();
-                                customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_true_darkmode));
-                                customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_true_darkmode));
 
                                 customListFunctionMode = new ArrayList<>();
                                 customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_true_darkmode));
@@ -1239,7 +1180,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_true_darkmode));
 
                                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
-                                customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                                 customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                                 customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
@@ -1248,7 +1188,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 String color = "#D5D5D5";
                                 String backgroundColor = "#000000";
 
-                                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
+                                CustomAdapter[] adapters = {customAdapter1, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                                 for (CustomAdapter adapter : adapters) {
                                     adapter.setTextColor(Color.parseColor(color));
@@ -1259,7 +1199,6 @@ public class SettingsActivity extends AppCompatActivity {
                                 newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
                             }
                             customSpinner1.setAdapter(customAdapter1);
-                            customSpinner2.setAdapter(customAdapter2);
                             customSpinner3.setAdapter(customAdapter3);
                             customSpinner4.setAdapter(customAdapter4);
                             customSpinner5.setAdapter(customAdapter5);
@@ -1282,10 +1221,6 @@ public class SettingsActivity extends AppCompatActivity {
                             customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_light));
                             customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_light));
                             customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_light));
-
-                            customListCalculationMode = new ArrayList<>();
-                            customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_light));
-                            customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_light));
 
                             customListFunctionMode = new ArrayList<>();
                             customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
@@ -1317,7 +1252,6 @@ public class SettingsActivity extends AppCompatActivity {
                             customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_light));
 
                             customAdapter1 = new CustomAdapter(this, customListDisplayMode);
-                            customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                             customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                             customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                             customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
@@ -1326,7 +1260,7 @@ public class SettingsActivity extends AppCompatActivity {
                             String color = "#FFFFFF";
                             String backgroundColor = "#151515";
 
-                            CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
+                            CustomAdapter[] adapters = {customAdapter1, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                             for (CustomAdapter adapter : adapters) {
                                 adapter.setTextColor(Color.parseColor(color));
@@ -1337,7 +1271,6 @@ public class SettingsActivity extends AppCompatActivity {
                             newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
 
                             customSpinner1.setAdapter(customAdapter1);
-                            customSpinner2.setAdapter(customAdapter2);
                             customSpinner3.setAdapter(customAdapter3);
                             customSpinner4.setAdapter(customAdapter4);
                             customSpinner5.setAdapter(customAdapter5);
@@ -1365,10 +1298,6 @@ public class SettingsActivity extends AppCompatActivity {
                         customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings));
                         customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day));
                         customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night));
-
-                        customListCalculationMode = new ArrayList<>();
-                        customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced));
-                        customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings));
 
                         customListFunctionMode = new ArrayList<>();
                         customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree));
@@ -1400,7 +1329,6 @@ public class SettingsActivity extends AppCompatActivity {
                         customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced));
 
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
-                        customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                         customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                         customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
@@ -1409,7 +1337,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String color = "#000000";
                         String backgroundColor = "#FFFFFF";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -1420,7 +1348,6 @@ public class SettingsActivity extends AppCompatActivity {
                         newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
 
                         customSpinner1.setAdapter(customAdapter1);
-                        customSpinner2.setAdapter(customAdapter2);
                         customSpinner3.setAdapter(customAdapter3);
                         customSpinner4.setAdapter(customAdapter4);
                         customSpinner5.setAdapter(customAdapter5);
@@ -1447,10 +1374,6 @@ public class SettingsActivity extends AppCompatActivity {
                 customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings));
                 customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day));
                 customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night));
-
-                customListCalculationMode = new ArrayList<>();
-                customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced));
-                customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings));
 
                 customListFunctionMode = new ArrayList<>();
                 customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree));
@@ -1482,7 +1405,6 @@ public class SettingsActivity extends AppCompatActivity {
                 customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced));
 
                 customAdapter1 = new CustomAdapter(this, customListDisplayMode);
-                customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                 customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                 customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                 customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
@@ -1491,7 +1413,7 @@ public class SettingsActivity extends AppCompatActivity {
                 String color = "#000000";
                 String backgroundColor = "#FFFFFF";
 
-                CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
+                CustomAdapter[] adapters = {customAdapter1, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                 for (CustomAdapter adapter : adapters) {
                     adapter.setTextColor(Color.parseColor(color));
@@ -1502,7 +1424,6 @@ public class SettingsActivity extends AppCompatActivity {
                 newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
 
                 customSpinner1.setAdapter(customAdapter1);
-                customSpinner2.setAdapter(customAdapter2);
                 customSpinner3.setAdapter(customAdapter3);
                 customSpinner4.setAdapter(customAdapter4);
                 customSpinner5.setAdapter(customAdapter5);
@@ -1541,10 +1462,6 @@ public class SettingsActivity extends AppCompatActivity {
                         customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_light));
                         customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_light));
 
-                        customListCalculationMode = new ArrayList<>();
-                        customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_light));
-                        customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_light));
-
                         customListFunctionMode = new ArrayList<>();
                         customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
                         customListFunctionMode.add(new CustomItems(getString(R.string.radian), R.drawable.radian_light));
@@ -1575,7 +1492,6 @@ public class SettingsActivity extends AppCompatActivity {
                         customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_light));
 
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
-                        customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                         customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                         customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
@@ -1584,7 +1500,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String color = "#FFFFFF";
                         String backgroundColor = "#151515";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -1612,10 +1528,6 @@ public class SettingsActivity extends AppCompatActivity {
                         customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_true_darkmode));
                         customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_true_darkmode));
                         customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_true_darkmode));
-
-                        customListCalculationMode = new ArrayList<>();
-                        customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_true_darkmode));
-                        customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_true_darkmode));
 
                         customListFunctionMode = new ArrayList<>();
                         customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_true_darkmode));
@@ -1647,7 +1559,6 @@ public class SettingsActivity extends AppCompatActivity {
                         customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_true_darkmode));
 
                         customAdapter1 = new CustomAdapter(this, customListDisplayMode);
-                        customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                         customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                         customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                         customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
@@ -1656,7 +1567,7 @@ public class SettingsActivity extends AppCompatActivity {
                         String color = "#D5D5D5";
                         String backgroundColor = "#000000";
 
-                        CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
+                        CustomAdapter[] adapters = {customAdapter1, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                         for (CustomAdapter adapter : adapters) {
                             adapter.setTextColor(Color.parseColor(color));
@@ -1668,7 +1579,6 @@ public class SettingsActivity extends AppCompatActivity {
                     }
 
                     customSpinner1.setAdapter(customAdapter1);
-                    customSpinner2.setAdapter(customAdapter2);
                     customSpinner3.setAdapter(customAdapter3);
                     customSpinner4.setAdapter(customAdapter4);
                     customSpinner5.setAdapter(customAdapter5);
@@ -1691,10 +1601,6 @@ public class SettingsActivity extends AppCompatActivity {
                     customListDisplayMode.add(new CustomItems(getString(R.string.systemDefault), R.drawable.settings_light));
                     customListDisplayMode.add(new CustomItems(getString(R.string.lightMode), R.drawable.day_light));
                     customListDisplayMode.add(new CustomItems(getString(R.string.darkmode), R.drawable.night_light));
-
-                    customListCalculationMode = new ArrayList<>();
-                    customListCalculationMode.add(new CustomItems(getString(R.string.defaultCalculationMode), R.drawable.advanced_light));
-                    customListCalculationMode.add(new CustomItems(getString(R.string.easyCalculationMode), R.drawable.settings_light));
 
                     customListFunctionMode = new ArrayList<>();
                     customListFunctionMode.add(new CustomItems(getString(R.string.degree), R.drawable.degree_light));
@@ -1726,7 +1632,6 @@ public class SettingsActivity extends AppCompatActivity {
                     customListHistoryModesAdvanced.add(new CustomItems(getString(R.string.advancedHistoryMode), R.drawable.advanced_light));
 
                     customAdapter1 = new CustomAdapter(this, customListDisplayMode);
-                    customAdapter2 = new CustomAdapter(this, customListCalculationMode);
                     customAdapter3 = new CustomAdapter(this, customListFunctionMode);
                     customAdapter4 = new CustomAdapter(this, customListHistoryMode);
                     customAdapter5 = new CustomAdapter(this, customListDecimalPoints);
@@ -1735,7 +1640,7 @@ public class SettingsActivity extends AppCompatActivity {
                     String color = "#FFFFFF";
                     String backgroundColor = "#151515";
 
-                    CustomAdapter[] adapters = {customAdapter1, customAdapter2, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
+                    CustomAdapter[] adapters = {customAdapter1, customAdapter3, customAdapter4, customAdapter5, customAdapter6};
 
                     for (CustomAdapter adapter : adapters) {
                         adapter.setTextColor(Color.parseColor(color));
@@ -1746,7 +1651,6 @@ public class SettingsActivity extends AppCompatActivity {
                     newColorBTNBackgroundAccent = Color.parseColor(backgroundColor);
 
                     customSpinner1.setAdapter(customAdapter1);
-                    customSpinner2.setAdapter(customAdapter2);
                     customSpinner3.setAdapter(customAdapter3);
                     customSpinner4.setAdapter(customAdapter4);
                     customSpinner5.setAdapter(customAdapter5);
@@ -1761,9 +1665,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
             try {
                 String mode;
-                mode = dataManager.getJSONSettingsData("calculationMode", getMainActivityContext()).getString("value");
-                int selection = mode.equals("Standard") ? 0 : 1;
-                customSpinner2.setSelection(selection);
+                int selection;
 
                 mode = dataManager.getJSONSettingsData("functionMode", getMainActivityContext()).getString("value");
                 selection = mode.equals("Deg") ? 0 : 1;
@@ -1815,8 +1717,6 @@ public class SettingsActivity extends AppCompatActivity {
         TextView allowDailyNotifications = findViewById(R.id.settings_daily_hints);
         TextView allowDailyNotificationsText = findViewById(R.id.settings_daily_hints_text);
 
-        TextView settingsCalculationModeText = findViewById(R.id.settings_calculation_mode_text);
-        TextView settingsCalculationModeTitle = findViewById(R.id.settings_calculation_mode_title);
         TextView settingsCredits = findViewById(R.id.credits_view);
 
         TextView settingsFunctionModeTitle = findViewById(R.id.settings_function_title);
@@ -1854,8 +1754,6 @@ public class SettingsActivity extends AppCompatActivity {
         allowRememberNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
         allowDailyNotifications.setTextColor(ContextCompat.getColor(this, textColor));
         allowDailyNotificationsText.setTextColor(ContextCompat.getColor(this, textColor));
-        settingsCalculationModeText.setTextColor(ContextCompat.getColor(this, textColor));
-        settingsCalculationModeTitle.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setTextColor(ContextCompat.getColor(this, textColor));
         settingsCredits.setBackgroundColor(ContextCompat.getColor(this, backgroundColor));
 

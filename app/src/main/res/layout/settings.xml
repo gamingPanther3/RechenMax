@@ -221,35 +221,6 @@
                 android:textColor="@color/colorBTNForegroundAccent" />
 
             <TextView
-                android:id="@+id/settings_calculation_mode_title"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/calculationMode"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxTitleSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform" />
-
-            <TextView
-                android:id="@+id/settings_calculation_mode_text"
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:text="@string/calculationModeText"
-                android:textColor="@color/colorBTNForegroundAccent"
-                android:autoSizeMaxTextSize="@dimen/maxTextSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform" />
-
-            <Spinner
-                android:id="@+id/settings_calculation_mode_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:autoSizeMaxTextSize="@dimen/maxTextSize"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform" />
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="" />
