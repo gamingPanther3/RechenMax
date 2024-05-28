@@ -226,6 +226,7 @@
     <string name="faculty">Faculty</string>
     <string name="exponential">Exponential</string>
     <string name="squareroot">Square root</string>
+    <string name="cubicroot">Cube root</string>
     <string name="eulersNumber">Euler\'s number (2,718..)</string>
     <string name="clearResult">Clear result</string>
     <string name="clearAll">Clear all</string>

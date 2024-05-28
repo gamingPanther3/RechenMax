@@ -297,6 +297,7 @@
     <string name="faculty">Fakultät</string>
     <string name="exponential">Exponent</string>
     <string name="squareroot">Quadratwurzel</string>
+    <string name="cubicroot">Kubikwurzel</string>
     <string name="eulersNumber">Eulersche Zahl (2,718..)</string>
     <string name="clearResult">Ergebnis leeren</string>
     <string name="clearAll">Alles leeren</string>

@@ -947,7 +947,7 @@
                 android:tag="³√"
                 android:text="@string/three_root"
                 android:textColor="@color/colorBTNForegroundAccent"
-                android:tooltipText="@string/three_root" />
+                android:tooltipText="@string/cubicroot" />
         </GridLayout>
 
         <GridLayout

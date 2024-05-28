@@ -208,6 +208,7 @@
     <string name="faculty">Factorielle</string>
     <string name="exponential">Exponentielle</string>
     <string name="squareroot">Racine carrée</string>
+    <string name="cubicroot">Racine cubique</string>
     <string name="eulersNumber">Nombre d\'Euler (2,718..)</string>
     <string name="clearResult">Effacer le résultat</string>
     <string name="clearAll">Tout effacer</string>

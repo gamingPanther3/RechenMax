@@ -225,6 +225,7 @@
     <string name="faculty">Factorial</string>
     <string name="exponential">Exponencial</string>
     <string name="squareroot">Raíz cuadrada</string>
+    <string name="cubicroot">Raíz cúbica</string>
     <string name="eulersNumber">Número de Euler (2,718..)</string>
     <string name="clearResult">Borrar resultado</string>
     <string name="clearAll">Borrar todo</string>

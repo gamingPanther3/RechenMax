@@ -2839,21 +2839,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is called when the backspace button is clicked.
-     * It removes the last character from the result text.
-     * If the result text is "Ungültige Eingabe", it resets the calculate text and result text.
-     * If the result text is empty after removing the last character, it sets the result text to "0".
-     * It then formats the result text and saves the numbers to the application context.
+     * Handles the action when the backspace key is pressed during a calculation.
+     *
+     * This method performs the following steps:
+     * 1. Saves a flag to indicate that the "calculate" button hasn't been pressed.
+     * 2. Retrieves the current calculation text.
+     * 3. Checks if the calculation text is not empty:
+     *    - If the last character is an opening parenthesis or a '#', it removes all operators
+     *      using the `removeOperators` method.
+     *    - Otherwise, it simply removes the last character.
+     * 4. If the calculation text is empty after removal, sets the result text to "0".
+     * 5. Formats the result text for better display and adjusts the text size to fit the display area.
      */
     private void handleBackspaceAction() {
         dataManager.saveToJSONSettings("pressedCalculate", false, getApplicationContext());
-        if(!getCalculateText().isEmpty()) {
-            if(!(getCalculateText().charAt(getCalculateText().length() - 1) == '(')) {
-                setCalculateText(getCalculateText().substring(0, getCalculateText().length() - 1));
+        String calculateText = getCalculateText();
+        if (!calculateText.isEmpty()) {
+            char lastChar = calculateText.charAt(calculateText.length() - 1);
+            if (lastChar == '(' || lastChar == '#') {
+                setCalculateText(removeOperators(calculateText));
             } else {
-                setCalculateText(removeOperators(getCalculateText()));
+                setCalculateText(calculateText.substring(0, calculateText.length() - 1));
             }
         } else {
+            setResultText("0");
+        }
+
+        if (getCalculateText().isEmpty()) {
             setResultText("0");
         }
 
@@ -2862,56 +2874,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Removes the trailing operator from a mathematical expression string.
+     * Removes operators from the end of the given input string.
      * <p>
-     * This method analyzes the end of the input string to identify and remove a specific set of mathematical operators.
-     * The recognized operators include common functions (e.g., "sin(", "ln(", "√("), inverse functions, and special cases like "RanInt(".
-     * If the input string ends with one of these operators (or its prefix if it's a function with parentheses),
-     * the method removes the operator and returns the modified string. If no recognized operator is found,
-     * the original string is returned unchanged.
+     * This method checks if the input string ends with any of the following operators:
+     * - Mathematical functions (e.g., "sin(", "cos(", "√(")
+     * - Logarithm with various subscripts (e.g., "log₂(")
+     * - Special operators like "³√(" or "Ran#"
+     * <p>
+     * If an operator is found at the end, it's removed from the input string.
      *
-     * @param input The mathematical expression string to process.
-     * @return The input string with the trailing operator removed, or the original string if no recognized operator was found.
+     * @param input The string to remove operators from.
+     * @return The input string with operators removed from the end.
      */
     public static String removeOperators(String input) {
         String[] operators = {"³√(", "ln(", "tanh⁻¹(", "cosh⁻¹(", "sinh⁻¹(", "tan⁻¹(", "cos⁻¹(", "sin⁻¹(",
                 "tanh(", "cosh(", "sinh(", "tan(", "cos(", "sin(", "√(", "Pol(", "Rec(",
-                "RanInt", "Ran"};
+                "RanInt(", "Ran#"};
 
         // Regular expression to match log with any subscript followed by "("
         Pattern logPattern = Pattern.compile("log[₀-₉]+\\($");
 
-        int endIndex = input.length() - 1;
-        boolean foundOperator = false;
-
-        // Check for the regular operators first
         for (String operator : operators) {
-            if (input.endsWith(operator) || (operator.endsWith("(") && input.endsWith(operator.substring(0, operator.length() - 1))) || input.endsWith("Ran#")) {
-                endIndex -= operator.length() - (operator.endsWith("(") ? 1 : 0);
-                foundOperator = true;
-                break;
+            if (input.endsWith(operator)) {
+                return input.substring(0, input.length() - operator.length());
+            } else if (operator.endsWith("(") && input.endsWith(operator.substring(0, operator.length() - 1))) {
+                return input.substring(0, input.length() - operator.length() + 1);
             }
         }
 
-        // Check for log with subscript if no other operator is found
-        if (!foundOperator) {
-            Matcher logMatcher = logPattern.matcher(input);
-            if (logMatcher.find() && logMatcher.end() == input.length()) {
-                endIndex -= logMatcher.end() - logMatcher.start() - 1;
-                foundOperator = true;
-            }
+        Matcher logMatcher = logPattern.matcher(input);
+        if (logMatcher.find() && logMatcher.end() == input.length()) {
+            return input.substring(0, logMatcher.start());
         }
 
-        // Ensure endIndex is within bounds
-        endIndex = Math.max(0, endIndex);
-
-        if (foundOperator) {
-            if (input.substring(0, endIndex).isEmpty()) {
-                return input.substring(0, endIndex);
-            } else {
-                return input.substring(0, endIndex + 1);
-            }
-        }
         return input;
     }
 
