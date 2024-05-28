@@ -776,45 +776,7 @@ public class CalculatorEngine {
         fixedExpression = fixedExpression.replaceAll("-\\+", "-");
 
         //Log.e("fixExpression", "Fixed Expression: " + addBracketsAroundBinomialCoefficientAndPermutation(fixedExpression));
-        return addBracketsAroundBinomialCoefficientAndPermutation(stringBuilder.toString().isEmpty() ? input : fixedExpression);
-    }
-
-    /**
-     * Adds brackets around binomial coefficient and permutation expressions (nCk, nPk) found in a string,
-     * if they are not already enclosed in brackets.
-     * <p>
-     * This method takes a string that may contain binomial coefficient or permutation expressions in the format "nCk" or "nPk"
-     * (e.g., "5C2" or "5P2"). It identifies these expressions using a regular expression and encloses them in parentheses if
-     * they are not already enclosed in parentheses.
-     * <p>
-     * Example:
-     *   - Input:  "The answer is 5C2"
-     *   - Output: "The answer is (5C2)"
-     *
-     * @param input The string to be processed.
-     * @return The string with parentheses added around binomial coefficient or permutation expressions.
-     */
-    public static String addBracketsAroundBinomialCoefficientAndPermutation(String input) {
-        Pattern pattern = Pattern.compile("(\\d+[СƤ⁒]\\d+)");
-        Matcher matcher = pattern.matcher(input);
-
-        StringBuilder result = new StringBuilder();
-
-        int lastIndex = 0;
-        while (matcher.find()) {
-            String match = matcher.group(1);
-            // Check if the match is already enclosed in parentheses
-            if(!(matcher.start() > 0 && input.charAt(matcher.start() - 1) == '(' && matcher.end() < input.length() && input.charAt(matcher.end()) == ')')) {
-                result.append(input, lastIndex, matcher.start());
-                result.append("(").append(match).append(")");
-            } else {
-                result.append(input, lastIndex, matcher.end());
-            }
-            lastIndex = matcher.end();
-        }
-        result.append(input.substring(lastIndex));
-
-        return result.toString();
+        return stringBuilder.toString().isEmpty() ? input : fixedExpression;
     }
 
     /**
