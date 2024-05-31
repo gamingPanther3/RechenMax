@@ -19,11 +19,9 @@ package com.mlprograms.rechenmax;
 import static com.mlprograms.rechenmax.NumberHelper.PI;
 import static com.mlprograms.rechenmax.NumberHelper.e;
 import static com.mlprograms.rechenmax.ParenthesesBalancer.balanceParentheses;
-import static java.lang.Math.sqrt;
 import static ch.obermuhlner.math.big.DefaultBigDecimalMath.pow;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -378,7 +376,7 @@ public class CalculatorEngine {
             case "^":
                 return power(operand1, operand2);
             case "С":
-                return binomialCoefficientBigDecimal(operand1, operand2);
+                return combinationBigDecimal(operand1, operand2);
             case "Ƥ":
                 return permutationBigDecimal(operand1, operand2);
             case "⁒":
@@ -1265,22 +1263,22 @@ public class CalculatorEngine {
     }
 
     /**
-     * Calculates the binomial coefficient, also known as "n choose k".
+     * Calculates the combination, also known as "n choose k".
      * <p>
-     * The binomial coefficient is a mathematical expression that represents the number of ways to choose
-     * k items from a set of n items without regard to order. It's denoted as nCk or (n k) and is calculated as:
+     * The combination is a mathematical expression that represents the number of ways to choose
+     * k items from a set of n items without regard to order. It's denoted as nCr or (n k) and is calculated as:
      * <p>
-     *    nCk = n! / (k! * (n-k)!)
+     *    nCr = n! / (k! * (n-k)!)
      * <p>
      * This method uses an optimized approach to avoid calculating factorials directly, which can lead to overflow
      * for large values of n.
      *
      * @param n1 The total number of items (n >= 0).
      * @param k1 The number of items to choose (0 <= k <= n).
-     * @return The binomial coefficient nCk.
+     * @return The combination nCr.
      * @throws IllegalArgumentException If k is greater than n (invalid input).
      */
-    public static BigDecimal binomialCoefficientBigDecimal(BigDecimal n1, BigDecimal k1) {
+    public static BigDecimal combinationBigDecimal(BigDecimal n1, BigDecimal k1) {
         int n = n1.intValue();
         int k = k1.intValue();
 
@@ -1303,10 +1301,10 @@ public class CalculatorEngine {
     /**
      * @param n The total number of items (n >= 0).
      * @param k The number of items to choose (0 <= k <= n).
-     * @return The binomial coefficient nCk.
+     * @return The combination nCr.
      * @throws IllegalArgumentException If k is greater than n (invalid input).
      */
-    public static BigDecimal binomialCoefficientInt(int n, int k) {
+    public static BigDecimal combinationInt(int n, int k) {
         if (k > n) {
             throw new IllegalArgumentException(mainActivity.getString(R.string.errorMessage18));
         }

@@ -65,7 +65,7 @@ public class Converter extends ConvertActivity {
         METER(new Unit(Category.LENGTH, "m", "Meter", new BigDecimal("1.0"))),
         DECIMETER(new Unit(Category.LENGTH, "dm", "Decimeter", new BigDecimal("0.1"))),
         CENTIMETER(new Unit(Category.LENGTH, "cm", "Centimeter", new BigDecimal("0.01"))),
-        MILLIMETER(new Unit(Category.LENGTH, "mm", "Millimeter", new BigDecimal("0.0010"))),
+        MILLIMETER(new Unit(Category.LENGTH, "mm", "Millimeter", new BigDecimal("0.001"))),
         MICROMETER(new Unit(Category.LENGTH, "\u00b5m", "Micrometer", new BigDecimal("1.0E-6"))),
         NANOMETER(new Unit(Category.LENGTH, "nm", "Nanometer", new BigDecimal("1.0E-9"))),
         ANGSTROM(new Unit(Category.LENGTH, "\u00c5", "Angstrom", new BigDecimal("1.0E-10"))),
@@ -88,16 +88,16 @@ public class Converter extends ConvertActivity {
         KILOGRAM(new Unit(Category.MASS, "kg", "Kilogram", new BigDecimal("1.0"))),
         GRAM(new Unit(Category.MASS, "g", "Gram", new BigDecimal("1.0E-3"))),
         MILLIGRAM(new Unit(Category.MASS, "mg", "Milligram", new BigDecimal("1.0E-6"))),
-        MICROGRAM(new Unit(Category.MASS, "\u00b5g", "Mikrogram", new BigDecimal("1.0E-6"))),
-        NANOGRAM(new Unit(Category.MASS, "ng", "Nanogram", new BigDecimal("1.0E-9"))),
-        PICOGRAM(new Unit(Category.MASS, "pg", "Picogram", new BigDecimal("1.0E-12"))),
-        FEMTOGRAM(new Unit(Category.MASS, "fg", "Femtogram", new BigDecimal("1.0E-15"))),
-        OUNCE(new Unit(Category.MASS, "oz", "Ounce (US)", new BigDecimal("0.028"))),
-        POUND(new Unit(Category.MASS, "lb", "Pounds (US)", new BigDecimal("0.45359237"))),
+        MICROGRAM(new Unit(Category.MASS, "\u00b5g", "Mikrogram", new BigDecimal("1.0E-9"))),
+        NANOGRAM(new Unit(Category.MASS, "ng", "Nanogram", new BigDecimal("1.0E-12"))),
+        PICOGRAM(new Unit(Category.MASS, "pg", "Picogram", new BigDecimal("1.0E-15"))),
+        FEMTOGRAM(new Unit(Category.MASS, "fg", "Femtogram", new BigDecimal("1.0E-18"))),
+        OUNCE(new Unit(Category.MASS, "oz", "Ounce (US)", new BigDecimal("0.0283495"))),
+        POUND(new Unit(Category.MASS, "lb", "Pounds (US)", new BigDecimal("0.4535920000001679"))),
 
         // Time
-        YEAR(new Unit(Category.TIME, "yr", "Year", new BigDecimal("31557600"))), // added
-        MONTH(new Unit(Category.TIME, "mth", "Month", new BigDecimal("2628002.88"))), // added
+        YEAR(new Unit(Category.TIME, "yr", "Year", new BigDecimal("31557600"))),
+        MONTH(new Unit(Category.TIME, "mth", "Month", new BigDecimal("2.628e+6"))),
         WEEK(new Unit(Category.TIME, "wk", "Week", new BigDecimal("604800"))),
         DAY(new Unit(Category.TIME, "d", "Day", new BigDecimal("86400"))),
         HOUR(new Unit(Category.TIME, "h", "Hour", new BigDecimal("3600"))),
@@ -119,7 +119,7 @@ public class Converter extends ConvertActivity {
         SQUARE_ANGSTROM(new Unit(Category.AREA, "\u00c5\u00b2", "Square \u00c5ngstrom", new BigDecimal("1.0E-20"))),
         SQUARE_PICOMETER(new Unit(Category.AREA, "pm\u00b2", "Square Picometer", new BigDecimal("1.0E-24"))),
         SQUARE_FEMTOMETER(new Unit(Category.AREA, "fm\u00b2", "Square Femtometer", new BigDecimal("1.0E-30"))),
-        HECTARE(new Unit(Category.AREA, "ha", "Hectare", new BigDecimal("1.0E4"))),                             /* changed from 1.0E5 to 1.0E4 */
+        HECTARE(new Unit(Category.AREA, "ha", "Hectare", new BigDecimal("1.0E4"))),
         ACRE(new Unit(Category.AREA, "ac", "Acre", new BigDecimal("4046.8564224"))),
         ARES(new Unit(Category.AREA, "a", "Ares", new BigDecimal("100"))),
         SQUARE_INCH(new Unit(Category.AREA, "in\u00b2", "Square Inch", new BigDecimal("0.00064516"))),
@@ -163,11 +163,11 @@ public class Converter extends ConvertActivity {
 
         // Speed
         MILLIMETER_PER_SECOND(new Unit(Category.SPEED, "mm/s", "Millimeter per second", new BigDecimal("1.0E-3"))),
-        METER_PER_SECOND(new Unit(Category.SPEED, "m/s", "Meter per second", new BigDecimal("1.0E0"))),
+        METER_PER_SECOND(new Unit(Category.SPEED, "m/s", "Meter per second", new BigDecimal("1.0"))),
         KILOMETER_PER_HOUR(new Unit(Category.SPEED, "km/h", "Kilometer per hour", new BigDecimal("0.2777777778"))),
         MILES_PER_HOUR(new Unit(Category.SPEED, "mph", "Miles per hour", new BigDecimal("0.44704"))),
         KNOT(new Unit(Category.SPEED, "kt", "Knot", new BigDecimal("0.51444444444444"))),
-        MACH(new Unit(Category.SPEED, "M", "Mach", new BigDecimal("343"))),                     /* changed number from '0.00293866995797' to '343'; reason: incorrect */
+        MACH(new Unit(Category.SPEED, "M", "Mach", new BigDecimal("343.46"))),
 
         // TemperatureGradient
         KELVIN_PER_SECOND(new Unit(Category.TEMPERATURE_GRADIENT, "K/s", "Kelvin per second", new BigDecimal("1.0"))),
