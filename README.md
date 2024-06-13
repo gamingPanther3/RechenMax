@@ -4,7 +4,7 @@
 </div>
 
 <a href="[http://example.com/](https://play.google.com/store/apps/details?id=com.mlprograms.rechenmax&hl=de)" target="_blank">
-  <img src="images/GetItOnGooglePlay_Badge_Web_color_English.png">
+  <img src="pictures/GetItOnGooglePlay_Badge_Web_color_English.png">
 </a>
 
 ## Übersicht
