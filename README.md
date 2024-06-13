@@ -3,8 +3,8 @@
 # Dokumentation - RechenMax (Taschenrechner)
 </div>
 
-<a href="[http://example.com/](https://play.google.com/store/apps/details?id=com.mlprograms.rechenmax&hl=de)" target="_blank">
-  <img src="pictures/GetItOnGooglePlay_Badge_Web_color_English.png">
+<a href="https://play.google.com/store/apps/details?id=com.mlprograms.rechenmax&hl=de" target="_blank">
+  <img src="pictures/GetItOnGooglePlay_Badge_Web_color_English.png" alt="Holen Sie sich die App im Google Play Store">
 </a>
 
 ## Übersicht
