@@ -3,6 +3,10 @@
 # Dokumentation - RechenMax (Taschenrechner)
 </div>
 
+<a href="[http://example.com/](https://play.google.com/store/apps/details?id=com.mlprograms.rechenmax&hl=de)" target="_blank">
+  <img src="images/GetItOnGooglePlay_Badge_Web_color_English.png">
+</a>
+
 ## Übersicht
 
 RechenMax ist eine leistungsstarke und benutzerfreundliche Taschenrechner-App, die eine Vielzahl von mathematischen Operationen unterstützt. Von grundlegenden Rechenoperationen bis hin zu komplexen wissenschaftlichen Berechnungen, RechenMax ist perfekt auf die Anforderungen einer breiten Palette von Anwendungen zugeschnitten. Außerdem ist der Taschenrechner in Deutsch, Englisch, Französisch und Spanisch verfügbar.
