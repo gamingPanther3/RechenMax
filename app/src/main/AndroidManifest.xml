@@ -79,7 +79,8 @@
             android:exported="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:supportsPictureInPicture="false"
-            android:resizeableActivity="false"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="fullUser">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

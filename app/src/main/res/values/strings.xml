@@ -64,6 +64,24 @@
     <string name="log2x" translatable="false">log₂(x)</string>
     <string name="logxx" translatable="false">logₓ(x)</string>
     <string name="ln" translatable="false">ln(x)</string>
+
+    <string name="sin_" translatable="false">sin(</string>
+    <string name="cos_" translatable="false">cos(</string>
+    <string name="tan_" translatable="false">tan(</string>
+    <string name="sinh_" translatable="false">sinh(</string>
+    <string name="cosh_" translatable="false">cosh(</string>
+    <string name="tanh_" translatable="false">tanh(</string>
+    <string name="asin_" translatable="false">sin⁻¹(</string>
+    <string name="acos_" translatable="false">cos⁻¹(</string>
+    <string name="atan_" translatable="false">tan⁻¹(</string>
+    <string name="asinh_" translatable="false">sinh⁻¹(</string>
+    <string name="acosh_" translatable="false">cosh⁻¹(</string>
+    <string name="atanh_" translatable="false">tanh⁻¹(</string>
+    <string name="log_" translatable="false">log(</string>
+    <string name="log2x_" translatable="false">log₂(</string>
+    <string name="logxx_" translatable="false">logₓ(</string>
+    <string name="ln_" translatable="false">ln(</string>
+
     <string name="е" translatable="false">е</string>
     <string name="e" translatable="false">e±</string>
     <string name="pi" translatable="false">π</string>

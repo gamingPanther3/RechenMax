@@ -204,8 +204,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Load numbers, set up listeners, check science button state, check dark mode setting, format result text, adjust text size
         setUpListeners();
-        showOrHideScienceButtonState();
-        switchDisplayMode();
 
         // Scroll down in the calculate label
         scrollToStart(findViewById(R.id.calculate_scrollview));
@@ -223,6 +221,8 @@ public class MainActivity extends AppCompatActivity {
         resultScrollView.setVerticalScrollBarEnabled(false);
 
         findMaxCharactersWithoutScrolling(); // loads numbers after finish
+        showOrHideScienceButtonState();
+        switchDisplayMode();
     }
 
     private void findMaxCharactersWithoutScrolling() {
@@ -2812,6 +2812,7 @@ public class MainActivity extends AppCompatActivity {
      * @param e The action to be performed. This can be "⌫" for the backspace button, "C" for the C button, or "CE" for the CE button.
      */
     public void EmptyAction(final String e) {
+        boolean doNotCalculate = false;
         switch (e) {
             case "⌫":
                 handleBackspaceAction();
@@ -2823,19 +2824,23 @@ public class MainActivity extends AppCompatActivity {
                 dataManager.saveToJSONSettings("logX", "false", getApplicationContext());
                 break;
             case "CE":
-                setResultText("0");
+                if(getCalculateText().isEmpty()) {
+                    setResultText("0");
+                } else {
+                    doNotCalculate = true;
+                    setResultText("");
+                }
                 break;
         }
 
-        dataManager.saveNumbers(getApplicationContext());
-
-        if(!isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
+        if(!doNotCalculate && !isInvalidInput(CalculatorEngine.calculate(getCalculateText()))) {
             setResultText(CalculatorEngine.calculate(getCalculateText()));
         }
 
-        if(getCalculateText().isEmpty()) {
+        if(!doNotCalculate && getCalculateText().isEmpty()) {
             setResultText("0");
         }
+        dataManager.saveNumbers(getApplicationContext());
     }
 
     /**

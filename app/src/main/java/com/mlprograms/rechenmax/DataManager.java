@@ -525,6 +525,51 @@ public class DataManager {
         }
     }
 
+    /**
+     * This method loads numbers from two files and sets the text of two TextViews.
+     */
+    public void loadResultText() throws JSONException {
+        if (mainActivity != null) {
+            JSONObject resultText = getJSONSettingsData("result_text", mainActivity.getApplicationContext());
+            TextView resultlabel = mainActivity.findViewById(R.id.result_label);
+
+            if (resultlabel != null) {
+                try {
+                    final String value = resultText.getString("value");
+                    if (!value.replace(" ", "").isEmpty()) {
+                        try {
+                            mainActivity.setResultText(resultText.getString("value"));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        mainActivity.setResultText("0");
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    /**
+     * This method loads numbers from two files and sets the text of two TextViews.
+     */
+    public void loadCalculateText() throws JSONException {
+        if (mainActivity != null) {
+            JSONObject calculateText = getJSONSettingsData("calculate_text", mainActivity.getApplicationContext());
+            TextView calculatelabel = mainActivity.findViewById(R.id.calculate_label);
+
+            if (calculatelabel != null) {
+                try {
+                    mainActivity.setCalculateText(calculateText.getString("value"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
     public void updateValuesInHistoryData(String name, String valueName, String newValue, Context applicationContext) {
         try {
             File file = new File(applicationContext.getFilesDir(), HISTORY_FILE);
