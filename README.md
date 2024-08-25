@@ -11,6 +11,12 @@
 
 RechenMax ist eine leistungsstarke und benutzerfreundliche Taschenrechner-App, die eine Vielzahl von mathematischen Operationen unterstützt. Von grundlegenden Rechenoperationen bis hin zu komplexen wissenschaftlichen Berechnungen, RechenMax ist perfekt auf die Anforderungen einer breiten Palette von Anwendungen zugeschnitten. Außerdem ist der Taschenrechner in Deutsch, Englisch, Französisch und Spanisch verfügbar.
 
+<div align="center">
+  <img src="pictures/RM1.png" alt="RechenMaxBild1" width="250"/>
+  <img src="pictures/RM2.png" alt="RechenMaxBild2" width="250"/>
+  <img src="pictures/RM3.png" alt="RechenMaxBild3" width="250"/>
+</div>
+
 ### Funktionen
 
 Der Taschenrechner bietet eine Vielzahl von Funktionen:
@@ -49,16 +55,6 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 
 - **Rechteck-Koordinatenumrechnung**: Konvertieren Sie zwischen kartesischen und rechteckigen Koordinaten mit Rec.
   - Beispiel: Um Polarkoordinaten (5;53,13) in kartesische Koordinaten zu konvertieren, geben Sie Rec(5;53,13) ein.
-
-<!--
-<div align="center">
-  <img src="pictures/RM1.png" alt="RechenMaxBild1" width="150"/>
-  <img src="pictures/RM2.png" alt="RechenMaxBild2" width="150"/>
-  <img src="pictures/RM3.png" alt="RechenMaxBild3" width="150"/>
-  <img src="pictures/RM4.png" alt="RechenMaxBild4" width="150"/>
-  <img src="pictures/RM5.png" alt="RechenMaxBild5" width="150"/>
-</div>
--->
 
 - **Wissenschaftlicher Modus**: Schalten Sie in den wissenschaftlichen Modus um, um zusätzliche Funktionen wie Sinus, Cosinus, Tangens oder Pi zu nutzen.
 
