@@ -34,6 +34,12 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
   - Beispiel: Um den Cosinus von 45 Grad zu berechnen, geben Sie cos(45) ein.
   - Beispiel: Um den Tangens von 60 Grad zu berechnen, geben Sie tan(60) ein.
 
+<div align="center">
+  <img src="pictures/RM4.png" alt="RechenMaxBild4" width="250"/>
+  <img src="pictures/RM5.png" alt="RechenMaxBild5" width="250"/>
+  <img src="pictures/RM6.png" alt="RechenMaxBild6" width="250"/>
+</div>
+
 - **Inverse trigonometrische Funktionen**: Verwenden Sie inverse trigonometrische Funktionen wie Sinus^-1 (sin⁻¹), Cosinus^-1 (cos⁻¹) und Tangens^-1 (tan⁻¹).
   - Beispiel: Um den Winkel zu finden, dessen Sinus 0,5 ist, geben Sie sin⁻¹(0.5) ein.
   - Beispiel: Um den Winkel zu finden, dessen Cosinus 0,707 ist, geben Sie cos⁻¹(0.707) ein.
@@ -62,16 +68,6 @@ Der Taschenrechner bietet eine Vielzahl von Funktionen:
 
 - **Wissenschaftliche Notationen**: RechenMax kann auch wissenschaftliche Notationen verarbeiten und automatisch in Dezimalnotationen umwandeln.
   - Beispiel: Der Taschenrechner zeigt auch Ergebnisse in wissenschaftlicher Notation an, wenn das Ergebnis sehr groß oder sehr klein ist.
-
-<!--
-<div align="center">
-  <img src="pictures/RM6.png" alt="RechenMaxBild6" width="150"/>
-  <img src="pictures/RM7.png" alt="RechenMaxBild7" width="150"/>
-  <img src="pictures/RM8.png" alt="RechenMaxBild8" width="150"/>
-  <img src="pictures/RM9.png" alt="RechenMaxBild9" width="150"/>
-  <img src="pictures/RM10.png" alt="RechenMaxBild10" width="150"/>
-</div>
--->
 
 ### Verwendung
 
